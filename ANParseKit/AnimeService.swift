@@ -10,6 +10,113 @@ import Foundation
 import Parse
 import Bolts
 
+
+
+public enum AnimeType: String {
+    case TV = "TV"
+    case Movie = "Movie"
+    case Special = "Special"
+    case OVA = "OVA"
+    case ONA = "ONA"
+    case Music = "Music"
+    
+    static func count() -> Int {
+        return 6
+    }
+}
+
+public enum AnimeClassification: String {
+    case G = "G - All Ages"
+    case PG = "PG - Children"
+    case PG13 = "PG-13 - Teens 13 or older"
+    case R17 = "R - 17+ (violence & profanity)"
+    case RPlus = "R+ - Mild Nudity"
+    case Rx = "Rx - Hentai"
+    
+    static func count() -> Int {
+        return 6
+    }
+}
+
+public enum AnimeStatus: String {
+    case FinishedAiring = "finished airing"
+    case CurrentlyAiring = "currently airing"
+    case NotYetAired = "not yet aired"
+    
+    static func count() -> Int {
+        return 3
+    }
+}
+
+public enum AnimeGenre: String {
+    case Action = "Action"
+    case Adventure = "Adventure"
+    case Cars = "Cars"
+    case Comedy = "Comedy"
+    case Dementia = "Dementia"
+    case Demons = "Demons"
+    case Drama = "Drama"
+    case Ecchi = "Ecchi"
+    case Fantasy = "Fantasy"
+    case Game = "Game"
+    case Harem = "Harem"
+    case Hentai = "Hentai"
+    case Historical = "Historical"
+    case Horror = "Horror"
+    case Josei = "Josei"
+    case Kids = "Kids"
+    case Magic = "Magic"
+    case MartialArts = "Martial Arts"
+    case Mecha = "Mecha"
+    case Military = "Military"
+    case Music = "Music"
+    case Mystery = "Mystery"
+    case Parody = "Parody"
+    case Police = "Police"
+    case Psychological = "Psychological"
+    case Romance = "Romance"
+    case Samurai = "Samurai"
+    case School = "School"
+    case SciFi = "Sci-Fi"
+    case Seinen = "Seinen"
+    case Shoujo = "Shoujo"
+    case ShoujoAi = "Shoujo Ai"
+    case Shounen = "Shounen"
+    case ShounenAi = "Shounen Ai"
+    case SliceOfLife = "Slice of Life"
+    case Space = "Space"
+    case Sports = "Sports"
+    case SuperPower = "Super Power"
+    case Supernatural = "Supernatural"
+    case Thriller = "Thriller"
+    case Vampire = "Vampire"
+    case Yaoi = "Yaoi"
+    case Yuri = "Yuri"
+    
+    static func count() -> Int {
+        return 43
+    }
+}
+
+public enum AnimeSort: String {
+    case AZ = "A-Z"
+    case Popular = "Most Popular"
+    case Rating = "Highest Rated"
+}
+
+public enum FilterYear: String {
+    case TwoThousandTen = "2010s"
+    case TwoThousand = "2000s"
+    case NineteenNinety = "1990s"
+    case NineteenEighty = "1980s"
+    case NineteenSeventy = "1970s"
+    case Older = "Older"
+    
+    static func count() -> Int {
+        return 6
+    }
+}
+
 public class AnimeService {
 
     public class func allAnime() -> BFTask {
@@ -64,14 +171,69 @@ public class AnimeService {
             query.whereKey("startDate2", lessThanOrEqualTo: endDate)
             
             let query2 = PFQuery(className: ParseKit.Anime)
-            query.whereKey("endDate2", greaterThanOrEqualTo: startDate)
-            query.whereKey("endDate2", lessThanOrEqualTo: endDate)
+            query2.whereKey("endDate2", greaterThanOrEqualTo: startDate)
+            query2.whereKey("endDate2", lessThanOrEqualTo: endDate)
             
             return PFQuery
                 .orQueryWithSubqueries([query,query2])
                 .findObjectsInBackground()
         }
         return BFTask(result: [])
+    }
+    
+    public class func findAnime(sort: AnimeSort? = .AZ, years: [FilterYear]? = [], genres: [AnimeGenre]? = [], types: [AnimeType]? = [], classification: [AnimeClassification]? = [], status: [AnimeStatus]? = [] , includeClasses: [String]? = [] , limit: Int? = 1000) -> BFTask {
+        let query = PFQuery(className: ParseKit.Anime)
+        
+        query.limit = limit!
+        
+        switch sort! {
+            case .AZ: query.orderByAscending("title")
+            case .Popular: fallthrough
+            case .Rating: ()
+        }
+        
+//        if let years = years where years.count != FilterYears.yearsCount() {
+//            let yearsQuery = PFQuery(className: ParseKit.Anime)
+//            for year in years {
+//                yearsQuery.
+//            }
+//        }
+        
+        if let genres = genres where genres.count != AnimeGenre.count() && genres.count != 0 {
+            var includeGenres: [String] = []
+            for genre in genres {
+                includeGenres.append(genre.rawValue)
+            }
+            query.whereKey("genres", containsAllObjectsInArray: includeGenres)
+        }
+        
+        
+        if let types = types where types.count != AnimeType.count() && types.count != 0  {
+            var includeTypes: [String] = []
+            for type in types {
+                includeTypes.append(type.rawValue)
+            }
+            query.whereKey("type", containedIn: includeTypes)
+        }
+        
+        if let classification = classification where classification.count != AnimeClassification.count() && classification.count != 0  {
+            var includeClassifications: [String] = []
+            for aClassification in classification {
+                includeClassifications.append(aClassification.rawValue)
+            }
+            query.whereKey("classification", containedIn: includeClassifications)
+        }
+        
+        if let status = status where status.count != AnimeStatus.count() && status.count != 0  {
+            var includeStatus: [String] = []
+            for aStatus in status {
+                includeStatus.append(aStatus.rawValue)
+            }
+            query.whereKey("status", containedIn: includeStatus)
+        }
+        
+        return query.findObjectsInBackground()
+        
     }
     
 }

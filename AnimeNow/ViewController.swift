@@ -37,38 +37,18 @@ class ViewController: UIViewController {
 //            request()
 //        }
         
-        //MALScrapper.getInfo(.Winter)
-//        SeasonalChartService.currentSeasonalChart().continueWithBlock { (task: BFTask!) -> BFTask! in
-//            println(task.result);
-//            return task
-//        }
-
-
-//        AnimeService.allAnime().continueWithBlock { (task: BFTask!) -> AnyObject in
-//            let result = task.result as! [PFObject]
-//
-//            for anime in result {
-//
-////                if let startDate = anime["startDate"] as? String {
-////                    anime["startDate2"] = self.dateForString(startDate)
-////                }
-////                if let endDate = anime["endDate"] as? String {
-////                    anime["endDate2"] = self.dateForString(endDate)
-////                }
-//         
-//                anime.saveInBackground()
-//                // This maximizes request to ~25/sec
-//                NSThread.sleepForTimeInterval(0.035715)
+//        AnimeService.findAnime(genres:[.Action,.Adventure], types:[.TV], limit: 2).continueWithBlock {
+//            (task: BFTask!) -> AnyObject! in
+//            
+//            for anime in task.result as! [PFObject] {
+//                let title: AnyObject? = anime["title"]
+//                let malID: AnyObject? = anime["myAnimeListID"]
+//                println("\(malID) \(title)")
 //            }
-//            return result
+//            
+//            return nil
 //        }
         
-//        AnimeService.findAnimeBetterHigherThanNine().continueWithBlock { (task: BFTask!) -> AnyObject! in
-//            let result = task.result
-//            return task
-//        }
-        
-        SeasonalChartService.fillChartWithAnime(SeasonalChart.Spring, year: 2015)
     }
     
     func dateForString(string: String) -> AnyObject! {
@@ -96,10 +76,6 @@ class ViewController: UIViewController {
             }
         }
     }
-    
-    // MARK: - Parse testing
-    
-    
 
 }
 
