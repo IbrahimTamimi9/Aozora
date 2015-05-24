@@ -29,7 +29,6 @@ public class SeasonalChartService {
         let query = PFQuery(className: ParseKit.SeasonalChart)
         query.limit = 1
         query.orderByDescending("startDate")
-        query.includeKey("")
         return query
             .findObjectsInBackground()
             .continueWithBlock { (task: BFTask!) -> BFTask! in

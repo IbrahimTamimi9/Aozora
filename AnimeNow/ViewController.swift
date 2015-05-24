@@ -36,8 +36,11 @@ class ViewController: UIViewController {
 //        } else {
 //            request()
 //        }
-        
-//        AnimeService.findAnime(genres:[.Action,.Adventure], types:[.TV], limit: 2).continueWithBlock {
+
+        // Using findAnime()
+//        AnimeService
+//        .findAnime(genres:[.Action,.Adventure], classification:[.R17], types:[.TV], limit: 2)
+//            .continueWithBlock {
 //            (task: BFTask!) -> AnyObject! in
 //            
 //            for anime in task.result as! [PFObject] {
@@ -48,6 +51,50 @@ class ViewController: UIViewController {
 //            
 //            return nil
 //        }
+        
+        
+//        // Read JSON and store in string
+//        let filePath = NSBundle.mainBundle().pathForResource("ServiceIdentifier", ofType: "json")
+//        let data = NSData(contentsOfFile: filePath!)
+//        let result = NSJSONSerialization.JSONObjectWithData(data!, options: nil, error: nil) as! NSDictionary
+//        let serviceIdentifiers = result["results"] as! [NSDictionary]
+        
+//        AnimeService.findAllAnime().continueWithBlock { (task: BFTask!) -> AnyObject! in
+//            
+//            for anime in task.result as! [PFObject] {
+//
+//                NSThread.sleepForTimeInterval(0.01)
+//            }
+//
+//            return nil
+//        }.continueWithBlock {
+//            (task: BFTask!) -> AnyObject! in
+//            if (task.exception != nil || task.error != nil) {
+//                println("duh")
+//                println(task.error)
+//                println(task.exception)
+//            }
+//            return nil
+//        }
+        
+        // Filter class by value(s) of pointer column
+//        let query = PFQuery(className: "Test1")
+//        let innerQuery = PFQuery(className: "Test2")
+//        innerQuery.whereKey("types", containsAllObjectsInArray: ["tv"])
+//        query.whereKey("test2", matchesQuery: innerQuery)
+//        query.findObjectsInBackground().continueWithBlock {
+//            (task: BFTask!) -> AnyObject! in
+//            for test1 in task.result as! [PFObject] {
+//                println(test1["title"])
+//                let objects: [PFObject] = [test1,test1["test2"] as! PFObject];
+//                PFObject.deleteAll(objects);
+//                break;
+//                
+//            }
+//            
+//            return nil
+//        }
+    
         
     }
     

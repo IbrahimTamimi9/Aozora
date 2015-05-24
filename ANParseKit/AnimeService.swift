@@ -104,22 +104,9 @@ public enum AnimeSort: String {
     case Rating = "Highest Rated"
 }
 
-public enum FilterYear: String {
-    case TwoThousandTen = "2010s"
-    case TwoThousand = "2000s"
-    case NineteenNinety = "1990s"
-    case NineteenEighty = "1980s"
-    case NineteenSeventy = "1970s"
-    case Older = "Older"
-    
-    static func count() -> Int {
-        return 6
-    }
-}
-
 public class AnimeService {
 
-    public class func allAnime() -> BFTask {
+    public class func findAllAnime() -> BFTask {
         return findAnimeWithSkip(0)
     }
     
@@ -129,7 +116,11 @@ public class AnimeService {
         query.limit = limitSize
         query.skip = skip
         return query
-            .selectKeys(["endDate2"])
+//            .whereKey("myAnimeListID", equalTo: 11783)
+//            .includeKey("statistics")
+//            .whereKeyDoesNotExist("details")
+            .selectKeys(["startDate","endDate"])
+//            .whereKey("type", equalTo: "TV")
             .findObjectsInBackground()
             .continueWithBlock { (task: BFTask!) -> BFTask! in
             
@@ -147,32 +138,17 @@ public class AnimeService {
         }
     }
     
-    public class func findAnimeBetterHigherThanNine() -> BFTask {
-
-        let innerQuery = PFQuery(className: ParseKit.AnimeStatistics)
-        innerQuery.whereKey("membersScore", greaterThan: 9.0)
-        
-        return PFQuery(className: ParseKit.Anime)
-        .whereKey("statistics", matchesQuery: innerQuery)
-        .includeKey("statistics")
-        .findObjectsInBackground()
-        .continueWithBlock { (task: BFTask!) -> BFTask! in
-            
-            return task
-        }
-    }
-    
     public class func findAnimeForSeasonalChart(season: PFObject) -> BFTask {
         if let startDate = season["startDate"] as? NSDate,
         let endDate = season["endDate"] as? NSDate {
             
             let query = PFQuery(className: ParseKit.Anime)
-            query.whereKey("startDate2", greaterThanOrEqualTo: startDate)
-            query.whereKey("startDate2", lessThanOrEqualTo: endDate)
+            query.whereKey("startDate", greaterThanOrEqualTo: startDate)
+            query.whereKey("startDate", lessThanOrEqualTo: endDate)
             
             let query2 = PFQuery(className: ParseKit.Anime)
-            query2.whereKey("endDate2", greaterThanOrEqualTo: startDate)
-            query2.whereKey("endDate2", lessThanOrEqualTo: endDate)
+            query2.whereKey("endDate", greaterThanOrEqualTo: startDate)
+            query2.whereKey("endDate", lessThanOrEqualTo: endDate)
             
             return PFQuery
                 .orQueryWithSubqueries([query,query2])
@@ -181,23 +157,25 @@ public class AnimeService {
         return BFTask(result: [])
     }
     
-    public class func findAnime(sort: AnimeSort? = .AZ, years: [FilterYear]? = [], genres: [AnimeGenre]? = [], types: [AnimeType]? = [], classification: [AnimeClassification]? = [], status: [AnimeStatus]? = [] , includeClasses: [String]? = [] , limit: Int? = 1000) -> BFTask {
+    public class func findAnime(sort: AnimeSort? = .AZ, years: [Int]? = [], genres: [AnimeGenre]? = [], types: [AnimeType]? = [], classification: [AnimeClassification]? = [], status: [AnimeStatus]? = [] , includeClasses: [String]? = [] , limit: Int? = 1000) -> BFTask {
         let query = PFQuery(className: ParseKit.Anime)
         
         query.limit = limit!
         
         switch sort! {
             case .AZ: query.orderByAscending("title")
-            case .Popular: fallthrough
-            case .Rating: ()
+            case .Popular: query.orderByDescending("popularityRank")
+            case .Rating: query.orderByDescending("rank")
         }
         
-//        if let years = years where years.count != FilterYears.yearsCount() {
-//            let yearsQuery = PFQuery(className: ParseKit.Anime)
-//            for year in years {
-//                yearsQuery.
-//            }
-//        }
+        if let years = years where years.count != 0 {
+            
+            var includeYears: [Int] = []
+            for year in years {
+                includeYears.append(year)
+            }
+            query.whereKey("year", containedIn: includeYears)
+        }
         
         if let genres = genres where genres.count != AnimeGenre.count() && genres.count != 0 {
             var includeGenres: [String] = []
@@ -221,7 +199,9 @@ public class AnimeService {
             for aClassification in classification {
                 includeClassifications.append(aClassification.rawValue)
             }
-            query.whereKey("classification", containedIn: includeClassifications)
+            let innerQuery = PFQuery(className: ParseKit.AnimeDetail)
+            innerQuery.whereKey("classification", containedIn: includeClassifications)
+            query.whereKey("details", matchesQuery: innerQuery)
         }
         
         if let status = status where status.count != AnimeStatus.count() && status.count != 0  {
