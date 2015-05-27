@@ -118,8 +118,8 @@ public class AnimeService {
         return query
 //            .whereKey("myAnimeListID", equalTo: 11783)
 //            .includeKey("statistics")
-//            .whereKeyDoesNotExist("details")
-            .selectKeys(["startDate","endDate"])
+            .whereKeyDoesNotExist("anilistID")
+            .selectKeys(["myAnimeListID","title","type","episodes"])
 //            .whereKey("type", equalTo: "TV")
             .findObjectsInBackground()
             .continueWithBlock { (task: BFTask!) -> BFTask! in

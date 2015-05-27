@@ -21,6 +21,8 @@ struct AniList {
         case requestAccessToken()
         case browseAnime(year: Int?, season: Season?, type: Type?, status: Status?, genres: [String]?, excludedGenres: [String]?, sort: Sort, airingData: Bool, fullPage: Bool, page: Int?)
         case browseSeasonalChart(year: Int, season: Season, sort: Sort, airingData: Bool)
+        case getAnime(id: Int)
+        case searchAnime(query: String)
         
         var URLRequest: NSURLRequest {
             let (method: Alamofire.Method, path: String, parameters: [String: AnyObject]) = {
@@ -70,6 +72,13 @@ struct AniList {
                     params["full_page"] = "true"
                     
                     return (.GET,"browse/anime",params)
+                    
+                case .getAnime(let id):
+                    var params = ["access_token":accessToken]
+                    return (.GET,"anime/\(id)/page",params)
+                case .searchAnime(let query):
+                    var params = ["access_token":accessToken]
+                    return (.GET,"anime/search/\(query)",params)
                 }
             }()
             
