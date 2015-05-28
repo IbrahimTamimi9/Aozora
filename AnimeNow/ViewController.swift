@@ -14,7 +14,163 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        // TODO: Use anilist to calculate eta
         
+        
+    }
+    
+    // MARK: - TraktV2
+    
+    func linkTraktWithMAL() {
+        
+        AnimeService.findAllAnime().continueWithBlock { (task: BFTask!) -> AnyObject! in
+            
+//.includeKey("details")
+//.whereKeyDoesNotExist("traktID")
+//.selectKeys(["details","myAnimeListID","year","title","startDate"])
+//.whereKey("type", equalTo: "TV")
+//.whereKey("startDate", greaterThan: NSDate().dateByAddingTimeInterval(-10*60*60*24*365))
+            var sequence = BFTask(result: nil);
+            
+            for anime in task.result as! [PFObject] {
+                sequence = sequence.continueWithBlock {
+                (task: BFTask!) -> AnyObject! in
+                let title = (anime["title"] as! String)
+                let year = anime["year"] as! Int
+                return self.traktRequestWith(route: TraktV2.Router.searchShowForTitle(title: title, year: year))
+                
+                }.continueWithBlock{
+                    (task: BFTask!) -> AnyObject! in
+                    
+                    if let result = task.result as? NSArray where result.count > 0 {
+                        
+                        let title = (anime["title"] as! String)
+                        println("Results for: \(title), found \(result.count) results")
+                        let traktID = ((((result.firstObject as! NSDictionary)["show"] as! NSDictionary)["ids"] as! NSDictionary)["trakt"] as! Int)
+                        return self.traktRequestWith(route: TraktV2.Router.showSummaryForId(id: traktID))
+                        
+                    } else {
+                        //let title = (anime["title"] as! String)
+                        //println("Failed for title \(title)")
+                        NSThread.sleepForTimeInterval(0.2)
+                        return BFTask(result: nil)
+                    }
+                    
+                }.continueWithBlock{
+                    (task: BFTask!) -> AnyObject! in
+                    
+                    if let result = task.result {
+                        let date1 = (result["first_aired"] as! String).date
+                        let date2 = anime["startDate"] as! NSDate
+                        if NSCalendar.currentCalendar().isDate(date1, inSameDayAsDate: date2) {
+                            println("Matched!")
+                        }
+                        return nil;
+                    } else {
+                        return nil;
+                    }
+                }
+                
+            }
+            
+            return nil;
+            }.continueWithBlock {
+                (task: BFTask!) -> AnyObject! in
+                if (task.exception != nil) {
+                    println(task.exception)
+                }
+                return nil
+        }
+        
+    }
+    
+    func getShowIDsFromSlugs() {
+//        .whereKeyExists("traktSlug")
+//        .selectKeys(["traktSlug"])
+        AnimeService.findAllAnime().continueWithBlock { (task: BFTask!) -> AnyObject! in
+            
+            var sequence = BFTask(result: nil);
+            
+            for anime in task.result as! [PFObject] {
+                sequence = sequence.continueWithBlock {
+                    (task: BFTask!) -> AnyObject! in
+                    
+                    let slug = (anime["traktSlug"] as! String)
+                    return self.traktRequestWith(route: TraktV2.Router.showSummaryForSlug(slug: slug))
+                    
+                    }.continueWithBlock{
+                        (task: BFTask!) -> AnyObject! in
+                        
+                        if let result = task.result as? NSDictionary {
+                            let traktID = ((result["ids"] as! NSDictionary)["trakt"] as! Int)
+                            anime["traktID"] = traktID
+                            return anime.saveInBackground()
+                        } else {
+                            let slug = anime["traktSlug"]
+                            println("Failed for slug \(slug)")
+                            return BFTask(result: nil)
+                        }
+                        
+                }
+                
+            }
+            
+            return nil;
+        }
+    }
+    
+    func traktRequestWith(#route: TraktV2.Router) -> BFTask {
+        let completionSource = BFTaskCompletionSource()
+        Alamofire.request(route).validate().responseJSON { (req, res, JSON, error) -> Void in
+            if error == nil {
+                completionSource.setResult(JSON)
+            } else {
+                completionSource.setError(error)
+            }
+        }
+        return completionSource.task
+    }
+    
+    // MARK: - TraktV1
+    func getShowSlugs() {
+        AnimeService.findAllAnime().continueWithBlock { (task: BFTask!) -> AnyObject! in
+            
+            var sequence = BFTask(result: nil);
+            
+            for anime in task.result as! [PFObject] {
+                sequence = sequence.continueWithBlock {
+                    (task: BFTask!) -> AnyObject! in
+                    
+                    return self.showSummary(anime["tvdbID"] as! Int)
+                    
+                    }.continueWithBlock{
+                        (task: BFTask!) -> AnyObject! in
+                        
+                        let result = task.result as! NSDictionary
+                        
+                        let slug = (result["url"] as! String).stringByReplacingOccurrencesOfString("/shows/", withString: "")
+                        
+                        anime["traktSlug"] = slug
+                        NSThread.sleepForTimeInterval(0.1)
+                        return anime.saveInBackground()
+                }
+                
+            }
+            
+            return nil;
+        }
+    }
+    
+    func showSummary(id: Int) -> BFTask! {
+        let completionSource = BFTaskCompletionSource()
+        Alamofire.request(TraktV1.Router.showSummaryForID(tvdbID: id)).validate().responseJSON { (req, res, JSON, error) -> Void in
+            if error == nil {
+                completionSource.setResult(JSON)
+            } else {
+                completionSource.setError(error)
+            }
+        }
+        return completionSource.task
     }
     
     // MARK: - AnimeService
@@ -206,5 +362,16 @@ class ViewController: UIViewController {
 //        }
     }
 
+}
+
+extension String {
+    var date: NSDate {
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z"
+        formatter.timeZone = NSTimeZone(forSecondsFromGMT: 0)
+        formatter.calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierISO8601)!
+        formatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+        return formatter.dateFromString(self)!
+    }
 }
 

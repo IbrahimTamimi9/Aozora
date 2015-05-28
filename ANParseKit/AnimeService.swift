@@ -115,12 +115,14 @@ public class AnimeService {
         let query = PFQuery(className: ParseKit.Anime)
         query.limit = limitSize
         query.skip = skip
+        
         return query
 //            .whereKey("myAnimeListID", equalTo: 11783)
-//            .includeKey("statistics")
-            .whereKeyDoesNotExist("anilistID")
-            .selectKeys(["myAnimeListID","title","type","episodes"])
-//            .whereKey("type", equalTo: "TV")
+            .includeKey("details")
+            .whereKeyDoesNotExist("traktID")
+            .selectKeys(["details","myAnimeListID","year","title","startDate"])
+            .whereKey("type", equalTo: "TV")
+            .whereKey("startDate", greaterThan: NSDate().dateByAddingTimeInterval(-10*60*60*24*365))
             .findObjectsInBackground()
             .continueWithBlock { (task: BFTask!) -> BFTask! in
             

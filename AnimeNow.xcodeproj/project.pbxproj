@@ -51,6 +51,8 @@
 		DA6E13291B10FA9400B278B0 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E12EF1B10DCBC00B278B0 /* AudioToolbox.framework */; };
 		DA6E132A1B10FAA100B278B0 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E12EB1B10DCA100B278B0 /* Bolts.framework */; };
 		DA6E132B1B10FAA100B278B0 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E12EC1B10DCA100B278B0 /* Parse.framework */; };
+		DA6E83B21B1672A500970D27 /* TraktV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6E83B11B1672A500970D27 /* TraktV1.swift */; };
+		DA6E83B41B167F1E00970D27 /* TraktV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6E83B31B167F1E00970D27 /* TraktV2.swift */; };
 		DACCF35D1B110AA2006A13EB /* ANParseKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACCF35C1B110AA2006A13EB /* ANParseKit.swift */; };
 		DACCF35F1B111016006A13EB /* AnimeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACCF35E1B111016006A13EB /* AnimeService.swift */; };
 /* End PBXBuildFile section */
@@ -155,6 +157,8 @@
 		DA6E13101B10F2E500B278B0 /* MALScrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MALScrapper.swift; sourceTree = "<group>"; };
 		DA6E13121B10F56B00B278B0 /* SeasonalChartService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeasonalChartService.swift; sourceTree = "<group>"; };
 		DA6E131C1B10F9C800B278B0 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		DA6E83B11B1672A500970D27 /* TraktV1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TraktV1.swift; sourceTree = "<group>"; };
+		DA6E83B31B167F1E00970D27 /* TraktV2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TraktV2.swift; sourceTree = "<group>"; };
 		DACCF35C1B110AA2006A13EB /* ANParseKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ANParseKit.swift; sourceTree = "<group>"; };
 		DACCF35E1B111016006A13EB /* AnimeService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -244,6 +248,8 @@
 		DA27D1931AF1BA9D00CC854E /* AnimeNow */ = {
 			isa = PBXGroup;
 			children = (
+				DA6E83B11B1672A500970D27 /* TraktV1.swift */,
+				DA6E83B31B167F1E00970D27 /* TraktV2.swift */,
 				DA27D1B61AF1BFA300CC854E /* AniList.swift */,
 				DA27D1961AF1BA9D00CC854E /* AppDelegate.swift */,
 				DA27D1981AF1BA9D00CC854E /* ViewController.swift */,
@@ -624,6 +630,8 @@
 			files = (
 				DA27D1991AF1BA9D00CC854E /* ViewController.swift in Sources */,
 				DA27D1B71AF1BFA300CC854E /* AniList.swift in Sources */,
+				DA6E83B41B167F1E00970D27 /* TraktV2.swift in Sources */,
+				DA6E83B21B1672A500970D27 /* TraktV1.swift in Sources */,
 				DA27D1971AF1BA9D00CC854E /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
