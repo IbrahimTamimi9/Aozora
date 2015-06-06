@@ -10,7 +10,7 @@ import Foundation
 import Parse
 import Bolts
 
-public enum SeasonalChart: String {
+public enum SeasonalChartType: String {
     case Winter = "Winter"
     case Summer = "Summer"
     case Spring = "Spring"
@@ -97,7 +97,7 @@ public class SeasonalChartService {
     // MARK: - Charts generation
     
     public class func generateAllSeasonalCharts() {
-        var seasons: [SeasonalChart] = [.Winter, .Summer, .Spring, .Fall]
+        var seasons: [SeasonalChartType] = [.Winter, .Summer, .Spring, .Fall]
         
         for var year = 1990; year < 2016; year++ {
             for seasonEnum in seasons {
@@ -111,7 +111,7 @@ public class SeasonalChartService {
         }
     }
     
-    class func startDateForSeason(season: SeasonalChart, year: Int) -> NSDate {
+    class func startDateForSeason(season: SeasonalChartType, year: Int) -> NSDate {
         let components = NSDateComponents()
         components.day = 1
         switch (season) {
@@ -128,7 +128,7 @@ public class SeasonalChartService {
         return calendar.dateFromComponents(components)!
     }
     
-    class func endDateForSeason(season: SeasonalChart, year: Int) -> NSDate {
+    class func endDateForSeason(season: SeasonalChartType, year: Int) -> NSDate {
         let components = NSDateComponents()
         
         switch (season) {

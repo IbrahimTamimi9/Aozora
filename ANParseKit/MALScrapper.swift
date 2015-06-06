@@ -9,7 +9,7 @@
 import Foundation
 
 public class MALScrapper {
-    public class func getInfo(seasonalChart: SeasonalChart) {
+    public class func getInfo(seasonalChart: SeasonalChartType) {
         println(seasonalChart.rawValue)
     }
 }

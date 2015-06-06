@@ -10,23 +10,51 @@ import UIKit
 import ANParseKit
 import SDWebImage
 
+enum OrderBy: String {
+    case Rating = "Rating"
+    case Popularity = "Popularity"
+    case Title = "Title"
+    case NextAiringEpisode = "Next Airing Episode"
+    
+    static func allItems() -> [String] {
+        return [
+            OrderBy.Rating.rawValue,
+            OrderBy.Popularity.rawValue,
+            OrderBy.Title.rawValue,
+            OrderBy.NextAiringEpisode.rawValue
+        ]
+    }
+}
+
+enum ViewType: String {
+    case Chart = "Chart"
+    case List = "List"
+    
+    static func allItems() -> [String] {
+        return [
+            ViewType.Chart.rawValue,
+            ViewType.List.rawValue
+        ]
+    }
+}
+
 class ChartViewController: UIViewController {
     
     let FirstHeaderCellHeight: CGFloat = 88.0
     let HeaderCellHeight: CGFloat = 44.0
     
     var isFirstLoad = true
-    var dataSource: [PFObject] = [] {
+    var currentOrder: OrderBy = .Rating
+    var currentViewType: ViewType = .Chart
+    
+    var dataSource: [Anime] = [] {
         didSet {
             filteredDataSource = dataSource
-            self.collectionView.collectionViewLayout.invalidateLayout()
-            self.collectionView.reloadData()
         }
     }
     
-    var filteredDataSource: [PFObject] = [] {
+    var filteredDataSource: [Anime] = [] {
         didSet {
-            
             self.collectionView.collectionViewLayout.invalidateLayout()
             self.collectionView.reloadData()
         }
@@ -35,6 +63,12 @@ class ChartViewController: UIViewController {
     // TODO: create loading view from code, generalize to be used on UICollectionViews
     @IBOutlet weak var loadingView: LoaderView!
     @IBOutlet weak var collectionView: UICollectionView!
+    
+    @IBOutlet weak var orderTitleLabel: UILabel!
+    @IBOutlet weak var orderButton: UIButton!
+    
+    @IBOutlet weak var viewTitleLabel: UILabel!
+    @IBOutlet weak var viewButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,26 +81,17 @@ class ChartViewController: UIViewController {
         
         loadingView.startAnimating()
         
-        let currentChartQuery = PFQuery(className: ParseKit.SeasonalChart)
+        let currentChartQuery = SeasonalChart.query()!
         currentChartQuery.limit = 1
         currentChartQuery.orderByDescending("startDate")
         currentChartQuery.includeKey("tvAnime")
         currentChartQuery.findObjectsInBackground().continueWithBlock {
             (task: BFTask!) -> AnyObject! in
-            if let result = task.result.copy() as? [PFObject], let season = result.last {
+            if let result = task.result as? [SeasonalChart], let season = result.last {
 
-                var tvAnimeArray = season["tvAnime"] as! NSArray
-                var tvAnimeList = tvAnimeArray.mutableCopy() as! [PFObject];
-                println("0")
-                tvAnimeList.sort({
-                    item1, item2 in
-                    let score1 = item1["membersScore"] as! Double
-                    let score2 = item2["membersScore"] as! Double
-                    return score1 > score2
-                })
-                println("1")
+                var tvAnimeList = season.tvAnime
                 self.dataSource = tvAnimeList
-                println("2")
+                self.order(by: self.currentOrder)
                 self.loadingView.stopAnimating()
             }
             
@@ -74,18 +99,54 @@ class ChartViewController: UIViewController {
         }
     }
     
-    @IBAction func pressedChangeOrder(sender: AnyObject) {
+    // MARK: - Utility Functions
+    
+    func order(#by: OrderBy) {
+        
+        orderTitleLabel.text = by.rawValue
+    
+        switch by {
+        case .Rating:
+            dataSource.sort({ $0.membersScore > $1.membersScore})
+        case .Popularity:
+            dataSource.sort({ $0.membersCount > $1.membersCount})
+        case .Title:
+            dataSource.sort({ $0.title < $1.title})
+        case .NextAiringEpisode:
+            // TODO: implement
+            dataSource.sort({ $0.membersScore > $1.membersScore})
+        }
+        
+        
+    }
+    
+    func viewType(viewType: ViewType) {
+        
+    }
+    
+    func showDropDownController(sender: UIView, dataSource: [String]) {
+        let frameRelativeToViewController = sender.convertRect(sender.bounds, toView: view)
+        
         let commonStoryboard = UIStoryboard(name: "Common", bundle: nil)
-        let controller = commonStoryboard.instantiateViewControllerWithIdentifier("ActionList") as! ActionListViewController
-        controller.setDataSource(["Rating","Popularity","Title","Next Airing Episode"], title: "Order")
+        let controller = commonStoryboard.instantiateViewControllerWithIdentifier("DropDownList") as! DropDownListViewController
+        controller.delegate = self
+        controller.setDataSource(sender, dataSource: dataSource, yPosition: CGRectGetMaxY(frameRelativeToViewController))
         controller.modalTransitionStyle = .CrossDissolve
         controller.modalPresentationStyle = .OverCurrentContext
         self.tabBarController?.presentViewController(controller, animated: true, completion: nil)
     }
-
-    @IBAction func pressedChangeView(sender: AnyObject) {
-        
+    
+    // MARK: - IBActions
+    
+    @IBAction func pressedChangeOrder(sender: UIButton) {
+        showDropDownController(sender, dataSource:OrderBy.allItems())
     }
+
+    @IBAction func pressedChangeView(sender: UIButton) {
+        showDropDownController(sender, dataSource:ViewType.allItems())
+    }
+    
+    
 }
 
 extension ChartViewController: UISearchBarDelegate {
@@ -97,8 +158,8 @@ extension ChartViewController: UISearchBarDelegate {
             return
         }
         
-        func filterText(anime: PFObject) -> Bool {
-            let title = anime["title"] as! String
+        func filterText(anime: Anime) -> Bool {
+            let title = anime.title
             return (title.rangeOfString(searchBar.text) != nil)
         }
         
@@ -118,10 +179,10 @@ extension ChartViewController: UICollectionViewDataSource {
         println("5.0")
         let anime = filteredDataSource[indexPath.row]
 
-        let imageUrl = NSURL(string: (anime["imageUrl"] as! String) )
+        let imageUrl = NSURL(string: anime.imageUrl)
         cell.posterImageView.sd_setImageWithURL(imageUrl)
-        cell.titleLabel.text = anime["title"] as? String
-        cell.genresLabel.text = ", ".join(anime["genres"] as! [String])
+        cell.titleLabel.text = anime.title
+        cell.genresLabel.text = ", ".join(anime.genres)
         
         cell.layoutIfNeeded()
         
@@ -182,6 +243,16 @@ extension ChartViewController: UICollectionViewDataSource {
 
 }
 
-extension ChartViewController: UICollectionViewDelegate {
-  
+extension ChartViewController: DropDownListDelegate {
+    func selectedAction(trigger: UIView, action: String) {
+        if trigger.isEqual(orderButton) {
+            if let orderEnum = OrderBy(rawValue: action) {
+                order(by: orderEnum)
+            }
+        } else if trigger.isEqual(viewButton) {
+            if let viewEnum = ViewType(rawValue: action) {
+                viewType(viewEnum)
+            }
+        }
+    }
 }

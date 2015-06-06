@@ -9,6 +9,7 @@
 import UIKit
 import Parse
 import Bolts
+import ANParseKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,8 +21,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Power your app with Local Datastore. For more info, go to
         // https://parse.com/docs/ios_guide#localdatastore/iOS
+        
+        // Register subclasses
+        Anime.registerSubclass()
+        SeasonalChart.registerSubclass()
+        
         // TODO: Check how to work with this
-        //Parse.enableLocalDatastore()
+        Parse.enableLocalDatastore()
         
         // Initialize Parse.
         Parse.setApplicationId("X95vv1iNbXWqoEClbK5XzGvjuydWKQk2Ti2n8OPn",
