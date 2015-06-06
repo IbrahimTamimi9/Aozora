@@ -26,11 +26,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Initialize Parse.
         Parse.setApplicationId("X95vv1iNbXWqoEClbK5XzGvjuydWKQk2Ti2n8OPn",
             clientKey: "vvsbzUBBgnPKCoYQlltREy5S0gSIgMfBp34aDrkc")
+
+        // AnimeTrakr Keys temp
+//        Parse.setApplicationId("nLCbHmeklHp6gBly9KHZOZNSMBTyuvknAubwHGAQ",
+//            clientKey: "yVixWhPhTM9yGmjtfm1isbC7Ekxq29eNLTzu6KzM")
         
         // Track statistics around application opens.
         // TODO: Uncomment this
         //PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
         
+        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
+        UINavigationBar.appearance().barTintColor = UIColor.midnightBlue()
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
+        
+        UITabBar.appearance().barTintColor = UIColor.midnightBlue()
+        UITabBar.appearance().tintColor = UIColor.whiteColor()
+        
+        UITextField.appearance().textColor = UIColor.whiteColor()
+
         return true
     }
 

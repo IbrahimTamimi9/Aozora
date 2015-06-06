@@ -10,11 +10,18 @@
 		6923F76C724843F5AED124BD /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D27C7A8ED4F7C96DF08F5850 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		DA27D1971AF1BA9D00CC854E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA27D1961AF1BA9D00CC854E /* AppDelegate.swift */; };
 		DA27D1991AF1BA9D00CC854E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA27D1981AF1BA9D00CC854E /* ViewController.swift */; };
-		DA27D19C1AF1BA9D00CC854E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA27D19A1AF1BA9D00CC854E /* Main.storyboard */; };
+		DA27D19C1AF1BA9D00CC854E /* Base.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA27D19A1AF1BA9D00CC854E /* Base.storyboard */; };
 		DA27D19E1AF1BA9D00CC854E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA27D19D1AF1BA9D00CC854E /* Images.xcassets */; };
 		DA27D1A11AF1BA9D00CC854E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA27D19F1AF1BA9D00CC854E /* LaunchScreen.xib */; };
 		DA27D1AD1AF1BA9D00CC854E /* AnimeNowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA27D1AC1AF1BA9D00CC854E /* AnimeNowTests.swift */; };
 		DA27D1B71AF1BFA300CC854E /* AniList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA27D1B61AF1BFA300CC854E /* AniList.swift */; };
+		DA2853BD1B22B7130070B675 /* LoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2853BC1B22B7130070B675 /* LoaderView.swift */; };
+		DA2853BF1B22C1710070B675 /* HighlightButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2853BE1B22C1710070B675 /* HighlightButton.swift */; };
+		DA2853C21B22C5D30070B675 /* UIColor+AniNow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2853C11B22C5D30070B675 /* UIColor+AniNow.swift */; };
+		DA38A9891B223AF1002FCBB4 /* ActionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA38A9881B223AF1002FCBB4 /* ActionListViewController.swift */; };
+		DA38A98C1B223B39002FCBB4 /* Common.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA38A98B1B223B39002FCBB4 /* Common.storyboard */; };
+		DA38A98F1B223F1F002FCBB4 /* BasicTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA38A98E1B223F1F002FCBB4 /* BasicTableCell.swift */; };
+		DA38A9911B224960002FCBB4 /* BasicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA38A9901B224960002FCBB4 /* BasicView.swift */; };
 		DA6E12B31B10D94200B278B0 /* ANParseKit.h in Headers */ = {isa = PBXBuildFile; fileRef = DA6E12B21B10D94200B278B0 /* ANParseKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA6E12B91B10D94200B278B0 /* ANParseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E12AE1B10D94200B278B0 /* ANParseKit.framework */; };
 		DA6E12C21B10D94200B278B0 /* ANParseKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6E12C11B10D94200B278B0 /* ANParseKitTests.swift */; };
@@ -55,6 +62,8 @@
 		DA6E83B41B167F1E00970D27 /* TraktV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6E83B31B167F1E00970D27 /* TraktV2.swift */; };
 		DACCF35D1B110AA2006A13EB /* ANParseKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACCF35C1B110AA2006A13EB /* ANParseKit.swift */; };
 		DACCF35F1B111016006A13EB /* AnimeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACCF35E1B111016006A13EB /* AnimeService.swift */; };
+		DAE7A7191B2105FD00788614 /* AnimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE7A7181B2105FD00788614 /* AnimeCell.swift */; };
+		DAFBB0951B20EFF700495ED9 /* ChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFBB0941B20EFF700495ED9 /* ChartViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -110,13 +119,20 @@
 		DA27D1951AF1BA9D00CC854E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA27D1961AF1BA9D00CC854E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DA27D1981AF1BA9D00CC854E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		DA27D19B1AF1BA9D00CC854E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		DA27D19B1AF1BA9D00CC854E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Base.storyboard; sourceTree = "<group>"; };
 		DA27D19D1AF1BA9D00CC854E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		DA27D1A01AF1BA9D00CC854E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		DA27D1A61AF1BA9D00CC854E /* AnimeNowTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AnimeNowTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA27D1AB1AF1BA9D00CC854E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA27D1AC1AF1BA9D00CC854E /* AnimeNowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimeNowTests.swift; sourceTree = "<group>"; };
 		DA27D1B61AF1BFA300CC854E /* AniList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AniList.swift; sourceTree = "<group>"; };
+		DA2853BC1B22B7130070B675 /* LoaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoaderView.swift; sourceTree = "<group>"; };
+		DA2853BE1B22C1710070B675 /* HighlightButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HighlightButton.swift; sourceTree = "<group>"; };
+		DA2853C11B22C5D30070B675 /* UIColor+AniNow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+AniNow.swift"; sourceTree = "<group>"; };
+		DA38A9881B223AF1002FCBB4 /* ActionListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionListViewController.swift; sourceTree = "<group>"; };
+		DA38A98B1B223B39002FCBB4 /* Common.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Common.storyboard; sourceTree = "<group>"; };
+		DA38A98E1B223F1F002FCBB4 /* BasicTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicTableCell.swift; sourceTree = "<group>"; };
+		DA38A9901B224960002FCBB4 /* BasicView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicView.swift; sourceTree = "<group>"; };
 		DA6E12AE1B10D94200B278B0 /* ANParseKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ANParseKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA6E12B11B10D94200B278B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA6E12B21B10D94200B278B0 /* ANParseKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ANParseKit.h; sourceTree = "<group>"; };
@@ -161,6 +177,8 @@
 		DA6E83B31B167F1E00970D27 /* TraktV2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TraktV2.swift; sourceTree = "<group>"; };
 		DACCF35C1B110AA2006A13EB /* ANParseKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ANParseKit.swift; sourceTree = "<group>"; };
 		DACCF35E1B111016006A13EB /* AnimeService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeService.swift; sourceTree = "<group>"; };
+		DAE7A7181B2105FD00788614 /* AnimeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeCell.swift; sourceTree = "<group>"; };
+		DAFBB0941B20EFF700495ED9 /* ChartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -248,12 +266,11 @@
 		DA27D1931AF1BA9D00CC854E /* AnimeNow */ = {
 			isa = PBXGroup;
 			children = (
-				DA6E83B11B1672A500970D27 /* TraktV1.swift */,
-				DA6E83B31B167F1E00970D27 /* TraktV2.swift */,
-				DA27D1B61AF1BFA300CC854E /* AniList.swift */,
+				DAFBB0931B20EFC600495ED9 /* API */,
+				DA38A9861B223AAC002FCBB4 /* Common */,
+				DAFBB0911B20EFAB00495ED9 /* Chart */,
 				DA27D1961AF1BA9D00CC854E /* AppDelegate.swift */,
 				DA27D1981AF1BA9D00CC854E /* ViewController.swift */,
-				DA27D19A1AF1BA9D00CC854E /* Main.storyboard */,
 				DA27D19D1AF1BA9D00CC854E /* Images.xcassets */,
 				DA27D19F1AF1BA9D00CC854E /* LaunchScreen.xib */,
 				DA27D1941AF1BA9D00CC854E /* Supporting Files */,
@@ -284,6 +301,52 @@
 				DA27D1AB1AF1BA9D00CC854E /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DA2853C01B22C5B40070B675 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				DA2853C11B22C5D30070B675 /* UIColor+AniNow.swift */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
+		DA38A9861B223AAC002FCBB4 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				DA2853C01B22C5B40070B675 /* Categories */,
+				DA38A98D1B223EFC002FCBB4 /* Views */,
+				DA38A98A1B223B11002FCBB4 /* UI */,
+				DA38A9871B223AC6002FCBB4 /* Controllers */,
+			);
+			name = Common;
+			sourceTree = "<group>";
+		};
+		DA38A9871B223AC6002FCBB4 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				DA38A9881B223AF1002FCBB4 /* ActionListViewController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		DA38A98A1B223B11002FCBB4 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				DA38A98B1B223B39002FCBB4 /* Common.storyboard */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		DA38A98D1B223EFC002FCBB4 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DA38A98E1B223F1F002FCBB4 /* BasicTableCell.swift */,
+				DA38A9901B224960002FCBB4 /* BasicView.swift */,
+				DA2853BC1B22B7130070B675 /* LoaderView.swift */,
+				DA2853BE1B22C1710070B675 /* HighlightButton.swift */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 		DA6E12AF1B10D94200B278B0 /* ANParseKit */ = {
@@ -369,6 +432,50 @@
 				DA6E130B1B10DE0F00B278B0 /* TFHppleElement+MALScrapping.m */,
 			);
 			name = Categories;
+			sourceTree = "<group>";
+		};
+		DAE7A7131B2105BD00788614 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				DA27D19A1AF1BA9D00CC854E /* Base.storyboard */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		DAE7A7141B2105C400788614 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				DAFBB0941B20EFF700495ED9 /* ChartViewController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		DAE7A7151B2105D000788614 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DAE7A7181B2105FD00788614 /* AnimeCell.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		DAFBB0911B20EFAB00495ED9 /* Chart */ = {
+			isa = PBXGroup;
+			children = (
+				DAE7A7151B2105D000788614 /* Views */,
+				DAE7A7131B2105BD00788614 /* UI */,
+				DAE7A7141B2105C400788614 /* Controllers */,
+			);
+			name = Chart;
+			sourceTree = "<group>";
+		};
+		DAFBB0931B20EFC600495ED9 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				DA6E83B11B1672A500970D27 /* TraktV1.swift */,
+				DA6E83B31B167F1E00970D27 /* TraktV2.swift */,
+				DA27D1B61AF1BFA300CC854E /* AniList.swift */,
+			);
+			name = API;
 			sourceTree = "<group>";
 		};
 		F4F69FB5D8335951A772F9AC /* Frameworks */ = {
@@ -545,7 +652,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA27D19C1AF1BA9D00CC854E /* Main.storyboard in Resources */,
+				DA27D19C1AF1BA9D00CC854E /* Base.storyboard in Resources */,
+				DA38A98C1B223B39002FCBB4 /* Common.storyboard in Resources */,
 				DA27D1A11AF1BA9D00CC854E /* LaunchScreen.xib in Resources */,
 				DA27D19E1AF1BA9D00CC854E /* Images.xcassets in Resources */,
 			);
@@ -628,11 +736,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA38A98F1B223F1F002FCBB4 /* BasicTableCell.swift in Sources */,
+				DA2853BD1B22B7130070B675 /* LoaderView.swift in Sources */,
+				DAE7A7191B2105FD00788614 /* AnimeCell.swift in Sources */,
 				DA27D1991AF1BA9D00CC854E /* ViewController.swift in Sources */,
+				DA2853BF1B22C1710070B675 /* HighlightButton.swift in Sources */,
+				DA38A9891B223AF1002FCBB4 /* ActionListViewController.swift in Sources */,
+				DA2853C21B22C5D30070B675 /* UIColor+AniNow.swift in Sources */,
 				DA27D1B71AF1BFA300CC854E /* AniList.swift in Sources */,
 				DA6E83B41B167F1E00970D27 /* TraktV2.swift in Sources */,
 				DA6E83B21B1672A500970D27 /* TraktV1.swift in Sources */,
+				DA38A9911B224960002FCBB4 /* BasicView.swift in Sources */,
 				DA27D1971AF1BA9D00CC854E /* AppDelegate.swift in Sources */,
+				DAFBB0951B20EFF700495ED9 /* ChartViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -696,12 +812,12 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		DA27D19A1AF1BA9D00CC854E /* Main.storyboard */ = {
+		DA27D19A1AF1BA9D00CC854E /* Base.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				DA27D19B1AF1BA9D00CC854E /* Base */,
 			);
-			name = Main.storyboard;
+			name = Base.storyboard;
 			sourceTree = "<group>";
 		};
 		DA27D19F1AF1BA9D00CC854E /* LaunchScreen.xib */ = {

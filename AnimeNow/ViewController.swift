@@ -16,7 +16,6 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // TODO: Use anilist to calculate eta
         
-        
     }
     
     // MARK: - TraktV2
@@ -131,7 +130,89 @@ class ViewController: UIViewController {
         return completionSource.task
     }
     
+    // MARK: - TraktV1 AnimeTrakr
+    func getShowSlugsForAnimeTrakr() {
+        
+        findAllAnime().continueWithBlock {
+            (task: BFTask!) -> AnyObject! in
+            
+            var sequence = BFTask(result: nil);
+            
+            for identifier in task.result as! [PFObject] {
+                sequence = sequence.continueWithBlock {
+                    (task: BFTask!) -> AnyObject! in
+                    let thetvdbID = identifier["theTvdbID"] as! String
+                    return self.showSummary(thetvdbID.toInt()!)
+                    
+                    }.continueWithBlock{
+                        (task: BFTask!) -> AnyObject! in
+                        
+                        if let result = task.result as? NSDictionary {
+                            
+                            let slug = (result["url"] as! String).stringByReplacingOccurrencesOfString("/shows/", withString: "")
+                            
+                            identifier["traktSlug"] = slug
+                            println("Saved: \(slug)")
+                            return identifier.saveInBackground()
+                        }else {
+                            let identifier = identifier["theTvdbID"] as! String
+                            println("Failed for: \(identifier)")
+                            return BFTask(result: nil);
+                        }
+                        
+                }
+                
+            }
+            
+            return nil;
+            
+            }.continueWithBlock {
+                (task: BFTask!) -> AnyObject! in
+                if (task.exception != nil) {
+                    println(task.exception)
+                }
+                if task.error != nil {
+                    println(task.error)
+                }
+                return nil
+        }
+        
+        
+        
+    }
+    
+    func findAnimeWithSkip(skip: Int) -> BFTask {
+        let limitSize = 1000
+        let query = PFQuery(className: "ServiceIdentifier")
+        query.limit = limitSize
+        query.skip = skip
+        
+        return query
+            .whereKeyDoesNotExist("traktSlug")
+            .selectKeys(["theTvdbID"])
+            .findObjectsInBackground()
+            .continueWithBlock { (task: BFTask!) -> BFTask! in
+                
+                let result = task.result as! [PFObject]
+                
+                if result.count == limitSize {
+                    return self.findAnimeWithSkip(skip + limitSize)
+                        .continueWithBlock({ (previousTask: BFTask!) -> AnyObject! in
+                            let previousResults = previousTask.result as! [PFObject]
+                            return BFTask(result: previousResults+result)
+                        })
+                } else {
+                    return task
+                }
+        }
+    }
+    
+    func findAllAnime() -> BFTask {
+        return findAnimeWithSkip(0)
+    }
+    
     // MARK: - TraktV1
+    
     func getShowSlugs() {
         AnimeService.findAllAnime().continueWithBlock { (task: BFTask!) -> AnyObject! in
             
