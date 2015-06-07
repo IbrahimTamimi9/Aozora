@@ -43,17 +43,17 @@ class ChartViewController: UIViewController {
     let FirstHeaderCellHeight: CGFloat = 88.0
     let HeaderCellHeight: CGFloat = 44.0
     
-    var isFirstLoad = true
+    var showTableView = true
     var currentOrder: OrderBy = .Rating
     var currentViewType: ViewType = .Chart
     
-    var dataSource: [Anime] = [] {
+    var dataSource: [[Anime]] = [] {
         didSet {
             filteredDataSource = dataSource
         }
     }
     
-    var filteredDataSource: [Anime] = [] {
+    var filteredDataSource: [[Anime]] = [] {
         didSet {
             self.collectionView.collectionViewLayout.invalidateLayout()
             self.collectionView.reloadData()
@@ -76,52 +76,86 @@ class ChartViewController: UIViewController {
         navigationController?.hidesBarsOnSwipe = true
         navigationController?.hidesBarsOnTap = false
         
-        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
-        layout.itemSize = CGSize(width: view.bounds.size.width, height: 132)
+        setViewType(.Chart)
         
+        collectionView.alpha = 0.0
         loadingView.startAnimating()
         
         let currentChartQuery = SeasonalChart.query()!
         currentChartQuery.limit = 1
         currentChartQuery.orderByDescending("startDate")
         currentChartQuery.includeKey("tvAnime")
+        currentChartQuery.includeKey("leftOvers")
+        currentChartQuery.includeKey("movieAnime")
+        currentChartQuery.includeKey("ovaAnime")
+        currentChartQuery.includeKey("onaAnime")
+        currentChartQuery.includeKey("specialAnime")
+//        currentChartQuery.fromLocalDatastore()
         currentChartQuery.findObjectsInBackground().continueWithBlock {
             (task: BFTask!) -> AnyObject! in
             if let result = task.result as? [SeasonalChart], let season = result.last {
 
-                var tvAnimeList = season.tvAnime
-                self.dataSource = tvAnimeList
+                self.dataSource = [season.tvAnime, season.movieAnime, season.ovaAnime, season.onaAnime, season.specialAnime]
                 self.order(by: self.currentOrder)
                 self.loadingView.stopAnimating()
+                self.animateCollectionViewFadeIn()
+                
             }
             
             return nil;
         }
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        animateCollectionViewFadeIn()
+    }
+    
+    // MARK: - UI Functions
+    
+    func animateCollectionViewFadeIn() {
+        collectionView.alpha = 0.0
+        collectionView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.7, 0.7)
+        
+        UIView.animateWithDuration(0.8, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 1.0, options:UIViewAnimationOptions.AllowUserInteraction|UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+            self.collectionView.alpha = 1.0
+            self.collectionView.transform = CGAffineTransformIdentity
+            }, completion: nil)
+    }
+    
     // MARK: - Utility Functions
     
     func order(#by: OrderBy) {
         
-        orderTitleLabel.text = by.rawValue
+        currentOrder = by
+        orderTitleLabel.text = currentOrder.rawValue
     
-        switch by {
-        case .Rating:
-            dataSource.sort({ $0.membersScore > $1.membersScore})
-        case .Popularity:
-            dataSource.sort({ $0.membersCount > $1.membersCount})
-        case .Title:
-            dataSource.sort({ $0.title < $1.title})
-        case .NextAiringEpisode:
-            // TODO: implement
-            dataSource.sort({ $0.membersScore > $1.membersScore})
+        filteredDataSource = filteredDataSource.map { (var animeArray) -> [Anime] in
+            switch self.currentOrder {
+            case .Rating:
+                animeArray.sort({ $0.membersScore > $1.membersScore})
+            case .Popularity:
+                animeArray.sort({ $0.membersCount > $1.membersCount})
+            case .Title:
+                animeArray.sort({ $0.title < $1.title})
+            case .NextAiringEpisode:
+                // TODO: implement
+                animeArray.sort({ $0.membersScore > $1.membersScore})
+            }
+            return animeArray
         }
-        
-        
     }
     
-    func viewType(viewType: ViewType) {
+    func setViewType(viewType: ViewType) {
         
+        currentViewType = viewType
+        viewTitleLabel.text = currentViewType.rawValue
+        let height: CGFloat = (currentViewType == .Chart) ? 132 : 52
+        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        layout.itemSize = CGSize(width: view.bounds.size.width, height: height)
+        
+        collectionView.collectionViewLayout.invalidateLayout()
+        collectionView.reloadData()
     }
     
     func showDropDownController(sender: UIView, dataSource: [String]) {
@@ -158,68 +192,39 @@ extension ChartViewController: UISearchBarDelegate {
             return
         }
         
-        func filterText(anime: Anime) -> Bool {
-            let title = anime.title
-            return (title.rangeOfString(searchBar.text) != nil)
+        filteredDataSource = dataSource.map { (var animeTypeArray) -> [Anime] in
+            func filterText(anime: Anime) -> Bool {
+                let title = anime.title
+                return (title.rangeOfString(searchBar.text) != nil)
+            }
+            return animeTypeArray.filter(filterText)
         }
         
-        filteredDataSource = dataSource.filter(filterText)
     }
 }
 
 extension ChartViewController: UICollectionViewDataSource {
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        println("4")
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return filteredDataSource.count
+    }
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return filteredDataSource[section].count
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("animeCell", forIndexPath: indexPath) as! AnimeCell        
-        println("5.0")
-        let anime = filteredDataSource[indexPath.row]
+        let reuseIdentifier = (currentViewType == .Chart) ? "AnimeCell" : "AnimeListCell";
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! AnimeCell
+
+        let anime = filteredDataSource[indexPath.section][indexPath.row]
 
         let imageUrl = NSURL(string: anime.imageUrl)
         cell.posterImageView.sd_setImageWithURL(imageUrl)
         cell.titleLabel.text = anime.title
-        cell.genresLabel.text = ", ".join(anime.genres)
+        cell.genresLabel?.text = ", ".join(anime.genres)
         
         cell.layoutIfNeeded()
-        
-        if isFirstLoad {
-            cell.alpha = 0.0
-            if indexPath.row == 3 {
-                isFirstLoad = false
-                var dispatchTime: dispatch_time_t = dispatch_time(DISPATCH_TIME_NOW, Int64(0.1 * Double(NSEC_PER_SEC)))
-                dispatch_after(dispatchTime, dispatch_get_main_queue(), {
-                    // your function here
-                    self.animate()
-                })
-            }
-        }
-        println("5.1")
         return cell
-    }
-    
-    func animate() {
-        
-        var visibleCells = collectionView.indexPathsForVisibleItems()
-        
-        for (index, element) in enumerate(visibleCells) {
-            var indexPath = element as! NSIndexPath
-            var cell = collectionView.cellForItemAtIndexPath(indexPath) as! AnimeCell
-            var frame = cell.frame
-            var newFrame = cell.frame
-            newFrame.origin.y += CGFloat(indexPath.row+1)*20
-            cell.frame = newFrame
-            cell.alpha = 0.0
-            UIView.animateWithDuration(0.40, delay: Double(indexPath.row)*0.05, options: .CurveEaseOut, animations: { () -> Void in
-                cell.frame = frame
-                cell.alpha = 1.0
-                }, completion: nil)
-        }
-        
-        
     }
     
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
@@ -228,7 +233,20 @@ extension ChartViewController: UICollectionViewDataSource {
         
         if kind == UICollectionElementKindSectionHeader {
             
-            var headerView = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView", forIndexPath: indexPath) as! UICollectionReusableView
+            var headerView = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView", forIndexPath: indexPath) as! BasicCollectionReusableView
+            
+            var title = ""
+            switch indexPath.section {
+                case 0: title = "TV"
+                case 1: title = "Movie"
+                case 2: title = "OVA"
+                case 3: title = "ONA"
+                case 4: title = "Special"
+                default: break
+            }
+            
+            headerView.titleLabel.text = title
+            
             reusableView = headerView;
         }
         
@@ -251,7 +269,7 @@ extension ChartViewController: DropDownListDelegate {
             }
         } else if trigger.isEqual(viewButton) {
             if let viewEnum = ViewType(rawValue: action) {
-                viewType(viewEnum)
+                setViewType(viewEnum)
             }
         }
     }

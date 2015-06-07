@@ -45,8 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().barTintColor = UIColor.midnightBlue()
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
         
-        UITabBar.appearance().barTintColor = UIColor.midnightBlue()
-        UITabBar.appearance().tintColor = UIColor.whiteColor()
+        UITabBar.appearance().tintColor = UIColor.peterRiver()
         
         UITextField.appearance().textColor = UIColor.whiteColor()
 

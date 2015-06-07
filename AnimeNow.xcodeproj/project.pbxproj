@@ -62,6 +62,7 @@
 		DA6E83B41B167F1E00970D27 /* TraktV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6E83B31B167F1E00970D27 /* TraktV2.swift */; };
 		DA76A1971B235BF4006CB489 /* DropDownListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA76A1961B235BF4006CB489 /* DropDownListViewController.swift */; };
 		DA76A19B1B238498006CB489 /* Classes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA76A1991B2375E1006CB489 /* Classes.swift */; };
+		DA76A19D1B23AADF006CB489 /* BasicCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA76A19C1B23AADF006CB489 /* BasicCollectionReusableView.swift */; };
 		DACCF35D1B110AA2006A13EB /* ANParseKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACCF35C1B110AA2006A13EB /* ANParseKit.swift */; };
 		DACCF35F1B111016006A13EB /* AnimeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACCF35E1B111016006A13EB /* AnimeService.swift */; };
 		DAE7A7191B2105FD00788614 /* AnimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE7A7181B2105FD00788614 /* AnimeCell.swift */; };
@@ -179,6 +180,7 @@
 		DA6E83B31B167F1E00970D27 /* TraktV2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TraktV2.swift; sourceTree = "<group>"; };
 		DA76A1961B235BF4006CB489 /* DropDownListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropDownListViewController.swift; sourceTree = "<group>"; };
 		DA76A1991B2375E1006CB489 /* Classes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Classes.swift; sourceTree = "<group>"; };
+		DA76A19C1B23AADF006CB489 /* BasicCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicCollectionReusableView.swift; sourceTree = "<group>"; };
 		DACCF35C1B110AA2006A13EB /* ANParseKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ANParseKit.swift; sourceTree = "<group>"; };
 		DACCF35E1B111016006A13EB /* AnimeService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeService.swift; sourceTree = "<group>"; };
 		DAE7A7181B2105FD00788614 /* AnimeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeCell.swift; sourceTree = "<group>"; };
@@ -350,6 +352,7 @@
 				DA38A9901B224960002FCBB4 /* BasicView.swift */,
 				DA2853BC1B22B7130070B675 /* LoaderView.swift */,
 				DA2853BE1B22C1710070B675 /* HighlightButton.swift */,
+				DA76A19C1B23AADF006CB489 /* BasicCollectionReusableView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -758,6 +761,7 @@
 				DA2853BF1B22C1710070B675 /* HighlightButton.swift in Sources */,
 				DA38A9891B223AF1002FCBB4 /* ActionListViewController.swift in Sources */,
 				DA2853C21B22C5D30070B675 /* UIColor+AniNow.swift in Sources */,
+				DA76A19D1B23AADF006CB489 /* BasicCollectionReusableView.swift in Sources */,
 				DA76A19B1B238498006CB489 /* Classes.swift in Sources */,
 				DA27D1B71AF1BFA300CC854E /* AniList.swift in Sources */,
 				DA6E83B41B167F1E00970D27 /* TraktV2.swift in Sources */,
