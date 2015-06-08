@@ -309,6 +309,7 @@ class ViewController: UIViewController {
                     
                     if error == nil {
                         let dictionary = (JSON as! NSDictionary)
+                        println(dictionary["access_token"])
                         NSUserDefaults.standardUserDefaults().setObject(dictionary["access_token"], forKey: "access_token")
                         NSUserDefaults.standardUserDefaults().setObject(NSDate(timeIntervalSinceNow: dictionary["expires_in"] as! Double), forKey: "expiration_date")
                         NSUserDefaults.standardUserDefaults().synchronize()

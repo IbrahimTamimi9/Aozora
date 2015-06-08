@@ -360,7 +360,7 @@
 		DA6E12AF1B10D94200B278B0 /* ANParseKit */ = {
 			isa = PBXGroup;
 			children = (
-				DA76A1981B237453006CB489 /* Classes */,
+				DA76A1991B2375E1006CB489 /* Classes.swift */,
 				DA6E12B21B10D94200B278B0 /* ANParseKit.h */,
 				DACCF35C1B110AA2006A13EB /* ANParseKit.swift */,
 				DA6E13101B10F2E500B278B0 /* MALScrapper.swift */,
@@ -441,14 +441,6 @@
 				DA6E130B1B10DE0F00B278B0 /* TFHppleElement+MALScrapping.m */,
 			);
 			name = Categories;
-			sourceTree = "<group>";
-		};
-		DA76A1981B237453006CB489 /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				DA76A1991B2375E1006CB489 /* Classes.swift */,
-			);
-			name = Classes;
 			sourceTree = "<group>";
 		};
 		DAE7A7131B2105BD00788614 /* UI */ = {

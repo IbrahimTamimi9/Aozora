@@ -82,5 +82,63 @@ public class Anime: PFObject, PFSubclassing {
     @NSManaged public var hummingBirdID: Int
     @NSManaged public var hummingBirdSlug: String
     
+    @NSManaged public var duration: Int
+    @NSManaged public var externalLinks: [NSDictionary]
+    @NSManaged public var source: String?
+    @NSManaged public var startDateTime: NSDate?
+    @NSManaged public var studio: [NSDictionary]
+    
+    public var nextEpisode: Int? {
+        get {
+            if !hasNextEpisodeInformation() {
+                return 0
+            }
+            return nextEpisodeInternal
+        }
+    }
+    
+    public var nextEpisodeDate: NSDate? {
+        get {
+            if !hasNextEpisodeInformation() {
+                return nil
+            }
+            return nextEpisodeDateInternal
+        }
+    }
+    
+    var nextEpisodeInternal: Int = 0
+    var nextEpisodeDateInternal: NSDate = NSDate()
+    
+    func hasNextEpisodeInformation() -> Bool {
+        if let startDate = startDateTime {
+            if nextEpisodeInternal == 0 {
+                let (nextAiringDate, nextAiringEpisode) = nextEpisodeForStartDate(startDate)
+                nextEpisodeInternal = nextAiringEpisode
+                nextEpisodeDateInternal = nextAiringDate
+            }
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func nextEpisodeForStartDate(startDate: NSDate) -> (nextDate: NSDate, nextEpisode: Int) {
+        
+        let now = NSDate()
+        
+        if startDate.compare(now) == NSComparisonResult.OrderedDescending {
+            return (startDate, 1)
+        }
+        
+        let cal = NSCalendar.currentCalendar()
+        let unit: NSCalendarUnit = .CalendarUnitWeekOfYear
+        let components = cal.components(unit, fromDate: startDate, toDate: now, options: nil)
+        components.weekOfYear = components.weekOfYear+1
+        
+        let nextEpisodeDate: NSDate = cal.dateByAddingComponents(components, toDate: startDate, options: nil)!
+        return (nextEpisodeDate, components.weekOfYear+1)
+    }
+    
+    
 }
 

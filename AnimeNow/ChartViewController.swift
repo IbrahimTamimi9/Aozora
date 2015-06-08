@@ -9,6 +9,7 @@
 import UIKit
 import ANParseKit
 import SDWebImage
+import Alamofire
 
 enum OrderBy: String {
     case Rating = "Rating"
@@ -46,6 +47,7 @@ class ChartViewController: UIViewController {
     var showTableView = true
     var currentOrder: OrderBy = .Rating
     var currentViewType: ViewType = .Chart
+    var timer: NSTimer!
     
     var dataSource: [[Anime]] = [] {
         didSet {
@@ -104,6 +106,31 @@ class ChartViewController: UIViewController {
             
             return nil;
         }
+        
+        timer = NSTimer.scheduledTimerWithTimeInterval(60.0, target: self, selector: "updateETACells", userInfo: nil, repeats: true)
+    }
+    
+    func getAnilistAccessToken() {
+        let expirationDate = NSUserDefaults.standardUserDefaults().objectForKey("expiration_date") as? NSDate
+        let accessToken = NSUserDefaults.standardUserDefaults().stringForKey("access_token")
+        
+        if accessToken == nil || expirationDate?.compare(NSDate()) == .OrderedAscending {
+            Alamofire.request(AniList.Router.requestAccessToken())
+                .validate()
+                .responseJSON { (req, res, JSON, error) in
+                    
+                    if error == nil {
+                        
+                        let dictionary = (JSON as! NSDictionary)
+                        println(dictionary["access_token"])
+                        NSUserDefaults.standardUserDefaults().setObject(dictionary["access_token"], forKey: "access_token")
+                        NSUserDefaults.standardUserDefaults().setObject(NSDate(timeIntervalSinceNow: dictionary["expires_in"] as! Double), forKey: "expiration_date")
+                        NSUserDefaults.standardUserDefaults().synchronize()
+                    }else {
+                        println(error)
+                    }
+            }
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -121,6 +148,11 @@ class ChartViewController: UIViewController {
             self.collectionView.alpha = 1.0
             self.collectionView.transform = CGAffineTransformIdentity
             }, completion: nil)
+    }
+    
+    func updateETACells() {
+        let indexPaths = self.collectionView.indexPathsForVisibleItems()
+        self.collectionView.reloadItemsAtIndexPaths(indexPaths)
     }
     
     // MARK: - Utility Functions
@@ -168,6 +200,16 @@ class ChartViewController: UIViewController {
         controller.modalTransitionStyle = .CrossDissolve
         controller.modalPresentationStyle = .OverCurrentContext
         self.tabBarController?.presentViewController(controller, animated: true, completion: nil)
+    }
+    
+    // Helper date functions
+    func etaForDate(nextDate: NSDate) -> (days: Int, hours: Int, minutes: Int) {
+        let now = NSDate()
+        let cal = NSCalendar.currentCalendar()
+        let unit: NSCalendarUnit = .CalendarUnitDay | .CalendarUnitHour | .CalendarUnitMinute
+        let components = cal.components(unit, fromDate: now, toDate: nextDate, options: nil)
+        
+        return (components.day,components.hour, components.minute)
     }
     
     // MARK: - IBActions
@@ -219,9 +261,40 @@ extension ChartViewController: UICollectionViewDataSource {
         let anime = filteredDataSource[indexPath.section][indexPath.row]
 
         let imageUrl = NSURL(string: anime.imageUrl)
-        cell.posterImageView.sd_setImageWithURL(imageUrl)
+        cell.posterImageView?.sd_setImageWithURL(imageUrl)
         cell.titleLabel.text = anime.title
         cell.genresLabel?.text = ", ".join(anime.genres)
+
+        if let source = anime.source {
+            cell.sourceLabel?.text = "Source: \(source)"
+        } else {
+            cell.sourceLabel?.text = ""
+        }
+        
+        
+        if let mainStudio = anime.studio.first {
+            let studioString = mainStudio["studio_name"] as! String
+            cell.studioLabel?.text = "\(studioString)"
+        } else {
+            cell.studioLabel?.text = ""
+        }
+        
+        if let nextEpisodeDate = anime.nextEpisodeDate,
+            let nextEpisode = anime.nextEpisode {
+            
+            let (days, hours, minutes) = etaForDate(nextEpisodeDate)
+            
+            if days != 0 {
+                cell.etaLabel.text = "Episode \(nextEpisode) - \(days)d \(hours)h \(minutes)m"
+            } else if hours != 0 {
+                cell.etaLabel.text = "Episode \(nextEpisode) - \(hours)h \(minutes)m"
+            } else {
+                cell.etaLabel.text = "Episode \(nextEpisode) - \(minutes)m"
+            }
+            
+        } else {
+            cell.etaLabel.text = ""
+        }
         
         cell.layoutIfNeeded()
         return cell
