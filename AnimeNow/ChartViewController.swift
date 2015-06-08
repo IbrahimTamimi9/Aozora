@@ -65,6 +65,7 @@ class ChartViewController: UIViewController {
     // TODO: create loading view from code, generalize to be used on UICollectionViews
     @IBOutlet weak var loadingView: LoaderView!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var searchBar: UISearchBar!
     
     @IBOutlet weak var orderTitleLabel: UILabel!
     @IBOutlet weak var orderButton: UIButton!
@@ -162,20 +163,22 @@ class ChartViewController: UIViewController {
         currentOrder = by
         orderTitleLabel.text = currentOrder.rawValue
     
-        filteredDataSource = filteredDataSource.map { (var animeArray) -> [Anime] in
+        dataSource = dataSource.map { (var animeArray) -> [Anime] in
             switch self.currentOrder {
             case .Rating:
-                animeArray.sort({ $0.membersScore > $1.membersScore})
+                animeArray.sort({ $0.rank < $1.rank})
             case .Popularity:
-                animeArray.sort({ $0.membersCount > $1.membersCount})
+                animeArray.sort({ $0.popularityRank < $1.popularityRank})
             case .Title:
                 animeArray.sort({ $0.title < $1.title})
             case .NextAiringEpisode:
-                // TODO: implement
-                animeArray.sort({ $0.membersScore > $1.membersScore})
+                animeArray.sort({ $0.nextEpisodeDate.compare($1.nextEpisodeDate) == .OrderedAscending})
             }
             return animeArray
         }
+        
+        // Filter
+        searchBar(searchBar, textDidChange: searchBar.text)
     }
     
     func setViewType(viewType: ViewType) {
@@ -236,8 +239,9 @@ extension ChartViewController: UISearchBarDelegate {
         
         filteredDataSource = dataSource.map { (var animeTypeArray) -> [Anime] in
             func filterText(anime: Anime) -> Bool {
-                let title = anime.title
-                return (title.rangeOfString(searchBar.text) != nil)
+                return (anime.title.rangeOfString(searchBar.text) != nil) ||
+                (" ".join(anime.genres).rangeOfString(searchBar.text) != nil)
+                
             }
             return animeTypeArray.filter(filterText)
         }
@@ -279,16 +283,18 @@ extension ChartViewController: UICollectionViewDataSource {
             cell.studioLabel?.text = ""
         }
         
-        if let nextEpisodeDate = anime.nextEpisodeDate,
-            let nextEpisode = anime.nextEpisode {
+        if let nextEpisode = anime.nextEpisode {
             
-            let (days, hours, minutes) = etaForDate(nextEpisodeDate)
+            let (days, hours, minutes) = etaForDate(anime.nextEpisodeDate)
             
             if days != 0 {
+                cell.etaLabel.textColor = UIColor.belizeHole()
                 cell.etaLabel.text = "Episode \(nextEpisode) - \(days)d \(hours)h \(minutes)m"
             } else if hours != 0 {
+                cell.etaLabel.textColor = UIColor.nephritis()
                 cell.etaLabel.text = "Episode \(nextEpisode) - \(hours)h \(minutes)m"
             } else {
+                cell.etaLabel.textColor = UIColor.pumpkin()
                 cell.etaLabel.text = "Episode \(nextEpisode) - \(minutes)m"
             }
             

@@ -24,4 +24,14 @@ extension UIColor {
         return UIColor(red: 52/255.0, green: 152/255.0, blue: 219/255.0, alpha: 1.0)
     }
 
+    // Greenish
+    class func nephritis() -> UIColor! {
+        return UIColor(red: 39/255.0, green: 174/255.0, blue: 96/255.0, alpha: 1.0)
+    }
+    
+    // Orange
+    class func pumpkin() -> UIColor! {
+        return UIColor(red: 211/255.0, green: 84/255.0, blue: 0/255.0, alpha: 1.0)
+    }
+    
 }

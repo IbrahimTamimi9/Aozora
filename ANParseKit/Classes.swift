@@ -91,16 +91,16 @@ public class Anime: PFObject, PFSubclassing {
     public var nextEpisode: Int? {
         get {
             if !hasNextEpisodeInformation() {
-                return 0
+                return nil
             }
             return nextEpisodeInternal
         }
     }
     
-    public var nextEpisodeDate: NSDate? {
+    public var nextEpisodeDate: NSDate {
         get {
             if !hasNextEpisodeInformation() {
-                return nil
+                return NSDate(timeIntervalSinceNow: 60*60*24*1000)
             }
             return nextEpisodeDateInternal
         }

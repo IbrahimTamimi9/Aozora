@@ -250,9 +250,9 @@
                                                     <nil key="highlightedColor"/>
                                                     <variation key="default">
                                                         <mask key="constraints">
+                                                            <exclude reference="0bq-pJ-tnG"/>
                                                             <exclude reference="A5g-Gv-0M9"/>
                                                             <exclude reference="GJc-Dt-yD7"/>
-                                                            <exclude reference="0bq-pJ-tnG"/>
                                                             <exclude reference="cmt-SY-aVn"/>
                                                         </mask>
                                                     </variation>
@@ -477,6 +477,7 @@
                         <outlet property="loadingView" destination="D3A-vI-Dzq" id="pI7-jc-jQn"/>
                         <outlet property="orderButton" destination="KTu-R4-N9l" id="bAg-AP-2kg"/>
                         <outlet property="orderTitleLabel" destination="Bvk-qC-J3o" id="yc3-w9-ZfE"/>
+                        <outlet property="searchBar" destination="A7Y-Gl-bhQ" id="pdG-1N-yNK"/>
                         <outlet property="viewButton" destination="gsJ-Id-fMu" id="zve-lq-Len"/>
                         <outlet property="viewTitleLabel" destination="aal-tQ-Y5s" id="pgr-oh-7DF"/>
                     </connections>
