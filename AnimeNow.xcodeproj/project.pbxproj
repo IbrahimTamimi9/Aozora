@@ -22,6 +22,7 @@
 		DA38A98C1B223B39002FCBB4 /* Common.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA38A98B1B223B39002FCBB4 /* Common.storyboard */; };
 		DA38A98F1B223F1F002FCBB4 /* BasicTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA38A98E1B223F1F002FCBB4 /* BasicTableCell.swift */; };
 		DA38A9911B224960002FCBB4 /* BasicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA38A9901B224960002FCBB4 /* BasicView.swift */; };
+		DA41679B1B25F76F00847F56 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA41679A1B25F76F00847F56 /* FontAwesome.ttf */; };
 		DA6E12B31B10D94200B278B0 /* ANParseKit.h in Headers */ = {isa = PBXBuildFile; fileRef = DA6E12B21B10D94200B278B0 /* ANParseKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA6E12B91B10D94200B278B0 /* ANParseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E12AE1B10D94200B278B0 /* ANParseKit.framework */; };
 		DA6E12C21B10D94200B278B0 /* ANParseKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6E12C11B10D94200B278B0 /* ANParseKitTests.swift */; };
@@ -136,6 +137,8 @@
 		DA38A98B1B223B39002FCBB4 /* Common.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Common.storyboard; sourceTree = "<group>"; };
 		DA38A98E1B223F1F002FCBB4 /* BasicTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicTableCell.swift; sourceTree = "<group>"; };
 		DA38A9901B224960002FCBB4 /* BasicView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicView.swift; sourceTree = "<group>"; };
+		DA4167991B25F1BF00847F56 /* AnimeNow-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AnimeNow-Bridging-Header.h"; sourceTree = "<group>"; };
+		DA41679A1B25F76F00847F56 /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.ttf; sourceTree = "<group>"; };
 		DA6E12AE1B10D94200B278B0 /* ANParseKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ANParseKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA6E12B11B10D94200B278B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA6E12B21B10D94200B278B0 /* ANParseKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ANParseKit.h; sourceTree = "<group>"; };
@@ -287,7 +290,9 @@
 		DA27D1941AF1BA9D00CC854E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				DA41679A1B25F76F00847F56 /* FontAwesome.ttf */,
 				DA27D1951AF1BA9D00CC854E /* Info.plist */,
+				DA4167991B25F1BF00847F56 /* AnimeNow-Bridging-Header.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -662,6 +667,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA27D19C1AF1BA9D00CC854E /* Base.storyboard in Resources */,
+				DA41679B1B25F76F00847F56 /* FontAwesome.ttf in Resources */,
 				DA38A98C1B223B39002FCBB4 /* Common.storyboard in Resources */,
 				DA27D1A11AF1BA9D00CC854E /* LaunchScreen.xib in Resources */,
 				DA27D19E1AF1BA9D00CC854E /* Images.xcassets in Resources */,
@@ -936,6 +942,7 @@
 				INFOPLIST_FILE = AnimeNow/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "AnimeNow/AnimeNow-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -951,6 +958,7 @@
 				INFOPLIST_FILE = AnimeNow/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "AnimeNow/AnimeNow-Bridging-Header.h";
 			};
 			name = Release;
 		};

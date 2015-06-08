@@ -67,9 +67,13 @@ class ChartViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var searchBar: UISearchBar!
     
+    @IBOutlet weak var navigationBarTitle: UILabel!
+    
+    @IBOutlet weak var titleOrder: UILabel!
     @IBOutlet weak var orderTitleLabel: UILabel!
     @IBOutlet weak var orderButton: UIButton!
     
+    @IBOutlet weak var titleView: UILabel!
     @IBOutlet weak var viewTitleLabel: UILabel!
     @IBOutlet weak var viewButton: UIButton!
     
@@ -79,10 +83,19 @@ class ChartViewController: UIViewController {
         navigationController?.hidesBarsOnSwipe = true
         navigationController?.hidesBarsOnTap = false
         
+        let caretIcon = NSString.fontAwesomeIconStringForIconIdentifier("icon-caret-down")
+        titleOrder.text = "Order ".stringByAppendingString(caretIcon)
+        titleView.text = "View ".stringByAppendingString(caretIcon)
+        navigationBarTitle.text = "Spring 2015 ".stringByAppendingString(caretIcon)
+        title = "Spring 2015"
+        
         setViewType(.Chart)
         
         collectionView.alpha = 0.0
         loadingView.startAnimating()
+        
+        var tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "changeSeasonalChart")
+        navigationController?.navigationBar.addGestureRecognizer(tapGestureRecognizer)
         
         let currentChartQuery = SeasonalChart.query()!
         currentChartQuery.limit = 1
@@ -193,16 +206,22 @@ class ChartViewController: UIViewController {
         collectionView.reloadData()
     }
     
-    func showDropDownController(sender: UIView, dataSource: [String]) {
+    func showDropDownController(sender: UIView, dataSource: [String], imageDataSource: [String]? = []) {
         let frameRelativeToViewController = sender.convertRect(sender.bounds, toView: view)
         
         let commonStoryboard = UIStoryboard(name: "Common", bundle: nil)
         let controller = commonStoryboard.instantiateViewControllerWithIdentifier("DropDownList") as! DropDownListViewController
         controller.delegate = self
-        controller.setDataSource(sender, dataSource: dataSource, yPosition: CGRectGetMaxY(frameRelativeToViewController))
+        controller.setDataSource(sender, dataSource: dataSource, yPosition: CGRectGetMaxY(frameRelativeToViewController), imageDataSource: imageDataSource)
         controller.modalTransitionStyle = .CrossDissolve
         controller.modalPresentationStyle = .OverCurrentContext
         self.tabBarController?.presentViewController(controller, animated: true, completion: nil)
+    }
+    
+    func changeSeasonalChart() {
+        if let bar = navigationController?.navigationBar {
+            showDropDownController(bar, dataSource: ["Winter 2015","Spring 2015","Summer 2015","Fall 2015"], imageDataSource: ["icon-winter","icon-spring","icon-summer","icon-fall"])
+        }
     }
     
     // Helper date functions

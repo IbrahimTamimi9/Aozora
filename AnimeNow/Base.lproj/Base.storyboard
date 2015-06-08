@@ -6,6 +6,13 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="FontAwesome.ttf">
+            <string>FontAwesome</string>
+            <string>FontAwesome</string>
+            <string>FontAwesome</string>
+        </mutableArray>
+    </customFonts>
     <scenes>
         <!--Airing-->
         <scene sceneID="ch4-Sq-GWV">
@@ -64,7 +71,7 @@
             </objects>
             <point key="canvasLocation" x="1007" y="1919"/>
         </scene>
-        <!--Spring 2015-->
+        <!--Item 1-->
         <scene sceneID="XGY-SR-MWK">
             <objects>
                 <viewController id="lKi-cX-gzy" customClass="ChartViewController" customModule="AnimeNow" sceneMemberID="viewController">
@@ -159,7 +166,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HcI-Z8-u2G">
-                                                    <rect key="frame" x="99" y="98" width="233" height="17"/>
+                                                    <rect key="frame" x="99" y="98" width="233" height="16.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="240" id="EXN-GQ-k7D"/>
                                                     </constraints>
@@ -321,11 +328,11 @@
                                         <rect key="frame" x="0.0" y="40" width="120" height="44"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Order" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4aP-Nn-XzU">
-                                                <rect key="frame" x="8" y="8" width="32" height="14.5"/>
+                                                <rect key="frame" x="8" y="8" width="31" height="12.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="17" id="Ca4-UE-fP1"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="12"/>
                                                 <color key="textColor" red="0.67843137249999996" green="0.67450980390000004" blue="0.67843137249999996" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                                 <variation key="default">
@@ -335,7 +342,7 @@
                                                 </variation>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bvk-qC-J3o">
-                                                <rect key="frame" x="8" y="19" width="38" height="17"/>
+                                                <rect key="frame" x="8" y="17" width="38" height="17"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
@@ -372,13 +379,13 @@
                                         <rect key="frame" x="121" y="40" width="120" height="44"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="View" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tap-Hh-Dci">
-                                                <rect key="frame" x="8" y="8" width="26.5" height="14.5"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <rect key="frame" x="8" y="8" width="26" height="12.5"/>
+                                                <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="12"/>
                                                 <color key="textColor" red="0.67843137249999996" green="0.67450980390000004" blue="0.67843137249999996" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chart" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aal-tQ-Y5s">
-                                                <rect key="frame" x="8" y="19" width="35.5" height="17"/>
+                                                <rect key="frame" x="8" y="17" width="35.5" height="17"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
@@ -471,13 +478,31 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item 1" id="FQV-uk-GRU"/>
-                    <navigationItem key="navigationItem" title="Spring 2015" id="zgQ-7c-dfu"/>
+                    <navigationItem key="navigationItem" id="zgQ-7c-dfu">
+                        <nil key="title"/>
+                        <view key="titleView" contentMode="scaleToFill" id="gyd-V5-hn8">
+                            <rect key="frame" x="180" y="5.5" width="240" height="33"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Spring 2015" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fxw-Lx-82y">
+                                    <rect key="frame" x="0.0" y="0.0" width="240" height="33"/>
+                                    <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="17"/>
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        </view>
+                    </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="HnX-1F-O3i" id="m9G-8O-rnb"/>
                         <outlet property="loadingView" destination="D3A-vI-Dzq" id="pI7-jc-jQn"/>
+                        <outlet property="navigationBarTitle" destination="Fxw-Lx-82y" id="Bql-l6-T3d"/>
                         <outlet property="orderButton" destination="KTu-R4-N9l" id="bAg-AP-2kg"/>
                         <outlet property="orderTitleLabel" destination="Bvk-qC-J3o" id="yc3-w9-ZfE"/>
                         <outlet property="searchBar" destination="A7Y-Gl-bhQ" id="pdG-1N-yNK"/>
+                        <outlet property="titleOrder" destination="4aP-Nn-XzU" id="QpK-pj-a6p"/>
+                        <outlet property="titleView" destination="tap-Hh-Dci" id="HEN-uH-MIF"/>
                         <outlet property="viewButton" destination="gsJ-Id-fMu" id="zve-lq-Len"/>
                         <outlet property="viewTitleLabel" destination="aal-tQ-Y5s" id="pgr-oh-7DF"/>
                     </connections>

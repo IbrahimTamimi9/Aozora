@@ -4,3 +4,4 @@ use_frameworks!
 
 pod 'Alamofire', '~> 1.2'
 pod 'SDWebImage'
+pod 'FontAwesome+iOS'

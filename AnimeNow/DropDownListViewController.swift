@@ -24,14 +24,16 @@ class DropDownListViewController: UIViewController {
     
     weak var delegate: DropDownListDelegate?
     var dataSource = [String]()
+    var imageDataSource = [String]()
     var yPosition: CGFloat = 0
     var showTableView = true
     var trigger: UIView!
     
-    func setDataSource(trigger: UIView, dataSource: [String], yPosition: CGFloat) {
+    func setDataSource(trigger: UIView, dataSource: [String], yPosition: CGFloat, imageDataSource: [String]? = []) {
         self.trigger = trigger
         self.dataSource = dataSource
         self.yPosition = yPosition
+        self.imageDataSource = imageDataSource!
     }
     
     override func viewDidLoad() {
@@ -79,9 +81,14 @@ extension DropDownListViewController: UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier("OptionCell") as! BasicTableCell
+        let cellId = (imageDataSource.count != 0) ? "OptionCell2" : "OptionCell"
+        var cell = tableView.dequeueReusableCellWithIdentifier(cellId) as! BasicTableCell
         var title = dataSource[indexPath.row]
         cell.titleLabel.text = title
+        if imageDataSource.count != 0 {
+            cell.titleimageView.image = UIImage(named: imageDataSource[indexPath.row])
+        }
+        
         return cell
     }
 }
