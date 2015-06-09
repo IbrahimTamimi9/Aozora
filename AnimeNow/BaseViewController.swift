@@ -11,6 +11,7 @@ import ANParseKit
 import SDWebImage
 import Alamofire
 import ANAnimeKit
+import ANCommonKit
 
 enum OrderBy: String {
     case Rating = "Rating"
@@ -48,8 +49,9 @@ class BaseViewController: UIViewController {
     
     var showTableView = true
     var currentOrder: OrderBy = .Rating
-    var currentViewType: ViewType = .List
+    var currentViewType: ViewType = .Chart
     var timer: NSTimer!
+    var animator: ZFModalTransitionAnimator!
     
     var dataSource: [[Anime]] = [] {
         didSet {
@@ -187,8 +189,7 @@ class BaseViewController: UIViewController {
     func showDropDownController(sender: UIView, dataSource: [String], imageDataSource: [String]? = []) {
         let frameRelativeToViewController = sender.convertRect(sender.bounds, toView: view)
         
-        let commonStoryboard = UIStoryboard(name: "Common", bundle: nil)
-        let controller = commonStoryboard.instantiateViewControllerWithIdentifier("DropDownList") as! DropDownListViewController
+        let controller = ANCommonKit.dropDownListViewController()
         controller.delegate = self
         controller.setDataSource(sender, dataSource: dataSource, yPosition: CGRectGetMaxY(frameRelativeToViewController), imageDataSource: imageDataSource)
         controller.modalTransitionStyle = .CrossDissolve
@@ -250,7 +251,7 @@ extension BaseViewController: UICollectionViewDataSource {
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let reuseIdentifier = (currentViewType == .Chart) ? "AnimeCell" : "AnimeListCell";
+        let reuseIdentifier = (currentViewType == .Chart) ? "AnimeCell2" : "AnimeListCell";
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! AnimeCell
         
         let anime = filteredDataSource[indexPath.section][indexPath.row]
@@ -331,9 +332,25 @@ extension BaseViewController: UICollectionViewDataSource {
     
 }
 
+
+
 extension BaseViewController: UICollectionViewDelegate {
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let tabBarController = ANAnimeKit.rootTabBarController()
+        
+        // create animator object with instance of modal view controller
+        // we need to keep it in property with strong reference so it will not get release
+        animator = ZFModalTransitionAnimator(modalViewController: tabBarController)
+        animator.dragable = true
+        animator.direction = ZFModalTransitonDirection.Bottom
+        
+        
+        //[self.animator setContentScrollView:detailViewController.scrollview];
+        
+        // set transition delegate of modal view controller to our object
+        tabBarController.transitioningDelegate = self.animator;
+        tabBarController.modalPresentationStyle = UIModalPresentationStyle.Custom;
+        
         presentViewController(tabBarController, animated: true, completion: nil)
     }
 }

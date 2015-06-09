@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoaderView: UIView {
+public class LoaderView: UIView {
 
     let rectShape = CAShapeLayer()
     
@@ -17,7 +17,7 @@ class LoaderView: UIView {
         configure()
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required public init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         configure()
     }
@@ -32,7 +32,7 @@ class LoaderView: UIView {
         rectShape.fillColor = UIColor.midnightBlue().CGColor
     }
     
-    func startAnimating() {
+    public func startAnimating() {
 
         let timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
         let animationDuration = 0.4
@@ -62,7 +62,7 @@ class LoaderView: UIView {
 
     }
     
-    func stopAnimating() {
+    public func stopAnimating() {
         rectShape.removeAllAnimations()
         rectShape.removeFromSuperlayer()
     }

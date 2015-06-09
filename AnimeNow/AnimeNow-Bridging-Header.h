@@ -10,5 +10,7 @@
 #define AnimeNow_AnimeNow_Bridging_Header_h
 
 #import <FontAwesome_iOS/NSString+FontAwesome.h>
+#import <Shimmer/FBShimmeringView.h>
+#import "ZFModalTransitionAnimator.h"
 
 #endif

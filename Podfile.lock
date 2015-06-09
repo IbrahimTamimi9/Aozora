@@ -4,15 +4,18 @@ PODS:
   - SDWebImage (3.7.2):
     - SDWebImage/Core (= 3.7.2)
   - SDWebImage/Core (3.7.2)
+  - Shimmer (1.0.2)
 
 DEPENDENCIES:
   - Alamofire (~> 1.2)
   - FontAwesome+iOS
   - SDWebImage
+  - Shimmer
 
 SPEC CHECKSUMS:
   Alamofire: 1acfdf179aff68b41a48dff70c1ac7fa263e2bcb
   FontAwesome+iOS: 9070b682a9255ca0fdc34bcfb129ad0ba2b73b87
   SDWebImage: 71b7cdc1d1721d6a82ed62889030225f2c249e29
+  Shimmer: c5374be1c2b0c9e292fb05b339a513cf291cac86
 
 COCOAPODS: 0.37.2

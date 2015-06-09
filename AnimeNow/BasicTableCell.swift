@@ -9,6 +9,6 @@
 import UIKit
 
 public class BasicTableCell: UITableViewCell {
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var titleimageView: UIImageView!
+    @IBOutlet public weak var titleLabel: UILabel!
+    @IBOutlet public weak var titleimageView: UIImageView!
 }

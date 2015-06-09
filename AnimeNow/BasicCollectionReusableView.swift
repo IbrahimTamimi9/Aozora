@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BasicCollectionReusableView: UICollectionReusableView {
+public class BasicCollectionReusableView: UICollectionReusableView {
 
-    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet public weak var titleLabel: UILabel!
 }

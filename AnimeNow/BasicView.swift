@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BasicView: UIView {
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var subTitleLabel: UILabel!
+public class BasicView: UIView {
+    @IBOutlet public weak var titleLabel: UILabel!
+    @IBOutlet public weak var subTitleLabel: UILabel!
 }

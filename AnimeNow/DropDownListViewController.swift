@@ -8,11 +8,11 @@
 
 import UIKit
 
-protocol DropDownListDelegate: class {
+public protocol DropDownListDelegate: class {
     func selectedAction(sender: UIView, action: String)
 }
 
-class DropDownListViewController: UIViewController {
+public class DropDownListViewController: UIViewController {
     
     let CellHeight: Int = 44
     
@@ -22,21 +22,21 @@ class DropDownListViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    weak var delegate: DropDownListDelegate?
+    public weak var delegate: DropDownListDelegate?
     var dataSource = [String]()
     var imageDataSource = [String]()
     var yPosition: CGFloat = 0
     var showTableView = true
     var trigger: UIView!
     
-    func setDataSource(trigger: UIView, dataSource: [String], yPosition: CGFloat, imageDataSource: [String]? = []) {
+    public func setDataSource(trigger: UIView, dataSource: [String], yPosition: CGFloat, imageDataSource: [String]? = []) {
         self.trigger = trigger
         self.dataSource = dataSource
         self.yPosition = yPosition
         self.imageDataSource = imageDataSource!
     }
     
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         
         let tableHeight = CGFloat(dataSource.count*CellHeight)
@@ -47,7 +47,7 @@ class DropDownListViewController: UIViewController {
         
     }
     
-    override func viewDidLayoutSubviews() {
+    override public func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
         if showTableView {
@@ -70,17 +70,17 @@ class DropDownListViewController: UIViewController {
 }
 
 extension DropDownListViewController: UIGestureRecognizerDelegate {
-    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
+    public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
         return !touch.view.isDescendantOfView(tableView)
     }
 }
 
 extension DropDownListViewController: UITableViewDataSource {
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataSource.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cellId = (imageDataSource.count != 0) ? "OptionCell2" : "OptionCell"
         var cell = tableView.dequeueReusableCellWithIdentifier(cellId) as! BasicTableCell
         var title = dataSource[indexPath.row]
@@ -95,7 +95,7 @@ extension DropDownListViewController: UITableViewDataSource {
 
 extension DropDownListViewController: UITableViewDelegate {
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         let action = dataSource[indexPath.row]
         delegate?.selectedAction(trigger, action: action)

@@ -7,10 +7,10 @@
 //
 
 import UIKit
-protocol ActionListDelegate: class {
+public protocol ActionListDelegate: class {
     func selectedAction(action: String)
 }
-class ActionListViewController: UIViewController {
+public class ActionListViewController: UIViewController {
     
     let CellHeight: Int = 44
     
@@ -29,7 +29,7 @@ class ActionListViewController: UIViewController {
         
     }
     
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         
         // Set variables
@@ -41,7 +41,7 @@ class ActionListViewController: UIViewController {
         headerRect.size.height = CGRectGetHeight(view.bounds) - CGFloat(space)
         tableView.tableHeaderView?.bounds = headerRect
     }
-    override func viewDidLayoutSubviews() {
+    override public func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
         if showTableView {
@@ -63,11 +63,11 @@ class ActionListViewController: UIViewController {
 }
 
 extension ActionListViewController: UITableViewDataSource {
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataSource.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCellWithIdentifier("OptionCell") as! BasicTableCell
         var title = dataSource[indexPath.row]
         cell.titleLabel.text = title
@@ -76,7 +76,7 @@ extension ActionListViewController: UITableViewDataSource {
 }
 
 extension ActionListViewController: UITableViewDelegate {
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         let action = dataSource[indexPath.row]
         delegate?.selectedAction(action)
