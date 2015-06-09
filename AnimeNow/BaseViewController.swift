@@ -10,6 +10,7 @@ import UIKit
 import ANParseKit
 import SDWebImage
 import Alamofire
+import ANAnimeKit
 
 enum OrderBy: String {
     case Rating = "Rating"
@@ -69,11 +70,9 @@ class BaseViewController: UIViewController {
     
     @IBOutlet weak var navigationBarTitle: UILabel!
     
-    @IBOutlet weak var titleOrder: UILabel!
     @IBOutlet weak var orderTitleLabel: UILabel!
     @IBOutlet weak var orderButton: UIButton!
     
-    @IBOutlet weak var titleView: UILabel!
     @IBOutlet weak var viewTitleLabel: UILabel!
     @IBOutlet weak var viewButton: UIButton!
     
@@ -82,9 +81,6 @@ class BaseViewController: UIViewController {
         
         navigationController?.hidesBarsOnSwipe = true
         navigationController?.hidesBarsOnTap = false
-        
-        titleOrder.text = "Order ".stringByAppendingString(angleDownIcon)
-        titleView.text = "View ".stringByAppendingString(angleDownIcon)
         
         setViewType(currentViewType)
         
@@ -333,6 +329,13 @@ extension BaseViewController: UICollectionViewDataSource {
         return CGSize(width: view.bounds.size.width, height: height)
     }
     
+}
+
+extension BaseViewController: UICollectionViewDelegate {
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        let tabBarController = ANAnimeKit.rootTabBarController()
+        presentViewController(tabBarController, animated: true, completion: nil)
+    }
 }
 
 extension BaseViewController: DropDownListDelegate {

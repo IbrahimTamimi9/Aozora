@@ -1122,7 +1122,7 @@
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ZvF-JW-mkc">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <color key="backgroundColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.90196078430000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.89411764709999997" green="0.89411764709999997" blue="0.89411764709999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <inset key="scrollIndicatorInsets" minX="0.0" minY="44" maxX="0.0" maxY="0.0"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="0.0" id="laK-Dg-eRO">
                                     <size key="itemSize" width="340" height="132"/>
@@ -1149,6 +1149,11 @@
                                                         <constraint firstAttribute="width" constant="83" id="bh5-oz-KzH"/>
                                                         <constraint firstAttribute="width" secondItem="ywL-Hf-A1H" secondAttribute="height" multiplier="38:53" id="uLl-3w-DuA"/>
                                                     </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                            <integer key="value" value="2"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
                                                     <variation key="default">
                                                         <mask key="constraints">
                                                             <exclude reference="MeE-OZ-Wvd"/>
@@ -1227,7 +1232,7 @@
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <color key="backgroundColor" white="0.94526796189999995" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstItem="0py-2R-bkH" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="cZu-pl-pnT" secondAttribute="bottomMargin" priority="750" id="4Yi-gv-7H3"/>
                                             <constraint firstItem="3ek-NL-VzG" firstAttribute="top" secondItem="3G3-i8-oOS" secondAttribute="bottom" id="5Dq-qQ-pDJ"/>
@@ -1311,7 +1316,7 @@
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <color key="backgroundColor" white="0.94526796189999995" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstItem="fGi-ma-8Mj" firstAttribute="trailing" secondItem="ZFQ-xv-IOU" secondAttribute="trailingMargin" constant="1" id="SAB-2q-Zob"/>
                                             <constraint firstItem="fGi-ma-8Mj" firstAttribute="leading" secondItem="ZFQ-xv-IOU" secondAttribute="leadingMargin" id="a7U-b2-lpB"/>
@@ -1336,20 +1341,44 @@
                                     <rect key="frame" x="0.0" y="64" width="600" height="44"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TV" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3ut-Am-cO8">
-                                            <rect key="frame" x="8" y="11" width="22" height="21"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" TV" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3ut-Am-cO8" customClass="CustomLabel" customModule="AnimeNow" customModuleProvider="target">
+                                            <rect key="frame" x="8" y="8" width="584" height="36"/>
+                                            <color key="backgroundColor" red="0.89411764709999997" green="0.89411764709999997" blue="0.89411764709999997" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
+                                                <constraint firstAttribute="height" constant="36" id="6Yy-UT-UZE"/>
                                                 <constraint firstAttribute="height" constant="21" id="RQG-sR-AKQ"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="18"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                    <integer key="value" value="2"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="RQG-sR-AKQ"/>
+                                                </mask>
+                                            </variation>
                                         </label>
                                     </subviews>
+                                    <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="bottomMargin" secondItem="3ut-Am-cO8" secondAttribute="bottom" constant="4" id="8s8-of-lRv"/>
+                                        <constraint firstItem="3ut-Am-cO8" firstAttribute="bottom" secondItem="dzI-dB-Lqn" secondAttribute="bottomMargin" constant="8" id="Ac2-Gw-EE3"/>
+                                        <constraint firstItem="3ut-Am-cO8" firstAttribute="top" secondItem="dzI-dB-Lqn" secondAttribute="topMargin" id="apS-mU-Zed"/>
                                         <constraint firstItem="3ut-Am-cO8" firstAttribute="leading" secondItem="dzI-dB-Lqn" secondAttribute="leadingMargin" id="hza-RD-Q13"/>
+                                        <constraint firstItem="3ut-Am-cO8" firstAttribute="trailing" secondItem="dzI-dB-Lqn" secondAttribute="trailingMargin" id="oRF-SN-025"/>
+                                        <constraint firstItem="3ut-Am-cO8" firstAttribute="leading" secondItem="dzI-dB-Lqn" secondAttribute="leadingMargin" id="qM2-pu-eJl"/>
                                     </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="8s8-of-lRv"/>
+                                            <exclude reference="apS-mU-Zed"/>
+                                            <exclude reference="hza-RD-Q13"/>
+                                        </mask>
+                                    </variation>
                                     <connections>
                                         <outlet property="titleLabel" destination="3ut-Am-cO8" id="ii8-PN-oEa"/>
                                     </connections>
@@ -1365,8 +1394,8 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AmM-TX-whE" userLabel="Order" customClass="BasicView" customModule="AnimeNow" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="40" width="120" height="44"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Order" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6jQ-pu-z6Y">
-                                                <rect key="frame" x="8" y="8" width="31" height="12.5"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Order " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6jQ-pu-z6Y">
+                                                <rect key="frame" x="8" y="8" width="41.5" height="12.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="17" id="ori-lR-dqo"/>
                                                 </constraints>
@@ -1416,8 +1445,8 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fdA-9f-mYh" customClass="BasicView" customModule="AnimeNow" customModuleProvider="target">
                                         <rect key="frame" x="121" y="40" width="120" height="44"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="View" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="82s-EK-2tv">
-                                                <rect key="frame" x="8" y="8" width="26" height="12.5"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="View " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="82s-EK-2tv">
+                                                <rect key="frame" x="8" y="8" width="37" height="12.5"/>
                                                 <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="12"/>
                                                 <color key="textColor" red="0.67843137249999996" green="0.67450980390000004" blue="0.67843137249999996" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -1539,8 +1568,6 @@
                         <outlet property="orderButton" destination="Kmm-r9-uUk" id="BQN-fV-JNU"/>
                         <outlet property="orderTitleLabel" destination="eR2-2Z-b2A" id="ys9-KJ-DKN"/>
                         <outlet property="searchBar" destination="slb-i9-V2M" id="5yV-TU-LCK"/>
-                        <outlet property="titleOrder" destination="6jQ-pu-z6Y" id="QTq-lW-FBW"/>
-                        <outlet property="titleView" destination="82s-EK-2tv" id="uwb-lL-C9x"/>
                         <outlet property="viewButton" destination="M0W-MN-qCS" id="cfx-qc-Hc5"/>
                         <outlet property="viewTitleLabel" destination="Vbu-Ny-kOM" id="mMo-0r-gau"/>
                     </connections>

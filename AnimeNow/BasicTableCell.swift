@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BasicTableCell: UITableViewCell {
+public class BasicTableCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var titleimageView: UIImageView!
 }

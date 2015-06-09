@@ -78,10 +78,10 @@ extension ChartViewController: UICollectionViewDataSource {
             var title = ""
             switch indexPath.section {
                 case 0: title = "TV"
-                case 1: title = "Movie"
-                case 2: title = "OVA"
-                case 3: title = "ONA"
-                case 4: title = "Special"
+                case 1: title = "Movies"
+                case 2: title = "OVAs"
+                case 3: title = "ONAs"
+                case 4: title = "Specials"
                 default: break
             }
             
