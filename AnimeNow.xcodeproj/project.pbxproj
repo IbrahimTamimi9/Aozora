@@ -26,6 +26,8 @@
 		DA41679D1B2630C700847F56 /* AiringViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA41679C1B2630C700847F56 /* AiringViewController.swift */; };
 		DA41679F1B26320600847F56 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA41679E1B26320600847F56 /* BaseViewController.swift */; };
 		DA4167A11B263A1E00847F56 /* TBAViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4167A01B263A1E00847F56 /* TBAViewController.swift */; };
+		DA4167A31B26428A00847F56 /* ArchiveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4167A21B26428A00847F56 /* ArchiveViewController.swift */; };
+		DA4167A51B2646F900847F56 /* BasicCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4167A41B2646F900847F56 /* BasicCollectionCell.swift */; };
 		DA6E12B31B10D94200B278B0 /* ANParseKit.h in Headers */ = {isa = PBXBuildFile; fileRef = DA6E12B21B10D94200B278B0 /* ANParseKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA6E12B91B10D94200B278B0 /* ANParseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E12AE1B10D94200B278B0 /* ANParseKit.framework */; };
 		DA6E12C21B10D94200B278B0 /* ANParseKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6E12C11B10D94200B278B0 /* ANParseKitTests.swift */; };
@@ -145,6 +147,8 @@
 		DA41679C1B2630C700847F56 /* AiringViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AiringViewController.swift; sourceTree = "<group>"; };
 		DA41679E1B26320600847F56 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		DA4167A01B263A1E00847F56 /* TBAViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TBAViewController.swift; sourceTree = "<group>"; };
+		DA4167A21B26428A00847F56 /* ArchiveViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchiveViewController.swift; sourceTree = "<group>"; };
+		DA4167A41B2646F900847F56 /* BasicCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicCollectionCell.swift; sourceTree = "<group>"; };
 		DA6E12AE1B10D94200B278B0 /* ANParseKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ANParseKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA6E12B11B10D94200B278B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA6E12B21B10D94200B278B0 /* ANParseKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ANParseKit.h; sourceTree = "<group>"; };
@@ -364,6 +368,7 @@
 				DA2853BC1B22B7130070B675 /* LoaderView.swift */,
 				DA2853BE1B22C1710070B675 /* HighlightButton.swift */,
 				DA76A19C1B23AADF006CB489 /* BasicCollectionReusableView.swift */,
+				DA4167A41B2646F900847F56 /* BasicCollectionCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -469,6 +474,7 @@
 				DAFBB0941B20EFF700495ED9 /* ChartViewController.swift */,
 				DA41679C1B2630C700847F56 /* AiringViewController.swift */,
 				DA4167A01B263A1E00847F56 /* TBAViewController.swift */,
+				DA4167A21B26428A00847F56 /* ArchiveViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -763,10 +769,12 @@
 				DA76A1971B235BF4006CB489 /* DropDownListViewController.swift in Sources */,
 				DA38A98F1B223F1F002FCBB4 /* BasicTableCell.swift in Sources */,
 				DA2853BD1B22B7130070B675 /* LoaderView.swift in Sources */,
+				DA4167A31B26428A00847F56 /* ArchiveViewController.swift in Sources */,
 				DA41679D1B2630C700847F56 /* AiringViewController.swift in Sources */,
 				DAE7A7191B2105FD00788614 /* AnimeCell.swift in Sources */,
 				DA41679F1B26320600847F56 /* BaseViewController.swift in Sources */,
 				DA27D1991AF1BA9D00CC854E /* ViewController.swift in Sources */,
+				DA4167A51B2646F900847F56 /* BasicCollectionCell.swift in Sources */,
 				DA2853BF1B22C1710070B675 /* HighlightButton.swift in Sources */,
 				DA38A9891B223AF1002FCBB4 /* ActionListViewController.swift in Sources */,
 				DA2853C21B22C5D30070B675 /* UIColor+AniNow.swift in Sources */,

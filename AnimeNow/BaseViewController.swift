@@ -47,7 +47,7 @@ class BaseViewController: UIViewController {
     
     var showTableView = true
     var currentOrder: OrderBy = .Rating
-    var currentViewType: ViewType = .Chart
+    var currentViewType: ViewType = .List
     var timer: NSTimer!
     
     var dataSource: [[Anime]] = [] {
@@ -86,7 +86,7 @@ class BaseViewController: UIViewController {
         titleOrder.text = "Order ".stringByAppendingString(angleDownIcon)
         titleView.text = "View ".stringByAppendingString(angleDownIcon)
         
-        setViewType(.Chart)
+        setViewType(currentViewType)
         
         collectionView.alpha = 0.0
         

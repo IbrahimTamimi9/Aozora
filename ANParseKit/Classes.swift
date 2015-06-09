@@ -32,6 +32,7 @@ public class SeasonalChart: PFObject, PFSubclassing {
     @NSManaged public var ovaAnime: [Anime]
     @NSManaged public var specialAnime: [Anime]
     @NSManaged public var onaAnime: [Anime]
+    @NSManaged public var fanarts: [String]
 }
 
 public class Anime: PFObject, PFSubclassing {
