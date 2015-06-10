@@ -14,6 +14,8 @@ import ANCommonKit
 
 class AiringViewController: BaseViewController {
     
+    var weekdayStrings: [String] = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         currentOrder = OrderBy.NextAiringEpisode
@@ -38,6 +40,8 @@ class AiringViewController: BaseViewController {
                 let calendar = NSCalendar.currentCalendar()
                 let unitFlags: NSCalendarUnit = NSCalendarUnit.CalendarUnitWeekday
                 
+                var todayWeekday = calendar.components(unitFlags, fromDate: NSDate()).weekday
+                
                 for anime in result {
                     if let startDateTime = anime.startDateTime {
                         let dateComponents = calendar.components(unitFlags, fromDate: startDateTime)
@@ -46,9 +50,18 @@ class AiringViewController: BaseViewController {
                     }
                 }
                 
-                var sunday = animeByWeekday[0]
-                animeByWeekday.removeAtIndex(0)
-                animeByWeekday.append(sunday)
+                todayWeekday -= 1
+                while (todayWeekday > 0) {
+                    var currentFirstWeekdays = animeByWeekday[0]
+                    animeByWeekday.removeAtIndex(0)
+                    animeByWeekday.append(currentFirstWeekdays)
+                    
+                    var weekdayString = self.weekdayStrings[0]
+                    self.weekdayStrings.removeAtIndex(0)
+                    self.weekdayStrings.append(weekdayString)
+                    
+                    todayWeekday -= 1
+                }
                 
                 self.dataSource = animeByWeekday
                 self.order(by: self.currentOrder)
@@ -71,20 +84,7 @@ extension AiringViewController: UICollectionViewDataSource {
             
             var headerView = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView", forIndexPath: indexPath) as! BasicCollectionReusableView
             
-            var title = ""
-            switch indexPath.section {
-            case 0: title = "Monday"
-            case 1: title = "Tuesday"
-            case 2: title = "Wednesday"
-            case 3: title = "Thursday"
-            case 4: title = "Friday"
-            case 5: title = "Saturday"
-            case 6: title = "Sunday"
-            default: break
-            }
-            
-            headerView.titleLabel.text = title
-            
+            headerView.titleLabel.text = weekdayStrings[indexPath.section]
             reusableView = headerView;
         }
         

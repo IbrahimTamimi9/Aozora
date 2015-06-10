@@ -251,13 +251,13 @@ extension BaseViewController: UICollectionViewDataSource {
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let reuseIdentifier = (currentViewType == .Chart) ? "AnimeCell2" : "AnimeListCell";
+        let reuseIdentifier = (currentViewType == .Chart) ? "AnimeCell" : "AnimeListCell";
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! AnimeCell
         
         let anime = filteredDataSource[indexPath.section][indexPath.row]
         
-        let imageUrl = NSURL(string: anime.imageUrl)
-        cell.posterImageView?.sd_setImageWithURL(imageUrl)
+        //let imageUrl = NSURL(string: anime.imageUrl)
+        //cell.posterImageView?.sd_setImageWithURL(imageUrl)
         cell.titleLabel.text = anime.title
         cell.genresLabel?.text = ", ".join(anime.genres)
         
@@ -326,8 +326,12 @@ extension BaseViewController: UICollectionViewDataSource {
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         
-        let height = (section == 0) ? FirstHeaderCellHeight : HeaderCellHeight
-        return CGSize(width: view.bounds.size.width, height: height)
+        if filteredDataSource[section].count == 0 {
+            return CGSizeZero
+        } else {
+            let height = (section == 0) ? FirstHeaderCellHeight : HeaderCellHeight
+            return CGSize(width: view.bounds.size.width, height: height)
+        }
     }
     
 }
@@ -338,20 +342,18 @@ extension BaseViewController: UICollectionViewDelegate {
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let tabBarController = ANAnimeKit.rootTabBarController()
         
-        // create animator object with instance of modal view controller
-        // we need to keep it in property with strong reference so it will not get release
         animator = ZFModalTransitionAnimator(modalViewController: tabBarController)
         animator.dragable = true
         animator.direction = ZFModalTransitonDirection.Bottom
         
+        let controller = tabBarController.viewControllers?.first as! AnimeInformationViewController
         
-        //[self.animator setContentScrollView:detailViewController.scrollview];
-        
-        // set transition delegate of modal view controller to our object
         tabBarController.transitioningDelegate = self.animator;
         tabBarController.modalPresentationStyle = UIModalPresentationStyle.Custom;
         
-        presentViewController(tabBarController, animated: true, completion: nil)
+        presentViewController(tabBarController, animated: true) { () -> Void in
+            self.animator.setContentScrollView(controller.tableView)
+        }
     }
 }
 

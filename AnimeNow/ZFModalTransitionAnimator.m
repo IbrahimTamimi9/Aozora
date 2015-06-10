@@ -133,6 +133,7 @@
                              toViewController.view.frame = CGRectMake(0,0,
                                                                       CGRectGetWidth(toViewController.view.frame),
                                                                       CGRectGetHeight(toViewController.view.frame));
+                             [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
                          } completion:^(BOOL finished) {
                              [fromViewController endAppearanceTransition];
                              [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
