@@ -56,7 +56,7 @@ public class Anime: PFObject, PFSubclassing {
     @NSManaged public var tvdbID: Int
     @NSManaged public var traktID: Int
     @NSManaged public var traktSlug: String
-    @NSManaged public var title: String
+    @NSManaged public var title: String?
     @NSManaged public var type: String
     @NSManaged public var episodes: Int
     
@@ -67,19 +67,19 @@ public class Anime: PFObject, PFSubclassing {
     @NSManaged public var producers: [String]
     @NSManaged public var status: String
     
-    @NSManaged public var details: PFObject
-    @NSManaged public var relations: PFObject
-    @NSManaged public var cast: PFObject
-    @NSManaged public var characters: PFObject
+    @NSManaged public var details: AnimeDetail
+    @NSManaged public var relations: AnimeRelation
+    @NSManaged public var cast: AnimeCast
+    @NSManaged public var characters: AnimeCharacters
     @NSManaged public var forum: PFObject
-    @NSManaged public var reviews: PFObject
+    @NSManaged public var reviews: AnimeReview
     
     @NSManaged public var favoritedCount: Int
     @NSManaged public var membersCount: Int
     @NSManaged public var membersScore: Double
     @NSManaged public var popularityRank: Int
     @NSManaged public var year: Int
-    @NSManaged public var fanart: String
+    @NSManaged public var fanart: String?
     @NSManaged public var hummingBirdID: Int
     @NSManaged public var hummingBirdSlug: String
     
@@ -140,6 +140,82 @@ public class Anime: PFObject, PFSubclassing {
         return (nextEpisodeDate, components.weekOfYear+1)
     }
     
-    
 }
 
+
+public class AnimeDetail: PFObject, PFSubclassing {
+    override public class func initialize() {
+        struct Static {
+            static var onceToken : dispatch_once_t = 0;
+        }
+        dispatch_once(&Static.onceToken) {
+            self.registerSubclass()
+        }
+    }
+    
+    public class func parseClassName() -> String {
+        return "AnimeDetail"
+    }
+    
+    @NSManaged public var tvdbStart: Int
+    @NSManaged public var tvdbEnd: Int
+    @NSManaged public var inTvdbSpecials: Int
+    @NSManaged public var synopsis: String?
+    @NSManaged public var classification: String
+    @NSManaged public var englishTitles: [String]
+    @NSManaged public var japaneseTitles: [String]
+    @NSManaged public var synonyms: [String]
+    @NSManaged public var youtubeID: String
+}
+
+public class AnimeCharacters: PFObject, PFSubclassing {
+    override public class func initialize() {
+        struct Static {
+            static var onceToken : dispatch_once_t = 0;
+        }
+        dispatch_once(&Static.onceToken) {
+            self.registerSubclass()
+        }
+    }
+    
+    public class func parseClassName() -> String {
+        return "AnimeCharacters"
+    }
+    
+    @NSManaged public var characters: [[String:AnyObject]]
+}
+
+public class AnimeCast: PFObject, PFSubclassing {
+    override public class func initialize() {
+        struct Static {
+            static var onceToken : dispatch_once_t = 0;
+        }
+        dispatch_once(&Static.onceToken) {
+            self.registerSubclass()
+        }
+    }
+    
+    public class func parseClassName() -> String {
+        return "AnimeCast"
+    }
+    
+    @NSManaged public var cast: [[String:AnyObject]]
+}
+
+
+public class AnimeReview: PFObject, PFSubclassing {
+    override public class func initialize() {
+        struct Static {
+            static var onceToken : dispatch_once_t = 0;
+        }
+        dispatch_once(&Static.onceToken) {
+            self.registerSubclass()
+        }
+    }
+    
+    public class func parseClassName() -> String {
+        return "AnimeReview"
+    }
+    
+    @NSManaged public var reviews: [[String:AnyObject]]
+}

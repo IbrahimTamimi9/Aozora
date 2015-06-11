@@ -9,7 +9,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire (~> 1.2)
   - FontAwesome+iOS
-  - SDWebImage
+  - SDWebImage (~> 3.7.2)
   - Shimmer
 
 SPEC CHECKSUMS:

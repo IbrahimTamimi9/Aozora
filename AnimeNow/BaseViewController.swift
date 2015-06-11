@@ -231,7 +231,7 @@ extension BaseViewController: UISearchBarDelegate {
         
         filteredDataSource = dataSource.map { (var animeTypeArray) -> [Anime] in
             func filterText(anime: Anime) -> Bool {
-                return (anime.title.rangeOfString(searchBar.text) != nil) ||
+                return (anime.title!.rangeOfString(searchBar.text) != nil) ||
                     (" ".join(anime.genres).rangeOfString(searchBar.text) != nil)
                 
             }
@@ -256,8 +256,7 @@ extension BaseViewController: UICollectionViewDataSource {
         
         let anime = filteredDataSource[indexPath.section][indexPath.row]
         
-        //let imageUrl = NSURL(string: anime.imageUrl)
-        //cell.posterImageView?.sd_setImageWithURL(imageUrl)
+        cell.posterImageView?.setImageWithAnimationFrom(urlString: anime.imageUrl)
         cell.titleLabel.text = anime.title
         cell.genresLabel?.text = ", ".join(anime.genres)
         
@@ -347,6 +346,7 @@ extension BaseViewController: UICollectionViewDelegate {
         animator.direction = ZFModalTransitonDirection.Bottom
         
         let controller = tabBarController.viewControllers?.first as! AnimeInformationViewController
+        controller.initWithAnime(filteredDataSource[indexPath.section][indexPath.row])
         
         tabBarController.transitioningDelegate = self.animator;
         tabBarController.modalPresentationStyle = UIModalPresentationStyle.Custom;

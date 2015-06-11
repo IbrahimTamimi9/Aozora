@@ -23,6 +23,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // https://parse.com/docs/ios_guide#localdatastore/iOS
         
         // Register subclasses
+        AnimeDetail.registerSubclass()
+        AnimeCast.registerSubclass()
+        AnimeCharacters.registerSubclass()
+        AnimeRelation.registerSubclass()
+        AnimeReview.registerSubclass()
         Anime.registerSubclass()
         SeasonalChart.registerSubclass()
         

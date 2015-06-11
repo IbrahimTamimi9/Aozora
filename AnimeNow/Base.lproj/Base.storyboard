@@ -312,6 +312,7 @@
                                                     <rect key="frame" x="8" y="8" width="83" height="116"/>
                                                     <color key="backgroundColor" red="0.85098039219999999" green="0.85098039219999999" blue="0.85098039219999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
+                                                        <constraint firstAttribute="width" secondItem="XUh-1p-OKV" secondAttribute="height" multiplier="83:116" id="4c7-f1-ezE"/>
                                                         <constraint firstAttribute="width" constant="83" id="pLV-zb-dh3"/>
                                                         <constraint firstAttribute="height" constant="116" id="we8-1R-SgC"/>
                                                     </constraints>
