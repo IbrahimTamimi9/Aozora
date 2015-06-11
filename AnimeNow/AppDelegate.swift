@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Register subclasses
         AnimeDetail.registerSubclass()
         AnimeCast.registerSubclass()
-        AnimeCharacters.registerSubclass()
+        AnimeCharacter.registerSubclass()
         AnimeRelation.registerSubclass()
         AnimeReview.registerSubclass()
         Anime.registerSubclass()

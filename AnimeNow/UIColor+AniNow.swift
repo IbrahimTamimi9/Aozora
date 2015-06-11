@@ -34,4 +34,38 @@ extension UIColor {
         return UIColor(red: 211/255.0, green: 84/255.0, blue: 0/255.0, alpha: 1.0)
     }
     
+    
+    // External Sites
+    public class func crunchyroll() -> UIColor! {
+        return UIColor(red: 247/255.0, green: 139/255.0, blue: 46/255.0, alpha: 1.0)
+    }
+    
+    public class func officialSite() -> UIColor! {
+        return UIColor(red: 38/255.0, green: 47/255.0, blue: 62/255.0, alpha: 1.0)
+    }
+    
+    public class func daisuki() -> UIColor! {
+        return UIColor(red: 17/255.0, green: 17/255.0, blue: 17/255.0, alpha: 1.0)
+    }
+    
+    public class func funimation() -> UIColor! {
+        return UIColor(red: 28/255.0, green: 29/255.0, blue: 29/255.0, alpha: 1.0)
+    }
+    
+    public class func myAnimeList() -> UIColor! {
+        return UIColor(red: 46/255.0, green: 81/255.0, blue: 162/255.0, alpha: 1.0)
+    }
+    
+    public class func hummingbird() -> UIColor! {
+        return UIColor(red: 236/255.0, green: 134/255.0, blue: 97/255.0, alpha: 1.0)
+    }
+    
+    public class func anilist() -> UIColor! {
+        return UIColor(red: 38/255.0, green: 47/255.0, blue: 62/255.0, alpha: 1.0)
+    }
+    
+    public class func other() -> UIColor! {
+        return UIColor(red: 38/255.0, green: 47/255.0, blue: 62/255.0, alpha: 1.0)
+    }
+    
 }

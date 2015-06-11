@@ -17,10 +17,10 @@ enum AnimeSection: Int {
     case Relations
     case Information
     case Characters
-    case Reviews
     case ExternalLinks
+    case Cast
     
-    static var allSections: [AnimeSection] = [.Synopsis,.Relations,.Information,.Characters,.Reviews,.ExternalLinks]
+    static var allSections: [AnimeSection] = [.Synopsis,.Relations,.Information,.Characters,.ExternalLinks]
 }
 
 public class AnimeInformationViewController: UIViewController {
@@ -37,12 +37,12 @@ public class AnimeInformationViewController: UIViewController {
                 scoreRankLabel.text = "#\(anime.rank)"
                 popularityRankLabel.text = "#\(anime.popularityRank)"
                 
-                posterImageView.setImageWithAnimationFrom(urlString: anime.imageUrl)
+                posterImageView.setImageFrom(urlString: anime.imageUrl)
                 
                 if let fanartUrl = anime.fanart where count(fanartUrl) != 0 {
-                    fanartImageView.setImageWithAnimationFrom(urlString: fanartUrl)
+                    fanartImageView.setImageFrom(urlString: fanartUrl)
                 } else {
-                    fanartImageView.setImageWithAnimationFrom(urlString: anime.imageUrl)
+                    fanartImageView.setImageFrom(urlString: anime.imageUrl)
                 }
             
                 tableView.dataSource = self
@@ -155,9 +155,9 @@ extension AnimeInformationViewController: UITableViewDataSource {
             case .Synopsis: numberOfRows = 1
             case .Relations: numberOfRows = anime.relations.totalRelations
             case .Information: numberOfRows = 11
-            case .Characters: numberOfRows = 1
-            case .Reviews: numberOfRows = 5
-            case .ExternalLinks: numberOfRows = 2
+            case .Characters: numberOfRows = 5
+            case .Cast: numberOfRows = 5
+            case .ExternalLinks: numberOfRows = anime.externalLinks.count
         }
         
         return numberOfRows
@@ -169,12 +169,14 @@ extension AnimeInformationViewController: UITableViewDataSource {
         case .Synopsis:
             let cell = tableView.dequeueReusableCellWithIdentifier("SynopsisCell") as! SynopsisCell
             cell.synopsisLabel.text = anime.details.synopsis
+            cell.layoutIfNeeded()
             return cell
         case .Relations:
             let cell = tableView.dequeueReusableCellWithIdentifier("InformationCell") as! InformationCell
             let relation = anime.relations.relationAtIndex(indexPath.row)
             cell.titleLabel.text = relation.relationType.rawValue
             cell.detailLabel.text = relation.title
+            cell.layoutIfNeeded()
             return cell
         case .Information:
             let cell = tableView.dequeueReusableCellWithIdentifier("InformationCell") as! InformationCell
@@ -216,15 +218,50 @@ extension AnimeInformationViewController: UITableViewDataSource {
             default:
                 break
             }
+            cell.layoutIfNeeded()
             return cell
         case .Characters:
-            let cell = tableView.dequeueReusableCellWithIdentifier("SynopsisCell") as! SynopsisCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("CharacterCell") as! CharacterCell
+            let character = anime.characters.characterAtIndex(indexPath.row)
+            cell.characterImageView.setImageFrom(urlString: character.image)
+            cell.characterName.text = character.name
+            cell.characterRole.text = character.role
+            cell.personImageView.setImageFrom(urlString: character.japaneseActor.image)
+            cell.personName.text = character.japaneseActor.name
+            cell.personJob.text = character.japaneseActor.job
+            cell.layoutIfNeeded()
             return cell
-        case .Reviews:
-            let cell = tableView.dequeueReusableCellWithIdentifier("ReviewCell") as! ReviewCell
+        case .Cast:
+            let cell = tableView.dequeueReusableCellWithIdentifier("CastCell") as! CharacterCell
+            let cast = anime.cast.castAtIndex(indexPath.row)
+            cell.personImageView.setImageFrom(urlString: cast.image)
+            cell.personName.text = cast.name
+            cell.personJob.text = cast.job
+            cell.layoutIfNeeded()
             return cell
         case .ExternalLinks:
             let cell = tableView.dequeueReusableCellWithIdentifier("LinkCell") as! LinkCell
+            
+            let link = anime.linkAtIndex(indexPath.row)
+            cell.linkButton.setTitle(link.site.rawValue, forState: UIControlState.Normal)
+            switch link.site {
+            case .Crunchyroll:
+                cell.linkButton.backgroundColor = UIColor.crunchyroll()
+            case .OfficialSite:
+                cell.linkButton.backgroundColor = UIColor.officialSite()
+            case .Daisuki:
+                cell.linkButton.backgroundColor = UIColor.daisuki()
+            case .Funimation:
+                cell.linkButton.backgroundColor = UIColor.funimation()
+            case .MyAnimeList:
+                cell.linkButton.backgroundColor = UIColor.myAnimeList()
+            case .Hummingbird:
+                cell.linkButton.backgroundColor = UIColor.hummingbird()
+            case .Anilist:
+                cell.linkButton.backgroundColor = UIColor.anilist()
+            case .Other:
+                cell.linkButton.backgroundColor = UIColor.other()
+            }
             return cell
         default:
             break;
@@ -252,10 +289,10 @@ extension AnimeInformationViewController: UITableViewDataSource {
             title = "Characters"
             cell.allButton.hidden = false
             cell.allButton.setTitle("See All ", forState: .Normal)
-        case .Reviews:
-            title = "Reviews"
+        case .Cast:
+            title = "Cast"
             cell.allButton.hidden = false
-            cell.allButton.setTitle("Read All ", forState: .Normal)
+            cell.allButton.setTitle("See All ", forState: .Normal)
         case .ExternalLinks:
             title = "External Links"
             cell.allButton.hidden = true

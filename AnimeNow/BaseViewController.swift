@@ -256,7 +256,7 @@ extension BaseViewController: UICollectionViewDataSource {
         
         let anime = filteredDataSource[indexPath.section][indexPath.row]
         
-        cell.posterImageView?.setImageWithAnimationFrom(urlString: anime.imageUrl)
+        cell.posterImageView?.setImageFrom(urlString: anime.imageUrl)
         cell.titleLabel.text = anime.title
         cell.genresLabel?.text = ", ".join(anime.genres)
         

@@ -30,7 +30,6 @@
 		DA4167D21B273B7100847F56 /* AnimeInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4167D11B273B7100847F56 /* AnimeInformationViewController.swift */; };
 		DA4167D41B273B9400847F56 /* Anime.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA4167D31B273B9400847F56 /* Anime.storyboard */; };
 		DA4167D61B273FA300847F56 /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4167D51B273FA300847F56 /* CustomTabBar.swift */; };
-		DA4167DC1B27502800847F56 /* fanart2.png in Resources */ = {isa = PBXBuildFile; fileRef = DA4167DB1B27502800847F56 /* fanart2.png */; };
 		DA4167DF1B275CCC00847F56 /* InformationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4167DE1B275CCC00847F56 /* InformationCell.swift */; };
 		DA4167E11B275CDE00847F56 /* SynopsisCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4167E01B275CDE00847F56 /* SynopsisCell.swift */; };
 		DA4167E31B275CEB00847F56 /* ReviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4167E21B275CEB00847F56 /* ReviewCell.swift */; };
@@ -38,7 +37,6 @@
 		DA4167E71B275D3800847F56 /* TitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4167E61B275D3800847F56 /* TitleCell.swift */; };
 		DA4167E91B275F9400847F56 /* ANAnimeKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4167E81B275F9400847F56 /* ANAnimeKit.swift */; };
 		DA4167EA1B2760BF00847F56 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA27D19D1AF1BA9D00CC854E /* Images.xcassets */; };
-		DA48EA251B27E99A00D8610F /* poster.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DA48EA241B27E99A00D8610F /* poster.jpg */; };
 		DA48EA271B288DED00D8610F /* Classes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA76A1991B2375E1006CB489 /* Classes.swift */; };
 		DA48EA521B28951400D8610F /* ANParseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E12AE1B10D94200B278B0 /* ANParseKit.framework */; };
 		DA4AF8BA1B276E060020252E /* ANCommonKit.h in Headers */ = {isa = PBXBuildFile; fileRef = DA4AF8B91B276E060020252E /* ANCommonKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -106,6 +104,12 @@
 		DAFD60BF1B278463007275C1 /* UIColor+AniNow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2853C11B22C5D30070B675 /* UIColor+AniNow.swift */; };
 		DAFD60C11B27847E007275C1 /* ANCommonKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFD60C01B27847E007275C1 /* ANCommonKit.swift */; };
 		DAFD60C21B27855B007275C1 /* ANCommonKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA4AF8B51B276E060020252E /* ANCommonKit.framework */; };
+		DAFE19A81B29E01F002F3A76 /* character.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DAFE19A71B29E01F002F3A76 /* character.jpg */; };
+		DAFE19AA1B29E0DF002F3A76 /* person.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DAFE19A91B29E0DF002F3A76 /* person.jpg */; };
+		DAFE19AC1B29E17F002F3A76 /* CharacterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFE19AB1B29E17F002F3A76 /* CharacterCell.swift */; };
+		DAFE19AE1B29E4CD002F3A76 /* AnimeCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFE19AD1B29E4CD002F3A76 /* AnimeCharacter.swift */; };
+		DAFE19B01B29F264002F3A76 /* AnimeCast.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFE19AF1B29F264002F3A76 /* AnimeCast.swift */; };
+		DAFE19B21B29F4EC002F3A76 /* Anime.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFE19B11B29F4EC002F3A76 /* Anime.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -236,14 +240,12 @@
 		DA4167D31B273B9400847F56 /* Anime.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Anime.storyboard; sourceTree = "<group>"; };
 		DA4167D51B273FA300847F56 /* CustomTabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
 		DA4167D71B274D3B00847F56 /* CustomLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
-		DA4167DB1B27502800847F56 /* fanart2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fanart2.png; sourceTree = "<group>"; };
 		DA4167DE1B275CCC00847F56 /* InformationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationCell.swift; sourceTree = "<group>"; };
 		DA4167E01B275CDE00847F56 /* SynopsisCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SynopsisCell.swift; sourceTree = "<group>"; };
 		DA4167E21B275CEB00847F56 /* ReviewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewCell.swift; sourceTree = "<group>"; };
 		DA4167E41B275CF500847F56 /* LinkCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkCell.swift; sourceTree = "<group>"; };
 		DA4167E61B275D3800847F56 /* TitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleCell.swift; sourceTree = "<group>"; };
 		DA4167E81B275F9400847F56 /* ANAnimeKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ANAnimeKit.swift; sourceTree = "<group>"; };
-		DA48EA241B27E99A00D8610F /* poster.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = poster.jpg; sourceTree = "<group>"; };
 		DA4AF8B51B276E060020252E /* ANCommonKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ANCommonKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA4AF8B81B276E060020252E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA4AF8B91B276E060020252E /* ANCommonKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ANCommonKit.h; sourceTree = "<group>"; };
@@ -305,6 +307,12 @@
 		DAFD60B21B277B8D007275C1 /* ZFModalTransitionAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFModalTransitionAnimator.h; sourceTree = "<group>"; };
 		DAFD60B31B277B8D007275C1 /* ZFModalTransitionAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFModalTransitionAnimator.m; sourceTree = "<group>"; };
 		DAFD60C01B27847E007275C1 /* ANCommonKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ANCommonKit.swift; sourceTree = "<group>"; };
+		DAFE19A71B29E01F002F3A76 /* character.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = character.jpg; sourceTree = "<group>"; };
+		DAFE19A91B29E0DF002F3A76 /* person.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = person.jpg; sourceTree = "<group>"; };
+		DAFE19AB1B29E17F002F3A76 /* CharacterCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharacterCell.swift; sourceTree = "<group>"; };
+		DAFE19AD1B29E4CD002F3A76 /* AnimeCharacter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeCharacter.swift; sourceTree = "<group>"; };
+		DAFE19AF1B29F264002F3A76 /* AnimeCast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeCast.swift; sourceTree = "<group>"; };
+		DAFE19B11B29F4EC002F3A76 /* Anime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Anime.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -538,8 +546,6 @@
 		DA4167B01B273B0700847F56 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				DA48EA241B27E99A00D8610F /* poster.jpg */,
-				DA4167DB1B27502800847F56 /* fanart2.png */,
 				DA4167B11B273B0700847F56 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -574,6 +580,8 @@
 		DA4167CE1B273B1D00847F56 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				DAFE19A91B29E0DF002F3A76 /* person.jpg */,
+				DAFE19A71B29E01F002F3A76 /* character.jpg */,
 				DA4167D31B273B9400847F56 /* Anime.storyboard */,
 			);
 			name = UI;
@@ -587,6 +595,7 @@
 				DA4167E21B275CEB00847F56 /* ReviewCell.swift */,
 				DA4167E41B275CF500847F56 /* LinkCell.swift */,
 				DA4167E61B275D3800847F56 /* TitleCell.swift */,
+				DAFE19AB1B29E17F002F3A76 /* CharacterCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -721,6 +730,9 @@
 			children = (
 				DA76A1991B2375E1006CB489 /* Classes.swift */,
 				DACE77C31B29517F00037486 /* AnimeRelation.swift */,
+				DAFE19AD1B29E4CD002F3A76 /* AnimeCharacter.swift */,
+				DAFE19AF1B29F264002F3A76 /* AnimeCast.swift */,
+				DAFE19B11B29F4EC002F3A76 /* Anime.swift */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -1079,10 +1091,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA4167EA1B2760BF00847F56 /* Images.xcassets in Resources */,
+				DAFE19A81B29E01F002F3A76 /* character.jpg in Resources */,
 				DA9F731E1B29370F00C2652C /* FontAwesome.ttf in Resources */,
+				DAFE19AA1B29E0DF002F3A76 /* person.jpg in Resources */,
 				DA4167D41B273B9400847F56 /* Anime.storyboard in Resources */,
-				DA48EA251B27E99A00D8610F /* poster.jpg in Resources */,
-				DA4167DC1B27502800847F56 /* fanart2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1268,6 +1280,7 @@
 				DA4167DF1B275CCC00847F56 /* InformationCell.swift in Sources */,
 				DA4167E71B275D3800847F56 /* TitleCell.swift in Sources */,
 				DA4167E31B275CEB00847F56 /* ReviewCell.swift in Sources */,
+				DAFE19AC1B29E17F002F3A76 /* CharacterCell.swift in Sources */,
 				DA4167E11B275CDE00847F56 /* SynopsisCell.swift in Sources */,
 				DA4167E91B275F9400847F56 /* ANAnimeKit.swift in Sources */,
 				DA4167D21B273B7100847F56 /* AnimeInformationViewController.swift in Sources */,
@@ -1316,10 +1329,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAFE19B21B29F4EC002F3A76 /* Anime.swift in Sources */,
 				DA6E12E01B10D96F00B278B0 /* TFHppleElement.m in Sources */,
 				DACE77C41B29517F00037486 /* AnimeRelation.swift in Sources */,
 				DA6E130D1B10DE0F00B278B0 /* NSArray+TFHppleElement.m in Sources */,
 				DA48EA271B288DED00D8610F /* Classes.swift in Sources */,
+				DAFE19AE1B29E4CD002F3A76 /* AnimeCharacter.swift in Sources */,
+				DAFE19B01B29F264002F3A76 /* AnimeCast.swift in Sources */,
 				DACCF35F1B111016006A13EB /* AnimeService.swift in Sources */,
 				DA6E12E61B10D96F00B278B0 /* WSWebScraper.m in Sources */,
 				DA6E130F1B10DE0F00B278B0 /* TFHppleElement+MALScrapping.m in Sources */,

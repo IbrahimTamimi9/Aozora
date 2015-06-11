@@ -10,17 +10,22 @@ import UIKit
 import SDWebImage
 
 extension UIImageView {
-    public func setImageWithAnimationFrom(#urlString:String!)
+    
+    public func setImageFrom(#urlString:String!, animated:Bool? = true)
     {
         image = nil
         if let url = NSURL(string: urlString) {
-            SDWebImageManager.sharedManager().downloadImageWithURL(url, options: nil, progress: nil) { (downloadedImage:UIImage!, error:NSError!, cacheType:SDImageCacheType, isDownloaded:Bool, withURL:NSURL!) -> Void in
-                self.alpha = 0
-                UIView.transitionWithView(self, duration: 0.5, options: nil, animations: { () -> Void in
-                    self.image = downloadedImage
-                    self.alpha = 1
-                    }, completion: nil)
-                
+            if !animated! {
+                self.sd_setImageWithURL(url)
+            } else {
+                SDWebImageManager.sharedManager().downloadImageWithURL(url, options: nil, progress: nil) { (downloadedImage:UIImage!, error:NSError!, cacheType:SDImageCacheType, isDownloaded:Bool, withURL:NSURL!) -> Void in
+                    self.alpha = 0
+                    UIView.transitionWithView(self, duration: 0.5, options: nil, animations: { () -> Void in
+                        self.image = downloadedImage
+                        self.alpha = 1
+                        }, completion: nil)
+                    
+                }
             }
         }
     }
