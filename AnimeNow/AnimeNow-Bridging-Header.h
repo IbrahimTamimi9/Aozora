@@ -11,6 +11,5 @@
 
 #import <FontAwesome_iOS/NSString+FontAwesome.h>
 #import <Shimmer/FBShimmeringView.h>
-#import "ZFModalTransitionAnimator.h"
 
 #endif

@@ -30,7 +30,7 @@ public class AnimeCharacter: PFObject, PFSubclassing {
         public var image: String
         public var name: String
         public var role: String
-        public var japaneseActor: Person
+        public var japaneseActor: Person?
         
     }
     
@@ -44,18 +44,20 @@ public class AnimeCharacter: PFObject, PFSubclassing {
     public func characterAtIndex(index: Int) -> Character {
         let data = characters[index]
         
-        var voiceActorsData = data["actors"] as! [AnyObject]
-        var japaneseVoiceActor = Person()
+        var japaneseVoiceActor: Person?
         
-        for voiceActor in voiceActorsData {
-            if (voiceActor["language"] as! String) == "Japanese" {
-                japaneseVoiceActor = Person(
-                    personID: (voiceActor["id"] as! Int),
-                    image: (voiceActor["image"] as! String),
-                    name: (voiceActor["name"] as! String),
-                    job: (voiceActor["language"] as! String))
+        if let voiceActorsData = data["actors"] as? [AnyObject] {
+            for voiceActor in voiceActorsData {
+                if (voiceActor["language"] as! String) == "Japanese" {
+                    japaneseVoiceActor = Person(
+                        personID: (voiceActor["id"] as! Int),
+                        image: (voiceActor["image"] as! String),
+                        name: (voiceActor["name"] as! String),
+                        job: (voiceActor["language"] as! String))
+                }
             }
         }
+        
         
         return Character(
             characterID: (data["id"] as! Int),

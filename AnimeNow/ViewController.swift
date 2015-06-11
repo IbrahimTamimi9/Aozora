@@ -58,7 +58,7 @@ class ViewController: UIViewController {
                 }.continueWithBlock{
                     (task: BFTask!) -> AnyObject! in
                     
-                    if let result = task.result {
+                    if let result: AnyObject = task.result {
                         let date1 = (result["first_aired"] as! String).date
                         let date2 = anime["startDate"] as! NSDate
                         if NSCalendar.currentCalendar().isDate(date1, inSameDayAsDate: date2) {
@@ -105,7 +105,7 @@ class ViewController: UIViewController {
                             anime["traktID"] = traktID
                             return anime.saveInBackground()
                         } else {
-                            let slug = anime["traktSlug"]
+                            let slug: AnyObject? = anime["traktSlug"]
                             println("Failed for slug \(slug)")
                             return BFTask(result: nil)
                         }

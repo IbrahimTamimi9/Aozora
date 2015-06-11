@@ -63,19 +63,3 @@ public class AnimeDetail: PFObject, PFSubclassing {
 
 
 
-public class AnimeReview: PFObject, PFSubclassing {
-    override public class func initialize() {
-        struct Static {
-            static var onceToken : dispatch_once_t = 0;
-        }
-        dispatch_once(&Static.onceToken) {
-            self.registerSubclass()
-        }
-    }
-    
-    public class func parseClassName() -> String {
-        return "AnimeReview"
-    }
-    
-    @NSManaged public var reviews: [[String:AnyObject]]
-}

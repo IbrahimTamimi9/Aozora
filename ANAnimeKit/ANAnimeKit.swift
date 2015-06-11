@@ -16,8 +16,8 @@ public class ANAnimeKit {
         return UIStoryboard(name: "Anime", bundle: bundle())
     }
     
-    public class func rootTabBarController() -> UITabBarController {
-        let tabBarController = defaultStoryboard().instantiateInitialViewController() as! UITabBarController
+    public class func rootTabBarController() -> CustomTabBarController {
+        let tabBarController = defaultStoryboard().instantiateInitialViewController() as! CustomTabBarController
         return tabBarController
     }
     

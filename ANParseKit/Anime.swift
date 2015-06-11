@@ -136,7 +136,7 @@ public class Anime: PFObject, PFSubclassing {
     
     public func linkAtIndex(index: Int) -> Link {
         
-        let linkData = externalLinks[index]
+        let linkData: AnyObject = externalLinks[index]
         let externalLink = ExternalLink(rawValue: linkData["site"] as! String) ?? .Other
 
         return Link(site: externalLink, url: (linkData["url"] as! String))

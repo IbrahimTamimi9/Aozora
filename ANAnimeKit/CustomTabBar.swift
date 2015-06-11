@@ -7,14 +7,42 @@
 //
 
 import UIKit
+import ANParseKit
+import ANCommonKit
 
-class CustomTabBarController: UITabBarController {
-    override func viewDidLoad() {
+protocol CustomAnimatorProtocol {
+    func scrollView() -> UIScrollView
+}
+
+protocol RequiresAnimeProtocol {
+    func initWithAnime(anime: Anime)
+}
+
+public class CustomTabBarController: UITabBarController {
+    
+    var anime: Anime!
+    public var animator: ZFModalTransitionAnimator!
+    
+    public func initWithAnime(anime: Anime) {
+        self.anime = anime
+    }
+    
+    func setCurrentViewController(controller: CustomAnimatorProtocol) {
+        animator.setContentScrollView(controller.scrollView())
+    }
+    
+    override public func viewDidLoad() {
         super.viewDidLoad()
         let controllers = viewControllers as! [UIViewController]
         for controller in controllers {
             controller.tabBarItem.imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: -4, right: 0)
         }
+        
+        delegate = self
+        
+        let navController = self.viewControllers?.first as! UINavigationController
+        let controller = navController.viewControllers.first as! AnimeInformationViewController
+        controller.initWithAnime(anime)
     }
 }
 
@@ -23,5 +51,21 @@ class CustomTabBar: UITabBar {
         var sizeThatFits = super.sizeThatFits(size)
         sizeThatFits.height = 44
         return sizeThatFits
+    }
+}
+
+extension CustomTabBarController: UITabBarControllerDelegate {
+    public func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
+        return true
+    }
+    
+    public func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
+        viewController
+        
+        let navController = viewController as! UINavigationController
+        if let requiresAnime = navController.viewControllers.first as? RequiresAnimeProtocol {
+            requiresAnime.initWithAnime(anime)
+        }
+        
     }
 }

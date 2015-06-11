@@ -89,9 +89,9 @@ class BaseViewController: UIViewController {
         collectionView.alpha = 0.0
         
         timer = NSTimer.scheduledTimerWithTimeInterval(60.0, target: self, selector: "updateETACells", userInfo: nil, repeats: true)
+        
+        loadingView.startAnimating()
     }
-    
-
     
     func getAnilistAccessToken() {
         let expirationDate = NSUserDefaults.standardUserDefaults().objectForKey("expiration_date") as? NSDate
@@ -116,16 +116,12 @@ class BaseViewController: UIViewController {
         }
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        animateCollectionViewFadeIn()
-    }
-    
     // MARK: - UI Functions
     
     func animateCollectionViewFadeIn() {
         
         loadingView.stopAnimating()
+
         collectionView.alpha = 0.0
         collectionView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.7, 0.7)
         
@@ -137,7 +133,6 @@ class BaseViewController: UIViewController {
     
     func animateCollectionViewFadeOut() {
         
-        loadingView.startAnimating()
         UIView.animateWithDuration(0.25, animations: { () -> Void in
             self.collectionView.alpha = 0.0
             self.collectionView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.7, 0.7)
@@ -340,19 +335,20 @@ extension BaseViewController: UICollectionViewDataSource {
 extension BaseViewController: UICollectionViewDelegate {
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let tabBarController = ANAnimeKit.rootTabBarController()
+        let anime = filteredDataSource[indexPath.section][indexPath.row]
+        tabBarController.initWithAnime(anime)
         
         animator = ZFModalTransitionAnimator(modalViewController: tabBarController)
         animator.dragable = true
         animator.direction = ZFModalTransitonDirection.Bottom
         
-        let controller = tabBarController.viewControllers?.first as! AnimeInformationViewController
-        controller.initWithAnime(filteredDataSource[indexPath.section][indexPath.row])
         
+        tabBarController.animator = animator
         tabBarController.transitioningDelegate = self.animator;
         tabBarController.modalPresentationStyle = UIModalPresentationStyle.Custom;
         
         presentViewController(tabBarController, animated: true) { () -> Void in
-            self.animator.setContentScrollView(controller.tableView)
+            
         }
     }
 }

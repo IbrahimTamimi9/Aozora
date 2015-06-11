@@ -23,12 +23,24 @@ enum AnimeSection: Int {
     static var allSections: [AnimeSection] = [.Synopsis,.Relations,.Information,.Characters,.ExternalLinks]
 }
 
+extension AnimeInformationViewController: CustomAnimatorProtocol {
+    func scrollView() -> UIScrollView {
+        return tableView
+    }
+}
+
+extension AnimeInformationViewController: RequiresAnimeProtocol {
+    func initWithAnime(anime: Anime) {
+        self.anime = anime
+    }
+}
+
 public class AnimeInformationViewController: UIViewController {
     
     var canHideStatusBar = true
     var anime: Anime! {
         didSet {
-            if anime.details.isDataAvailable() {
+            if anime.details.isDataAvailable() && isViewLoaded() {
                 animeTitle.text = anime.title
                 tagsLabel.text = "\(anime.type) · \(ANAnimeKit.shortClassification(anime.details.classification)) · \(anime.episodes) eps · \(anime.duration) min · \(anime.year)"
                 etaLabel.text = anime.status.capitalizedString
@@ -70,10 +82,6 @@ public class AnimeInformationViewController: UIViewController {
     @IBOutlet weak var posterImageView: UIImageView!
     @IBOutlet weak var fanartImageView: UIImageView!
     
-    public func initWithAnime(anime: Anime) {
-        self.anime = anime
-    }
-    
     override public func viewDidLoad() {
         super.viewDidLoad()
         
@@ -83,21 +91,32 @@ public class AnimeInformationViewController: UIViewController {
         tableView.estimatedRowHeight = 80.0
         tableView.rowHeight = UITableViewAutomaticDimension
         
+        let tabBar = tabBarController as! CustomTabBarController
+        tabBar.setCurrentViewController(self)
+        
         fetchCurrentAnime()
         
     }
     
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.Default, animated: true)
-        canHideStatusBar = true
+        if tableView.contentOffset.y == 0 {
+            UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.Default, animated: true)
+            UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: UIStatusBarAnimation.Fade)
+            canHideStatusBar = true
+        }
     }
 
     public override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
+     
+        if isBeingDismissed() {
+            
+        }
         UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: UIStatusBarAnimation.None)
+        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
         canHideStatusBar = false
+    
     }
     
     func fetchCurrentAnime() {
@@ -223,12 +242,19 @@ extension AnimeInformationViewController: UITableViewDataSource {
         case .Characters:
             let cell = tableView.dequeueReusableCellWithIdentifier("CharacterCell") as! CharacterCell
             let character = anime.characters.characterAtIndex(indexPath.row)
-            cell.characterImageView.setImageFrom(urlString: character.image)
+            cell.characterImageView.setImageFrom(urlString: character.image, animated:false)
             cell.characterName.text = character.name
             cell.characterRole.text = character.role
-            cell.personImageView.setImageFrom(urlString: character.japaneseActor.image)
-            cell.personName.text = character.japaneseActor.name
-            cell.personJob.text = character.japaneseActor.job
+            if let japaneseVoiceActor = character.japaneseActor {
+                cell.personImageView.setImageFrom(urlString: japaneseVoiceActor.image, animated:false)
+                cell.personName.text = japaneseVoiceActor.name
+                cell.personJob.text = japaneseVoiceActor.job
+            } else {
+                cell.personImageView.image = nil
+                cell.personName.text = ""
+                cell.personJob.text = ""
+            }
+
             cell.layoutIfNeeded()
             return cell
         case .Cast:
