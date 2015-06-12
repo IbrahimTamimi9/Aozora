@@ -35,14 +35,32 @@ extension AnimeInformationViewController: RequiresAnimeProtocol {
     }
 }
 
+extension AnimeInformationViewController: StatusBarVisibilityProtocol {
+    func shouldHideStatusBar() -> Bool {
+        return hideStatusBar()
+    }
+    func updateCanHideStatusBar(canHide: Bool) {
+        canHideStatusBar = canHide
+    }
+}
+
 public class AnimeInformationViewController: UIViewController {
     
+    let HeaderCellHeight: CGFloat = 39
+    let HeaderViewHeight: CGFloat = 194
+    let TopBarHeight: CGFloat = 44
+    let StatusBarHeight: CGFloat = 22
+    
     var canHideStatusBar = true
+    var subAnimator: ZFModalTransitionAnimator!
     var anime: Anime! {
         didSet {
             if anime.details.isDataAvailable() && isViewLoaded() {
                 animeTitle.text = anime.title
-                tagsLabel.text = "\(anime.type) · \(ANAnimeKit.shortClassification(anime.details.classification)) · \(anime.episodes) eps · \(anime.duration) min · \(anime.year)"
+                let episodes = (anime.episodes != 0) ? anime.episodes.description : "?"
+                let duration = (anime.duration != 0) ? anime.duration.description : "?"
+                let year = (anime.year != 0) ? anime.year.description : "?"
+                tagsLabel.text = "\(anime.type) · \(ANAnimeKit.shortClassification(anime.details.classification)) · \(episodes) eps · \(duration) min · \(year)"
                 etaLabel.text = anime.status.capitalizedString
                 ratingLabel.text = String(format:"%.2f", anime.membersScore)
                 membersCountLabel.text = String(anime.membersCount)
@@ -67,7 +85,7 @@ public class AnimeInformationViewController: UIViewController {
     @IBOutlet public weak var tableView: UITableView!
     @IBOutlet weak var shimeringView: FBShimmeringView!
     @IBOutlet weak var separatorView: UIView!
-    @IBOutlet weak var openInAnimeTrakr: UILabel!
+    @IBOutlet weak var openInAnimeTrakr: UIButton!
     @IBOutlet weak var topViewHeight: NSLayoutConstraint!
     @IBOutlet weak var shimeringViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var etaLabel: UILabel!
@@ -91,46 +109,49 @@ public class AnimeInformationViewController: UIViewController {
         tableView.estimatedRowHeight = 80.0
         tableView.rowHeight = UITableViewAutomaticDimension
         
-        let tabBar = tabBarController as! CustomTabBarController
-        tabBar.setCurrentViewController(self)
+        if let tabBar = tabBarController as? CustomTabBarController {
+            tabBar.setCurrentViewController(self)
+        }
         
         fetchCurrentAnime()
         
+        openInAnimeTrakr.hidden = anime.traktID != 0 ? false : true
     }
     
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        if tableView.contentOffset.y == 0 {
-            UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.Default, animated: true)
-            UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: UIStatusBarAnimation.Fade)
-            canHideStatusBar = true
-        }
-    }
-
-    public override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-     
-        if isBeingDismissed() {
-            
-        }
-        UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: UIStatusBarAnimation.None)
-        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
-        canHideStatusBar = false
-    
+        canHideStatusBar = true
+        self.scrollViewDidScroll(tableView)
     }
     
     func fetchCurrentAnime() {
-        let query = Anime.query()!
-        query.limit = 1
-        query.whereKey("objectId", equalTo: anime.objectId!)
-        query.includeKey("details")
-        query.includeKey("cast")
-        query.includeKey("characters")
-        //query.includeKey("forum")
-        query.includeKey("reviews")
-        query.includeKey("relations")
+        let query = Anime.queryWith(objectID: anime.objectId!)
         query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
             self.anime = objects?.first as! Anime
+        }
+    }
+    
+    @IBAction func openInAnimeTrakr(sender: AnyObject) {
+        
+        if let url = NSURL(scheme: "animetrakr", host: nil, path: "/identifier/\(anime.myAnimeListID)") {
+            
+            let animeTrakrInstalled = UIApplication.sharedApplication().canOpenURL(url)
+            
+            if animeTrakrInstalled {
+                UIApplication.sharedApplication().openURL(url)
+            } else {
+                let appstoreURL = NSURL(string: "https://userpub.itunes.apple.com/WebObjects/MZUserPublishing.woa/wa/addUserReview?type=Purple+Software&id=590452826&mt=8&o=i")!
+                UIApplication.sharedApplication().openURL(appstoreURL)
+            }
+        }
+    }
+    
+    func hideStatusBar() -> Bool {
+        var offset = HeaderViewHeight - self.scrollView().contentOffset.y - TopBarHeight
+        if offset > StatusBarHeight {
+            return true
+        } else {
+            return false
         }
     }
 
@@ -139,11 +160,11 @@ public class AnimeInformationViewController: UIViewController {
 extension AnimeInformationViewController: UIScrollViewDelegate {
     public func scrollViewDidScroll(scrollView: UIScrollView) {
         
-        var newOffset = 194-scrollView.contentOffset.y
-        var shimmerOffset = newOffset-44
-        shimeringViewTopConstraint.constant = (shimmerOffset > 20) ? shimmerOffset : 20
+        var newOffset = HeaderViewHeight-scrollView.contentOffset.y
+        var topBarOffset = newOffset - TopBarHeight
+        shimeringViewTopConstraint.constant = (topBarOffset > StatusBarHeight) ? topBarOffset : StatusBarHeight
     
-        if shimmerOffset > 20 {
+        if topBarOffset > StatusBarHeight {
             if canHideStatusBar {
                 UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: UIStatusBarAnimation.Fade)
                 separatorView.hidden = true
@@ -187,7 +208,24 @@ extension AnimeInformationViewController: UITableViewDataSource {
         switch AnimeSection(rawValue: indexPath.section)! {
         case .Synopsis:
             let cell = tableView.dequeueReusableCellWithIdentifier("SynopsisCell") as! SynopsisCell
-            cell.synopsisLabel.text = anime.details.synopsis
+            if let synopsis = anime.details.synopsis, let data = synopsis.dataUsingEncoding(NSUnicodeStringEncoding) {
+                let font = UIFont.systemFontOfSize(15)
+            
+                if let attributedString = NSMutableAttributedString(
+                    data: data,
+                    options: [NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType],
+                    documentAttributes: nil
+                    , error: nil) {
+                    attributedString.addAttribute(NSFontAttributeName, value: font, range: NSMakeRange(0, attributedString.length))
+                    cell.synopsisLabel.attributedText = attributedString
+                } else {
+                    cell.synopsisLabel.text = ""
+                }
+                
+            } else {
+                cell.synopsisLabel.text = ""
+            }
+            
             cell.layoutIfNeeded()
             return cell
         case .Relations:
@@ -206,13 +244,15 @@ extension AnimeInformationViewController: UITableViewDataSource {
                 cell.detailLabel.text = anime.type
             case 1:
                 cell.titleLabel.text = "Episodes"
-                cell.detailLabel.text = anime.episodes.description
+                cell.detailLabel.text = (anime.episodes != 0) ? anime.episodes.description : "?"
             case 2:
                 cell.titleLabel.text = "Status"
                 cell.detailLabel.text = anime.status.capitalizedString
             case 3:
                 cell.titleLabel.text = "Aired"
-                cell.detailLabel.text = "\(anime.startDate.mediumDate()) - \(anime.endDate.mediumDate())"
+                let startDate = anime.startDate != nil ? anime.startDate!.mediumDate() : "?"
+                let endDate = anime.endDate != nil ? anime.endDate!.mediumDate() : "?"
+                cell.detailLabel.text = "\(startDate) - \(endDate)"
             case 4:
                 cell.titleLabel.text = "Producers"
                 cell.detailLabel.text = ", ".join(anime.producers)
@@ -221,7 +261,8 @@ extension AnimeInformationViewController: UITableViewDataSource {
                 cell.detailLabel.text = ", ".join(anime.genres)
             case 6:
                 cell.titleLabel.text = "Duration"
-                cell.detailLabel.text = "\(anime.duration) min"
+                let duration = (anime.duration != 0) ? anime.duration.description : "?"
+                cell.detailLabel.text = "\(duration) min"
             case 7:
                 cell.titleLabel.text = "Classification"
                 cell.detailLabel.text = anime.details.classification
@@ -303,8 +344,7 @@ extension AnimeInformationViewController: UITableViewDataSource {
         switch AnimeSection(rawValue: section)! {
         case .Synopsis:
             title = "Synopsis"
-            cell.allButton.hidden = false
-            cell.allButton.setTitle("Read All ", forState: .Normal)
+            cell.allButton.hidden = true
         case .Relations:
             title = "Relations"
             cell.allButton.hidden = true
@@ -325,16 +365,59 @@ extension AnimeInformationViewController: UITableViewDataSource {
         }
         
         cell.titleLabel.text = title
-        return cell
+        return cell.contentView
     }
     
     public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 39.0
+        return self.tableView(tableView, numberOfRowsInSection: section) > 0 ? HeaderCellHeight : 0
     }
 
 }
 
 extension AnimeInformationViewController: UITableViewDelegate {
-    
+    public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let section = AnimeSection(rawValue: indexPath.section)!
+        
+        switch section {
+        case .Synopsis:
+            let synopsisCell = tableView.cellForRowAtIndexPath(indexPath) as! SynopsisCell
+            synopsisCell.synopsisLabel.numberOfLines = (synopsisCell.synopsisLabel.numberOfLines == 3) ? 0 : 3
+            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            UIView.animateWithDuration(0.25, animations: { () -> Void in
+                tableView.beginUpdates()
+                tableView.endUpdates()
+            })
+            
+        case .Relations:
+            
+            let relation = anime.relations.relationAtIndex(indexPath.row)
+            // TODO: Parse is fetching again inside presenting AnimeInformationVC
+            let query = Anime.queryWith(malID: relation.animeID)
+            query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
+                let anime = objects?.first as! Anime
+                
+                let tabBarController = ANAnimeKit.rootTabBarController()
+                tabBarController.initWithAnime(anime)
+                
+                self.subAnimator = ZFModalTransitionAnimator(modalViewController: tabBarController)
+                self.subAnimator.dragable = true
+                self.subAnimator.direction = ZFModalTransitonDirection.Bottom
+                
+                tabBarController.animator = self.subAnimator
+                tabBarController.transitioningDelegate = self.subAnimator;
+                tabBarController.modalPresentationStyle = UIModalPresentationStyle.Custom;
+                
+                self.presentViewController(tabBarController, animated: true, completion: nil)
+                
+            }
+
+        case .Information:break
+        case .Characters:break
+        case .Cast:break
+        case .ExternalLinks:break
+        default: break
+        }
+
+    }
 }
 

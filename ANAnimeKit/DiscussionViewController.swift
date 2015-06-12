@@ -22,6 +22,14 @@ extension DiscussionViewController: RequiresAnimeProtocol {
     }
 }
 
+extension DiscussionViewController: StatusBarVisibilityProtocol {
+    func shouldHideStatusBar() -> Bool {
+        return false
+    }
+    func updateCanHideStatusBar(canHide: Bool) {
+    }
+}
+
 public class DiscussionViewController: UIViewController {
     
     var anime: Anime!
@@ -31,7 +39,7 @@ public class DiscussionViewController: UIViewController {
         super.viewDidLoad()
         
         
-        tableView.estimatedRowHeight = 120.0
+        tableView.estimatedRowHeight = 150.0
         tableView.rowHeight = UITableViewAutomaticDimension
         
         let tabBar = tabBarController as! CustomTabBarController
@@ -41,12 +49,6 @@ public class DiscussionViewController: UIViewController {
         navigationController?.navigationBar.tintColor = UIColor.blackColor()
         navigationController?.navigationBar.barTintColor = UIColor.whiteColor()
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.blackColor()]
-    }
-    
-    public override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: UIStatusBarAnimation.None)
-        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.Default, animated: true)
     }
 
 }
@@ -67,7 +69,7 @@ extension DiscussionViewController: UITableViewDataSource {
         cell.reviewerLabel.text = animeReview.username
         cell.reviewerAvatar.setImageFrom(urlString: animeReview.avatarUrl)
         cell.reviewerOverallScoreLabel.text = animeReview.rating.description
-        cell.reviewerReviewLabel.text = animeReview.review
+        cell.reviewerReviewLabel.text = "\(animeReview.review)..."
         let percentageString = String(format: "%.0f%%",Double(animeReview.helpful)*100.0 / Double(animeReview.helpfulTotal))
         cell.reviewStatisticsLabel.text = "\(percentageString) of \(animeReview.helpfulTotal) people found this review helpful"
         cell.layoutIfNeeded()
@@ -77,5 +79,9 @@ extension DiscussionViewController: UITableViewDataSource {
 }
 
 extension DiscussionViewController: UITableViewDelegate {
-    
+    public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+
+    }
 }

@@ -33,8 +33,8 @@ public class Anime: PFObject, PFSubclassing {
     @NSManaged public var type: String
     @NSManaged public var episodes: Int
     
-    @NSManaged public var startDate: NSDate
-    @NSManaged public var endDate: NSDate
+    @NSManaged public var startDate: NSDate?
+    @NSManaged public var endDate: NSDate?
     @NSManaged public var genres: [String]
     @NSManaged public var imageUrl: String
     @NSManaged public var producers: [String]
@@ -141,5 +141,35 @@ public class Anime: PFObject, PFSubclassing {
 
         return Link(site: externalLink, url: (linkData["url"] as! String))
     }
+    
+    // Fetching
+    public class func queryWith(#objectID: String) -> PFQuery {
+        
+        let query = Anime.query()!
+        query.limit = 1
+        query.whereKey("objectId", equalTo: objectID)
+        query.includeKey("details")
+        query.includeKey("cast")
+        query.includeKey("characters")
+        //query.includeKey("forum")
+        query.includeKey("reviews")
+        query.includeKey("relations")
+        return query
+    }
+    
+    public class func queryWith(#malID: Int) -> PFQuery {
+        
+        let query = Anime.query()!
+        query.limit = 1
+        query.whereKey("myAnimeListID", equalTo: malID)
+        query.includeKey("details")
+        query.includeKey("cast")
+        query.includeKey("characters")
+        //query.includeKey("forum")
+        query.includeKey("reviews")
+        query.includeKey("relations")
+        return query
+    }
+    
 
 }

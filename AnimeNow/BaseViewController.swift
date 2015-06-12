@@ -341,15 +341,12 @@ extension BaseViewController: UICollectionViewDelegate {
         animator = ZFModalTransitionAnimator(modalViewController: tabBarController)
         animator.dragable = true
         animator.direction = ZFModalTransitonDirection.Bottom
-        
-        
+         
         tabBarController.animator = animator
         tabBarController.transitioningDelegate = self.animator;
         tabBarController.modalPresentationStyle = UIModalPresentationStyle.Custom;
         
-        presentViewController(tabBarController, animated: true) { () -> Void in
-            
-        }
+        presentViewController(tabBarController, animated: true, completion: nil)
     }
 }
 

@@ -18,6 +18,11 @@ protocol RequiresAnimeProtocol {
     func initWithAnime(anime: Anime)
 }
 
+protocol StatusBarVisibilityProtocol {
+    func shouldHideStatusBar() -> Bool
+    func updateCanHideStatusBar(canHide: Bool)
+}
+
 public class CustomTabBarController: UITabBarController {
     
     var anime: Anime!
@@ -44,6 +49,20 @@ public class CustomTabBarController: UITabBarController {
         let controller = navController.viewControllers.first as! AnimeInformationViewController
         controller.initWithAnime(anime)
     }
+    
+    public override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.Default, animated: true)
+    }
+    
+    public override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if isBeingDismissed() {
+            UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: UIStatusBarAnimation.None)
+            UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
+        }
+    }
 }
 
 class CustomTabBar: UITabBar {
@@ -56,15 +75,27 @@ class CustomTabBar: UITabBar {
 
 extension CustomTabBarController: UITabBarControllerDelegate {
     public func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
+        
+        let currentNavController = selectedViewController as! UINavigationController
+        if let controller = currentNavController.viewControllers.first as? StatusBarVisibilityProtocol {
+            controller.updateCanHideStatusBar(false)
+        }
+        
+        let navController = viewController as! UINavigationController
+        if let controller = navController.viewControllers.first as? StatusBarVisibilityProtocol {
+            
+            let hide = controller.shouldHideStatusBar()
+            UIApplication.sharedApplication().setStatusBarHidden(hide, withAnimation: UIStatusBarAnimation.None)
+        }
+        
         return true
     }
     
     public func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
-        viewController
         
         let navController = viewController as! UINavigationController
-        if let requiresAnime = navController.viewControllers.first as? RequiresAnimeProtocol {
-            requiresAnime.initWithAnime(anime)
+        if let controller = navController.viewControllers.first as? RequiresAnimeProtocol {
+            controller.initWithAnime(anime)
         }
         
     }

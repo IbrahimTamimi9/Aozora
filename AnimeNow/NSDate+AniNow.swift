@@ -13,6 +13,7 @@ extension NSDate {
     public func mediumDate() -> String {
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
+
         return dateFormatter.stringFromDate(self)
     }
     

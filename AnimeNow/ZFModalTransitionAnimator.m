@@ -31,7 +31,7 @@
         _behindViewScale = 0.9f;
         _behindViewAlpha = 0.0f;
         _transitionDuration = 0.5f;
-        _damping = 0.85;
+        _damping = 0.8;
 
         [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
         [[NSNotificationCenter defaultCenter] addObserver:self
