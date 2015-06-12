@@ -27,3 +27,5 @@ Pods/**
 # For Xcode 6 Playgrounds 
 *.playground
 *.playground/**
+
+/AnimeNow.xcworkspace/
