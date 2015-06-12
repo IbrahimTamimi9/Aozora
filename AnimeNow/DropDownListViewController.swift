@@ -53,7 +53,7 @@ public class DropDownListViewController: UIViewController {
         if showTableView {
             showTableView = false
             
-            UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 0.85, initialSpringVelocity: 1.0, options: UIViewAnimationOptions.CurveEaseIn, animations: { () -> Void in
+            UIView.animateWithDuration(0.25, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
                 
                 self.tableTopSpaceConstraint.constant = 0
                 self.view.layoutIfNeeded()

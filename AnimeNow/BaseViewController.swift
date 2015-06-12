@@ -96,6 +96,9 @@ class BaseViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         setNeedsStatusBarAppearanceUpdate()
+        view.setNeedsUpdateConstraints()
+        view.layoutIfNeeded()
+        navigationController?.navigationBar.setNeedsUpdateConstraints()
         navigationController?.navigationBar.layoutIfNeeded()
     }
     
@@ -193,7 +196,7 @@ class BaseViewController: UIViewController {
         let controller = ANCommonKit.dropDownListViewController()
         controller.delegate = self
         controller.setDataSource(sender, dataSource: dataSource, yPosition: CGRectGetMaxY(frameRelativeToViewController), imageDataSource: imageDataSource)
-        controller.modalTransitionStyle = .CrossDissolve
+        controller.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
         controller.modalPresentationStyle = .OverCurrentContext
         self.tabBarController?.presentViewController(controller, animated: true, completion: nil)
     }

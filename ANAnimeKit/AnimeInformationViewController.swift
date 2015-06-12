@@ -16,24 +16,12 @@ enum AnimeSection: Int {
     case Synopsis = 0
     case Relations
     case Information
-    case Characters
     case ExternalLinks
-    case Cast
     
-    static var allSections: [AnimeSection] = [.Synopsis,.Relations,.Information,.Characters,.ExternalLinks]
+    static var allSections: [AnimeSection] = [.Synopsis,.Relations,.Information,.ExternalLinks]
 }
 
-extension AnimeInformationViewController: CustomAnimatorProtocol {
-    func scrollView() -> UIScrollView {
-        return tableView
-    }
-}
 
-extension AnimeInformationViewController: RequiresAnimeProtocol {
-    func initWithAnime(anime: Anime) {
-        self.anime = anime
-    }
-}
 
 extension AnimeInformationViewController: StatusBarVisibilityProtocol {
     func shouldHideStatusBar() -> Bool {
@@ -44,7 +32,7 @@ extension AnimeInformationViewController: StatusBarVisibilityProtocol {
     }
 }
 
-public class AnimeInformationViewController: UIViewController {
+public class AnimeInformationViewController: AnimeBaseViewController {
     
     let HeaderCellHeight: CGFloat = 39
     let HeaderViewHeight: CGFloat = 194
@@ -53,7 +41,7 @@ public class AnimeInformationViewController: UIViewController {
     
     var canHideStatusBar = true
     var subAnimator: ZFModalTransitionAnimator!
-    var anime: Anime! {
+    override var anime: Anime! {
         didSet {
             if anime.details.isDataAvailable() && isViewLoaded() {
                 animeTitle.text = anime.title
@@ -82,7 +70,6 @@ public class AnimeInformationViewController: UIViewController {
         }
     }
     
-    @IBOutlet public weak var tableView: UITableView!
     @IBOutlet weak var shimeringView: FBShimmeringView!
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var openInAnimeTrakr: UIButton!
@@ -109,10 +96,6 @@ public class AnimeInformationViewController: UIViewController {
         
         tableView.estimatedRowHeight = 44.0
         tableView.rowHeight = UITableViewAutomaticDimension
-        
-        if let tabBar = tabBarController as? CustomTabBarController {
-            tabBar.setCurrentViewController(self)
-        }
         
         fetchCurrentAnime()
         
@@ -202,8 +185,6 @@ extension AnimeInformationViewController: UITableViewDataSource {
             case .Synopsis: numberOfRows = 1
             case .Relations: numberOfRows = anime.relations.totalRelations
             case .Information: numberOfRows = 11
-            case .Characters: numberOfRows = 5
-            case .Cast: numberOfRows = 5
             case .ExternalLinks: numberOfRows = anime.externalLinks.count
         }
         
@@ -274,45 +255,20 @@ extension AnimeInformationViewController: UITableViewDataSource {
                 cell.titleLabel.text = "Classification"
                 cell.detailLabel.text = anime.details.classification
             case 8:
-                cell.titleLabel.text = anime.details.englishTitles.count != 0 ? "English Title" : ""
-                cell.detailLabel.text = "\n".join(anime.details.englishTitles)
+                cell.titleLabel.text = "English Titles"
+                cell.detailLabel.text = anime.details.englishTitles.count != 0 ? "\n".join(anime.details.englishTitles) : "-"
             case 9:
-                cell.titleLabel.text = "Japanese Title"
-                cell.detailLabel.text = "\n".join(anime.details.japaneseTitles)
+                cell.titleLabel.text = "Japanese Titles"
+                cell.detailLabel.text = anime.details.japaneseTitles.count != 0 ? "\n".join(anime.details.japaneseTitles) : "-"
             case 10:
-                cell.titleLabel.text = "Synonym"
-                cell.detailLabel.text = "\n".join(anime.details.synonyms)
+                cell.titleLabel.text = "Synonyms"
+                cell.detailLabel.text = anime.details.synonyms.count != 0 ? "\n".join(anime.details.synonyms) : "-"
             default:
                 break
             }
             cell.layoutIfNeeded()
             return cell
-        case .Characters:
-            let cell = tableView.dequeueReusableCellWithIdentifier("CharacterCell") as! CharacterCell
-            let character = anime.characters.characterAtIndex(indexPath.row)
-            cell.characterImageView.setImageFrom(urlString: character.image, animated:false)
-            cell.characterName.text = character.name
-            cell.characterRole.text = character.role
-            if let japaneseVoiceActor = character.japaneseActor {
-                cell.personImageView.setImageFrom(urlString: japaneseVoiceActor.image, animated:false)
-                cell.personName.text = japaneseVoiceActor.name
-                cell.personJob.text = japaneseVoiceActor.job
-            } else {
-                cell.personImageView.image = nil
-                cell.personName.text = ""
-                cell.personJob.text = ""
-            }
-
-            cell.layoutIfNeeded()
-            return cell
-        case .Cast:
-            let cell = tableView.dequeueReusableCellWithIdentifier("CastCell") as! CharacterCell
-            let cast = anime.cast.castAtIndex(indexPath.row)
-            cell.personImageView.setImageFrom(urlString: cast.image)
-            cell.personName.text = cast.name
-            cell.personJob.text = cast.job
-            cell.layoutIfNeeded()
-            return cell
+        
         case .ExternalLinks:
             let cell = tableView.dequeueReusableCellWithIdentifier("LinkCell") as! LinkCell
             
@@ -337,11 +293,8 @@ extension AnimeInformationViewController: UITableViewDataSource {
                 cell.linkButton.backgroundColor = UIColor.other()
             }
             return cell
-        default:
-            break;
+
         }
-        
-        return UITableViewCell()
     }
     
     public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -358,14 +311,6 @@ extension AnimeInformationViewController: UITableViewDataSource {
         case .Information:
             title = "Information"
             cell.allButton.hidden = true
-        case .Characters:
-            title = "Characters"
-            cell.allButton.hidden = false
-            cell.allButton.setTitle("See All ", forState: .Normal)
-        case .Cast:
-            title = "Cast"
-            cell.allButton.hidden = false
-            cell.allButton.setTitle("See All ", forState: .Normal)
         case .ExternalLinks:
             title = "External Links"
             cell.allButton.hidden = true
@@ -384,12 +329,14 @@ extension AnimeInformationViewController: UITableViewDataSource {
 extension AnimeInformationViewController: UITableViewDelegate {
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let section = AnimeSection(rawValue: indexPath.section)!
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
         switch section {
+            
         case .Synopsis:
             let synopsisCell = tableView.cellForRowAtIndexPath(indexPath) as! SynopsisCell
             synopsisCell.synopsisLabel.numberOfLines = (synopsisCell.synopsisLabel.numberOfLines == 3) ? 0 : 3
-            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            
             UIView.animateWithDuration(0.25, animations: { () -> Void in
                 tableView.beginUpdates()
                 tableView.endUpdates()
@@ -419,8 +366,6 @@ extension AnimeInformationViewController: UITableViewDelegate {
             }
 
         case .Information:break
-        case .Characters:break
-        case .Cast:break
         case .ExternalLinks:break
         default: break
         }

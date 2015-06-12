@@ -51,7 +51,10 @@ class ArchiveViewController: UIViewController {
         super.viewWillAppear(animated)
         animateCollectionViewFadeIn()
         
+        UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: UIStatusBarAnimation.None)
+        
         setNeedsStatusBarAppearanceUpdate()
+        navigationController?.navigationBar.setNeedsUpdateConstraints()
         navigationController?.navigationBar.layoutIfNeeded()
     }
     

@@ -84,6 +84,8 @@
 		DA6E83B41B167F1E00970D27 /* TraktV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6E83B31B167F1E00970D27 /* TraktV2.swift */; };
 		DA9F731D1B2931FF00C2652C /* UIImageView+SDWebImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9F731A1B2930F200C2652C /* UIImageView+SDWebImage.swift */; };
 		DA9F731E1B29370F00C2652C /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA41679A1B25F76F00847F56 /* FontAwesome.ttf */; };
+		DAA253B61B2B877C0092EB0B /* CharactersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA253B51B2B877C0092EB0B /* CharactersViewController.swift */; };
+		DAA253B81B2B8AF50092EB0B /* AnimeBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA253B71B2B8AF50092EB0B /* AnimeBaseViewController.swift */; };
 		DAC027CA1B2A15C20085C91A /* DiscussionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC027C91B2A15C20085C91A /* DiscussionViewController.swift */; };
 		DAC027CC1B2A16B80085C91A /* AnimeReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC027CB1B2A16B80085C91A /* AnimeReview.swift */; };
 		DAC027CF1B2A1C3F0085C91A /* ZFModalTransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = DAFD60B31B277B8D007275C1 /* ZFModalTransitionAnimator.m */; };
@@ -299,6 +301,8 @@
 		DA76A1991B2375E1006CB489 /* Classes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Classes.swift; sourceTree = "<group>"; };
 		DA76A19C1B23AADF006CB489 /* BasicCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicCollectionReusableView.swift; sourceTree = "<group>"; };
 		DA9F731A1B2930F200C2652C /* UIImageView+SDWebImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+SDWebImage.swift"; sourceTree = "<group>"; };
+		DAA253B51B2B877C0092EB0B /* CharactersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharactersViewController.swift; sourceTree = "<group>"; };
+		DAA253B71B2B8AF50092EB0B /* AnimeBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeBaseViewController.swift; sourceTree = "<group>"; };
 		DAC027C91B2A15C20085C91A /* DiscussionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscussionViewController.swift; sourceTree = "<group>"; };
 		DAC027CB1B2A16B80085C91A /* AnimeReview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeReview.swift; sourceTree = "<group>"; };
 		DACCF35C1B110AA2006A13EB /* ANParseKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ANParseKit.swift; sourceTree = "<group>"; };
@@ -572,7 +576,9 @@
 			isa = PBXGroup;
 			children = (
 				DA4167D51B273FA300847F56 /* CustomTabBar.swift */,
+				DAA253B71B2B8AF50092EB0B /* AnimeBaseViewController.swift */,
 				DA4167D11B273B7100847F56 /* AnimeInformationViewController.swift */,
+				DAA253B51B2B877C0092EB0B /* CharactersViewController.swift */,
 				DAC027C91B2A15C20085C91A /* DiscussionViewController.swift */,
 			);
 			name = ViewControllers;
@@ -1280,12 +1286,14 @@
 				DA4167E71B275D3800847F56 /* TitleCell.swift in Sources */,
 				DA4167E31B275CEB00847F56 /* ReviewCell.swift in Sources */,
 				DAFE19AC1B29E17F002F3A76 /* CharacterCell.swift in Sources */,
+				DAA253B81B2B8AF50092EB0B /* AnimeBaseViewController.swift in Sources */,
 				DAC027CA1B2A15C20085C91A /* DiscussionViewController.swift in Sources */,
 				DA4167E11B275CDE00847F56 /* SynopsisCell.swift in Sources */,
 				DA4167E91B275F9400847F56 /* ANAnimeKit.swift in Sources */,
 				DA4167D21B273B7100847F56 /* AnimeInformationViewController.swift in Sources */,
 				DA4167D61B273FA300847F56 /* CustomTabBar.swift in Sources */,
 				DA4167E51B275CF500847F56 /* LinkCell.swift in Sources */,
+				DAA253B61B2B877C0092EB0B /* CharactersViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
