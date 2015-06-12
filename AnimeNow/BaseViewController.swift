@@ -93,6 +93,12 @@ class BaseViewController: UIViewController {
         loadingView.startAnimating()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        setNeedsStatusBarAppearanceUpdate()
+        navigationController?.navigationBar.layoutIfNeeded()
+    }
+    
     func getAnilistAccessToken() {
         let expirationDate = NSUserDefaults.standardUserDefaults().objectForKey("expiration_date") as? NSDate
         let accessToken = NSUserDefaults.standardUserDefaults().stringForKey("access_token")

@@ -77,7 +77,7 @@ public class AnimeInformationViewController: UIViewController {
             
                 tableView.dataSource = self
                 tableView.delegate = self
-                tableView.reloadData()    
+                tableView.reloadData()
             }
         }
     }
@@ -89,6 +89,7 @@ public class AnimeInformationViewController: UIViewController {
     @IBOutlet weak var topViewHeight: NSLayoutConstraint!
     @IBOutlet weak var shimeringViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var etaLabel: UILabel!
+    @IBOutlet weak var closeButton: UIButton!
     
     @IBOutlet weak var animeTitle: UILabel!
     @IBOutlet weak var tagsLabel: UILabel!
@@ -106,7 +107,7 @@ public class AnimeInformationViewController: UIViewController {
         shimeringView.contentView = animeTitle
         shimeringView.shimmering = true
         
-        tableView.estimatedRowHeight = 80.0
+        tableView.estimatedRowHeight = 44.0
         tableView.rowHeight = UITableViewAutomaticDimension
         
         if let tabBar = tabBarController as? CustomTabBarController {
@@ -146,6 +147,10 @@ public class AnimeInformationViewController: UIViewController {
         }
     }
     
+    @IBAction func dismissViewController(sender: AnyObject) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
     func hideStatusBar() -> Bool {
         var offset = HeaderViewHeight - self.scrollView().contentOffset.y - TopBarHeight
         if offset > StatusBarHeight {
@@ -166,12 +171,14 @@ extension AnimeInformationViewController: UIScrollViewDelegate {
     
         if topBarOffset > StatusBarHeight {
             if canHideStatusBar {
-                UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: UIStatusBarAnimation.Fade)
+                UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: UIStatusBarAnimation.None)
                 separatorView.hidden = true
+                closeButton.hidden = true
             }
         } else {
-            UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: UIStatusBarAnimation.Fade)
+            UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: UIStatusBarAnimation.None)
             separatorView.hidden = false
+            closeButton.hidden = false
         }
     
         topViewHeight.constant = newOffset

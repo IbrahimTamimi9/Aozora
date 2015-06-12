@@ -50,6 +50,9 @@ class ArchiveViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         animateCollectionViewFadeIn()
+        
+        setNeedsStatusBarAppearanceUpdate()
+        navigationController?.navigationBar.layoutIfNeeded()
     }
     
     // MARK: - Internal functions

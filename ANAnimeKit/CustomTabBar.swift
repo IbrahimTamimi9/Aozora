@@ -59,9 +59,19 @@ public class CustomTabBarController: UITabBarController {
         super.viewWillDisappear(animated)
         
         if isBeingDismissed() {
+            selectedViewControllerCantHideStatusBar()
+            
             UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: UIStatusBarAnimation.None)
             UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
         }
+    }
+    
+    func selectedViewControllerCantHideStatusBar() {
+        let currentNavController = selectedViewController as! UINavigationController
+        if let controller = currentNavController.viewControllers.first as? StatusBarVisibilityProtocol {
+            controller.updateCanHideStatusBar(false)
+        }
+        
     }
 }
 
@@ -76,10 +86,7 @@ class CustomTabBar: UITabBar {
 extension CustomTabBarController: UITabBarControllerDelegate {
     public func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
         
-        let currentNavController = selectedViewController as! UINavigationController
-        if let controller = currentNavController.viewControllers.first as? StatusBarVisibilityProtocol {
-            controller.updateCanHideStatusBar(false)
-        }
+        selectedViewControllerCantHideStatusBar()
         
         let navController = viewController as! UINavigationController
         if let controller = navController.viewControllers.first as? StatusBarVisibilityProtocol {
