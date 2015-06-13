@@ -16,4 +16,5 @@ class ReviewCell: UITableViewCell {
     @IBOutlet weak var reviewerReviewLabel: UILabel!
     @IBOutlet weak var reviewStatisticsLabel: UILabel!
     
+    @IBOutlet weak var reviewHeightConstraint: NSLayoutConstraint!
 }

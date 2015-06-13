@@ -335,7 +335,7 @@ extension AnimeInformationViewController: UITableViewDelegate {
             
         case .Synopsis:
             let synopsisCell = tableView.cellForRowAtIndexPath(indexPath) as! SynopsisCell
-            synopsisCell.synopsisLabel.numberOfLines = (synopsisCell.synopsisLabel.numberOfLines == 3) ? 0 : 3
+            synopsisCell.synopsisLabel.numberOfLines = (synopsisCell.synopsisLabel.numberOfLines == 8) ? 0 : 8
             
             UIView.animateWithDuration(0.25, animations: { () -> Void in
                 tableView.beginUpdates()

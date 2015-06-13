@@ -22,9 +22,4 @@
   return __webScraper;
 }
 
-- (WSWebScraper *)createWebScraper
-{
-  return [[WSWebScraper alloc] initWithViewController:self];
-}
-
 @end

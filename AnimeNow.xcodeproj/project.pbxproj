@@ -37,7 +37,7 @@
 		DA4167E71B275D3800847F56 /* TitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4167E61B275D3800847F56 /* TitleCell.swift */; };
 		DA4167E91B275F9400847F56 /* ANAnimeKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4167E81B275F9400847F56 /* ANAnimeKit.swift */; };
 		DA4167EA1B2760BF00847F56 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA27D19D1AF1BA9D00CC854E /* Images.xcassets */; };
-		DA48EA271B288DED00D8610F /* Classes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA76A1991B2375E1006CB489 /* Classes.swift */; };
+		DA48EA271B288DED00D8610F /* SeasonalChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA76A1991B2375E1006CB489 /* SeasonalChart.swift */; };
 		DA48EA521B28951400D8610F /* ANParseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E12AE1B10D94200B278B0 /* ANParseKit.framework */; };
 		DA4AF8BA1B276E060020252E /* ANCommonKit.h in Headers */ = {isa = PBXBuildFile; fileRef = DA4AF8B91B276E060020252E /* ANCommonKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA4AF8C01B276E060020252E /* ANCommonKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA4AF8B51B276E060020252E /* ANCommonKit.framework */; };
@@ -49,7 +49,6 @@
 		DA6E12C21B10D94200B278B0 /* ANParseKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6E12C11B10D94200B278B0 /* ANParseKitTests.swift */; };
 		DA6E12C51B10D94200B278B0 /* ANParseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E12AE1B10D94200B278B0 /* ANParseKit.framework */; };
 		DA6E12C61B10D94200B278B0 /* ANParseKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E12AE1B10D94200B278B0 /* ANParseKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		DA6E12DC1B10D96F00B278B0 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = DA6E12D01B10D96F00B278B0 /* LICENSE.txt */; };
 		DA6E12DD1B10D96F00B278B0 /* TFHpple.h in Headers */ = {isa = PBXBuildFile; fileRef = DA6E12D11B10D96F00B278B0 /* TFHpple.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA6E12DE1B10D96F00B278B0 /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = DA6E12D21B10D96F00B278B0 /* TFHpple.m */; };
 		DA6E12DF1B10D96F00B278B0 /* TFHppleElement.h in Headers */ = {isa = PBXBuildFile; fileRef = DA6E12D31B10D96F00B278B0 /* TFHppleElement.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -60,10 +59,6 @@
 		DA6E12E41B10D96F00B278B0 /* UIViewController+WebScraper.m in Sources */ = {isa = PBXBuildFile; fileRef = DA6E12D91B10D96F00B278B0 /* UIViewController+WebScraper.m */; };
 		DA6E12E51B10D96F00B278B0 /* WSWebScraper.h in Headers */ = {isa = PBXBuildFile; fileRef = DA6E12DA1B10D96F00B278B0 /* WSWebScraper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA6E12E61B10D96F00B278B0 /* WSWebScraper.m in Sources */ = {isa = PBXBuildFile; fileRef = DA6E12DB1B10D96F00B278B0 /* WSWebScraper.m */; };
-		DA6E130C1B10DE0F00B278B0 /* NSArray+TFHppleElement.h in Headers */ = {isa = PBXBuildFile; fileRef = DA6E13081B10DE0F00B278B0 /* NSArray+TFHppleElement.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DA6E130D1B10DE0F00B278B0 /* NSArray+TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = DA6E13091B10DE0F00B278B0 /* NSArray+TFHppleElement.m */; };
-		DA6E130E1B10DE0F00B278B0 /* TFHppleElement+MALScrapping.h in Headers */ = {isa = PBXBuildFile; fileRef = DA6E130A1B10DE0F00B278B0 /* TFHppleElement+MALScrapping.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DA6E130F1B10DE0F00B278B0 /* TFHppleElement+MALScrapping.m in Sources */ = {isa = PBXBuildFile; fileRef = DA6E130B1B10DE0F00B278B0 /* TFHppleElement+MALScrapping.m */; };
 		DA6E13111B10F2E500B278B0 /* MALScrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6E13101B10F2E500B278B0 /* MALScrapper.swift */; };
 		DA6E13131B10F56B00B278B0 /* SeasonalChartService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6E13121B10F56B00B278B0 /* SeasonalChartService.swift */; };
 		DA6E131E1B10F9E900B278B0 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E12E91B10DA2F00B278B0 /* libxml2.dylib */; };
@@ -82,6 +77,7 @@
 		DA6E132B1B10FAA100B278B0 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E12EC1B10DCA100B278B0 /* Parse.framework */; };
 		DA6E83B21B1672A500970D27 /* TraktV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6E83B11B1672A500970D27 /* TraktV1.swift */; };
 		DA6E83B41B167F1E00970D27 /* TraktV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6E83B31B167F1E00970D27 /* TraktV2.swift */; };
+		DA9EB9311B2BA580001ECFA7 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA9EB9301B2BA580001ECFA7 /* WebKit.framework */; };
 		DA9F731D1B2931FF00C2652C /* UIImageView+SDWebImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9F731A1B2930F200C2652C /* UIImageView+SDWebImage.swift */; };
 		DA9F731E1B29370F00C2652C /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA41679A1B25F76F00847F56 /* FontAwesome.ttf */; };
 		DAA253B61B2B877C0092EB0B /* CharactersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA253B51B2B877C0092EB0B /* CharactersViewController.swift */; };
@@ -94,6 +90,8 @@
 		DACCF35F1B111016006A13EB /* AnimeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACCF35E1B111016006A13EB /* AnimeService.swift */; };
 		DACE77C21B294D7B00037486 /* NSDate+AniNow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACE77C11B294D7B00037486 /* NSDate+AniNow.swift */; };
 		DACE77C41B29517F00037486 /* AnimeRelation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACE77C31B29517F00037486 /* AnimeRelation.swift */; };
+		DAE43C321B2BC1A900C3092D /* TFHppleElement+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE43C311B2BC1A900C3092D /* TFHppleElement+Convenience.swift */; };
+		DAE43C341B2BC3B700C3092D /* AnimeDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE43C331B2BC3B700C3092D /* AnimeDetail.swift */; };
 		DAE7A7191B2105FD00788614 /* AnimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE7A7181B2105FD00788614 /* AnimeCell.swift */; };
 		DAFBB0951B20EFF700495ED9 /* ChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFBB0941B20EFF700495ED9 /* ChartViewController.swift */; };
 		DAFD60B51B278452007275C1 /* ActionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA38A9881B223AF1002FCBB4 /* ActionListViewController.swift */; };
@@ -261,7 +259,6 @@
 		DA6E12B81B10D94200B278B0 /* ANParseKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ANParseKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA6E12C01B10D94200B278B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA6E12C11B10D94200B278B0 /* ANParseKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANParseKitTests.swift; sourceTree = "<group>"; };
-		DA6E12D01B10D96F00B278B0 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		DA6E12D11B10D96F00B278B0 /* TFHpple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHpple.h; sourceTree = "<group>"; };
 		DA6E12D21B10D96F00B278B0 /* TFHpple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHpple.m; sourceTree = "<group>"; };
 		DA6E12D31B10D96F00B278B0 /* TFHppleElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHppleElement.h; sourceTree = "<group>"; };
@@ -288,18 +285,15 @@
 		DA6E13011B10DCEE00B278B0 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		DA6E13031B10DDB500B278B0 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		DA6E13051B10DDB900B278B0 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
-		DA6E13081B10DE0F00B278B0 /* NSArray+TFHppleElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+TFHppleElement.h"; sourceTree = "<group>"; };
-		DA6E13091B10DE0F00B278B0 /* NSArray+TFHppleElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+TFHppleElement.m"; sourceTree = "<group>"; };
-		DA6E130A1B10DE0F00B278B0 /* TFHppleElement+MALScrapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TFHppleElement+MALScrapping.h"; sourceTree = "<group>"; };
-		DA6E130B1B10DE0F00B278B0 /* TFHppleElement+MALScrapping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TFHppleElement+MALScrapping.m"; sourceTree = "<group>"; };
 		DA6E13101B10F2E500B278B0 /* MALScrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MALScrapper.swift; sourceTree = "<group>"; };
 		DA6E13121B10F56B00B278B0 /* SeasonalChartService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeasonalChartService.swift; sourceTree = "<group>"; };
 		DA6E131C1B10F9C800B278B0 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		DA6E83B11B1672A500970D27 /* TraktV1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TraktV1.swift; sourceTree = "<group>"; };
 		DA6E83B31B167F1E00970D27 /* TraktV2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TraktV2.swift; sourceTree = "<group>"; };
 		DA76A1961B235BF4006CB489 /* DropDownListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropDownListViewController.swift; sourceTree = "<group>"; };
-		DA76A1991B2375E1006CB489 /* Classes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Classes.swift; sourceTree = "<group>"; };
+		DA76A1991B2375E1006CB489 /* SeasonalChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeasonalChart.swift; sourceTree = "<group>"; };
 		DA76A19C1B23AADF006CB489 /* BasicCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicCollectionReusableView.swift; sourceTree = "<group>"; };
+		DA9EB9301B2BA580001ECFA7 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		DA9F731A1B2930F200C2652C /* UIImageView+SDWebImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+SDWebImage.swift"; sourceTree = "<group>"; };
 		DAA253B51B2B877C0092EB0B /* CharactersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharactersViewController.swift; sourceTree = "<group>"; };
 		DAA253B71B2B8AF50092EB0B /* AnimeBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeBaseViewController.swift; sourceTree = "<group>"; };
@@ -309,6 +303,8 @@
 		DACCF35E1B111016006A13EB /* AnimeService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeService.swift; sourceTree = "<group>"; };
 		DACE77C11B294D7B00037486 /* NSDate+AniNow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDate+AniNow.swift"; sourceTree = "<group>"; };
 		DACE77C31B29517F00037486 /* AnimeRelation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeRelation.swift; sourceTree = "<group>"; };
+		DAE43C311B2BC1A900C3092D /* TFHppleElement+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TFHppleElement+Convenience.swift"; sourceTree = "<group>"; };
+		DAE43C331B2BC3B700C3092D /* AnimeDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeDetail.swift; sourceTree = "<group>"; };
 		DAE7A7181B2105FD00788614 /* AnimeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeCell.swift; sourceTree = "<group>"; };
 		DAFBB0941B20EFF700495ED9 /* ChartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartViewController.swift; sourceTree = "<group>"; };
 		DAFD60B21B277B8D007275C1 /* ZFModalTransitionAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZFModalTransitionAnimator.h; path = ../AnimeNow/ZFModalTransitionAnimator.h; sourceTree = "<group>"; };
@@ -377,6 +373,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA9EB9311B2BA580001ECFA7 /* WebKit.framework in Frameworks */,
 				DA6E132A1B10FAA100B278B0 /* Bolts.framework in Frameworks */,
 				DA6E132B1B10FAA100B278B0 /* Parse.framework in Frameworks */,
 				DA6E13291B10FA9400B278B0 /* AudioToolbox.framework in Frameworks */,
@@ -648,13 +645,13 @@
 		DA6E12AF1B10D94200B278B0 /* ANParseKit */ = {
 			isa = PBXGroup;
 			children = (
-				DACE77C51B29518300037486 /* Classes */,
 				DA6E12B21B10D94200B278B0 /* ANParseKit.h */,
 				DACCF35C1B110AA2006A13EB /* ANParseKit.swift */,
+				DAE43C301B2BC16F00C3092D /* Categories */,
+				DACE77C51B29518300037486 /* Parse classes */,
 				DA6E13101B10F2E500B278B0 /* MALScrapper.swift */,
 				DA6E13121B10F56B00B278B0 /* SeasonalChartService.swift */,
 				DACCF35E1B111016006A13EB /* AnimeService.swift */,
-				DA6E13071B10DDFC00B278B0 /* Categories */,
 				DA6E12CE1B10D96F00B278B0 /* Vendor */,
 				DA6E12B01B10D94200B278B0 /* Supporting Files */,
 			);
@@ -698,7 +695,6 @@
 		DA6E12CF1B10D96F00B278B0 /* hpple */ = {
 			isa = PBXGroup;
 			children = (
-				DA6E12D01B10D96F00B278B0 /* LICENSE.txt */,
 				DA6E12D11B10D96F00B278B0 /* TFHpple.h */,
 				DA6E12D21B10D96F00B278B0 /* TFHpple.m */,
 				DA6E12D31B10D96F00B278B0 /* TFHppleElement.h */,
@@ -720,17 +716,6 @@
 			path = SWWebScrapper;
 			sourceTree = "<group>";
 		};
-		DA6E13071B10DDFC00B278B0 /* Categories */ = {
-			isa = PBXGroup;
-			children = (
-				DA6E13081B10DE0F00B278B0 /* NSArray+TFHppleElement.h */,
-				DA6E13091B10DE0F00B278B0 /* NSArray+TFHppleElement.m */,
-				DA6E130A1B10DE0F00B278B0 /* TFHppleElement+MALScrapping.h */,
-				DA6E130B1B10DE0F00B278B0 /* TFHppleElement+MALScrapping.m */,
-			);
-			name = Categories;
-			sourceTree = "<group>";
-		};
 		DAC027CE1B2A1C1D0085C91A /* Animators */ = {
 			isa = PBXGroup;
 			children = (
@@ -740,17 +725,26 @@
 			name = Animators;
 			sourceTree = "<group>";
 		};
-		DACE77C51B29518300037486 /* Classes */ = {
+		DACE77C51B29518300037486 /* Parse classes */ = {
 			isa = PBXGroup;
 			children = (
-				DA76A1991B2375E1006CB489 /* Classes.swift */,
+				DA76A1991B2375E1006CB489 /* SeasonalChart.swift */,
 				DACE77C31B29517F00037486 /* AnimeRelation.swift */,
 				DAFE19AD1B29E4CD002F3A76 /* AnimeCharacter.swift */,
 				DAFE19AF1B29F264002F3A76 /* AnimeCast.swift */,
 				DAFE19B11B29F4EC002F3A76 /* Anime.swift */,
 				DAC027CB1B2A16B80085C91A /* AnimeReview.swift */,
+				DAE43C331B2BC3B700C3092D /* AnimeDetail.swift */,
 			);
-			name = Classes;
+			name = "Parse classes";
+			sourceTree = "<group>";
+		};
+		DAE43C301B2BC16F00C3092D /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				DAE43C311B2BC1A900C3092D /* TFHppleElement+Convenience.swift */,
+			);
+			name = Categories;
 			sourceTree = "<group>";
 		};
 		DAE7A7131B2105BD00788614 /* UI */ = {
@@ -794,6 +788,7 @@
 		F4F69FB5D8335951A772F9AC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DA9EB9301B2BA580001ECFA7 /* WebKit.framework */,
 				DA6E131C1B10F9C800B278B0 /* Accelerate.framework */,
 				DA6E13051B10DDB900B278B0 /* Social.framework */,
 				DA6E13031B10DDB500B278B0 /* Accounts.framework */,
@@ -842,9 +837,7 @@
 			files = (
 				DA6E12DD1B10D96F00B278B0 /* TFHpple.h in Headers */,
 				DA6E12E31B10D96F00B278B0 /* UIViewController+WebScraper.h in Headers */,
-				DA6E130C1B10DE0F00B278B0 /* NSArray+TFHppleElement.h in Headers */,
 				DA6E12E11B10D96F00B278B0 /* XPathQuery.h in Headers */,
-				DA6E130E1B10DE0F00B278B0 /* TFHppleElement+MALScrapping.h in Headers */,
 				DA6E12B31B10D94200B278B0 /* ANParseKit.h in Headers */,
 				DA6E12E51B10D96F00B278B0 /* WSWebScraper.h in Headers */,
 				DA6E12DF1B10D96F00B278B0 /* TFHppleElement.h in Headers */,
@@ -1130,7 +1123,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA6E12DC1B10D96F00B278B0 /* LICENSE.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1338,17 +1330,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAE43C321B2BC1A900C3092D /* TFHppleElement+Convenience.swift in Sources */,
 				DAFE19B21B29F4EC002F3A76 /* Anime.swift in Sources */,
 				DA6E12E01B10D96F00B278B0 /* TFHppleElement.m in Sources */,
+				DAE43C341B2BC3B700C3092D /* AnimeDetail.swift in Sources */,
 				DACE77C41B29517F00037486 /* AnimeRelation.swift in Sources */,
-				DA6E130D1B10DE0F00B278B0 /* NSArray+TFHppleElement.m in Sources */,
-				DA48EA271B288DED00D8610F /* Classes.swift in Sources */,
+				DA48EA271B288DED00D8610F /* SeasonalChart.swift in Sources */,
 				DAFE19AE1B29E4CD002F3A76 /* AnimeCharacter.swift in Sources */,
 				DAFE19B01B29F264002F3A76 /* AnimeCast.swift in Sources */,
 				DACCF35F1B111016006A13EB /* AnimeService.swift in Sources */,
 				DA6E12E61B10D96F00B278B0 /* WSWebScraper.m in Sources */,
 				DAC027CC1B2A16B80085C91A /* AnimeReview.swift in Sources */,
-				DA6E130F1B10DE0F00B278B0 /* TFHppleElement+MALScrapping.m in Sources */,
 				DA6E13131B10F56B00B278B0 /* SeasonalChartService.swift in Sources */,
 				DACCF35D1B110AA2006A13EB /* ANParseKit.swift in Sources */,
 				DA6E12E21B10D96F00B278B0 /* XPathQuery.m in Sources */,

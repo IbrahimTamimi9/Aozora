@@ -9,6 +9,7 @@
 import UIKit
 import ANCommonKit
 import ANParseKit
+import Bolts
 
 extension DiscussionViewController: StatusBarVisibilityProtocol {
     func shouldHideStatusBar() -> Bool {
@@ -20,24 +21,27 @@ extension DiscussionViewController: StatusBarVisibilityProtocol {
 
 public class DiscussionViewController: AnimeBaseViewController {
     
+    var malScrapper: MALScrapper!
+    var dataSource: [MALScrapper.Review] = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    
     public override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.estimatedRowHeight = 150.0
         tableView.rowHeight = UITableViewAutomaticDimension
         
-    }
-
-    public override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        super.prepareForSegue(segue, sender: sender)
-        
-        if segue.identifier == "ReviewDetails" {
-            if
-                let controller = segue.destinationViewController as? ReviewViewController,
-                let indexPath = sender as? NSIndexPath {
-                    let review = anime.reviews.reviewFor(index: indexPath.row)
-                    controller.initWithReview(review)
+        malScrapper = MALScrapper(viewController: self)
+        malScrapper.reviewsFor(anime: anime).continueWithBlock {
+            (task: BFTask!) -> AnyObject! in
+            
+            if task.result != nil {
+                self.dataSource = task.result as! [MALScrapper.Review]
             }
+            return nil
         }
     }
 }
@@ -45,21 +49,20 @@ public class DiscussionViewController: AnimeBaseViewController {
 extension DiscussionViewController: UITableViewDataSource {
     
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        var numberOfRows = anime.reviews.reviews.count
-        return numberOfRows
+    
+        return dataSource.count
     }
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("ReviewCell") as! ReviewCell
         
-        let animeReview = anime.reviews.reviewFor(index: indexPath.row)
-        cell.reviewerLabel.text = animeReview.username
-        cell.reviewerAvatar.setImageFrom(urlString: animeReview.avatarUrl)
-        cell.reviewerOverallScoreLabel.text = animeReview.rating.description
-        cell.reviewerReviewLabel.text = "\(animeReview.review)..."
-        cell.reviewStatisticsLabel.text = animeReview.helpfulString()
+        let review = dataSource[indexPath.row]
+        cell.reviewerLabel.text = review.username
+        cell.reviewerAvatar.setImageFrom(urlString: review.avatarUrl)
+        cell.reviewerOverallScoreLabel.text = "Rated \(review.rating.description) our of 10"
+        cell.reviewerReviewLabel.text = "\(review.review)..."
+        cell.reviewStatisticsLabel.text = review.helpful
         cell.layoutIfNeeded()
         return cell
     }
@@ -70,9 +73,13 @@ extension DiscussionViewController: UITableViewDelegate {
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        performSegueWithIdentifier("ReviewDetails", sender: indexPath)
-        if let tabBar = tabBarController as? CustomTabBarController {
-            tabBar.disableDragDismiss()
+        
+        let reviewCell = tableView.cellForRowAtIndexPath(indexPath) as! ReviewCell
+        
+        reviewCell.reviewerReviewLabel.numberOfLines = reviewCell.reviewerReviewLabel.numberOfLines == 4 ? 0 : 4
+        tableView.reloadData()
+        if reviewCell.reviewerReviewLabel.numberOfLines == 4 {
+            tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Middle, animated: true)
         }
 
     }

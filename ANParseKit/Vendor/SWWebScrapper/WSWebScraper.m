@@ -106,7 +106,15 @@
 {
     [webView evaluateJavaScript:@"document.body.innerHTML" completionHandler:^(NSString *body, NSError *error) {
         NSString* html = [NSString stringWithFormat:@"<html><head></head><body>%@</body></html>", body];
-        TFHpple *hpple = [TFHpple hppleWithHTMLData:[html dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        
+        NSString *newHTML = [[[html stringByReplacingOccurrencesOfString:@"\n" withString:@""] stringByReplacingOccurrencesOfString:@"  " withString:@""] stringByReplacingOccurrencesOfString:@"\t" withString:@""];
+        
+        
+        TFHpple *hpple = [TFHpple hppleWithHTMLData:[newHTML dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        
+        
         self.completetion(hpple);
     }];
 }

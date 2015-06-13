@@ -15,6 +15,4 @@
 
 @property (readonly, strong, nonatomic) WSWebScraper* webScraper;
 
-- (WSWebScraper *)createWebScraper;
-
 @end

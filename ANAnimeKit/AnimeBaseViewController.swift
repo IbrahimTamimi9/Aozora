@@ -29,7 +29,7 @@ public class AnimeBaseViewController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationController?.navigationBar.tintColor = UIColor.blackColor()
+        navigationController?.navigationBar.tintColor = UIColor.peterRiver()
         navigationController?.navigationBar.barTintColor = UIColor.whiteColor()
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.blackColor()]
 
