@@ -32,11 +32,13 @@ enum OrderBy: String {
 enum ViewType: String {
     case Chart = "Chart"
     case List = "List"
+    case Poster = "Poster"
     
     static func allItems() -> [String] {
         return [
             ViewType.Chart.rawValue,
-            ViewType.List.rawValue
+            ViewType.List.rawValue,
+            ViewType.Poster.rawValue
         ]
     }
 }
@@ -91,6 +93,7 @@ class BaseViewController: UIViewController {
         timer = NSTimer.scheduledTimerWithTimeInterval(60.0, target: self, selector: "updateETACells", userInfo: nil, repeats: true)
         
         loadingView.startAnimating()
+        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -159,8 +162,7 @@ class BaseViewController: UIViewController {
         
         currentOrder = by
         orderTitleLabel.text = currentOrder.rawValue
-        
-        dataSource = dataSource.map { (var animeArray) -> [Anime] in
+        dataSource = dataSource.map() { (var animeArray) -> [Anime] in
             switch self.currentOrder {
             case .Rating:
                 animeArray.sort({ $0.rank < $1.rank})
@@ -169,7 +171,7 @@ class BaseViewController: UIViewController {
             case .Title:
                 animeArray.sort({ $0.title < $1.title})
             case .NextAiringEpisode:
-                animeArray.sort({ $0.nextEpisodeDate.compare($1.nextEpisodeDate) == .OrderedAscending})
+                animeArray.sort({ $0.nextEpisodeDate.compare($1.nextEpisodeDate) == .OrderedAscending })
             }
             return animeArray
         }
@@ -178,13 +180,34 @@ class BaseViewController: UIViewController {
         searchBar(searchBar, textDidChange: searchBar.text)
     }
     
+    func orderNextAiringEpisode(var animeArray: [Anime]) {
+        animeArray.sort({ $0.nextEpisodeDate.compare($1.nextEpisodeDate) == .OrderedAscending })
+    }
+    
     func setViewType(viewType: ViewType) {
         
         currentViewType = viewType
         viewTitleLabel.text = currentViewType.rawValue
-        let height: CGFloat = (currentViewType == .Chart) ? 132 : 52
+        var size: CGSize
         let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
-        layout.itemSize = CGSize(width: view.bounds.size.width, height: height)
+        
+        switch currentViewType {
+        case .Chart:
+            size = CGSize(width: view.bounds.size.width, height: 132)
+            layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            layout.minimumLineSpacing = 1
+        case .Poster:
+            size = CGSize(width: 100, height: 164)
+            let inset: CGFloat = (view.bounds.size.width - (100*3))/4
+            layout.sectionInset = UIEdgeInsets(top: 0, left: inset, bottom: 0, right: inset)
+            layout.minimumLineSpacing = inset
+        case .List:
+            size = CGSize(width: view.bounds.size.width, height: 52)
+            layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            layout.minimumLineSpacing = 1
+        }
+        
+        layout.itemSize = size
         
         collectionView.collectionViewLayout.invalidateLayout()
         collectionView.reloadData()
@@ -255,7 +278,17 @@ extension BaseViewController: UICollectionViewDataSource {
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let reuseIdentifier = (currentViewType == .Chart) ? "AnimeCell" : "AnimeListCell";
+        var reuseIdentifier: String = ""
+            
+        switch currentViewType {
+        case .Chart:
+            reuseIdentifier = "AnimeCell"
+        case .List:
+            reuseIdentifier = "AnimeListCell"
+        case .Poster:
+            reuseIdentifier = "AnimeCellPoster"
+        }
+
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! AnimeCell
         
         let anime = filteredDataSource[indexPath.section][indexPath.row]
@@ -278,23 +311,33 @@ extension BaseViewController: UICollectionViewDataSource {
             cell.studioLabel?.text = ""
         }
         
-        if let nextEpisode = anime.nextEpisode {
+        if var nextEpisode = anime.nextEpisode {
+            let nextDate = anime.nextEpisodeDate
             
-            let (days, hours, minutes) = etaForDate(anime.nextEpisodeDate)
-            
+            let (days, hours, minutes) = etaForDate(nextDate)
+            let etaTime: String
             if days != 0 {
-                cell.etaLabel.textColor = UIColor.belizeHole()
-                cell.etaLabel.text = "Episode \(nextEpisode) - \(days)d \(hours)h \(minutes)m"
+                etaTime = "\(days)d \(hours)h \(minutes)m"
+                cell.etaLabel?.textColor = UIColor.belizeHole()
+                cell.etaTimeLabel?.textColor = UIColor.belizeHole()
+                cell.etaLabel?.text = "Episode \(nextEpisode) - " + etaTime
             } else if hours != 0 {
-                cell.etaLabel.textColor = UIColor.nephritis()
-                cell.etaLabel.text = "Episode \(nextEpisode) - \(hours)h \(minutes)m"
+                etaTime = "\(hours)h \(minutes)m"
+                cell.etaLabel?.textColor = UIColor.nephritis()
+                cell.etaTimeLabel?.textColor = UIColor.nephritis()
+                cell.etaLabel?.text = "Episode \(nextEpisode) - " + etaTime
             } else {
-                cell.etaLabel.textColor = UIColor.pumpkin()
-                cell.etaLabel.text = "Episode \(nextEpisode) - \(minutes)m"
+                etaTime = "\(minutes)m"
+                cell.etaLabel?.textColor = UIColor.pumpkin()
+                cell.etaTimeLabel?.textColor = UIColor.pumpkin()
+                cell.etaLabel?.text = "Episode \(nextEpisode) - \(minutes)m"
             }
             
+            cell.etaTimeLabel?.text = etaTime
+            cell.nextEpisodeNumberLabel?.text = nextEpisode.description
+        
         } else {
-            cell.etaLabel.text = ""
+            cell.etaLabel?.text = ""
         }
         
         cell.layoutIfNeeded()

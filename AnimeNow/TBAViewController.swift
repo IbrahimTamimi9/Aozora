@@ -29,6 +29,7 @@ class TBAViewController: BaseViewController {
         
         let query = Anime.query()!
         query.whereKeyExists("startDate")
+        query.whereKey("genres", notContainedIn: ["Hentai"])
         query.whereKey("status", equalTo: "not yet aired")
         query.findObjectsInBackground().continueWithBlock {
             (task: BFTask!) -> AnyObject! in
