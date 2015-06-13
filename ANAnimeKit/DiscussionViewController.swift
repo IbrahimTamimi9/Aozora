@@ -28,6 +28,18 @@ public class DiscussionViewController: AnimeBaseViewController {
         
     }
 
+    public override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        super.prepareForSegue(segue, sender: sender)
+        
+        if segue.identifier == "ReviewDetails" {
+            if
+                let controller = segue.destinationViewController as? ReviewViewController,
+                let indexPath = sender as? NSIndexPath {
+                    let review = anime.reviews.reviewFor(index: indexPath.row)
+                    controller.initWithReview(review)
+            }
+        }
+    }
 }
 
 extension DiscussionViewController: UITableViewDataSource {
@@ -47,8 +59,7 @@ extension DiscussionViewController: UITableViewDataSource {
         cell.reviewerAvatar.setImageFrom(urlString: animeReview.avatarUrl)
         cell.reviewerOverallScoreLabel.text = animeReview.rating.description
         cell.reviewerReviewLabel.text = "\(animeReview.review)..."
-        let percentageString = String(format: "%.0f%%",Double(animeReview.helpful)*100.0 / Double(animeReview.helpfulTotal))
-        cell.reviewStatisticsLabel.text = "\(percentageString) of \(animeReview.helpfulTotal) people found this review helpful"
+        cell.reviewStatisticsLabel.text = animeReview.helpfulString()
         cell.layoutIfNeeded()
         return cell
     }
@@ -59,6 +70,10 @@ extension DiscussionViewController: UITableViewDelegate {
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        performSegueWithIdentifier("ReviewDetails", sender: indexPath)
+        if let tabBar = tabBarController as? CustomTabBarController {
+            tabBar.disableDragDismiss()
+        }
 
     }
 }

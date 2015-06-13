@@ -33,7 +33,11 @@ public class CustomTabBarController: UITabBarController {
     }
     
     func setCurrentViewController(controller: CustomAnimatorProtocol) {
+        animator.gesture.enabled = true
         animator.setContentScrollView(controller.scrollView())
+    }
+    func disableDragDismiss() {
+        animator.gesture.enabled = false
     }
     
     override public func viewDidLoad() {

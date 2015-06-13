@@ -9,6 +9,8 @@
 import UIKit
 import Alamofire
 import ANParseKit
+import Parse
+import Bolts
 
 class ViewController: UIViewController {
 

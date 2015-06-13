@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import ANCommonKit
 import ANParseKit
 
 extension AnimeBaseViewController: RequiresAnimeProtocol {
@@ -36,8 +35,8 @@ public class AnimeBaseViewController: UIViewController {
 
     }
     
-    public override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
+    public override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
         
         if let tabBar = tabBarController as? CustomTabBarController {
             tabBar.setCurrentViewController(self)

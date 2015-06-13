@@ -19,9 +19,7 @@ FOUNDATION_EXPORT const unsigned char ANParseKitVersionString[];
 #import <ANParseKit/WSWebScraper.h>
 #import <ANParseKit/TFHpple.h>
 
-#import <ANParseKit/TFHppleElement+MALScrapping.h>
-#import <ANParseKit/NSArray+TFHppleElement.h>
-#import <Parse/Parse.h>
-#import <Bolts/Bolts.h>
+//#import <Parse/Parse.h>
+//#import <Bolts/Bolts.h>
 
 

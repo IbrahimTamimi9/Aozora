@@ -8,18 +8,19 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <WebKit/WebKit.h>
 #import "TFHpple.h"
 
-@interface WSWebScraper : NSObject <UIWebViewDelegate>
+@interface WSWebScraper : NSObject <WKNavigationDelegate>
 
 typedef void(^WSRequestHandler)(TFHpple *hpple);
 
 @property (nonatomic, copy) WSRequestHandler completetion;
-@property (strong, nonatomic) UIWebView* webView;
+@property (strong, nonatomic) WKWebView* webView;
 - (id)initWithViewController:(UIViewController *)aViewController;
 
 - (void)scrape:(NSString *)url;
-- (void)scrape:(NSString *)url mobileVersion:(BOOL)mobileVersion handler:(WSRequestHandler)handler;
+- (void)scrape:(NSString *)url handler:(WSRequestHandler)handler;
 
 
 @end

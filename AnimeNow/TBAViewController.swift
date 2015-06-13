@@ -11,6 +11,8 @@ import ANParseKit
 import SDWebImage
 import Alamofire
 import ANCommonKit
+import Parse
+import Bolts
 
 class TBAViewController: BaseViewController {
     

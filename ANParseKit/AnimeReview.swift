@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Parse
 
 public class AnimeReview: PFObject, PFSubclassing {
     override public class func initialize() {
@@ -34,6 +35,11 @@ public class AnimeReview: PFObject, PFSubclassing {
         public var review: String
         public var username: String
         public var watchedEpisodes: Int
+        
+        public func helpfulString() -> String {
+            let percentageString = String(format: "%.0f%%",Double(self.helpful)*100.0 / Double(self.helpfulTotal))
+            return "\(percentageString) of \(self.helpfulTotal) people found this review helpful"
+        }
     }
     
     public func reviewFor(#index: Int) -> Review {

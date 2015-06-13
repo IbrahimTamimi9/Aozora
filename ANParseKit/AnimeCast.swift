@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Parse
 
 public class AnimeCast: PFObject, PFSubclassing {
     override public class func initialize() {
