@@ -39,7 +39,7 @@ public class AnimeCast: PFObject, PFSubclassing {
             castID: (data["id"] as! Int),
             image: (data["image"] as! String),
             name: (data["name"] as! String),
-            job: (data["role"] as! String)
+            job: (data["rank"] as! String)
         )
     }
 }

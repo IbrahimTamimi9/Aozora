@@ -49,7 +49,7 @@ public class SeasonalChartService {
                     sequence = sequence.continueWithBlock {
                         (task: BFTask!) -> BFTask! in
                         
-                        return SeasonalChartService.fillChartWithAnime(chart)
+                        return SeasonalChartService.updateChartWithAnime(chart)
                     }
                 }
             }
@@ -58,7 +58,7 @@ public class SeasonalChartService {
         }
     }
     
-    public class func fillChartWithAnime(season: PFObject) -> BFTask {
+    public class func updateChartWithAnime(season: PFObject) -> BFTask {
     
         return AnimeService
             .findAnimeForSeasonalChart(season)
@@ -83,11 +83,11 @@ public class SeasonalChartService {
                             default: ()
                         }
                     }
-                    season.addUniqueObjectsFromArray(tvAnime, forKey: "tvAnime")
-                    season.addUniqueObjectsFromArray(movieAnime, forKey: "movieAnime")
-                    season.addUniqueObjectsFromArray(ovaAnime, forKey: "ovaAnime")
-                    season.addUniqueObjectsFromArray(onaAnime, forKey: "onaAnime")
-                    season.addUniqueObjectsFromArray(specialAnime, forKey: "specialAnime")
+                    season.setObject(tvAnime, forKey: "tvAnime")
+                    season.setObject(movieAnime, forKey: "movieAnime")
+                    season.setObject(ovaAnime, forKey: "ovaAnime")
+                    season.setObject(onaAnime, forKey: "onaAnime")
+                    season.setObject(specialAnime, forKey: "specialAnime")
                 }
                 
                 return season.saveInBackground()

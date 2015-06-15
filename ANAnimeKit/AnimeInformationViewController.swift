@@ -238,8 +238,8 @@ extension AnimeInformationViewController: UITableViewDataSource {
                 cell.detailLabel.text = anime.status.capitalizedString
             case 3:
                 cell.titleLabel.text = "Aired"
-                let startDate = anime.startDate != nil ? anime.startDate!.mediumDate() : "?"
-                let endDate = anime.endDate != nil ? anime.endDate!.mediumDate() : "?"
+                let startDate = anime.startDate != nil && anime.startDate?.compare(NSDate(timeIntervalSince1970: 0)) != NSComparisonResult.OrderedAscending ? anime.startDate!.mediumDate() : "?"
+                let endDate = anime.endDate != nil && anime.endDate?.compare(NSDate(timeIntervalSince1970: 0)) != NSComparisonResult.OrderedAscending ? anime.endDate!.mediumDate() : "?"
                 cell.detailLabel.text = "\(startDate) - \(endDate)"
             case 4:
                 cell.titleLabel.text = "Producers"

@@ -12,25 +12,65 @@ import ANParseKit
 import Parse
 import Bolts
 
-class ViewController: UIViewController {
+class ParseWorker {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // TODO: Use anilist to calculate eta
+    // MARK: - Atarashii
+    
+    func resaveAllCast() {
+        // re-save all cast
         
+        let query = PFQuery(className: ParseKit.Anime)
+        query.whereKeyDoesNotExist("cast")
+        
+        AnimeService.findAllObjectsWith(query: query).continueWithBlock { (task: BFTask!) -> AnyObject! in
+            
+            var sequence = BFTask(result: nil);
+            
+            for data in task.result as! [Anime] {
+                sequence = sequence.continueWithBlock {
+                    (task: BFTask!) -> AnyObject! in
+                    //NSThread.sleepForTimeInterval(0.025)
+                    return self.animeCast(data.myAnimeListID)
+                    }.continueWithBlock {
+                        (task: BFTask!) -> AnyObject! in
+                        var cast = AnimeCast()
+                        cast.cast = task.result["Staff"] as? [[String:AnyObject]] ?? []
+                        data.cast = cast
+                        println("saving \(data.title)")
+                        return data.saveInBackground()
+                }
+            }
+            
+            return sequence
+        }
+    }
+    
+    func animeCast(id: Int) -> BFTask! {
+        let completionSource = BFTaskCompletionSource()
+        Alamofire.request(Atarashii.Router.animeCast(id: id)).validate().responseJSON { (req, res, JSON, error) -> Void in
+            if error == nil {
+                completionSource.setResult(JSON)
+            } else {
+                completionSource.setError(error)
+            }
+        }
+        return completionSource.task
     }
     
     // MARK: - TraktV2
     
     func linkTraktWithMAL() {
         
-        AnimeService.findAllAnime().continueWithBlock { (task: BFTask!) -> AnyObject! in
+        let query = PFQuery(className: ParseKit.Anime)
+        query
+            .includeKey("details")
+            .whereKeyDoesNotExist("traktID")
+            .selectKeys(["details","myAnimeListID","year","title","startDate"])
+            .whereKey("type", equalTo: "TV")
+            .whereKey("startDate", greaterThan: NSDate().dateByAddingTimeInterval(-10*60*60*24*365))
+        
+        AnimeService.findAllObjectsWith(query: query).continueWithBlock { (task: BFTask!) -> AnyObject! in
             
-//.includeKey("details")
-//.whereKeyDoesNotExist("traktID")
-//.selectKeys(["details","myAnimeListID","year","title","startDate"])
-//.whereKey("type", equalTo: "TV")
-//.whereKey("startDate", greaterThan: NSDate().dateByAddingTimeInterval(-10*60*60*24*365))
             var sequence = BFTask(result: nil);
             
             for anime in task.result as! [PFObject] {
@@ -326,6 +366,7 @@ class ViewController: UIViewController {
     }
     
     func request() {
+        anilistLinker()
     }
     
     // MARK: - Anilist Linker
@@ -334,14 +375,19 @@ class ViewController: UIViewController {
         return title
             .stringByReplacingOccurrencesOfString("2nd season", withString: "2")
             .stringByReplacingOccurrencesOfString("2nd Season", withString: "2")
+            .stringByReplacingOccurrencesOfString("Second Season", withString: "2")
+            .stringByReplacingOccurrencesOfString("3rd Season", withString: "3")
             .stringByReplacingOccurrencesOfString("TV", withString: " ")
+            .stringByReplacingOccurrencesOfString("The Animation", withString: " ")
+            .stringByReplacingOccurrencesOfString("Specials", withString: "Special")
             .stringByReplacingOccurrencesOfString("OVA", withString: " ")
             .stringByReplacingOccurrencesOfString("/", withString: " ")
+            .stringByReplacingOccurrencesOfString("@", withString: "a")
             .stringByReplacingOccurrencesOfString("!", withString: " ")
             .stringByReplacingOccurrencesOfString("-", withString: " ")
             .stringByReplacingOccurrencesOfString("(", withString: " ")
             .stringByReplacingOccurrencesOfString(")", withString: " ")
-            .componentsSeparatedByString(":")[0]
+        
     }
     
     func searchAnime(query: String) -> BFTask! {
@@ -360,23 +406,30 @@ class ViewController: UIViewController {
     func anilistLinker() {
         let accessToken = NSUserDefaults.standardUserDefaults().stringForKey("access_token")
         println("using token: \(accessToken)")
-        AnimeService.findAllAnime().continueWithBlock { (task: BFTask!) -> AnyObject! in
+        
+        
+        let query = PFQuery(className: ParseKit.Anime)
+        query
+            .whereKeyDoesNotExist("anilistID")
+            //.whereKey("myAnimeList", equalTo: "29325") //ghost in the shell alternative architecture
+        
+        AnimeService.findAllObjectsWith(query: query).continueWithBlock { (task: BFTask!) -> AnyObject! in
             
             var sequence = BFTask(result: nil);
-            
-            for anime in task.result as! [PFObject] {
+            var result = task.result as! [Anime]
+            result.sort({ $0.rank < $1.rank })
+            for anime in result {
                 
                 sequence = sequence.continueWithBlock {
                     (task: BFTask!) -> AnyObject! in
                     
-                    return self.searchAnime(anime["title"] as! String)
+                    return self.searchAnime(anime.title!)
                     
                     }.continueWithBlock({
                         (task: BFTask!) -> AnyObject! in
                         
                         if task.result == nil {
-//                            let title: AnyObject? = anime["title"];
-//                            println("Failed for: \(title)")
+                            println("Failed for: \(anime.title!)")
                             return BFTask(result: nil)
                         }
                         
@@ -407,7 +460,7 @@ class ViewController: UIViewController {
                             
                         }
                         
-                        NSThread.sleepForTimeInterval(0.51)
+                        NSThread.sleepForTimeInterval(0.25)
                         
                         if let matchedAnime = matchedAnime,
                             let id = matchedAnime["id"] as? Int,
@@ -415,11 +468,10 @@ class ViewController: UIViewController {
                         where id > 20449 {
                                 println("Matched \(id) \(id2)")
                                 anime["anilistID"] = id
-                                //return BFTask(result: nil)
                                 return anime.saveEventually()
                         } else {
-                            //let title: AnyObject? = anime["title"];
-                            //println("Failed for: \(title)")
+
+                            println("Failed for: \(anime.title!)")
                             return BFTask(result: nil)
                         }
                         

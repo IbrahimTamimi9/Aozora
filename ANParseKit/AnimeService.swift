@@ -107,29 +107,26 @@ public enum AnimeSort: String {
 public class AnimeService {
 
     public class func findAllAnime() -> BFTask {
-        return findAnimeWithSkip(0)
+        
+        let query = PFQuery(className: ParseKit.Anime)
+        query.limit = 1000
+        query.skip = 0
+        
+        return findAllObjectsWith(query: query)
     }
     
-    class func findAnimeWithSkip(skip: Int) -> BFTask {
-        let limitSize = 1000
-        let query = PFQuery(className: ParseKit.Anime)
-        query.limit = limitSize
-        query.skip = skip
+    public class func findAllObjectsWith(#query: PFQuery, skip: Int? = 0) -> BFTask {
+        query.limit = 1000
+        query.skip = skip!
         
         return query
-//            .whereKey("myAnimeListID", equalTo: 11783)
-            .includeKey("details")
-            .whereKeyDoesNotExist("traktID")
-            .selectKeys(["details","myAnimeListID","year","title","startDate"])
-            .whereKey("type", equalTo: "TV")
-            .whereKey("startDate", greaterThan: NSDate().dateByAddingTimeInterval(-10*60*60*24*365))
             .findObjectsInBackground()
             .continueWithBlock { (task: BFTask!) -> BFTask! in
             
             let result = task.result as! [PFObject]
                 
-                if result.count == limitSize {
-                    return self.findAnimeWithSkip(skip + limitSize)
+                if result.count == query.limit {
+                    return self.findAllObjectsWith(query: query, skip:query.skip + query.limit)
                         .continueWithBlock({ (previousTask: BFTask!) -> AnyObject! in
                         let previousResults = previousTask.result as! [PFObject]
                         return BFTask(result: previousResults+result)
@@ -149,6 +146,7 @@ public class AnimeService {
             query.whereKey("startDate", lessThanOrEqualTo: endDate)
             
             let query2 = PFQuery(className: ParseKit.Anime)
+            query2.whereKey("type", notEqualTo: "TV")
             query2.whereKey("endDate", greaterThanOrEqualTo: startDate)
             query2.whereKey("endDate", lessThanOrEqualTo: endDate)
             

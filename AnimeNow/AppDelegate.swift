@@ -19,9 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-        // Power your app with Local Datastore. For more info, go to
-        // https://parse.com/docs/ios_guide#localdatastore/iOS
-        
         // Register subclasses
         AnimeDetail.registerSubclass()
         AnimeCast.registerSubclass()
@@ -31,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Anime.registerSubclass()
         SeasonalChart.registerSubclass()
         
-        // TODO: Check how to work with this
+        // TODO: Implement this
         Parse.enableLocalDatastore()
         
         // Initialize Parse.
