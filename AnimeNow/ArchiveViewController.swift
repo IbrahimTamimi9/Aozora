@@ -69,17 +69,17 @@ class ArchiveViewController: UIViewController {
         query.limit = 200
         query.whereKey("startDate", lessThan: NSDate())
         query.orderByDescending("startDate")
-        query.findObjectsInBackground().continueWithBlock {
-            (task: BFTask!) -> AnyObject! in
-            
+        query.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
+
             var seasons: [Int:[SeasonalChart]] = [:]
-            var result = task.result as! [SeasonalChart]
+            var result = result as! [SeasonalChart]
             
             self.dataSource = result
             
             self.animateCollectionViewFadeIn()
-            return nil;
-        }
+        })
+
+        
     }
     
     // MARK: - UI Functions

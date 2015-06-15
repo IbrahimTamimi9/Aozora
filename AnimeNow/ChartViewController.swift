@@ -43,22 +43,17 @@ class ChartViewController: BaseViewController {
         currentChartQuery.includeKey("ovaAnime")
         currentChartQuery.includeKey("onaAnime")
         currentChartQuery.includeKey("specialAnime")
-        currentChartQuery.findObjectsInBackground().continueWithBlock {
-            (task: BFTask!) -> AnyObject! in
-            if let result = task.result as? [SeasonalChart], let season = result.last {
-                
+        currentChartQuery.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
+            if let result = result as? [SeasonalChart], let season = result.last {
                 self.dataSource = [season.tvAnime, season.movieAnime, season.ovaAnime, season.onaAnime, season.specialAnime]
                 self.order(by: self.currentOrder)
-                
-                
             }
             
             self.animateCollectionViewFadeIn()
-            
-            
-            return nil;
-        }
+        })
     }
+    
+    
     
     func changeSeasonalChart() {
         if let bar = navigationController?.navigationBar {

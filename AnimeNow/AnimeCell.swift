@@ -20,10 +20,4 @@ class AnimeCell: UICollectionViewCell {
     @IBOutlet weak var nextEpisodeNumberLabel: UILabel?
     @IBOutlet weak var etaTimeLabel: UILabel?
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        contentView.frame = bounds
-        contentView.autoresizingMask = .FlexibleWidth | .FlexibleHeight
-    }
-    
 }

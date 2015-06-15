@@ -313,7 +313,7 @@
                                                     <color key="backgroundColor" red="0.85098039219999999" green="0.85098039219999999" blue="0.85098039219999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="XUh-1p-OKV" secondAttribute="height" multiplier="83:116" id="4c7-f1-ezE"/>
-                                                        <constraint firstAttribute="width" constant="83" id="pLV-zb-dh3"/>
+                                                        <constraint firstAttribute="width" priority="999" constant="83" id="pLV-zb-dh3"/>
                                                         <constraint firstAttribute="height" constant="116" id="we8-1R-SgC"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
@@ -321,6 +321,11 @@
                                                             <integer key="value" value="2"/>
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="4c7-f1-ezE"/>
+                                                        </mask>
+                                                    </variation>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -332,6 +337,7 @@
                                             <constraint firstItem="wYw-gS-gbI" firstAttribute="leading" secondItem="j72-bo-Yc1" secondAttribute="leading" id="A5I-JZ-aFD"/>
                                             <constraint firstItem="wYw-gS-gbI" firstAttribute="leading" secondItem="yQy-y9-xrs" secondAttribute="leading" id="Bq0-u9-5eJ"/>
                                             <constraint firstItem="Km9-Si-wtV" firstAttribute="trailing" secondItem="Nze-dg-mvt" secondAttribute="trailingMargin" id="CGd-eC-iVV"/>
+                                            <constraint firstItem="Km9-Si-wtV" firstAttribute="leading" secondItem="XUh-1p-OKV" secondAttribute="trailing" constant="8" id="Lck-bW-aBu"/>
                                             <constraint firstAttribute="bottomMargin" secondItem="j72-bo-Yc1" secondAttribute="bottom" constant="6" id="TId-sd-mgi"/>
                                             <constraint firstItem="j72-bo-Yc1" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Nze-dg-mvt" secondAttribute="bottomMargin" priority="750" id="TuU-s2-s4R"/>
                                             <constraint firstItem="VxC-Gq-CGe" firstAttribute="top" secondItem="Km9-Si-wtV" secondAttribute="bottom" id="VjL-VM-sJa"/>
@@ -349,6 +355,7 @@
                                         </constraints>
                                         <variation key="default">
                                             <mask key="constraints">
+                                                <exclude reference="1ec-Ne-m57"/>
                                                 <exclude reference="rin-C4-TZW"/>
                                                 <exclude reference="1aG-LI-7Ka"/>
                                                 <exclude reference="TId-sd-mgi"/>
@@ -386,8 +393,8 @@
                                                     </userDefinedRuntimeAttributes>
                                                     <variation key="default">
                                                         <mask key="constraints">
-                                                            <exclude reference="Mtx-Xo-hf5"/>
                                                             <exclude reference="FYg-qb-KKj"/>
+                                                            <exclude reference="Mtx-Xo-hf5"/>
                                                         </mask>
                                                     </variation>
                                                 </imageView>
@@ -409,9 +416,9 @@
                                                     <variation key="default">
                                                         <mask key="constraints">
                                                             <exclude reference="IHZ-sU-Vv7"/>
-                                                            <exclude reference="vao-4p-kzo"/>
                                                             <exclude reference="JZd-Zz-V7x"/>
                                                             <exclude reference="dbD-DY-TLQ"/>
+                                                            <exclude reference="vao-4p-kzo"/>
                                                         </mask>
                                                     </variation>
                                                 </label>
@@ -475,18 +482,18 @@
                                         <size key="customSize" width="99.5" height="163.5"/>
                                         <variation key="default">
                                             <mask key="constraints">
-                                                <exclude reference="ikg-F7-mlw"/>
                                                 <exclude reference="B2b-QT-IWU"/>
-                                                <exclude reference="Lca-WQ-Puc"/>
                                                 <exclude reference="Ehc-SP-ltM"/>
-                                                <exclude reference="Nj0-Uw-UgX"/>
+                                                <exclude reference="Lca-WQ-Puc"/>
+                                                <exclude reference="ikg-F7-mlw"/>
                                                 <exclude reference="5qg-24-WCx"/>
-                                                <exclude reference="RyP-yd-kzi"/>
-                                                <exclude reference="nk7-A5-5Mf"/>
-                                                <exclude reference="btJ-YV-yAz"/>
-                                                <exclude reference="ITi-pI-mJF"/>
+                                                <exclude reference="Nj0-Uw-UgX"/>
                                                 <exclude reference="9Sn-Gm-8DK"/>
+                                                <exclude reference="ITi-pI-mJF"/>
+                                                <exclude reference="RyP-yd-kzi"/>
+                                                <exclude reference="btJ-YV-yAz"/>
                                                 <exclude reference="eTe-IV-Fwg"/>
+                                                <exclude reference="nk7-A5-5Mf"/>
                                             </mask>
                                         </variation>
                                         <connections>
@@ -966,10 +973,10 @@
                                                     <nil key="highlightedColor"/>
                                                     <variation key="default">
                                                         <mask key="constraints">
+                                                            <exclude reference="2Vm-cw-SBJ"/>
                                                             <exclude reference="8Hy-ZP-SzD"/>
                                                             <exclude reference="A0Z-tC-PGi"/>
                                                             <exclude reference="XGN-mY-3RF"/>
-                                                            <exclude reference="2Vm-cw-SBJ"/>
                                                         </mask>
                                                     </variation>
                                                 </label>
@@ -1011,13 +1018,18 @@
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="116" id="AgV-Rl-t04"/>
                                                         <constraint firstAttribute="width" secondItem="CWp-fm-vaX" secondAttribute="height" multiplier="83:116" id="Uh3-FQ-dtX"/>
-                                                        <constraint firstAttribute="width" constant="83" id="Ztv-73-umM"/>
+                                                        <constraint firstAttribute="width" priority="999" constant="83" id="Ztv-73-umM"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                             <integer key="value" value="2"/>
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="Uh3-FQ-dtX"/>
+                                                        </mask>
+                                                    </variation>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -1035,6 +1047,7 @@
                                             <constraint firstItem="FY1-XO-wOu" firstAttribute="leading" secondItem="MjV-R8-XjV" secondAttribute="leading" id="IbX-zw-Vb3"/>
                                             <constraint firstItem="CWp-fm-vaX" firstAttribute="top" secondItem="Oys-lL-tR0" secondAttribute="topMargin" id="JSY-7J-ynC"/>
                                             <constraint firstItem="ase-eZ-rI9" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Oys-lL-tR0" secondAttribute="bottomMargin" priority="750" id="Mxs-O5-0VB"/>
+                                            <constraint firstItem="3qu-xB-tPd" firstAttribute="leading" secondItem="CWp-fm-vaX" secondAttribute="trailing" constant="8" id="Tvz-zZ-A8W"/>
                                             <constraint firstAttribute="trailingMargin" secondItem="ase-eZ-rI9" secondAttribute="trailing" id="U0l-cF-ZkW"/>
                                             <constraint firstItem="CWp-fm-vaX" firstAttribute="leading" secondItem="Oys-lL-tR0" secondAttribute="leadingMargin" id="YxY-Cq-OUH"/>
                                             <constraint firstItem="3qu-xB-tPd" firstAttribute="leading" secondItem="FY1-XO-wOu" secondAttribute="leading" id="cqT-Tn-BOh"/>
@@ -1046,11 +1059,12 @@
                                         </constraints>
                                         <variation key="default">
                                             <mask key="constraints">
+                                                <exclude reference="EYc-lD-V5V"/>
                                                 <exclude reference="saq-rc-J9d"/>
                                                 <exclude reference="7AU-OX-a3H"/>
                                                 <exclude reference="9B1-hi-mqF"/>
-                                                <exclude reference="Mxs-O5-0VB"/>
                                                 <exclude reference="IVF-vL-aiH"/>
+                                                <exclude reference="Mxs-O5-0VB"/>
                                             </mask>
                                         </variation>
                                         <connections>
@@ -1082,10 +1096,10 @@
                                                     <nil key="highlightedColor"/>
                                                     <variation key="default">
                                                         <mask key="constraints">
-                                                            <exclude reference="qMM-Kh-D6U"/>
-                                                            <exclude reference="xpt-h6-AgV"/>
-                                                            <exclude reference="wNj-Ou-gi0"/>
                                                             <exclude reference="Dyc-10-L0W"/>
+                                                            <exclude reference="qMM-Kh-D6U"/>
+                                                            <exclude reference="wNj-Ou-gi0"/>
+                                                            <exclude reference="xpt-h6-AgV"/>
                                                         </mask>
                                                     </variation>
                                                 </label>
@@ -1392,7 +1406,7 @@
                                                     <rect key="frame" x="8" y="8" width="83" height="116"/>
                                                     <color key="backgroundColor" red="0.85098039219999999" green="0.85098039219999999" blue="0.85098039219999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="83" id="VuI-gb-0lF"/>
+                                                        <constraint firstAttribute="width" priority="999" constant="83" id="VuI-gb-0lF"/>
                                                         <constraint firstAttribute="height" constant="116" id="aB1-kB-VRo"/>
                                                         <constraint firstAttribute="height" constant="106" id="cng-5V-pOw"/>
                                                         <constraint firstAttribute="width" secondItem="haa-Py-kHd" secondAttribute="height" multiplier="38:53" id="gEe-TY-T2y"/>
@@ -1515,6 +1529,7 @@
                                                 <exclude reference="RNC-ac-K7X"/>
                                                 <exclude reference="sjE-qv-BnH"/>
                                                 <exclude reference="yXu-nr-nhC"/>
+                                                <exclude reference="mow-Fi-Zc3"/>
                                                 <exclude reference="uwq-sp-hgc"/>
                                                 <exclude reference="3Ox-j8-CPI"/>
                                                 <exclude reference="TCl-2s-Gtc"/>
@@ -1552,8 +1567,8 @@
                                                     </userDefinedRuntimeAttributes>
                                                     <variation key="default">
                                                         <mask key="constraints">
-                                                            <exclude reference="L2P-0p-qH3"/>
                                                             <exclude reference="GHL-EP-wra"/>
+                                                            <exclude reference="L2P-0p-qH3"/>
                                                         </mask>
                                                     </variation>
                                                 </imageView>
@@ -1574,8 +1589,8 @@
                                                     <nil key="highlightedColor"/>
                                                     <variation key="default">
                                                         <mask key="constraints">
-                                                            <exclude reference="Jhv-ji-06K"/>
                                                             <exclude reference="HkA-Dt-BDB"/>
+                                                            <exclude reference="Jhv-ji-06K"/>
                                                             <exclude reference="Mse-KA-7fJ"/>
                                                             <exclude reference="pDn-kd-gQb"/>
                                                         </mask>
@@ -1643,16 +1658,16 @@
                                             <mask key="constraints">
                                                 <exclude reference="OVN-N2-595"/>
                                                 <exclude reference="ROa-5t-D2d"/>
-                                                <exclude reference="nqy-Fa-aRb"/>
                                                 <exclude reference="mxJ-of-lK3"/>
-                                                <exclude reference="RHi-3Z-Gve"/>
+                                                <exclude reference="nqy-Fa-aRb"/>
                                                 <exclude reference="LG6-9q-LIM"/>
-                                                <exclude reference="krq-3f-tab"/>
+                                                <exclude reference="RHi-3Z-Gve"/>
                                                 <exclude reference="QPX-Rg-s5O"/>
-                                                <exclude reference="fc3-jD-INi"/>
                                                 <exclude reference="RSc-38-vPA"/>
                                                 <exclude reference="VYv-bU-6zR"/>
                                                 <exclude reference="bQQ-Ow-BPV"/>
+                                                <exclude reference="fc3-jD-INi"/>
+                                                <exclude reference="krq-3f-tab"/>
                                             </mask>
                                         </variation>
                                         <connections>

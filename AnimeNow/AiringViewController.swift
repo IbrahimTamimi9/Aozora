@@ -36,51 +36,53 @@ class AiringViewController: BaseViewController {
         let query = Anime.query()!
         query.whereKeyExists("startDateTime")
         query.whereKey("status", equalTo: "currently airing")
-        query.findObjectsInBackground().continueWithBlock {
-            (task: BFTask!) -> AnyObject! in
+        query.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
             
-            if let result = task.result as? [Anime] {
+            if let result = result as? [Anime] {
+            
+            var animeByWeekday: [[Anime]] = [[],[],[],[],[],[],[]]
+            
+            let calendar = NSCalendar.currentCalendar()
+            let unitFlags: NSCalendarUnit = NSCalendarUnit.CalendarUnitWeekday
+            
+            for anime in result {
+                let startDateTime = anime.nextEpisodeDate
+                let dateComponents = calendar.components(unitFlags, fromDate: startDateTime)
+                let weekday = dateComponents.weekday-1
+                animeByWeekday[weekday].append(anime)
                 
-                var animeByWeekday: [[Anime]] = [[],[],[],[],[],[],[]]
+            }
+            
+            var todayWeekday = calendar.components(unitFlags, fromDate: NSDate()).weekday - 1
+            while (todayWeekday > 0) {
+                var currentFirstWeekdays = animeByWeekday[0]
+                animeByWeekday.removeAtIndex(0)
+                animeByWeekday.append(currentFirstWeekdays)
+                todayWeekday -= 1
+            }
+            
+            // Set weekday strings
+            
+            let today = NSDate()
+            let unitFlags2: NSCalendarUnit = NSCalendarUnit.CalendarUnitWeekday | NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitMonth
+            var dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "eeee, MMM dd"
+            for daysAhead in 0..<7 {
+                let date = calendar.dateByAddingUnit(NSCalendarUnit.CalendarUnitDay, value: daysAhead, toDate: today, options: nil)
+                let dateString = dateFormatter.stringFromDate(date!)
+                self.weekdayStrings.append(dateString)
+            }
+            
+            self.dataSource = animeByWeekday
+            self.order(by: self.currentOrder)
                 
-                let calendar = NSCalendar.currentCalendar()
-                let unitFlags: NSCalendarUnit = NSCalendarUnit.CalendarUnitWeekday
-                
-                for anime in result {
-                    let startDateTime = anime.nextEpisodeDate
-                    let dateComponents = calendar.components(unitFlags, fromDate: startDateTime)
-                    let weekday = dateComponents.weekday-1
-                    animeByWeekday[weekday].append(anime)
-                    
-                }
-                
-                var todayWeekday = calendar.components(unitFlags, fromDate: NSDate()).weekday - 1
-                while (todayWeekday > 0) {
-                    var currentFirstWeekdays = animeByWeekday[0]
-                    animeByWeekday.removeAtIndex(0)
-                    animeByWeekday.append(currentFirstWeekdays)
-                    todayWeekday -= 1
-                }
-                
-                // Set weekday strings
-                
-                let today = NSDate()
-                let unitFlags2: NSCalendarUnit = NSCalendarUnit.CalendarUnitWeekday | NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitMonth
-                var dateFormatter = NSDateFormatter()
-                dateFormatter.dateFormat = "eeee, MMM dd"
-                for daysAhead in 0..<7 {
-                    let date = calendar.dateByAddingUnit(NSCalendarUnit.CalendarUnitDay, value: daysAhead, toDate: today, options: nil)
-                    let dateString = dateFormatter.stringFromDate(date!)
-                    self.weekdayStrings.append(dateString)
-                }
-                
-                self.dataSource = animeByWeekday
-                self.order(by: self.currentOrder)
             }
             
             self.animateCollectionViewFadeIn()
-            return nil;
-        }
+        })
+        
+
+        
     }
     
     

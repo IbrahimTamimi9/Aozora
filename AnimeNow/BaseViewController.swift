@@ -98,6 +98,9 @@ class BaseViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
+        animateCollectionViewFadeIn()
+        
         setNeedsStatusBarAppearanceUpdate()
         view.setNeedsUpdateConstraints()
         view.layoutIfNeeded()

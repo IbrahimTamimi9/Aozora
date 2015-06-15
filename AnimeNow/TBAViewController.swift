@@ -30,15 +30,12 @@ class TBAViewController: BaseViewController {
         let query = Anime.query()!
         query.whereKeyExists("startDate")
         query.whereKey("status", equalTo: "not yet aired")
-        query.findObjectsInBackground().continueWithBlock {
-            (task: BFTask!) -> AnyObject! in
-            
-            if let result = task.result as? [Anime] {
+        query.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
+            if let result = result as? [Anime] {
                 
                 var animeByType: [[Anime]] = [[],[],[],[],[],[],[]]
                                 
                 for anime in result {
-
                     var index = 0
                     switch anime.type {
                         case "TV": index = 0
@@ -48,7 +45,6 @@ class TBAViewController: BaseViewController {
                         case "Special": index = 4
                         default: break;
                     }
-                    
                     animeByType[index].append(anime)
                 }
                 
@@ -57,8 +53,9 @@ class TBAViewController: BaseViewController {
             }
             
             self.animateCollectionViewFadeIn()
-            return nil;
-        }
+        })
+
+        
     }
     
 }
