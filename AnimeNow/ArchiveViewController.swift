@@ -31,8 +31,8 @@ class ArchiveViewController: UIViewController {
         }
     }
     
-    // TODO: create loading view from code, generalize to be used on UICollectionViews
-    @IBOutlet weak var loadingView: LoaderView!
+    var loadingView: LoaderView!
+    
     @IBOutlet weak var collectionView: UICollectionView!
     
     override func viewDidLoad() {
@@ -46,7 +46,13 @@ class ArchiveViewController: UIViewController {
         let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
         layout.itemSize = CGSize(width: view.bounds.size.width, height: 36)
         
+        
+        loadingView = LoaderView()
+        loadingView.addToViewController(self)
+        loadingView.startAnimating()
+        
         fetchAllSeasons()
+        
     }
     
     override func viewWillAppear(animated: Bool) {

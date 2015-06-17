@@ -28,16 +28,27 @@ public class DiscussionViewController: AnimeBaseViewController {
         }
     }
     
+    var expandedIndexPath: NSIndexPath?
+    
+    var canFadeInImages = true
+    var loadingView: LoaderView!
+    
     public override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.estimatedRowHeight = 150.0
         tableView.rowHeight = UITableViewAutomaticDimension
         
+        loadingView = LoaderView()
+        loadingView.addToViewController(self)
+        loadingView.startAnimating()
+        
         malScrapper = MALScrapper(viewController: self)
         malScrapper.reviewsFor(anime: anime).continueWithBlock {
             (task: BFTask!) -> AnyObject! in
             
+            self.tableView.animateFadeIn()
+            self.loadingView.stopAnimating()
             if task.result != nil {
                 self.dataSource = task.result as! [MALScrapper.Review]
             }
@@ -59,10 +70,16 @@ extension DiscussionViewController: UITableViewDataSource {
         
         let review = dataSource[indexPath.row]
         cell.reviewerLabel.text = review.username
-        cell.reviewerAvatar.setImageFrom(urlString: review.avatarUrl)
+        cell.reviewerAvatar.setImageFrom(urlString: review.avatarUrl, animated: canFadeInImages)
         cell.reviewerOverallScoreLabel.text = "Rated \(review.rating.description) our of 10"
         cell.reviewerReviewLabel.text = "\(review.review)..."
         cell.reviewStatisticsLabel.text = review.helpful
+        
+        if expandedIndexPath?.row == indexPath.row {
+            cell.reviewerReviewLabel.numberOfLines = 0
+        } else {
+            cell.reviewerReviewLabel.numberOfLines = 4
+        }
         cell.layoutIfNeeded()
         return cell
     }
@@ -75,9 +92,15 @@ extension DiscussionViewController: UITableViewDelegate {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
         let reviewCell = tableView.cellForRowAtIndexPath(indexPath) as! ReviewCell
+        let cellIsContracted = reviewCell.reviewerReviewLabel.numberOfLines == 4
         
-        reviewCell.reviewerReviewLabel.numberOfLines = reviewCell.reviewerReviewLabel.numberOfLines == 4 ? 0 : 4
+        reviewCell.reviewerReviewLabel.numberOfLines = cellIsContracted ? 0 : 4
+        expandedIndexPath = cellIsContracted ? indexPath : nil
+        
+        canFadeInImages = false
         tableView.reloadData()
+        tableView.layoutIfNeeded()
+        canFadeInImages = true
         if reviewCell.reviewerReviewLabel.numberOfLines == 4 {
             tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Middle, animated: true)
         }

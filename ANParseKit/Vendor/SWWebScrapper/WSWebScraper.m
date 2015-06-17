@@ -110,6 +110,7 @@
         
         NSString *newHTML = [[[html stringByReplacingOccurrencesOfString:@"\n" withString:@""] stringByReplacingOccurrencesOfString:@"  " withString:@""] stringByReplacingOccurrencesOfString:@"\t" withString:@""];
         
+        newHTML = [newHTML stringByReplacingOccurrencesOfString:@"> <" withString:@"><"];
         
         TFHpple *hpple = [TFHpple hppleWithHTMLData:[newHTML dataUsingEncoding:NSUTF8StringEncoding]];
         

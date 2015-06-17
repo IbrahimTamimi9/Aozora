@@ -197,29 +197,18 @@
                                     <outlet property="delegate" destination="Zis-TZ-Cdx" id="1dh-fU-HBz"/>
                                 </connections>
                             </collectionView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o4q-hA-b6A" customClass="LoaderView" customModule="ANCommonKit">
-                                <rect key="frame" x="290" y="290" width="20" height="20"/>
-                                <color key="backgroundColor" red="0.98431372549999996" green="0.50986284500000001" blue="0.2695369138" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="20" id="x8d-8a-cAH"/>
-                                    <constraint firstAttribute="height" constant="20" id="yKK-ru-sEu"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="3hE-RK-hYE" firstAttribute="top" secondItem="F5q-sh-Pus" secondAttribute="bottom" constant="-49" id="24J-4r-pM8"/>
-                            <constraint firstAttribute="centerX" secondItem="o4q-hA-b6A" secondAttribute="centerX" id="3lt-03-1h8"/>
                             <constraint firstItem="F5q-sh-Pus" firstAttribute="top" secondItem="u6e-h4-zpA" secondAttribute="bottom" constant="-64" id="4gy-Ly-3NP"/>
                             <constraint firstItem="F5q-sh-Pus" firstAttribute="leading" secondItem="gYr-7o-A6C" secondAttribute="leadingMargin" constant="-16" id="INe-Mn-qQc"/>
-                            <constraint firstAttribute="centerY" secondItem="o4q-hA-b6A" secondAttribute="centerY" id="oSJ-mB-ldd"/>
                             <constraint firstAttribute="trailingMargin" secondItem="F5q-sh-Pus" secondAttribute="trailing" constant="-16" id="pQ5-Mn-bte"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Archive" id="qis-6R-kLC"/>
                     <connections>
                         <outlet property="collectionView" destination="F5q-sh-Pus" id="a8U-40-zYR"/>
-                        <outlet property="loadingView" destination="o4q-hA-b6A" id="rRI-Kr-rKj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uQX-13-bHZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -744,14 +733,6 @@
                                     <constraint firstItem="fdA-9f-mYh" firstAttribute="leading" secondItem="AmM-TX-whE" secondAttribute="trailing" constant="1" id="zbu-ak-fDi"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dh2-9I-oNl" customClass="LoaderView" customModule="ANCommonKit">
-                                <rect key="frame" x="290" y="290" width="20" height="20"/>
-                                <color key="backgroundColor" red="0.98431372549999996" green="0.50986284500000001" blue="0.2695369138" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="20" id="Jnt-VG-Hd3"/>
-                                    <constraint firstAttribute="height" constant="20" id="QUt-jb-Z9C"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.90196078430000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
@@ -759,10 +740,8 @@
                             <constraint firstItem="qNO-UV-LtX" firstAttribute="top" secondItem="m5v-5k-u0e" secondAttribute="bottom" constant="-40" id="2UA-fn-o8w"/>
                             <constraint firstItem="haP-dC-pfL" firstAttribute="top" secondItem="ZvF-JW-mkc" secondAttribute="bottom" constant="-49" id="3fh-su-gfC"/>
                             <constraint firstItem="qNO-UV-LtX" firstAttribute="leading" secondItem="kcU-gF-Gza" secondAttribute="leading" id="9Ew-FQ-M0Z"/>
-                            <constraint firstAttribute="centerY" secondItem="dh2-9I-oNl" secondAttribute="centerY" id="Aln-5L-pTg"/>
                             <constraint firstItem="ZvF-JW-mkc" firstAttribute="leading" secondItem="kcU-gF-Gza" secondAttribute="leadingMargin" constant="-16" id="BEZ-dq-2Cj"/>
                             <constraint firstAttribute="trailingMargin" secondItem="ZvF-JW-mkc" secondAttribute="trailing" constant="-16" id="GtQ-iU-4lP"/>
-                            <constraint firstAttribute="centerX" secondItem="dh2-9I-oNl" secondAttribute="centerX" id="klA-8c-GTE"/>
                             <constraint firstAttribute="trailing" secondItem="qNO-UV-LtX" secondAttribute="trailing" id="zFt-ir-8Qo"/>
                             <constraint firstItem="ZvF-JW-mkc" firstAttribute="top" secondItem="m5v-5k-u0e" secondAttribute="bottom" constant="-64" id="ztV-ne-0fz"/>
                         </constraints>
@@ -786,7 +765,6 @@
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="ZvF-JW-mkc" id="ieM-OQ-8lS"/>
-                        <outlet property="loadingView" destination="dh2-9I-oNl" id="wOb-Xh-rq9"/>
                         <outlet property="navigationBarTitle" destination="wsb-4U-rg4" id="nMm-HZ-ziu"/>
                         <outlet property="orderButton" destination="Kmm-r9-uUk" id="BQN-fV-JNU"/>
                         <outlet property="orderTitleLabel" destination="eR2-2Z-b2A" id="ys9-KJ-DKN"/>
@@ -1317,22 +1295,12 @@
                                     <constraint firstItem="Nga-rp-yfE" firstAttribute="width" secondItem="vYN-0r-zFC" secondAttribute="width" multiplier="0.2" id="UZ5-qb-gMN"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bcH-mu-fzb" customClass="LoaderView" customModule="ANCommonKit">
-                                <rect key="frame" x="290" y="290" width="20" height="20"/>
-                                <color key="backgroundColor" red="0.98431372549999996" green="0.50986284500000001" blue="0.2695369138" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="20" id="ABm-JO-tMs"/>
-                                    <constraint firstAttribute="height" constant="20" id="P64-nH-rvd"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.90196078430000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="h1J-6b-Ktu" secondAttribute="trailing" constant="-16" id="9nX-SP-hU3"/>
-                            <constraint firstAttribute="centerX" secondItem="bcH-mu-fzb" secondAttribute="centerX" id="Bog-6h-UAn"/>
                             <constraint firstItem="vYN-0r-zFC" firstAttribute="leading" secondItem="VuH-Z5-x2P" secondAttribute="leading" id="J4N-yP-eBA"/>
-                            <constraint firstAttribute="centerY" secondItem="bcH-mu-fzb" secondAttribute="centerY" id="NAv-db-XhT"/>
                             <constraint firstItem="h1J-6b-Ktu" firstAttribute="top" secondItem="UzP-F5-cHr" secondAttribute="bottom" constant="-64" id="QGs-iZ-AGD"/>
                             <constraint firstItem="vYN-0r-zFC" firstAttribute="top" secondItem="UzP-F5-cHr" secondAttribute="bottom" constant="-40" id="UuI-65-O26"/>
                             <constraint firstAttribute="trailing" secondItem="vYN-0r-zFC" secondAttribute="trailing" id="XMW-h8-mUH"/>
@@ -1359,7 +1327,6 @@
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="h1J-6b-Ktu" id="cjW-1u-mxP"/>
-                        <outlet property="loadingView" destination="bcH-mu-fzb" id="tf1-lv-zWP"/>
                         <outlet property="navigationBarTitle" destination="r54-Ru-ZTe" id="AhO-Hf-SUL"/>
                         <outlet property="orderButton" destination="UuF-uE-sZE" id="K3a-1a-D09"/>
                         <outlet property="orderTitleLabel" destination="HGs-hu-T4e" id="ys3-S8-NUN"/>
@@ -1918,22 +1885,12 @@
                                     <constraint firstAttribute="bottom" secondItem="KsR-7U-3MZ" secondAttribute="bottom" id="yYw-Qa-qMz"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ECd-7E-v8p" customClass="LoaderView" customModule="ANCommonKit">
-                                <rect key="frame" x="290" y="290" width="20" height="20"/>
-                                <color key="backgroundColor" red="0.98431372549999996" green="0.50986284500000001" blue="0.2695369138" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="20" id="00f-Zv-fKE"/>
-                                    <constraint firstAttribute="height" constant="20" id="ndZ-Uy-PZY"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.90196078430000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstAttribute="centerX" secondItem="ECd-7E-v8p" secondAttribute="centerX" id="1Sw-hf-f0C"/>
                             <constraint firstItem="Zdp-qa-jqf" firstAttribute="leading" secondItem="kir-8n-jYN" secondAttribute="leadingMargin" constant="-16" id="2xd-L9-hKT"/>
                             <constraint firstItem="F0f-WI-VVa" firstAttribute="leading" secondItem="kir-8n-jYN" secondAttribute="leading" id="76v-fX-yS0"/>
-                            <constraint firstAttribute="centerY" secondItem="ECd-7E-v8p" secondAttribute="centerY" id="9bL-J4-Vyk"/>
                             <constraint firstAttribute="trailing" secondItem="F0f-WI-VVa" secondAttribute="trailing" id="HpW-h4-Jbu"/>
                             <constraint firstItem="Q6M-7m-DIM" firstAttribute="top" secondItem="Zdp-qa-jqf" secondAttribute="bottom" constant="-49" id="Ils-qv-0fp"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Zdp-qa-jqf" secondAttribute="trailing" constant="-16" id="f1h-Pw-Vae"/>
@@ -1960,7 +1917,6 @@
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="Zdp-qa-jqf" id="KNc-Fp-guW"/>
-                        <outlet property="loadingView" destination="ECd-7E-v8p" id="6cE-vs-EwW"/>
                         <outlet property="navigationBarTitle" destination="skB-Pd-djA" id="XEV-Gn-5p9"/>
                         <outlet property="orderButton" destination="wJI-nl-7V4" id="rVw-LU-o4w"/>
                         <outlet property="orderTitleLabel" destination="gcL-wP-ayd" id="RbW-U3-e8D"/>

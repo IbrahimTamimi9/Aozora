@@ -49,6 +49,7 @@ class BaseViewController: UIViewController {
     let HeaderCellHeight: CGFloat = 44.0
     let angleDownIcon = NSString.fontAwesomeIconStringForIconIdentifier("icon-angle-down")
     
+    var canFadeImages = true
     var showTableView = true
     var currentOrder: OrderBy = .Rating
     var currentViewType: ViewType = .Chart
@@ -63,12 +64,12 @@ class BaseViewController: UIViewController {
     
     var filteredDataSource: [[Anime]] = [] {
         didSet {
+            canFadeImages = false
             self.collectionView.reloadData()
+            canFadeImages = true
         }
     }
-    
-    // TODO: create loading view from code, generalize to be used on UICollectionViews
-    @IBOutlet weak var loadingView: LoaderView!
+
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var searchBar: UISearchBar!
     
@@ -79,6 +80,8 @@ class BaseViewController: UIViewController {
     
     @IBOutlet weak var viewTitleLabel: UILabel!
     @IBOutlet weak var viewButton: UIButton!
+    
+    var loadingView: LoaderView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -92,14 +95,18 @@ class BaseViewController: UIViewController {
         
         timer = NSTimer.scheduledTimerWithTimeInterval(60.0, target: self, selector: "updateETACells", userInfo: nil, repeats: true)
         
+        loadingView = LoaderView()
+        loadingView.addToViewController(self)
         loadingView.startAnimating()
-        
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        animateCollectionViewFadeIn()
+        if loadingView.animating == false {
+            loadingView.stopAnimating()
+            collectionView.animateFadeIn()
+        }
         
         setNeedsStatusBarAppearanceUpdate()
         view.setNeedsUpdateConstraints()
@@ -133,30 +140,11 @@ class BaseViewController: UIViewController {
     
     // MARK: - UI Functions
     
-    func animateCollectionViewFadeIn() {
-        
-        loadingView.stopAnimating()
-
-        collectionView.alpha = 0.0
-        collectionView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.7, 0.7)
-        
-        UIView.animateWithDuration(0.8, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 1.0, options:UIViewAnimationOptions.AllowUserInteraction|UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
-            self.collectionView.alpha = 1.0
-            self.collectionView.transform = CGAffineTransformIdentity
-            }, completion: nil)
-    }
-    
-    func animateCollectionViewFadeOut() {
-        
-        UIView.animateWithDuration(0.25, animations: { () -> Void in
-            self.collectionView.alpha = 0.0
-            self.collectionView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.7, 0.7)
-            }, completion: nil)
-    }
-    
     func updateETACells() {
+        canFadeImages = false
         let indexPaths = self.collectionView.indexPathsForVisibleItems()
         self.collectionView.reloadItemsAtIndexPaths(indexPaths)
+        canFadeImages = true
     }
     
     // MARK: - Utility Functions
@@ -212,8 +200,10 @@ class BaseViewController: UIViewController {
         
         layout.itemSize = size
         
+        canFadeImages = false
         collectionView.collectionViewLayout.invalidateLayout()
         collectionView.reloadData()
+        canFadeImages = true
     }
     
     func showDropDownController(sender: UIView, dataSource: [String], imageDataSource: [String]? = []) {
@@ -296,7 +286,7 @@ extension BaseViewController: UICollectionViewDataSource {
         
         let anime = filteredDataSource[indexPath.section][indexPath.row]
         
-        cell.posterImageView?.setImageFrom(urlString: anime.imageUrl)
+        cell.posterImageView?.setImageFrom(urlString: anime.imageUrl, animated: canFadeImages)
         cell.titleLabel.text = anime.title
         cell.genresLabel?.text = ", ".join(anime.genres)
         

@@ -17,7 +17,7 @@ public class MALScrapper {
         self.viewController = viewController
     }
     
-    // Structures
+    // Classes
     
     public class Review {
         public var avatarUrl: String
@@ -37,6 +37,31 @@ public class MALScrapper {
             self.username = username
             
         }
+    }
+    
+    public class Topic {
+        public var id: Int
+        public var title: String
+        public var fromUser: String
+        public var date: String
+        
+        public var replies: Int
+        
+        public var lastPost: Post
+        
+        init(id: Int, title: String, fromUser: String, date: String, replies: Int, lastPost: Post) {
+            self.id = id
+            self.title = title
+            self.fromUser = fromUser
+            self.date = date
+            self.replies = replies
+            self.lastPost = lastPost
+        }
+    }
+    
+    public class Post {
+        public var fromUser: String = ""
+        public var date: String = ""
     }
     
     
@@ -90,6 +115,61 @@ public class MALScrapper {
             }
             
             completion.setResult(reviews)
+        }
+        
+        return completion.task
+    }
+    
+    public func topicsForAnime(#anime: Anime) -> BFTask {
+        let completion = BFTaskCompletionSource()
+        
+        let malSlug = malTitleToSlug(anime.title!)
+        let requestURL = "http://myanimelist.net/forum/?animeid=\(anime.myAnimeListID)"
+        
+        viewController.webScraper.scrape(requestURL) { (hpple) -> Void in
+            if hpple == nil {
+                println("hpple is nil")
+                completion.setError(NSError())
+                return
+            }
+            
+            var results = hpple.searchWithXPathQuery("//table[@id='forumTopics']/tbody/tr") as! [TFHppleElement]
+            
+            // Removing header
+            results.removeAtIndex(0)
+            
+            var topics: [Topic] = []
+            
+            for result in results {
+                
+                var topicID = result.hppleElementFor(path: [1,1])?.objectForKey("href")
+                let title = result.hppleElementFor(path: [1,1])?.text()
+                let fromUser = result.hppleElementFor(path: [1,4,0])?.text()
+                let date = result.hppleElementFor(path: [1,5])?.text()
+                var replies = result.hppleElementFor(path: [2])?.text()
+                let lastReplyFromUser = result.hppleElementFor(path: [3,1])?.text()
+                let lastReplyDate = result.hppleElementFor(path: [3,4])?.content
+                
+                topicID = topicID?.stringByRemovingOccurencesOfString(["/forum/?topicid="])
+                replies = replies?.stringByRemovingOccurencesOfString([","])
+                
+                if let _ = topicID {
+                    var lastPost = Post()
+                    lastPost.fromUser = lastReplyFromUser ?? ""
+                    lastPost.date = lastReplyDate ?? ""
+                    
+                    var topic = Topic(
+                        id: topicID?.toInt() ?? 0,
+                        title: title ?? "",
+                        fromUser: fromUser ?? "",
+                        date: date ?? "",
+                        replies: replies?.toInt() ?? 0,
+                        lastPost: lastPost)
+                    topics.append(topic)
+                }
+            }
+            
+            completion.setResult(topics)
         }
         
         return completion.task

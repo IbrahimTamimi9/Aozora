@@ -11,6 +11,8 @@ import UIKit
 public class LoaderView: UIView {
 
     let rectShape = CAShapeLayer()
+    let diameter = 20
+    public var animating: Bool = false
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -25,15 +27,52 @@ public class LoaderView: UIView {
     func configure() {
         backgroundColor = UIColor.clearColor()
         
-        rectShape.bounds = bounds
-        rectShape.position = CGPoint(x: CGRectGetMidX(bounds), y: CGRectGetMidY(bounds))
+        rectShape.bounds = CGRect(x: 0, y: 0, width: diameter, height: diameter)
+        rectShape.position = CGPoint(x: CGFloat(diameter/2), y: CGFloat(diameter/2))
         rectShape.cornerRadius = bounds.width / 2
         rectShape.path = UIBezierPath(ovalInRect: rectShape.bounds).CGPath
-        rectShape.fillColor = UIColor.midnightBlue().CGColor
+        rectShape.fillColor = UIColor.belizeHole().CGColor
+        
+        setTranslatesAutoresizingMaskIntoConstraints(false)
+    }
+    
+    public func addToViewController(controller: UIViewController) {
+        controller.view.addSubview(self)
+        
+        let viewsDictionary = ["view":self]
+        let constraintH = NSLayoutConstraint.constraintsWithVisualFormat("H:[view(\(diameter))]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
+        let constraintV = NSLayoutConstraint.constraintsWithVisualFormat("V:[view(\(diameter))]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
+        
+        controller.view.addConstraints(constraintH)
+        controller.view.addConstraints(constraintV)
+        
+        controller.view.addConstraint(
+            NSLayoutConstraint(
+                item: self,
+                attribute: NSLayoutAttribute.CenterY,
+                relatedBy: NSLayoutRelation.Equal,
+                toItem: controller.view,
+                attribute: NSLayoutAttribute.CenterY,
+                multiplier: 1.0,
+                constant: 0.0)
+        )
+        
+        controller.view.addConstraint(
+            NSLayoutConstraint(
+                item: self,
+                attribute: NSLayoutAttribute.CenterX,
+                relatedBy: NSLayoutRelation.Equal,
+                toItem: controller.view,
+                attribute: NSLayoutAttribute.CenterX,
+                multiplier: 1.0,
+                constant: 0.0)
+        )
+        
     }
     
     public func startAnimating() {
 
+        animating = true
         let timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
         let animationDuration = 0.4
         
@@ -63,6 +102,8 @@ public class LoaderView: UIView {
     }
     
     public func stopAnimating() {
+        
+        animating = false
         rectShape.removeAllAnimations()
         rectShape.removeFromSuperlayer()
     }

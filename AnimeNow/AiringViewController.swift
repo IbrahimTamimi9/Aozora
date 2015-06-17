@@ -31,7 +31,7 @@ class AiringViewController: BaseViewController {
     
     func fetchAiring() {
         
-        animateCollectionViewFadeOut()
+        collectionView.animateFadeOut()
         
         let query = Anime.query()!
         query.whereKeyExists("startDateTime")
@@ -78,7 +78,8 @@ class AiringViewController: BaseViewController {
                 
             }
             
-            self.animateCollectionViewFadeIn()
+            self.loadingView.stopAnimating()
+            self.collectionView.animateFadeIn()
         })
         
 
@@ -149,7 +150,7 @@ extension AiringViewController: UICollectionViewDataSource {
         
         let anime = filteredDataSource[indexPath.section][indexPath.row]
         
-        cell.posterImageView?.setImageFrom(urlString: anime.imageUrl)
+        cell.posterImageView?.setImageFrom(urlString: anime.imageUrl, animated: canFadeImages)
         cell.titleLabel.text = anime.title
         cell.genresLabel?.text = ", ".join(anime.genres)
         

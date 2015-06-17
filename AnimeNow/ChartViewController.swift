@@ -32,7 +32,7 @@ class ChartViewController: BaseViewController {
         navigationBarTitle.text = seasonalChart.stringByAppendingString(" "+angleDownIcon)
         
         
-        animateCollectionViewFadeOut()
+        collectionView.animateFadeOut()
         
         let currentChartQuery = SeasonalChart.query()!
         currentChartQuery.limit = 1
@@ -49,7 +49,8 @@ class ChartViewController: BaseViewController {
                 self.order(by: self.currentOrder)
             }
             
-            self.animateCollectionViewFadeIn()
+            self.loadingView.stopAnimating()
+            self.collectionView.animateFadeIn()
         })
     }
     

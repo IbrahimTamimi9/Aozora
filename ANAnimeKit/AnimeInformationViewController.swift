@@ -70,6 +70,8 @@ public class AnimeInformationViewController: AnimeBaseViewController {
         }
     }
     
+    var loadingView: LoaderView!
+    
     @IBOutlet weak var shimeringView: FBShimmeringView!
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var openInAnimeTrakr: UIButton!
@@ -77,6 +79,7 @@ public class AnimeInformationViewController: AnimeBaseViewController {
     @IBOutlet weak var shimeringViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var etaLabel: UILabel!
     @IBOutlet weak var closeButton: UIButton!
+    @IBOutlet weak var ranksView: UIView!
     
     @IBOutlet weak var animeTitle: UILabel!
     @IBOutlet weak var tagsLabel: UILabel!
@@ -97,6 +100,11 @@ public class AnimeInformationViewController: AnimeBaseViewController {
         tableView.estimatedRowHeight = 44.0
         tableView.rowHeight = UITableViewAutomaticDimension
         
+        loadingView = LoaderView()
+        loadingView.addToViewController(self)
+        loadingView.startAnimating()
+        
+        ranksView.hidden = true
         fetchCurrentAnime()
         
         openInAnimeTrakr.hidden = anime.traktID != 0 ? false : true
@@ -111,6 +119,8 @@ public class AnimeInformationViewController: AnimeBaseViewController {
     func fetchCurrentAnime() {
         let query = Anime.queryWith(objectID: anime.objectId!)
         query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
+            self.loadingView.stopAnimating()
+            self.ranksView.hidden = false
             self.anime = objects?.first as! Anime
         }
     }

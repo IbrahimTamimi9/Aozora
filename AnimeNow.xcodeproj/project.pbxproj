@@ -82,6 +82,8 @@
 		DA9F731E1B29370F00C2652C /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA41679A1B25F76F00847F56 /* FontAwesome.ttf */; };
 		DAA253B61B2B877C0092EB0B /* CharactersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA253B51B2B877C0092EB0B /* CharactersViewController.swift */; };
 		DAA253B81B2B8AF50092EB0B /* AnimeBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA253B71B2B8AF50092EB0B /* AnimeBaseViewController.swift */; };
+		DAAD79931B30D087009D70ED /* ForumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAD79921B30D087009D70ED /* ForumViewController.swift */; };
+		DAAD79951B30D918009D70ED /* TopicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAD79941B30D918009D70ED /* TopicCell.swift */; };
 		DAC027CA1B2A15C20085C91A /* DiscussionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC027C91B2A15C20085C91A /* DiscussionViewController.swift */; };
 		DAC027CC1B2A16B80085C91A /* AnimeReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC027CB1B2A16B80085C91A /* AnimeReview.swift */; };
 		DAC027CF1B2A1C3F0085C91A /* ZFModalTransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = DAFD60B31B277B8D007275C1 /* ZFModalTransitionAnimator.m */; };
@@ -93,6 +95,7 @@
 		DAE43C321B2BC1A900C3092D /* TFHppleElement+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE43C311B2BC1A900C3092D /* TFHppleElement+Convenience.swift */; };
 		DAE43C341B2BC3B700C3092D /* AnimeDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE43C331B2BC3B700C3092D /* AnimeDetail.swift */; };
 		DAE43C381B2D5BC800C3092D /* Atarashii.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE43C371B2D5BC800C3092D /* Atarashii.swift */; };
+		DAE43C3A1B2F971800C3092D /* UIView+Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE43C391B2F971800C3092D /* UIView+Animation.swift */; };
 		DAE7A7191B2105FD00788614 /* AnimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE7A7181B2105FD00788614 /* AnimeCell.swift */; };
 		DAFBB0951B20EFF700495ED9 /* ChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFBB0941B20EFF700495ED9 /* ChartViewController.swift */; };
 		DAFD60B51B278452007275C1 /* ActionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA38A9881B223AF1002FCBB4 /* ActionListViewController.swift */; };
@@ -298,6 +301,8 @@
 		DA9F731A1B2930F200C2652C /* UIImageView+SDWebImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+SDWebImage.swift"; sourceTree = "<group>"; };
 		DAA253B51B2B877C0092EB0B /* CharactersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharactersViewController.swift; sourceTree = "<group>"; };
 		DAA253B71B2B8AF50092EB0B /* AnimeBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeBaseViewController.swift; sourceTree = "<group>"; };
+		DAAD79921B30D087009D70ED /* ForumViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForumViewController.swift; sourceTree = "<group>"; };
+		DAAD79941B30D918009D70ED /* TopicCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicCell.swift; sourceTree = "<group>"; };
 		DAC027C91B2A15C20085C91A /* DiscussionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscussionViewController.swift; sourceTree = "<group>"; };
 		DAC027CB1B2A16B80085C91A /* AnimeReview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeReview.swift; sourceTree = "<group>"; };
 		DACCF35C1B110AA2006A13EB /* ANParseKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ANParseKit.swift; sourceTree = "<group>"; };
@@ -307,6 +312,7 @@
 		DAE43C311B2BC1A900C3092D /* TFHppleElement+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TFHppleElement+Convenience.swift"; sourceTree = "<group>"; };
 		DAE43C331B2BC3B700C3092D /* AnimeDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeDetail.swift; sourceTree = "<group>"; };
 		DAE43C371B2D5BC800C3092D /* Atarashii.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Atarashii.swift; sourceTree = "<group>"; };
+		DAE43C391B2F971800C3092D /* UIView+Animation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Animation.swift"; sourceTree = "<group>"; };
 		DAE7A7181B2105FD00788614 /* AnimeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeCell.swift; sourceTree = "<group>"; };
 		DAFBB0941B20EFF700495ED9 /* ChartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartViewController.swift; sourceTree = "<group>"; };
 		DAFD60B21B277B8D007275C1 /* ZFModalTransitionAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZFModalTransitionAnimator.h; path = ../AnimeNow/ZFModalTransitionAnimator.h; sourceTree = "<group>"; };
@@ -494,6 +500,7 @@
 				DA9F731A1B2930F200C2652C /* UIImageView+SDWebImage.swift */,
 				DA2853C11B22C5D30070B675 /* UIColor+AniNow.swift */,
 				DACE77C11B294D7B00037486 /* NSDate+AniNow.swift */,
+				DAE43C391B2F971800C3092D /* UIView+Animation.swift */,
 			);
 			name = Categories;
 			path = ../AnimeNow;
@@ -579,6 +586,7 @@
 				DA4167D11B273B7100847F56 /* AnimeInformationViewController.swift */,
 				DAA253B51B2B877C0092EB0B /* CharactersViewController.swift */,
 				DAC027C91B2A15C20085C91A /* DiscussionViewController.swift */,
+				DAAD79921B30D087009D70ED /* ForumViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -600,6 +608,7 @@
 				DA4167E41B275CF500847F56 /* LinkCell.swift */,
 				DA4167E61B275D3800847F56 /* TitleCell.swift */,
 				DAFE19AB1B29E17F002F3A76 /* CharacterCell.swift */,
+				DAAD79941B30D918009D70ED /* TopicCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1280,8 +1289,10 @@
 			files = (
 				DA4167DF1B275CCC00847F56 /* InformationCell.swift in Sources */,
 				DA4167E71B275D3800847F56 /* TitleCell.swift in Sources */,
+				DAAD79931B30D087009D70ED /* ForumViewController.swift in Sources */,
 				DA4167E31B275CEB00847F56 /* ReviewCell.swift in Sources */,
 				DAFE19AC1B29E17F002F3A76 /* CharacterCell.swift in Sources */,
+				DAAD79951B30D918009D70ED /* TopicCell.swift in Sources */,
 				DAA253B81B2B8AF50092EB0B /* AnimeBaseViewController.swift in Sources */,
 				DAC027CA1B2A15C20085C91A /* DiscussionViewController.swift in Sources */,
 				DA4167E11B275CDE00847F56 /* SynopsisCell.swift in Sources */,
@@ -1307,6 +1318,7 @@
 			files = (
 				DAFD60BD1B27845F007275C1 /* BasicCollectionReusableView.swift in Sources */,
 				DAFD60B61B278452007275C1 /* DropDownListViewController.swift in Sources */,
+				DAE43C3A1B2F971800C3092D /* UIView+Animation.swift in Sources */,
 				DA9F731D1B2931FF00C2652C /* UIImageView+SDWebImage.swift in Sources */,
 				DAFD60B91B27845F007275C1 /* BasicTableCell.swift in Sources */,
 				DAFD60BC1B27845F007275C1 /* HighlightButton.swift in Sources */,

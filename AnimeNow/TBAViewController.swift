@@ -25,7 +25,7 @@ class TBAViewController: BaseViewController {
     
     func fetchTBA() {
         
-        animateCollectionViewFadeOut()
+        collectionView.animateFadeOut()
         
         let query = Anime.query()!
         query.whereKeyExists("startDate")
@@ -52,7 +52,8 @@ class TBAViewController: BaseViewController {
                 self.order(by: self.currentOrder)
             }
             
-            self.animateCollectionViewFadeIn()
+            self.loadingView.stopAnimating()
+            self.collectionView.animateFadeIn()
         })
 
         
