@@ -12,4 +12,5 @@ class TopicCell: UITableViewCell {
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var information: UILabel!
     
+    @IBOutlet weak var typeLabel: UILabel!
 }

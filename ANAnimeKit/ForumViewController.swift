@@ -41,7 +41,7 @@ public class ForumViewController: AnimeBaseViewController {
         loadingView.startAnimating()
         
         malScrapper = MALScrapper(viewController: self)
-        malScrapper.topicsForAnime(anime: anime).continueWithBlock {
+        malScrapper.topicsFor(anime: anime).continueWithBlock {
             (task: BFTask!) -> AnyObject! in
             
             self.tableView.animateFadeIn()
@@ -51,6 +51,13 @@ public class ForumViewController: AnimeBaseViewController {
             }
             
             return nil
+        }
+    }
+    
+    public override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "ShowTopic" {
+            let destination = segue.destinationViewController as! TopicViewController
+            destination.topic = sender as! MALScrapper.Topic
         }
     }
 }
@@ -67,9 +74,10 @@ extension ForumViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCellWithIdentifier("TopicCell") as! TopicCell
         
         let topic = dataSource[indexPath.row]
-        
-        cell.title.text = topic.title
-        cell.information.text = "\(topic.replies) replies · last post \(topic.lastPost.date) by \(topic.lastPost.fromUser)"
+        let title = topic.title.stringByReplacingOccurrencesOfString("\(anime.title)", withString: "")
+        cell.typeLabel.text = topic.type == MALScrapper.TopicType.Sticky ? " " : ""
+        cell.title.text = title
+        cell.information.text = "\(topic.replies)  · last post \(topic.lastPost.date) by \(topic.lastPost.user)"
         cell.layoutIfNeeded()
         return cell
     }
@@ -81,7 +89,7 @@ extension ForumViewController: UITableViewDelegate {
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
-        
-        
+        performSegueWithIdentifier("ShowTopic", sender: dataSource[indexPath.row])
+
     }
 }
