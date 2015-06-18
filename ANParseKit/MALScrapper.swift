@@ -81,23 +81,25 @@ public class MALScrapper {
             case Text
             case Image
             case Video
-            case Reply
         }
         
         public class Content {
             public var type: ContentType
             public var content: String
+            public var formats: [(attribute: String,value: AnyObject,range: NSRange)]
+            public var links: [(url: NSURL, text: String)]
+            public var level: Int // 0 normal post // 1: reply // 2: reply of reply
             
-            init(type: ContentType, content: String) {
+            init(type: ContentType, content: String, formats: [(attribute: String,value: AnyObject,range: NSRange)], links: [(url: NSURL, text: String)], level: Int) {
                 self.type = type
                 self.content = content
+                self.formats = formats
+                self.level = level
+                self.links = links
             }
         }
         
     }
-    
-    
-    
     
     // Functions
     
@@ -257,27 +259,9 @@ public class MALScrapper {
                 if let contents = result.hppleElementFor(path: [2,0,0]),
                 let children = contents.children {
                     for content in children {
-                        if content.isTextNode() || content.tagName == "br" {
-                            let lastObject = allContent.last
-                            if let lastObject = lastObject where lastObject.type == Post.ContentType.Text {
-                                
-                                if content.tagName == "br" && lastObject.content.rangeOfString("\n") == nil {
-                                    lastObject.content = lastObject.content.stringByAppendingString("\n")
-                                } else if content.tagName != "br"  {
-                                    lastObject.content = lastObject.content.stringByAppendingString(content.content)
-                                }
-                                
-                            } else {
-                                var contentToSet = content.tagName == "br" ? "\n" : content.content
-                                
-                                let contentObject = Post.Content(type: Post.ContentType.Text, content: contentToSet)
-                                allContent.append(contentObject)
-                            }
-                            
-                        } else if content.tagName == "img", let imageURL = content.objectForKey("src") as? String {
-
-                            let contentObject = Post.Content(type: Post.ContentType.Image, content: imageURL ?? "")
-                            allContent.append(contentObject)
+                        let lastContent = allContent.last?.level == 0 ? allContent.last : nil
+                        if let newContent = self.scrapePostContent(content as! TFHppleElement, lastContent: lastContent, inheritedFormats:[], currentLevel: 0, currentLocation: 0) {
+                            allContent += newContent
                         }
                     }
                 }
@@ -299,7 +283,120 @@ public class MALScrapper {
         return completion.task
     }
     
+    func scrapePostContent(
+        content: TFHppleElement,
+        lastContent: Post.Content?,
+        inheritedFormats: [(attribute: String,value: AnyObject,range: NSRange)],
+        currentLevel: Int,
+        currentLocation: Int) -> [Post.Content]? {
+        
+        switch content.tagName {
+        // Image
+        case "img" where content.objectForKey("src") != nil:
+            let contentObject = Post.Content(type: Post.ContentType.Image, content: content.objectForKey("src"), formats:[], links:[], level: currentLevel)
+            return [contentObject]
+            
+        // Reply
+        case "div" where content.objectForKey("class") == "quotetext":
+            var replyContent: [Post.Content] = []
+            for content in content.children as! [TFHppleElement] {
+                let lastContent = replyContent.last?.level == currentLevel+1 ? replyContent.last : nil
+                if let newContent = scrapePostContent(content, lastContent: lastContent, inheritedFormats: inheritedFormats, currentLevel: currentLevel+1, currentLocation: 0) {
+                    replyContent += newContent
+                }
+            }
+            return replyContent
+            
+        // Text
+        case "a": fallthrough
+        case "span": fallthrough
+        case "i": fallthrough
+        case "u": fallthrough
+        case "b": fallthrough
+        case "strong": fallthrough
+        case "br": fallthrough
+        case "text":
+            
+            if let lastObject = lastContent where lastObject.type == Post.ContentType.Text {
+                let (content, formats, links) = contentsForElement(content, inheritedFormats: inheritedFormats, links: [], currentLocation: count(lastObject.content))
+                lastObject.content += content
+                lastObject.formats += formats
+                lastObject.links += links
+                
+            } else {
+                let (content, formats, links) = contentsForElement(content, inheritedFormats: inheritedFormats, links: [], currentLocation: 0)
+                let contentObject = Post.Content(type: Post.ContentType.Text, content: content, formats:formats, links: links, level: currentLevel)
+                return [contentObject]
+            }
+            
+        default: break;
+        }
+        
+        return nil
+    }
+    
+    func contentsForElement(
+        element: TFHppleElement,
+        inheritedFormats: [(attribute: String,value: AnyObject,range: NSRange)],
+        links: [(url: NSURL, text: String)],
+        currentLocation: Int)
+        -> (content:String, formats:[(attribute: String,value: AnyObject,range: NSRange)], links: [(url: NSURL, text: String)]) {
+        var allContent = ""
+        var allInheritedFormats = inheritedFormats
+        var allLinks = links
+                
+        var newFormats: [(attribute: String, value: AnyObject)] = []
+            
+        allContent += elementText(element)
 
+            
+        for child in element.children as! [TFHppleElement] {
+            
+            switch child.tagName {
+            case "text":
+                allContent += child.content
+            case "br":
+                allContent += "\n"
+            case "a": fallthrough
+            case "span": fallthrough
+            case "b": fallthrough
+            case "i": fallthrough
+            case "u": fallthrough
+            case "strong":
+                let lastChild = child.children.last as! TFHppleElement
+                if child.children.count == 1 &&
+                (lastChild.isTextNode() || lastChild.text() != nil) {
+                    let content = lastChild.text() ?? lastChild.content ?? ""
+                    //let range = NSRange(location: currentLocation, length: count(content))
+                    allContent += content
+                    
+                    if child.tagName == "a" {
+                        allLinks.append(url: NSURL(string: child.objectForKey("href"))!, text: content)
+                    }
+                    
+                } else {
+                    let (content, formats, links) = contentsForElement(child, inheritedFormats: inheritedFormats, links: links, currentLocation: count(allContent)+currentLocation)
+                    allContent += content
+                    allInheritedFormats += formats
+                    allLinks += links
+                }
+            default:
+                break
+            }
+        }
+        return (allContent,allInheritedFormats, allLinks)
+    }
+    
+    func elementText(element: TFHppleElement) -> String {
+        switch element.tagName {
+        case "text":
+            return element.content
+        case "br":
+            return "\n"
+        default:
+            return ""
+        }
+    }
     
 }
 

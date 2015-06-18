@@ -89,6 +89,10 @@ extension ForumViewController: UITableViewDelegate {
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
+        if let tabBar = tabBarController as? CustomTabBarController {
+            tabBar.disableDragDismiss()
+        }
+        
         performSegueWithIdentifier("ShowTopic", sender: dataSource[indexPath.row])
 
     }

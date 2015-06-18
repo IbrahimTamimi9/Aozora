@@ -10,16 +10,9 @@ import UIKit
 import ANCommonKit
 import ANParseKit
 import Bolts
+import TTTAttributedLabel
 
-extension TopicViewController: StatusBarVisibilityProtocol {
-    func shouldHideStatusBar() -> Bool {
-        return false
-    }
-    func updateCanHideStatusBar(canHide: Bool) {
-    }
-}
-
-public class TopicViewController: AnimeBaseViewController {
+public class TopicViewController: UIViewController {
     
     var malScrapper: MALScrapper!
     var dataSource: [MALScrapper.Post] = [] {
@@ -30,6 +23,8 @@ public class TopicViewController: AnimeBaseViewController {
     
     var loadingView: LoaderView!
     var topic: MALScrapper.Topic!
+    
+    @IBOutlet weak var tableView: UITableView!
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,16 +70,28 @@ extension TopicViewController: UITableViewDataSource {
         switch content.type {
         case .Text:
             let cell = tableView.dequeueReusableCellWithIdentifier("TextCell") as! BasicTableCell
-            cell.titleLabel.text = content.content
+            
+            cell.attributedLabel.linkAttributes = [kCTForegroundColorAttributeName: UIColor.peterRiver()]
+            cell.attributedLabel.enabledTextCheckingTypes = NSTextCheckingType.Link.rawValue
+            cell.attributedLabel.delegate = self;
+            cell.attributedLabel.setText(content.content, afterInheritingLabelAttributesAndConfiguringWithBlock: { (attributedString) -> NSMutableAttributedString! in
+                
+                return attributedString
+            })
+            for (url, text) in content.links {
+                let range = (content.content as NSString).rangeOfString(text)
+                cell.attributedLabel.addLinkToURL(url, withRange: range)
+            }
+            
+            cell.contentView.backgroundColor = UIColor(white: CGFloat((97-content.level*6))/100.0, alpha: 1.0)
             cell.layoutIfNeeded()
             return cell
         case .Image:
             let cell = tableView.dequeueReusableCellWithIdentifier("ImageCell") as! BasicTableCell
             cell.titleimageView.setImageFrom(urlString: content.content, animated: true)
+            cell.contentView.backgroundColor = UIColor(white: CGFloat((97-content.level*6))/100.0, alpha: 1.0)
             cell.layoutIfNeeded()
             return cell
-        case .Reply:
-            break;
         case .Video:
             break;
         }
@@ -101,6 +108,7 @@ extension TopicViewController: UITableViewDataSource {
         cell.avatar.setImageFrom(urlString: post.userAvatar)
         cell.username.text = post.user
         cell.date.text = post.date
+
         
         return cell.contentView
     }
@@ -125,5 +133,13 @@ extension TopicViewController: UITableViewDelegate {
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
+    }
+}
+
+
+extension TopicViewController: TTTAttributedLabelDelegate {
+
+    public func attributedLabel(label: TTTAttributedLabel!, didSelectLinkWithURL url: NSURL!) {
+        println("selected link")
     }
 }
