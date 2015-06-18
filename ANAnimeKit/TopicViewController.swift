@@ -140,6 +140,9 @@ extension TopicViewController: UITableViewDelegate {
 extension TopicViewController: TTTAttributedLabelDelegate {
 
     public func attributedLabel(label: TTTAttributedLabel!, didSelectLinkWithURL url: NSURL!) {
-        println("selected link")
+        
+        let (navController, webController) = ANCommonKit.webViewController()
+        webController.initialUrl = url
+        presentViewController(navController, animated: true, completion: nil)
     }
 }

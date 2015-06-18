@@ -47,6 +47,7 @@
     self.webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, 1, 0)];
   self.webView.hidden = YES;  
   self.webView.navigationDelegate = self;
+    [self.webView addObserver:self forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:NULL];
   
   self.viewController = aViewController;
   [self.viewController.view addSubview:self.webView];
@@ -55,7 +56,13 @@
   
   return self;
 }
-
+- (void)dealloc {
+    [self.webView removeObserver:self forKeyPath:@"estimatedProgress"];
+    
+    // if you have set either WKWebView delegate also set these to nil here
+    [self.webView setNavigationDelegate:nil];
+    [self.webView setUIDelegate:nil];
+}
 - (void)scrape:(NSString *)url
 {
   [self scrape:url handler:self.completetion];
@@ -66,32 +73,62 @@
     [self.webView stopLoading];
     self.targetUrl = [NSURL URLWithString:url];
     self.completetion = handler;
-    self.catchFlag = YES;
 
     NSMutableURLRequest *rq = [NSMutableURLRequest requestWithURL:self.targetUrl];
     [rq setValue:@"api-animetrkr-79CF0C8BFA98843F983F9D1083C54A36" forHTTPHeaderField:@"User-Agent"];
     
     [self.webView loadRequest:rq];
+    
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"estimatedProgress"] && object == self.webView) {
+        NSLog(@"%f", self.webView.estimatedProgress);
+        // estimatedProgress is a value from 0.0 to 1.0
+        // Update your UI here accordingly
+        if(self.catchFlag) {
+            [self.webView evaluateJavaScript:@"document.body.innerHTML" completionHandler:^(NSString *body, NSError *error) {
+                if(!body.length){
+                    NSLog(@"No body");
+                    return;
+                }
+                if(!self.catchFlag) {
+                    return;
+                }
+                self.catchFlag = NO;
+                NSLog(@"Loaded from progress");
+                [self completeForWebView:self.webView];
+                [self.webView stopLoading];
+            }];
+        }
+    }
+    else {
+        // Make sure to call the superclass's implementation in the else block in case it is also implementing KVO
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
 }
 
 #pragma mark - WKNavigationDelegate
+- (void)webView:(WKWebView *)webView didCommitNavigation:(WKNavigation *)navigation
+{
+    self.catchFlag = YES;
+}
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation
 {
-    [webView evaluateJavaScript:@"document.body.innerHTML" completionHandler:^(NSString *body, NSError *error) {
-        if(!body.length){
-            return;
-        }
-        
-        if(!self.catchFlag){
-            return;
-        }
-        
-        self.catchFlag = NO;
-        
-        [self completeForWebView:self.webView];
-    }];
-    
+//    [webView evaluateJavaScript:@"document.body.innerHTML" completionHandler:^(NSString *body, NSError *error) {
+//        if(!body.length){
+//            return;
+//        }
+//
+//        if(!self.catchFlag){
+//            return;
+//        }
+//        
+//        //self.catchFlag = NO;
+//        
+//        [self completeForWebView:self.webView];
+//    }];
 }
 
 - (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error

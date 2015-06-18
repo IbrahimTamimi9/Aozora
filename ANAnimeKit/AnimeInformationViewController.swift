@@ -376,7 +376,12 @@ extension AnimeInformationViewController: UITableViewDelegate {
             }
 
         case .Information:break
-        case .ExternalLinks:break
+        case .ExternalLinks:
+            let link = anime.linkAtIndex(indexPath.row)
+            
+            let (navController, webController) = ANCommonKit.webViewController()
+            webController.initialUrl = NSURL(string: link.url)
+            presentViewController(navController, animated: true, completion: nil)
         default: break
         }
 

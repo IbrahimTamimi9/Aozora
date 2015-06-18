@@ -25,4 +25,9 @@ public class ANCommonKit {
         let controller = defaultStoryboard().instantiateViewControllerWithIdentifier("DropDownList") as! DropDownListViewController
         return controller
     }
+    
+    public class func webViewController() -> (UINavigationController,InAppBrowserViewController) {
+        let controller = UIStoryboard(name: "InAppBrowser", bundle: NSBundle(forClass: self)).instantiateInitialViewController() as! UINavigationController
+        return (controller,controller.viewControllers.last! as! InAppBrowserViewController)
+    }
 }

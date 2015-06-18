@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E33b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="fgZ-H9-hfW">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="KVR-MJ-RBC">
+            <objects>
+                <navigationController id="fgZ-H9-hfW" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="7Gr-pU-3AE">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Nc5-67-Let" kind="relationship" relationship="rootViewController" id="z6K-On-WId"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fJm-vk-1q9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-548" y="153"/>
+        </scene>
+        <!--In App Browser View Controller-->
+        <scene sceneID="ohI-V0-GAQ">
+            <objects>
+                <viewController storyboardIdentifier="InAppBrowserViewController" id="Nc5-67-Let" customClass="InAppBrowserViewController" customModule="ANCommonKit" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="GDc-3K-yb5"/>
+                        <viewControllerLayoutGuide type="bottom" id="7DI-99-SJv"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="SwB-wQ-k19">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pen-m6-Tbq">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Nc5-67-Let" id="ZSr-YM-ep0"/>
+                                </connections>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="pen-m6-Tbq" firstAttribute="top" secondItem="SwB-wQ-k19" secondAttribute="top" id="5Nw-JP-2wm"/>
+                            <constraint firstItem="pen-m6-Tbq" firstAttribute="leading" secondItem="SwB-wQ-k19" secondAttribute="leading" id="Jkp-zs-25G"/>
+                            <constraint firstAttribute="trailing" secondItem="pen-m6-Tbq" secondAttribute="trailing" id="KzC-VR-p3S"/>
+                            <constraint firstItem="7DI-99-SJv" firstAttribute="top" secondItem="pen-m6-Tbq" secondAttribute="bottom" id="gIU-W9-zm4"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="IjM-8O-GYv">
+                        <barButtonItem key="rightBarButtonItem" title="Done" id="ekH-uF-j4I">
+                            <connections>
+                                <action selector="dismissModal" destination="Nc5-67-Let" id="jFS-Lv-LnX"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="webView" destination="pen-m6-Tbq" id="Ges-sB-jvt"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="huq-4f-USB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="152" y="153"/>
+        </scene>
+    </scenes>
+</document>

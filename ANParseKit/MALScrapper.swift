@@ -191,7 +191,7 @@ public class MALScrapper {
                     topicID = result.hppleElementFor(path: [1,1])?.objectForKey("href")
                 }
                 
-                let fromUser = result.hppleElementFor(path: [1,4,0])?.text()
+                let fromUser = ""// = result.hppleElementFor(path: [1,4,0])?.text()
                 let date = result.hppleElementFor(path: [1,5])?.text()
                 var replies = result.hppleElementFor(path: [2])?.text()
                 let lastReplyFromUser = result.hppleElementFor(path: [3,1])?.text()
@@ -297,7 +297,7 @@ public class MALScrapper {
             return [contentObject]
             
         // Reply
-        case "div" where content.objectForKey("class") == "quotetext":
+        case "div" where content.objectForKey("class") != nil && content.objectForKey("class") == "quotetext":
             var replyContent: [Post.Content] = []
             for content in content.children as! [TFHppleElement] {
                 let lastContent = replyContent.last?.level == currentLevel+1 ? replyContent.last : nil
