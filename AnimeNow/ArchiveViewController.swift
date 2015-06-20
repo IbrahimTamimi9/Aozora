@@ -47,9 +47,8 @@ class ArchiveViewController: UIViewController {
         layout.itemSize = CGSize(width: view.bounds.size.width, height: 36)
         
         
-        loadingView = LoaderView()
-        loadingView.addToViewController(self)
-        loadingView.startAnimating()
+        loadingView = LoaderView(viewController: self)
+        
         
         fetchAllSeasons()
         
@@ -69,7 +68,9 @@ class ArchiveViewController: UIViewController {
     // MARK: - Internal functions
     
     func fetchAllSeasons() {
+        
         animateCollectionViewFadeOut()
+        loadingView.startAnimating()
         
         let query = SeasonalChart.query()!
         query.limit = 200

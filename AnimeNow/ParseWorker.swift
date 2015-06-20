@@ -11,6 +11,7 @@ import Alamofire
 import ANParseKit
 import Parse
 import Bolts
+import ANCommonKit
 
 class ParseWorker {
 

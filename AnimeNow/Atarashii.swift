@@ -9,21 +9,25 @@
 import Foundation
 import Alamofire
 
-struct Atarashii {
+public struct Atarashii {
     
-    var accessToken: String
+    public var accessToken: String
     
-    enum Router: URLRequestConvertible {
+    public enum Router: URLRequestConvertible {
         static let BaseURLString = "https://api.atarashiiapp.com/2"
         
         case animeCast(id: Int)
+        case verifyCredentials()
         
-        var URLRequest: NSURLRequest {
+        public var URLRequest: NSURLRequest {
             let (method: Alamofire.Method, path: String, parameters: [String: AnyObject]) = {
                 switch self {
                 case .animeCast(let id):
                     return (.GET,"anime/cast/\(id)",[:])
+                case .verifyCredentials():
+                    return (.GET,"account/verify_credentials",[:])
                 }
+                
                 }()
             
             let URL = NSURL(string: Router.BaseURLString)
@@ -35,4 +39,4 @@ struct Atarashii {
         }
     }
     
-   }
+}

@@ -95,8 +95,7 @@ class BaseViewController: UIViewController {
         
         timer = NSTimer.scheduledTimerWithTimeInterval(60.0, target: self, selector: "updateETACells", userInfo: nil, repeats: true)
         
-        loadingView = LoaderView()
-        loadingView.addToViewController(self)
+        loadingView = LoaderView(viewController: self)
         loadingView.startAnimating()
     }
     

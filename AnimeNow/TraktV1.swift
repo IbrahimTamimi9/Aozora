@@ -9,15 +9,15 @@
 import Foundation
 import Alamofire
 
-struct TraktV1 {
+public struct TraktV1 {
     
-    enum Router: URLRequestConvertible {
+    public enum Router: URLRequestConvertible {
         static let TraktAPIKey = "3d00b19f07b707f960e58fd9fa81caf2"
         static let BaseURLString = "http://api.trakt.tv"
         
         case showSummaryForID(tvdbID: Int)
         
-        var URLRequest: NSURLRequest {
+        public var URLRequest: NSURLRequest {
             let (method: Alamofire.Method, path: String, parameters: [String: AnyObject]) = {
                 switch self {
                 case .showSummaryForID(let tvdbID):

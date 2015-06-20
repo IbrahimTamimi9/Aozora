@@ -100,9 +100,7 @@ public class AnimeInformationViewController: AnimeBaseViewController {
         tableView.estimatedRowHeight = 44.0
         tableView.rowHeight = UITableViewAutomaticDimension
         
-        loadingView = LoaderView()
-        loadingView.addToViewController(self)
-        loadingView.startAnimating()
+        loadingView = LoaderView(viewController: self)
         
         ranksView.hidden = true
         fetchCurrentAnime()
@@ -117,6 +115,7 @@ public class AnimeInformationViewController: AnimeBaseViewController {
     }
     
     func fetchCurrentAnime() {
+        loadingView.startAnimating()
         let query = Anime.queryWith(objectID: anime.objectId!)
         query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
             self.loadingView.stopAnimating()

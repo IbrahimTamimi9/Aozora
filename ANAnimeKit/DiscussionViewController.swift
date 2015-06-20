@@ -39,11 +39,10 @@ public class DiscussionViewController: AnimeBaseViewController {
         tableView.estimatedRowHeight = 150.0
         tableView.rowHeight = UITableViewAutomaticDimension
         
-        loadingView = LoaderView()
-        loadingView.addToViewController(self)
-        loadingView.startAnimating()
-        
+        loadingView = LoaderView(viewController: self)
         malScrapper = MALScrapper(viewController: self)
+        
+        loadingView.startAnimating()
         malScrapper.reviewsFor(anime: anime).continueWithBlock {
             (task: BFTask!) -> AnyObject! in
             

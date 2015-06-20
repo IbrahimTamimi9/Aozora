@@ -9,11 +9,11 @@
 import Foundation
 import Alamofire
 
-struct AniList {
+public struct AniList {
     
-    var accessToken: String
+    public var accessToken: String
     
-    enum Router: URLRequestConvertible {
+    public enum Router: URLRequestConvertible {
         static let ClientID = "darkcirius-oa0ev"
         static let ClientSecret = "SM6uk1MWcnLopbZw7Qd5G"
         static let BaseURLString = "https://anilist.co/api"
@@ -24,7 +24,7 @@ struct AniList {
         case getAnime(id: Int)
         case searchAnime(query: String)
         
-        var URLRequest: NSURLRequest {
+        public var URLRequest: NSURLRequest {
             let (method: Alamofire.Method, path: String, parameters: [String: AnyObject]) = {
                 let accessToken = NSUserDefaults.standardUserDefaults().stringForKey("access_token") ?? ""
                 switch self {
@@ -91,14 +91,14 @@ struct AniList {
         }
     }
 
-    enum Season: String {
+    public enum Season: String {
         case Winter = "Winter"
         case Spring = "Spring"
         case Summer = "Summer"
         case Fall = "Fall"
     }
     
-    enum Type: String {
+    public enum Type: String {
         case Tv = "Tv"
         case Movie = "Movie"
         case Special = "Special"
@@ -107,14 +107,14 @@ struct AniList {
         case TvShort = "Tv Short"
     }
     
-    enum Status: String {
+    public enum Status: String {
         case NotYetAired = "Not Yet Aired"
         case CurrentlyAiring = "Currently Airing"
         case FinishedAiring = "Finished Airing"
         case Cancelled = "Cancelled"
     }
     
-    enum Sort: String {
+    public enum Sort: String {
         case Id = "id"
         case Score = "score"
         case Popularity = "popularity"
@@ -126,7 +126,7 @@ struct AniList {
         }
     }
     
-    enum Genre: String {
+    public enum Genre: String {
         case Action = "Action"
         case Adult = "Adult"
         case Adventure = "Adventure"

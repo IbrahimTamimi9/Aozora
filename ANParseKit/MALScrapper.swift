@@ -8,6 +8,7 @@
 
 import UIKit
 import Bolts
+import ANCommonKit
 
 public class MALScrapper {
     
@@ -81,6 +82,7 @@ public class MALScrapper {
             case Text
             case Image
             case Video
+            case SpoilerButton
         }
         
         public class Content {
@@ -99,6 +101,11 @@ public class MALScrapper {
             }
         }
         
+        public class SpoilerButton: Content {
+            public var spoilerContent: [Content] = []
+            public var contentIsHidden = true
+        }
+        
     }
     
     // Functions
@@ -107,6 +114,48 @@ public class MALScrapper {
         return title
             .stringByReplacingOccurencesOfString([" ","/"], withString: "_")
             .stringByRemovingOccurencesOfString(["%"])
+    }
+    
+    public func loginWith(#username: String, password: String) -> BFTask {
+
+        let urlString = "http://myanimelist.net/login.php"
+        let postData = "user_name:'\(username)',password:'\(password)'"
+        let script = "post('\(urlString)', {\(postData)});"
+        
+        let completion = BFTaskCompletionSource()
+        
+        viewController.webScraper.makePostRequestWithScript(script, handler: { (body) -> Void in
+            if (body as NSString).containsString("\(username)") {
+                println("Logged in!")
+                completion.setResult(nil)
+            } else {
+                println("Failed log in")
+                completion.setError(NSError(domain: "aninow", code: 1, userInfo: nil))
+            }
+        })
+        
+        return completion.task
+    }
+    
+    public func postToForum(topic: Int, message: String, with username: String) -> BFTask {
+        let urlString = "http://myanimelist.net/forum/index.php?topic_id=\(topic)&action=message"
+        let postData = "msg_text:'\(message)'"
+        let script = "post('\(urlString)', {\(postData)});"
+        
+        let completion = BFTaskCompletionSource()
+        
+        self.viewController.webScraper.makePostRequestWithScript(script, handler: { (body) -> Void in
+            // TODO: Remove darcirius for real password
+            if (body as NSString).containsString(username) {
+                completion.setResult(nil)
+            } else {
+                println(body)
+                completion.setError(NSError(domain: "aninow", code: 1, userInfo: nil))
+            }
+            
+        })
+        
+        return completion.task
     }
     
     public func reviewsFor(#anime: Anime) -> BFTask{
@@ -306,7 +355,35 @@ public class MALScrapper {
                 }
             }
             return replyContent
+        // Spoiler
+        case "div" where content.objectForKey("class") != nil && content.objectForKey("class") == "spoiler":
+            var spoilerContent: [Post.Content] = []
             
+            var hiddenElementChildren = (content.children as! [TFHppleElement])[1].children as! [TFHppleElement]
+            for content in hiddenElementChildren {
+                let lastContent = spoilerContent.last?.level == currentLevel+1 ? spoilerContent.last : nil
+                if let newContent = scrapePostContent(content, lastContent: lastContent, inheritedFormats: inheritedFormats, currentLevel: currentLevel+1, currentLocation: 0) {
+                    spoilerContent += newContent
+                }
+            }
+            
+            var spoilerButton = Post.SpoilerButton(type: Post.ContentType.SpoilerButton, content: "", formats:[], links: [], level: currentLevel+1)
+            spoilerButton.spoilerContent = spoilerContent
+            
+            return [spoilerButton]
+        // Div
+        case "div":
+            var divContent: [Post.Content] = []
+            for content in content.children as! [TFHppleElement] {
+                if let newContent = scrapePostContent(content, lastContent: divContent.last, inheritedFormats: inheritedFormats, currentLevel: currentLevel, currentLocation: 0) {
+                    divContent += newContent
+                }
+            }
+            return divContent
+        // Embeded video
+        case "iframe":
+            let contentObject = Post.Content(type: Post.ContentType.Text, content: content.objectForKey("src"), formats:[], links: [], level: currentLevel)
+            return [contentObject]
         // Text
         case "a": fallthrough
         case "span": fallthrough
@@ -357,6 +434,7 @@ public class MALScrapper {
                 allContent += child.content
             case "br":
                 allContent += "\n"
+            case "div": fallthrough
             case "a": fallthrough
             case "span": fallthrough
             case "b": fallthrough

@@ -1,0 +1,42 @@
+<html>
+    <head>
+        <script>
+            //POST request example:
+            //post('URL', {key: 'value'});
+            function post(path, params) {
+                var method = "post";
+                var form = document.createElement("form");
+                form.setAttribute("method", method);
+                form.setAttribute("action", path);
+                
+                for(var key in params) {
+                    if(params.hasOwnProperty(key)) {
+                        var hiddenField = document.createElement("input");
+                        hiddenField.setAttribute("type", "hidden");
+                        hiddenField.setAttribute("name", key);
+                        hiddenField.setAttribute("value", params[key]);
+                        
+                        form.appendChild(hiddenField);
+                    }
+                }
+                
+                var submitInput = document.createElement("input")
+                submitInput.type = "submit"
+                submitInput.value = "login"
+                form.appendChild(submitInput);
+                
+                var submitInput2 = document.createElement("input")
+                submitInput2.type = "hidden"
+                submitInput2.name = "submit"
+                submitInput2.value = "1"
+                form.appendChild(submitInput2);
+                
+                document.body.appendChild(form);
+                
+                submitInput.click();
+            }
+        </script>
+    </head>
+    <body>
+    </body>
+</html>

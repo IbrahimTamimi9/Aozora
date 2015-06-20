@@ -18,13 +18,27 @@ public class TopicViewController: UIViewController {
     var dataSource: [MALScrapper.Post] = [] {
         didSet {
             tableView.reloadData()
+            
+            if scrollToBottom {
+                scrollToBottom = false
+                UIView.animateWithDuration(0.25, delay: 0.0, options: .CurveEaseOut, animations: {
+                    self.view.layoutIfNeeded()
+                    self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.dataSource.count-1, inSection: 0), atScrollPosition: .Bottom, animated: false)
+                    }, completion: nil)
+            }
         }
     }
     
     var loadingView: LoaderView!
     var topic: MALScrapper.Topic!
+    var scrollToBottom = false
     
     @IBOutlet weak var tableView: UITableView!
+    
+    func initWith(#topic: MALScrapper.Topic, scrapper: MALScrapper) {
+        self.topic = topic
+        self.malScrapper = scrapper
+    }
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,11 +48,15 @@ public class TopicViewController: UIViewController {
         tableView.estimatedRowHeight = 40.0
         tableView.rowHeight = UITableViewAutomaticDimension
         
-        loadingView = LoaderView()
-        loadingView.addToViewController(self)
+        loadingView = LoaderView(viewController: self)
+        fetchPosts()
+        
+    }
+    
+    func fetchPosts() {
+        
         loadingView.startAnimating()
         
-        malScrapper = MALScrapper(viewController: self)
         malScrapper.postsFor(topic: topic).continueWithBlock {
             (task: BFTask!) -> AnyObject! in
             
@@ -50,7 +68,37 @@ public class TopicViewController: UIViewController {
             
             return nil
         }
+        
     }
+    
+    // MARK: - Segue
+    
+    public override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        super.prepareForSegue(segue, sender: sender)
+        if segue.identifier == "PostReply" {
+            let controller = segue.destinationViewController as! NewPostViewController
+            controller.initWithTopic(topic, scrapper: malScrapper)
+        }
+    }
+    
+    // MARK: - Utility Functions
+    
+    func backgroundColorForLevel(level: Int) -> UIColor {
+        return UIColor(white: CGFloat((97-level*6))/100.0, alpha: 1.0)
+    }
+    
+    // MARK: - IBActions
+    
+    @IBAction func addCommentPressed(sender: AnyObject) {
+        if User.loggedIn {
+            performSegueWithIdentifier("PostReply", sender: self)
+        } else {
+            let storyboard = UIStoryboard(name: "Login", bundle: ANAnimeKit.bundle())
+            let loginController = storyboard.instantiateInitialViewController() as! LoginViewController
+            presentViewController(loginController, animated: true, completion: nil)
+        }
+    }
+    
 }
 
 extension TopicViewController: UITableViewDataSource {
@@ -83,13 +131,21 @@ extension TopicViewController: UITableViewDataSource {
                 cell.attributedLabel.addLinkToURL(url, withRange: range)
             }
             
-            cell.contentView.backgroundColor = UIColor(white: CGFloat((97-content.level*6))/100.0, alpha: 1.0)
+            cell.contentView.backgroundColor = backgroundColorForLevel(content.level)
             cell.layoutIfNeeded()
             return cell
         case .Image:
             let cell = tableView.dequeueReusableCellWithIdentifier("ImageCell") as! BasicTableCell
             cell.titleimageView.setImageFrom(urlString: content.content, animated: true)
-            cell.contentView.backgroundColor = UIColor(white: CGFloat((97-content.level*6))/100.0, alpha: 1.0)
+            cell.contentView.backgroundColor = backgroundColorForLevel(content.level)
+            cell.layoutIfNeeded()
+            return cell
+        case .SpoilerButton:
+            let spoilerButton = content as! MALScrapper.Post.SpoilerButton
+            let cell = tableView.dequeueReusableCellWithIdentifier("SpoilerButtonCell") as! BasicTableCell
+            cell.titleLabel.text = spoilerButton.contentIsHidden ? "Show Spoiler" : "Hide Spoiler"
+            cell.titleLabel.backgroundColor = backgroundColorForLevel(content.level)
+            cell.contentView.backgroundColor = backgroundColorForLevel(content.level-1)
             cell.layoutIfNeeded()
             return cell
         case .Video:
@@ -133,6 +189,22 @@ extension TopicViewController: UITableViewDelegate {
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
+        let content = dataSource[indexPath.section].content[indexPath.row]
+        
+        if content.type == .SpoilerButton {
+            // Show/hide
+            let cell = tableView.cellForRowAtIndexPath(indexPath) as! BasicTableCell
+            let spoilerButton = content as! MALScrapper.Post.SpoilerButton
+            spoilerButton.contentIsHidden = !spoilerButton.contentIsHidden
+            
+            if spoilerButton.contentIsHidden {
+                dataSource[indexPath.section].content.removeRange(indexPath.row+1..<indexPath.row+1+spoilerButton.spoilerContent.count)
+            } else {
+                dataSource[indexPath.section].content.splice(spoilerButton.spoilerContent, atIndex: indexPath.row+1)
+            }
+            tableView.reloadData()
+            
+        }
     }
 }
 
@@ -144,5 +216,13 @@ extension TopicViewController: TTTAttributedLabelDelegate {
         let (navController, webController) = ANCommonKit.webViewController()
         webController.initialUrl = url
         presentViewController(navController, animated: true, completion: nil)
+    }
+}
+
+extension TopicViewController: NewPostViewControllerDelegate {
+    public func didPost() {
+        tableView.animateFadeOut()
+        scrollToBottom = true
+        fetchPosts()
     }
 }

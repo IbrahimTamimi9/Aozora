@@ -12,16 +12,22 @@ public class LoaderView: UIView {
 
     let rectShape = CAShapeLayer()
     let diameter = 20
+    
+    var controller: UIViewController!
     public var animating: Bool = false
+    
+    convenience public init(viewController: UIViewController) {
+        self.init(frame: CGRectZero)
+        controller = viewController
+        configure()
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configure()
     }
     
     required public init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        configure()
     }
     
     func configure() {
@@ -34,9 +40,7 @@ public class LoaderView: UIView {
         rectShape.fillColor = UIColor.belizeHole().CGColor
         
         setTranslatesAutoresizingMaskIntoConstraints(false)
-    }
-    
-    public func addToViewController(controller: UIViewController) {
+        
         controller.view.addSubview(self)
         
         let viewsDictionary = ["view":self]

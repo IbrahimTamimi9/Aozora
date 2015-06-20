@@ -9,11 +9,11 @@
 import Foundation
 import Alamofire
 
-struct TraktV2 {
+public struct TraktV2 {
     
-    var accessToken: String
+    public var accessToken: String
     
-    enum Router: URLRequestConvertible {
+    public enum Router: URLRequestConvertible {
         static let ClientID = "12f8cae902e79db4344c261df078e2b2ea3bea57ca86240bf0d506e1ae514c2b"
         static let ClientSecret = "c4847ea39d465aaede74c8253418855f3ea96f4488705a84a1f85aa45a3672cf"
         static let BaseURLString = "https://api-v2launch.trakt.tv"
@@ -23,7 +23,7 @@ struct TraktV2 {
         case showSummaryForId(id: Int)
         case searchShowForTitle(title: String, year: Int)
         
-        var URLRequest: NSURLRequest {
+        public var URLRequest: NSURLRequest {
             let (method: Alamofire.Method, path: String, parameters: [String: AnyObject]) = {
                 let accessToken = NSUserDefaults.standardUserDefaults().stringForKey("access_token") ?? ""
                 switch self {

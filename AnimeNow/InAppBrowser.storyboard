@@ -31,22 +31,7 @@
                     <view key="view" contentMode="scaleToFill" id="SwB-wQ-k19">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pen-m6-Tbq">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <outlet property="delegate" destination="Nc5-67-Let" id="ZSr-YM-ep0"/>
-                                </connections>
-                            </webView>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="pen-m6-Tbq" firstAttribute="top" secondItem="SwB-wQ-k19" secondAttribute="top" id="5Nw-JP-2wm"/>
-                            <constraint firstItem="pen-m6-Tbq" firstAttribute="leading" secondItem="SwB-wQ-k19" secondAttribute="leading" id="Jkp-zs-25G"/>
-                            <constraint firstAttribute="trailing" secondItem="pen-m6-Tbq" secondAttribute="trailing" id="KzC-VR-p3S"/>
-                            <constraint firstItem="7DI-99-SJv" firstAttribute="top" secondItem="pen-m6-Tbq" secondAttribute="bottom" id="gIU-W9-zm4"/>
-                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="IjM-8O-GYv">
                         <barButtonItem key="rightBarButtonItem" title="Done" id="ekH-uF-j4I">
@@ -55,9 +40,6 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <connections>
-                        <outlet property="webView" destination="pen-m6-Tbq" id="Ges-sB-jvt"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="huq-4f-USB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

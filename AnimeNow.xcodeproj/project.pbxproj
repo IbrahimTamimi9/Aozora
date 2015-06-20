@@ -16,7 +16,6 @@
 		DA27D19E1AF1BA9D00CC854E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA27D19D1AF1BA9D00CC854E /* Images.xcassets */; };
 		DA27D1A11AF1BA9D00CC854E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA27D19F1AF1BA9D00CC854E /* LaunchScreen.xib */; };
 		DA27D1AD1AF1BA9D00CC854E /* AnimeNowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA27D1AC1AF1BA9D00CC854E /* AnimeNowTests.swift */; };
-		DA27D1B71AF1BFA300CC854E /* AniList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA27D1B61AF1BFA300CC854E /* AniList.swift */; };
 		DA41679B1B25F76F00847F56 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA41679A1B25F76F00847F56 /* FontAwesome.ttf */; };
 		DA41679D1B2630C700847F56 /* AiringViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA41679C1B2630C700847F56 /* AiringViewController.swift */; };
 		DA41679F1B26320600847F56 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA41679E1B26320600847F56 /* BaseViewController.swift */; };
@@ -44,6 +43,16 @@
 		DA4AF8C91B276E060020252E /* ANCommonKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4AF8C81B276E060020252E /* ANCommonKitTests.swift */; };
 		DA4AF8CC1B276E060020252E /* ANCommonKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA4AF8B51B276E060020252E /* ANCommonKit.framework */; };
 		DA4AF8CD1B276E060020252E /* ANCommonKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA4AF8B51B276E060020252E /* ANCommonKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		DA5A3BEF1B346F4700C07D71 /* POSTRequestJS.html in Resources */ = {isa = PBXBuildFile; fileRef = DA5A3BEE1B346F4700C07D71 /* POSTRequestJS.html */; };
+		DA5A3BF11B35CC6400C07D71 /* NewPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5A3BF01B35CC6400C07D71 /* NewPostViewController.swift */; };
+		DA5A3BF41B35EB4F00C07D71 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA5A3BF31B35EB4F00C07D71 /* Login.storyboard */; };
+		DA5A3BF61B35EB5F00C07D71 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5A3BF51B35EB5F00C07D71 /* LoginViewController.swift */; };
+		DA5A3BF81B35EE2200C07D71 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5A3BF71B35EE2200C07D71 /* CustomTextField.swift */; };
+		DA5A3BFA1B35F19A00C07D71 /* TraktV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6E83B11B1672A500970D27 /* TraktV1.swift */; };
+		DA5A3BFB1B35F19A00C07D71 /* TraktV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6E83B31B167F1E00970D27 /* TraktV2.swift */; };
+		DA5A3BFC1B35F19A00C07D71 /* AniList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA27D1B61AF1BFA300CC854E /* AniList.swift */; };
+		DA5A3BFD1B35F19A00C07D71 /* Atarashii.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE43C371B2D5BC800C3092D /* Atarashii.swift */; };
+		DA5A3BFF1B35F41B00C07D71 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5A3BFE1B35F41B00C07D71 /* User.swift */; };
 		DA6E12B31B10D94200B278B0 /* ANParseKit.h in Headers */ = {isa = PBXBuildFile; fileRef = DA6E12B21B10D94200B278B0 /* ANParseKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA6E12B91B10D94200B278B0 /* ANParseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E12AE1B10D94200B278B0 /* ANParseKit.framework */; };
 		DA6E12C21B10D94200B278B0 /* ANParseKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6E12C11B10D94200B278B0 /* ANParseKitTests.swift */; };
@@ -75,8 +84,6 @@
 		DA6E13291B10FA9400B278B0 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E12EF1B10DCBC00B278B0 /* AudioToolbox.framework */; };
 		DA6E132A1B10FAA100B278B0 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E12EB1B10DCA100B278B0 /* Bolts.framework */; };
 		DA6E132B1B10FAA100B278B0 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E12EC1B10DCA100B278B0 /* Parse.framework */; };
-		DA6E83B21B1672A500970D27 /* TraktV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6E83B11B1672A500970D27 /* TraktV1.swift */; };
-		DA6E83B41B167F1E00970D27 /* TraktV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6E83B31B167F1E00970D27 /* TraktV2.swift */; };
 		DA823D8C1B326940005C7AFD /* InAppBrowser.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA823D8A1B326940005C7AFD /* InAppBrowser.storyboard */; };
 		DA823D8D1B326940005C7AFD /* InAppBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA823D8B1B326940005C7AFD /* InAppBrowserViewController.swift */; };
 		DA9EB9311B2BA580001ECFA7 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA9EB9301B2BA580001ECFA7 /* WebKit.framework */; };
@@ -98,7 +105,6 @@
 		DACE77C41B29517F00037486 /* AnimeRelation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACE77C31B29517F00037486 /* AnimeRelation.swift */; };
 		DAE43C321B2BC1A900C3092D /* TFHppleElement+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE43C311B2BC1A900C3092D /* TFHppleElement+Convenience.swift */; };
 		DAE43C341B2BC3B700C3092D /* AnimeDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE43C331B2BC3B700C3092D /* AnimeDetail.swift */; };
-		DAE43C381B2D5BC800C3092D /* Atarashii.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE43C371B2D5BC800C3092D /* Atarashii.swift */; };
 		DAE43C3A1B2F971800C3092D /* UIView+Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE43C391B2F971800C3092D /* UIView+Animation.swift */; };
 		DAE7A7191B2105FD00788614 /* AnimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE7A7181B2105FD00788614 /* AnimeCell.swift */; };
 		DAFBB0951B20EFF700495ED9 /* ChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFBB0941B20EFF700495ED9 /* ChartViewController.swift */; };
@@ -261,6 +267,12 @@
 		DA4AF8BF1B276E060020252E /* ANCommonKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ANCommonKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA4AF8C71B276E060020252E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA4AF8C81B276E060020252E /* ANCommonKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANCommonKitTests.swift; sourceTree = "<group>"; };
+		DA5A3BEE1B346F4700C07D71 /* POSTRequestJS.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = POSTRequestJS.html; sourceTree = "<group>"; };
+		DA5A3BF01B35CC6400C07D71 /* NewPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewPostViewController.swift; sourceTree = "<group>"; };
+		DA5A3BF31B35EB4F00C07D71 /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
+		DA5A3BF51B35EB5F00C07D71 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		DA5A3BF71B35EE2200C07D71 /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		DA5A3BFE1B35F41B00C07D71 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		DA6E12AE1B10D94200B278B0 /* ANParseKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ANParseKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA6E12B11B10D94200B278B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA6E12B21B10D94200B278B0 /* ANParseKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ANParseKit.h; sourceTree = "<group>"; };
@@ -462,7 +474,6 @@
 		DA27D1931AF1BA9D00CC854E /* AnimeNow */ = {
 			isa = PBXGroup;
 			children = (
-				DAFBB0931B20EFC600495ED9 /* API */,
 				DAE7A7151B2105D000788614 /* Views */,
 				DAE7A7131B2105BD00788614 /* UI */,
 				DAE7A7141B2105C400788614 /* Controllers */,
@@ -538,6 +549,7 @@
 		DA38A98D1B223EFC002FCBB4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				DA5A3BF71B35EE2200C07D71 /* CustomTextField.swift */,
 				DA4167D71B274D3B00847F56 /* CustomLabel.swift */,
 				DA38A98E1B223F1F002FCBB4 /* BasicTableCell.swift */,
 				DA38A9901B224960002FCBB4 /* BasicView.swift */,
@@ -558,6 +570,7 @@
 				DA4167CE1B273B1D00847F56 /* UI */,
 				DA4167DD1B275CA700847F56 /* Views */,
 				DA4167CD1B273B1700847F56 /* ViewControllers */,
+				DA5A3BF21B35EB4000C07D71 /* Login */,
 				DA4167B01B273B0700847F56 /* Supporting Files */,
 			);
 			path = ANAnimeKit;
@@ -598,6 +611,7 @@
 				DAC027C91B2A15C20085C91A /* DiscussionViewController.swift */,
 				DAAD79921B30D087009D70ED /* ForumViewController.swift */,
 				DAC610BB1B3115C100B60631 /* TopicViewController.swift */,
+				DA5A3BF01B35CC6400C07D71 /* NewPostViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -630,6 +644,7 @@
 			children = (
 				DAFD60C01B27847E007275C1 /* ANCommonKit.swift */,
 				DA4AF8B91B276E060020252E /* ANCommonKit.h */,
+				DAFBB0931B20EFC600495ED9 /* API */,
 				DA2853C01B22C5B40070B675 /* Categories */,
 				DA38A98D1B223EFC002FCBB4 /* Views */,
 				DA38A98A1B223B11002FCBB4 /* UI */,
@@ -665,6 +680,25 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		DA5A3BED1B346F2100C07D71 /* MALScrapper */ = {
+			isa = PBXGroup;
+			children = (
+				DA6E13101B10F2E500B278B0 /* MALScrapper.swift */,
+				DA5A3BEE1B346F4700C07D71 /* POSTRequestJS.html */,
+			);
+			name = MALScrapper;
+			sourceTree = "<group>";
+		};
+		DA5A3BF21B35EB4000C07D71 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				DA5A3BF31B35EB4F00C07D71 /* Login.storyboard */,
+				DA5A3BF51B35EB5F00C07D71 /* LoginViewController.swift */,
+				DA5A3BFE1B35F41B00C07D71 /* User.swift */,
+			);
+			name = Login;
+			sourceTree = "<group>";
+		};
 		DA6E12AF1B10D94200B278B0 /* ANParseKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -672,7 +706,7 @@
 				DACCF35C1B110AA2006A13EB /* ANParseKit.swift */,
 				DAE43C301B2BC16F00C3092D /* Categories */,
 				DACE77C51B29518300037486 /* Parse classes */,
-				DA6E13101B10F2E500B278B0 /* MALScrapper.swift */,
+				DA5A3BED1B346F2100C07D71 /* MALScrapper */,
 				DA6E13121B10F56B00B278B0 /* SeasonalChartService.swift */,
 				DACCF35E1B111016006A13EB /* AnimeService.swift */,
 				DA6E12CE1B10D96F00B278B0 /* Vendor */,
@@ -807,6 +841,7 @@
 				DAE43C371B2D5BC800C3092D /* Atarashii.swift */,
 			);
 			name = API;
+			path = ../AnimeNow;
 			sourceTree = "<group>";
 		};
 		F4F69FB5D8335951A772F9AC /* Frameworks */ = {
@@ -1115,6 +1150,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA5A3BF41B35EB4F00C07D71 /* Login.storyboard in Resources */,
 				DA4167EA1B2760BF00847F56 /* Images.xcassets in Resources */,
 				DA9F731E1B29370F00C2652C /* FontAwesome.ttf in Resources */,
 				DA4167D41B273B9400847F56 /* Anime.storyboard in Resources */,
@@ -1148,6 +1184,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA5A3BEF1B346F4700C07D71 /* POSTRequestJS.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1277,11 +1314,7 @@
 				DA41679D1B2630C700847F56 /* AiringViewController.swift in Sources */,
 				DAE7A7191B2105FD00788614 /* AnimeCell.swift in Sources */,
 				DA41679F1B26320600847F56 /* BaseViewController.swift in Sources */,
-				DAE43C381B2D5BC800C3092D /* Atarashii.swift in Sources */,
 				DA27D1991AF1BA9D00CC854E /* ParseWorker.swift in Sources */,
-				DA27D1B71AF1BFA300CC854E /* AniList.swift in Sources */,
-				DA6E83B41B167F1E00970D27 /* TraktV2.swift in Sources */,
-				DA6E83B21B1672A500970D27 /* TraktV1.swift in Sources */,
 				DA27D1971AF1BA9D00CC854E /* AppDelegate.swift in Sources */,
 				DAFBB0951B20EFF700495ED9 /* ChartViewController.swift in Sources */,
 				DA4167A11B263A1E00847F56 /* TBAViewController.swift in Sources */,
@@ -1300,6 +1333,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA5A3BF61B35EB5F00C07D71 /* LoginViewController.swift in Sources */,
 				DA4167DF1B275CCC00847F56 /* InformationCell.swift in Sources */,
 				DA4167E71B275D3800847F56 /* TitleCell.swift in Sources */,
 				DAAD79931B30D087009D70ED /* ForumViewController.swift in Sources */,
@@ -1316,6 +1350,8 @@
 				DA4167D61B273FA300847F56 /* CustomTabBar.swift in Sources */,
 				DA4167E51B275CF500847F56 /* LinkCell.swift in Sources */,
 				DAA253B61B2B877C0092EB0B /* CharactersViewController.swift in Sources */,
+				DA5A3BF11B35CC6400C07D71 /* NewPostViewController.swift in Sources */,
+				DA5A3BFF1B35F41B00C07D71 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1334,11 +1370,16 @@
 				DAFD60BD1B27845F007275C1 /* BasicCollectionReusableView.swift in Sources */,
 				DAFD60B61B278452007275C1 /* DropDownListViewController.swift in Sources */,
 				DAE43C3A1B2F971800C3092D /* UIView+Animation.swift in Sources */,
+				DA5A3BFB1B35F19A00C07D71 /* TraktV2.swift in Sources */,
+				DA5A3BFD1B35F19A00C07D71 /* Atarashii.swift in Sources */,
+				DA5A3BFC1B35F19A00C07D71 /* AniList.swift in Sources */,
 				DA9F731D1B2931FF00C2652C /* UIImageView+SDWebImage.swift in Sources */,
 				DAFD60B91B27845F007275C1 /* BasicTableCell.swift in Sources */,
 				DAFD60BC1B27845F007275C1 /* HighlightButton.swift in Sources */,
 				DAFD60BA1B27845F007275C1 /* BasicView.swift in Sources */,
+				DA5A3BFA1B35F19A00C07D71 /* TraktV1.swift in Sources */,
 				DAFD60B81B27845F007275C1 /* CustomLabel.swift in Sources */,
+				DA5A3BF81B35EE2200C07D71 /* CustomTextField.swift in Sources */,
 				DAFD60B51B278452007275C1 /* ActionListViewController.swift in Sources */,
 				DAFD60BB1B27845F007275C1 /* LoaderView.swift in Sources */,
 				DAC027CF1B2A1C3F0085C91A /* ZFModalTransitionAnimator.m in Sources */,

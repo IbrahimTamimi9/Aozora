@@ -36,11 +36,10 @@ public class ForumViewController: AnimeBaseViewController {
         tableView.estimatedRowHeight = 150.0
         tableView.rowHeight = UITableViewAutomaticDimension
         
-        loadingView = LoaderView()
-        loadingView.addToViewController(self)
-        loadingView.startAnimating()
-        
+        loadingView = LoaderView(viewController: self)
         malScrapper = MALScrapper(viewController: self)
+        
+        loadingView.startAnimating()
         malScrapper.topicsFor(anime: anime).continueWithBlock {
             (task: BFTask!) -> AnyObject! in
             
@@ -57,7 +56,8 @@ public class ForumViewController: AnimeBaseViewController {
     public override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "ShowTopic" {
             let destination = segue.destinationViewController as! TopicViewController
-            destination.topic = sender as! MALScrapper.Topic
+            let topic = sender as! MALScrapper.Topic
+            destination.initWith(topic: topic, scrapper: malScrapper)
         }
     }
 }

@@ -10,7 +10,7 @@ import WebKit
 
 public class InAppBrowserViewController: UIViewController {
 
-    @IBOutlet private weak var webView : WKWebView!
+    var webView: WKWebView!
 
     public var initialUrl : NSURL? {
         didSet {
@@ -24,6 +24,11 @@ public class InAppBrowserViewController: UIViewController {
 
     override public func viewDidLoad() {
         super.viewDidLoad()
+        
+        webView = WKWebView(frame: view.bounds)
+        webView.navigationDelegate = self
+        view.addSubview(webView)
+        
         navigationController?.navigationBar.barTintColor = UIColor.midnightBlue()
         navigationController?.navigationBar.tintColor = UIColor.whiteColor()
 
@@ -61,5 +66,7 @@ extension InAppBrowserViewController : WKNavigationDelegate {
         
         presentViewController(alert, animated: true, completion: nil)
     }
+    
+
     
 }
