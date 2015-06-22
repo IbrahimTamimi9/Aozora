@@ -176,8 +176,8 @@
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IGh-v8-rbg" userLabel="ClipView">
                                 <rect key="frame" x="0.0" y="20" width="600" height="580"/>
                                 <subviews>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="NsO-F4-teE">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="66"/>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="NsO-F4-teE">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="208"/>
                                         <color key="backgroundColor" red="0.26274509800000001" green="0.31764705879999999" blue="0.3803921569" alpha="0.95000000000000007" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="66" id="XS6-Sl-r7N"/>
@@ -218,6 +218,29 @@
                                                 <connections>
                                                     <outlet property="titleLabel" destination="Ivy-8W-zWx" id="eJx-vB-f2p"/>
                                                 </connections>
+                                            </tableViewCell>
+                                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SectionCell" rowHeight="22" id="FeG-wq-Km1" customClass="BasicTableCell" customModule="ANCommonKit" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FeG-wq-Km1" id="GF8-e2-pBg">
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RJG-WH-CGe" userLabel="Separator">
+                                                            <rect key="frame" x="8" y="0.0" width="592" height="1"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.10000000000000001" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="1" id="3JM-pE-5Wo"/>
+                                                            </constraints>
+                                                        </view>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstAttribute="trailing" secondItem="RJG-WH-CGe" secondAttribute="trailing" id="CsN-o0-CV7"/>
+                                                        <constraint firstItem="RJG-WH-CGe" firstAttribute="top" secondItem="GF8-e2-pBg" secondAttribute="top" id="Eb2-kH-vPN"/>
+                                                        <constraint firstItem="RJG-WH-CGe" firstAttribute="leading" secondItem="GF8-e2-pBg" secondAttribute="leading" constant="8" id="KnY-n3-fU7"/>
+                                                        <constraint firstAttribute="bottom" secondItem="RJG-WH-CGe" secondAttribute="bottom" constant="21" id="kpX-K0-2bm"/>
+                                                    </constraints>
+                                                </tableViewCellContentView>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             </tableViewCell>
                                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="OptionCell2" id="WnI-0T-jEi" customClass="BasicTableCell" customModule="ANCommonKit" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>

@@ -18,6 +18,7 @@ public struct Atarashii {
         
         case animeCast(id: Int)
         case verifyCredentials()
+        case animeList(username: String)
         
         public var URLRequest: NSURLRequest {
             let (method: Alamofire.Method, path: String, parameters: [String: AnyObject]) = {
@@ -26,9 +27,10 @@ public struct Atarashii {
                     return (.GET,"anime/cast/\(id)",[:])
                 case .verifyCredentials():
                     return (.GET,"account/verify_credentials",[:])
+                case .animeList(let username):
+                    return (.GET,"animelist/\(username)",[:])
                 }
-                
-                }()
+            }()
             
             let URL = NSURL(string: Router.BaseURLString)
             let URLRequest = NSMutableURLRequest(URL: URL!.URLByAppendingPathComponent(path))

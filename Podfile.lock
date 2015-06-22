@@ -1,24 +1,35 @@
 PODS:
   - Alamofire (1.2.1)
   - FontAwesome+iOS (0.1.4)
+  - Realm (0.93.2):
+    - Realm/Headers (= 0.93.2)
+  - Realm/Headers (0.93.2)
+  - RealmSwift (0.93.2):
+    - Realm (= 0.93.2)
   - SDWebImage (3.7.2):
     - SDWebImage/Core (= 3.7.2)
   - SDWebImage/Core (3.7.2)
   - Shimmer (1.0.2)
   - TTTAttributedLabel (1.13.4)
+  - XLPagerTabStrip (1.1.1)
 
 DEPENDENCIES:
   - Alamofire (~> 1.2)
   - FontAwesome+iOS
+  - RealmSwift
   - SDWebImage (~> 3.7.2)
   - Shimmer
   - TTTAttributedLabel (~> 1.13.4)
+  - XLPagerTabStrip (~> 1.1.1)
 
 SPEC CHECKSUMS:
   Alamofire: 1acfdf179aff68b41a48dff70c1ac7fa263e2bcb
   FontAwesome+iOS: 9070b682a9255ca0fdc34bcfb129ad0ba2b73b87
+  Realm: 2fdd0ae74f730e190384e0338d8a0d3654df8220
+  RealmSwift: 231b064da9f98b1c4f325fe1f1cb8756aae2b8d6
   SDWebImage: 71b7cdc1d1721d6a82ed62889030225f2c249e29
   Shimmer: c5374be1c2b0c9e292fb05b339a513cf291cac86
   TTTAttributedLabel: 0a2ac7b2dd726d32a070dafb01446026b11e624f
+  XLPagerTabStrip: 222995115ef0d3a7134073b02d38023592835c17
 
 COCOAPODS: 0.37.2

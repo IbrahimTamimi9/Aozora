@@ -205,9 +205,11 @@ public class MALScrapper {
         return completion.task
     }
     
+    // Scrapping topics from desktop version
     public func topicsFor(#anime: Anime) -> BFTask {
-        let completion = BFTaskCompletionSource()
         let requestURL = "http://myanimelist.net/forum/?animeid=\(anime.myAnimeListID)"
+        
+        let completion = BFTaskCompletionSource()
         
         viewController.webScraper.scrape(requestURL) { (hpple) -> Void in
             if hpple == nil {
@@ -270,7 +272,75 @@ public class MALScrapper {
         }
         
         return completion.task
+        
     }
+    
+    // Scrapping topics from mobile version
+    public func topicsFor(#board: Int) -> BFTask {
+        let requestURL = "http://myanimelist.net/forum/?board=\(board)"
+        
+        let completion = BFTaskCompletionSource()
+        
+        viewController.webScraper.scrape(requestURL) { (hpple) -> Void in
+            if hpple == nil {
+                println("hpple is nil")
+                completion.setError(NSError())
+                return
+            }
+            
+            var results = hpple.searchWithXPathQuery("//div[@class='forums']/div[@class='box-unit3']") as! [TFHppleElement]
+            
+            var topics: [Topic] = []
+            
+            for result in results {
+                
+                var type: TopicType = .Normal
+                var topicID = result.hppleElementFor(path: [0])?.objectForKey("href")
+                let firstElement = result.hppleElementFor(path: [0,0,0,0])
+                var title = firstElement!.text() != nil ? firstElement?.text() : firstElement?.content
+                
+                if title == "Sticky:" {
+                    type = .Sticky
+                    title = result.hppleElementFor(path: [0,0,0,1])?.content
+                } else if title == "Poll:" {
+                    type = .Poll
+                    title = result.hppleElementFor(path: [0,0,0,1])?.content
+                }
+                
+                var replies = result.hppleElementFor(path: [0,0,1])?.text()
+                var lastActivity = result.hppleElementFor(path: [0,0,2])?.text()
+                
+                var lastReplyFromUser = lastActivity?.componentsSeparatedByString(" by ")[1]
+                var lastReplyDate = lastActivity?.componentsSeparatedByString(" by ")[0]
+                
+                topicID = topicID?.stringByRemovingOccurencesOfString(["http://myanimelist.net/forum/?topicid="])
+                replies = replies?.stringByRemovingOccurencesOfString([","," replies"])
+                
+                if let _ = topicID {
+                    var lastPost = Post()
+                    lastPost.user = lastReplyFromUser ?? ""
+                    lastPost.date = lastReplyDate ?? ""
+                    
+                    var topic = Topic(
+                        id: topicID?.toInt() ?? 0,
+                        title: title ?? "",
+                        fromUser: "",
+                        date: "",
+                        replies: replies?.toInt() ?? 0,
+                        type: type,
+                        lastPost: lastPost)
+                    topics.append(topic)
+                }
+            }
+            
+            completion.setResult(topics)
+        }
+        
+        return completion.task
+    }
+    
+    
+
     
     public func postsFor(#topic: Topic) -> BFTask {
         let completion = BFTaskCompletionSource()

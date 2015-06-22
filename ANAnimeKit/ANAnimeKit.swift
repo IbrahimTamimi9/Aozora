@@ -21,6 +21,16 @@ public class ANAnimeKit {
         return tabBarController
     }
     
+    public class func animeForumViewController() -> (UINavigationController,ForumViewController) {
+        let controller = UIStoryboard(name: "Forum", bundle: bundle()).instantiateInitialViewController() as! UINavigationController
+        return (controller,controller.viewControllers.last! as! ForumViewController)
+    }
+    
+    public class func forumViewController() -> ForumViewController {
+        let controller = UIStoryboard(name: "Forum", bundle: bundle()).instantiateViewControllerWithIdentifier("Forum") as! ForumViewController
+        return controller
+    }
+    
     public class func shortClassification(classification: String) -> String {
         
         switch classification {

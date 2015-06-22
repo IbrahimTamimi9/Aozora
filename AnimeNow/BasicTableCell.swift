@@ -11,6 +11,7 @@ import TTTAttributedLabel
 
 public class BasicTableCell: UITableViewCell {
     @IBOutlet public weak var titleLabel: UILabel!
+    @IBOutlet public weak var subtitleLabel: UILabel!
     @IBOutlet public weak var titleimageView: UIImageView!
     @IBOutlet public weak var attributedLabel: TTTAttributedLabel!
 }

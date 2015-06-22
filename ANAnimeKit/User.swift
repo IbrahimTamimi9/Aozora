@@ -39,7 +39,7 @@ public class User {
         }
     }
     
-    public class func removeCredentials {
+    public class func removeCredentials() {
         NSUserDefaults.standardUserDefaults().removeObjectForKey(UsernameDefaultKey)
         NSUserDefaults.standardUserDefaults().removeObjectForKey(PasswordDefaultKey)
         NSUserDefaults.standardUserDefaults().synchronize()

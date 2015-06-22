@@ -93,7 +93,7 @@ public class TopicViewController: UIViewController {
         if User.loggedIn {
             performSegueWithIdentifier("PostReply", sender: self)
         } else {
-            let storyboard = UIStoryboard(name: "Login", bundle: ANAnimeKit.bundle())
+            let storyboard = UIStoryboard(name: "Login", bundle: ANCommonKit.bundle())
             let loginController = storyboard.instantiateInitialViewController() as! LoginViewController
             presentViewController(loginController, animated: true, completion: nil)
         }

@@ -10,6 +10,7 @@ import UIKit
 import Parse
 import Bolts
 import ANParseKit
+import ANAnimeKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -50,7 +51,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UITabBar.appearance().tintColor = UIColor.peterRiver()
         
         UITextField.appearance().textColor = UIColor.whiteColor()
-
+        
+        // Creating RootTabBar
+        let seasons = UIStoryboard(name: "Season", bundle: nil).instantiateInitialViewController() as! UINavigationController
+        let library = UIStoryboard(name: "Library", bundle: nil).instantiateInitialViewController() as! UINavigationController
+        let forum = UIStoryboard(name: "Forum", bundle: nil).instantiateInitialViewController() as! UINavigationController
+        
+        let tabBarController = UITabBarController()
+        tabBarController.viewControllers = [seasons, library, forum]
+        
+        window?.rootViewController = tabBarController
+        window?.makeKeyAndVisible()
+        
         return true
     }
 

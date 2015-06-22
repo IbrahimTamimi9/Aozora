@@ -13,7 +13,7 @@ public class ANCommonKit {
     }
     
     public class func defaultStoryboard() -> UIStoryboard {
-        return UIStoryboard(name: "Common", bundle: bundle())
+        return UIStoryboard(name: "Action", bundle: bundle())
     }
     
     public class func actionListViewController() -> ActionListViewController {

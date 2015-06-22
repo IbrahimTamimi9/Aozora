@@ -18,6 +18,7 @@ enum OrderBy: String {
     case Popularity = "Popularity"
     case Title = "Title"
     case NextAiringEpisode = "Next Airing Episode"
+    case None = "None"
     
     static func allItems() -> [String] {
         return [
@@ -33,6 +34,7 @@ enum ViewType: String {
     case Chart = "Chart"
     case List = "List"
     case Poster = "Poster"
+    case SeasonalChart = "SeasonalChart"
     
     static func allItems() -> [String] {
         return [
@@ -43,6 +45,13 @@ enum ViewType: String {
     }
 }
 
+enum SelectedList: Int {
+    case SeasonalChart = 0
+    case AllSeasons
+    case Calendar
+    case TBA
+}
+
 class BaseViewController: UIViewController {
     
     let FirstHeaderCellHeight: CGFloat = 88.0
@@ -51,8 +60,35 @@ class BaseViewController: UIViewController {
     
     var canFadeImages = true
     var showTableView = true
-    var currentOrder: OrderBy = .Rating
-    var currentViewType: ViewType = .Chart
+    
+    var orders: [OrderBy] = [.Rating,.None,.NextAiringEpisode,.Popularity]
+    var viewTypes: [ViewType] = [.Chart,.SeasonalChart,.Poster,.Chart]
+    var selectedList: SelectedList = .SeasonalChart {
+        didSet {
+            filterBar.hidden = selectedList == .AllSeasons
+        }
+    }
+    
+    var currentOrder: OrderBy {
+        get {
+            return orders[selectedList.rawValue]
+        }
+        set (order) {
+            orders[selectedList.rawValue] = order
+        }
+    }
+    
+    var currentViewType: ViewType {
+        get {
+            return viewTypes[selectedList.rawValue]
+        }
+        set (viewType) {
+            viewTypes[selectedList.rawValue] = viewType
+        }
+    }
+    
+    var weekdayStrings: [String] = []
+    
     var timer: NSTimer!
     var animator: ZFModalTransitionAnimator!
     
@@ -69,6 +105,12 @@ class BaseViewController: UIViewController {
             canFadeImages = true
         }
     }
+    
+    var chartsDataSource: [SeasonalChart] = [] {
+        didSet {
+            self.collectionView.reloadData()
+        }
+    }
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -81,6 +123,8 @@ class BaseViewController: UIViewController {
     @IBOutlet weak var viewTitleLabel: UILabel!
     @IBOutlet weak var viewButton: UIButton!
     
+    @IBOutlet weak var filterBar: UIView!
+    
     var loadingView: LoaderView!
     
     override func viewDidLoad() {
@@ -89,14 +133,11 @@ class BaseViewController: UIViewController {
         navigationController?.hidesBarsOnSwipe = true
         navigationController?.hidesBarsOnTap = false
         
-        setViewType(currentViewType)
-        
         collectionView.alpha = 0.0
         
         timer = NSTimer.scheduledTimerWithTimeInterval(60.0, target: self, selector: "updateETACells", userInfo: nil, repeats: true)
         
         loadingView = LoaderView(viewController: self)
-        loadingView.startAnimating()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -152,6 +193,10 @@ class BaseViewController: UIViewController {
         
         currentOrder = by
         orderTitleLabel.text = currentOrder.rawValue
+        
+        let today = NSDate()
+        var index = 0
+        
         dataSource = dataSource.map() { (var animeArray) -> [Anime] in
             switch self.currentOrder {
             case .Rating:
@@ -161,7 +206,33 @@ class BaseViewController: UIViewController {
             case .Title:
                 animeArray.sort({ $0.title < $1.title})
             case .NextAiringEpisode:
-                animeArray.sort({ $0.nextEpisodeDate.compare($1.nextEpisodeDate) == .OrderedAscending })
+                
+                if self.selectedList == SelectedList.Calendar {
+                    if index == 0 {
+                        animeArray.sort({ (anime1: Anime, anime2: Anime) in
+                            let anime1IsToday = anime1.nextEpisodeDate.timeIntervalSinceDate(today) < 60*60*24
+                            let anime2IsToday = anime2.nextEpisodeDate.timeIntervalSinceDate(today) < 60*60*24
+                            if anime1IsToday && anime2IsToday {
+                                return anime1.nextEpisodeDate.compare(anime2.nextEpisodeDate) == .OrderedAscending
+                            } else if !anime1IsToday && !anime2IsToday {
+                                return anime1.nextEpisodeDate.compare(anime2.nextEpisodeDate) == .OrderedDescending
+                            } else if anime1IsToday && !anime2IsToday {
+                                return false
+                            } else {
+                                return true
+                            }
+                            
+                        })
+                    } else {
+                        animeArray.sort({ $0.nextEpisodeDate.compare($1.nextEpisodeDate) == .OrderedAscending })
+                    }
+                
+                    index += 1
+                } else {
+                    animeArray.sort({ $0.nextEpisodeDate.compare($1.nextEpisodeDate) == .OrderedAscending })
+                }
+            case .None:
+                break;
             }
             return animeArray
         }
@@ -195,6 +266,10 @@ class BaseViewController: UIViewController {
             size = CGSize(width: view.bounds.size.width, height: 52)
             layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
             layout.minimumLineSpacing = 1
+        case .SeasonalChart:
+            size = CGSize(width: view.bounds.size.width, height: 36)
+            layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            layout.minimumLineSpacing = 1
         }
         
         layout.itemSize = size
@@ -205,7 +280,7 @@ class BaseViewController: UIViewController {
         canFadeImages = true
     }
     
-    func showDropDownController(sender: UIView, dataSource: [String], imageDataSource: [String]? = []) {
+    func showDropDownController(sender: UIView, dataSource: [[String]], imageDataSource: [[String]]? = []) {
         let frameRelativeToViewController = sender.convertRect(sender.bounds, toView: view)
         
         let controller = ANCommonKit.dropDownListViewController()
@@ -229,11 +304,11 @@ class BaseViewController: UIViewController {
     // MARK: - IBActions
     
     @IBAction func pressedChangeOrder(sender: UIButton) {
-        showDropDownController(sender, dataSource:OrderBy.allItems())
+        showDropDownController(sender, dataSource: [OrderBy.allItems()])
     }
     
     @IBAction func pressedChangeView(sender: UIButton) {
-        showDropDownController(sender, dataSource:ViewType.allItems())
+        showDropDownController(sender, dataSource: [ViewType.allItems()])
     }
     
     
@@ -263,13 +338,33 @@ extension BaseViewController: UISearchBarDelegate {
 extension BaseViewController: UICollectionViewDataSource {
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return filteredDataSource.count
+        if selectedList == SelectedList.AllSeasons {
+            return 1
+        } else {
+            return filteredDataSource.count
+        }
+        
     }
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return filteredDataSource[section].count
+        if selectedList == SelectedList.AllSeasons {
+            return chartsDataSource.count
+        } else {
+            return filteredDataSource[section].count
+        }
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        
+        if selectedList == SelectedList.AllSeasons {
+            let reuseIdentifier = "SeasonCell";
+            let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! BasicCollectionCell
+            
+            let seasonalChart = chartsDataSource[indexPath.row]
+            cell.titleLabel.text = seasonalChart.title
+            cell.layoutIfNeeded()
+            return cell
+        }
+        
         var reuseIdentifier: String = ""
             
         switch currentViewType {
@@ -279,6 +374,7 @@ extension BaseViewController: UICollectionViewDataSource {
             reuseIdentifier = "AnimeListCell"
         case .Poster:
             reuseIdentifier = "AnimeCellPoster"
+        case .SeasonalChart: break
         }
 
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! AnimeCell
@@ -306,26 +402,38 @@ extension BaseViewController: UICollectionViewDataSource {
         if var nextEpisode = anime.nextEpisode {
             let nextDate = anime.nextEpisodeDate
             
-            let (days, hours, minutes) = etaForDate(nextDate)
-            let etaTime: String
-            if days != 0 {
-                etaTime = "\(days)d \(hours)h \(minutes)m"
-                cell.etaLabel?.textColor = UIColor.belizeHole()
-                cell.etaTimeLabel?.textColor = UIColor.belizeHole()
-                cell.etaLabel?.text = "Episode \(nextEpisode) - " + etaTime
-            } else if hours != 0 {
-                etaTime = "\(hours)h \(minutes)m"
-                cell.etaLabel?.textColor = UIColor.nephritis()
-                cell.etaTimeLabel?.textColor = UIColor.nephritis()
-                cell.etaLabel?.text = "Episode \(nextEpisode) - " + etaTime
-            } else {
-                etaTime = "\(minutes)m"
+            if selectedList == SelectedList.Calendar &&
+                indexPath.section == 0 &&
+                nextDate.timeIntervalSinceNow > 60*60*24 {
+                    
                 cell.etaLabel?.textColor = UIColor.pumpkin()
                 cell.etaTimeLabel?.textColor = UIColor.pumpkin()
-                cell.etaLabel?.text = "Episode \(nextEpisode) - \(minutes)m"
+                cell.etaLabel?.text = "Episode \(nextEpisode-1) - Aired"
+                cell.etaTimeLabel?.text = "Aired"
+            } else {
+                
+                let (days, hours, minutes) = etaForDate(nextDate)
+                let etaTime: String
+                if days != 0 {
+                    etaTime = "\(days)d \(hours)h \(minutes)m"
+                    cell.etaLabel?.textColor = UIColor.belizeHole()
+                    cell.etaTimeLabel?.textColor = UIColor.belizeHole()
+                    cell.etaLabel?.text = "Episode \(nextEpisode) - " + etaTime
+                } else if hours != 0 {
+                    etaTime = "\(hours)h \(minutes)m"
+                    cell.etaLabel?.textColor = UIColor.nephritis()
+                    cell.etaTimeLabel?.textColor = UIColor.nephritis()
+                    cell.etaLabel?.text = "Episode \(nextEpisode) - " + etaTime
+                } else {
+                    etaTime = "\(minutes)m"
+                    cell.etaLabel?.textColor = UIColor.pumpkin()
+                    cell.etaTimeLabel?.textColor = UIColor.pumpkin()
+                    cell.etaLabel?.text = "Episode \(nextEpisode) - \(minutes)m"
+                }
+                
+                cell.etaTimeLabel?.text = etaTime
             }
             
-            cell.etaTimeLabel?.text = etaTime
             cell.nextEpisodeNumberLabel?.text = nextEpisode.description
         
         } else {
@@ -344,17 +452,22 @@ extension BaseViewController: UICollectionViewDataSource {
             
             var headerView = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView", forIndexPath: indexPath) as! BasicCollectionReusableView
             
-            var title = ""
-            switch indexPath.section {
-            case 0: title = "TV"
-            case 1: title = "Movie"
-            case 2: title = "OVA"
-            case 3: title = "ONA"
-            case 4: title = "Special"
-            default: break
+            if selectedList == SelectedList.Calendar {
+                headerView.titleLabel.text = weekdayStrings[indexPath.section]
+            } else {
+                var title = ""
+                switch indexPath.section {
+                case 0: title = "TV"
+                case 1: title = "Movie"
+                case 2: title = "OVA"
+                case 3: title = "ONA"
+                case 4: title = "Special"
+                default: break
+                }
+                
+                headerView.titleLabel.text = title
             }
             
-            headerView.titleLabel.text = title
             
             reusableView = headerView;
         }
@@ -364,7 +477,8 @@ extension BaseViewController: UICollectionViewDataSource {
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         
-        if filteredDataSource[section].count == 0 {
+        if filteredDataSource[section].count == 0
+            || selectedList == SelectedList.AllSeasons {
             return CGSizeZero
         } else {
             let height = (section == 0) ? FirstHeaderCellHeight : HeaderCellHeight
@@ -378,24 +492,28 @@ extension BaseViewController: UICollectionViewDataSource {
 
 extension BaseViewController: UICollectionViewDelegate {
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let tabBarController = ANAnimeKit.rootTabBarController()
-        let anime = filteredDataSource[indexPath.section][indexPath.row]
-        tabBarController.initWithAnime(anime)
         
-        animator = ZFModalTransitionAnimator(modalViewController: tabBarController)
-        animator.dragable = true
-        animator.direction = ZFModalTransitonDirection.Bottom
-         
-        tabBarController.animator = animator
-        tabBarController.transitioningDelegate = self.animator;
-        tabBarController.modalPresentationStyle = UIModalPresentationStyle.Custom;
+        if selectedList != SelectedList.AllSeasons {
+            let tabBarController = ANAnimeKit.rootTabBarController()
+            let anime = filteredDataSource[indexPath.section][indexPath.row]
+            tabBarController.initWithAnime(anime)
+            
+            animator = ZFModalTransitionAnimator(modalViewController: tabBarController)
+            animator.dragable = true
+            animator.direction = ZFModalTransitonDirection.Bottom
+            
+            tabBarController.animator = animator
+            tabBarController.transitioningDelegate = self.animator;
+            tabBarController.modalPresentationStyle = UIModalPresentationStyle.Custom;
+            
+            presentViewController(tabBarController, animated: true, completion: nil)
+        }
         
-        presentViewController(tabBarController, animated: true, completion: nil)
     }
 }
 
 extension BaseViewController: DropDownListDelegate {
-    func selectedAction(trigger: UIView, action: String) {
+    func selectedAction(trigger: UIView, action: String, indexPath: NSIndexPath) {
         if trigger.isEqual(orderButton) {
             if let orderEnum = OrderBy(rawValue: action) {
                 order(by: orderEnum)

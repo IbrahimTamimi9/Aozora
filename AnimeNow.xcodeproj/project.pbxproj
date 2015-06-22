@@ -8,19 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		51750AC81B96323951AB9040 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D27C7A8ED4F7C96DF08F5850 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		5D86412D23C2DF6FF9D63C06 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D27C7A8ED4F7C96DF08F5850 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		6923F76C724843F5AED124BD /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D27C7A8ED4F7C96DF08F5850 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		79AF381FB9C944A80806E321 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D27C7A8ED4F7C96DF08F5850 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		DA27D1971AF1BA9D00CC854E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA27D1961AF1BA9D00CC854E /* AppDelegate.swift */; };
 		DA27D1991AF1BA9D00CC854E /* ParseWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA27D1981AF1BA9D00CC854E /* ParseWorker.swift */; };
-		DA27D19C1AF1BA9D00CC854E /* Base.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA27D19A1AF1BA9D00CC854E /* Base.storyboard */; };
+		DA27D19C1AF1BA9D00CC854E /* Season.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA27D19A1AF1BA9D00CC854E /* Season.storyboard */; };
 		DA27D19E1AF1BA9D00CC854E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA27D19D1AF1BA9D00CC854E /* Images.xcassets */; };
 		DA27D1A11AF1BA9D00CC854E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA27D19F1AF1BA9D00CC854E /* LaunchScreen.xib */; };
 		DA27D1AD1AF1BA9D00CC854E /* AnimeNowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA27D1AC1AF1BA9D00CC854E /* AnimeNowTests.swift */; };
 		DA41679B1B25F76F00847F56 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA41679A1B25F76F00847F56 /* FontAwesome.ttf */; };
-		DA41679D1B2630C700847F56 /* AiringViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA41679C1B2630C700847F56 /* AiringViewController.swift */; };
 		DA41679F1B26320600847F56 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA41679E1B26320600847F56 /* BaseViewController.swift */; };
-		DA4167A11B263A1E00847F56 /* TBAViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4167A01B263A1E00847F56 /* TBAViewController.swift */; };
-		DA4167A31B26428A00847F56 /* ArchiveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4167A21B26428A00847F56 /* ArchiveViewController.swift */; };
 		DA4167B31B273B0700847F56 /* ANAnimeKit.h in Headers */ = {isa = PBXBuildFile; fileRef = DA4167B21B273B0700847F56 /* ANAnimeKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA4167B91B273B0700847F56 /* ANAnimeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA4167AE1B273B0700847F56 /* ANAnimeKit.framework */; };
 		DA4167C21B273B0700847F56 /* ANAnimeKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4167C11B273B0700847F56 /* ANAnimeKitTests.swift */; };
@@ -28,7 +26,6 @@
 		DA4167C61B273B0700847F56 /* ANAnimeKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA4167AE1B273B0700847F56 /* ANAnimeKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DA4167D21B273B7100847F56 /* AnimeInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4167D11B273B7100847F56 /* AnimeInformationViewController.swift */; };
 		DA4167D41B273B9400847F56 /* Anime.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA4167D31B273B9400847F56 /* Anime.storyboard */; };
-		DA4167D61B273FA300847F56 /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4167D51B273FA300847F56 /* CustomTabBar.swift */; };
 		DA4167DF1B275CCC00847F56 /* InformationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4167DE1B275CCC00847F56 /* InformationCell.swift */; };
 		DA4167E11B275CDE00847F56 /* SynopsisCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4167E01B275CDE00847F56 /* SynopsisCell.swift */; };
 		DA4167E31B275CEB00847F56 /* ReviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4167E21B275CEB00847F56 /* ReviewCell.swift */; };
@@ -44,15 +41,12 @@
 		DA4AF8CC1B276E060020252E /* ANCommonKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA4AF8B51B276E060020252E /* ANCommonKit.framework */; };
 		DA4AF8CD1B276E060020252E /* ANCommonKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA4AF8B51B276E060020252E /* ANCommonKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DA5A3BEF1B346F4700C07D71 /* POSTRequestJS.html in Resources */ = {isa = PBXBuildFile; fileRef = DA5A3BEE1B346F4700C07D71 /* POSTRequestJS.html */; };
-		DA5A3BF11B35CC6400C07D71 /* NewPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5A3BF01B35CC6400C07D71 /* NewPostViewController.swift */; };
-		DA5A3BF41B35EB4F00C07D71 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA5A3BF31B35EB4F00C07D71 /* Login.storyboard */; };
-		DA5A3BF61B35EB5F00C07D71 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5A3BF51B35EB5F00C07D71 /* LoginViewController.swift */; };
 		DA5A3BF81B35EE2200C07D71 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5A3BF71B35EE2200C07D71 /* CustomTextField.swift */; };
 		DA5A3BFA1B35F19A00C07D71 /* TraktV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6E83B11B1672A500970D27 /* TraktV1.swift */; };
 		DA5A3BFB1B35F19A00C07D71 /* TraktV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6E83B31B167F1E00970D27 /* TraktV2.swift */; };
 		DA5A3BFC1B35F19A00C07D71 /* AniList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA27D1B61AF1BFA300CC854E /* AniList.swift */; };
 		DA5A3BFD1B35F19A00C07D71 /* Atarashii.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE43C371B2D5BC800C3092D /* Atarashii.swift */; };
-		DA5A3BFF1B35F41B00C07D71 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5A3BFE1B35F41B00C07D71 /* User.swift */; };
+		DA5A3C061B36255200C07D71 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5A3C051B36255200C07D71 /* ProfileViewController.swift */; };
 		DA6E12B31B10D94200B278B0 /* ANParseKit.h in Headers */ = {isa = PBXBuildFile; fileRef = DA6E12B21B10D94200B278B0 /* ANParseKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA6E12B91B10D94200B278B0 /* ANParseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E12AE1B10D94200B278B0 /* ANParseKit.framework */; };
 		DA6E12C21B10D94200B278B0 /* ANParseKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6E12C11B10D94200B278B0 /* ANParseKitTests.swift */; };
@@ -90,15 +84,10 @@
 		DA9F731D1B2931FF00C2652C /* UIImageView+SDWebImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9F731A1B2930F200C2652C /* UIImageView+SDWebImage.swift */; };
 		DA9F731E1B29370F00C2652C /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA41679A1B25F76F00847F56 /* FontAwesome.ttf */; };
 		DAA253B61B2B877C0092EB0B /* CharactersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA253B51B2B877C0092EB0B /* CharactersViewController.swift */; };
-		DAA253B81B2B8AF50092EB0B /* AnimeBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA253B71B2B8AF50092EB0B /* AnimeBaseViewController.swift */; };
-		DAAD79931B30D087009D70ED /* ForumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAD79921B30D087009D70ED /* ForumViewController.swift */; };
-		DAAD79951B30D918009D70ED /* TopicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAD79941B30D918009D70ED /* TopicCell.swift */; };
 		DAC027CA1B2A15C20085C91A /* DiscussionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC027C91B2A15C20085C91A /* DiscussionViewController.swift */; };
 		DAC027CC1B2A16B80085C91A /* AnimeReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC027CB1B2A16B80085C91A /* AnimeReview.swift */; };
 		DAC027CF1B2A1C3F0085C91A /* ZFModalTransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = DAFD60B31B277B8D007275C1 /* ZFModalTransitionAnimator.m */; };
 		DAC027D01B2A1C750085C91A /* ZFModalTransitionAnimator.h in Headers */ = {isa = PBXBuildFile; fileRef = DAFD60B21B277B8D007275C1 /* ZFModalTransitionAnimator.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DAC610BC1B3115C100B60631 /* TopicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC610BB1B3115C100B60631 /* TopicViewController.swift */; };
-		DAC610BE1B312B0200B60631 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC610BD1B312B0200B60631 /* UserCell.swift */; };
 		DACCF35D1B110AA2006A13EB /* ANParseKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACCF35C1B110AA2006A13EB /* ANParseKit.swift */; };
 		DACCF35F1B111016006A13EB /* AnimeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACCF35E1B111016006A13EB /* AnimeService.swift */; };
 		DACE77C21B294D7B00037486 /* NSDate+AniNow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACE77C11B294D7B00037486 /* NSDate+AniNow.swift */; };
@@ -107,10 +96,30 @@
 		DAE43C341B2BC3B700C3092D /* AnimeDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE43C331B2BC3B700C3092D /* AnimeDetail.swift */; };
 		DAE43C3A1B2F971800C3092D /* UIView+Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE43C391B2F971800C3092D /* UIView+Animation.swift */; };
 		DAE7A7191B2105FD00788614 /* AnimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE7A7181B2105FD00788614 /* AnimeCell.swift */; };
+		DAF6186D1B377AAE00286517 /* AnimeProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF6186B1B37792900286517 /* AnimeProgress.swift */; };
+		DAF6186F1B377C2100286517 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E13051B10DDB900B278B0 /* Social.framework */; };
+		DAF618701B377C3000286517 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E13031B10DDB500B278B0 /* Accounts.framework */; };
+		DAF618761B377CA700286517 /* AnimeLibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF618751B377CA700286517 /* AnimeLibraryViewController.swift */; };
+		DAF618781B377D6000286517 /* AnimeListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF618771B377D6000286517 /* AnimeListViewController.swift */; };
+		DAF6187A1B37825700286517 /* Library.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAF618791B37825700286517 /* Library.storyboard */; };
+		DAF6187C1B3784E300286517 /* ForumsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF6187B1B3784E300286517 /* ForumsViewController.swift */; };
+		DAF618901B378B1F00286517 /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4167D51B273FA300847F56 /* CustomTabBar.swift */; };
+		DAF618911B378B1F00286517 /* AnimeBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA253B71B2B8AF50092EB0B /* AnimeBaseViewController.swift */; };
+		DAF618921B378B1F00286517 /* Forum.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAF6187F1B37861000286517 /* Forum.storyboard */; };
+		DAF618931B378B1F00286517 /* ForumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAD79921B30D087009D70ED /* ForumViewController.swift */; };
+		DAF618941B378B1F00286517 /* TopicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC610BB1B3115C100B60631 /* TopicViewController.swift */; };
+		DAF618951B378B1F00286517 /* NewPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5A3BF01B35CC6400C07D71 /* NewPostViewController.swift */; };
+		DAF618961B378B2700286517 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC610BD1B312B0200B60631 /* UserCell.swift */; };
+		DAF618971B378B2700286517 /* TopicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAD79941B30D918009D70ED /* TopicCell.swift */; };
+		DAF618981B378B3000286517 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA5A3BF31B35EB4F00C07D71 /* Login.storyboard */; };
+		DAF618991B378B3000286517 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5A3BF51B35EB5F00C07D71 /* LoginViewController.swift */; };
+		DAF6189B1B378BA100286517 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5A3BFE1B35F41B00C07D71 /* User.swift */; };
+		DAF6189E1B378FEF00286517 /* Forum.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAF6189D1B378FEF00286517 /* Forum.storyboard */; };
+		DAF618A01B378FF700286517 /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAF6189F1B378FF700286517 /* Profile.storyboard */; };
 		DAFBB0951B20EFF700495ED9 /* ChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFBB0941B20EFF700495ED9 /* ChartViewController.swift */; };
 		DAFD60B51B278452007275C1 /* ActionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA38A9881B223AF1002FCBB4 /* ActionListViewController.swift */; };
 		DAFD60B61B278452007275C1 /* DropDownListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA76A1961B235BF4006CB489 /* DropDownListViewController.swift */; };
-		DAFD60B71B278459007275C1 /* Common.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA38A98B1B223B39002FCBB4 /* Common.storyboard */; };
+		DAFD60B71B278459007275C1 /* Action.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA38A98B1B223B39002FCBB4 /* Action.storyboard */; };
 		DAFD60B81B27845F007275C1 /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4167D71B274D3B00847F56 /* CustomLabel.swift */; };
 		DAFD60B91B27845F007275C1 /* BasicTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA38A98E1B223F1F002FCBB4 /* BasicTableCell.swift */; };
 		DAFD60BA1B27845F007275C1 /* BasicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA38A9901B224960002FCBB4 /* BasicView.swift */; };
@@ -224,7 +233,7 @@
 		DA27D1951AF1BA9D00CC854E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA27D1961AF1BA9D00CC854E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DA27D1981AF1BA9D00CC854E /* ParseWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseWorker.swift; sourceTree = "<group>"; };
-		DA27D19B1AF1BA9D00CC854E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Base.storyboard; sourceTree = "<group>"; };
+		DA27D19B1AF1BA9D00CC854E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Season.storyboard; sourceTree = "<group>"; };
 		DA27D19D1AF1BA9D00CC854E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		DA27D1A01AF1BA9D00CC854E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		DA27D1A61AF1BA9D00CC854E /* AnimeNowTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AnimeNowTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -235,15 +244,12 @@
 		DA2853BE1B22C1710070B675 /* HighlightButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HighlightButton.swift; sourceTree = "<group>"; };
 		DA2853C11B22C5D30070B675 /* UIColor+AniNow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+AniNow.swift"; sourceTree = "<group>"; };
 		DA38A9881B223AF1002FCBB4 /* ActionListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionListViewController.swift; sourceTree = "<group>"; };
-		DA38A98B1B223B39002FCBB4 /* Common.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Common.storyboard; sourceTree = "<group>"; };
+		DA38A98B1B223B39002FCBB4 /* Action.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Action.storyboard; sourceTree = "<group>"; };
 		DA38A98E1B223F1F002FCBB4 /* BasicTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicTableCell.swift; sourceTree = "<group>"; };
 		DA38A9901B224960002FCBB4 /* BasicView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicView.swift; sourceTree = "<group>"; };
 		DA4167991B25F1BF00847F56 /* AnimeNow-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AnimeNow-Bridging-Header.h"; sourceTree = "<group>"; };
 		DA41679A1B25F76F00847F56 /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.ttf; sourceTree = "<group>"; };
-		DA41679C1B2630C700847F56 /* AiringViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AiringViewController.swift; sourceTree = "<group>"; };
 		DA41679E1B26320600847F56 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
-		DA4167A01B263A1E00847F56 /* TBAViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TBAViewController.swift; sourceTree = "<group>"; };
-		DA4167A21B26428A00847F56 /* ArchiveViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchiveViewController.swift; sourceTree = "<group>"; };
 		DA4167A41B2646F900847F56 /* BasicCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicCollectionCell.swift; sourceTree = "<group>"; };
 		DA4167AE1B273B0700847F56 /* ANAnimeKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ANAnimeKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA4167B11B273B0700847F56 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -268,11 +274,12 @@
 		DA4AF8C71B276E060020252E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA4AF8C81B276E060020252E /* ANCommonKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANCommonKitTests.swift; sourceTree = "<group>"; };
 		DA5A3BEE1B346F4700C07D71 /* POSTRequestJS.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = POSTRequestJS.html; sourceTree = "<group>"; };
-		DA5A3BF01B35CC6400C07D71 /* NewPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewPostViewController.swift; sourceTree = "<group>"; };
+		DA5A3BF01B35CC6400C07D71 /* NewPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewPostViewController.swift; path = ../ANAnimeKit/NewPostViewController.swift; sourceTree = "<group>"; };
 		DA5A3BF31B35EB4F00C07D71 /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		DA5A3BF51B35EB5F00C07D71 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		DA5A3BF71B35EE2200C07D71 /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		DA5A3BFE1B35F41B00C07D71 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		DA5A3C051B36255200C07D71 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		DA6E12AE1B10D94200B278B0 /* ANParseKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ANParseKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA6E12B11B10D94200B278B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA6E12B21B10D94200B278B0 /* ANParseKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ANParseKit.h; sourceTree = "<group>"; };
@@ -313,18 +320,18 @@
 		DA76A1961B235BF4006CB489 /* DropDownListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropDownListViewController.swift; sourceTree = "<group>"; };
 		DA76A1991B2375E1006CB489 /* SeasonalChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeasonalChart.swift; sourceTree = "<group>"; };
 		DA76A19C1B23AADF006CB489 /* BasicCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicCollectionReusableView.swift; sourceTree = "<group>"; };
-		DA823D8A1B326940005C7AFD /* InAppBrowser.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = InAppBrowser.storyboard; sourceTree = "<group>"; };
-		DA823D8B1B326940005C7AFD /* InAppBrowserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InAppBrowserViewController.swift; sourceTree = "<group>"; };
+		DA823D8A1B326940005C7AFD /* InAppBrowser.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = InAppBrowser.storyboard; path = ../AnimeNow/InAppBrowser.storyboard; sourceTree = "<group>"; };
+		DA823D8B1B326940005C7AFD /* InAppBrowserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InAppBrowserViewController.swift; path = ../AnimeNow/InAppBrowserViewController.swift; sourceTree = "<group>"; };
 		DA9EB9301B2BA580001ECFA7 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		DA9F731A1B2930F200C2652C /* UIImageView+SDWebImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+SDWebImage.swift"; sourceTree = "<group>"; };
 		DAA253B51B2B877C0092EB0B /* CharactersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharactersViewController.swift; sourceTree = "<group>"; };
 		DAA253B71B2B8AF50092EB0B /* AnimeBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeBaseViewController.swift; sourceTree = "<group>"; };
-		DAAD79921B30D087009D70ED /* ForumViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForumViewController.swift; sourceTree = "<group>"; };
-		DAAD79941B30D918009D70ED /* TopicCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicCell.swift; sourceTree = "<group>"; };
+		DAAD79921B30D087009D70ED /* ForumViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ForumViewController.swift; path = ../ANAnimeKit/ForumViewController.swift; sourceTree = "<group>"; };
+		DAAD79941B30D918009D70ED /* TopicCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TopicCell.swift; path = ../ANAnimeKit/TopicCell.swift; sourceTree = "<group>"; };
 		DAC027C91B2A15C20085C91A /* DiscussionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscussionViewController.swift; sourceTree = "<group>"; };
 		DAC027CB1B2A16B80085C91A /* AnimeReview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeReview.swift; sourceTree = "<group>"; };
-		DAC610BB1B3115C100B60631 /* TopicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicViewController.swift; sourceTree = "<group>"; };
-		DAC610BD1B312B0200B60631 /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
+		DAC610BB1B3115C100B60631 /* TopicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TopicViewController.swift; path = ../ANAnimeKit/TopicViewController.swift; sourceTree = "<group>"; };
+		DAC610BD1B312B0200B60631 /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserCell.swift; path = ../ANAnimeKit/UserCell.swift; sourceTree = "<group>"; };
 		DACCF35C1B110AA2006A13EB /* ANParseKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ANParseKit.swift; sourceTree = "<group>"; };
 		DACCF35E1B111016006A13EB /* AnimeService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeService.swift; sourceTree = "<group>"; };
 		DACE77C11B294D7B00037486 /* NSDate+AniNow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDate+AniNow.swift"; sourceTree = "<group>"; };
@@ -334,6 +341,14 @@
 		DAE43C371B2D5BC800C3092D /* Atarashii.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Atarashii.swift; sourceTree = "<group>"; };
 		DAE43C391B2F971800C3092D /* UIView+Animation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Animation.swift"; sourceTree = "<group>"; };
 		DAE7A7181B2105FD00788614 /* AnimeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeCell.swift; sourceTree = "<group>"; };
+		DAF6186B1B37792900286517 /* AnimeProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeProgress.swift; sourceTree = "<group>"; };
+		DAF618751B377CA700286517 /* AnimeLibraryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeLibraryViewController.swift; sourceTree = "<group>"; };
+		DAF618771B377D6000286517 /* AnimeListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeListViewController.swift; sourceTree = "<group>"; };
+		DAF618791B37825700286517 /* Library.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Library.storyboard; sourceTree = "<group>"; };
+		DAF6187B1B3784E300286517 /* ForumsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForumsViewController.swift; sourceTree = "<group>"; };
+		DAF6187F1B37861000286517 /* Forum.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Forum.storyboard; sourceTree = "<group>"; };
+		DAF6189D1B378FEF00286517 /* Forum.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Forum.storyboard; sourceTree = "<group>"; };
+		DAF6189F1B378FF700286517 /* Profile.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
 		DAFBB0941B20EFF700495ED9 /* ChartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartViewController.swift; sourceTree = "<group>"; };
 		DAFD60B21B277B8D007275C1 /* ZFModalTransitionAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZFModalTransitionAnimator.h; path = ../AnimeNow/ZFModalTransitionAnimator.h; sourceTree = "<group>"; };
 		DAFD60B31B277B8D007275C1 /* ZFModalTransitionAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZFModalTransitionAnimator.m; path = ../AnimeNow/ZFModalTransitionAnimator.m; sourceTree = "<group>"; };
@@ -401,6 +416,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAF618701B377C3000286517 /* Accounts.framework in Frameworks */,
+				DAF6186F1B377C2100286517 /* Social.framework in Frameworks */,
 				DA9EB9311B2BA580001ECFA7 /* WebKit.framework in Frameworks */,
 				DA6E132A1B10FAA100B278B0 /* Bolts.framework in Frameworks */,
 				DA6E132B1B10FAA100B278B0 /* Parse.framework in Frameworks */,
@@ -416,6 +433,7 @@
 				DA6E13201B10F9F500B278B0 /* libsqlite3.dylib in Frameworks */,
 				DA6E131F1B10F9EE00B278B0 /* libz.dylib in Frameworks */,
 				DA6E131E1B10F9E900B278B0 /* libxml2.dylib in Frameworks */,
+				5D86412D23C2DF6FF9D63C06 /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -437,6 +455,15 @@
 				CC7A7DA6842DABB2A3D90AB9 /* Pods.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		DA06132B1B3778310044340F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DAF6186B1B37792900286517 /* AnimeProgress.swift */,
+			);
+			name = Model;
+			path = ../AnimeNow;
 			sourceTree = "<group>";
 		};
 		DA27D1881AF1BA9D00CC854E = {
@@ -474,11 +501,13 @@
 		DA27D1931AF1BA9D00CC854E /* AnimeNow */ = {
 			isa = PBXGroup;
 			children = (
-				DAE7A7151B2105D000788614 /* Views */,
-				DAE7A7131B2105BD00788614 /* UI */,
-				DAE7A7141B2105C400788614 /* Controllers */,
 				DA27D1961AF1BA9D00CC854E /* AppDelegate.swift */,
 				DA27D1981AF1BA9D00CC854E /* ParseWorker.swift */,
+				DAE7A7151B2105D000788614 /* Views */,
+				DAF618711B377C6000286517 /* Season */,
+				DAF618731B377C7600286517 /* Library */,
+				DAF618721B377C6D00286517 /* Forum */,
+				DAE7A7141B2105C400788614 /* Profile */,
 				DA27D19D1AF1BA9D00CC854E /* Images.xcassets */,
 				DA27D19F1AF1BA9D00CC854E /* LaunchScreen.xib */,
 				DA27D1941AF1BA9D00CC854E /* Supporting Files */,
@@ -525,24 +554,14 @@
 			path = ../AnimeNow;
 			sourceTree = "<group>";
 		};
-		DA38A9871B223AC6002FCBB4 /* Controllers */ = {
+		DA38A98A1B223B11002FCBB4 /* ActionControllers */ = {
 			isa = PBXGroup;
 			children = (
-				DA823D8B1B326940005C7AFD /* InAppBrowserViewController.swift */,
+				DA38A98B1B223B39002FCBB4 /* Action.storyboard */,
 				DA38A9881B223AF1002FCBB4 /* ActionListViewController.swift */,
 				DA76A1961B235BF4006CB489 /* DropDownListViewController.swift */,
 			);
-			name = Controllers;
-			path = ../AnimeNow;
-			sourceTree = "<group>";
-		};
-		DA38A98A1B223B11002FCBB4 /* UI */ = {
-			isa = PBXGroup;
-			children = (
-				DA823D8A1B326940005C7AFD /* InAppBrowser.storyboard */,
-				DA38A98B1B223B39002FCBB4 /* Common.storyboard */,
-			);
-			name = UI;
+			name = ActionControllers;
 			path = ../AnimeNow;
 			sourceTree = "<group>";
 		};
@@ -567,9 +586,12 @@
 			children = (
 				DA4167E81B275F9400847F56 /* ANAnimeKit.swift */,
 				DA4167B21B273B0700847F56 /* ANAnimeKit.h */,
+				DA5A3BFE1B35F41B00C07D71 /* User.swift */,
 				DA4167CE1B273B1D00847F56 /* UI */,
 				DA4167DD1B275CA700847F56 /* Views */,
-				DA4167CD1B273B1700847F56 /* ViewControllers */,
+				DAF6189C1B378C2A00286517 /* DismissableTabBar */,
+				DA4167CD1B273B1700847F56 /* Controllers */,
+				DAF6187E1B3785FC00286517 /* Forum */,
 				DA5A3BF21B35EB4000C07D71 /* Login */,
 				DA4167B01B273B0700847F56 /* Supporting Files */,
 			);
@@ -601,19 +623,14 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		DA4167CD1B273B1700847F56 /* ViewControllers */ = {
+		DA4167CD1B273B1700847F56 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				DA4167D51B273FA300847F56 /* CustomTabBar.swift */,
-				DAA253B71B2B8AF50092EB0B /* AnimeBaseViewController.swift */,
 				DA4167D11B273B7100847F56 /* AnimeInformationViewController.swift */,
 				DAA253B51B2B877C0092EB0B /* CharactersViewController.swift */,
 				DAC027C91B2A15C20085C91A /* DiscussionViewController.swift */,
-				DAAD79921B30D087009D70ED /* ForumViewController.swift */,
-				DAC610BB1B3115C100B60631 /* TopicViewController.swift */,
-				DA5A3BF01B35CC6400C07D71 /* NewPostViewController.swift */,
 			);
-			name = ViewControllers;
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 		DA4167CE1B273B1D00847F56 /* UI */ = {
@@ -633,8 +650,6 @@
 				DA4167E41B275CF500847F56 /* LinkCell.swift */,
 				DA4167E61B275D3800847F56 /* TitleCell.swift */,
 				DAFE19AB1B29E17F002F3A76 /* CharacterCell.swift */,
-				DAAD79941B30D918009D70ED /* TopicCell.swift */,
-				DAC610BD1B312B0200B60631 /* UserCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -644,12 +659,13 @@
 			children = (
 				DAFD60C01B27847E007275C1 /* ANCommonKit.swift */,
 				DA4AF8B91B276E060020252E /* ANCommonKit.h */,
+				DA06132B1B3778310044340F /* Model */,
 				DAFBB0931B20EFC600495ED9 /* API */,
 				DA2853C01B22C5B40070B675 /* Categories */,
 				DA38A98D1B223EFC002FCBB4 /* Views */,
-				DA38A98A1B223B11002FCBB4 /* UI */,
+				DAF6187D1B3785D600286517 /* Browser */,
+				DA38A98A1B223B11002FCBB4 /* ActionControllers */,
 				DAC027CE1B2A1C1D0085C91A /* Animators */,
-				DA38A9871B223AC6002FCBB4 /* Controllers */,
 				DA4AF8B71B276E060020252E /* Supporting Files */,
 			);
 			path = ANCommonKit;
@@ -694,7 +710,6 @@
 			children = (
 				DA5A3BF31B35EB4F00C07D71 /* Login.storyboard */,
 				DA5A3BF51B35EB5F00C07D71 /* LoginViewController.swift */,
-				DA5A3BFE1B35F41B00C07D71 /* User.swift */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -707,8 +722,7 @@
 				DAE43C301B2BC16F00C3092D /* Categories */,
 				DACE77C51B29518300037486 /* Parse classes */,
 				DA5A3BED1B346F2100C07D71 /* MALScrapper */,
-				DA6E13121B10F56B00B278B0 /* SeasonalChartService.swift */,
-				DACCF35E1B111016006A13EB /* AnimeService.swift */,
+				DAF6186E1B377BBF00286517 /* Services */,
 				DA6E12CE1B10D96F00B278B0 /* Vendor */,
 				DA6E12B01B10D94200B278B0 /* Supporting Files */,
 			);
@@ -804,24 +818,13 @@
 			name = Categories;
 			sourceTree = "<group>";
 		};
-		DAE7A7131B2105BD00788614 /* UI */ = {
+		DAE7A7141B2105C400788614 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				DA27D19A1AF1BA9D00CC854E /* Base.storyboard */,
+				DAF6189F1B378FF700286517 /* Profile.storyboard */,
+				DA5A3C051B36255200C07D71 /* ProfileViewController.swift */,
 			);
-			name = UI;
-			sourceTree = "<group>";
-		};
-		DAE7A7141B2105C400788614 /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				DA41679E1B26320600847F56 /* BaseViewController.swift */,
-				DAFBB0941B20EFF700495ED9 /* ChartViewController.swift */,
-				DA41679C1B2630C700847F56 /* AiringViewController.swift */,
-				DA4167A01B263A1E00847F56 /* TBAViewController.swift */,
-				DA4167A21B26428A00847F56 /* ArchiveViewController.swift */,
-			);
-			name = Controllers;
+			name = Profile;
 			sourceTree = "<group>";
 		};
 		DAE7A7151B2105D000788614 /* Views */ = {
@@ -830,6 +833,84 @@
 				DAE7A7181B2105FD00788614 /* AnimeCell.swift */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		DAF6186E1B377BBF00286517 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				DA6E13121B10F56B00B278B0 /* SeasonalChartService.swift */,
+				DACCF35E1B111016006A13EB /* AnimeService.swift */,
+			);
+			name = Services;
+			sourceTree = "<group>";
+		};
+		DAF618711B377C6000286517 /* Season */ = {
+			isa = PBXGroup;
+			children = (
+				DA27D19A1AF1BA9D00CC854E /* Season.storyboard */,
+				DA41679E1B26320600847F56 /* BaseViewController.swift */,
+				DAFBB0941B20EFF700495ED9 /* ChartViewController.swift */,
+			);
+			name = Season;
+			sourceTree = "<group>";
+		};
+		DAF618721B377C6D00286517 /* Forum */ = {
+			isa = PBXGroup;
+			children = (
+				DAF6189D1B378FEF00286517 /* Forum.storyboard */,
+				DAF6187B1B3784E300286517 /* ForumsViewController.swift */,
+			);
+			name = Forum;
+			sourceTree = "<group>";
+		};
+		DAF618731B377C7600286517 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				DAF618791B37825700286517 /* Library.storyboard */,
+				DAF618751B377CA700286517 /* AnimeLibraryViewController.swift */,
+				DAF618771B377D6000286517 /* AnimeListViewController.swift */,
+			);
+			name = Library;
+			sourceTree = "<group>";
+		};
+		DAF6187D1B3785D600286517 /* Browser */ = {
+			isa = PBXGroup;
+			children = (
+				DA823D8A1B326940005C7AFD /* InAppBrowser.storyboard */,
+				DA823D8B1B326940005C7AFD /* InAppBrowserViewController.swift */,
+			);
+			name = Browser;
+			sourceTree = "<group>";
+		};
+		DAF6187E1B3785FC00286517 /* Forum */ = {
+			isa = PBXGroup;
+			children = (
+				DAF618891B3788FC00286517 /* Views */,
+				DAF6187F1B37861000286517 /* Forum.storyboard */,
+				DAAD79921B30D087009D70ED /* ForumViewController.swift */,
+				DAC610BB1B3115C100B60631 /* TopicViewController.swift */,
+				DA5A3BF01B35CC6400C07D71 /* NewPostViewController.swift */,
+			);
+			name = Forum;
+			path = ../ANCommonKit;
+			sourceTree = "<group>";
+		};
+		DAF618891B3788FC00286517 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DAC610BD1B312B0200B60631 /* UserCell.swift */,
+				DAAD79941B30D918009D70ED /* TopicCell.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		DAF6189C1B378C2A00286517 /* DismissableTabBar */ = {
+			isa = PBXGroup;
+			children = (
+				DA4167D51B273FA300847F56 /* CustomTabBar.swift */,
+				DAA253B71B2B8AF50092EB0B /* AnimeBaseViewController.swift */,
+			);
+			name = DismissableTabBar;
 			sourceTree = "<group>";
 		};
 		DAFBB0931B20EFC600495ED9 /* API */ = {
@@ -1030,10 +1111,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DA6E12C71B10D94200B278B0 /* Build configuration list for PBXNativeTarget "ANParseKit" */;
 			buildPhases = (
+				333F86161AE84AEEB3B047DD /* Check Pods Manifest.lock */,
 				DA6E12A91B10D94200B278B0 /* Sources */,
 				DA6E12AA1B10D94200B278B0 /* Frameworks */,
 				DA6E12AB1B10D94200B278B0 /* Headers */,
 				DA6E12AC1B10D94200B278B0 /* Resources */,
+				F974CF5C7B84ED5E81EB0F2C /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1132,9 +1215,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA27D19C1AF1BA9D00CC854E /* Base.storyboard in Resources */,
+				DAF6189E1B378FEF00286517 /* Forum.storyboard in Resources */,
+				DA27D19C1AF1BA9D00CC854E /* Season.storyboard in Resources */,
 				DA41679B1B25F76F00847F56 /* FontAwesome.ttf in Resources */,
+				DAF6187A1B37825700286517 /* Library.storyboard in Resources */,
 				DA27D1A11AF1BA9D00CC854E /* LaunchScreen.xib in Resources */,
+				DAF618A01B378FF700286517 /* Profile.storyboard in Resources */,
 				DA27D19E1AF1BA9D00CC854E /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1150,9 +1236,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA5A3BF41B35EB4F00C07D71 /* Login.storyboard in Resources */,
+				DAF618921B378B1F00286517 /* Forum.storyboard in Resources */,
 				DA4167EA1B2760BF00847F56 /* Images.xcassets in Resources */,
 				DA9F731E1B29370F00C2652C /* FontAwesome.ttf in Resources */,
+				DAF618981B378B3000286517 /* Login.storyboard in Resources */,
 				DA4167D41B273B9400847F56 /* Anime.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1169,7 +1256,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA823D8C1B326940005C7AFD /* InAppBrowser.storyboard in Resources */,
-				DAFD60B71B278459007275C1 /* Common.storyboard in Resources */,
+				DAFD60B71B278459007275C1 /* Action.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1214,6 +1301,21 @@
 			showEnvVarsInLog = 0;
 		};
 		21AA3F6C7C18F02D50F77AA0 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		333F86161AE84AEEB3B047DD /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1288,6 +1390,21 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		F974CF5C7B84ED5E81EB0F2C /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		FCB548D67E364123103F724B /* Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1310,14 +1427,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA4167A31B26428A00847F56 /* ArchiveViewController.swift in Sources */,
-				DA41679D1B2630C700847F56 /* AiringViewController.swift in Sources */,
+				DAF618761B377CA700286517 /* AnimeLibraryViewController.swift in Sources */,
 				DAE7A7191B2105FD00788614 /* AnimeCell.swift in Sources */,
+				DAF6187C1B3784E300286517 /* ForumsViewController.swift in Sources */,
 				DA41679F1B26320600847F56 /* BaseViewController.swift in Sources */,
 				DA27D1991AF1BA9D00CC854E /* ParseWorker.swift in Sources */,
 				DA27D1971AF1BA9D00CC854E /* AppDelegate.swift in Sources */,
+				DAF618781B377D6000286517 /* AnimeListViewController.swift in Sources */,
+				DA5A3C061B36255200C07D71 /* ProfileViewController.swift in Sources */,
 				DAFBB0951B20EFF700495ED9 /* ChartViewController.swift in Sources */,
-				DA4167A11B263A1E00847F56 /* TBAViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1333,25 +1451,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA5A3BF61B35EB5F00C07D71 /* LoginViewController.swift in Sources */,
+				DAF618991B378B3000286517 /* LoginViewController.swift in Sources */,
 				DA4167DF1B275CCC00847F56 /* InformationCell.swift in Sources */,
 				DA4167E71B275D3800847F56 /* TitleCell.swift in Sources */,
-				DAAD79931B30D087009D70ED /* ForumViewController.swift in Sources */,
+				DAF618931B378B1F00286517 /* ForumViewController.swift in Sources */,
 				DA4167E31B275CEB00847F56 /* ReviewCell.swift in Sources */,
+				DAF618901B378B1F00286517 /* CustomTabBar.swift in Sources */,
+				DAF618911B378B1F00286517 /* AnimeBaseViewController.swift in Sources */,
+				DAF618941B378B1F00286517 /* TopicViewController.swift in Sources */,
 				DAFE19AC1B29E17F002F3A76 /* CharacterCell.swift in Sources */,
-				DAAD79951B30D918009D70ED /* TopicCell.swift in Sources */,
-				DAA253B81B2B8AF50092EB0B /* AnimeBaseViewController.swift in Sources */,
+				DAF618961B378B2700286517 /* UserCell.swift in Sources */,
 				DAC027CA1B2A15C20085C91A /* DiscussionViewController.swift in Sources */,
-				DAC610BE1B312B0200B60631 /* UserCell.swift in Sources */,
-				DAC610BC1B3115C100B60631 /* TopicViewController.swift in Sources */,
 				DA4167E11B275CDE00847F56 /* SynopsisCell.swift in Sources */,
 				DA4167E91B275F9400847F56 /* ANAnimeKit.swift in Sources */,
+				DAF618971B378B2700286517 /* TopicCell.swift in Sources */,
 				DA4167D21B273B7100847F56 /* AnimeInformationViewController.swift in Sources */,
-				DA4167D61B273FA300847F56 /* CustomTabBar.swift in Sources */,
 				DA4167E51B275CF500847F56 /* LinkCell.swift in Sources */,
 				DAA253B61B2B877C0092EB0B /* CharactersViewController.swift in Sources */,
-				DA5A3BF11B35CC6400C07D71 /* NewPostViewController.swift in Sources */,
-				DA5A3BFF1B35F41B00C07D71 /* User.swift in Sources */,
+				DAF618951B378B1F00286517 /* NewPostViewController.swift in Sources */,
+				DAF6189B1B378BA100286517 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1382,6 +1500,7 @@
 				DA5A3BF81B35EE2200C07D71 /* CustomTextField.swift in Sources */,
 				DAFD60B51B278452007275C1 /* ActionListViewController.swift in Sources */,
 				DAFD60BB1B27845F007275C1 /* LoaderView.swift in Sources */,
+				DAF6186D1B377AAE00286517 /* AnimeProgress.swift in Sources */,
 				DAC027CF1B2A1C3F0085C91A /* ZFModalTransitionAnimator.m in Sources */,
 				DAFD60C11B27847E007275C1 /* ANCommonKit.swift in Sources */,
 				DA823D8D1B326940005C7AFD /* InAppBrowserViewController.swift in Sources */,
@@ -1487,12 +1606,12 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		DA27D19A1AF1BA9D00CC854E /* Base.storyboard */ = {
+		DA27D19A1AF1BA9D00CC854E /* Season.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				DA27D19B1AF1BA9D00CC854E /* Base */,
 			);
-			name = Base.storyboard;
+			name = Season.storyboard;
 			sourceTree = "<group>";
 		};
 		DA27D19F1AF1BA9D00CC854E /* LaunchScreen.xib */ = {
@@ -1749,6 +1868,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1773,6 +1896,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = ANCommonKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1818,6 +1945,7 @@
 		};
 		DA6E12C81B10D94200B278B0 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3ABB693D5DECE103E9514C77 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1852,6 +1980,7 @@
 		};
 		DA6E12C91B10D94200B278B0 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CC7A7DA6842DABB2A3D90AB9 /* Pods.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;

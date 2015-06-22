@@ -30,6 +30,9 @@ public class ForumViewController: AnimeBaseViewController {
     
     var loadingView: LoaderView!
     
+    // Set board to load board instead of anime
+    public var board: Int?
+    
     public override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -40,17 +43,33 @@ public class ForumViewController: AnimeBaseViewController {
         malScrapper = MALScrapper(viewController: self)
         
         loadingView.startAnimating()
-        malScrapper.topicsFor(anime: anime).continueWithBlock {
-            (task: BFTask!) -> AnyObject! in
-            
-            self.tableView.animateFadeIn()
-            self.loadingView.stopAnimating()
-            if task.result != nil {
-                self.dataSource = task.result as! [MALScrapper.Topic]
+        
+        if let anime = anime {
+            malScrapper.topicsFor(anime: anime).continueWithBlock {
+                (task: BFTask!) -> AnyObject! in
+                
+                self.tableView.animateFadeIn()
+                self.loadingView.stopAnimating()
+                if task.result != nil {
+                    self.dataSource = task.result as! [MALScrapper.Topic]
+                }
+                
+                return nil
             }
-            
-            return nil
+        } else if let board = board {
+            malScrapper.topicsFor(board: board).continueWithBlock {
+                (task: BFTask!) -> AnyObject! in
+                
+                self.tableView.animateFadeIn()
+                self.loadingView.stopAnimating()
+                if task.result != nil {
+                    self.dataSource = task.result as! [MALScrapper.Topic]
+                }
+                
+                return nil
+            }
         }
+        
     }
     
     public override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -74,10 +93,10 @@ extension ForumViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCellWithIdentifier("TopicCell") as! TopicCell
         
         let topic = dataSource[indexPath.row]
-        let title = topic.title.stringByReplacingOccurrencesOfString("\(anime.title)", withString: "")
+        let title = topic.title
         cell.typeLabel.text = topic.type == MALScrapper.TopicType.Sticky ? " " : ""
         cell.title.text = title
-        cell.information.text = "\(topic.replies)  · last post \(topic.lastPost.date) by \(topic.lastPost.user)"
+        cell.information.text = "\(topic.replies)  · \(topic.lastPost.date) by \(topic.lastPost.user)"
         cell.layoutIfNeeded()
         return cell
     }

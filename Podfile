@@ -3,10 +3,12 @@ platform :ios, '8.0'
 inhibit_all_warnings!
 use_frameworks!
 
-link_with ['AnimeNow','ANAnimeKit','ANCommonKit']
+link_with ['AnimeNow','ANAnimeKit','ANCommonKit','ANParseKit']
 
 pod 'Alamofire', '~> 1.2'
 pod 'SDWebImage', '~> 3.7.2'
 pod 'FontAwesome+iOS'
 pod 'Shimmer'
 pod 'TTTAttributedLabel', '~> 1.13.4'
+pod 'XLPagerTabStrip', '~> 1.1.1'
+pod 'RealmSwift'

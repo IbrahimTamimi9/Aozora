@@ -42,15 +42,22 @@ public class CustomTabBarController: UITabBarController {
     
     override public func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Forum view controller
+        let (forumNavController, forumController) = ANAnimeKit.animeForumViewController()
+        self.viewControllers?.append(forumNavController)
+        
+        // Update icons frame
         let controllers = viewControllers as! [UIViewController]
         for controller in controllers {
             controller.tabBarItem.imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: -4, right: 0)
         }
         
         delegate = self
-        
+
+        // Set first view controller anime, the rest is set when tab controller delegate
         let navController = self.viewControllers?.first as! UINavigationController
-        let controller = navController.viewControllers.first as! AnimeInformationViewController
+        let controller = navController.viewControllers.first as! RequiresAnimeProtocol
         controller.initWithAnime(anime)
     }
     
