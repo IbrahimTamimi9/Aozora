@@ -19,6 +19,9 @@ public struct Atarashii {
         case animeCast(id: Int)
         case verifyCredentials()
         case animeList(username: String)
+        case profile(username: String)
+        case friends(username: String)
+        case history(username: String)
         
         public var URLRequest: NSURLRequest {
             let (method: Alamofire.Method, path: String, parameters: [String: AnyObject]) = {
@@ -29,6 +32,12 @@ public struct Atarashii {
                     return (.GET,"account/verify_credentials",[:])
                 case .animeList(let username):
                     return (.GET,"animelist/\(username)",[:])
+                case .profile(let username):
+                    return (.GET,"profile/\(username)",[:])
+                case .friends(let username):
+                    return (.GET,"friends/\(username)",[:])
+                case .history(let username):
+                    return (.GET,"history/\(username)",[:])
                 }
             }()
             

@@ -12,6 +12,8 @@ import ANAnimeKit
 
 class ForumsViewController: UIViewController {
     
+    let HeaderCellHeight: CGFloat = 39
+    
     var dataSource: [[(title: String, subtitle: String, board: Int)]] =
         [
             [],
@@ -72,9 +74,13 @@ extension ForumsViewController: UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let cell = tableView.dequeueReusableCellWithIdentifier("HeaderCell") as! BasicTableCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("TitleCell") as! BasicTableCell
         cell.titleLabel.text = titles[section]
         return cell.contentView
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return HeaderCellHeight
     }
     
 }

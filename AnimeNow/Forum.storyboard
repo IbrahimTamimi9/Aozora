@@ -14,7 +14,11 @@
         <scene sceneID="80q-NV-czB">
             <objects>
                 <navigationController id="M8H-6s-B3q" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Forum" image="icon-forum" id="Qxm-Dj-d5s"/>
+                    <tabBarItem key="tabBarItem" title="Forum" image="icon-forum" id="Qxm-Dj-d5s">
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="icon-forum-filled"/>
+                        </userDefinedRuntimeAttributes>
+                    </tabBarItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ERS-IT-ukv">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -49,40 +53,51 @@
                                     <color key="backgroundColor" red="0.97254902119999997" green="0.97254902119999997" blue="0.97254902119999997" alpha="1" colorSpace="calibratedRGB"/>
                                 </view>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="HeaderCell" rowHeight="36" id="Eje-9Z-ANt" customClass="BasicTableCell" customModule="ANCommonKit">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Eje-9Z-ANt" id="ph0-AX-Oa2">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TitleCell" rowHeight="39" id="kWa-1f-SY8" customClass="BasicTableCell" customModule="ANCommonKit">
+                                        <rect key="frame" x="0.0" y="278" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kWa-1f-SY8" id="3cE-rQ-zu5">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Anime" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N5L-hu-Qjc">
-                                                    <rect key="frame" x="8" y="8" width="583.5" height="19.5"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
-                                                    <color key="textColor" red="0.0078431372550000003" green="0.43921568630000002" blue="0.73333333329999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wEf-W9-fip" customClass="CustomLabel" customModule="ANCommonKit">
+                                                    <rect key="frame" x="8" y="8" width="584" height="31"/>
+                                                    <color key="backgroundColor" red="0.89411764709999997" green="0.89411764709999997" blue="0.89411764709999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="36" id="LSt-8r-BJB"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                            <integer key="value" value="2"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="LSt-8r-BJB"/>
+                                                        </mask>
+                                                    </variation>
                                                 </label>
                                             </subviews>
                                             <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
-                                                <constraint firstItem="N5L-hu-Qjc" firstAttribute="bottom" secondItem="ph0-AX-Oa2" secondAttribute="bottomMargin" id="9yE-kk-Pud"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="N5L-hu-Qjc" secondAttribute="trailing" id="Ip6-dG-566"/>
-                                                <constraint firstItem="N5L-hu-Qjc" firstAttribute="top" secondItem="ph0-AX-Oa2" secondAttribute="topMargin" constant="4" id="XHf-E6-fqu"/>
-                                                <constraint firstItem="N5L-hu-Qjc" firstAttribute="top" secondItem="ph0-AX-Oa2" secondAttribute="topMargin" id="dIQ-07-FSL"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="N5L-hu-Qjc" secondAttribute="trailing" constant="0.5" id="tzR-8T-cJN"/>
-                                                <constraint firstItem="N5L-hu-Qjc" firstAttribute="leading" secondItem="ph0-AX-Oa2" secondAttribute="leadingMargin" id="yDa-T4-bgF"/>
-                                                <constraint firstItem="N5L-hu-Qjc" firstAttribute="leading" secondItem="ph0-AX-Oa2" secondAttribute="leadingMargin" id="zMT-eK-FTk"/>
+                                                <constraint firstItem="wEf-W9-fip" firstAttribute="leading" secondItem="3cE-rQ-zu5" secondAttribute="leadingMargin" id="LfY-E3-WTC"/>
+                                                <constraint firstItem="wEf-W9-fip" firstAttribute="leading" secondItem="3cE-rQ-zu5" secondAttribute="leading" constant="8" id="QgC-FJ-J21"/>
+                                                <constraint firstAttribute="trailing" secondItem="wEf-W9-fip" secondAttribute="trailing" constant="8" id="SRd-eq-zyq"/>
+                                                <constraint firstItem="wEf-W9-fip" firstAttribute="top" secondItem="3cE-rQ-zu5" secondAttribute="topMargin" id="dbi-hG-hkh"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="wEf-W9-fip" secondAttribute="bottom" constant="-8" id="dev-hJ-8Zm"/>
+                                                <constraint firstItem="wEf-W9-fip" firstAttribute="trailing" secondItem="3cE-rQ-zu5" secondAttribute="trailingMargin" id="zbJ-JP-gIi"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
-                                                    <exclude reference="Ip6-dG-566"/>
-                                                    <exclude reference="XHf-E6-fqu"/>
-                                                    <exclude reference="zMT-eK-FTk"/>
+                                                    <exclude reference="LfY-E3-WTC"/>
+                                                    <exclude reference="zbJ-JP-gIi"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" red="0.97254902119999997" green="0.97254902119999997" blue="0.97254902119999997" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
-                                            <outlet property="titleLabel" destination="N5L-hu-Qjc" id="xKC-dX-HJf"/>
+                                            <outlet property="titleLabel" destination="wEf-W9-fip" id="L8X-fu-rbY"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="BoardCell" id="ou4-ED-gnu" customClass="BasicTableCell" customModule="ANCommonKit">
@@ -174,5 +189,6 @@
     </scenes>
     <resources>
         <image name="icon-forum" width="25" height="25"/>
+        <image name="icon-forum-filled" width="25" height="25"/>
     </resources>
 </document>

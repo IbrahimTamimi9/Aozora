@@ -48,10 +48,10 @@
                                                     <nil key="highlightedColor"/>
                                                     <variation key="default">
                                                         <mask key="constraints">
-                                                            <exclude reference="SFx-D9-wWl"/>
                                                             <exclude reference="4MJ-ts-Rj3"/>
-                                                            <exclude reference="KpN-1q-KIn"/>
                                                             <exclude reference="933-T0-EJl"/>
+                                                            <exclude reference="KpN-1q-KIn"/>
+                                                            <exclude reference="SFx-D9-wWl"/>
                                                         </mask>
                                                     </variation>
                                                 </label>
@@ -138,8 +138,8 @@
                                                 <exclude reference="cLz-VB-WwQ"/>
                                                 <exclude reference="esY-TR-5Vo"/>
                                                 <exclude reference="7Kd-1H-OEV"/>
-                                                <exclude reference="Vf8-pd-oGK"/>
                                                 <exclude reference="OJi-iB-y08"/>
+                                                <exclude reference="Vf8-pd-oGK"/>
                                                 <exclude reference="fDR-4I-JYv"/>
                                             </mask>
                                         </variation>
@@ -196,7 +196,7 @@
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="XWP-tV-gBT" customClass="XLButtonBarView">
                                 <rect key="frame" x="0.0" y="64" width="600" height="43"/>
-                                <color key="backgroundColor" red="0.18823529780000001" green="0.19607843459999999" blue="0.23529411850000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.10359226639999999" green="0.1079328739" blue="0.1310863334" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="43" id="fhP-Vu-EA7"/>
                                 </constraints>

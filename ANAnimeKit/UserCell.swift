@@ -8,9 +8,10 @@
 
 import UIKit
 
-class UserCell: UITableViewCell {
+public class UserCell: UITableViewCell {
     
-    @IBOutlet weak var username: UILabel!
-    @IBOutlet weak var avatar: UIImageView!
-    @IBOutlet weak var date: UILabel!
+    @IBOutlet weak public var username: UILabel!
+    @IBOutlet weak public var avatar: UIImageView!
+    @IBOutlet weak public var date: UILabel!
+    @IBOutlet weak public var lastOnline: UILabel!
 }

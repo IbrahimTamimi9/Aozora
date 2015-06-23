@@ -16,7 +16,12 @@
         <scene sceneID="qts-i8-pN3">
             <objects>
                 <navigationController id="x4L-h4-vA7" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="icon-forum" id="mxR-vt-fWF"/>
+                    <tabBarItem key="tabBarItem" title="" image="icon-forum" id="mxR-vt-fWF">
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="icon-forum-filled"/>
+                        </userDefinedRuntimeAttributes>
+                    </tabBarItem>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="i96-bd-1Ne">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -41,7 +46,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="61" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Fmw-jU-6m7">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="61" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Fmw-jU-6m7">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" red="0.97254902119999997" green="0.97254902119999997" blue="0.97254902119999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="YFv-zO-dUD">
@@ -167,7 +172,7 @@
                                     <color key="backgroundColor" red="0.97254902119999997" green="0.97254902119999997" blue="0.97254902119999997" alpha="1" colorSpace="calibratedRGB"/>
                                 </view>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="UserCell" rowHeight="61" id="wfb-fU-5Q8" customClass="UserCell" customModule="ANAnimeKit" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="UserCell" rowHeight="61" id="wfb-fU-5Q8" customClass="UserCell" customModule="ANCommonKit">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wfb-fU-5Q8" id="kX3-jJ-0IZ">
@@ -203,8 +208,8 @@
                                                     <nil key="highlightedColor"/>
                                                     <variation key="default">
                                                         <mask key="constraints">
-                                                            <exclude reference="YqJ-dZ-5FA"/>
                                                             <exclude reference="BNu-VD-gpq"/>
+                                                            <exclude reference="YqJ-dZ-5FA"/>
                                                         </mask>
                                                     </variation>
                                                 </label>
@@ -281,8 +286,8 @@
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
-                                                    <exclude reference="nVE-xO-AXL"/>
                                                     <exclude reference="1dc-Lw-xk8"/>
+                                                    <exclude reference="nVE-xO-AXL"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -325,8 +330,8 @@
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
-                                                    <exclude reference="fQH-wf-bcO"/>
                                                     <exclude reference="PHH-49-nQd"/>
+                                                    <exclude reference="fQH-wf-bcO"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -359,8 +364,8 @@
                                                     </userDefinedRuntimeAttributes>
                                                     <variation key="default">
                                                         <mask key="constraints">
-                                                            <exclude reference="nrg-Y2-y1h"/>
                                                             <exclude reference="cxZ-aA-6wN"/>
+                                                            <exclude reference="nrg-Y2-y1h"/>
                                                         </mask>
                                                     </variation>
                                                 </label>
@@ -376,8 +381,8 @@
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
-                                                    <exclude reference="cJ3-rc-maw"/>
                                                     <exclude reference="6p1-9d-LNJ"/>
+                                                    <exclude reference="cJ3-rc-maw"/>
                                                     <exclude reference="s8x-Fj-BvA"/>
                                                 </mask>
                                             </variation>
@@ -496,5 +501,6 @@
     </scenes>
     <resources>
         <image name="icon-forum" width="25" height="25"/>
+        <image name="icon-forum-filled" width="25" height="25"/>
     </resources>
 </document>

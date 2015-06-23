@@ -17,4 +17,8 @@ extension NSDate {
         return dateFormatter.stringFromDate(self)
     }
     
+    public func daysAgo() -> Int {
+        return Int(-timeIntervalSinceDate(NSDate()) / (60*60*24))
+    }
+    
 }

@@ -40,6 +40,12 @@
 		DA4AF8C91B276E060020252E /* ANCommonKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4AF8C81B276E060020252E /* ANCommonKitTests.swift */; };
 		DA4AF8CC1B276E060020252E /* ANCommonKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA4AF8B51B276E060020252E /* ANCommonKit.framework */; };
 		DA4AF8CD1B276E060020252E /* ANCommonKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA4AF8B51B276E060020252E /* ANCommonKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		DA58C2D71B386BAC0082B626 /* UserHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58C2D61B386BAC0082B626 /* UserHistoryViewController.swift */; };
+		DA58C2D91B386BB90082B626 /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58C2D81B386BB90082B626 /* UserProfileViewController.swift */; };
+		DA58C2DB1B386BC80082B626 /* UserFriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58C2DA1B386BC80082B626 /* UserFriendsViewController.swift */; };
+		DA58C2DD1B386C7E0082B626 /* UserBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58C2DC1B386C7E0082B626 /* UserBaseViewController.swift */; };
+		DA58C2DE1B38A3990082B626 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC610BD1B312B0200B60631 /* UserCell.swift */; };
+		DA58C2E21B38A7760082B626 /* String+NSDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58C2E11B38A7760082B626 /* String+NSDate.swift */; };
 		DA5A3BEF1B346F4700C07D71 /* POSTRequestJS.html in Resources */ = {isa = PBXBuildFile; fileRef = DA5A3BEE1B346F4700C07D71 /* POSTRequestJS.html */; };
 		DA5A3BF81B35EE2200C07D71 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5A3BF71B35EE2200C07D71 /* CustomTextField.swift */; };
 		DA5A3BFA1B35F19A00C07D71 /* TraktV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6E83B11B1672A500970D27 /* TraktV1.swift */; };
@@ -109,7 +115,6 @@
 		DAF618931B378B1F00286517 /* ForumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAD79921B30D087009D70ED /* ForumViewController.swift */; };
 		DAF618941B378B1F00286517 /* TopicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC610BB1B3115C100B60631 /* TopicViewController.swift */; };
 		DAF618951B378B1F00286517 /* NewPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5A3BF01B35CC6400C07D71 /* NewPostViewController.swift */; };
-		DAF618961B378B2700286517 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC610BD1B312B0200B60631 /* UserCell.swift */; };
 		DAF618971B378B2700286517 /* TopicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAD79941B30D918009D70ED /* TopicCell.swift */; };
 		DAF618981B378B3000286517 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA5A3BF31B35EB4F00C07D71 /* Login.storyboard */; };
 		DAF618991B378B3000286517 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5A3BF51B35EB5F00C07D71 /* LoginViewController.swift */; };
@@ -273,6 +278,11 @@
 		DA4AF8BF1B276E060020252E /* ANCommonKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ANCommonKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA4AF8C71B276E060020252E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA4AF8C81B276E060020252E /* ANCommonKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANCommonKitTests.swift; sourceTree = "<group>"; };
+		DA58C2D61B386BAC0082B626 /* UserHistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserHistoryViewController.swift; sourceTree = "<group>"; };
+		DA58C2D81B386BB90082B626 /* UserProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
+		DA58C2DA1B386BC80082B626 /* UserFriendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserFriendsViewController.swift; sourceTree = "<group>"; };
+		DA58C2DC1B386C7E0082B626 /* UserBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserBaseViewController.swift; sourceTree = "<group>"; };
+		DA58C2E11B38A7760082B626 /* String+NSDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+NSDate.swift"; sourceTree = "<group>"; };
 		DA5A3BEE1B346F4700C07D71 /* POSTRequestJS.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = POSTRequestJS.html; sourceTree = "<group>"; };
 		DA5A3BF01B35CC6400C07D71 /* NewPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewPostViewController.swift; path = ../ANAnimeKit/NewPostViewController.swift; sourceTree = "<group>"; };
 		DA5A3BF31B35EB4F00C07D71 /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
@@ -549,6 +559,7 @@
 				DA2853C11B22C5D30070B675 /* UIColor+AniNow.swift */,
 				DACE77C11B294D7B00037486 /* NSDate+AniNow.swift */,
 				DAE43C391B2F971800C3092D /* UIView+Animation.swift */,
+				DA58C2E11B38A7760082B626 /* String+NSDate.swift */,
 			);
 			name = Categories;
 			path = ../AnimeNow;
@@ -576,6 +587,7 @@
 				DA2853BE1B22C1710070B675 /* HighlightButton.swift */,
 				DA76A19C1B23AADF006CB489 /* BasicCollectionReusableView.swift */,
 				DA4167A41B2646F900847F56 /* BasicCollectionCell.swift */,
+				DAC610BD1B312B0200B60631 /* UserCell.swift */,
 			);
 			name = Views;
 			path = ../AnimeNow;
@@ -823,6 +835,10 @@
 			children = (
 				DAF6189F1B378FF700286517 /* Profile.storyboard */,
 				DA5A3C051B36255200C07D71 /* ProfileViewController.swift */,
+				DA58C2DC1B386C7E0082B626 /* UserBaseViewController.swift */,
+				DA58C2D81B386BB90082B626 /* UserProfileViewController.swift */,
+				DA58C2D61B386BAC0082B626 /* UserHistoryViewController.swift */,
+				DA58C2DA1B386BC80082B626 /* UserFriendsViewController.swift */,
 			);
 			name = Profile;
 			sourceTree = "<group>";
@@ -898,7 +914,6 @@
 		DAF618891B3788FC00286517 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				DAC610BD1B312B0200B60631 /* UserCell.swift */,
 				DAAD79941B30D918009D70ED /* TopicCell.swift */,
 			);
 			name = Views;
@@ -1429,13 +1444,17 @@
 			files = (
 				DAF618761B377CA700286517 /* AnimeLibraryViewController.swift in Sources */,
 				DAE7A7191B2105FD00788614 /* AnimeCell.swift in Sources */,
+				DA58C2DD1B386C7E0082B626 /* UserBaseViewController.swift in Sources */,
 				DAF6187C1B3784E300286517 /* ForumsViewController.swift in Sources */,
 				DA41679F1B26320600847F56 /* BaseViewController.swift in Sources */,
+				DA58C2D71B386BAC0082B626 /* UserHistoryViewController.swift in Sources */,
 				DA27D1991AF1BA9D00CC854E /* ParseWorker.swift in Sources */,
 				DA27D1971AF1BA9D00CC854E /* AppDelegate.swift in Sources */,
 				DAF618781B377D6000286517 /* AnimeListViewController.swift in Sources */,
 				DA5A3C061B36255200C07D71 /* ProfileViewController.swift in Sources */,
+				DA58C2D91B386BB90082B626 /* UserProfileViewController.swift in Sources */,
 				DAFBB0951B20EFF700495ED9 /* ChartViewController.swift in Sources */,
+				DA58C2DB1B386BC80082B626 /* UserFriendsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1460,7 +1479,6 @@
 				DAF618911B378B1F00286517 /* AnimeBaseViewController.swift in Sources */,
 				DAF618941B378B1F00286517 /* TopicViewController.swift in Sources */,
 				DAFE19AC1B29E17F002F3A76 /* CharacterCell.swift in Sources */,
-				DAF618961B378B2700286517 /* UserCell.swift in Sources */,
 				DAC027CA1B2A15C20085C91A /* DiscussionViewController.swift in Sources */,
 				DA4167E11B275CDE00847F56 /* SynopsisCell.swift in Sources */,
 				DA4167E91B275F9400847F56 /* ANAnimeKit.swift in Sources */,
@@ -1492,10 +1510,12 @@
 				DA5A3BFD1B35F19A00C07D71 /* Atarashii.swift in Sources */,
 				DA5A3BFC1B35F19A00C07D71 /* AniList.swift in Sources */,
 				DA9F731D1B2931FF00C2652C /* UIImageView+SDWebImage.swift in Sources */,
+				DA58C2E21B38A7760082B626 /* String+NSDate.swift in Sources */,
 				DAFD60B91B27845F007275C1 /* BasicTableCell.swift in Sources */,
 				DAFD60BC1B27845F007275C1 /* HighlightButton.swift in Sources */,
 				DAFD60BA1B27845F007275C1 /* BasicView.swift in Sources */,
 				DA5A3BFA1B35F19A00C07D71 /* TraktV1.swift in Sources */,
+				DA58C2DE1B38A3990082B626 /* UserCell.swift in Sources */,
 				DAFD60B81B27845F007275C1 /* CustomLabel.swift in Sources */,
 				DA5A3BF81B35EE2200C07D71 /* CustomTextField.swift in Sources */,
 				DAFD60B51B278452007275C1 /* ActionListViewController.swift in Sources */,

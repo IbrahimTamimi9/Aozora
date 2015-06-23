@@ -779,7 +779,11 @@
         <scene sceneID="KY9-xF-vDS">
             <objects>
                 <navigationController id="6ik-8u-5Gi" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="icon-group" id="edh-EG-Sb4"/>
+                    <tabBarItem key="tabBarItem" title="" image="icon-group" id="edh-EG-Sb4">
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="icon-group-filled"/>
+                        </userDefinedRuntimeAttributes>
+                    </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="qgJ-PR-7H7">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -799,7 +803,11 @@
         <scene sceneID="Z36-0j-Jwk">
             <objects>
                 <navigationController id="12K-A1-B4Q" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="icon-comments" id="x5d-tZ-5m0"/>
+                    <tabBarItem key="tabBarItem" title="" image="icon-comments" id="x5d-tZ-5m0">
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="icon-comments-filled"/>
+                        </userDefinedRuntimeAttributes>
+                    </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="uUB-9U-kPm">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1134,7 +1142,9 @@
     </scenes>
     <resources>
         <image name="icon-comments" width="25" height="25"/>
+        <image name="icon-comments-filled" width="25" height="25"/>
         <image name="icon-group" width="25" height="25"/>
+        <image name="icon-group-filled" width="25" height="25"/>
         <image name="icon-information" width="25" height="25"/>
     </resources>
 </document>

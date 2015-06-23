@@ -11,6 +11,11 @@ import UIKit
 extension UIColor {
     // Reference http://flatuicolors.com/
     
+    // Backish
+    public class func darkBlue() -> UIColor! {
+        return UIColor(red: 10/255.0, green: 13/255.0, blue: 22/255.0, alpha: 1.0)
+    }
+    
     // Bluish
     public class func midnightBlue() -> UIColor! {
         return UIColor(red: 44/255.0, green: 62/255.0, blue: 80/255.0, alpha: 1.0)

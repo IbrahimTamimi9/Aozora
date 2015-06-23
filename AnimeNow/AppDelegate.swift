@@ -45,7 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
         
         UINavigationBar.appearance().tintColor = UIColor.whiteColor()
-        UINavigationBar.appearance().barTintColor = UIColor.midnightBlue()
+        UINavigationBar.appearance().barTintColor = UIColor.darkBlue()
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
         
         UITabBar.appearance().tintColor = UIColor.peterRiver()
@@ -56,9 +56,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let seasons = UIStoryboard(name: "Season", bundle: nil).instantiateInitialViewController() as! UINavigationController
         let library = UIStoryboard(name: "Library", bundle: nil).instantiateInitialViewController() as! UINavigationController
         let forum = UIStoryboard(name: "Forum", bundle: nil).instantiateInitialViewController() as! UINavigationController
+        let profile = UIStoryboard(name: "Profile", bundle: nil).instantiateInitialViewController() as! UINavigationController
+        
         
         let tabBarController = UITabBarController()
-        tabBarController.viewControllers = [seasons, library, forum]
+        tabBarController.viewControllers = [seasons, library, forum, profile]
         
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
