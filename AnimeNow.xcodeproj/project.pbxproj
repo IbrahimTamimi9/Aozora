@@ -46,6 +46,8 @@
 		DA58C2DD1B386C7E0082B626 /* UserBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58C2DC1B386C7E0082B626 /* UserBaseViewController.swift */; };
 		DA58C2DE1B38A3990082B626 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC610BD1B312B0200B60631 /* UserCell.swift */; };
 		DA58C2E21B38A7760082B626 /* String+NSDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58C2E11B38A7760082B626 /* String+NSDate.swift */; };
+		DA58C2E51B39C0080082B626 /* Browse.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA58C2E41B39C0080082B626 /* Browse.storyboard */; };
+		DA58C2E71B39C01B0082B626 /* BrowseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58C2E61B39C01B0082B626 /* BrowseViewController.swift */; };
 		DA5A3BEF1B346F4700C07D71 /* POSTRequestJS.html in Resources */ = {isa = PBXBuildFile; fileRef = DA5A3BEE1B346F4700C07D71 /* POSTRequestJS.html */; };
 		DA5A3BF81B35EE2200C07D71 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5A3BF71B35EE2200C07D71 /* CustomTextField.swift */; };
 		DA5A3BFA1B35F19A00C07D71 /* TraktV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6E83B11B1672A500970D27 /* TraktV1.swift */; };
@@ -283,6 +285,8 @@
 		DA58C2DA1B386BC80082B626 /* UserFriendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserFriendsViewController.swift; sourceTree = "<group>"; };
 		DA58C2DC1B386C7E0082B626 /* UserBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserBaseViewController.swift; sourceTree = "<group>"; };
 		DA58C2E11B38A7760082B626 /* String+NSDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+NSDate.swift"; sourceTree = "<group>"; };
+		DA58C2E41B39C0080082B626 /* Browse.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Browse.storyboard; sourceTree = "<group>"; };
+		DA58C2E61B39C01B0082B626 /* BrowseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseViewController.swift; sourceTree = "<group>"; };
 		DA5A3BEE1B346F4700C07D71 /* POSTRequestJS.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = POSTRequestJS.html; sourceTree = "<group>"; };
 		DA5A3BF01B35CC6400C07D71 /* NewPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewPostViewController.swift; path = ../ANAnimeKit/NewPostViewController.swift; sourceTree = "<group>"; };
 		DA5A3BF31B35EB4F00C07D71 /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
@@ -518,6 +522,7 @@
 				DAF618731B377C7600286517 /* Library */,
 				DAF618721B377C6D00286517 /* Forum */,
 				DAE7A7141B2105C400788614 /* Profile */,
+				DA58C2E31B39BF850082B626 /* Browse */,
 				DA27D19D1AF1BA9D00CC854E /* Images.xcassets */,
 				DA27D19F1AF1BA9D00CC854E /* LaunchScreen.xib */,
 				DA27D1941AF1BA9D00CC854E /* Supporting Files */,
@@ -706,6 +711,15 @@
 				DA4AF8C71B276E060020252E /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DA58C2E31B39BF850082B626 /* Browse */ = {
+			isa = PBXGroup;
+			children = (
+				DA58C2E41B39C0080082B626 /* Browse.storyboard */,
+				DA58C2E61B39C01B0082B626 /* BrowseViewController.swift */,
+			);
+			name = Browse;
 			sourceTree = "<group>";
 		};
 		DA5A3BED1B346F2100C07D71 /* MALScrapper */ = {
@@ -1231,6 +1245,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DAF6189E1B378FEF00286517 /* Forum.storyboard in Resources */,
+				DA58C2E51B39C0080082B626 /* Browse.storyboard in Resources */,
 				DA27D19C1AF1BA9D00CC854E /* Season.storyboard in Resources */,
 				DA41679B1B25F76F00847F56 /* FontAwesome.ttf in Resources */,
 				DAF6187A1B37825700286517 /* Library.storyboard in Resources */,
@@ -1451,6 +1466,7 @@
 				DA27D1991AF1BA9D00CC854E /* ParseWorker.swift in Sources */,
 				DA27D1971AF1BA9D00CC854E /* AppDelegate.swift in Sources */,
 				DAF618781B377D6000286517 /* AnimeListViewController.swift in Sources */,
+				DA58C2E71B39C01B0082B626 /* BrowseViewController.swift in Sources */,
 				DA5A3C061B36255200C07D71 /* ProfileViewController.swift in Sources */,
 				DA58C2D91B386BB90082B626 /* UserProfileViewController.swift in Sources */,
 				DAFBB0951B20EFF700495ED9 /* ChartViewController.swift in Sources */,

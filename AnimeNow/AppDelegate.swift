@@ -20,47 +20,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-        // Register subclasses
-        AnimeDetail.registerSubclass()
-        AnimeCast.registerSubclass()
-        AnimeCharacter.registerSubclass()
-        AnimeRelation.registerSubclass()
-        AnimeReview.registerSubclass()
-        Anime.registerSubclass()
-        SeasonalChart.registerSubclass()
-        
-        // TODO: Implement this
-        Parse.enableLocalDatastore()
-        
-        // Initialize Parse.
-        Parse.setApplicationId("X95vv1iNbXWqoEClbK5XzGvjuydWKQk2Ti2n8OPn",
-            clientKey: "vvsbzUBBgnPKCoYQlltREy5S0gSIgMfBp34aDrkc")
-
-        // AnimeTrakr Keys temp
-//        Parse.setApplicationId("nLCbHmeklHp6gBly9KHZOZNSMBTyuvknAubwHGAQ",
-//            clientKey: "yVixWhPhTM9yGmjtfm1isbC7Ekxq29eNLTzu6KzM")
-        
-        // Track statistics around application opens.
-        // TODO: Uncomment this
-        //PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
-        
-        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
-        UINavigationBar.appearance().barTintColor = UIColor.darkBlue()
-        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
-        
-        UITabBar.appearance().tintColor = UIColor.peterRiver()
-        
-        UITextField.appearance().textColor = UIColor.whiteColor()
+        // Initialization
+        registerParse()
+        customizeAppearance()
         
         // Creating RootTabBar
         let seasons = UIStoryboard(name: "Season", bundle: nil).instantiateInitialViewController() as! UINavigationController
         let library = UIStoryboard(name: "Library", bundle: nil).instantiateInitialViewController() as! UINavigationController
         let forum = UIStoryboard(name: "Forum", bundle: nil).instantiateInitialViewController() as! UINavigationController
         let profile = UIStoryboard(name: "Profile", bundle: nil).instantiateInitialViewController() as! UINavigationController
-        
+        let browse = UIStoryboard(name: "Browse", bundle: nil).instantiateInitialViewController() as! UINavigationController
         
         let tabBarController = UITabBarController()
-        tabBarController.viewControllers = [seasons, library, forum, profile]
+        tabBarController.viewControllers = [seasons, library, forum, profile, browse]
         
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
@@ -90,6 +62,46 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+    // MARK: - Internal functions
+    
+    func registerParse() {
+        // Register subclasses
+        AnimeDetail.registerSubclass()
+        AnimeCast.registerSubclass()
+        AnimeCharacter.registerSubclass()
+        AnimeRelation.registerSubclass()
+        AnimeReview.registerSubclass()
+        Anime.registerSubclass()
+        SeasonalChart.registerSubclass()
+        
+        // TODO: Implement this
+        Parse.enableLocalDatastore()
+        
+        // Initialize Parse.
+        Parse.setApplicationId("X95vv1iNbXWqoEClbK5XzGvjuydWKQk2Ti2n8OPn",
+            clientKey: "vvsbzUBBgnPKCoYQlltREy5S0gSIgMfBp34aDrkc")
+        
+        // AnimeTrakr Keys temp
+        //        Parse.setApplicationId("nLCbHmeklHp6gBly9KHZOZNSMBTyuvknAubwHGAQ",
+        //            clientKey: "yVixWhPhTM9yGmjtfm1isbC7Ekxq29eNLTzu6KzM")
+        
+        // Track statistics around application opens.
+        // TODO: Uncomment this
+        //PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
+
+
+    }
+    
+    func customizeAppearance() {
+        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
+        UINavigationBar.appearance().barTintColor = UIColor.darkBlue()
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
+        
+        UITabBar.appearance().tintColor = UIColor.peterRiver()
+        
+        UITextField.appearance().textColor = UIColor.whiteColor()
+    }
+    
 
 }
 

@@ -288,7 +288,7 @@ class BaseViewController: UIViewController {
         controller.setDataSource(sender, dataSource: dataSource, yPosition: CGRectGetMaxY(frameRelativeToViewController), imageDataSource: imageDataSource)
         controller.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
         controller.modalPresentationStyle = .OverCurrentContext
-        self.tabBarController?.presentViewController(controller, animated: true, completion: nil)
+        self.tabBarController?.presentViewController(controller, animated: false, completion: nil)
     }
     
     // Helper date functions

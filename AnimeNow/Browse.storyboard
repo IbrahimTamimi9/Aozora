@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E33b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="XXQ-2Y-JUt">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="FontAwesome.ttf">
+            <string>FontAwesome</string>
+        </mutableArray>
+    </customFonts>
+    <scenes>
+        <!--Browse View Controller-->
+        <scene sceneID="5iu-Fo-mgD">
+            <objects>
+                <viewController id="YRA-9j-0wW" customClass="BrowseViewController" customModule="AnimeNow" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="LH5-rv-kyi"/>
+                        <viewControllerLayoutGuide type="bottom" id="1Rg-vb-Unz"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="iRo-PT-lV4">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hEl-5h-6PJ" userLabel="FilterBar">
+                                <rect key="frame" x="0.0" y="40" width="600" height="64"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VFf-lK-T1n">
+                                        <rect key="frame" x="0.0" y="24" width="600" height="40"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="FILTER" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i7D-lX-Vhf">
+                                                <rect key="frame" x="8" y="14" width="41.5" height="12.5"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="17" id="DAW-En-Qjr"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="12"/>
+                                                <color key="textColor" red="0.2039215714" green="0.59607845540000004" blue="0.85882353779999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                                <variation key="default">
+                                                    <mask key="constraints">
+                                                        <exclude reference="DAW-En-Qjr"/>
+                                                    </mask>
+                                                </variation>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1j8-CK-gUb">
+                                                <rect key="frame" x="555" y="-3" width="45" height="45"/>
+                                                <inset key="contentEdgeInsets" minX="12" minY="12" maxX="12" maxY="12"/>
+                                                <state key="normal" image="icon-filter">
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                            </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="None" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9gm-pf-kWJ">
+                                                <rect key="frame" x="57" y="12" width="38.5" height="17"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <color key="textColor" red="0.89411765336990356" green="0.89411765336990356" blue="0.89411765336990356" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="5QO-ZR-Y81"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" red="0.18823529780000001" green="0.19607843459999999" blue="0.23529411850000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="VFf-lK-T1n" secondAttribute="trailing" id="Dpg-QO-dbe"/>
+                                    <constraint firstItem="VFf-lK-T1n" firstAttribute="leading" secondItem="hEl-5h-6PJ" secondAttribute="leading" id="ko5-vn-OqQ"/>
+                                    <constraint firstAttribute="bottom" secondItem="VFf-lK-T1n" secondAttribute="bottom" id="tXh-kD-LNw"/>
+                                    <constraint firstAttribute="height" constant="64" id="umj-e7-bo8"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="hEl-5h-6PJ" firstAttribute="leading" secondItem="iRo-PT-lV4" secondAttribute="leading" id="HbG-3u-d31"/>
+                            <constraint firstItem="hEl-5h-6PJ" firstAttribute="top" secondItem="LH5-rv-kyi" secondAttribute="bottom" constant="-24" id="jpR-OY-Btd"/>
+                            <constraint firstAttribute="trailing" secondItem="hEl-5h-6PJ" secondAttribute="trailing" id="wMm-om-hNW"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="7HD-Ub-kqJ"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uHl-y0-C4v" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="938" y="465"/>
+        </scene>
+        <!--Browse-->
+        <scene sceneID="FZ1-yQ-J55">
+            <objects>
+                <navigationController id="XXQ-2Y-JUt" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Browse" image="icon-search-2" id="NVS-bu-XEv"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="4k5-t9-Cb1">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="YRA-9j-0wW" kind="relationship" relationship="rootViewController" id="y6g-u1-Bpz"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ufr-jz-zD2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="260" y="465"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="icon-filter" width="25" height="25"/>
+        <image name="icon-search-2" width="25" height="25"/>
+    </resources>
+</document>
