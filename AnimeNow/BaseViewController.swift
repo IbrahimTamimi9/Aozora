@@ -291,15 +291,6 @@ class BaseViewController: UIViewController {
         self.tabBarController?.presentViewController(controller, animated: false, completion: nil)
     }
     
-    // Helper date functions
-    func etaForDate(nextDate: NSDate) -> (days: Int, hours: Int, minutes: Int) {
-        let now = NSDate()
-        let cal = NSCalendar.currentCalendar()
-        let unit: NSCalendarUnit = .CalendarUnitDay | .CalendarUnitHour | .CalendarUnitMinute
-        let components = cal.components(unit, fromDate: now, toDate: nextDate, options: nil)
-        
-        return (components.day,components.hour, components.minute)
-    }
     
     // MARK: - IBActions
     
@@ -381,64 +372,13 @@ extension BaseViewController: UICollectionViewDataSource {
         
         let anime = filteredDataSource[indexPath.section][indexPath.row]
         
-        cell.posterImageView?.setImageFrom(urlString: anime.imageUrl, animated: canFadeImages)
-        cell.titleLabel.text = anime.title
-        cell.genresLabel?.text = ", ".join(anime.genres)
+        let nextDate = anime.nextEpisodeDate
+        let showEtaAsAired =
+            selectedList == SelectedList.Calendar &&
+            indexPath.section == 0 &&
+            nextDate.timeIntervalSinceNow > 60*60*24
         
-        if let source = anime.source {
-            cell.sourceLabel?.text = "Source: \(source)"
-        } else {
-            cell.sourceLabel?.text = ""
-        }
-        
-        
-        if let mainStudio = anime.studio.first {
-            let studioString = mainStudio["studio_name"] as! String
-            cell.studioLabel?.text = "\(studioString)"
-        } else {
-            cell.studioLabel?.text = ""
-        }
-        
-        if var nextEpisode = anime.nextEpisode {
-            let nextDate = anime.nextEpisodeDate
-            
-            if selectedList == SelectedList.Calendar &&
-                indexPath.section == 0 &&
-                nextDate.timeIntervalSinceNow > 60*60*24 {
-                    
-                cell.etaLabel?.textColor = UIColor.pumpkin()
-                cell.etaTimeLabel?.textColor = UIColor.pumpkin()
-                cell.etaLabel?.text = "Episode \(nextEpisode-1) - Aired"
-                cell.etaTimeLabel?.text = "Aired"
-            } else {
-                
-                let (days, hours, minutes) = etaForDate(nextDate)
-                let etaTime: String
-                if days != 0 {
-                    etaTime = "\(days)d \(hours)h \(minutes)m"
-                    cell.etaLabel?.textColor = UIColor.belizeHole()
-                    cell.etaTimeLabel?.textColor = UIColor.belizeHole()
-                    cell.etaLabel?.text = "Episode \(nextEpisode) - " + etaTime
-                } else if hours != 0 {
-                    etaTime = "\(hours)h \(minutes)m"
-                    cell.etaLabel?.textColor = UIColor.nephritis()
-                    cell.etaTimeLabel?.textColor = UIColor.nephritis()
-                    cell.etaLabel?.text = "Episode \(nextEpisode) - " + etaTime
-                } else {
-                    etaTime = "\(minutes)m"
-                    cell.etaLabel?.textColor = UIColor.pumpkin()
-                    cell.etaTimeLabel?.textColor = UIColor.pumpkin()
-                    cell.etaLabel?.text = "Episode \(nextEpisode) - \(minutes)m"
-                }
-                
-                cell.etaTimeLabel?.text = etaTime
-            }
-            
-            cell.nextEpisodeNumberLabel?.text = nextEpisode.description
-        
-        } else {
-            cell.etaLabel?.text = ""
-        }
+        cell.configureWithAnime(anime, canFadeImages: canFadeImages, showEtaAsAired: showEtaAsAired)
         
         cell.layoutIfNeeded()
         return cell

@@ -394,7 +394,7 @@
                                                         </mask>
                                                     </variation>
                                                 </imageView>
-                                                <imageView hidden="YES" userInteractionEnabled="NO" alpha="0.80000001192092896" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="2CE09305-AA6F-41C5-9E70-2D390CA36096" translatesAutoresizingMaskIntoConstraints="NO" id="2c3-xd-E9q">
+                                                <imageView hidden="YES" userInteractionEnabled="NO" alpha="0.80000001192092896" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="A81A07AD-6F32-4965-A6E1-BC3D3D3CBD23" translatesAutoresizingMaskIntoConstraints="NO" id="2c3-xd-E9q">
                                                     <rect key="frame" x="0.0" y="95" width="340" height="37"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vEb-9b-Yyt">
@@ -657,7 +657,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="2CE09305-AA6F-41C5-9E70-2D390CA36096" width="10" height="45">
+        <image name="A81A07AD-6F32-4965-A6E1-BC3D3D3CBD23" width="10" height="45">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPj9YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQsLzI4O1UkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw

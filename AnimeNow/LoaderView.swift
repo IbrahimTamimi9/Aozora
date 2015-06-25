@@ -76,6 +76,10 @@ public class LoaderView: UIView {
     
     public func startAnimating() {
 
+        if animating {
+            return
+        }
+        
         animating = true
         let timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
         let animationDuration = 0.4
