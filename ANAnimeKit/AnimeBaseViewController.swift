@@ -17,7 +17,7 @@ extension AnimeBaseViewController: RequiresAnimeProtocol {
 
 extension AnimeBaseViewController: CustomAnimatorProtocol {
     func scrollView() -> UIScrollView {
-        return tableView
+        return tableView != nil ? tableView : collectionView
     }
 }
 
@@ -25,6 +25,7 @@ public class AnimeBaseViewController: UIViewController {
     var anime: Anime!
     
     @IBOutlet public weak var tableView: UITableView!
+    @IBOutlet public weak var collectionView: UICollectionView!
     
     public override func viewDidLoad() {
         super.viewDidLoad()

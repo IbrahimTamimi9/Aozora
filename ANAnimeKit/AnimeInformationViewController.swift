@@ -35,7 +35,7 @@ extension AnimeInformationViewController: StatusBarVisibilityProtocol {
 public class AnimeInformationViewController: AnimeBaseViewController {
     
     let HeaderCellHeight: CGFloat = 39
-    let HeaderViewHeight: CGFloat = 194
+    let HeaderViewHeight: CGFloat = 294
     let TopBarHeight: CGFloat = 44
     let StatusBarHeight: CGFloat = 22
     

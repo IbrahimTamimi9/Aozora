@@ -152,8 +152,6 @@ public class Anime: PFObject, PFSubclassing {
         query.includeKey("details")
         query.includeKey("cast")
         query.includeKey("characters")
-        //query.includeKey("forum")
-        query.includeKey("reviews")
         query.includeKey("relations")
         return query
     }
@@ -166,8 +164,6 @@ public class Anime: PFObject, PFSubclassing {
         query.includeKey("details")
         query.includeKey("cast")
         query.includeKey("characters")
-        //query.includeKey("forum")
-        query.includeKey("reviews")
         query.includeKey("relations")
         return query
     }

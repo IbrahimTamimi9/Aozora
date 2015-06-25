@@ -250,7 +250,10 @@
                         </constraints>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Library" id="lOj-rd-NWO"/>
+                    <navigationItem key="navigationItem" title="Library" id="lOj-rd-NWO">
+                        <barButtonItem key="leftBarButtonItem" image="icon-filter" id="viB-Wp-f4n"/>
+                        <barButtonItem key="rightBarButtonItem" image="icon-search" id="KfE-x2-30n"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="buttonBarView" destination="XWP-tV-gBT" id="iEp-iL-CNF"/>
                         <outlet property="containerView" destination="AFD-f9-o6a" id="xfl-dh-udZ"/>
@@ -262,6 +265,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="icon-filter" width="22" height="22"/>
         <image name="icon-library" width="25" height="25"/>
+        <image name="icon-search" width="22" height="22"/>
     </resources>
 </document>

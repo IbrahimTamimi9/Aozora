@@ -27,8 +27,8 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VFf-lK-T1n">
                                         <rect key="frame" x="0.0" y="24" width="600" height="40"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="FILTER" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i7D-lX-Vhf">
-                                                <rect key="frame" x="8" y="14" width="41.5" height="12.5"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FILTER" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i7D-lX-Vhf">
+                                                <rect key="frame" x="8" y="14" width="40.5" height="12.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="17" id="DAW-En-Qjr"/>
                                                 </constraints>
@@ -41,16 +41,9 @@
                                                     </mask>
                                                 </variation>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1j8-CK-gUb">
-                                                <rect key="frame" x="555" y="-3" width="45" height="45"/>
-                                                <inset key="contentEdgeInsets" minX="12" minY="12" maxX="12" maxY="12"/>
-                                                <state key="normal" image="icon-filter">
-                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                            </button>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="None" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9gm-pf-kWJ">
-                                                <rect key="frame" x="57" y="12" width="38.5" height="17"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="None" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9gm-pf-kWJ">
+                                                <rect key="frame" x="56" y="12.5" width="32" height="16"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                 <color key="textColor" red="0.89411765336990356" green="0.89411765336990356" blue="0.89411765336990356" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -58,6 +51,10 @@
                                         <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="5QO-ZR-Y81"/>
+                                            <constraint firstItem="9gm-pf-kWJ" firstAttribute="leading" secondItem="i7D-lX-Vhf" secondAttribute="trailing" constant="7.5" id="Jq1-de-E9z"/>
+                                            <constraint firstAttribute="centerY" secondItem="i7D-lX-Vhf" secondAttribute="centerY" constant="-0.25" id="Oe3-zm-tvW"/>
+                                            <constraint firstItem="i7D-lX-Vhf" firstAttribute="leading" secondItem="VFf-lK-T1n" secondAttribute="leading" constant="8" id="oEk-Nz-fro"/>
+                                            <constraint firstItem="9gm-pf-kWJ" firstAttribute="centerY" secondItem="i7D-lX-Vhf" secondAttribute="centerY" constant="0.25" id="xfm-aC-I7f"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -77,7 +74,10 @@
                             <constraint firstAttribute="trailing" secondItem="hEl-5h-6PJ" secondAttribute="trailing" id="wMm-om-hNW"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="7HD-Ub-kqJ"/>
+                    <navigationItem key="navigationItem" id="7HD-Ub-kqJ">
+                        <barButtonItem key="leftBarButtonItem" image="icon-filter" id="tjB-T6-Cc4"/>
+                        <barButtonItem key="rightBarButtonItem" image="icon-search" id="HkJ-A5-NCU"/>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uHl-y0-C4v" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -87,7 +87,7 @@
         <scene sceneID="FZ1-yQ-J55">
             <objects>
                 <navigationController id="XXQ-2Y-JUt" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Browse" image="icon-search-2" id="NVS-bu-XEv"/>
+                    <tabBarItem key="tabBarItem" title="Browse" image="icon-search-50" id="NVS-bu-XEv"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="4k5-t9-Cb1">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -103,7 +103,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="icon-filter" width="25" height="25"/>
-        <image name="icon-search-2" width="25" height="25"/>
+        <image name="icon-filter" width="22" height="22"/>
+        <image name="icon-search" width="22" height="22"/>
+        <image name="icon-search-50" width="25" height="25"/>
     </resources>
 </document>

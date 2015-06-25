@@ -26,6 +26,10 @@ class ProfileViewController: XLButtonBarPagerTabStripViewController {
     var profile: UserProfileViewController!
     var friends: UserFriendsViewController!
     
+    @IBOutlet weak var reminderBBI: UIBarButtonItem!
+    @IBOutlet weak var settingsBBI: UIBarButtonItem!
+    
+    
     func initWithUsername(username: String) {
         self.username = username
     }

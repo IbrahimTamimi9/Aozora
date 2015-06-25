@@ -48,6 +48,9 @@
 		DA58C2E21B38A7760082B626 /* String+NSDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58C2E11B38A7760082B626 /* String+NSDate.swift */; };
 		DA58C2E51B39C0080082B626 /* Browse.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA58C2E41B39C0080082B626 /* Browse.storyboard */; };
 		DA58C2E71B39C01B0082B626 /* BrowseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58C2E61B39C01B0082B626 /* BrowseViewController.swift */; };
+		DA58C2E91B3B0B680082B626 /* EpisodeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58C2E81B3B0B680082B626 /* EpisodeCell.swift */; };
+		DA58C2EB1B3B109D0082B626 /* EpisodesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58C2EA1B3B109D0082B626 /* EpisodesViewController.swift */; };
+		DA58C2ED1B3B111A0082B626 /* Episode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58C2EC1B3B111A0082B626 /* Episode.swift */; };
 		DA5A3BEF1B346F4700C07D71 /* POSTRequestJS.html in Resources */ = {isa = PBXBuildFile; fileRef = DA5A3BEE1B346F4700C07D71 /* POSTRequestJS.html */; };
 		DA5A3BF81B35EE2200C07D71 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5A3BF71B35EE2200C07D71 /* CustomTextField.swift */; };
 		DA5A3BFA1B35F19A00C07D71 /* TraktV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6E83B11B1672A500970D27 /* TraktV1.swift */; };
@@ -287,6 +290,9 @@
 		DA58C2E11B38A7760082B626 /* String+NSDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+NSDate.swift"; sourceTree = "<group>"; };
 		DA58C2E41B39C0080082B626 /* Browse.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Browse.storyboard; sourceTree = "<group>"; };
 		DA58C2E61B39C01B0082B626 /* BrowseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseViewController.swift; sourceTree = "<group>"; };
+		DA58C2E81B3B0B680082B626 /* EpisodeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodeCell.swift; sourceTree = "<group>"; };
+		DA58C2EA1B3B109D0082B626 /* EpisodesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodesViewController.swift; sourceTree = "<group>"; };
+		DA58C2EC1B3B111A0082B626 /* Episode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Episode.swift; sourceTree = "<group>"; };
 		DA5A3BEE1B346F4700C07D71 /* POSTRequestJS.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = POSTRequestJS.html; sourceTree = "<group>"; };
 		DA5A3BF01B35CC6400C07D71 /* NewPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewPostViewController.swift; path = ../ANAnimeKit/NewPostViewController.swift; sourceTree = "<group>"; };
 		DA5A3BF31B35EB4F00C07D71 /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
@@ -646,6 +652,7 @@
 				DA4167D11B273B7100847F56 /* AnimeInformationViewController.swift */,
 				DAA253B51B2B877C0092EB0B /* CharactersViewController.swift */,
 				DAC027C91B2A15C20085C91A /* DiscussionViewController.swift */,
+				DA58C2EA1B3B109D0082B626 /* EpisodesViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -667,6 +674,7 @@
 				DA4167E41B275CF500847F56 /* LinkCell.swift */,
 				DA4167E61B275D3800847F56 /* TitleCell.swift */,
 				DAFE19AB1B29E17F002F3A76 /* CharacterCell.swift */,
+				DA58C2E81B3B0B680082B626 /* EpisodeCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -832,6 +840,7 @@
 				DAFE19B11B29F4EC002F3A76 /* Anime.swift */,
 				DAC027CB1B2A16B80085C91A /* AnimeReview.swift */,
 				DAE43C331B2BC3B700C3092D /* AnimeDetail.swift */,
+				DA58C2EC1B3B111A0082B626 /* Episode.swift */,
 			);
 			name = "Parse classes";
 			sourceTree = "<group>";
@@ -1496,9 +1505,11 @@
 				DAF618941B378B1F00286517 /* TopicViewController.swift in Sources */,
 				DAFE19AC1B29E17F002F3A76 /* CharacterCell.swift in Sources */,
 				DAC027CA1B2A15C20085C91A /* DiscussionViewController.swift in Sources */,
+				DA58C2E91B3B0B680082B626 /* EpisodeCell.swift in Sources */,
 				DA4167E11B275CDE00847F56 /* SynopsisCell.swift in Sources */,
 				DA4167E91B275F9400847F56 /* ANAnimeKit.swift in Sources */,
 				DAF618971B378B2700286517 /* TopicCell.swift in Sources */,
+				DA58C2EB1B3B109D0082B626 /* EpisodesViewController.swift in Sources */,
 				DA4167D21B273B7100847F56 /* AnimeInformationViewController.swift in Sources */,
 				DA4167E51B275CF500847F56 /* LinkCell.swift in Sources */,
 				DAA253B61B2B877C0092EB0B /* CharactersViewController.swift in Sources */,
@@ -1565,6 +1576,7 @@
 				DACE77C41B29517F00037486 /* AnimeRelation.swift in Sources */,
 				DA48EA271B288DED00D8610F /* SeasonalChart.swift in Sources */,
 				DAFE19AE1B29E4CD002F3A76 /* AnimeCharacter.swift in Sources */,
+				DA58C2ED1B3B111A0082B626 /* Episode.swift in Sources */,
 				DAFE19B01B29F264002F3A76 /* AnimeCast.swift in Sources */,
 				DACCF35F1B111016006A13EB /* AnimeService.swift in Sources */,
 				DA6E12E61B10D96F00B278B0 /* WSWebScraper.m in Sources */,

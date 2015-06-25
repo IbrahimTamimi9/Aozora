@@ -70,7 +70,7 @@ extension DiscussionViewController: UITableViewDataSource {
         let review = dataSource[indexPath.row]
         cell.reviewerLabel.text = review.username
         cell.reviewerAvatar.setImageFrom(urlString: review.avatarUrl, animated: canFadeInImages)
-        cell.reviewerOverallScoreLabel.text = "Rated \(review.rating.description) our of 10"
+        cell.reviewerOverallScoreLabel.text = "Rated \(review.rating.description) out of 10"
         cell.reviewerReviewLabel.text = "\(review.review)..."
         cell.reviewStatisticsLabel.text = review.helpful
         
