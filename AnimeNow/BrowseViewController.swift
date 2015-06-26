@@ -77,7 +77,7 @@ class BrowseViewController: UIViewController {
         
         // Update UI
         collectionView.scrollRectToVisible(CGRect(x: 0, y: 0, width: 1, height: 1), animated: false)
-        navigationBarTitle.text! = currentBrowseType.rawValue + " "
+        navigationBarTitle.text! = currentBrowseType.rawValue + " " + FontAwesome.AngleDown.rawValue
         
         // Fetch
         let query = Anime.query()!
@@ -122,22 +122,9 @@ class BrowseViewController: UIViewController {
     }
     
     func changeSeasonalChart() {
-        if let bar = navigationController?.navigationBar {
-            showDropDownController(bar,
-                dataSource: [BrowseType.allItems()])
+        if let bar = navigationController?.navigationBar {         
+            DropDownListViewController.showDropDownListWith(sender: bar, viewController: tabBarController!, delegate: self, dataSource: [BrowseType.allItems()])
         }
-    }
-    
-    // TODO: Remove duplicated code in BaseViewController..
-    func showDropDownController(sender: UIView, dataSource: [[String]], imageDataSource: [[String]]? = []) {
-        let frameRelativeToViewController = sender.convertRect(sender.bounds, toView: view)
-        
-        let controller = ANCommonKit.dropDownListViewController()
-        controller.delegate = self
-        controller.setDataSource(sender, dataSource: dataSource, yPosition: CGRectGetMaxY(frameRelativeToViewController), imageDataSource: imageDataSource)
-        controller.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
-        controller.modalPresentationStyle = .OverCurrentContext
-        self.tabBarController?.presentViewController(controller, animated: false, completion: nil)
     }
     
     // MARK: - IBActions
@@ -152,6 +139,36 @@ class BrowseViewController: UIViewController {
         }
     }
     
+    @IBAction func showFilterPressed(sender: AnyObject) {
+        
+        if let tabBar = tabBarController {
+            let controller = UIStoryboard(name: "Browse", bundle: nil).instantiateViewControllerWithIdentifier("Filter") as! FilterViewController
+            var allYears: [String] = []
+            for year in 1970...2016 {
+                allYears.append(year.description)
+            }
+            
+            let dataSource: [(FilterSection, String?, [String])] = [
+                (FilterSection.View, ViewType.Chart.rawValue, ViewType.allRawValues()),
+                (FilterSection.Sort, SortBy.Rating.rawValue, SortBy.allRawValues()),
+                (FilterSection.FilterTitle, nil, []),
+                (FilterSection.AnimeType, nil, AnimeType.allRawValues()),
+                (FilterSection.Year, nil, allYears),
+                (FilterSection.Status, nil, AnimeStatus.allRawValues()),
+                (FilterSection.Studio, nil, allStudios),
+                (FilterSection.Classification, nil, AnimeClassification.allRawValues()),
+                (FilterSection.Genres, nil, AnimeGenre.allRawValues())
+            ]
+            
+            
+            
+            controller.initWithDataSource(dataSource)
+            controller.modalTransitionStyle = UIModalTransitionStyle.CoverVertical
+            controller.modalPresentationStyle = .OverCurrentContext
+            tabBar.presentViewController(controller, animated: true, completion: nil)
+        }
+        
+    }
 }
 
 
@@ -180,4 +197,8 @@ extension BrowseViewController: DropDownListDelegate {
         let rawValue = BrowseType.allItems()[indexPath.row]
         fetchListType(BrowseType(rawValue: rawValue)!)
     }
+    func willDismiss() {
+    }
 }
+
+var allStudios = ["P.A. Works", "Ordet", "Studio Khara", "Sega", "Production I.G", "Studio 4C", "Creators in Pack TOKYO", "Shirogumi", "Satelight", "Genco", "Kinema Citrus", "ufotable", "Artmic", "POLYGON PICTURES", "Lay-duce", "DAX Production", "Passione", "AIC A.S.T.A.", "office DCI", "Benesse Corporation", "NAZ", "Silver Link", "Gonzo", "AIC Plus+", "Media Factory", "DropWave", "Toho Company", "Production IMS", "Manglobe", "TYO Animations", "J.C. Staff", "Actas", "Brains Base", "Wit Studio", "Ultra Super Pictures", "Kenji Studio", "Kachidoki Studio", "Nomad", "TROYCA", "Studio 3Hz", "Seven Arcs", "Studio Deva Loka", "Arms", "Hoods Entertainment", "CoMix Wave", "Kyoto Animation", "Nippon Ichi Software", "Sunrise", "MAPPA", "Studio Deen", "Studio Unicorn", "Gathering", "Madhouse Studios", "Tatsunoko Productions", "TNK", "Ascension", "Bridge", "Toei Animation", "Project No.9", "Trigger", "Nippon Animation", "Studio Colorido", "Diomedea", "Xebec", "SANZIGEN", "A-1 Pictures", "C-Station", "TMS Entertainment", "Studio Shuka", "Fanworks", "Encourage Films", "Studio Pierrot", "C2C", "Studio Gokumi", "Asahi Production", "AIC", "Fuji TV", "GoHands", "Oriental Light and Magic", "Poncotan", "Shogakukan Productions", "Studio Chizu", "Aniplex", "Telecom Animation Film", "Graphinica", "Trick Block", "VAP", "Bones", "Tezuka Productions", "Feel", "8bit", "Nexus", "Studio Gallop", "Gainax", "Dogakobo", "LIDEN FILMS", "DLE", "SynergySP", "Shaft", "Shin-Ei Animation", "White Fox", "David Production", "Zexcs", "Seven", "Anpro", "TV Tokyo", "Lerche", "Strawberry Meets Pictures", "Studio Ghibli", "Artland"]

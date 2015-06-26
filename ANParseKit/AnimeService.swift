@@ -10,8 +10,6 @@ import Foundation
 import Parse
 import Bolts
 
-
-
 public enum AnimeType: String {
     case TV = "TV"
     case Movie = "Movie"
@@ -22,6 +20,10 @@ public enum AnimeType: String {
     
     static func count() -> Int {
         return 6
+    }
+    
+    static public func allRawValues() -> [String] {
+        return [AnimeType.TV.rawValue, AnimeType.Movie.rawValue, AnimeType.Special.rawValue, AnimeType.OVA.rawValue, AnimeType.ONA.rawValue, AnimeType.Music.rawValue]
     }
 }
 
@@ -36,6 +38,10 @@ public enum AnimeClassification: String {
     static func count() -> Int {
         return 6
     }
+    
+    static public func allRawValues() -> [String] {
+        return [AnimeClassification.G.rawValue, AnimeClassification.PG.rawValue, AnimeClassification.PG13.rawValue, AnimeClassification.R17.rawValue, AnimeClassification.RPlus.rawValue, AnimeClassification.Rx.rawValue]
+    }
 }
 
 public enum AnimeStatus: String {
@@ -45,6 +51,10 @@ public enum AnimeStatus: String {
     
     static func count() -> Int {
         return 3
+    }
+    
+    static public  func allRawValues() -> [String] {
+        return [AnimeStatus.FinishedAiring.rawValue, AnimeStatus.CurrentlyAiring.rawValue, AnimeStatus.NotYetAired.rawValue]
     }
 }
 
@@ -95,6 +105,10 @@ public enum AnimeGenre: String {
     
     static func count() -> Int {
         return 43
+    }
+    
+    static public func allRawValues() -> [String] {
+        return [AnimeGenre.Action.rawValue, AnimeGenre.Adventure.rawValue, AnimeGenre.Cars.rawValue, AnimeGenre.Comedy.rawValue, AnimeGenre.Dementia.rawValue, AnimeGenre.Demons.rawValue, AnimeGenre.Drama.rawValue, AnimeGenre.Ecchi.rawValue, AnimeGenre.Fantasy.rawValue, AnimeGenre.Game.rawValue, AnimeGenre.Harem.rawValue, AnimeGenre.Hentai.rawValue, AnimeGenre.Historical.rawValue, AnimeGenre.Horror.rawValue, AnimeGenre.Josei.rawValue, AnimeGenre.Kids.rawValue, AnimeGenre.Magic.rawValue, AnimeGenre.MartialArts.rawValue, AnimeGenre.Mecha.rawValue, AnimeGenre.Military.rawValue, AnimeGenre.Music.rawValue, AnimeGenre.Mystery.rawValue, AnimeGenre.Parody.rawValue, AnimeGenre.Police.rawValue, AnimeGenre.Psychological.rawValue, AnimeGenre.Romance.rawValue, AnimeGenre.Samurai.rawValue, AnimeGenre.School.rawValue, AnimeGenre.SciFi.rawValue, AnimeGenre.Seinen.rawValue, AnimeGenre.Shoujo.rawValue, AnimeGenre.ShoujoAi.rawValue, AnimeGenre.Shounen.rawValue, AnimeGenre.ShounenAi.rawValue, AnimeGenre.SliceOfLife.rawValue, AnimeGenre.Space.rawValue, AnimeGenre.Sports.rawValue, AnimeGenre.SuperPower.rawValue, AnimeGenre.Supernatural.rawValue, AnimeGenre.Thriller.rawValue, AnimeGenre.Vampire.rawValue, AnimeGenre.Yaoi.rawValue, AnimeGenre.Yuri.rawValue]
     }
 }
 

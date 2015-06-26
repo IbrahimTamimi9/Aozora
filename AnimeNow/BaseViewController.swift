@@ -13,37 +13,6 @@ import Alamofire
 import ANAnimeKit
 import ANCommonKit
 
-enum OrderBy: String {
-    case Rating = "Rating"
-    case Popularity = "Popularity"
-    case Title = "Title"
-    case NextAiringEpisode = "Next Airing Episode"
-    case None = "None"
-    
-    static func allItems() -> [String] {
-        return [
-            OrderBy.Rating.rawValue,
-            OrderBy.Popularity.rawValue,
-            OrderBy.Title.rawValue,
-            OrderBy.NextAiringEpisode.rawValue
-        ]
-    }
-}
-
-enum ViewType: String {
-    case Chart = "Chart"
-    case List = "List"
-    case Poster = "Poster"
-    case SeasonalChart = "SeasonalChart"
-    
-    static func allItems() -> [String] {
-        return [
-            ViewType.Chart.rawValue,
-            ViewType.List.rawValue,
-            ViewType.Poster.rawValue
-        ]
-    }
-}
 
 enum SelectedList: Int {
     case SeasonalChart = 0
@@ -56,12 +25,11 @@ class BaseViewController: UIViewController {
     
     let FirstHeaderCellHeight: CGFloat = 88.0
     let HeaderCellHeight: CGFloat = 44.0
-    let angleDownIcon = NSString.fontAwesomeIconStringForIconIdentifier("icon-angle-down")
     
     var canFadeImages = true
     var showTableView = true
     
-    var orders: [OrderBy] = [.Rating,.None,.NextAiringEpisode,.Popularity]
+    var orders: [SortBy] = [.Rating,.None,.NextAiringEpisode,.Popularity]
     var viewTypes: [ViewType] = [.Chart,.SeasonalChart,.Poster,.Chart]
     var selectedList: SelectedList = .SeasonalChart {
         didSet {
@@ -69,7 +37,7 @@ class BaseViewController: UIViewController {
         }
     }
     
-    var currentOrder: OrderBy {
+    var currentOrder: SortBy {
         get {
             return orders[selectedList.rawValue]
         }
@@ -189,7 +157,7 @@ class BaseViewController: UIViewController {
     
     // MARK: - Utility Functions
     
-    func order(#by: OrderBy) {
+    func order(#by: SortBy) {
         
         currentOrder = by
         orderTitleLabel.text = currentOrder.rawValue
@@ -280,26 +248,26 @@ class BaseViewController: UIViewController {
         canFadeImages = true
     }
     
-    func showDropDownController(sender: UIView, dataSource: [[String]], imageDataSource: [[String]]? = []) {
-        let frameRelativeToViewController = sender.convertRect(sender.bounds, toView: view)
-        
-        let controller = ANCommonKit.dropDownListViewController()
-        controller.delegate = self
-        controller.setDataSource(sender, dataSource: dataSource, yPosition: CGRectGetMaxY(frameRelativeToViewController), imageDataSource: imageDataSource)
-        controller.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
-        controller.modalPresentationStyle = .OverCurrentContext
-        self.tabBarController?.presentViewController(controller, animated: false, completion: nil)
-    }
+//    func showDropDownController(sender: UIView, dataSource: [[String]], imageDataSource: [[String]]? = []) {
+//        let frameRelativeToViewController = sender.convertRect(sender.bounds, toView: view)
+//        
+//        let controller = ANCommonKit.dropDownListViewController()
+//        controller.delegate = self
+//        controller.setDataSource(sender, dataSource: dataSource, yPosition: CGRectGetMaxY(frameRelativeToViewController), imageDataSource: imageDataSource)
+//        controller.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
+//        controller.modalPresentationStyle = .OverCurrentContext
+//        self.tabBarController?.presentViewController(controller, animated: false, completion: nil)
+//    }
     
     
     // MARK: - IBActions
     
     @IBAction func pressedChangeOrder(sender: UIButton) {
-        showDropDownController(sender, dataSource: [OrderBy.allItems()])
+        //showDropDownController(sender, dataSource: [SortBy.allItems()])
     }
     
     @IBAction func pressedChangeView(sender: UIButton) {
-        showDropDownController(sender, dataSource: [ViewType.allItems()])
+        //showDropDownController(sender, dataSource: [ViewType.allItems()])
     }
     
     
@@ -455,7 +423,7 @@ extension BaseViewController: UICollectionViewDelegate {
 extension BaseViewController: DropDownListDelegate {
     func selectedAction(trigger: UIView, action: String, indexPath: NSIndexPath) {
         if trigger.isEqual(orderButton) {
-            if let orderEnum = OrderBy(rawValue: action) {
+            if let orderEnum = SortBy(rawValue: action) {
                 order(by: orderEnum)
             }
         } else if trigger.isEqual(viewButton) {
@@ -463,5 +431,7 @@ extension BaseViewController: DropDownListDelegate {
                 setViewType(viewEnum)
             }
         }
+    }
+    func willDismiss() {
     }
 }

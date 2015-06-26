@@ -31,3 +31,8 @@ public class ANCommonKit {
         return (controller,controller.viewControllers.last! as! InAppBrowserViewController)
     }
 }
+
+public enum FontAwesome: String {
+    case AngleDown = ""
+    case TimesCircle = ""
+}

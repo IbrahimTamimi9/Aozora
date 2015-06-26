@@ -48,7 +48,7 @@ class ChartViewController: BaseViewController {
             fetchTBA()
         }
         
-        navigationBarTitle.text! += " " + angleDownIcon
+        navigationBarTitle.text! += " " + FontAwesome.AngleDown.rawValue
         setViewType(currentViewType)
     }
     
@@ -183,10 +183,12 @@ class ChartViewController: BaseViewController {
     
     
     func changeSeasonalChart() {
-        if let bar = navigationController?.navigationBar {
-            showDropDownController(bar,
-                dataSource: [["Winter 2015","Spring 2015","Summer 2015","Fall 2015"],["All Seasons", "Calendar", "To Be Announced"]],
-                imageDataSource: [["icon-winter","icon-spring","icon-summer","icon-fall"],["icon-archived","icon-chart","icon-next"]])
+        if let sender = navigationController?.navigationBar,
+            let viewController = tabBarController{
+            let dataSource = [["Winter 2015","Spring 2015","Summer 2015","Fall 2015"],["All Seasons"]]
+            let imageDataSource = [["icon-winter","icon-spring","icon-summer","icon-fall"],["icon-archived"]]
+            
+            DropDownListViewController.showDropDownListWith(sender: sender, viewController: viewController, delegate: self, dataSource: dataSource, imageDataSource: imageDataSource)
         }
     }
     

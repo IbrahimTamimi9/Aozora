@@ -92,6 +92,7 @@
 		DA823D8C1B326940005C7AFD /* InAppBrowser.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA823D8A1B326940005C7AFD /* InAppBrowser.storyboard */; };
 		DA823D8D1B326940005C7AFD /* InAppBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA823D8B1B326940005C7AFD /* InAppBrowserViewController.swift */; };
 		DA8DD6411B3C95F300B05FBF /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8DD6401B3C95F300B05FBF /* SearchViewController.swift */; };
+		DA8DD6431B3CAEC500B05FBF /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8DD6421B3CAEC500B05FBF /* FilterViewController.swift */; };
 		DA9EB9311B2BA580001ECFA7 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA9EB9301B2BA580001ECFA7 /* WebKit.framework */; };
 		DA9F731D1B2931FF00C2652C /* UIImageView+SDWebImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9F731A1B2930F200C2652C /* UIImageView+SDWebImage.swift */; };
 		DA9F731E1B29370F00C2652C /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA41679A1B25F76F00847F56 /* FontAwesome.ttf */; };
@@ -344,6 +345,7 @@
 		DA823D8A1B326940005C7AFD /* InAppBrowser.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = InAppBrowser.storyboard; path = ../AnimeNow/InAppBrowser.storyboard; sourceTree = "<group>"; };
 		DA823D8B1B326940005C7AFD /* InAppBrowserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InAppBrowserViewController.swift; path = ../AnimeNow/InAppBrowserViewController.swift; sourceTree = "<group>"; };
 		DA8DD6401B3C95F300B05FBF /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		DA8DD6421B3CAEC500B05FBF /* FilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		DA9EB9301B2BA580001ECFA7 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		DA9F731A1B2930F200C2652C /* UIImageView+SDWebImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+SDWebImage.swift"; sourceTree = "<group>"; };
 		DAA253B51B2B877C0092EB0B /* CharactersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharactersViewController.swift; sourceTree = "<group>"; };
@@ -728,6 +730,7 @@
 			children = (
 				DA58C2E41B39C0080082B626 /* Browse.storyboard */,
 				DA58C2E61B39C01B0082B626 /* BrowseViewController.swift */,
+				DA8DD6421B3CAEC500B05FBF /* FilterViewController.swift */,
 				DA8DD6401B3C95F300B05FBF /* SearchViewController.swift */,
 			);
 			name = Browse;
@@ -1479,6 +1482,7 @@
 				DA27D1991AF1BA9D00CC854E /* ParseWorker.swift in Sources */,
 				DA27D1971AF1BA9D00CC854E /* AppDelegate.swift in Sources */,
 				DAF618781B377D6000286517 /* AnimeListViewController.swift in Sources */,
+				DA8DD6431B3CAEC500B05FBF /* FilterViewController.swift in Sources */,
 				DA58C2E71B39C01B0082B626 /* BrowseViewController.swift in Sources */,
 				DA5A3C061B36255200C07D71 /* ProfileViewController.swift in Sources */,
 				DA58C2D91B386BB90082B626 /* UserProfileViewController.swift in Sources */,

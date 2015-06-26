@@ -45,8 +45,6 @@ public class Anime: PFObject, PFSubclassing {
     @NSManaged public var relations: AnimeRelation
     @NSManaged public var cast: AnimeCast
     @NSManaged public var characters: AnimeCharacter
-    @NSManaged public var forum: PFObject
-    @NSManaged public var reviews: AnimeReview
     
     @NSManaged public var favoritedCount: Int
     @NSManaged public var membersCount: Int

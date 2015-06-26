@@ -10,6 +10,7 @@ import UIKit
 
 public protocol DropDownListDelegate: class {
     func selectedAction(sender: UIView, action: String, indexPath: NSIndexPath)
+    func willDismiss()
 }
 
 public class DropDownListViewController: UIViewController {
@@ -28,9 +29,29 @@ public class DropDownListViewController: UIViewController {
     var yPosition: CGFloat = 0
     var showTableView = true
     var trigger: UIView!
+    var viewController: UIViewController!
     
-    public func setDataSource(trigger: UIView, dataSource: [[String]], yPosition: CGFloat, imageDataSource: [[String]]? = [[]]) {
+    public class func showDropDownListWith(
+        #sender: UIView,
+        viewController: UIViewController,
+        delegate: DropDownListDelegate?,
+        dataSource: [[String]],
+        imageDataSource: [[String]]? = []) {
+        
+        let frameRelativeToViewController = sender.convertRect(sender.bounds, toView: viewController.view)
+        
+        let controller = ANCommonKit.dropDownListViewController()
+        controller.delegate = delegate
+        controller.setDataSource(sender, viewController: viewController, dataSource: dataSource, yPosition: CGRectGetMaxY(frameRelativeToViewController), imageDataSource: imageDataSource)
+        controller.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
+        controller.modalPresentationStyle = .OverCurrentContext
+        viewController.presentViewController(controller, animated: false, completion: nil)
+        
+    }
+    
+    public func setDataSource(trigger: UIView, viewController: UIViewController, dataSource: [[String]], yPosition: CGFloat, imageDataSource: [[String]]? = [[]]) {
         self.trigger = trigger
+        self.viewController = viewController
         self.dataSource = dataSource
         self.yPosition = yPosition
         self.imageDataSource = imageDataSource!
@@ -46,6 +67,12 @@ public class DropDownListViewController: UIViewController {
         }
         
         tableHeight -= 22
+        
+        let heightLeft = viewController.view.bounds.height - yPosition
+        if tableHeight > heightLeft {
+            tableHeight = heightLeft
+            self.tableView.scrollEnabled = true
+        }
         
         self.tableTopSpaceConstraint.constant = -tableHeight
         self.tableHeightConstraint.constant = tableHeight
@@ -72,6 +99,7 @@ public class DropDownListViewController: UIViewController {
     }
     
     @IBAction func dismissPressed(sender: AnyObject) {
+        delegate?.willDismiss()
         dismissViewControllerAnimated(true, completion: nil)
     }
 }
