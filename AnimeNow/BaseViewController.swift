@@ -29,6 +29,12 @@ class BaseViewController: UIViewController {
     var canFadeImages = true
     var showTableView = true
     
+    var currentConfiguration: [(FilterSection, String?, [String])] =
+    [
+        (FilterSection.View, ViewType.Chart.rawValue, ViewType.allRawValues()),
+        (FilterSection.Sort, SortBy.Rating.rawValue, SortBy.allRawValues())
+    ]
+    
     var orders: [SortBy] = [.Rating,.None,.NextAiringEpisode,.Popularity]
     var viewTypes: [ViewType] = [.Chart,.SeasonalChart,.Poster,.Chart]
     var selectedList: SelectedList = .SeasonalChart {
@@ -82,15 +88,7 @@ class BaseViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var searchBar: UISearchBar!
-    
     @IBOutlet weak var navigationBarTitle: UILabel!
-    
-    @IBOutlet weak var orderTitleLabel: UILabel!
-    @IBOutlet weak var orderButton: UIButton!
-    
-    @IBOutlet weak var viewTitleLabel: UILabel!
-    @IBOutlet weak var viewButton: UIButton!
-    
     @IBOutlet weak var filterBar: UIView!
     
     var loadingView: LoaderView!
@@ -160,7 +158,6 @@ class BaseViewController: UIViewController {
     func order(#by: SortBy) {
         
         currentOrder = by
-        orderTitleLabel.text = currentOrder.rawValue
         
         let today = NSDate()
         var index = 0
@@ -216,7 +213,6 @@ class BaseViewController: UIViewController {
     func setViewType(viewType: ViewType) {
         
         currentViewType = viewType
-        viewTitleLabel.text = currentViewType.rawValue
         var size: CGSize
         let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
         
@@ -247,27 +243,22 @@ class BaseViewController: UIViewController {
         collectionView.reloadData()
         canFadeImages = true
     }
-    
-//    func showDropDownController(sender: UIView, dataSource: [[String]], imageDataSource: [[String]]? = []) {
-//        let frameRelativeToViewController = sender.convertRect(sender.bounds, toView: view)
-//        
-//        let controller = ANCommonKit.dropDownListViewController()
-//        controller.delegate = self
-//        controller.setDataSource(sender, dataSource: dataSource, yPosition: CGRectGetMaxY(frameRelativeToViewController), imageDataSource: imageDataSource)
-//        controller.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
-//        controller.modalPresentationStyle = .OverCurrentContext
-//        self.tabBarController?.presentViewController(controller, animated: false, completion: nil)
-//    }
+
     
     
     // MARK: - IBActions
-    
-    @IBAction func pressedChangeOrder(sender: UIButton) {
-        //showDropDownController(sender, dataSource: [SortBy.allItems()])
-    }
-    
-    @IBAction func pressedChangeView(sender: UIButton) {
-        //showDropDownController(sender, dataSource: [ViewType.allItems()])
+    @IBAction func showFilterPressed(sender: AnyObject) {
+        
+        if let tabBar = tabBarController {
+            let controller = UIStoryboard(name: "Browse", bundle: nil).instantiateViewControllerWithIdentifier("Filter") as! FilterViewController
+            
+            controller.delegate = self
+            controller.initWith(configuration: currentConfiguration)
+            controller.modalTransitionStyle = UIModalTransitionStyle.CoverVertical
+            controller.modalPresentationStyle = .OverCurrentContext
+            tabBar.presentViewController(controller, animated: true, completion: nil)
+        }
+        
     }
     
     
@@ -420,18 +411,20 @@ extension BaseViewController: UICollectionViewDelegate {
     }
 }
 
-extension BaseViewController: DropDownListDelegate {
-    func selectedAction(trigger: UIView, action: String, indexPath: NSIndexPath) {
-        if trigger.isEqual(orderButton) {
-            if let orderEnum = SortBy(rawValue: action) {
-                order(by: orderEnum)
-            }
-        } else if trigger.isEqual(viewButton) {
-            if let viewEnum = ViewType(rawValue: action) {
-                setViewType(viewEnum)
+extension BaseViewController: FilterViewControllerDelegate {
+    func finishedWith(#configuration: [(FilterSection, String?, [String])], selectedGenres: [String]) {
+        currentConfiguration = configuration
+        
+        for (filterSection, value, _) in configuration {
+            if let value = value {
+                switch filterSection {
+                case .Sort:
+                    order(by: SortBy(rawValue: value)!)
+                case .View:
+                    setViewType(ViewType(rawValue: value)!)
+                default: break
+                }
             }
         }
-    }
-    func willDismiss() {
     }
 }

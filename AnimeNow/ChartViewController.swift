@@ -240,8 +240,7 @@ extension ChartViewController: UICollectionViewDelegate {
 
 
 extension ChartViewController: DropDownListDelegate {
-    override func selectedAction(trigger: UIView, action: String, indexPath: NSIndexPath) {
-        super.selectedAction(trigger, action: action, indexPath: indexPath)
+    func selectedAction(trigger: UIView, action: String, indexPath: NSIndexPath) {
         
         if trigger.isEqual(navigationController?.navigationBar) {
             switch (indexPath.row, indexPath.section) {
@@ -250,10 +249,6 @@ extension ChartViewController: DropDownListDelegate {
                 prepareForList(.SeasonalChart)
             case (0,1):
                 prepareForList(.AllSeasons)
-            case (1,1):
-                prepareForList(.Calendar)
-            case (2,1):
-                prepareForList(.TBA)
             default: break
             }
             

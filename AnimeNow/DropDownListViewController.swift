@@ -10,7 +10,6 @@ import UIKit
 
 public protocol DropDownListDelegate: class {
     func selectedAction(sender: UIView, action: String, indexPath: NSIndexPath)
-    func willDismiss()
 }
 
 public class DropDownListViewController: UIViewController {
@@ -99,7 +98,6 @@ public class DropDownListViewController: UIViewController {
     }
     
     @IBAction func dismissPressed(sender: AnyObject) {
-        delegate?.willDismiss()
         dismissViewControllerAnimated(true, completion: nil)
     }
 }

@@ -56,7 +56,7 @@ enum ViewType: String {
 }
 
 protocol FilterViewControllerDelegate: class {
-    func finishedWith(#configuration: [(FilterSection, String?)], selectedGenres: [String])
+    func finishedWith(#configuration: [(FilterSection, String?, [String])], selectedGenres: [String])
 }
 
 class FilterViewController: UIViewController {
@@ -68,30 +68,23 @@ class FilterViewController: UIViewController {
     weak var delegate: FilterViewControllerDelegate?
     
     var expandedSection: Int?
+    var selectedGenres: [String] = []
     var filteredDataSource: [[String]] = []
-    var sectionsDataSource: [(FilterSection, String?, [String])] = [] {
-        didSet {
-            for _ in sectionsDataSource {
-                filteredDataSource.append([])
-            }
-        }
-    }
+    var sectionsDataSource: [(FilterSection, String?, [String])] = []
     
-    func initWithDataSource(dataSource: [(FilterSection, String?, [String])]) {
-        self.sectionsDataSource = dataSource
+    func initWith(#configuration: [(FilterSection, String?, [String])]) {
+        sectionsDataSource = configuration
+        for _ in sectionsDataSource {
+            filteredDataSource.append([])
+        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
-        layout.itemSize = CGSize(width: view.bounds.size.width, height: 44)
-        
-        collectionView.reloadData()
     }
     
     @IBAction func dimissViewControllerPressed(sender: AnyObject) {
-        //delegate?.finishedWith(configuration: <#[(FilterSection, String)]#>, selectedGenres: <#[String]#>)
+        delegate?.finishedWith(configuration: sectionsDataSource, selectedGenres: selectedGenres)
         dismissViewControllerAnimated(true, completion: nil)
     }
 }
@@ -109,10 +102,23 @@ extension FilterViewController: UICollectionViewDataSource {
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("BasicCollectionCell", forIndexPath: indexPath) as! BasicCollectionCell
         
+        let (filterSection, sectionValue, _) = sectionsDataSource[indexPath.section]
         let value = filteredDataSource[indexPath.section][indexPath.row]
 
         cell.titleLabel.text = value
         
+        if filterSection == FilterSection.Genres {
+            if let index = find(selectedGenres, value) {
+                cell.backgroundColor = UIColor.backgroundEvenDarker()
+            } else {
+                cell.backgroundColor = UIColor.backgroundDarker()
+            }
+        } else if let sectionValue = sectionValue where sectionValue == value {
+            cell.backgroundColor = UIColor.backgroundEvenDarker()
+        } else {
+            cell.backgroundColor = UIColor.backgroundDarker()
+        }
+    
         return cell
     }
     
@@ -155,10 +161,10 @@ extension FilterViewController: UICollectionViewDataSource {
             case .View: fallthrough
             case .Sort:
                 if let value = value {
-                    headerView.actionButton.setTitle(value + " " + FontAwesome.AngleDown.rawValue, forState: .Normal)
+                    headerView.subtitleLabel.text = value + " " + FontAwesome.AngleDown.rawValue
                 }
             case .FilterTitle:
-                headerView.actionButton.setTitle("Clear all", forState: .Normal)
+                headerView.subtitleLabel.text = "Clear all"
             case .AnimeType: fallthrough
             case .Year: fallthrough
             case .Status: fallthrough
@@ -166,9 +172,9 @@ extension FilterViewController: UICollectionViewDataSource {
             case .Classification: fallthrough
             case .Genres:
                 if let value = value {
-                    headerView.actionButton.setTitle(value + " " + FontAwesome.TimesCircle.rawValue, forState: .Normal)
+                    headerView.subtitleLabel.text = value + " " + FontAwesome.TimesCircle.rawValue
                 } else {
-                    headerView.actionButton.setTitle(FontAwesome.AngleDown.rawValue, forState: .Normal)
+                    headerView.subtitleLabel.text = FontAwesome.AngleDown.rawValue
                 }
             }
             
@@ -185,7 +191,36 @@ extension FilterViewController: UICollectionViewDataSource {
 }
 
 extension FilterViewController: UICollectionViewDelegate {
-    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
+        var (filterSection, value, _) = sectionsDataSource[indexPath.section]
+        var string = filteredDataSource[indexPath.section][indexPath.row]
+        
+        switch filterSection {
+        case .View: fallthrough
+        case .Sort: fallthrough
+        case .AnimeType: fallthrough
+        case .Status: fallthrough
+        case .Classification: fallthrough
+        case .Studio: fallthrough
+        case .Year:
+            sectionsDataSource[indexPath.section].1 = string
+            filteredDataSource[indexPath.section] = []
+            expandedSection = nil
+            collectionView.reloadData()
+        case .Genres:
+            if let index = find(selectedGenres, string) {
+                selectedGenres.removeAtIndex(index)
+            } else {
+                selectedGenres.append(string)
+            }
+            sectionsDataSource[indexPath.section].1 = selectedGenres.count != 0 ? "\(selectedGenres.count) genres" : ""
+            collectionView.reloadData()
+        case .FilterTitle: break
+        }
+        
+        
+    }
 }
 
 extension FilterViewController: UICollectionViewDelegateFlowLayout {
@@ -217,6 +252,11 @@ extension FilterViewController: BasicCollectionReusableViewDelegate {
         
         let section = cell.section!
         
+        if section == 2 {
+            // Do nothing
+            return;
+        }
+        
         if let expandedSection = expandedSection {
             filteredDataSource[expandedSection] = []
         }
@@ -230,20 +270,44 @@ extension FilterViewController: BasicCollectionReusableViewDelegate {
         
         collectionView.reloadData()
     }
+    
+    func headerSelectedActionButton2(cell: BasicCollectionReusableView) {
+        let section = cell.section!
+        
+        switch section {
+        case 0...1:
+            // Show down-down
+            headerSelectedActionButton(cell)
+        case 2:
+            // Clear all filters
+            for index in 3...8 {
+                sectionsDataSource[index].1 = nil
+            }
+            selectedGenres.removeAll(keepCapacity: false)
+            expandedSection = nil
+            collectionView.reloadData()
+            return
+        case 3...8:
+            // Clear a filter or open drop-down
+            if let value = sectionsDataSource[section].1 {
+                if section == 8 {
+                    selectedGenres.removeAll(keepCapacity: false)
+                }
+                
+                sectionsDataSource[section].1 = nil
+                collectionView.reloadData()
+            } else {
+                headerSelectedActionButton(cell)
+            }
+        default: break
+        }
+        
+    }
 }
 
 extension FilterViewController: UINavigationBarDelegate {
     func positionForBar(bar: UIBarPositioning) -> UIBarPosition {
         return UIBarPosition.TopAttached
-    }
-}
-
-extension FilterViewController: DropDownListDelegate {
-    func selectedAction(sender: UIView, action: String, indexPath: NSIndexPath) {
-        collectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
-    }
-    func willDismiss() {
-        collectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
     }
 }
 

@@ -11,6 +11,16 @@ import UIKit
 extension UIColor {
     // Reference http://flatuicolors.com/
     
+    // Greyish
+    
+    public class func backgroundEvenDarker() -> UIColor! {
+        return UIColor(red: 208/255.0, green: 208/255.0, blue: 208/255.0, alpha: 1.0)
+    }
+    
+    public class func backgroundDarker() -> UIColor! {
+        return UIColor(red: 228/255.0, green: 228/255.0, blue: 228/255.0, alpha: 1.0)
+    }
+    
     // Backish
     public class func darkBlue() -> UIColor! {
         return UIColor(red: 10/255.0, green: 13/255.0, blue: 22/255.0, alpha: 1.0)
