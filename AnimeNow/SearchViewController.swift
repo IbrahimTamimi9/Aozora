@@ -17,6 +17,7 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     
     var loadingView: LoaderView!
+    var animator: ZFModalTransitionAnimator!
     
     var dataSource: [Anime] = [] {
         didSet {
@@ -79,7 +80,11 @@ extension SearchViewController: UICollectionViewDataSource {
 }
 
 extension SearchViewController: UICollectionViewDelegate {
-    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
+        let anime = dataSource[indexPath.row]
+        self.animator = presentAnimeModal(anime)
+    }
 }
 
 extension SearchViewController: UISearchBarDelegate {

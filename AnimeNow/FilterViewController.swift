@@ -28,16 +28,10 @@ enum SortBy: String {
     case Popularity = "Popularity"
     case Title = "Title"
     case NextAiringEpisode = "Next Airing Episode"
+    case Newest = "Newest"
+    case Oldest = "Oldest"
     case None = "None"
     
-    static func allRawValues() -> [String] {
-        return [
-            SortBy.Rating.rawValue,
-            SortBy.Popularity.rawValue,
-            SortBy.Title.rawValue,
-            SortBy.NextAiringEpisode.rawValue
-        ]
-    }
 }
 
 enum ViewType: String {
@@ -85,8 +79,9 @@ class FilterViewController: UIViewController {
         }
     }
     
-    func initWith(#configuration: Configuration) {
+    func initWith(#configuration: Configuration, selectedGenres: [String]? = []) {
         sectionsDataSource = configuration
+        self.selectedGenres = selectedGenres!
         for (section, value, _) in sectionsDataSource {
             filteredDataSource.append([])
         }

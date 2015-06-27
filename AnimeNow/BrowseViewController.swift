@@ -47,10 +47,11 @@ class BrowseViewController: UIViewController {
         }
     }
     
+    var animator: ZFModalTransitionAnimator!
     var loadingView: LoaderView!
     var currentConfiguration: Configuration =
     [
-        (FilterSection.Sort, SortBy.Rating.rawValue, SortBy.allRawValues()),
+        (FilterSection.Sort, SortBy.Rating.rawValue, [SortBy.Rating.rawValue, SortBy.Popularity.rawValue, SortBy.Title.rawValue, SortBy.Newest.rawValue, SortBy.Oldest.rawValue]),
         (FilterSection.FilterTitle, nil, []),
         (FilterSection.AnimeType, nil, AnimeType.allRawValues()),
         (FilterSection.Year, nil, allYears),
@@ -169,7 +170,7 @@ class BrowseViewController: UIViewController {
             let controller = UIStoryboard(name: "Browse", bundle: nil).instantiateViewControllerWithIdentifier("Filter") as! FilterViewController
             
             controller.delegate = self
-            controller.initWith(configuration: currentConfiguration)
+            controller.initWith(configuration: currentConfiguration, selectedGenres: selectedGenres)
             controller.modalTransitionStyle = UIModalTransitionStyle.CoverVertical
             controller.modalPresentationStyle = .OverCurrentContext
             tabBar.presentViewController(controller, animated: true, completion: nil)
@@ -196,7 +197,11 @@ extension BrowseViewController: UICollectionViewDataSource {
 }
 
 extension BrowseViewController: UICollectionViewDelegate {
-    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
+        let anime = dataSource[indexPath.row]
+        self.animator = presentAnimeModal(anime)
+    }
 }
 
 extension BrowseViewController: FilterViewControllerDelegate {
@@ -218,6 +223,11 @@ extension BrowseViewController: FilterViewControllerDelegate {
                         query.orderByAscending("popularityRank")
                     case .Title:
                         query.orderByAscending("title")
+                    case .Newest:
+                        query.orderByDescending("startDate")
+                    case .Oldest:
+                        query.orderByAscending("startDate")
+                        query.whereKeyExists("startDate")
                     default: break
                     }
                 case .AnimeType:

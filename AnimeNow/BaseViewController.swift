@@ -32,7 +32,7 @@ class BaseViewController: UIViewController {
     var currentConfiguration: Configuration =
     [
         (FilterSection.View, ViewType.Chart.rawValue, ViewType.allRawValues()),
-        (FilterSection.Sort, SortBy.Rating.rawValue, SortBy.allRawValues())
+        (FilterSection.Sort, SortBy.Rating.rawValue, [SortBy.Rating.rawValue, SortBy.Popularity.rawValue, SortBy.Title.rawValue, SortBy.NextAiringEpisode.rawValue])
     ]
     
     var orders: [SortBy] = [.Rating,.None,.NextAiringEpisode,.Popularity]
@@ -200,7 +200,7 @@ class BaseViewController: UIViewController {
                 } else {
                     animeArray.sort({ $0.nextEpisodeDate.compare($1.nextEpisodeDate) == .OrderedAscending })
                 }
-            case .None:
+            default:
                 break;
             }
             return animeArray
@@ -397,19 +397,8 @@ extension BaseViewController: UICollectionViewDelegate {
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
         if selectedList != SelectedList.AllSeasons {
-            let tabBarController = ANAnimeKit.rootTabBarController()
             let anime = filteredDataSource[indexPath.section][indexPath.row]
-            tabBarController.initWithAnime(anime)
-            
-            animator = ZFModalTransitionAnimator(modalViewController: tabBarController)
-            animator.dragable = true
-            animator.direction = ZFModalTransitonDirection.Bottom
-            
-            tabBarController.animator = animator
-            tabBarController.transitioningDelegate = self.animator;
-            tabBarController.modalPresentationStyle = UIModalPresentationStyle.Custom;
-            
-            presentViewController(tabBarController, animated: true, completion: nil)
+            self.animator = presentAnimeModal(anime)
         }
         
     }

@@ -272,7 +272,7 @@
                                             </mask>
                                         </variation>
                                     </imageView>
-                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8BA-FD-Yxj">
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8BA-FD-Yxj">
                                         <rect key="frame" x="430" y="0.0" width="81" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="5Oy-xi-9pE"/>
