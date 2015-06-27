@@ -12,9 +12,4 @@ import ANCommonKit
 class TitleCell: UITableViewCell {
 
     @IBOutlet weak var titleLabel: CustomLabel!
-    @IBOutlet weak var allButton: UIButton!
-    
-    @IBAction func allPressed(sender: AnyObject) {
-    }
-
 }

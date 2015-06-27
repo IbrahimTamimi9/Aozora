@@ -282,24 +282,24 @@ extension AnimeInformationViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCellWithIdentifier("LinkCell") as! LinkCell
             
             let link = anime.linkAtIndex(indexPath.row)
-            cell.linkButton.setTitle(link.site.rawValue, forState: UIControlState.Normal)
+            cell.linkLabel.text = link.site.rawValue
             switch link.site {
             case .Crunchyroll:
-                cell.linkButton.backgroundColor = UIColor.crunchyroll()
+                cell.linkLabel.backgroundColor = UIColor.crunchyroll()
             case .OfficialSite:
-                cell.linkButton.backgroundColor = UIColor.officialSite()
+                cell.linkLabel.backgroundColor = UIColor.officialSite()
             case .Daisuki:
-                cell.linkButton.backgroundColor = UIColor.daisuki()
+                cell.linkLabel.backgroundColor = UIColor.daisuki()
             case .Funimation:
-                cell.linkButton.backgroundColor = UIColor.funimation()
+                cell.linkLabel.backgroundColor = UIColor.funimation()
             case .MyAnimeList:
-                cell.linkButton.backgroundColor = UIColor.myAnimeList()
+                cell.linkLabel.backgroundColor = UIColor.myAnimeList()
             case .Hummingbird:
-                cell.linkButton.backgroundColor = UIColor.hummingbird()
+                cell.linkLabel.backgroundColor = UIColor.hummingbird()
             case .Anilist:
-                cell.linkButton.backgroundColor = UIColor.anilist()
+                cell.linkLabel.backgroundColor = UIColor.anilist()
             case .Other:
-                cell.linkButton.backgroundColor = UIColor.other()
+                cell.linkLabel.backgroundColor = UIColor.other()
             }
             return cell
 
@@ -313,16 +313,12 @@ extension AnimeInformationViewController: UITableViewDataSource {
         switch AnimeSection(rawValue: section)! {
         case .Synopsis:
             title = "Synopsis"
-            cell.allButton.hidden = true
         case .Relations:
             title = "Relations"
-            cell.allButton.hidden = true
         case .Information:
             title = "Information"
-            cell.allButton.hidden = true
         case .ExternalLinks:
             title = "External Links"
-            cell.allButton.hidden = true
         }
         
         cell.titleLabel.text = title

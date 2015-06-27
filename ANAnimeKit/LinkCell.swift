@@ -10,6 +10,6 @@ import UIKit
 
 class LinkCell: UITableViewCell {
 
-    @IBOutlet weak var linkButton: UIButton!
+    @IBOutlet weak var linkLabel: UILabel!
 
 }

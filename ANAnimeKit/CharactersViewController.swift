@@ -94,10 +94,8 @@ extension CharactersViewController: UITableViewDataSource {
         switch CharacterSection(rawValue: section)! {
         case .Character:
             title = "Characters"
-            cell.allButton.hidden = true
         case .Cast:
             title = "Cast"
-            cell.allButton.hidden = true
         }
         
         cell.titleLabel.text = title

@@ -74,9 +74,20 @@ class FilterViewController: UIViewController {
     var filteredDataSource: [[String]] = []
     var sectionsDataSource: Configuration = []
     
+    var filteringSomething: Bool {
+        get {
+            for (section, value, _) in sectionsDataSource {
+                if section != .View && section != .Sort && section != .FilterTitle && value != nil {
+                    return true
+                }
+            }
+            return false
+        }
+    }
+    
     func initWith(#configuration: Configuration) {
         sectionsDataSource = configuration
-        for _ in sectionsDataSource {
+        for (section, value, _) in sectionsDataSource {
             filteredDataSource.append([])
         }
     }
@@ -169,7 +180,7 @@ extension FilterViewController: UICollectionViewDataSource {
                     headerView.subtitleLabel.text = value + " " + FontAwesome.AngleDown.rawValue
                 }
             case .FilterTitle:
-                headerView.subtitleLabel.text = "Clear all"
+                headerView.subtitleLabel.text = filteringSomething ? "Clear all" : ""
             case .AnimeType: fallthrough
             case .Year: fallthrough
             case .Status: fallthrough
@@ -219,7 +230,7 @@ extension FilterViewController: UICollectionViewDelegate {
             } else {
                 selectedGenres.append(string)
             }
-            sectionsDataSource[indexPath.section].value = selectedGenres.count != 0 ? "\(selectedGenres.count) genres" : ""
+            sectionsDataSource[indexPath.section].value = selectedGenres.count != 0 ? "\(selectedGenres.count) genres" : nil
             collectionView.reloadData()
         case .FilterTitle: break
         }
@@ -256,8 +267,9 @@ extension FilterViewController: BasicCollectionReusableViewDelegate {
     func headerSelectedActionButton(cell: BasicCollectionReusableView) {
         
         let section = cell.section!
+        let filterSection = sectionsDataSource[section].section
         
-        if section == 2 {
+        if filterSection == .FilterTitle {
             // Do nothing
             return;
         }

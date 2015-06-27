@@ -371,7 +371,7 @@
                                             </connections>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="View" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="08m-1N-cKe">
-                                            <rect key="frame" x="31" y="11" width="35.5" height="19.5"/>
+                                            <rect key="frame" x="31" y="12.5" width="35.5" height="19.5"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="314" id="dr8-A4-owc"/>
                                                 <constraint firstAttribute="width" constant="240" id="iJD-Wt-X7l"/>
@@ -412,8 +412,8 @@
                                         <constraint firstAttribute="bottom" secondItem="w0S-al-5lK" secondAttribute="bottom" id="6pH-Yi-enr"/>
                                         <constraint firstAttribute="centerY" secondItem="W4u-No-DQb" secondAttribute="centerY" id="Clt-oM-wh5"/>
                                         <constraint firstItem="w0S-al-5lK" firstAttribute="leading" secondItem="ABe-6L-w97" secondAttribute="trailing" id="GJx-24-ax6"/>
-                                        <constraint firstAttribute="centerY" secondItem="Lba-mX-3Im" secondAttribute="centerY" constant="0.5" id="GS8-wN-R0V"/>
-                                        <constraint firstAttribute="centerY" secondItem="08m-1N-cKe" secondAttribute="centerY" constant="0.75" id="KHe-Cg-6jP"/>
+                                        <constraint firstAttribute="centerY" secondItem="Lba-mX-3Im" secondAttribute="centerY" id="GS8-wN-R0V"/>
+                                        <constraint firstAttribute="centerY" secondItem="08m-1N-cKe" secondAttribute="centerY" id="KHe-Cg-6jP"/>
                                         <constraint firstAttribute="bottom" secondItem="ABe-6L-w97" secondAttribute="bottom" id="VHE-f1-EYX"/>
                                         <constraint firstAttribute="bottom" secondItem="xz6-mr-fKm" secondAttribute="bottom" id="Wi8-O9-B3J"/>
                                         <constraint firstItem="xz6-mr-fKm" firstAttribute="leading" secondItem="EV4-V2-SGY" secondAttribute="leading" id="Yw3-Fk-GaR"/>

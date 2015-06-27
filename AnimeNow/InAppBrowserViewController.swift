@@ -29,7 +29,7 @@ public class InAppBrowserViewController: UIViewController {
         webView.navigationDelegate = self
         view.addSubview(webView)
         
-        navigationController?.navigationBar.barTintColor = UIColor.midnightBlue()
+        navigationController?.navigationBar.barTintColor = UIColor.darkBlue()
         navigationController?.navigationBar.tintColor = UIColor.whiteColor()
 
         if let request = lastRequest {
