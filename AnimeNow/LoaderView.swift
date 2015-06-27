@@ -13,12 +13,12 @@ public class LoaderView: UIView {
     let rectShape = CAShapeLayer()
     let diameter = 20
     
-    var controller: UIViewController!
+    var parentView: UIView!
     public var animating: Bool = false
     
-    convenience public init(viewController: UIViewController) {
+    convenience public init(parentView: UIView) {
         self.init(frame: CGRectZero)
-        controller = viewController
+        self.parentView = parentView
         configure()
     }
     
@@ -41,32 +41,32 @@ public class LoaderView: UIView {
         
         setTranslatesAutoresizingMaskIntoConstraints(false)
         
-        controller.view.addSubview(self)
+        parentView.addSubview(self)
         
         let viewsDictionary = ["view":self]
         let constraintH = NSLayoutConstraint.constraintsWithVisualFormat("H:[view(\(diameter))]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
         let constraintV = NSLayoutConstraint.constraintsWithVisualFormat("V:[view(\(diameter))]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
         
-        controller.view.addConstraints(constraintH)
-        controller.view.addConstraints(constraintV)
+        parentView.addConstraints(constraintH)
+        parentView.addConstraints(constraintV)
         
-        controller.view.addConstraint(
+        parentView.addConstraint(
             NSLayoutConstraint(
                 item: self,
                 attribute: NSLayoutAttribute.CenterY,
                 relatedBy: NSLayoutRelation.Equal,
-                toItem: controller.view,
+                toItem: parentView,
                 attribute: NSLayoutAttribute.CenterY,
                 multiplier: 1.0,
                 constant: 0.0)
         )
         
-        controller.view.addConstraint(
+        parentView.addConstraint(
             NSLayoutConstraint(
                 item: self,
                 attribute: NSLayoutAttribute.CenterX,
                 relatedBy: NSLayoutRelation.Equal,
-                toItem: controller.view,
+                toItem: parentView,
                 attribute: NSLayoutAttribute.CenterX,
                 multiplier: 1.0,
                 constant: 0.0)

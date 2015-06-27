@@ -8,42 +8,79 @@
 
 import UIKit
 import ANParseKit
+import ANCommonKit
 
 class AnimeCell: UICollectionViewCell {
+    
+    enum CellStyle {
+        case Chart
+        case Poster
+        case List
+    }
     
     @IBOutlet weak var posterImageView: UIImageView?
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var etaLabel: UILabel?
-    @IBOutlet weak var studioLabel: UILabel?
-    @IBOutlet weak var sourceLabel: UILabel?
+    @IBOutlet weak var informationLabel: UILabel?
+    @IBOutlet weak var ratingLabel: UILabel?
     @IBOutlet weak var genresLabel: UILabel?
     
     @IBOutlet weak var nextEpisodeNumberLabel: UILabel?
     @IBOutlet weak var etaTimeLabel: UILabel?
     
-    func configureWithAnime(
-        anime: Anime,
-        canFadeImages: Bool? = true,
-        showEtaAsAired: Bool? = false) {
+    var numberFormatter: NSNumberFormatter {
+        struct Static {
+            static let instance : NSNumberFormatter = {
+                let formatter = NSNumberFormatter()
+                formatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
+                formatter.maximumFractionDigits = 0
+                return formatter
+                }()
+        }
+        return Static.instance
+    }
     
+    class func registerNibFor(#collectionView: UICollectionView, style: CellStyle, reuseIdentifier: String) {
+        switch style {
+        case .Chart:
+            let chartNib = UINib(nibName: "AnimeCell", bundle: nil)
+            collectionView.registerNib(chartNib, forCellWithReuseIdentifier: reuseIdentifier)
+        case .Poster:
+            let posterNib = UINib(nibName: "AnimeCellPoster", bundle: nil)
+            collectionView.registerNib(posterNib, forCellWithReuseIdentifier: reuseIdentifier)
+        case .List:
+            let listNib = UINib(nibName: "AnimeCellList", bundle: nil)
+            collectionView.registerNib(listNib, forCellWithReuseIdentifier: reuseIdentifier)
+        }
+        
+    }
+    
+    func configureWithAnime(
+    anime: Anime,
+    canFadeImages: Bool? = true,
+    showEtaAsAired: Bool? = false) {
+
         posterImageView?.setImageFrom(urlString: anime.imageUrl, animated: canFadeImages)
         titleLabel.text = anime.title
         genresLabel?.text = ", ".join(anime.genres)
         
-        if let source = anime.source {
-            sourceLabel?.text = "Source: \(source)"
-        } else {
-            sourceLabel?.text = ""
-        }
-        
-        
+        var information = "\(anime.type) · "
+            
         if let mainStudio = anime.studio.first {
             let studioString = mainStudio["studio_name"] as! String
-            studioLabel?.text = "\(studioString)"
+            information += studioString
         } else {
-            studioLabel?.text = ""
+            information += "?"
+        }
+            
+        if let source = anime.source where count(source) != 0 {
+            information += " · " + source
         }
         
+        informationLabel?.text = information
+        
+        ratingLabel?.text = FontAwesome.Ranking.rawValue + String(format: " %.2f    ", anime.membersScore) + FontAwesome.Members.rawValue + " " + numberFormatter.stringFromNumber(anime.membersCount)!
+    
         if var nextEpisode = anime.nextEpisode {
             
             if showEtaAsAired! {

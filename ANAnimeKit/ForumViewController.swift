@@ -39,7 +39,7 @@ public class ForumViewController: AnimeBaseViewController {
         tableView.estimatedRowHeight = 150.0
         tableView.rowHeight = UITableViewAutomaticDimension
         
-        loadingView = LoaderView(viewController: self)
+        loadingView = LoaderView(parentView: self.view)
         malScrapper = MALScrapper(viewController: self)
         
         loadingView.startAnimating()

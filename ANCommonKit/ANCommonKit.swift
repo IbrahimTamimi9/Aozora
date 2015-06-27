@@ -35,4 +35,6 @@ public class ANCommonKit {
 public enum FontAwesome: String {
     case AngleDown = ""
     case TimesCircle = ""
+    case Ranking = ""
+    case Members = ""
 }

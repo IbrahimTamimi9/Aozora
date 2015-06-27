@@ -29,7 +29,7 @@ class BaseViewController: UIViewController {
     var canFadeImages = true
     var showTableView = true
     
-    var currentConfiguration: [(FilterSection, String?, [String])] =
+    var currentConfiguration: Configuration =
     [
         (FilterSection.View, ViewType.Chart.rawValue, ViewType.allRawValues()),
         (FilterSection.Sort, SortBy.Rating.rawValue, SortBy.allRawValues())
@@ -96,14 +96,18 @@ class BaseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationController?.hidesBarsOnSwipe = true
-        navigationController?.hidesBarsOnTap = false
+        AnimeCell.registerNibFor(collectionView: collectionView, style: .Chart, reuseIdentifier: "AnimeCell")
+        AnimeCell.registerNibFor(collectionView: collectionView, style: .Poster, reuseIdentifier: "AnimeCellPoster")
+        AnimeCell.registerNibFor(collectionView: collectionView, style: .List, reuseIdentifier: "AnimeCellList")
+        
+//        navigationController?.hidesBarsOnSwipe = true
+//        navigationController?.hidesBarsOnTap = false
         
         collectionView.alpha = 0.0
         
         timer = NSTimer.scheduledTimerWithTimeInterval(60.0, target: self, selector: "updateETACells", userInfo: nil, repeats: true)
         
-        loadingView = LoaderView(viewController: self)
+        loadingView = LoaderView(parentView: self.view)        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -321,7 +325,7 @@ extension BaseViewController: UICollectionViewDataSource {
         case .Chart:
             reuseIdentifier = "AnimeCell"
         case .List:
-            reuseIdentifier = "AnimeListCell"
+            reuseIdentifier = "AnimeCellList"
         case .Poster:
             reuseIdentifier = "AnimeCellPoster"
         case .SeasonalChart: break
@@ -412,7 +416,7 @@ extension BaseViewController: UICollectionViewDelegate {
 }
 
 extension BaseViewController: FilterViewControllerDelegate {
-    func finishedWith(#configuration: [(FilterSection, String?, [String])], selectedGenres: [String]) {
+    func finishedWith(#configuration: Configuration, selectedGenres: [String]) {
         currentConfiguration = configuration
         
         for (filterSection, value, _) in configuration {

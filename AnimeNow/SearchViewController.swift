@@ -28,10 +28,13 @@ class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let chartNib = UINib(nibName: "AnimeCell", bundle: nil)
+        collectionView.registerNib(chartNib, forCellWithReuseIdentifier: "AnimeCell")
+        
         let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
         layout.itemSize = CGSize(width: view.bounds.size.width, height: 132)
         
-        loadingView = LoaderView(viewController: self)
+        loadingView = LoaderView(parentView: self.view)
         
         searchBar.becomeFirstResponder()
     }

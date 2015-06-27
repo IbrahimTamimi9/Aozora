@@ -33,14 +33,13 @@ public enum AnimeClassification: String {
     case PG13 = "PG-13 - Teens 13 or older"
     case R17 = "R - 17+ (violence & profanity)"
     case RPlus = "R+ - Mild Nudity"
-    case Rx = "Rx - Hentai"
     
     static func count() -> Int {
-        return 6
+        return 5
     }
     
     static public func allRawValues() -> [String] {
-        return [AnimeClassification.G.rawValue, AnimeClassification.PG.rawValue, AnimeClassification.PG13.rawValue, AnimeClassification.R17.rawValue, AnimeClassification.RPlus.rawValue, AnimeClassification.Rx.rawValue]
+        return [AnimeClassification.G.rawValue, AnimeClassification.PG.rawValue, AnimeClassification.PG13.rawValue, AnimeClassification.R17.rawValue, AnimeClassification.RPlus.rawValue]
     }
 }
 
@@ -70,7 +69,6 @@ public enum AnimeGenre: String {
     case Fantasy = "Fantasy"
     case Game = "Game"
     case Harem = "Harem"
-    case Hentai = "Hentai"
     case Historical = "Historical"
     case Horror = "Horror"
     case Josei = "Josei"
@@ -108,7 +106,7 @@ public enum AnimeGenre: String {
     }
     
     static public func allRawValues() -> [String] {
-        return [AnimeGenre.Action.rawValue, AnimeGenre.Adventure.rawValue, AnimeGenre.Cars.rawValue, AnimeGenre.Comedy.rawValue, AnimeGenre.Dementia.rawValue, AnimeGenre.Demons.rawValue, AnimeGenre.Drama.rawValue, AnimeGenre.Ecchi.rawValue, AnimeGenre.Fantasy.rawValue, AnimeGenre.Game.rawValue, AnimeGenre.Harem.rawValue, AnimeGenre.Hentai.rawValue, AnimeGenre.Historical.rawValue, AnimeGenre.Horror.rawValue, AnimeGenre.Josei.rawValue, AnimeGenre.Kids.rawValue, AnimeGenre.Magic.rawValue, AnimeGenre.MartialArts.rawValue, AnimeGenre.Mecha.rawValue, AnimeGenre.Military.rawValue, AnimeGenre.Music.rawValue, AnimeGenre.Mystery.rawValue, AnimeGenre.Parody.rawValue, AnimeGenre.Police.rawValue, AnimeGenre.Psychological.rawValue, AnimeGenre.Romance.rawValue, AnimeGenre.Samurai.rawValue, AnimeGenre.School.rawValue, AnimeGenre.SciFi.rawValue, AnimeGenre.Seinen.rawValue, AnimeGenre.Shoujo.rawValue, AnimeGenre.ShoujoAi.rawValue, AnimeGenre.Shounen.rawValue, AnimeGenre.ShounenAi.rawValue, AnimeGenre.SliceOfLife.rawValue, AnimeGenre.Space.rawValue, AnimeGenre.Sports.rawValue, AnimeGenre.SuperPower.rawValue, AnimeGenre.Supernatural.rawValue, AnimeGenre.Thriller.rawValue, AnimeGenre.Vampire.rawValue, AnimeGenre.Yaoi.rawValue, AnimeGenre.Yuri.rawValue]
+        return [AnimeGenre.Action.rawValue, AnimeGenre.Adventure.rawValue, AnimeGenre.Cars.rawValue, AnimeGenre.Comedy.rawValue, AnimeGenre.Dementia.rawValue, AnimeGenre.Demons.rawValue, AnimeGenre.Drama.rawValue, AnimeGenre.Ecchi.rawValue, AnimeGenre.Fantasy.rawValue, AnimeGenre.Game.rawValue, AnimeGenre.Harem.rawValue, AnimeGenre.Historical.rawValue, AnimeGenre.Horror.rawValue, AnimeGenre.Josei.rawValue, AnimeGenre.Kids.rawValue, AnimeGenre.Magic.rawValue, AnimeGenre.MartialArts.rawValue, AnimeGenre.Mecha.rawValue, AnimeGenre.Military.rawValue, AnimeGenre.Music.rawValue, AnimeGenre.Mystery.rawValue, AnimeGenre.Parody.rawValue, AnimeGenre.Police.rawValue, AnimeGenre.Psychological.rawValue, AnimeGenre.Romance.rawValue, AnimeGenre.Samurai.rawValue, AnimeGenre.School.rawValue, AnimeGenre.SciFi.rawValue, AnimeGenre.Seinen.rawValue, AnimeGenre.Shoujo.rawValue, AnimeGenre.ShoujoAi.rawValue, AnimeGenre.Shounen.rawValue, AnimeGenre.ShounenAi.rawValue, AnimeGenre.SliceOfLife.rawValue, AnimeGenre.Space.rawValue, AnimeGenre.Sports.rawValue, AnimeGenre.SuperPower.rawValue, AnimeGenre.Supernatural.rawValue, AnimeGenre.Thriller.rawValue, AnimeGenre.Vampire.rawValue, AnimeGenre.Yaoi.rawValue, AnimeGenre.Yuri.rawValue]
     }
 }
 

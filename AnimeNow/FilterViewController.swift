@@ -55,8 +55,10 @@ enum ViewType: String {
     }
 }
 
+typealias Configuration = [(section: FilterSection, value: String?, dataSource: [String])]
+
 protocol FilterViewControllerDelegate: class {
-    func finishedWith(#configuration: [(FilterSection, String?, [String])], selectedGenres: [String])
+    func finishedWith(#configuration: Configuration, selectedGenres: [String])
 }
 
 class FilterViewController: UIViewController {
@@ -70,9 +72,9 @@ class FilterViewController: UIViewController {
     var expandedSection: Int?
     var selectedGenres: [String] = []
     var filteredDataSource: [[String]] = []
-    var sectionsDataSource: [(FilterSection, String?, [String])] = []
+    var sectionsDataSource: Configuration = []
     
-    func initWith(#configuration: [(FilterSection, String?, [String])]) {
+    func initWith(#configuration: Configuration) {
         sectionsDataSource = configuration
         for _ in sectionsDataSource {
             filteredDataSource.append([])
@@ -84,6 +86,9 @@ class FilterViewController: UIViewController {
     }
     
     @IBAction func dimissViewControllerPressed(sender: AnyObject) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    @IBAction func applyFilterPressed(sender: AnyObject) {
         delegate?.finishedWith(configuration: sectionsDataSource, selectedGenres: selectedGenres)
         dismissViewControllerAnimated(true, completion: nil)
     }
@@ -204,7 +209,7 @@ extension FilterViewController: UICollectionViewDelegate {
         case .Classification: fallthrough
         case .Studio: fallthrough
         case .Year:
-            sectionsDataSource[indexPath.section].1 = string
+            sectionsDataSource[indexPath.section].value = string
             filteredDataSource[indexPath.section] = []
             expandedSection = nil
             collectionView.reloadData()
@@ -214,7 +219,7 @@ extension FilterViewController: UICollectionViewDelegate {
             } else {
                 selectedGenres.append(string)
             }
-            sectionsDataSource[indexPath.section].1 = selectedGenres.count != 0 ? "\(selectedGenres.count) genres" : ""
+            sectionsDataSource[indexPath.section].value = selectedGenres.count != 0 ? "\(selectedGenres.count) genres" : ""
             collectionView.reloadData()
         case .FilterTitle: break
         }
@@ -263,7 +268,7 @@ extension FilterViewController: BasicCollectionReusableViewDelegate {
         
         if section != expandedSection {
             expandedSection = section
-            filteredDataSource[section] = sectionsDataSource[section].2
+            filteredDataSource[section] = sectionsDataSource[section].dataSource
         } else {
             expandedSection = nil
         }
@@ -273,33 +278,40 @@ extension FilterViewController: BasicCollectionReusableViewDelegate {
     
     func headerSelectedActionButton2(cell: BasicCollectionReusableView) {
         let section = cell.section!
-        
-        switch section {
-        case 0...1:
+        let filterSection = sectionsDataSource[section].section
+        switch filterSection {
+        case .View: fallthrough
+        case .Sort:
             // Show down-down
             headerSelectedActionButton(cell)
-        case 2:
+        case .FilterTitle:
             // Clear all filters
-            for index in 3...8 {
-                sectionsDataSource[index].1 = nil
+            let firstFilterIndex = section+1
+            let lastFilterIndex = sectionsDataSource.count - 1
+            for index in firstFilterIndex...lastFilterIndex {
+                sectionsDataSource[index].value = nil
             }
             selectedGenres.removeAll(keepCapacity: false)
             expandedSection = nil
             collectionView.reloadData()
             return
-        case 3...8:
+        case .AnimeType: fallthrough
+        case .Year: fallthrough
+        case .Status: fallthrough
+        case .Studio: fallthrough
+        case .Classification: fallthrough
+        case .Genres:
             // Clear a filter or open drop-down
-            if let value = sectionsDataSource[section].1 {
-                if section == 8 {
+            if let value = sectionsDataSource[section].value {
+                if filterSection == .Genres {
                     selectedGenres.removeAll(keepCapacity: false)
                 }
                 
-                sectionsDataSource[section].1 = nil
+                sectionsDataSource[section].value = nil
                 collectionView.reloadData()
             } else {
                 headerSelectedActionButton(cell)
             }
-        default: break
         }
         
     }

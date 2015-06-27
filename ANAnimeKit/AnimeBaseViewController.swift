@@ -30,10 +30,11 @@ public class AnimeBaseViewController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationController?.navigationBar.tintColor = UIColor.peterRiver()
-        navigationController?.navigationBar.barTintColor = UIColor.whiteColor()
-        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.blackColor()]
-
+        if let tabBar = tabBarController as? CustomTabBarController {
+            navigationController?.navigationBar.tintColor = UIColor.peterRiver()
+            navigationController?.navigationBar.barTintColor = UIColor.whiteColor()
+            navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.blackColor()]
+        }
     }
     
     public override func viewDidAppear(animated: Bool) {

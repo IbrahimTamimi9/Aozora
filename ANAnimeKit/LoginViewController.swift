@@ -22,7 +22,7 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadingView = LoaderView(viewController: self)
+        loadingView = LoaderView(parentView: self.view)
         malScrapper = MALScrapper(viewController: self)
     }
     

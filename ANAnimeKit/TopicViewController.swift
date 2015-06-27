@@ -48,7 +48,7 @@ public class TopicViewController: UIViewController {
         tableView.estimatedRowHeight = 40.0
         tableView.rowHeight = UITableViewAutomaticDimension
         
-        loadingView = LoaderView(viewController: self)
+        loadingView = LoaderView(parentView: self.view)
         fetchPosts()
         
     }

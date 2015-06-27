@@ -48,9 +48,8 @@ class BrowseViewController: UIViewController {
     }
     
     var loadingView: LoaderView!
-    var currentConfiguration: [(FilterSection, String?, [String])] =
+    var currentConfiguration: Configuration =
     [
-        (FilterSection.View, ViewType.Chart.rawValue, ViewType.allRawValues()),
         (FilterSection.Sort, SortBy.Rating.rawValue, SortBy.allRawValues()),
         (FilterSection.FilterTitle, nil, []),
         (FilterSection.AnimeType, nil, AnimeType.allRawValues()),
@@ -68,6 +67,13 @@ class BrowseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let chartNib = UINib(nibName: "AnimeCell", bundle: nil)
+        collectionView.registerNib(chartNib, forCellWithReuseIdentifier: "AnimeCell")
+        let posterNib = UINib(nibName: "AnimeCellPoster", bundle: nil)
+        collectionView.registerNib(chartNib, forCellWithReuseIdentifier: "AnimeCellPoster")
+        let listNib = UINib(nibName: "AnimeCellList", bundle: nil)
+        collectionView.registerNib(chartNib, forCellWithReuseIdentifier: "AnimeCellList")
+        
         // TODO: Remove duplicated code in BaseViewController..
         var tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "changeSeasonalChart")
         navigationController?.navigationBar.addGestureRecognizer(tapGestureRecognizer)
@@ -75,7 +81,7 @@ class BrowseViewController: UIViewController {
         let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
         layout.itemSize = CGSize(width: view.bounds.size.width, height: 132)
         
-        loadingView = LoaderView(viewController: self)
+        loadingView = LoaderView(parentView: self.view)
         
         fetchListType(currentBrowseType)
     }
@@ -194,7 +200,7 @@ extension BrowseViewController: UICollectionViewDelegate {
 }
 
 extension BrowseViewController: FilterViewControllerDelegate {
-    func finishedWith(#configuration: [(FilterSection, String?, [String])], selectedGenres: [String]) {
+    func finishedWith(#configuration: Configuration, selectedGenres: [String]) {
         
         currentConfiguration = configuration
         self.selectedGenres = selectedGenres
