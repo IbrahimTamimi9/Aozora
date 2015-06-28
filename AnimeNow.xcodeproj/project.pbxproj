@@ -107,6 +107,7 @@
 		DAC13BF71B3EFC1C0013D479 /* LoadingTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC13BF61B3EFC1C0013D479 /* LoadingTableCell.swift */; };
 		DAC13BF91B3EFC280013D479 /* LoadingCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC13BF81B3EFC280013D479 /* LoadingCollectionCell.swift */; };
 		DAC13BFE1B3F36AB0013D479 /* UIViewController+Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC13BFD1B3F36AB0013D479 /* UIViewController+Navigation.swift */; };
+		DAC13C001B3F4A7B0013D479 /* DataFetchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC13BFF1B3F4A7A0013D479 /* DataFetchController.swift */; };
 		DACCF35D1B110AA2006A13EB /* ANParseKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACCF35C1B110AA2006A13EB /* ANParseKit.swift */; };
 		DACCF35F1B111016006A13EB /* AnimeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACCF35E1B111016006A13EB /* AnimeService.swift */; };
 		DACE77C21B294D7B00037486 /* NSDate+AniNow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACE77C11B294D7B00037486 /* NSDate+AniNow.swift */; };
@@ -366,6 +367,7 @@
 		DAC13BF61B3EFC1C0013D479 /* LoadingTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingTableCell.swift; sourceTree = "<group>"; };
 		DAC13BF81B3EFC280013D479 /* LoadingCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingCollectionCell.swift; sourceTree = "<group>"; };
 		DAC13BFD1B3F36AB0013D479 /* UIViewController+Navigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Navigation.swift"; sourceTree = "<group>"; };
+		DAC13BFF1B3F4A7A0013D479 /* DataFetchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataFetchController.swift; sourceTree = "<group>"; };
 		DAC610BB1B3115C100B60631 /* TopicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TopicViewController.swift; path = ../ANAnimeKit/TopicViewController.swift; sourceTree = "<group>"; };
 		DAC610BD1B312B0200B60631 /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserCell.swift; path = ../ANAnimeKit/UserCell.swift; sourceTree = "<group>"; };
 		DACCF35C1B110AA2006A13EB /* ANParseKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ANParseKit.swift; sourceTree = "<group>"; };
@@ -741,6 +743,7 @@
 		DA58C2E31B39BF850082B626 /* Browse */ = {
 			isa = PBXGroup;
 			children = (
+				DAC13BFF1B3F4A7A0013D479 /* DataFetchController.swift */,
 				DA58C2E41B39C0080082B626 /* Browse.storyboard */,
 				DA58C2E61B39C01B0082B626 /* BrowseViewController.swift */,
 				DA8DD6421B3CAEC500B05FBF /* FilterViewController.swift */,
@@ -1509,6 +1512,7 @@
 				DAF6187C1B3784E300286517 /* ForumsViewController.swift in Sources */,
 				DA41679F1B26320600847F56 /* BaseViewController.swift in Sources */,
 				DA58C2D71B386BAC0082B626 /* UserHistoryViewController.swift in Sources */,
+				DAC13C001B3F4A7B0013D479 /* DataFetchController.swift in Sources */,
 				DA27D1991AF1BA9D00CC854E /* ParseWorker.swift in Sources */,
 				DAC13BFE1B3F36AB0013D479 /* UIViewController+Navigation.swift in Sources */,
 				DA27D1971AF1BA9D00CC854E /* AppDelegate.swift in Sources */,

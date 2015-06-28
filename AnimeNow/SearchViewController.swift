@@ -48,7 +48,7 @@ class SearchViewController: UIViewController {
         collectionView.animateFadeOut()
         
         let query = Anime.query()!
-        query.limit = 10
+        query.limit = 20
         query.whereKey("title", matchesRegex: text, modifiers: "i")
         query.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
             if !cancellationToken.cancelled && result != nil {

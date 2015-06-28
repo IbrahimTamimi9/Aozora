@@ -41,11 +41,7 @@ enum BrowseType: String {
 class BrowseViewController: UIViewController {
     
     var currentBrowseType: BrowseType = .TopAnime
-    var dataSource: [Anime] = [] {
-        didSet {
-            collectionView.reloadData()
-        }
-    }
+    var dataSource: [Anime] = []
     
     var animator: ZFModalTransitionAnimator!
     var loadingView: LoaderView!
@@ -61,6 +57,9 @@ class BrowseViewController: UIViewController {
         (FilterSection.Genres, nil, AnimeGenre.allRawValues())
     ]
     var selectedGenres: [String] = []
+    var fetchController = DataFetchController()
+    
+    var currentQuery: PFQuery!
     
     @IBOutlet weak var navigationBarTitle: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
@@ -82,6 +81,9 @@ class BrowseViewController: UIViewController {
         let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
         layout.itemSize = CGSize(width: view.bounds.size.width, height: 132)
         
+        
+        fetchController.configureWith(self)
+        
         loadingView = LoaderView(parentView: self.view)
         
         fetchListType(currentBrowseType)
@@ -102,7 +104,6 @@ class BrowseViewController: UIViewController {
         
         // Fetch
         var query = Anime.query()!
-        
         switch currentBrowseType {
         case .TopAnime:
             query
@@ -136,13 +137,40 @@ class BrowseViewController: UIViewController {
             }
         }
         
-        
-        query.findObjectsInBackgroundWithBlock { (result, error) -> Void in
-            if result != nil {
-                self.dataSource = result as! [Anime]
+        currentQuery = query
+        fetchCurrentQuery()
+    }
+    
+    func fetchCurrentQuery(skip: Int = 0) {
+        currentQuery.skip = skip
+        currentQuery.findObjectsInBackgroundWithBlock { (result, error) -> Void in
+            if let result = result as? [Anime] {
+                if skip == 0 {
+                    self.dataSource = result
+                } else {
+                    self.dataSource += result
+                }
+                self.fetchController.didFetch(self.dataSource.count)
             }
-            self.loadingView.stopAnimating()
-            self.collectionView.animateFadeIn()
+            
+            if skip == 0 {
+                // Reload data
+                self.collectionView.reloadData()
+                self.loadingView.stopAnimating()
+                self.collectionView.animateFadeIn()
+            } else if let result = result {
+                // Insert rows
+                self.collectionView.performBatchUpdates({ () -> Void in
+                    let endIndex = self.dataSource.count
+                    let startIndex = endIndex - result.count
+                    var indexPathsToInsert: [NSIndexPath] = []
+                    for index in startIndex..<endIndex {
+                        indexPathsToInsert.append(NSIndexPath(forRow: index, inSection: 0))
+                    }
+                    self.collectionView.insertItemsAtIndexPaths(indexPathsToInsert)
+                }, completion: nil)
+            }
+            
         }
     }
     
@@ -192,6 +220,7 @@ extension BrowseViewController: UICollectionViewDataSource {
         
         cell.configureWithAnime(anime)
         
+        fetchController.didDisplayItemAt(index: indexPath.row)
         return cell
     }
 }
@@ -253,6 +282,12 @@ extension BrowseViewController: FilterViewControllerDelegate {
         
         
         fetchListType(BrowseType.Filtering, customQuery: query)
+    }
+}
+
+extension BrowseViewController: DataFetchControllerDelegate {
+    func fetchFor(#page: Int, skip: Int) {
+        fetchCurrentQuery(skip: skip)
     }
 }
 
