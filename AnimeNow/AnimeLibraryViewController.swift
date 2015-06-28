@@ -26,7 +26,36 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
         self.buttonBarView.selectedBar.backgroundColor = UIColor.peterRiver()
     }
     
+    // MARK: - IBActions
     
+    @IBAction func presentSearchPressed(sender: AnyObject) {
+        
+        if let tabBar = tabBarController {
+            let controller = UIStoryboard(name: "Browse", bundle: nil).instantiateViewControllerWithIdentifier("Search") as! SearchViewController
+            controller.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
+            controller.modalPresentationStyle = .OverCurrentContext
+            tabBar.presentViewController(controller, animated: true, completion: nil)
+        }
+    }
+    
+    var currentConfiguration: Configuration =
+    [
+        (FilterSection.View, ViewType.Chart.rawValue, ViewType.allRawValues()),
+        (FilterSection.Sort, SortBy.Rating.rawValue, [SortBy.Rating.rawValue, SortBy.Popularity.rawValue, SortBy.Title.rawValue, SortBy.NextAiringEpisode.rawValue,  SortBy.Newest.rawValue, SortBy.Oldest.rawValue]),
+    ]
+    
+    @IBAction func showFilterPressed(sender: AnyObject) {
+        
+        if let tabBar = tabBarController {
+            let controller = UIStoryboard(name: "Browse", bundle: nil).instantiateViewControllerWithIdentifier("Filter") as! FilterViewController
+            
+            controller.delegate = self
+            controller.initWith(configuration: currentConfiguration)
+            controller.modalTransitionStyle = UIModalTransitionStyle.CoverVertical
+            tabBar.presentViewController(controller, animated: true, completion: nil)
+        }
+        
+    }
 }
 
 
@@ -47,5 +76,23 @@ extension AnimeLibraryViewController: XLPagerTabStripViewControllerDataSource {
         onHold.initWithList(.OnHold)
         
         return [planning, watching, completed, dropped, onHold]
+    }
+}
+
+extension AnimeLibraryViewController: FilterViewControllerDelegate {
+    func finishedWith(#configuration: Configuration, selectedGenres: [String]) {
+        currentConfiguration = configuration
+        
+        for (filterSection, value, _) in configuration {
+            if let value = value {
+                switch filterSection {
+                case .Sort: break
+                    //setOrder(by: SortBy(rawValue: value)!)
+                case .View: break
+                    //setLayout(type: ViewType(rawValue: value)!)
+                default: break
+                }
+            }
+        }
     }
 }
