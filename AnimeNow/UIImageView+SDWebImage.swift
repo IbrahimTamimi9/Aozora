@@ -13,19 +13,19 @@ extension UIImageView {
     
     public func setImageFrom(#urlString:String!, animated:Bool? = true)
     {
-        image = nil
         if let url = NSURL(string: urlString) {
             if !animated! {
-                self.sd_setImageWithURL(url)
+                self.sd_setImageWithURL(url, placeholderImage: nil)
             } else {
-                SDWebImageManager.sharedManager().downloadImageWithURL(url, options: nil, progress: nil) { (downloadedImage:UIImage!, error:NSError!, cacheType:SDImageCacheType, isDownloaded:Bool, withURL:NSURL!) -> Void in
+                self.layer.removeAllAnimations()
+                self.sd_cancelCurrentImageLoad()
+                self.sd_setImageWithURL(url, placeholderImage: nil, completed: { (image, error, cacheType, url) -> Void in
                     self.alpha = 0
                     UIView.transitionWithView(self, duration: 0.5, options: nil, animations: { () -> Void in
-                        self.image = downloadedImage
+                        self.image = image
                         self.alpha = 1
                         }, completion: nil)
-                    
-                }
+                })
             }
         }
     }
