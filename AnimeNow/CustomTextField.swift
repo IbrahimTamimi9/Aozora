@@ -42,4 +42,9 @@ public extension CustomTextField {
     func validPassword() -> Bool {
         return (count(text) >= 6)
     }
+    
+    func trimSpaces() {
+        text = text.stringByReplacingOccurrencesOfString(" ", withString: "")
+    }
+    
 }

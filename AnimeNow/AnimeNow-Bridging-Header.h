@@ -11,5 +11,7 @@
 
 #import <FontAwesome_iOS/NSString+FontAwesome.h>
 #import <Shimmer/FBShimmeringView.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <ParseFacebookUtilsV4/PFFacebookUtils.h>
 
 #endif

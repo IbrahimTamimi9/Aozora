@@ -11,6 +11,7 @@ import XLPagerTabStrip
 import Alamofire
 import Bolts
 import ANCommonKit
+import Parse
 
 enum ProfileSection: String {
     case History = "History"
@@ -20,7 +21,7 @@ enum ProfileSection: String {
 
 class ProfileViewController: XLButtonBarPagerTabStripViewController {
 
-    var username: String = "darkcirius"
+    var username: String?
     
     var history: UserHistoryViewController!
     var profile: UserProfileViewController!
@@ -41,7 +42,7 @@ class ProfileViewController: XLButtonBarPagerTabStripViewController {
         buttonBarView.selectedBar.backgroundColor = UIColor.peterRiver()
         title = username
         
-        userProfile(username).continueWithBlock
+        userProfile(username!).continueWithBlock
         { (task: BFTask!) -> AnyObject! in
             
             if let result = task.result as? [String: AnyObject] {
@@ -52,7 +53,7 @@ class ProfileViewController: XLButtonBarPagerTabStripViewController {
                 
                 
                 var profile = Profile()
-                profile.username = self.username
+                profile.username = self.username!
                 profile.avatarURL = result["avatar_url"] as? String ?? ""
                 profile.lastOnline = details["last_online"] as? String ?? ""
                 profile.gender = details["gender"] as? String ?? ""
@@ -161,9 +162,9 @@ extension ProfileViewController: XLPagerTabStripViewControllerDataSource {
         profile = storyboard.instantiateViewControllerWithIdentifier("UserProfile") as! UserProfileViewController
         friends = storyboard.instantiateViewControllerWithIdentifier("UserFriends") as! UserFriendsViewController
         
-        history.initWithProfileSection(.History, username: username)
-        profile.initWithProfileSection(.Profile, username: username)
-        friends.initWithProfileSection(.Friends, username: username)
+        history.initWithProfileSection(.History, username: username!)
+        profile.initWithProfileSection(.Profile, username: username!)
+        friends.initWithProfileSection(.Friends, username: username!)
         
         return [profile, history, friends]
     }

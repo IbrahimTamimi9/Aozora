@@ -11,8 +11,9 @@ import ANCommonKit
 import Bolts
 import Alamofire
 import ANParseKit
+import Parse
 
-class LoginViewController: UIViewController {
+public class LoginViewController: UIViewController {
     
     @IBOutlet weak var usernameTextField: CustomTextField!
     @IBOutlet weak var passwordTextField: CustomTextField!
@@ -20,7 +21,7 @@ class LoginViewController: UIViewController {
     var loadingView: LoaderView!
     var malScrapper: MALScrapper!
     
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         loadingView = LoaderView(parentView: self.view)
         malScrapper = MALScrapper(viewController: self)
@@ -36,8 +37,8 @@ class LoginViewController: UIViewController {
         Alamofire.request(Atarashii.Router.verifyCredentials()).authenticate(user: usernameTextField.text, password: passwordTextField.text).validate().responseJSON { (req, res, JSON, error) -> Void in
             if error == nil {
                 
-                User.username = self.usernameTextField.text
-                User.password = self.passwordTextField.text
+                PFUser.malUsername = self.usernameTextField.text
+                PFUser.malPassword = self.passwordTextField.text
                 
                 completionSource.setResult(JSON)
             } else {
@@ -49,11 +50,15 @@ class LoginViewController: UIViewController {
     
     
     // MARK: - Actions
+    @IBAction func dismissKeyboardPressed(sender: AnyObject) {
+        
+        view.endEditing(true)
+    }
     
     @IBAction func loginPressed(sender: AnyObject) {
         verifyCredentials().continueWithSuccessBlock
         { (task: BFTask!) -> AnyObject! in
-            return self.malScrapper.loginWith(username: User.username!, password: User.password!)
+            return self.malScrapper.loginWith(username: PFUser.malUsername!, password: PFUser.malPassword!)
             
         }.continueWithBlock
         { (task: BFTask!) -> AnyObject! in

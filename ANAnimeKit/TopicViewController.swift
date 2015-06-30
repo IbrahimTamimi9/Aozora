@@ -11,6 +11,7 @@ import ANCommonKit
 import ANParseKit
 import Bolts
 import TTTAttributedLabel
+import Parse
 
 public class TopicViewController: UIViewController {
     
@@ -90,10 +91,10 @@ public class TopicViewController: UIViewController {
     // MARK: - IBActions
     
     @IBAction func addCommentPressed(sender: AnyObject) {
-        if User.loggedIn {
+        if PFUser.currentUserLoggedIn() {
             performSegueWithIdentifier("PostReply", sender: self)
         } else {
-            let storyboard = UIStoryboard(name: "Login", bundle: ANCommonKit.bundle())
+            let storyboard = UIStoryboard(name: "Login", bundle: ANAnimeKit.bundle())
             let loginController = storyboard.instantiateInitialViewController() as! LoginViewController
             presentViewController(loginController, animated: true, completion: nil)
         }

@@ -9,6 +9,7 @@
 import UIKit
 import ANParseKit
 import Bolts
+import Parse
 
 protocol NewPostViewControllerDelegate: class {
     func didPost()
@@ -68,11 +69,11 @@ public class NewPostViewController: UIViewController {
     
     @IBAction func sendPressed(sender: AnyObject) {
         
-        if !User.loggedIn {
+        if !PFUser.currentUserLoggedIn() {
             return
         }
         
-        let username = User.username ?? ""
+        let username = PFUser.malUsername ?? ""
         
         malScrapper.postToForum(topic.id, message: textView.text, with: username).continueWithBlock
             { (task: BFTask!) -> AnyObject! in
