@@ -30,7 +30,7 @@
         <!--Profile-->
         <scene sceneID="x2X-G7-FWK">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="J6a-uT-h8t" customClass="ProfileViewController" customModule="AnimeNow" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="J6a-uT-h8t" customClass="ProfileViewController" customModule="Aozora" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="5rc-QT-asC"/>
                         <viewControllerLayoutGuide type="bottom" id="3kb-cT-SrT"/>
@@ -113,7 +113,7 @@
         <!--User Friends View Controller-->
         <scene sceneID="38l-bX-nJn">
             <objects>
-                <viewController storyboardIdentifier="UserFriends" id="e1Y-uM-1lt" customClass="UserFriendsViewController" customModule="AnimeNow" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UserFriends" id="e1Y-uM-1lt" customClass="UserFriendsViewController" customModule="Aozora" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="xYF-wJ-boq"/>
                         <viewControllerLayoutGuide type="bottom" id="7N8-Q6-ha0"/>
@@ -228,7 +228,7 @@
         <!--User History View Controller-->
         <scene sceneID="x5O-r9-yeH">
             <objects>
-                <viewController storyboardIdentifier="UserHistory" id="7qR-EJ-zFo" customClass="UserHistoryViewController" customModule="AnimeNow" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UserHistory" id="7qR-EJ-zFo" customClass="UserHistoryViewController" customModule="Aozora" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Tza-rh-FfG"/>
                         <viewControllerLayoutGuide type="bottom" id="cad-4T-x6g"/>
@@ -396,7 +396,7 @@
         <!--User Profile View Controller-->
         <scene sceneID="mQm-aZ-M6o">
             <objects>
-                <viewController storyboardIdentifier="UserProfile" id="M5q-uq-HPK" customClass="UserProfileViewController" customModule="AnimeNow" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UserProfile" id="M5q-uq-HPK" customClass="UserProfileViewController" customModule="Aozora" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="UR8-Cc-VZl"/>
                         <viewControllerLayoutGuide type="bottom" id="xjQ-kx-jPV"/>

@@ -31,7 +31,7 @@
         <!--Item 1-->
         <scene sceneID="x34-bc-zDI">
             <objects>
-                <viewController id="e1V-ND-r09" customClass="ChartViewController" customModule="AnimeNow" sceneMemberID="viewController">
+                <viewController id="e1V-ND-r09" customClass="ChartViewController" customModule="Aozora" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="m5v-5k-u0e"/>
                         <viewControllerLayoutGuide type="bottom" id="haP-dC-pfL"/>

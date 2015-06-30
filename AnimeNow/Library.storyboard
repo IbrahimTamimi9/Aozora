@@ -8,7 +8,7 @@
         <!--Anime List View Controller-->
         <scene sceneID="AHa-Td-AJ2">
             <objects>
-                <viewController storyboardIdentifier="AnimeList" useStoryboardIdentifierAsRestorationIdentifier="YES" id="59z-su-Guf" customClass="AnimeListViewController" customModule="AnimeNow" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AnimeList" useStoryboardIdentifierAsRestorationIdentifier="YES" id="59z-su-Guf" customClass="AnimeListViewController" customModule="Aozora" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="EbK-cl-wC7"/>
                         <viewControllerLayoutGuide type="bottom" id="Gi7-pz-xZZ"/>
@@ -63,7 +63,7 @@
         <!--Library-->
         <scene sceneID="DB5-o8-SoY">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="sfh-gj-hB0" customClass="AnimeLibraryViewController" customModule="AnimeNow" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="sfh-gj-hB0" customClass="AnimeLibraryViewController" customModule="Aozora" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="tsa-a3-88g"/>
                         <viewControllerLayoutGuide type="bottom" id="reF-51-ZXy"/>

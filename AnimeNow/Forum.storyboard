@@ -35,7 +35,7 @@
         <!--Forum-->
         <scene sceneID="Szm-zW-0n9">
             <objects>
-                <viewController storyboardIdentifier="Forum" useStoryboardIdentifierAsRestorationIdentifier="YES" id="oFS-Rk-Qii" customClass="ForumsViewController" customModule="AnimeNow" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Forum" useStoryboardIdentifierAsRestorationIdentifier="YES" id="oFS-Rk-Qii" customClass="ForumsViewController" customModule="Aozora" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Klu-xu-FhM"/>
                         <viewControllerLayoutGuide type="bottom" id="Fr5-t8-LbC"/>

@@ -1927,6 +1927,8 @@
 			baseConfigurationReference = 3ABB693D5DECE103E9514C77 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Paul Chavarria Podoliako (46JV6S27VB)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Paul Chavarria Podoliako (46JV6S27VB)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1936,6 +1938,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = Aozora;
+				PROVISIONING_PROFILE = "97d93c39-509c-4a94-aa8c-6b8ae7ae090b";
 				SWIFT_OBJC_BRIDGING_HEADER = "AnimeNow/AnimeNow-Bridging-Header.h";
 			};
 			name = Debug;
@@ -1945,6 +1948,8 @@
 			baseConfigurationReference = CC7A7DA6842DABB2A3D90AB9 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Jose Chavarria Arrascue (Q9KPP7C7F3)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jose Chavarria Arrascue (Q9KPP7C7F3)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1954,6 +1959,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = Aozora;
+				PROVISIONING_PROFILE = "12055f45-b3ef-483a-b487-2cae4a4da138";
 				SWIFT_OBJC_BRIDGING_HEADER = "AnimeNow/AnimeNow-Bridging-Header.h";
 			};
 			name = Release;

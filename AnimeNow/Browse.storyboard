@@ -17,7 +17,7 @@
         <!--Browse View Controller-->
         <scene sceneID="5iu-Fo-mgD">
             <objects>
-                <viewController id="YRA-9j-0wW" customClass="BrowseViewController" customModule="AnimeNow" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="YRA-9j-0wW" customClass="BrowseViewController" customModule="Aozora" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="LH5-rv-kyi"/>
                         <viewControllerLayoutGuide type="bottom" id="1Rg-vb-Unz"/>
@@ -136,7 +136,7 @@
         <!--Search View Controller-->
         <scene sceneID="LIX-N5-w5H">
             <objects>
-                <viewController storyboardIdentifier="Search" useStoryboardIdentifierAsRestorationIdentifier="YES" id="YvL-lf-zev" customClass="SearchViewController" customModule="AnimeNow" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Search" useStoryboardIdentifierAsRestorationIdentifier="YES" id="YvL-lf-zev" customClass="SearchViewController" customModule="Aozora" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="CJl-4M-yme"/>
                         <viewControllerLayoutGuide type="bottom" id="gCo-Yj-upz"/>
@@ -240,7 +240,7 @@
         <!--Filter View Controller-->
         <scene sceneID="B8w-fW-N5U">
             <objects>
-                <viewController storyboardIdentifier="Filter" useStoryboardIdentifierAsRestorationIdentifier="YES" id="e6R-Qs-09y" customClass="FilterViewController" customModule="AnimeNow" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Filter" useStoryboardIdentifierAsRestorationIdentifier="YES" id="e6R-Qs-09y" customClass="FilterViewController" customModule="Aozora" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="DAV-wF-fgs"/>
                         <viewControllerLayoutGuide type="bottom" id="gLF-ko-heF"/>
