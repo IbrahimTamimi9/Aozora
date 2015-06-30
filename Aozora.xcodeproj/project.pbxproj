@@ -269,14 +269,14 @@
 		3ABB693D5DECE103E9514C77 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		CC7A7DA6842DABB2A3D90AB9 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		D27C7A8ED4F7C96DF08F5850 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		DA27D1911AF1BA9D00CC854E /* AnimeNow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AnimeNow.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA27D1911AF1BA9D00CC854E /* Aozora.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Aozora.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA27D1951AF1BA9D00CC854E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA27D1961AF1BA9D00CC854E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DA27D1981AF1BA9D00CC854E /* ParseWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseWorker.swift; sourceTree = "<group>"; };
 		DA27D19B1AF1BA9D00CC854E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Season.storyboard; sourceTree = "<group>"; };
 		DA27D19D1AF1BA9D00CC854E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		DA27D1A01AF1BA9D00CC854E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		DA27D1A61AF1BA9D00CC854E /* AnimeNowTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AnimeNowTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA27D1A61AF1BA9D00CC854E /* AozoraTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AozoraTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA27D1AB1AF1BA9D00CC854E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA27D1AC1AF1BA9D00CC854E /* AnimeNowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimeNowTests.swift; sourceTree = "<group>"; };
 		DA27D1B61AF1BFA300CC854E /* AniList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AniList.swift; sourceTree = "<group>"; };
@@ -571,8 +571,8 @@
 		DA27D1921AF1BA9D00CC854E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				DA27D1911AF1BA9D00CC854E /* AnimeNow.app */,
-				DA27D1A61AF1BA9D00CC854E /* AnimeNowTests.xctest */,
+				DA27D1911AF1BA9D00CC854E /* Aozora.app */,
+				DA27D1A61AF1BA9D00CC854E /* AozoraTests.xctest */,
 				DA6E12AE1B10D94200B278B0 /* ANParseKit.framework */,
 				DA6E12B81B10D94200B278B0 /* ANParseKitTests.xctest */,
 				DA4167AE1B273B0700847F56 /* ANAnimeKit.framework */,
@@ -1168,9 +1168,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		DA27D1901AF1BA9D00CC854E /* AnimeNow */ = {
+		DA27D1901AF1BA9D00CC854E /* Aozora */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DA27D1B01AF1BA9D00CC854E /* Build configuration list for PBXNativeTarget "AnimeNow" */;
+			buildConfigurationList = DA27D1B01AF1BA9D00CC854E /* Build configuration list for PBXNativeTarget "Aozora" */;
 			buildPhases = (
 				B003A2DD334A77B1CCA06F4A /* Check Pods Manifest.lock */,
 				DA27D18D1AF1BA9D00CC854E /* Sources */,
@@ -1187,14 +1187,14 @@
 				DA4167C41B273B0700847F56 /* PBXTargetDependency */,
 				DA4AF8CB1B276E060020252E /* PBXTargetDependency */,
 			);
-			name = AnimeNow;
+			name = Aozora;
 			productName = AnimeNow;
-			productReference = DA27D1911AF1BA9D00CC854E /* AnimeNow.app */;
+			productReference = DA27D1911AF1BA9D00CC854E /* Aozora.app */;
 			productType = "com.apple.product-type.application";
 		};
-		DA27D1A51AF1BA9D00CC854E /* AnimeNowTests */ = {
+		DA27D1A51AF1BA9D00CC854E /* AozoraTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DA27D1B31AF1BA9D00CC854E /* Build configuration list for PBXNativeTarget "AnimeNowTests" */;
+			buildConfigurationList = DA27D1B31AF1BA9D00CC854E /* Build configuration list for PBXNativeTarget "AozoraTests" */;
 			buildPhases = (
 				DA27D1A21AF1BA9D00CC854E /* Sources */,
 				DA27D1A31AF1BA9D00CC854E /* Frameworks */,
@@ -1205,9 +1205,9 @@
 			dependencies = (
 				DA27D1A81AF1BA9D00CC854E /* PBXTargetDependency */,
 			);
-			name = AnimeNowTests;
+			name = AozoraTests;
 			productName = AnimeNowTests;
-			productReference = DA27D1A61AF1BA9D00CC854E /* AnimeNowTests.xctest */;
+			productReference = DA27D1A61AF1BA9D00CC854E /* AozoraTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		DA4167AD1B273B0700847F56 /* ANAnimeKit */ = {
@@ -1366,7 +1366,7 @@
 					};
 				};
 			};
-			buildConfigurationList = DA27D18C1AF1BA9D00CC854E /* Build configuration list for PBXProject "AnimeNow" */;
+			buildConfigurationList = DA27D18C1AF1BA9D00CC854E /* Build configuration list for PBXProject "Aozora" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -1379,8 +1379,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				DA27D1901AF1BA9D00CC854E /* AnimeNow */,
-				DA27D1A51AF1BA9D00CC854E /* AnimeNowTests */,
+				DA27D1901AF1BA9D00CC854E /* Aozora */,
+				DA27D1A51AF1BA9D00CC854E /* AozoraTests */,
 				DA6E12AD1B10D94200B278B0 /* ANParseKit */,
 				DA6E12B71B10D94200B278B0 /* ANParseKitTests */,
 				DA4167AD1B273B0700847F56 /* ANAnimeKit */,
@@ -1771,7 +1771,7 @@
 /* Begin PBXTargetDependency section */
 		DA27D1A81AF1BA9D00CC854E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = DA27D1901AF1BA9D00CC854E /* AnimeNow */;
+			target = DA27D1901AF1BA9D00CC854E /* Aozora */;
 			targetProxy = DA27D1A71AF1BA9D00CC854E /* PBXContainerItemProxy */;
 		};
 		DA4167BB1B273B0700847F56 /* PBXTargetDependency */ = {
@@ -1781,7 +1781,7 @@
 		};
 		DA4167BD1B273B0700847F56 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = DA27D1901AF1BA9D00CC854E /* AnimeNow */;
+			target = DA27D1901AF1BA9D00CC854E /* Aozora */;
 			targetProxy = DA4167BC1B273B0700847F56 /* PBXContainerItemProxy */;
 		};
 		DA4167C41B273B0700847F56 /* PBXTargetDependency */ = {
@@ -1796,7 +1796,7 @@
 		};
 		DA4AF8C41B276E060020252E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = DA27D1901AF1BA9D00CC854E /* AnimeNow */;
+			target = DA27D1901AF1BA9D00CC854E /* Aozora */;
 			targetProxy = DA4AF8C31B276E060020252E /* PBXContainerItemProxy */;
 		};
 		DA4AF8CB1B276E060020252E /* PBXTargetDependency */ = {
@@ -1811,7 +1811,7 @@
 		};
 		DA6E12BD1B10D94200B278B0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = DA27D1901AF1BA9D00CC854E /* AnimeNow */;
+			target = DA27D1901AF1BA9D00CC854E /* Aozora */;
 			targetProxy = DA6E12BC1B10D94200B278B0 /* PBXContainerItemProxy */;
 		};
 		DA6E12C41B10D94200B278B0 /* PBXTargetDependency */ = {
@@ -1935,7 +1935,7 @@
 				INFOPLIST_FILE = AnimeNow/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Aozora;
 				SWIFT_OBJC_BRIDGING_HEADER = "AnimeNow/AnimeNow-Bridging-Header.h";
 			};
 			name = Debug;
@@ -1953,7 +1953,7 @@
 				INFOPLIST_FILE = AnimeNow/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Aozora;
 				SWIFT_OBJC_BRIDGING_HEADER = "AnimeNow/AnimeNow-Bridging-Header.h";
 			};
 			name = Release;
@@ -1972,7 +1972,7 @@
 				);
 				INFOPLIST_FILE = AnimeNowTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = AozoraTests;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AnimeNow.app/AnimeNow";
 			};
 			name = Debug;
@@ -1987,7 +1987,7 @@
 				);
 				INFOPLIST_FILE = AnimeNowTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = AozoraTests;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AnimeNow.app/AnimeNow";
 			};
 			name = Release;
@@ -2269,7 +2269,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		DA27D18C1AF1BA9D00CC854E /* Build configuration list for PBXProject "AnimeNow" */ = {
+		DA27D18C1AF1BA9D00CC854E /* Build configuration list for PBXProject "Aozora" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DA27D1AE1AF1BA9D00CC854E /* Debug */,
@@ -2278,7 +2278,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DA27D1B01AF1BA9D00CC854E /* Build configuration list for PBXNativeTarget "AnimeNow" */ = {
+		DA27D1B01AF1BA9D00CC854E /* Build configuration list for PBXNativeTarget "Aozora" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DA27D1B11AF1BA9D00CC854E /* Debug */,
@@ -2287,7 +2287,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DA27D1B31AF1BA9D00CC854E /* Build configuration list for PBXNativeTarget "AnimeNowTests" */ = {
+		DA27D1B31AF1BA9D00CC854E /* Build configuration list for PBXNativeTarget "AozoraTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DA27D1B41AF1BA9D00CC854E /* Debug */,

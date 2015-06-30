@@ -27,6 +27,7 @@ class OnboardingViewController: UIViewController {
             
             if let senderType = sender as? Int, let type = SignType(rawValue: senderType) {
                 let sign = segue.destinationViewController as! SignViewController
+                sign.isInWindowRoot = isInWindowRoot
                 sign.initWithType(type)
             }
             
@@ -34,10 +35,20 @@ class OnboardingViewController: UIViewController {
     }
     
     func presentRootTabBar() {
+        
+        OnboardingViewController.initializeUserDataIfNeeded()
+        
         if isInWindowRoot {
             WorkflowController.presentRootTabBar(animated: true)
         } else {
             self.dismissViewControllerAnimated(true, completion: nil)
+        }
+    }
+    
+    class func initializeUserDataIfNeeded() {
+        if let currentUser = PFUser.currentUser() where currentUser["joinDate"] == nil {
+            currentUser["joinDate"] = NSDate()
+            currentUser.saveEventually()
         }
     }
     

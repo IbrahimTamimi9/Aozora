@@ -25,6 +25,7 @@ class SignViewController: UIViewController {
     @IBOutlet weak var signUpSwitchButton: UIButton!
     
     var signType: SignType!
+    var isInWindowRoot = true
 
     func initWithType(signType: SignType) {
         self.signType = signType
@@ -52,7 +53,13 @@ class SignViewController: UIViewController {
     
     func showRootTabBar() {
         view.endEditing(true)
-        WorkflowController.presentRootTabBar(animated: true)
+        OnboardingViewController.initializeUserDataIfNeeded()
+        
+        if isInWindowRoot {
+            WorkflowController.presentRootTabBar(animated: true)
+        } else {
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
     }
     
     // MARK: - IBActions
