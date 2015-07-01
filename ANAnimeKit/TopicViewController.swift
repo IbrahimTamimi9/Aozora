@@ -13,22 +13,12 @@ import Bolts
 import TTTAttributedLabel
 import Parse
 
+
 public class TopicViewController: UIViewController {
     
+    var fetchController = DataFetchController()
     var malScrapper: MALScrapper!
-    var dataSource: [MALScrapper.Post] = [] {
-        didSet {
-            tableView.reloadData()
-            
-            if scrollToBottom {
-                scrollToBottom = false
-                UIView.animateWithDuration(0.25, delay: 0.0, options: .CurveEaseOut, animations: {
-                    self.view.layoutIfNeeded()
-                    self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.dataSource.count-1, inSection: 0), atScrollPosition: .Bottom, animated: false)
-                    }, completion: nil)
-            }
-        }
-    }
+    var dataSource: [MALScrapper.Post] = []
     
     var loadingView: LoaderView!
     var topic: MALScrapper.Topic!
@@ -49,24 +39,57 @@ public class TopicViewController: UIViewController {
         tableView.estimatedRowHeight = 40.0
         tableView.rowHeight = UITableViewAutomaticDimension
         
+        fetchController.configureWith(self, limit: 30)
+        
         loadingView = LoaderView(parentView: self.view)
-        fetchPosts()
+        fetchPosts(0)
         
     }
     
-    func fetchPosts() {
+    func fetchPosts(skip: Int) {
         
-        loadingView.startAnimating()
+        if skip == 0 {
+            loadingView.startAnimating()
+        }
         
-        malScrapper.postsFor(topic: topic).continueWithBlock {
+        malScrapper.postsFor(topic: topic, skip: skip).continueWithBlock {
             (task: BFTask!) -> AnyObject! in
             
-            self.tableView.animateFadeIn()
-            self.loadingView.stopAnimating()
-            if task.result != nil {
-                self.dataSource = task.result as! [MALScrapper.Post]
+            if let result = task.result as? [MALScrapper.Post] {
+                if skip == 0 {
+                    self.dataSource = result
+                } else {
+                    self.dataSource += result
+                }
+                self.fetchController.didFetch(self.dataSource.count)
             }
             
+            if skip == 0 {
+                // Reload data
+                self.tableView.reloadData()
+                self.loadingView.stopAnimating()
+                self.tableView.animateFadeIn()
+            } else if let result = task.result as? [MALScrapper.Post] {
+                // Insert rows
+                let startIndex = self.dataSource.count - result.count
+                var range = NSRange()
+                range.location = startIndex
+                range.length = result.count
+                NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                    self.tableView.beginUpdates()
+                    self.tableView.insertSections(NSIndexSet(indexesInRange: range), withRowAnimation: UITableViewRowAnimation.Automatic)
+                    self.tableView.endUpdates()
+                })
+            }
+
+            if self.scrollToBottom {
+                self.scrollToBottom = false
+                UIView.animateWithDuration(0.25, delay: 0.0, options: .CurveEaseOut, animations: {
+                    self.view.layoutIfNeeded()
+                    self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.dataSource.count-1, inSection: 0), atScrollPosition: .Bottom, animated: false)
+                    }, completion: nil)
+            }
+          
             return nil
         }
         
@@ -98,6 +121,7 @@ public class TopicViewController: UIViewController {
             let loginController = storyboard.instantiateInitialViewController() as! LoginViewController
             presentViewController(loginController, animated: true, completion: nil)
         }
+        
     }
     
 }
@@ -115,7 +139,9 @@ extension TopicViewController: UITableViewDataSource {
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
        
         let content = dataSource[indexPath.section].content[indexPath.row]
-
+        
+        fetchController.didDisplayItemAt(index: indexPath.section)
+        
         switch content.type {
         case .Text:
             let cell = tableView.dequeueReusableCellWithIdentifier("TextCell") as! BasicTableCell
@@ -205,6 +231,13 @@ extension TopicViewController: UITableViewDelegate {
             }
             tableView.reloadData()
             
+        } else if content.type == .Image {
+            
+            let cell = tableView.cellForRowAtIndexPath(indexPath) as! BasicTableCell
+            
+            // Show image
+            let imageURL = NSURL(string: content.content)
+            presentImageViewController(cell.titleimageView, imageUrl: imageURL!)
         }
     }
 }
@@ -224,6 +257,12 @@ extension TopicViewController: NewPostViewControllerDelegate {
     public func didPost() {
         tableView.animateFadeOut()
         scrollToBottom = true
-        fetchPosts()
+        fetchPosts(0)
+    }
+}
+
+extension TopicViewController: DataFetchControllerDelegate {
+    public func fetchFor(#page: Int, skip: Int) {
+        fetchPosts(skip)
     }
 }

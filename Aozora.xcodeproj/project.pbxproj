@@ -89,6 +89,9 @@
 		DA6E13291B10FA9400B278B0 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E12EF1B10DCBC00B278B0 /* AudioToolbox.framework */; };
 		DA6E132A1B10FAA100B278B0 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E12EB1B10DCA100B278B0 /* Bolts.framework */; };
 		DA6E132B1B10FAA100B278B0 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E12EC1B10DCA100B278B0 /* Parse.framework */; };
+		DA7C84C61B4333950036D119 /* DataFetchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC13BFF1B3F4A7A0013D479 /* DataFetchController.swift */; };
+		DA7C84C91B4379AA0036D119 /* UIViewController+Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7C84C81B4379AA0036D119 /* UIViewController+Navigation.swift */; };
+		DA7C84CA1B4379AD0036D119 /* UIViewController+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC13BFD1B3F36AB0013D479 /* UIViewController+Image.swift */; };
 		DA823D8C1B326940005C7AFD /* InAppBrowser.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA823D8A1B326940005C7AFD /* InAppBrowser.storyboard */; };
 		DA823D8D1B326940005C7AFD /* InAppBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA823D8B1B326940005C7AFD /* InAppBrowserViewController.swift */; };
 		DA8DD6411B3C95F300B05FBF /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8DD6401B3C95F300B05FBF /* SearchViewController.swift */; };
@@ -108,8 +111,6 @@
 		DAC13BF31B3EF17E0013D479 /* AnimeCellList.xib in Resources */ = {isa = PBXBuildFile; fileRef = DAC13BF21B3EF17E0013D479 /* AnimeCellList.xib */; };
 		DAC13BF71B3EFC1C0013D479 /* LoadingTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC13BF61B3EFC1C0013D479 /* LoadingTableCell.swift */; };
 		DAC13BF91B3EFC280013D479 /* LoadingCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC13BF81B3EFC280013D479 /* LoadingCollectionCell.swift */; };
-		DAC13BFE1B3F36AB0013D479 /* UIViewController+Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC13BFD1B3F36AB0013D479 /* UIViewController+Navigation.swift */; };
-		DAC13C001B3F4A7B0013D479 /* DataFetchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC13BFF1B3F4A7A0013D479 /* DataFetchController.swift */; };
 		DAC13C031B40569F0013D479 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAC13C021B40569F0013D479 /* Settings.storyboard */; };
 		DAC13C051B4056AB0013D479 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC13C041B4056AB0013D479 /* SettingsViewController.swift */; };
 		DAC13C081B41DF0E0013D479 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAC13C071B41DF0E0013D479 /* Onboarding.storyboard */; };
@@ -369,6 +370,7 @@
 		DA76A1961B235BF4006CB489 /* DropDownListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropDownListViewController.swift; sourceTree = "<group>"; };
 		DA76A1991B2375E1006CB489 /* SeasonalChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeasonalChart.swift; sourceTree = "<group>"; };
 		DA76A19C1B23AADF006CB489 /* BasicCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicCollectionReusableView.swift; sourceTree = "<group>"; };
+		DA7C84C81B4379AA0036D119 /* UIViewController+Navigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Navigation.swift"; sourceTree = "<group>"; };
 		DA823D8A1B326940005C7AFD /* InAppBrowser.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = InAppBrowser.storyboard; path = ../AnimeNow/InAppBrowser.storyboard; sourceTree = "<group>"; };
 		DA823D8B1B326940005C7AFD /* InAppBrowserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InAppBrowserViewController.swift; path = ../AnimeNow/InAppBrowserViewController.swift; sourceTree = "<group>"; };
 		DA8DD6401B3C95F300B05FBF /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -388,8 +390,8 @@
 		DAC13BF21B3EF17E0013D479 /* AnimeCellList.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnimeCellList.xib; sourceTree = "<group>"; };
 		DAC13BF61B3EFC1C0013D479 /* LoadingTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingTableCell.swift; sourceTree = "<group>"; };
 		DAC13BF81B3EFC280013D479 /* LoadingCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingCollectionCell.swift; sourceTree = "<group>"; };
-		DAC13BFD1B3F36AB0013D479 /* UIViewController+Navigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Navigation.swift"; sourceTree = "<group>"; };
-		DAC13BFF1B3F4A7A0013D479 /* DataFetchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataFetchController.swift; sourceTree = "<group>"; };
+		DAC13BFD1B3F36AB0013D479 /* UIViewController+Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIViewController+Image.swift"; path = "../AnimeNow/UIViewController+Image.swift"; sourceTree = "<group>"; };
+		DAC13BFF1B3F4A7A0013D479 /* DataFetchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataFetchController.swift; path = ../AnimeNow/DataFetchController.swift; sourceTree = "<group>"; };
 		DAC13C021B40569F0013D479 /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		DAC13C041B4056AB0013D479 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		DAC13C071B41DF0E0013D479 /* Onboarding.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Onboarding.storyboard; sourceTree = "<group>"; };
@@ -752,7 +754,9 @@
 			children = (
 				DAFD60C01B27847E007275C1 /* ANCommonKit.swift */,
 				DA4AF8B91B276E060020252E /* ANCommonKit.h */,
+				DA7C84C71B43797F0036D119 /* Extensions */,
 				DA06132B1B3778310044340F /* Model */,
+				DA7C84C51B43337E0036D119 /* Controllers */,
 				DAFBB0931B20EFC600495ED9 /* API */,
 				DA2853C01B22C5B40070B675 /* Categories */,
 				DA38A98D1B223EFC002FCBB4 /* Views */,
@@ -792,7 +796,6 @@
 		DA58C2E31B39BF850082B626 /* Browse */ = {
 			isa = PBXGroup;
 			children = (
-				DAC13BFF1B3F4A7A0013D479 /* DataFetchController.swift */,
 				DA58C2E41B39C0080082B626 /* Browse.storyboard */,
 				DA58C2E61B39C01B0082B626 /* BrowseViewController.swift */,
 				DA8DD6421B3CAEC500B05FBF /* FilterViewController.swift */,
@@ -892,6 +895,22 @@
 			path = SWWebScrapper;
 			sourceTree = "<group>";
 		};
+		DA7C84C51B43337E0036D119 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				DAC13BFF1B3F4A7A0013D479 /* DataFetchController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		DA7C84C71B43797F0036D119 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				DAC13BFD1B3F36AB0013D479 /* UIViewController+Image.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
 		DAA393271B42F1F100A8D5D5 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -912,7 +931,7 @@
 		DAC13BFC1B3F368D0013D479 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				DAC13BFD1B3F36AB0013D479 /* UIViewController+Navigation.swift */,
+				DA7C84C81B4379AA0036D119 /* UIViewController+Navigation.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -1633,9 +1652,7 @@
 				DA41679F1B26320600847F56 /* BaseViewController.swift in Sources */,
 				DA58C2D71B386BAC0082B626 /* UserHistoryViewController.swift in Sources */,
 				DAC13C171B4226E20013D479 /* OnboardingViewController.swift in Sources */,
-				DAC13C001B3F4A7B0013D479 /* DataFetchController.swift in Sources */,
 				DA27D1991AF1BA9D00CC854E /* ParseWorker.swift in Sources */,
-				DAC13BFE1B3F36AB0013D479 /* UIViewController+Navigation.swift in Sources */,
 				DA27D1971AF1BA9D00CC854E /* AppDelegate.swift in Sources */,
 				DAF618781B377D6000286517 /* AnimeListViewController.swift in Sources */,
 				DA8DD6431B3CAEC500B05FBF /* FilterViewController.swift in Sources */,
@@ -1643,6 +1660,7 @@
 				DA5A3C061B36255200C07D71 /* ProfileViewController.swift in Sources */,
 				DAC13C261B42495A0013D479 /* WorkflowController.swift in Sources */,
 				DAC13BF91B3EFC280013D479 /* LoadingCollectionCell.swift in Sources */,
+				DA7C84C91B4379AA0036D119 /* UIViewController+Navigation.swift in Sources */,
 				DAC13C201B423ED90013D479 /* SignViewController.swift in Sources */,
 				DA58C2D91B386BB90082B626 /* UserProfileViewController.swift in Sources */,
 				DAA393291B42F21900A8D5D5 /* RootTabBar.swift in Sources */,
@@ -1700,6 +1718,7 @@
 				DAFD60BD1B27845F007275C1 /* BasicCollectionReusableView.swift in Sources */,
 				DAFD60B61B278452007275C1 /* DropDownListViewController.swift in Sources */,
 				DAE43C3A1B2F971800C3092D /* UIView+Animation.swift in Sources */,
+				DA7C84C61B4333950036D119 /* DataFetchController.swift in Sources */,
 				DA5A3BFB1B35F19A00C07D71 /* TraktV2.swift in Sources */,
 				DA5A3BFD1B35F19A00C07D71 /* Atarashii.swift in Sources */,
 				DA5A3BFC1B35F19A00C07D71 /* AniList.swift in Sources */,
@@ -1720,6 +1739,7 @@
 				DA823D8D1B326940005C7AFD /* InAppBrowserViewController.swift in Sources */,
 				DAFD60BE1B27845F007275C1 /* BasicCollectionCell.swift in Sources */,
 				DAFD60BF1B278463007275C1 /* UIColor+AniNow.swift in Sources */,
+				DA7C84CA1B4379AD0036D119 /* UIViewController+Image.swift in Sources */,
 				DACE77C21B294D7B00037486 /* NSDate+AniNow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -10,6 +10,7 @@ import Foundation
 import ANParseKit
 import ANCommonKit
 import ANAnimeKit
+import JTSImageViewController
 
 extension UIViewController {
     
@@ -29,6 +30,22 @@ extension UIViewController {
         presentViewController(tabBarController, animated: true, completion: nil)
         
         return animator
+    }
+    
+    func presentImageViewController(imageView: UIImageView, imageUrl: NSURL? = nil) {
+        
+        let imageInfo = JTSImageInfo()
+        if let image = imageView.image {
+            imageInfo.image = image
+        } else {
+            imageInfo.imageURL = imageUrl
+        }
+        imageInfo.referenceRect = imageView.frame
+        imageInfo.referenceView = imageView
+        
+        let controller = JTSImageViewController(imageInfo: imageInfo, mode: JTSImageViewControllerMode.Image, backgroundStyle: JTSImageViewControllerBackgroundOptions.Blurred)
+        controller.showFromViewController(self, transition: JTSImageViewControllerTransition._FromOriginalPosition)
+        
     }
     
 }

@@ -31,5 +31,5 @@ public class AnimeDetail: PFObject, PFSubclassing {
     @NSManaged public var englishTitles: [String]
     @NSManaged public var japaneseTitles: [String]
     @NSManaged public var synonyms: [String]
-    @NSManaged public var youtubeID: String
+    @NSManaged public var youtubeID: String?
 }

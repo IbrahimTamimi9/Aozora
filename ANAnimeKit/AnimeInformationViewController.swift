@@ -11,6 +11,7 @@ import Shimmer
 import ANCommonKit
 import ANParseKit
 import FontAwesome_iOS
+import XCDYouTubeKit
 
 enum AnimeSection: Int {
     case Synopsis = 0
@@ -41,6 +42,9 @@ public class AnimeInformationViewController: AnimeBaseViewController {
     
     var canHideStatusBar = true
     var subAnimator: ZFModalTransitionAnimator!
+    var playerController: XCDYouTubeVideoPlayerViewController?
+    
+    
     override var anime: Anime! {
         didSet {
             if anime.details.isDataAvailable() && isViewLoaded() {
@@ -62,6 +66,14 @@ public class AnimeInformationViewController: AnimeBaseViewController {
                 } else {
                     fanartImageView.setImageFrom(urlString: anime.imageUrl)
                 }
+                
+                if let youtubeID = anime.details.youtubeID where count(youtubeID) > 0 {
+                    trailerButton.hidden = false
+                    trailerButton.layer.borderWidth = 1.0;
+                    trailerButton.layer.borderColor = UIColor(white: 1.0, alpha: 0.5).CGColor;
+                } else {
+                    trailerButton.hidden = true
+                }
             
                 tableView.dataSource = self
                 tableView.delegate = self
@@ -72,9 +84,9 @@ public class AnimeInformationViewController: AnimeBaseViewController {
     
     var loadingView: LoaderView!
     
+    @IBOutlet weak var trailerButton: UIButton!
     @IBOutlet weak var shimeringView: FBShimmeringView!
     @IBOutlet weak var separatorView: UIView!
-    @IBOutlet weak var openInAnimeTrakr: UIButton!
     @IBOutlet weak var topViewHeight: NSLayoutConstraint!
     @IBOutlet weak var shimeringViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var etaLabel: UILabel!
@@ -105,7 +117,8 @@ public class AnimeInformationViewController: AnimeBaseViewController {
         ranksView.hidden = true
         fetchCurrentAnime()
         
-        openInAnimeTrakr.hidden = anime.traktID != 0 ? false : true
+        // Video notifications
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "moviePlayerPlaybackDidFinish:", name: MPMoviePlayerPlaybackDidFinishNotification, object: nil)
     }
     
     public override func viewWillAppear(animated: Bool) {
@@ -124,23 +137,37 @@ public class AnimeInformationViewController: AnimeBaseViewController {
         }
     }
     
-    @IBAction func openInAnimeTrakr(sender: AnyObject) {
+    @IBAction func showFanart(sender: AnyObject) {
         
-        if let url = NSURL(scheme: "animetrakr", host: nil, path: "/identifier/\(anime.myAnimeListID)") {
-            
-            let animeTrakrInstalled = UIApplication.sharedApplication().canOpenURL(url)
-            
-            if animeTrakrInstalled {
-                UIApplication.sharedApplication().openURL(url)
-            } else {
-                let appstoreURL = NSURL(string: "https://userpub.itunes.apple.com/WebObjects/MZUserPublishing.woa/wa/addUserReview?type=Purple+Software&id=590452826&mt=8&o=i")!
-                UIApplication.sharedApplication().openURL(appstoreURL)
-            }
+        var imageString = ""
+        
+        if let fanartUrl = anime.fanart where count(fanartUrl) != 0 {
+            imageString = fanartUrl
+        } else {
+            imageString = anime.imageUrl
         }
+        
+        let imageURL = NSURL(string: imageString)
+        presentImageViewController(fanartImageView, imageUrl: imageURL)
     }
+    
+    @IBAction func showPoster(sender: AnyObject) {
+        
+        let imageURL = NSURL(string: anime.imageUrl)
+        presentImageViewController(posterImageView, imageUrl: imageURL!)
+    }
+   
     
     @IBAction func dismissViewController(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    @IBAction func playTrailerPressed(sender: AnyObject) {
+        
+        if let trailerURL = anime.details.youtubeID {
+            playerController = XCDYouTubeVideoPlayerViewController(videoIdentifier: trailerURL)
+            presentMoviePlayerViewControllerAnimated(playerController)
+        }
     }
     
     func hideStatusBar() -> Bool {
@@ -151,6 +178,13 @@ public class AnimeInformationViewController: AnimeBaseViewController {
             return false
         }
     }
+    
+    // MARK: - Notifications
+    
+    func moviePlayerPlaybackDidFinish(notification: NSNotification) {
+        playerController = nil;
+    }
+    
 
 }
 

@@ -65,7 +65,7 @@ class ChartViewController: BaseViewController {
         currentChartQuery.includeKey("specialAnime")
         currentChartQuery.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
             if let result = result as? [SeasonalChart], let season = result.last {
-                self.dataSource = [season.tvAnime, season.movieAnime, season.ovaAnime, season.onaAnime, season.specialAnime]
+                self.dataSource = [season.tvAnime as [Anime], season.movieAnime as [Anime], season.ovaAnime as [Anime], season.onaAnime as [Anime], season.specialAnime as [Anime]]
                 self.order(by: self.currentOrder)
             }
             

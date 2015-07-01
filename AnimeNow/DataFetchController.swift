@@ -8,12 +8,12 @@
 
 import Foundation
 
-protocol DataFetchControllerDelegate: class {
+public protocol DataFetchControllerDelegate: class {
     func fetchFor(#page: Int, skip: Int)
 }
-class DataFetchController {
+public class DataFetchController {
 
-    weak var delegate: DataFetchControllerDelegate?
+    public weak var delegate: DataFetchControllerDelegate?
     
     var isFetching = true
     var canFetchMore = true
@@ -21,22 +21,32 @@ class DataFetchController {
     var page = 0
     var limit = 100
     
-    func configureWith(delegate: DataFetchControllerDelegate, dataSourceCount: Int = 0, page: Int = 0, limit: Int = 100) {
+    var defaultIsFetching = true
+    var defaultCanFetchMore = true
+    var defaultDataSourceCount = 0
+    var defaultPage = 0
+    var defaultLimit = 100
+    
+    public init() {
+        
+    }
+    
+    public func configureWith(delegate: DataFetchControllerDelegate, page: Int = 0, limit: Int = 100) {
         self.delegate = delegate
-        self.dataSourceCount = dataSourceCount
-        self.page = page
-        self.limit = limit
+        defaultPage = page
+        defaultLimit = limit
+        resetToDefaults()
     }
     
     func resetToDefaults() {
-        isFetching = true
-        canFetchMore = true
-        dataSourceCount = 0
-        page = 0
-        limit = 100
+        isFetching = defaultIsFetching
+        canFetchMore = defaultCanFetchMore
+        dataSourceCount = defaultDataSourceCount
+        page = defaultPage
+        limit = defaultLimit
     }
     
-    func didDisplayItemAt(#index: Int) {
+    public func didDisplayItemAt(#index: Int) {
         
         if isFetching || !canFetchMore {
             return
@@ -50,7 +60,7 @@ class DataFetchController {
         }
     }
     
-    func didFetch(newDataSourceCount: Int) {
+    public func didFetch(newDataSourceCount: Int) {
         
         if !isFetching && newDataSourceCount == limit {
             resetToDefaults()

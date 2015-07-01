@@ -11,6 +11,8 @@ import Parse
 import Bolts
 import ANParseKit
 import ANAnimeKit
+import XCDYouTubeKit
+import JTSImageViewController
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -158,6 +160,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UITextField.appearance().textColor = UIColor.whiteColor()
     }
     
-
+    func application(application: UIApplication, supportedInterfaceOrientationsForWindow window: UIWindow?) -> Int {
+        
+        let topViewController = UIApplication.topViewController()
+        
+        if let controller = topViewController as? JTSImageViewController where !controller.isBeingDismissed() {
+            return Int(UIInterfaceOrientationMask.All.rawValue);
+        } else if let controller = topViewController as? XCDYouTubeVideoPlayerViewController where !controller.isBeingDismissed() {
+            return Int(UIInterfaceOrientationMask.All.rawValue);
+        }else {
+            return Int(UIInterfaceOrientationMask.Portrait.rawValue);
+        }
+    }
+    
 }
 
+extension UIApplication {
+    class func topViewController(base: UIViewController? = UIApplication.sharedApplication().keyWindow?.rootViewController) -> UIViewController? {
+        if let nav = base as? UINavigationController {
+            return topViewController(base: nav.visibleViewController)
+        }
+        if let tab = base as? UITabBarController {
+            if let selected = tab.selectedViewController {
+                return topViewController(base: selected)
+            }
+        }
+        if let presented = base?.presentedViewController {
+            return topViewController(base: presented)
+        }
+        return base
+    }
+}

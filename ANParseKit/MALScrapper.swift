@@ -342,10 +342,10 @@ public class MALScrapper {
     
 
     
-    public func postsFor(#topic: Topic) -> BFTask {
+    public func postsFor(#topic: Topic, skip: Int) -> BFTask {
         let completion = BFTaskCompletionSource()
         
-        let requestURL = "http://myanimelist.net/forum/?topicid=\(topic.id)"
+        let requestURL = "http://myanimelist.net/forum/?topicid=\(topic.id)&show=\(skip)"
         
         viewController.webScraper.scrape(requestURL) { (hpple) -> Void in
             if hpple == nil {
