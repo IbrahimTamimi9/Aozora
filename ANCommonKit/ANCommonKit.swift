@@ -37,4 +37,5 @@ public enum FontAwesome: String {
     case TimesCircle = ""
     case Ranking = ""
     case Members = ""
+    case Watched = ""
 }

@@ -125,7 +125,7 @@ extension AnimeLibraryViewController: XLPagerTabStripViewControllerDataSource {
         dropped.initWithList(.Dropped)
         onHold.initWithList(.OnHold)
         
-        return [planning, watching, completed, dropped, onHold]
+        return [planning, watching, onHold, completed, dropped]
     }
 }
 

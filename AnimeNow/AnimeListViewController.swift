@@ -16,7 +16,7 @@ import Parse
 class AnimeListViewController: UIViewController {
     
     var animator: ZFModalTransitionAnimator!
-    var animeListEnum: AnimeList!
+    var animeListType: AnimeList!
     var animeList: [Anime] = [] {
         didSet {
             if collectionView != nil {
@@ -28,14 +28,11 @@ class AnimeListViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     
     func initWithList(animeList: AnimeList) {
-        self.animeListEnum = animeList
+        self.animeListType = animeList
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        AnimeCell.registerNibFor(collectionView: collectionView, style: .Chart, reuseIdentifier: "AnimeCell")
-        
     
         let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
         
@@ -51,7 +48,8 @@ class AnimeListViewController: UIViewController {
         var refreshControl = UIRefreshControl()
         refreshControl.tintColor = UIColor.lightGrayColor()
         refreshControl.addTarget(self, action: "refreshLibrary", forControlEvents: UIControlEvents.ValueChanged)
-        collectionView.addSubview(refreshControl)
+        collectionView.insertSubview(refreshControl, atIndex: 0)
+//        collectionView.addSubview(refreshControl)
         collectionView.alwaysBounceVertical = true
     }
     
@@ -69,11 +67,11 @@ extension AnimeListViewController: UICollectionViewDataSource {
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("AnimeCell", forIndexPath: indexPath) as! AnimeCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("AnimeCell", forIndexPath: indexPath) as! LibraryAnimeCell
         
         let anime = animeList[indexPath.row]
-        
-        cell.configureWithAnime(anime)
+        cell.delegate = self
+        cell.configureWithAnime(anime, listType: animeListType)
         
         cell.layoutIfNeeded()
         return cell
@@ -91,12 +89,26 @@ extension AnimeListViewController: UICollectionViewDelegate {
     }
 }
 
+extension AnimeListViewController: LibraryAnimeCellDelegate {
+    func cellPressedWatched(cell: LibraryAnimeCell, anime: Anime) {
+        if let progress = anime.progress {
+            Realm().write({ () -> Void in
+                progress.episodes += 1
+            })
+            
+            if let indexPath = collectionView.indexPathForCell(cell) {
+                collectionView.reloadItemsAtIndexPaths([indexPath])
+            }
+        }
+    }
+}
+
 
 
 
 extension AnimeListViewController: XLPagerTabStripChildItem {
     func titleForPagerTabStripViewController(pagerTabStripViewController: XLPagerTabStripViewController!) -> String! {
-        return animeListEnum.rawValue
+        return animeListType.rawValue
     }
     
     func colorForPagerTabStripViewController(pagerTabStripViewController: XLPagerTabStripViewController!) -> UIColor! {

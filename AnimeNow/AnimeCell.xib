@@ -13,7 +13,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AnimeCell" id="nWh-E7-yvh" customClass="AnimeCell" customModule="AnimeNow" customModuleProvider="target">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AnimeCell" id="nWh-E7-yvh" customClass="AnimeCell" customModule="Aozora" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="340" height="132"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -33,10 +33,10 @@
                         <nil key="highlightedColor"/>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="1JH-EG-9ed"/>
-                                <exclude reference="zTP-fe-Zop"/>
                                 <exclude reference="0Mw-ie-buE"/>
+                                <exclude reference="1JH-EG-9ed"/>
                                 <exclude reference="jbq-c7-uGV"/>
+                                <exclude reference="zTP-fe-Zop"/>
                             </mask>
                         </variation>
                     </label>
@@ -126,13 +126,13 @@
                 <mask key="constraints">
                     <exclude reference="Dod-G3-e5K"/>
                     <exclude reference="bUs-cK-TTR"/>
-                    <exclude reference="ZS5-OZ-jnA"/>
-                    <exclude reference="pe3-CF-ZNc"/>
-                    <exclude reference="Yc3-3S-OnP"/>
-                    <exclude reference="m2i-WG-oFy"/>
                     <exclude reference="QDG-LX-Zyk"/>
-                    <exclude reference="uqY-NZ-DBf"/>
+                    <exclude reference="Yc3-3S-OnP"/>
+                    <exclude reference="ZS5-OZ-jnA"/>
+                    <exclude reference="m2i-WG-oFy"/>
+                    <exclude reference="pe3-CF-ZNc"/>
                     <exclude reference="Sh4-QR-91m"/>
+                    <exclude reference="uqY-NZ-DBf"/>
                 </mask>
             </variation>
             <connections>

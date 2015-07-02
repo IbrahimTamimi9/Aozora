@@ -7,8 +7,8 @@
 //
 
 import UIKit
-import ANParseKit
 import ANCommonKit
+import ANParseKit
 
 class AnimeCell: UICollectionViewCell {
     
