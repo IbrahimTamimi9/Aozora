@@ -100,9 +100,6 @@ class BaseViewController: UIViewController {
         AnimeCell.registerNibFor(collectionView: collectionView, style: .Poster, reuseIdentifier: "AnimeCellPoster")
         AnimeCell.registerNibFor(collectionView: collectionView, style: .List, reuseIdentifier: "AnimeCellList")
         
-//        navigationController?.hidesBarsOnSwipe = true
-//        navigationController?.hidesBarsOnTap = false
-        
         collectionView.alpha = 0.0
         
         timer = NSTimer.scheduledTimerWithTimeInterval(60.0, target: self, selector: "updateETACells", userInfo: nil, repeats: true)

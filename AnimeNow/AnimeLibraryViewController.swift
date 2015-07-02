@@ -7,7 +7,12 @@
 //
 
 import UIKit
+import ANCommonKit
+import ANParseKit
+import Parse
+import Bolts
 import XLPagerTabStrip
+import RealmSwift
 
 enum AnimeList: String {
     case Planning = "Planning"
@@ -19,11 +24,62 @@ enum AnimeList: String {
 
 class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
     
+    var planning: AnimeListViewController!
+    var watching: AnimeListViewController!
+    var completed: AnimeListViewController!
+    var dropped: AnimeListViewController!
+    var onHold: AnimeListViewController!
+    
+    var currentConfiguration: Configuration =
+    [
+        (FilterSection.View, ViewType.Chart.rawValue, ViewType.allRawValues()),
+        (FilterSection.Sort, SortBy.Rating.rawValue, [SortBy.Rating.rawValue, SortBy.Popularity.rawValue, SortBy.Title.rawValue, SortBy.NextAiringEpisode.rawValue,  SortBy.Newest.rawValue, SortBy.Oldest.rawValue]),
+    ]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.isProgressiveIndicator = true
         self.buttonBarView.selectedBar.backgroundColor = UIColor.peterRiver()
+        
+        fetchAnimeList()
+    }
+    
+    func fetchAnimeList() {
+        LibrarySyncController.fetchAnimeList().continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
+            
+            var animeList = task.result as! [Anime]
+            
+            var planningList: [Anime] = []
+            var watchingList: [Anime] = []
+            var completedList: [Anime] = []
+            var droppedList: [Anime] = []
+            var onHoldList: [Anime] = []
+            
+            for anime in animeList {
+                let malList = MALList(rawValue: anime.progress!.status) ?? .Planning
+                switch malList {
+                case .Planning:
+                    planningList.append(anime)
+                case .Watching:
+                    watchingList.append(anime)
+                case .Completed:
+                    completedList.append(anime)
+                case .Dropped:
+                    droppedList.append(anime)
+                case .OnHold:
+                    onHoldList.append(anime)
+                }
+            }
+            
+            self.planning.animeList = planningList
+            self.watching.animeList = watchingList
+            self.completed.animeList = completedList
+            self.dropped.animeList = droppedList
+            self.onHold.animeList = onHoldList
+            
+            return nil
+        }
     }
     
     // MARK: - IBActions
@@ -37,12 +93,6 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
             tabBar.presentViewController(controller, animated: true, completion: nil)
         }
     }
-    
-    var currentConfiguration: Configuration =
-    [
-        (FilterSection.View, ViewType.Chart.rawValue, ViewType.allRawValues()),
-        (FilterSection.Sort, SortBy.Rating.rawValue, [SortBy.Rating.rawValue, SortBy.Popularity.rawValue, SortBy.Title.rawValue, SortBy.NextAiringEpisode.rawValue,  SortBy.Newest.rawValue, SortBy.Oldest.rawValue]),
-    ]
     
     @IBAction func showFilterPressed(sender: AnyObject) {
         
@@ -63,11 +113,11 @@ extension AnimeLibraryViewController: XLPagerTabStripViewControllerDataSource {
     override func childViewControllersForPagerTabStripViewController(pagerTabStripViewController: XLPagerTabStripViewController!) -> [AnyObject]! {
         let storyboard = UIStoryboard(name: "Library", bundle: nil)
         
-        let planning = storyboard.instantiateViewControllerWithIdentifier("AnimeList") as! AnimeListViewController
-        let watching = storyboard.instantiateViewControllerWithIdentifier("AnimeList") as! AnimeListViewController
-        let completed = storyboard.instantiateViewControllerWithIdentifier("AnimeList") as! AnimeListViewController
-        let dropped = storyboard.instantiateViewControllerWithIdentifier("AnimeList") as! AnimeListViewController
-        let onHold = storyboard.instantiateViewControllerWithIdentifier("AnimeList") as! AnimeListViewController
+        planning = storyboard.instantiateViewControllerWithIdentifier("AnimeList") as! AnimeListViewController
+        watching = storyboard.instantiateViewControllerWithIdentifier("AnimeList") as! AnimeListViewController
+        completed = storyboard.instantiateViewControllerWithIdentifier("AnimeList") as! AnimeListViewController
+        dropped = storyboard.instantiateViewControllerWithIdentifier("AnimeList") as! AnimeListViewController
+        onHold = storyboard.instantiateViewControllerWithIdentifier("AnimeList") as! AnimeListViewController
         
         planning.initWithList(.Planning)
         watching.initWithList(.Watching)

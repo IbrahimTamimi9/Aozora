@@ -8,6 +8,7 @@
 
 import Foundation
 import Parse
+import ANCommonKit
 
 public class Anime: PFObject, PFSubclassing {
     
@@ -60,6 +61,10 @@ public class Anime: PFObject, PFSubclassing {
     @NSManaged public var source: String?
     @NSManaged public var startDateTime: NSDate?
     @NSManaged public var studio: [NSDictionary]
+    
+    // Progress
+    
+    public var progress: AnimeProgress?
     
     // ETA
     

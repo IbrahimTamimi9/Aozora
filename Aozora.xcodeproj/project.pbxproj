@@ -139,6 +139,7 @@
 		DAE43C341B2BC3B700C3092D /* AnimeDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE43C331B2BC3B700C3092D /* AnimeDetail.swift */; };
 		DAE43C3A1B2F971800C3092D /* UIView+Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE43C391B2F971800C3092D /* UIView+Animation.swift */; };
 		DAE7A7191B2105FD00788614 /* AnimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE7A7181B2105FD00788614 /* AnimeCell.swift */; };
+		DAF357041B45790100629A3D /* LibrarySyncController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF357031B45790100629A3D /* LibrarySyncController.swift */; };
 		DAF6186D1B377AAE00286517 /* AnimeProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF6186B1B37792900286517 /* AnimeProgress.swift */; };
 		DAF6186F1B377C2100286517 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E13051B10DDB900B278B0 /* Social.framework */; };
 		DAF618701B377C3000286517 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E13031B10DDB500B278B0 /* Accounts.framework */; };
@@ -423,6 +424,7 @@
 		DAE43C371B2D5BC800C3092D /* Atarashii.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Atarashii.swift; sourceTree = "<group>"; };
 		DAE43C391B2F971800C3092D /* UIView+Animation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Animation.swift"; sourceTree = "<group>"; };
 		DAE7A7181B2105FD00788614 /* AnimeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeCell.swift; sourceTree = "<group>"; };
+		DAF357031B45790100629A3D /* LibrarySyncController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibrarySyncController.swift; sourceTree = "<group>"; };
 		DAF6186B1B37792900286517 /* AnimeProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeProgress.swift; sourceTree = "<group>"; };
 		DAF618751B377CA700286517 /* AnimeLibraryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeLibraryViewController.swift; sourceTree = "<group>"; };
 		DAF618771B377D6000286517 /* AnimeListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeListViewController.swift; sourceTree = "<group>"; };
@@ -1062,6 +1064,7 @@
 		DAF618731B377C7600286517 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				DAF357031B45790100629A3D /* LibrarySyncController.swift */,
 				DAF618791B37825700286517 /* Library.storyboard */,
 				DAF618751B377CA700286517 /* AnimeLibraryViewController.swift */,
 				DAF618771B377D6000286517 /* AnimeListViewController.swift */,
@@ -1651,6 +1654,7 @@
 				DAC13C2A1B424DEF0013D479 /* ResetPasswordViewController.swift in Sources */,
 				DA41679F1B26320600847F56 /* BaseViewController.swift in Sources */,
 				DA58C2D71B386BAC0082B626 /* UserHistoryViewController.swift in Sources */,
+				DAF357041B45790100629A3D /* LibrarySyncController.swift in Sources */,
 				DAC13C171B4226E20013D479 /* OnboardingViewController.swift in Sources */,
 				DA27D1991AF1BA9D00CC854E /* ParseWorker.swift in Sources */,
 				DA27D1971AF1BA9D00CC854E /* AppDelegate.swift in Sources */,

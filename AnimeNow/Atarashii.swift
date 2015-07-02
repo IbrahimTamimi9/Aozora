@@ -51,3 +51,11 @@ public struct Atarashii {
     }
     
 }
+
+public enum MALList: String {
+    case Planning = "plan to watch"
+    case Watching = "watching"
+    case Completed = "completed"
+    case Dropped = "dropped"
+    case OnHold = "on-hold"
+}
