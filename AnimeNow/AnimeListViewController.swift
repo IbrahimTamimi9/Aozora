@@ -17,6 +17,38 @@ class AnimeListViewController: UIViewController {
     
     var animator: ZFModalTransitionAnimator!
     var animeListType: AnimeList!
+    var currentLayout: LibraryLayout = .CheckIn
+    var currentSortType: SortType = .Title
+    
+    var currentConfiguration: Configuration! {
+        didSet {
+            
+            for (filterSection, value, _) in currentConfiguration {
+                if let value = value {
+                    switch filterSection {
+                    case .Sort:
+                        let sortType = SortType(rawValue: value)!
+                        if isViewLoaded() {
+                            updateSortType(sortType)
+                        } else {
+                            currentSortType = sortType
+                        }
+                    case .View:
+                        let layoutType = LibraryLayout(rawValue: value)!
+                        if isViewLoaded() {
+                            updateLayout(layoutType)
+                        } else {
+                            currentLayout = layoutType
+                        }
+                        
+                    default: break
+                    }
+                }
+            }
+        }
+    }
+    var refreshControl = UIRefreshControl()
+    
     var animeList: [Anime] = [] {
         didSet {
             if collectionView != nil {
@@ -27,35 +59,92 @@ class AnimeListViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
-    func initWithList(animeList: AnimeList) {
+    func initWithList(animeList: AnimeList, configuration: Configuration) {
         self.animeListType = animeList
+        self.currentConfiguration = configuration
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
-        
-        var size = CGSize(width: view.bounds.size.width, height: 132)
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        layout.minimumLineSpacing = 1
-        layout.itemSize = size
-        
+        updateLayout(currentLayout)
+        updateSortType(currentSortType)
         addRefreshControl()
     }
     
     func addRefreshControl() {
-        var refreshControl = UIRefreshControl()
         refreshControl.tintColor = UIColor.lightGrayColor()
         refreshControl.addTarget(self, action: "refreshLibrary", forControlEvents: UIControlEvents.ValueChanged)
-        collectionView.insertSubview(refreshControl, atIndex: 0)
-//        collectionView.addSubview(refreshControl)
+        collectionView.insertSubview(refreshControl, atIndex: collectionView.subviews.count - 1)
         collectionView.alwaysBounceVertical = true
     }
     
     func refreshLibrary() {
-        
+        refreshControl.endRefreshing()
     }
+    
+    // MARK: - Sort and Layout
+    
+    func updateLayout(layout: LibraryLayout) {
+        
+        currentLayout = layout
+        
+        var size: CGSize?
+        
+        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        switch currentLayout {
+        case .CheckIn:
+            size = CGSize(width: view.bounds.size.width, height: 132)
+            layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            layout.minimumLineSpacing = 1
+            layout.minimumInteritemSpacing = 1
+        case .CheckInCompact:
+            let margin: CGFloat = 4
+            let columns: CGFloat = 2
+            let totalSize: CGFloat = view.bounds.size.width - (margin * (columns + 1))
+            let width = totalSize / columns
+            size = CGSize(width: width, height: width/164*164)
+            
+            layout.sectionInset = UIEdgeInsets(top: margin, left: margin, bottom: margin, right: margin)
+            layout.minimumLineSpacing = margin
+            layout.minimumInteritemSpacing = margin
+        case .Compact:
+            let margin: CGFloat = 4
+            let columns: CGFloat = 5
+            let totalSize: CGFloat = view.bounds.size.width - (margin * (columns + 1))
+            let width = totalSize / columns
+            size = CGSize(width: width, height: width/83*116)
+            
+            layout.sectionInset = UIEdgeInsets(top: margin, left: margin, bottom: margin, right: margin)
+            layout.minimumLineSpacing = margin
+            layout.minimumInteritemSpacing = margin
+        }
+        layout.itemSize = size!
+        
+        collectionView.collectionViewLayout.invalidateLayout()
+        collectionView.reloadData()
+    }
+    
+    func updateSortType(sortType: SortType) {
+        
+        currentSortType = sortType
+    
+        switch self.currentSortType {
+        case .Rating:
+            animeList.sort({ $0.rank < $1.rank})
+        case .Popularity:
+            animeList.sort({ $0.popularityRank < $1.popularityRank})
+        case .Title:
+            animeList.sort({ $0.title < $1.title})
+        case .NextAiringEpisode:
+            animeList.sort({ $0.nextEpisodeDate.compare($1.nextEpisodeDate) == .OrderedAscending })
+        default:
+            break;
+        }
+        
+        collectionView.reloadData()
+    }
+    
 }
 
 
@@ -66,15 +155,36 @@ extension AnimeListViewController: UICollectionViewDataSource {
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        var identifier: String?
+        switch currentLayout {
+            
+        case .CheckIn:
+            identifier = "CheckIn"
+            fallthrough
+        case .CheckInCompact:
+            if identifier == nil {
+                identifier = "CheckInCompact"
+            }
+            
+            let cell = collectionView.dequeueReusableCellWithReuseIdentifier(identifier!, forIndexPath: indexPath) as! LibraryAnimeCell
+            
+            let anime = animeList[indexPath.row]
+            cell.delegate = self
+            cell.configureWithAnime(anime, listType: animeListType)
+            cell.layoutIfNeeded()
+            return cell
+            
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("AnimeCell", forIndexPath: indexPath) as! LibraryAnimeCell
+        case .Compact:
+            identifier = "Compact"
+            let cell = collectionView.dequeueReusableCellWithReuseIdentifier(identifier!, forIndexPath: indexPath) as! BasicCollectionCell
+            
+            let anime = animeList[indexPath.row]
+            cell.titleimageView.setImageFrom(urlString: anime.imageUrl, animated: false)
+            cell.layoutIfNeeded()
+            return cell
+        }
         
-        let anime = animeList[indexPath.row]
-        cell.delegate = self
-        cell.configureWithAnime(anime, listType: animeListType)
-        
-        cell.layoutIfNeeded()
-        return cell
     }
     
 }

@@ -31,19 +31,19 @@ class BaseViewController: UIViewController {
     
     var currentConfiguration: Configuration =
     [
-        (FilterSection.View, ViewType.Chart.rawValue, ViewType.allRawValues()),
-        (FilterSection.Sort, SortBy.Rating.rawValue, [SortBy.Rating.rawValue, SortBy.Popularity.rawValue, SortBy.Title.rawValue, SortBy.NextAiringEpisode.rawValue])
+        (FilterSection.View, LayoutType.Chart.rawValue, LayoutType.allRawValues()),
+        (FilterSection.Sort, SortType.Rating.rawValue, [SortType.Rating.rawValue, SortType.Popularity.rawValue, SortType.Title.rawValue, SortType.NextAiringEpisode.rawValue])
     ]
     
-    var orders: [SortBy] = [.Rating,.None,.NextAiringEpisode,.Popularity]
-    var viewTypes: [ViewType] = [.Chart,.SeasonalChart,.Poster,.Chart]
+    var orders: [SortType] = [.Rating,.None,.NextAiringEpisode,.Popularity]
+    var viewTypes: [LayoutType] = [.Chart,.SeasonalChart,.Poster,.Chart]
     var selectedList: SelectedList = .SeasonalChart {
         didSet {
             filterBar.hidden = selectedList == .AllSeasons
         }
     }
     
-    var currentOrder: SortBy {
+    var currentSortType: SortType {
         get {
             return orders[selectedList.rawValue]
         }
@@ -52,7 +52,7 @@ class BaseViewController: UIViewController {
         }
     }
     
-    var currentViewType: ViewType {
+    var currentLayoutType: LayoutType {
         get {
             return viewTypes[selectedList.rawValue]
         }
@@ -156,15 +156,15 @@ class BaseViewController: UIViewController {
     
     // MARK: - Utility Functions
     
-    func order(#by: SortBy) {
+    func updateSortType(sortType: SortType) {
         
-        currentOrder = by
+        currentSortType = sortType
         
         let today = NSDate()
         var index = 0
         
         dataSource = dataSource.map() { (var animeArray) -> [Anime] in
-            switch self.currentOrder {
+            switch self.currentSortType {
             case .Rating:
                 animeArray.sort({ $0.rank < $1.rank})
             case .Popularity:
@@ -211,22 +211,29 @@ class BaseViewController: UIViewController {
         animeArray.sort({ $0.nextEpisodeDate.compare($1.nextEpisodeDate) == .OrderedAscending })
     }
     
-    func setViewType(viewType: ViewType) {
+    func updateLayoutType(layoutType: LayoutType) {
         
-        currentViewType = viewType
+        currentLayoutType = layoutType
         var size: CGSize
         let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
         
-        switch currentViewType {
+        switch currentLayoutType {
         case .Chart:
             size = CGSize(width: view.bounds.size.width, height: 132)
             layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
             layout.minimumLineSpacing = 1
         case .Poster:
-            size = CGSize(width: 100, height: 164)
-            let inset: CGFloat = (view.bounds.size.width - (100*3))/4
-            layout.sectionInset = UIEdgeInsets(top: 0, left: inset, bottom: 0, right: inset)
-            layout.minimumLineSpacing = inset
+            
+            let margin: CGFloat = 4
+            let columns: CGFloat = 4
+            let totalSize: CGFloat = view.bounds.size.width - (margin * (columns + 1))
+            let width = totalSize / columns
+            size = CGSize(width: width, height: width/100*164)
+            
+            layout.sectionInset = UIEdgeInsets(top: margin, left: margin, bottom: margin, right: margin)
+            layout.minimumLineSpacing = margin
+            layout.minimumInteritemSpacing = margin
+            
         case .List:
             size = CGSize(width: view.bounds.size.width, height: 52)
             layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -318,7 +325,7 @@ extension BaseViewController: UICollectionViewDataSource {
         
         var reuseIdentifier: String = ""
             
-        switch currentViewType {
+        switch currentLayoutType {
         case .Chart:
             reuseIdentifier = "AnimeCell"
         case .List:
@@ -409,9 +416,9 @@ extension BaseViewController: FilterViewControllerDelegate {
             if let value = value {
                 switch filterSection {
                 case .Sort:
-                    order(by: SortBy(rawValue: value)!)
+                    updateSortType(SortType(rawValue: value)!)
                 case .View:
-                    setViewType(ViewType(rawValue: value)!)
+                    updateLayoutType(LayoutType(rawValue: value)!)
                 default: break
                 }
             }

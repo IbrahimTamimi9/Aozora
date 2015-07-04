@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E33b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -7,7 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AnimeCellPoster" id="foZ-B7-mSO" customClass="AnimeCell" customModule="AnimeNow" customModuleProvider="target">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AnimeCellPoster" id="foZ-B7-mSO" customClass="AnimeCell" customModule="Aozora" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="99.5" height="163.5"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -50,10 +50,10 @@
                         <nil key="highlightedColor"/>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="sqT-id-6Zf"/>
-                                <exclude reference="foW-8r-t9o"/>
-                                <exclude reference="Un3-Je-ZQi"/>
                                 <exclude reference="8UV-M4-Aok"/>
+                                <exclude reference="Un3-Je-ZQi"/>
+                                <exclude reference="foW-8r-t9o"/>
+                                <exclude reference="sqT-id-6Zf"/>
                             </mask>
                         </variation>
                     </label>
@@ -117,18 +117,18 @@
             <size key="customSize" width="99.5" height="163.5"/>
             <variation key="default">
                 <mask key="constraints">
-                    <exclude reference="dzy-Kr-MnS"/>
-                    <exclude reference="dWh-Rg-mNi"/>
-                    <exclude reference="hbw-9G-Lus"/>
                     <exclude reference="cUs-me-3bR"/>
+                    <exclude reference="dWh-Rg-mNi"/>
+                    <exclude reference="dzy-Kr-MnS"/>
+                    <exclude reference="hbw-9G-Lus"/>
                     <exclude reference="Fbt-ov-olR"/>
                     <exclude reference="J6d-Rs-dJ2"/>
-                    <exclude reference="qs6-tJ-HBk"/>
                     <exclude reference="0FG-q2-L5L"/>
-                    <exclude reference="Yfw-md-Zag"/>
-                    <exclude reference="8RD-zk-Gpf"/>
                     <exclude reference="2z5-EI-AYY"/>
+                    <exclude reference="8RD-zk-Gpf"/>
+                    <exclude reference="Yfw-md-Zag"/>
                     <exclude reference="Yru-4k-ymE"/>
+                    <exclude reference="qs6-tJ-HBk"/>
                 </mask>
             </variation>
             <connections>

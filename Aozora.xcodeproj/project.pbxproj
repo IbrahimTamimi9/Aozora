@@ -2007,7 +2007,7 @@
 				INFOPLIST_FILE = AnimeNowTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = AozoraTests;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AnimeNow.app/AnimeNow";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Aozora.app/Aozora";
 			};
 			name = Debug;
 		};
@@ -2022,7 +2022,7 @@
 				INFOPLIST_FILE = AnimeNowTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = AozoraTests;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AnimeNow.app/AnimeNow";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Aozora.app/Aozora";
 			};
 			name = Release;
 		};

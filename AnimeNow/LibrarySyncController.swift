@@ -14,6 +14,20 @@ import Bolts
 import Alamofire
 import RealmSwift
 
+enum LibraryLayout: String {
+    case CheckIn = "Check-In"
+    case Compact = "Compact"
+    case CheckInCompact = "Check-In Compact"
+    
+    static func allRawValues() -> [String] {
+        return [
+            LibraryLayout.CheckIn.rawValue,
+            LibraryLayout.CheckInCompact.rawValue,
+            LibraryLayout.Compact.rawValue
+        ]
+    }
+}
+
 class LibrarySyncController {
     
     static let lastSyncDateDefaultsKey = "LibrarySync.LastSyncDate"
@@ -154,6 +168,15 @@ class LibrarySyncController {
         })
     }
     
+    class func fetchAnimeFromLocalDatastore(myAnimeListIDs: [Int]) -> BFTask {
+        println("From local datastore...")
+        let query = Anime.query()!
+        query.limit = 1000
+        query.fromLocalDatastore()
+        query.whereKey("myAnimeListID", containedIn: myAnimeListIDs)
+        return query.findObjectsInBackground()
+    }
+    
     class func fetchAnimeFromNetwork(myAnimeListIDs: [Int]) -> BFTask {
         // Fetch from network for missing titles
         println("From network...")
@@ -163,12 +186,4 @@ class LibrarySyncController {
         return networkQuery.findObjectsInBackground()
     }
     
-    class func fetchAnimeFromLocalDatastore(myAnimeListIDs: [Int]) -> BFTask {
-        println("From local datastore...")
-        let query = Anime.query()!
-        query.limit = 1000
-        query.fromLocalDatastore()
-        query.whereKey("myAnimeListID", containedIn: myAnimeListIDs)
-        return query.findObjectsInBackground()
-    }
 }

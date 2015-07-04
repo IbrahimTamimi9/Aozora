@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Bolts
 import Parse
 import ANCommonKit
 
@@ -65,6 +66,64 @@ public class Anime: PFObject, PFSubclassing {
     // Progress
     
     public var progress: AnimeProgress?
+    
+    // Episodes
+    var cachedEpisodeList: [Episode] = []
+    
+    public func episodeList(pin: Bool = false) -> BFTask {
+    
+        if cachedEpisodeList.count != 0 {
+            return BFTask(result: cachedEpisodeList)
+        }
+        
+        return fetchEpisodesFromLocalDatastore(myAnimeListID).continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
+            
+            if let episodes = task.result as? [Episode] {
+                if episodes.count == 0 {
+                    return self.fetchEpisodesFromNetwork(self.myAnimeListID)
+                } else {
+                    self.cachedEpisodeList = episodes
+                    return nil
+                }
+                
+            } else {
+                return nil
+            }
+            
+        }.continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
+            
+            if let result = task.result as? [Episode] where result.count > 0 {
+                println("found \(result.count) eps from network")
+                self.cachedEpisodeList += result
+                if pin {
+                    PFObject.pinAllInBackground(result, withName: "InLibrary")
+                }
+            }
+        
+            return BFTask(result: self.cachedEpisodeList)
+        }
+
+    }
+    
+    func fetchEpisodesFromLocalDatastore(myAnimeListID: Int) -> BFTask {
+        println("Eps From local datastore...")
+        let localQuery = Episode.query()!
+        localQuery.limit = 1000
+        localQuery.fromLocalDatastore()
+        localQuery.orderByAscending("number")
+        localQuery.whereKey("anime", equalTo: self)
+        return localQuery.findObjectsInBackground()
+    }
+    
+    func fetchEpisodesFromNetwork(myAnimeListID: Int) -> BFTask {
+        // Fetch from network for missing titles
+        println("Eps From network...")
+        let networkQuery = Episode.query()!
+        networkQuery.limit = 1000
+        networkQuery.orderByAscending("number")
+        networkQuery.whereKey("anime", equalTo: self)
+        return networkQuery.findObjectsInBackground()
+    }
     
     // ETA
     

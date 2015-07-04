@@ -61,7 +61,7 @@ class AnimeCell: UICollectionViewCell {
     showEtaAsAired: Bool? = false) {
 
         posterImageView?.setImageFrom(urlString: anime.imageUrl, animated: canFadeImages)
-        titleLabel.text = anime.title
+        titleLabel?.text = anime.title
         genresLabel?.text = ", ".join(anime.genres)
         
         var information = "\(anime.type) · "

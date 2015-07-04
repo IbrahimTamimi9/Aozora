@@ -47,7 +47,7 @@ class BrowseViewController: UIViewController {
     var loadingView: LoaderView!
     var currentConfiguration: Configuration =
     [
-        (FilterSection.Sort, SortBy.Rating.rawValue, [SortBy.Rating.rawValue, SortBy.Popularity.rawValue, SortBy.Title.rawValue, SortBy.Newest.rawValue, SortBy.Oldest.rawValue]),
+        (FilterSection.Sort, SortType.Rating.rawValue, [SortType.Rating.rawValue, SortType.Popularity.rawValue, SortType.Title.rawValue, SortType.Newest.rawValue, SortType.Oldest.rawValue]),
         (FilterSection.FilterTitle, nil, []),
         (FilterSection.AnimeType, nil, AnimeType.allRawValues()),
         (FilterSection.Year, nil, allYears),
@@ -244,7 +244,7 @@ extension BrowseViewController: FilterViewControllerDelegate {
             if let value = value {
                 switch filterSection {
                 case .Sort:
-                    switch SortBy(rawValue: value)! {
+                    switch SortType(rawValue: value)! {
                     case .Rating:
                         query.orderByAscending("rank")
                     case .Popularity:

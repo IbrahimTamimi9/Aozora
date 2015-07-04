@@ -30,10 +30,37 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
     var dropped: AnimeListViewController!
     var onHold: AnimeListViewController!
     
-    var currentConfiguration: Configuration =
+    var currentConfiguration: Configuration {
+        get {
+            return configurations[Int(currentIndex)]
+        }
+        
+        set (value) {
+            configurations[Int(currentIndex)] = value
+        }
+    }
+    var configurations: [Configuration] =
     [
-        (FilterSection.View, ViewType.Chart.rawValue, ViewType.allRawValues()),
-        (FilterSection.Sort, SortBy.Rating.rawValue, [SortBy.Rating.rawValue, SortBy.Popularity.rawValue, SortBy.Title.rawValue, SortBy.NextAiringEpisode.rawValue,  SortBy.Newest.rawValue, SortBy.Oldest.rawValue]),
+        [
+            (FilterSection.View, LibraryLayout.CheckIn.rawValue, LibraryLayout.allRawValues()),
+            (FilterSection.Sort, SortType.Title.rawValue, [SortType.Title.rawValue, SortType.NextAiringEpisode.rawValue]),
+        ],
+        [
+            (FilterSection.View, LibraryLayout.CheckIn.rawValue, LibraryLayout.allRawValues()),
+            (FilterSection.Sort, SortType.Title.rawValue, [SortType.Title.rawValue, SortType.NextAiringEpisode.rawValue]),
+        ],
+        [
+            (FilterSection.View, LibraryLayout.CheckIn.rawValue, LibraryLayout.allRawValues()),
+            (FilterSection.Sort, SortType.Title.rawValue, [SortType.Title.rawValue, SortType.NextAiringEpisode.rawValue]),
+        ],
+        [
+            (FilterSection.View, LibraryLayout.Compact.rawValue, LibraryLayout.allRawValues()),
+            (FilterSection.Sort, SortType.Title.rawValue, [SortType.Title.rawValue, SortType.NextAiringEpisode.rawValue]),
+        ],
+        [
+            (FilterSection.View, LibraryLayout.Compact.rawValue, LibraryLayout.allRawValues()),
+            (FilterSection.Sort, SortType.Title.rawValue, [SortType.Title.rawValue, SortType.NextAiringEpisode.rawValue]),
+        ]
     ]
     
     override func viewDidLoad() {
@@ -119,11 +146,11 @@ extension AnimeLibraryViewController: XLPagerTabStripViewControllerDataSource {
         dropped = storyboard.instantiateViewControllerWithIdentifier("AnimeList") as! AnimeListViewController
         onHold = storyboard.instantiateViewControllerWithIdentifier("AnimeList") as! AnimeListViewController
         
-        planning.initWithList(.Planning)
-        watching.initWithList(.Watching)
-        completed.initWithList(.Completed)
-        dropped.initWithList(.Dropped)
-        onHold.initWithList(.OnHold)
+        planning.initWithList(.Planning, configuration: configurations[0])
+        watching.initWithList(.Watching, configuration: configurations[1])
+        onHold.initWithList(.OnHold, configuration: configurations[2])
+        completed.initWithList(.Completed, configuration: configurations[3])
+        dropped.initWithList(.Dropped, configuration: configurations[4])
         
         return [planning, watching, onHold, completed, dropped]
     }
@@ -131,18 +158,22 @@ extension AnimeLibraryViewController: XLPagerTabStripViewControllerDataSource {
 
 extension AnimeLibraryViewController: FilterViewControllerDelegate {
     func finishedWith(#configuration: Configuration, selectedGenres: [String]) {
+
         currentConfiguration = configuration
         
-        for (filterSection, value, _) in configuration {
-            if let value = value {
-                switch filterSection {
-                case .Sort: break
-                    //setOrder(by: SortBy(rawValue: value)!)
-                case .View: break
-                    //setLayout(type: ViewType(rawValue: value)!)
-                default: break
-                }
-            }
+        switch Int(currentIndex) {
+        case 0:
+            planning.currentConfiguration = currentConfiguration
+        case 1:
+            watching.currentConfiguration = currentConfiguration
+        case 2:
+            onHold.currentConfiguration = currentConfiguration
+        case 3:
+            completed.currentConfiguration = currentConfiguration
+        case 4:
+            dropped.currentConfiguration = currentConfiguration
+        default: break
         }
+    
     }
 }

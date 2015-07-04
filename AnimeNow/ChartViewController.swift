@@ -49,7 +49,7 @@ class ChartViewController: BaseViewController {
         }
         
         navigationBarTitle.text! += " " + FontAwesome.AngleDown.rawValue
-        setViewType(currentViewType)
+        updateLayoutType(currentLayoutType)
     }
     
     func fetchSeasonalChart(seasonalChart: String) {
@@ -66,7 +66,7 @@ class ChartViewController: BaseViewController {
         currentChartQuery.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
             if let result = result as? [SeasonalChart], let season = result.last {
                 self.dataSource = [season.tvAnime as [Anime], season.movieAnime as [Anime], season.ovaAnime as [Anime], season.onaAnime as [Anime], season.specialAnime as [Anime]]
-                self.order(by: self.currentOrder)
+                self.updateSortType(self.currentSortType)
             }
             
             self.loadingView.stopAnimating()
@@ -137,7 +137,7 @@ class ChartViewController: BaseViewController {
                 }
                 
                 self.dataSource = animeByWeekday
-                self.order(by: self.currentOrder)
+                self.updateSortType(self.currentSortType)
                 
             }
             
@@ -171,7 +171,7 @@ class ChartViewController: BaseViewController {
                 }
                 
                 self.dataSource = animeByType
-                self.order(by: self.currentOrder)
+                self.updateSortType(self.currentSortType)
             }
             
             self.loadingView.stopAnimating()

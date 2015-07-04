@@ -23,7 +23,7 @@ enum FilterSection: String {
     
 }
 
-enum SortBy: String {
+enum SortType: String {
     case Rating = "Rating"
     case Popularity = "Popularity"
     case Title = "Title"
@@ -34,7 +34,7 @@ enum SortBy: String {
     
 }
 
-enum ViewType: String {
+enum LayoutType: String {
     case Chart = "Chart"
     case List = "List"
     case Poster = "Poster"
@@ -42,9 +42,9 @@ enum ViewType: String {
     
     static func allRawValues() -> [String] {
         return [
-            ViewType.Chart.rawValue,
-            ViewType.List.rawValue,
-            ViewType.Poster.rawValue
+            LayoutType.Chart.rawValue,
+            LayoutType.List.rawValue,
+            LayoutType.Poster.rawValue
         ]
     }
 }
