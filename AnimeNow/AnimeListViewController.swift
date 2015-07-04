@@ -67,6 +67,8 @@ class AnimeListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     
+        LibraryAnimeCell.registerNibFor(collectionView: collectionView, style: .CheckInCompact, reuseIdentifier: "CheckInCompact")
+        
         updateLayout(currentLayout)
         updateSortType(currentSortType)
         addRefreshControl()
@@ -170,7 +172,7 @@ extension AnimeListViewController: UICollectionViewDataSource {
             
             let anime = animeList[indexPath.row]
             cell.delegate = self
-            cell.configureWithAnime(anime, listType: animeListType)
+            cell.configureWithAnime(anime, showShortEta: true)
             cell.layoutIfNeeded()
             return cell
             

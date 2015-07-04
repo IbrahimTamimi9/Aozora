@@ -70,9 +70,13 @@ public class Anime: PFObject, PFSubclassing {
     // Episodes
     var cachedEpisodeList: [Episode] = []
     
-    public func episodeList(pin: Bool = false) -> BFTask {
+    public enum PinName: String {
+        case InLibrary = "InLibrary"
+    }
     
-        if cachedEpisodeList.count != 0 {
+    public func episodeList(pin: Bool = false, tag: PinName) -> BFTask {
+    
+        if cachedEpisodeList.count != 0 || episodes == 0 {
             return BFTask(result: cachedEpisodeList)
         }
         
@@ -96,7 +100,7 @@ public class Anime: PFObject, PFSubclassing {
                 println("found \(result.count) eps from network")
                 self.cachedEpisodeList += result
                 if pin {
-                    PFObject.pinAllInBackground(result, withName: "InLibrary")
+                    PFObject.pinAllInBackground(result, withName: tag.rawValue)
                 }
             }
         

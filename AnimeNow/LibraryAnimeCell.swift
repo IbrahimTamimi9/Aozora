@@ -27,45 +27,58 @@ class LibraryAnimeCell: AnimeCell {
         delegate?.cellPressedWatched(self, anime:anime!)
     }
     
-    func configureWithAnime(
-    anime: Anime,
-    listType: AnimeList,
-    canFadeImages: Bool? = true,
-    showEtaAsAired: Bool? = false) {
+    override class func registerNibFor(#collectionView: UICollectionView, style: CellStyle, reuseIdentifier: String) {
+        switch style {
+        case .CheckInCompact:
+            let chartNib = UINib(nibName: "CheckInCompact", bundle: nil)
+            collectionView.registerNib(chartNib, forCellWithReuseIdentifier: reuseIdentifier)
+        default:
+            super.registerNibFor(collectionView: collectionView, style: style, reuseIdentifier: reuseIdentifier)
+        }
         
-        super.configureWithAnime(anime, canFadeImages: canFadeImages, showEtaAsAired: showEtaAsAired)
+    }
+    
+    override func configureWithAnime(
+    anime: Anime,
+    canFadeImages: Bool = true,
+    showEtaAsAired: Bool = false,
+    showShortEta: Bool = false) {
+        
+        super.configureWithAnime(anime, canFadeImages: canFadeImages, showEtaAsAired: showEtaAsAired, showShortEta: showShortEta)
         
         self.anime = anime
         
-        let progress = anime.progress!
-        
-        watchedButton.hidden = false
-        let title = FontAwesome.Watched.rawValue + " Ep\((progress.episodes + 1))"
-        watchedButton.setTitle(title, forState: UIControlState.Normal)
-        
-        userProgressLabel.text = "\(anime.type) · " + FontAwesome.Watched.rawValue + " \(progress.episodes)/\(anime.episodes)   " + FontAwesome.Ranking.rawValue + " \(progress.score)"
-        
-        episodeImageView.image = nil
-        anime.episodeList(pin: true).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
+        if let progress = anime.progress {
             
-            if let episodes = task.result as? [Episode] {
-                if episodes.count > progress.episodes {
-                    let episode = episodes[progress.episodes]
-                    self.episodeImageView.setImageFrom(urlString: episode.screenshot ?? anime.fanart ?? "")
-                } else {
-                    
-                }
+            watchedButton.hidden = false
+            let title = FontAwesome.Watched.rawValue + " Ep\((progress.episodes + 1))"
+            watchedButton.setTitle(title, forState: UIControlState.Normal)
+            
+            userProgressLabel.text = "\(anime.type) · " + FontAwesome.Watched.rawValue + " \(progress.episodes)/\(anime.episodes)   " + FontAwesome.Ranking.rawValue + " \(progress.score)"
+            
+            setEpisodeImageView(anime, tag: .InLibrary, nextEpisode: progress.episodes)
+            
+            if let status = MALList(rawValue: progress.status) where status == .Completed || status == .Dropped {
+                watchedButton.hidden = true
+            }
+        }
+    }
+    
+    func setEpisodeImageView(anime: Anime, tag: Anime.PinName, nextEpisode: Int?) {
+        episodeImageView.image = nil
+        anime.episodeList(pin: true, tag: tag).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
+            
+            if let episodes = task.result as? [Episode],
+                let nextEpisode = nextEpisode where episodes.count > nextEpisode {
+                
+                let episode = episodes[nextEpisode]
+                self.episodeImageView.setImageFrom(urlString: episode.screenshot ?? anime.fanart ?? anime.imageUrl ?? "")
+                
+            } else {
+                self.episodeImageView.setImageFrom(urlString: anime.fanart ?? anime.imageUrl ?? "")
             }
             return nil
         })
-        
-        switch listType {
-        case .Planning: fallthrough
-        case .Watching: fallthrough
-        case .OnHold: break
-        case .Completed: fallthrough
-        case .Dropped:
-            watchedButton.hidden = true
-        }   
     }
+
 }

@@ -16,6 +16,7 @@ class AnimeCell: UICollectionViewCell {
         case Chart
         case Poster
         case List
+        case CheckInCompact
     }
     
     @IBOutlet weak var posterImageView: UIImageView?
@@ -51,42 +52,36 @@ class AnimeCell: UICollectionViewCell {
         case .List:
             let listNib = UINib(nibName: "AnimeCellList", bundle: nil)
             collectionView.registerNib(listNib, forCellWithReuseIdentifier: reuseIdentifier)
+        default: break
         }
         
     }
     
     func configureWithAnime(
     anime: Anime,
-    canFadeImages: Bool? = true,
-    showEtaAsAired: Bool? = false) {
+    canFadeImages: Bool = true,
+    showEtaAsAired: Bool = false,
+    showShortEta: Bool = false) {
 
         posterImageView?.setImageFrom(urlString: anime.imageUrl, animated: canFadeImages)
         titleLabel?.text = anime.title
         genresLabel?.text = ", ".join(anime.genres)
         
-        var information = "\(anime.type) · "
-            
-        if let mainStudio = anime.studio.first {
-            let studioString = mainStudio["studio_name"] as! String
-            information += studioString
-        } else {
-            information += "?"
-        }
-            
-        if let source = anime.source where count(source) != 0 {
-            information += " · " + source
-        }
-        
-        informationLabel?.text = information
+        updateInformationLabel(anime, informationLabel: informationLabel)
         
         ratingLabel?.text = FontAwesome.Ranking.rawValue + String(format: " %.2f    ", anime.membersScore) + FontAwesome.Members.rawValue + " " + numberFormatter.stringFromNumber(anime.membersCount)!
     
         if var nextEpisode = anime.nextEpisode {
             
-            if showEtaAsAired! {
+            if showEtaAsAired {
                 etaLabel?.textColor = UIColor.pumpkin()
                 etaTimeLabel?.textColor = UIColor.pumpkin()
-                etaLabel?.text = "Episode \(nextEpisode-1) - Aired"
+                if showShortEta {
+                    etaLabel?.text = "Episode \(nextEpisode-1) - Aired"
+                } else {
+                    etaLabel?.text = "Aired"
+                }
+                
                 etaTimeLabel?.text = "Aired"
             } else {
                 
@@ -96,18 +91,23 @@ class AnimeCell: UICollectionViewCell {
                     etaTime = "\(days)d \(hours)h \(minutes)m"
                     etaLabel?.textColor = UIColor.belizeHole()
                     etaTimeLabel?.textColor = UIColor.belizeHole()
-                    etaLabel?.text = "Episode \(nextEpisode) - " + etaTime
                 } else if hours != 0 {
                     etaTime = "\(hours)h \(minutes)m"
                     etaLabel?.textColor = UIColor.nephritis()
                     etaTimeLabel?.textColor = UIColor.nephritis()
-                    etaLabel?.text = "Episode \(nextEpisode) - " + etaTime
+                    
                 } else {
                     etaTime = "\(minutes)m"
                     etaLabel?.textColor = UIColor.pumpkin()
                     etaTimeLabel?.textColor = UIColor.pumpkin()
-                    etaLabel?.text = "Episode \(nextEpisode) - \(minutes)m"
                 }
+                
+                if showShortEta {
+                    etaLabel?.text = etaTime
+                } else {
+                    etaLabel?.text = "Episode \(nextEpisode) - " + etaTime
+                }
+                
                 
                 etaTimeLabel?.text = etaTime
             }
@@ -118,6 +118,23 @@ class AnimeCell: UICollectionViewCell {
             etaLabel?.text = ""
         }
         
+    }
+    
+    func updateInformationLabel(anime: Anime, informationLabel: UILabel?) {
+        var information = "\(anime.type) · "
+        
+        if let mainStudio = anime.studio.first {
+            let studioString = mainStudio["studio_name"] as! String
+            information += studioString
+        } else {
+            information += "?"
+        }
+        
+        if let source = anime.source where count(source) != 0 {
+            information += " · " + source
+        }
+        
+        informationLabel?.text = information
     }
     
     // Helper date functions

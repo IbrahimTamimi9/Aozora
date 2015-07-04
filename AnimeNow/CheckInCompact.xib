@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="FontAwesome.ttf">
+            <string>FontAwesome</string>
+            <string>FontAwesome</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CheckInCompact" id="1l0-PT-fAL" userLabel="CheckInCompact" customClass="LibraryAnimeCell" customModule="Aozora" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="164" height="164"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="164" height="164"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Yahari Ore no Seishun Loge Comedy wa Machigatteiru. Zoku" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tsa-pV-cCb">
+                        <rect key="frame" x="8" y="6" width="148" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="349" id="NxQ-7D-3j9"/>
+                            <constraint firstAttribute="width" constant="240" id="RaP-82-TEq"/>
+                            <constraint firstAttribute="width" constant="314" id="vl0-QG-Jq4"/>
+                            <constraint firstAttribute="width" constant="240" id="z8K-hL-L3E"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" red="0.1215686275" green="0.15686274510000001" blue="0.2156862745" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="RaP-82-TEq"/>
+                                <exclude reference="NxQ-7D-3j9"/>
+                                <exclude reference="z8K-hL-L3E"/>
+                                <exclude reference="vl0-QG-Jq4"/>
+                            </mask>
+                        </variation>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TV ·  10/24    9" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PBg-PE-HEX">
+                        <rect key="frame" x="8" y="26" width="111" height="13.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="240" id="1Oy-2f-Uvo"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="13"/>
+                        <color key="textColor" red="0.64835526320000003" green="0.64835526320000003" blue="0.64835526320000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="1Oy-2f-Uvo"/>
+                            </mask>
+                        </variation>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="78C-tW-kKo">
+                        <rect key="frame" x="8" y="124" width="148" height="32"/>
+                        <color key="backgroundColor" red="0.93890932000000005" green="0.93890932000000005" blue="0.93890932000000005" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="74" id="Iem-Qv-8mO"/>
+                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="35" id="MPU-Sk-gse"/>
+                            <constraint firstAttribute="height" constant="76" id="QM0-sv-yT9"/>
+                            <constraint firstAttribute="height" constant="63" id="aVn-kG-wkX"/>
+                            <constraint firstAttribute="width" constant="66" id="fI2-za-B0f"/>
+                            <constraint firstAttribute="height" constant="32" id="iyp-2l-hFb"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" priority="999" constant="86" id="nsE-QA-YKB"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="15"/>
+                        <inset key="contentEdgeInsets" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        <state key="normal" title="Ep3">
+                            <color key="titleColor" red="0.0078431377190000002" green="0.43921568989999998" blue="0.73333334920000004" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="aVn-kG-wkX"/>
+                                <exclude reference="Iem-Qv-8mO"/>
+                                <exclude reference="QM0-sv-yT9"/>
+                                <exclude reference="nsE-QA-YKB"/>
+                                <exclude reference="fI2-za-B0f"/>
+                                <exclude reference="MPU-Sk-gse"/>
+                            </mask>
+                        </variation>
+                        <connections>
+                            <action selector="watchedPressed:" destination="1l0-PT-fAL" eventType="touchUpInside" id="LZ5-FC-JAg"/>
+                        </connections>
+                    </button>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yCW-VS-Krx">
+                        <rect key="frame" x="8" y="48" width="148" height="76"/>
+                        <color key="backgroundColor" red="0.85098039219999999" green="0.85098039219999999" blue="0.85098039219999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="116" id="0AH-Hy-S4E"/>
+                            <constraint firstAttribute="height" constant="56" id="9VP-5U-IdD"/>
+                            <constraint firstAttribute="width" secondItem="yCW-VS-Krx" secondAttribute="height" multiplier="83:116" id="COg-sr-n84"/>
+                            <constraint firstAttribute="width" constant="121" id="Hx3-NP-DHi"/>
+                            <constraint firstAttribute="height" constant="63" id="IXs-WB-dBV"/>
+                            <constraint firstAttribute="width" constant="147" id="rEG-40-hC0"/>
+                            <constraint firstAttribute="width" priority="999" constant="83" id="usk-VW-dJ0"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="usk-VW-dJ0"/>
+                                <exclude reference="0AH-Hy-S4E"/>
+                                <exclude reference="rEG-40-hC0"/>
+                                <exclude reference="IXs-WB-dBV"/>
+                                <exclude reference="9VP-5U-IdD"/>
+                                <exclude reference="COg-sr-n84"/>
+                                <exclude reference="Hx3-NP-DHi"/>
+                            </mask>
+                        </variation>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="6d 19h" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lOA-jg-78z">
+                        <rect key="frame" x="103" y="131.5" width="45" height="17"/>
+                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+                        <color key="textColor" red="0.0078431377190000002" green="0.43921568989999998" blue="0.73333334920000004" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            </view>
+            <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="lOA-jg-78z" firstAttribute="trailing" secondItem="1l0-PT-fAL" secondAttribute="trailingMargin" constant="-8" id="0lA-7f-tSu"/>
+                <constraint firstItem="yCW-VS-Krx" firstAttribute="top" secondItem="PBg-PE-HEX" secondAttribute="bottom" constant="8" id="B4e-kv-yKl"/>
+                <constraint firstItem="PBg-PE-HEX" firstAttribute="leading" secondItem="1l0-PT-fAL" secondAttribute="leadingMargin" id="D4d-aA-7Mp"/>
+                <constraint firstItem="78C-tW-kKo" firstAttribute="leading" secondItem="1l0-PT-fAL" secondAttribute="leading" constant="8" id="EM8-7O-NOe"/>
+                <constraint firstItem="yCW-VS-Krx" firstAttribute="leading" secondItem="1l0-PT-fAL" secondAttribute="leadingMargin" id="Eek-jr-5dJ"/>
+                <constraint firstItem="lOA-jg-78z" firstAttribute="centerY" secondItem="78C-tW-kKo" secondAttribute="centerY" id="HFD-zf-V2r"/>
+                <constraint firstItem="PBg-PE-HEX" firstAttribute="top" secondItem="tsa-pV-cCb" secondAttribute="bottom" constant="2" id="IM2-bo-PJG"/>
+                <constraint firstItem="tsa-pV-cCb" firstAttribute="top" secondItem="1l0-PT-fAL" secondAttribute="topMargin" constant="-2" id="VvQ-Or-mEs"/>
+                <constraint firstAttribute="trailing" secondItem="78C-tW-kKo" secondAttribute="trailing" constant="8" id="c7q-qB-46M"/>
+                <constraint firstItem="yCW-VS-Krx" firstAttribute="trailing" secondItem="1l0-PT-fAL" secondAttribute="trailingMargin" id="hOZ-V8-vSC"/>
+                <constraint firstItem="78C-tW-kKo" firstAttribute="top" secondItem="yCW-VS-Krx" secondAttribute="bottom" id="jmm-zt-Iva"/>
+                <constraint firstItem="tsa-pV-cCb" firstAttribute="leading" secondItem="1l0-PT-fAL" secondAttribute="leading" constant="8" id="kbZ-fi-KKI"/>
+                <constraint firstAttribute="trailing" secondItem="tsa-pV-cCb" secondAttribute="trailing" constant="8" id="us8-mM-X8A"/>
+                <constraint firstAttribute="bottom" secondItem="78C-tW-kKo" secondAttribute="bottom" constant="8" id="yqE-rR-q2h"/>
+            </constraints>
+            <size key="customSize" width="164" height="164"/>
+            <connections>
+                <outlet property="episodeImageView" destination="yCW-VS-Krx" id="v6H-ab-R3m"/>
+                <outlet property="etaLabel" destination="lOA-jg-78z" id="Wyt-1i-lnP"/>
+                <outlet property="titleLabel" destination="tsa-pV-cCb" id="9OK-xa-xIV"/>
+                <outlet property="userProgressLabel" destination="PBg-PE-HEX" id="f0Q-h3-Vxw"/>
+                <outlet property="watchedButton" destination="78C-tW-kKo" id="JPq-SN-YIg"/>
+            </connections>
+        </collectionViewCell>
+    </objects>
+</document>
