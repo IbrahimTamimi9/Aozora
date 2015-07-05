@@ -18,4 +18,5 @@ public class AnimeProgress: Object {
     override public static func primaryKey() -> String? {
         return "animeID"
     }
+
 }

@@ -536,6 +536,7 @@
                         <outlet property="closeButton" destination="VMZ-vS-WFH" id="F4u-Oa-ryc"/>
                         <outlet property="etaLabel" destination="Uyp-jX-dBR" id="gai-5g-Hah"/>
                         <outlet property="fanartImageView" destination="rTn-ZB-ad5" id="fKb-2P-ZKA"/>
+                        <outlet property="listButton" destination="w04-sa-THe" id="vCH-oZ-8MH"/>
                         <outlet property="membersCountLabel" destination="riH-A3-wgP" id="je8-c6-Dut"/>
                         <outlet property="popularityRankLabel" destination="EeG-Mn-nrN" id="VhV-FI-aE2"/>
                         <outlet property="posterImageView" destination="w5k-tY-TLe" id="DUi-AW-qpK"/>

@@ -14,21 +14,7 @@ import Bolts
 import Alamofire
 import RealmSwift
 
-enum LibraryLayout: String {
-    case CheckIn = "Check-In"
-    case Compact = "Compact"
-    case CheckInCompact = "Check-In Compact"
-    
-    static func allRawValues() -> [String] {
-        return [
-            LibraryLayout.CheckIn.rawValue,
-            LibraryLayout.CheckInCompact.rawValue,
-            LibraryLayout.Compact.rawValue
-        ]
-    }
-}
-
-class LibrarySyncController {
+public class LibrarySyncController {
     
     static let lastSyncDateDefaultsKey = "LibrarySync.LastSyncDate"
     class var shouldSyncData: Bool {
@@ -53,7 +39,7 @@ class LibrarySyncController {
         NSUserDefaults.standardUserDefaults().synchronize()
     }
     
-    class func fetchAnimeList(isRefreshing: Bool) -> BFTask {
+    public class func fetchAnimeList(isRefreshing: Bool) -> BFTask {
         
         if shouldSyncData || isRefreshing {
             println("Fetching all anime library from network")
@@ -144,23 +130,7 @@ class LibrarySyncController {
                 PFObject.pinAllInBackground(result, withName: Anime.PinName.InLibrary.rawValue)
             }
             
-            let realm = Realm()
-            let animeLibrary = realm.objects(AnimeProgress)
-            
-            // Match all anime with it's progress..
-            for anime in animeList {
-                
-                if anime.progress != nil {
-                    continue
-                }
-                for progress in animeLibrary {
-                    if progress.animeID == anime.myAnimeListID {
-                        anime.progress = progress
-                        break
-                    }
-                }
-            }
-            
+            self.matchAnimeWithProgress(animeList)
             // Update last sync date
             self.syncedData()
             
@@ -168,7 +138,7 @@ class LibrarySyncController {
         })
     }
     
-    class func fetchAnimeFromLocalDatastore(myAnimeListIDs: [Int]) -> BFTask {
+    public class func fetchAnimeFromLocalDatastore(myAnimeListIDs: [Int]) -> BFTask {
         println("From local datastore...")
         let query = Anime.query()!
         query.limit = 1000
@@ -184,6 +154,75 @@ class LibrarySyncController {
         networkQuery.limit = 1000
         networkQuery.whereKey("myAnimeListID", containedIn: myAnimeListIDs)
         return networkQuery.findObjectsInBackground()
+    }
+    
+    public class func matchAnimeWithProgress(animeList: [Anime]) {
+        // Match all anime with it's progress..
+        let realm = Realm()
+        let animeLibrary = realm.objects(AnimeProgress)
+        
+        for anime in animeList {
+            
+            if anime.progress != nil {
+                continue
+            }
+            for progress in animeLibrary {
+                if progress.animeID == anime.myAnimeListID {
+                    anime.progress = progress
+                    break
+                }
+            }
+        }
+    }
+    
+    // MARK: - Update Library Methods
+    
+    public class func addAnime(progress: AnimeProgress) -> BFTask {
+        
+        let malProgress = malProgressWithProgress(progress)
+        return requestWithProgress(progress, router: Atarashii.Router.animeAdd(progress: malProgress))
+    }
+    
+    public class func updateAnime(progress: AnimeProgress) -> BFTask {
+        
+        let malProgress = malProgressWithProgress(progress)
+        return requestWithProgress(progress, router: Atarashii.Router.animeUpdate(progress: malProgress))
+    }
+    
+    public class func deleteAnime(progress: AnimeProgress) -> BFTask {
+        
+        return requestWithProgress(progress, router: Atarashii.Router.animeDelete(id: progress.animeID))
+    }
+    
+    class func requestWithProgress(progress: AnimeProgress, router: Atarashii.Router) -> BFTask {
+        
+        if !PFUser.currentUserLoggedIn() {
+            return BFTask(result: nil)
+        }
+        
+        let completionSource = BFTaskCompletionSource()
+        
+        let malUsername = PFUser.malUsername!
+        let malPassword = PFUser.malPassword!
+        
+        Alamofire.request(router)
+            .authenticate(user: malUsername, password: malPassword)
+            .validate()
+            .responseJSON { (req, res, JSON, error) -> Void in
+                if error == nil {
+                    completionSource.setResult(JSON)
+                } else {
+                    completionSource.setError(error)
+                }
+        }
+        return completionSource.task
+        
+    }
+    
+    class func malProgressWithProgress(progress: AnimeProgress) -> Atarashii.Progress {
+        let malList = MALList(rawValue: progress.status)!
+        return Atarashii.Progress(animeID: progress.animeID, status: malList, episodes: progress.episodes, score: progress.score)
+        
     }
     
 }

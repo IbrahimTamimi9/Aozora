@@ -181,6 +181,7 @@ extension AnimeListViewController: UICollectionViewDataSource {
         case .CheckIn:
             identifier = "CheckIn"
             fallthrough
+            
         case .CheckInCompact:
             if identifier == nil {
                 identifier = "CheckInCompact"
@@ -193,7 +194,6 @@ extension AnimeListViewController: UICollectionViewDataSource {
             cell.configureWithAnime(anime, showShortEta: true)
             cell.layoutIfNeeded()
             return cell
-            
         
         case .Compact:
             identifier = "Compact"
@@ -204,9 +204,7 @@ extension AnimeListViewController: UICollectionViewDataSource {
             cell.layoutIfNeeded()
             return cell
         }
-        
     }
-    
 }
 
 
@@ -221,20 +219,13 @@ extension AnimeListViewController: UICollectionViewDelegate {
 
 extension AnimeListViewController: LibraryAnimeCellDelegate {
     func cellPressedWatched(cell: LibraryAnimeCell, anime: Anime) {
-        if let progress = anime.progress {
-            Realm().write({ () -> Void in
-                progress.episodes += 1
-            })
-            
-            if let indexPath = collectionView.indexPathForCell(cell) {
-                collectionView.reloadItemsAtIndexPaths([indexPath])
-            }
+        if let progress = anime.progress,
+            let indexPath = collectionView.indexPathForCell(cell) {
+
+            collectionView.reloadItemsAtIndexPaths([indexPath])
         }
     }
 }
-
-
-
 
 extension AnimeListViewController: XLPagerTabStripChildItem {
     func titleForPagerTabStripViewController(pagerTabStripViewController: XLPagerTabStripViewController!) -> String! {

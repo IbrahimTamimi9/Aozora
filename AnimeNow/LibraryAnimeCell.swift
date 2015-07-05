@@ -10,6 +10,7 @@ import Foundation
 import ANParseKit
 import ANCommonKit
 import Bolts
+import RealmSwift
 
 protocol LibraryAnimeCellDelegate: class {
     func cellPressedWatched(cell: LibraryAnimeCell, anime: Anime)
@@ -24,6 +25,20 @@ class LibraryAnimeCell: AnimeCell {
     @IBOutlet weak var episodeImageView: UIImageView!
     
     @IBAction func watchedPressed(sender: AnyObject) {
+        
+        if let anime = anime, let progress = anime.progress {
+            Realm().write({ () -> Void in
+                progress.episodes += 1
+                
+                if let list = MALList(rawValue: progress.status) where list == .Planning {
+                    progress.status = MALList.Watching.rawValue
+                } else if let list = MALList(rawValue: progress.status) where list == .Watching && (anime.episodes == progress.episodes && anime.episodes != 0) {
+                    progress.status = MALList.Completed.rawValue
+                }
+            })
+            LibrarySyncController.updateAnime(progress)
+        }
+        
         delegate?.cellPressedWatched(self, anime:anime!)
     }
     

@@ -95,6 +95,8 @@ extension EpisodesViewController: UICollectionViewDataSource {
         let screenshot = episode.screenshot != nil ? episode.screenshot! : anime.fanart ?? ""
         cell.screenshotImageView.setImageFrom(urlString: screenshot)
         
+        cell.firstAiredLabel.text = episode.firstAired.mediumDate()
+        
         return cell
     }
 }

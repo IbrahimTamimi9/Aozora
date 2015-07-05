@@ -10,8 +10,8 @@ import UIKit
 import Shimmer
 import ANCommonKit
 import ANParseKit
-import FontAwesome_iOS
 import XCDYouTubeKit
+import RealmSwift
 
 enum AnimeSection: Int {
     case Synopsis = 0
@@ -21,8 +21,6 @@ enum AnimeSection: Int {
     
     static var allSections: [AnimeSection] = [.Synopsis,.Relations,.Information,.ExternalLinks]
 }
-
-
 
 extension AnimeInformationViewController: StatusBarVisibilityProtocol {
     func shouldHideStatusBar() -> Bool {
@@ -44,16 +42,23 @@ public class AnimeInformationViewController: AnimeBaseViewController {
     var subAnimator: ZFModalTransitionAnimator!
     var playerController: XCDYouTubeVideoPlayerViewController?
     
+    @IBOutlet weak var listButton: UIButton!
     
     override var anime: Anime! {
         didSet {
             if anime.details.isDataAvailable() && isViewLoaded() {
+                
+                if let progress = anime.progress {
+                    updateListButtonTitle(progress.status)
+                } else {
+                    updateListButtonTitle("Add to list ")
+                }
+                
                 animeTitle.text = anime.title
                 let episodes = (anime.episodes != 0) ? anime.episodes.description : "?"
                 let duration = (anime.duration != 0) ? anime.duration.description : "?"
                 let year = (anime.year != 0) ? anime.year.description : "?"
                 tagsLabel.text = "\(anime.type) · \(ANAnimeKit.shortClassification(anime.details.classification)) · \(episodes) eps · \(duration) min · \(year)"
-                
                 
                 if let status = AnimeStatus(rawValue: anime.status) {
                     switch status {
@@ -61,7 +66,7 @@ public class AnimeInformationViewController: AnimeBaseViewController {
                         etaLabel.text = "Airing    "
                         etaLabel.backgroundColor = UIColor(red: 155/255.0, green: 225/255.0, blue: 130/255.0, alpha: 1.0)
                     case .FinishedAiring:
-                        etaLabel.text = "Ended    "
+                        etaLabel.text = "Aired    "
                         etaLabel.backgroundColor = UIColor(red: 225/255.0, green: 157/255.0, blue: 112/255.0, alpha: 1.0)
                     case .NotYetAired:
                         etaLabel.text = "Not Aired    "
@@ -201,23 +206,34 @@ public class AnimeInformationViewController: AnimeBaseViewController {
         var alert = UIAlertController(title: title, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
         
         alert.addAction(UIAlertAction(title: "Watching", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
-            
+            self.updateProgressWithList(.Watching)
         }))
         alert.addAction(UIAlertAction(title: "Planning", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
-
+            self.updateProgressWithList(.Planning)
         }))
         alert.addAction(UIAlertAction(title: "On-Hold", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
-
+            self.updateProgressWithList(.OnHold)
         }))
         alert.addAction(UIAlertAction(title: "Completed", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
+            self.updateProgressWithList(.Completed)
         }))
         alert.addAction(UIAlertAction(title: "Dropped", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
-            
+            self.updateProgressWithList(.Dropped)
         }))
         
-        if progress != nil {
+        if let progress = progress {
             alert.addAction(UIAlertAction(title: "Remove from Library", style: UIAlertActionStyle.Destructive, handler: { (alertAction: UIAlertAction!) -> Void in
                 
+                self.anime.unpin()
+                LibrarySyncController.deleteAnime(progress)
+                let realm = Realm()
+                realm.write {
+                    realm.delete(progress)
+                }
+                
+                NSNotificationCenter.defaultCenter().postNotificationName(ANAnimeKit.LibraryUpdatedNotification, object: nil)
+                
+                self.dismissViewControllerAnimated(true, completion: nil)
             }))
         }
         
@@ -226,11 +242,56 @@ public class AnimeInformationViewController: AnimeBaseViewController {
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
+    func updateProgressWithList(list: MALList) {
+        
+        let realm = Realm()
+        
+        if let progress = anime.progress {
+            realm.write({ () -> Void in
+                progress.status = list.rawValue
+            })
+            
+            LibrarySyncController.updateAnime(progress)
+            updateListButtonTitle(progress.status)
+            
+        } else {
+            
+            // Save
+            var animeProgress = AnimeProgress()
+            animeProgress.animeID = anime.myAnimeListID
+            animeProgress.status = list.rawValue
+            animeProgress.episodes = 0
+            animeProgress.score = 0
+            
+            realm.write({ () -> Void in
+                realm.add(animeProgress, update: true)
+            })
+            
+            anime.pinWithName(Anime.PinName.InLibrary.rawValue)
+            
+            LibrarySyncController.addAnime(animeProgress)
+            
+            updateListButtonTitle(animeProgress.status)
+        }
+        
+        NSNotificationCenter.defaultCenter().postNotificationName(ANAnimeKit.LibraryUpdatedNotification, object: nil)
+    }
+    
+    func updateListButtonTitle(string: String) {
+        
+        if string == "plan to watch" {
+            listButton.setTitle("Planning " + FontAwesome.AngleDown.rawValue, forState: .Normal)
+        } else {
+            listButton.setTitle(string.capitalizedString + " " + FontAwesome.AngleDown.rawValue, forState: .Normal)
+        }
+        
+    }
+    
     @IBAction func moreOptionsPressed(sender: AnyObject) {
         
         var progress = anime.progress
  
-        var alert = UIAlertController(title: "Actions", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        var alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
         alert.addAction(UIAlertAction(title: "Rate anime", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
             
         }))

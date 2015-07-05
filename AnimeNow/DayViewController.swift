@@ -21,20 +21,42 @@ class DayViewController: UIViewController {
     var animator: ZFModalTransitionAnimator!
     var dayString: String = ""
     var dataSource: [[Anime]] = []
+    var section: Int = 0
     
     @IBOutlet weak var collectionView: UICollectionView!
     
-    func initWithTitle(title: String) {
+    func initWithTitle(title: String, section: Int) {
         dayString = title
+        self.section = section
     }
 
     func updateDataSource(dataSource: [Anime]) {
-        // TODO: Fetch anime in library
-        self.dataSource = [[],dataSource]
-        sort()
-        if isViewLoaded() {
-            self.collectionView.reloadData()
+        
+        
+        let ids = dataSource.map() { (var anime) -> Int in
+            return anime.myAnimeListID
         }
+        
+        // Find existing on library
+        
+        LibrarySyncController.fetchAnimeFromLocalDatastore(ids).continueWithExecutor( BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
+            
+            if let result = task.result as? [Anime] {
+                
+                LibrarySyncController.matchAnimeWithProgress(result)
+                
+                let filtered = dataSource.filter({ (anime: Anime) -> Bool in
+                    return !contains(result, anime)
+                })
+                
+                self.dataSource = [result, filtered]
+                self.sort()
+                if self.isViewLoaded() {
+                    self.collectionView.reloadData()
+                }
+            }
+            return nil
+        })
     }
     
     override func viewDidLoad() {
@@ -122,13 +144,17 @@ extension DayViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! AnimeCell
         
         let anime = dataSource[indexPath.section][indexPath.row]
-        
+
         let nextDate = anime.nextEpisodeDate
-        let showEtaAsAired =
-        indexPath.section == 0 &&
-            nextDate.timeIntervalSinceNow > 60*60*24
+        let showEtaAsAired = nextDate.timeIntervalSinceNow > 60*60*24 && section == 0
         
         cell.configureWithAnime(anime, canFadeImages: true, showEtaAsAired: showEtaAsAired, showShortEta: true)
+        
+        if let libraryCell = cell as? LibraryAnimeCell {
+            libraryCell.delegate = self
+        } else {
+            
+        }
         
         cell.layoutIfNeeded()
         return cell
@@ -188,6 +214,16 @@ extension DayViewController: UICollectionViewDelegate {
         
         let anime = dataSource[indexPath.section][indexPath.row]
         self.animator = presentAnimeModal(anime)
+    }
+}
+
+extension DayViewController: LibraryAnimeCellDelegate {
+    func cellPressedWatched(cell: LibraryAnimeCell, anime: Anime) {
+        if let progress = anime.progress,
+            let indexPath = collectionView.indexPathForCell(cell) {
+            
+            collectionView.reloadItemsAtIndexPaths([indexPath])
+        }
     }
 }
 

@@ -9,6 +9,7 @@
 import UIKit
 import ANCommonKit
 import ANParseKit
+import ANAnimeKit
 import Parse
 import Bolts
 import XLPagerTabStrip
@@ -20,6 +21,20 @@ enum AnimeList: String {
     case Completed = "Completed"
     case OnHold = "On-Hold"
     case Dropped = "Dropped"
+}
+
+enum LibraryLayout: String {
+    case CheckIn = "Check-In"
+    case Compact = "Compact"
+    case CheckInCompact = "Check-In Compact"
+    
+    static func allRawValues() -> [String] {
+        return [
+            LibraryLayout.CheckIn.rawValue,
+            LibraryLayout.CheckInCompact.rawValue,
+            LibraryLayout.Compact.rawValue
+        ]
+    }
 }
 
 class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
@@ -69,6 +84,16 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
         self.isProgressiveIndicator = true
         self.buttonBarView.selectedBar.backgroundColor = UIColor.peterRiver()
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateDataSource", name: ANAnimeKit.LibraryUpdatedNotification, object: nil)
+     
+        fetchAnimeList(false)
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    func updateDataSource() {
         fetchAnimeList(false)
     }
     

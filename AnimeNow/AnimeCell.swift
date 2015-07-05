@@ -77,9 +77,9 @@ class AnimeCell: UICollectionViewCell {
                 etaLabel?.textColor = UIColor.pumpkin()
                 etaTimeLabel?.textColor = UIColor.pumpkin()
                 if showShortEta {
-                    etaLabel?.text = "Episode \(nextEpisode-1) - Aired"
-                } else {
                     etaLabel?.text = "Aired"
+                } else {
+                    etaLabel?.text = "Episode \(nextEpisode-1) - Aired"
                 }
                 
                 etaTimeLabel?.text = "Aired"

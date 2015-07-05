@@ -10,11 +10,19 @@ import UIKit
 
 extension NSDate {
 
+    var mediumFormatter: NSDateFormatter {
+        struct Static {
+            static let instance : NSDateFormatter = {
+                let formatter = NSDateFormatter()
+                formatter.dateStyle = NSDateFormatterStyle.MediumStyle
+                return formatter
+                }()
+        }
+        return Static.instance
+    }
+    
     public func mediumDate() -> String {
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
-
-        return dateFormatter.stringFromDate(self)
+        return mediumFormatter.stringFromDate(self)
     }
     
     public func daysAgo() -> Int {

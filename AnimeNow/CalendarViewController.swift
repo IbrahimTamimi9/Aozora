@@ -35,10 +35,9 @@ class CalendarViewController: XLButtonBarPagerTabStripViewController {
         self.buttonBarView.selectedBar.backgroundColor = UIColor.peterRiver()
         
         loadingView = LoaderView(parentView: self.view)
-        
         loadingView.startAnimating()
+        
         fetchAiring()
-
     }
     
     func updateControllersDataSource() {
@@ -115,7 +114,7 @@ extension CalendarViewController: XLPagerTabStripViewControllerDataSource {
             
             // Instatiate view controller
             var controller = storyboard.instantiateViewControllerWithIdentifier("DayList") as! DayViewController
-            controller.initWithTitle(dateString)
+            controller.initWithTitle(dateString, section: daysAhead)
             dayViewControllers.append(controller)
         }
         
