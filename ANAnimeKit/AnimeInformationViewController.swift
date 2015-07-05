@@ -36,7 +36,7 @@ extension AnimeInformationViewController: StatusBarVisibilityProtocol {
 public class AnimeInformationViewController: AnimeBaseViewController {
     
     let HeaderCellHeight: CGFloat = 39
-    let HeaderViewHeight: CGFloat = 294
+    let HeaderViewHeight: CGFloat = 274
     let TopBarHeight: CGFloat = 44
     let StatusBarHeight: CGFloat = 22
     
@@ -53,7 +53,22 @@ public class AnimeInformationViewController: AnimeBaseViewController {
                 let duration = (anime.duration != 0) ? anime.duration.description : "?"
                 let year = (anime.year != 0) ? anime.year.description : "?"
                 tagsLabel.text = "\(anime.type) · \(ANAnimeKit.shortClassification(anime.details.classification)) · \(episodes) eps · \(duration) min · \(year)"
-                etaLabel.text = anime.status.capitalizedString
+                
+                
+                if let status = AnimeStatus(rawValue: anime.status) {
+                    switch status {
+                    case .CurrentlyAiring:
+                        etaLabel.text = "Airing    "
+                        etaLabel.backgroundColor = UIColor(red: 155/255.0, green: 225/255.0, blue: 130/255.0, alpha: 1.0)
+                    case .FinishedAiring:
+                        etaLabel.text = "Ended    "
+                        etaLabel.backgroundColor = UIColor(red: 225/255.0, green: 157/255.0, blue: 112/255.0, alpha: 1.0)
+                    case .NotYetAired:
+                        etaLabel.text = "Not Aired    "
+                        etaLabel.backgroundColor = UIColor(red: 225/255.0, green: 215/255.0, blue: 124/255.0, alpha: 1.0)
+                    }
+                }
+                
                 ratingLabel.text = String(format:"%.2f", anime.membersScore)
                 membersCountLabel.text = String(anime.membersCount)
                 scoreRankLabel.text = "#\(anime.rank)"
@@ -137,6 +152,8 @@ public class AnimeInformationViewController: AnimeBaseViewController {
         }
     }
     
+    // MARK: - IBActions
+    
     @IBAction func showFanart(sender: AnyObject) {
         
         var imageString = ""
@@ -169,6 +186,67 @@ public class AnimeInformationViewController: AnimeBaseViewController {
             presentMoviePlayerViewControllerAnimated(playerController)
         }
     }
+    
+    @IBAction func addToListPressed(sender: AnyObject) {
+        
+        var progress = anime.progress
+        
+        var title: String = ""
+        if progress == nil {
+            title = "Add to list"
+        } else {
+            title = "Move to list"
+        }
+        
+        var alert = UIAlertController(title: title, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        
+        alert.addAction(UIAlertAction(title: "Watching", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
+            
+        }))
+        alert.addAction(UIAlertAction(title: "Planning", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
+
+        }))
+        alert.addAction(UIAlertAction(title: "On-Hold", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
+
+        }))
+        alert.addAction(UIAlertAction(title: "Completed", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
+        }))
+        alert.addAction(UIAlertAction(title: "Dropped", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
+            
+        }))
+        
+        if progress != nil {
+            alert.addAction(UIAlertAction(title: "Remove from Library", style: UIAlertActionStyle.Destructive, handler: { (alertAction: UIAlertAction!) -> Void in
+                
+            }))
+        }
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler:nil))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    @IBAction func moreOptionsPressed(sender: AnyObject) {
+        
+        var progress = anime.progress
+ 
+        var alert = UIAlertController(title: "Actions", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        alert.addAction(UIAlertAction(title: "Rate anime", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
+            
+        }))
+        alert.addAction(UIAlertAction(title: "Enable reminders", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
+
+        }))
+        alert.addAction(UIAlertAction(title: "Share", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
+
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler:nil))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+        
+    }
+    // MARK: - Helper Functions
     
     func hideStatusBar() -> Bool {
         var offset = HeaderViewHeight - self.scrollView().contentOffset.y - TopBarHeight

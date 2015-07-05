@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E33b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="C0d-Zn-JUq">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="C0d-Zn-JUq">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -13,7 +13,7 @@
         <!--Onboarding View Controller-->
         <scene sceneID="eS3-Tt-ZOt">
             <objects>
-                <viewController storyboardIdentifier="Onboarding" id="C0d-Zn-JUq" customClass="OnboardingViewController" customModule="AnimeNow" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Onboarding" id="C0d-Zn-JUq" customClass="OnboardingViewController" customModule="Aozora" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="TKA-wr-RMU"/>
                         <viewControllerLayoutGuide type="bottom" id="a4n-g2-9As"/>
@@ -244,7 +244,7 @@
         <!--Sign View Controller-->
         <scene sceneID="BEq-AK-Tio">
             <objects>
-                <viewController storyboardIdentifier="Sign" id="aht-ee-gPe" customClass="SignViewController" customModule="AnimeNow" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Sign" id="aht-ee-gPe" customClass="SignViewController" customModule="Aozora" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="QTY-rQ-hEh"/>
                         <viewControllerLayoutGuide type="bottom" id="mqO-2u-egc"/>
@@ -427,7 +427,7 @@
         <!--Reset Password View Controller-->
         <scene sceneID="mcl-h4-YZ9">
             <objects>
-                <viewController id="cWG-K4-PqA" customClass="ResetPasswordViewController" customModule="AnimeNow" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="cWG-K4-PqA" customClass="ResetPasswordViewController" customModule="Aozora" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="obe-Om-cSV"/>
                         <viewControllerLayoutGuide type="bottom" id="vYV-hG-LdV"/>

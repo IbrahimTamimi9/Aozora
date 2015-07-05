@@ -12,8 +12,15 @@ import ANParseKit
 import XLPagerTabStrip
 import RealmSwift
 import Parse
+import Bolts
+
+protocol AnimeListControllerDelegate: class {
+    func controllerRequestRefresh() -> BFTask
+}
 
 class AnimeListViewController: UIViewController {
+    
+    weak var delegate: AnimeListControllerDelegate?
     
     var animator: ZFModalTransitionAnimator!
     var animeListType: AnimeList!
@@ -82,7 +89,18 @@ class AnimeListViewController: UIViewController {
     }
     
     func refreshLibrary() {
-        refreshControl.endRefreshing()
+        
+        delegate?.controllerRequestRefresh().continueWithExecutor(BFExecutor.mainThreadExecutor(), withBlock: { (task: BFTask!) -> AnyObject! in
+            
+            self.refreshControl.endRefreshing()
+            
+            if let error = task.error {
+                println("\(error)")
+            }
+            return nil
+        })
+        
+        
     }
     
     // MARK: - Sort and Layout

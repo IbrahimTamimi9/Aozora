@@ -69,11 +69,11 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
         self.isProgressiveIndicator = true
         self.buttonBarView.selectedBar.backgroundColor = UIColor.peterRiver()
         
-        fetchAnimeList()
+        fetchAnimeList(false)
     }
     
-    func fetchAnimeList() {
-        LibrarySyncController.fetchAnimeList().continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
+    func fetchAnimeList(isRefreshing: Bool) -> BFTask {
+        return LibrarySyncController.fetchAnimeList(isRefreshing).continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
             
             var animeList = task.result as! [Anime]
             
@@ -146,13 +146,19 @@ extension AnimeLibraryViewController: XLPagerTabStripViewControllerDataSource {
         dropped = storyboard.instantiateViewControllerWithIdentifier("AnimeList") as! AnimeListViewController
         onHold = storyboard.instantiateViewControllerWithIdentifier("AnimeList") as! AnimeListViewController
         
-        planning.initWithList(.Planning, configuration: configurations[0])
-        watching.initWithList(.Watching, configuration: configurations[1])
+        watching.initWithList(.Watching, configuration: configurations[0])
+        planning.initWithList(.Planning, configuration: configurations[1])
         onHold.initWithList(.OnHold, configuration: configurations[2])
         completed.initWithList(.Completed, configuration: configurations[3])
         dropped.initWithList(.Dropped, configuration: configurations[4])
         
-        return [planning, watching, onHold, completed, dropped]
+        watching.delegate = self
+        planning.delegate = self
+        onHold.delegate = self
+        completed.delegate = self
+        dropped.delegate = self
+        
+        return [watching, planning, onHold, completed, dropped]
     }
 }
 
@@ -163,9 +169,9 @@ extension AnimeLibraryViewController: FilterViewControllerDelegate {
         
         switch Int(currentIndex) {
         case 0:
-            planning.currentConfiguration = currentConfiguration
-        case 1:
             watching.currentConfiguration = currentConfiguration
+        case 1:
+            planning.currentConfiguration = currentConfiguration
         case 2:
             onHold.currentConfiguration = currentConfiguration
         case 3:
@@ -175,5 +181,11 @@ extension AnimeLibraryViewController: FilterViewControllerDelegate {
         default: break
         }
     
+    }
+}
+
+extension AnimeLibraryViewController: AnimeListControllerDelegate {
+    func controllerRequestRefresh() -> BFTask {
+        return fetchAnimeList(true)
     }
 }

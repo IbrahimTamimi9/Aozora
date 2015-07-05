@@ -53,9 +53,9 @@ class LibrarySyncController {
         NSUserDefaults.standardUserDefaults().synchronize()
     }
     
-    class func fetchAnimeList() -> BFTask {
+    class func fetchAnimeList(isRefreshing: Bool) -> BFTask {
         
-        if shouldSyncData {
+        if shouldSyncData || isRefreshing {
             println("Fetching all anime library from network")
             return loadAnimeList().continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
                 
@@ -130,7 +130,7 @@ class LibrarySyncController {
             })
             
             if missingIdList.count != 0 {
-                return nil//self.fetchAnimeFromNetwork(missingIdList)
+                return self.fetchAnimeFromNetwork(missingIdList)
             } else {
                 return nil
             }
@@ -141,7 +141,7 @@ class LibrarySyncController {
                 println("found \(result.count) objects from network")
                 animeList += result
                 
-                PFObject.pinAllInBackground(result, withName: "InLibrary")
+                PFObject.pinAllInBackground(result, withName: Anime.PinName.InLibrary.rawValue)
             }
             
             let realm = Realm()
