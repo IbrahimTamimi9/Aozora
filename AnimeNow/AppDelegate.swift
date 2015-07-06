@@ -19,7 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     override class func initialize() -> Void {
-        iRate.sharedInstance().onlyPromptIfLatestVersion = false
+        iRate.sharedInstance().promptForNewVersionIfUserRated = true
+        iRate.sharedInstance().daysUntilPrompt = 5.0
     }
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {

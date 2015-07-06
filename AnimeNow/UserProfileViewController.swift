@@ -21,7 +21,7 @@ class UserProfileViewController: UserBaseViewController {
         didSet {
             usernameLabel.text = profile?.username
             if let date = profile?.lastOnline.dateWithISO8601() {
-                self.lastOnlineLabel.text = "\(date.daysAgo()) days ago"
+                self.lastOnlineLabel.text = date.timeAgo()
             }
             self.userAvatar.setImageFrom(urlString: profile?.avatarURL)
             

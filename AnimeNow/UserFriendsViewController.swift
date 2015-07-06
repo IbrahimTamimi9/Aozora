@@ -39,7 +39,9 @@ class UserFriendsViewController: UserBaseViewController {
                     profile.avatarURL = profileInfo["avatar_url"] as! String
                     
                     let lastOnlineString = (profileInfo["details"] as! [String:AnyObject])["last_online"] as! String
-                    profile.lastOnline = lastOnlineString.dateWithISO8601NoMinutes()!.daysAgo().description + " days ago"
+                    if let lastOnline = lastOnlineString.dateWithISO8601NoMinutes() ?? lastOnlineString.dateWithISO8601() {
+                        profile.lastOnline = lastOnline.timeAgo()
+                    }
                     profiles.append(profile)
                 }
                 

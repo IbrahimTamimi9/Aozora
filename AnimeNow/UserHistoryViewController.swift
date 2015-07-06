@@ -42,14 +42,21 @@ class UserHistoryViewController: UserBaseViewController {
                 for historyItem in result {
                     
                     var item = HistoryItem()
-                    let itemInfo = historyItem["item"] as! [String: AnyObject]
-                    item.id = itemInfo["id"] as! Int
-                    item.title = itemInfo["title"] as! String
-                    item.episodes = itemInfo["episodes"] as! Int
-                    item.type = historyItem["type"] as! String
-                    item.updatedAt = (historyItem["time_updated"] as! String).dateWithISO8601()!
-                    
-                    history.append(item)
+                    if let itemInfo = historyItem["item"] as? [String: AnyObject],
+                        let id = itemInfo["id"] as? Int,
+                        let title = itemInfo["title"] as? String,
+                        let episodes = itemInfo["episodes"] as? Int,
+                        let type = historyItem["type"] as? String,
+                        let timeUpdated = historyItem["time_updated"] as? String {
+                            item.id = id
+                            item.title = title
+                            item.episodes = episodes
+                            item.type = type
+                            if let updatedAt = timeUpdated.dateWithISO8601() ?? timeUpdated.dateWithISO8601NoMinutes() {
+                                item.updatedAt = updatedAt
+                            }
+                            history.append(item)
+                    }
                 }
                 
                 self.dataSource = history
@@ -87,7 +94,7 @@ extension UserHistoryViewController: UITableViewDataSource {
         cell.titleLabel.text = historyItem.title
         cell.subtitleLabel.text = "Ep. " + historyItem.episodes.description
         cell.detailLabel.text = historyItem.type
-        cell.detailSubtitleLabel.text = historyItem.updatedAt.daysAgo().description + " days ago"
+        cell.detailSubtitleLabel.text = historyItem.updatedAt.timeAgo()
         
         cell.layoutIfNeeded()
         return cell

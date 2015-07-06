@@ -25,8 +25,19 @@ extension NSDate {
         return mediumFormatter.stringFromDate(self)
     }
     
-    public func daysAgo() -> Int {
-        return Int(-timeIntervalSinceDate(NSDate()) / (60*60*24))
+    public func timeAgo() -> String {
+        
+        var timeInterval = Int(-timeIntervalSinceDate(NSDate()))
+        
+        if let daysAgo = timeInterval / (60*60*24) as Int? where daysAgo > 0 {
+            return "\(daysAgo) days ago"
+        } else if let hoursAgo = timeInterval / (60*60) as Int? where hoursAgo > 0 {
+            return "\(hoursAgo) hours ago"
+        } else if let minutesAgo = timeInterval / 60 as Int? where minutesAgo > 0 {
+            return "\(minutesAgo) minutes ago"
+        } else {
+            return "Now"
+        }
     }
     
 }
