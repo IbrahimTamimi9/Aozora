@@ -27,6 +27,10 @@ extension UIColor {
     }
     
     // Bluish
+    public class func textBlue() -> UIColor! {
+        return UIColor(red: 12/255.0, green: 91/255.0, blue: 172/255.0, alpha: 1.0)
+    }
+    
     public class func midnightBlue() -> UIColor! {
         return UIColor(red: 44/255.0, green: 62/255.0, blue: 80/255.0, alpha: 1.0)
     }

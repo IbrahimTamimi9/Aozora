@@ -132,8 +132,8 @@ class ChartViewController: UIViewController {
     
     func updateETACells() {
         canFadeImages = false
-        let indexPaths = self.collectionView.indexPathsForVisibleItems()
-        self.collectionView.reloadItemsAtIndexPaths(indexPaths)
+        let indexPaths = collectionView.indexPathsForVisibleItems()
+        collectionView.reloadItemsAtIndexPaths(indexPaths)
         canFadeImages = true
     }
     

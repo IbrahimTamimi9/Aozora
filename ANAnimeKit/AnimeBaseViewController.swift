@@ -31,6 +31,9 @@ public class AnimeBaseViewController: UIViewController {
         super.viewDidLoad()
         
         if let tabBar = tabBarController as? CustomTabBarController {
+            
+            navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Stop, target: self, action: "dismissViewControllerPressed")
+            
             navigationController?.navigationBar.tintColor = UIColor.peterRiver()
             navigationController?.navigationBar.barTintColor = UIColor.whiteColor()
             navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.blackColor()]
@@ -43,5 +46,9 @@ public class AnimeBaseViewController: UIViewController {
         if let tabBar = tabBarController as? CustomTabBarController {
             tabBar.setCurrentViewController(self)
         }
+    }
+    
+    func dismissViewControllerPressed() {
+        dismissViewControllerAnimated(true, completion: nil)
     }
 }

@@ -18,5 +18,15 @@ public class AnimeProgress: Object {
     override public static func primaryKey() -> String? {
         return "animeID"
     }
+    
+    public func updatedEpisodes(animeEpisodes: Int) {
+        if let list = MALList(rawValue: status) where list == .Planning {
+            status = MALList.Watching.rawValue
+        } else if let list = MALList(rawValue: status) where list == .Watching && (animeEpisodes == episodes && animeEpisodes != 0) {
+            status = MALList.Completed.rawValue
+        } else if let list = MALList(rawValue: status) where list == .Completed && (animeEpisodes != episodes && animeEpisodes != 0) {
+            status = MALList.Watching.rawValue
+        }
+    }
 
 }

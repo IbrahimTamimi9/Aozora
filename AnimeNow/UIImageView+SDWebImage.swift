@@ -11,10 +11,10 @@ import SDWebImage
 
 extension UIImageView {
     
-    public func setImageFrom(#urlString:String!, animated:Bool? = true)
+    public func setImageFrom(#urlString:String!, animated:Bool = true)
     {
         if let url = NSURL(string: urlString) {
-            if !animated! {
+            if !animated {
                 self.sd_setImageWithURL(url, placeholderImage: nil)
             } else {
                 self.layer.removeAllAnimations()

@@ -10,6 +10,7 @@ import UIKit
 import ANCommonKit
 import ANParseKit
 import Bolts
+import RealmSwift
 
 extension EpisodesViewController: StatusBarVisibilityProtocol {
     func shouldHideStatusBar() -> Bool {
@@ -21,6 +22,7 @@ extension EpisodesViewController: StatusBarVisibilityProtocol {
 
 class EpisodesViewController: AnimeBaseViewController {
     
+    var canFadeImages = true
     var laidOutSubviews = false
     var dataSource: [Episode] = [] {
         didSet {
@@ -57,18 +59,34 @@ class EpisodesViewController: AnimeBaseViewController {
     func fetchEpisodes() {
         
         loadingView.startAnimating()
-        Episode.query()!
-        .whereKey("anime", equalTo: anime)
-        .orderByAscending("number")
-        .findObjectsInBackgroundWithBlock({ (episodes, error) -> Void in
+        
+        if let progress = anime.progress {
             
-            self.collectionView.animateFadeIn()
-            self.loadingView.stopAnimating()
-            if error == nil {
-                self.dataSource = episodes as! [Episode]
-            }
+            anime.episodeList(pin: true, tag: Anime.PinName.InLibrary).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
             
-        })
+                self.dataSource = task.result as! [Episode]
+                self.collectionView.animateFadeIn()
+                self.loadingView.stopAnimating()
+
+                return nil
+            })
+
+        } else {
+            println("Episode list from network..")
+            Episode.query()!
+                .whereKey("anime", equalTo: anime)
+                .orderByAscending("number")
+                .findObjectsInBackgroundWithBlock({ (episodes, error) -> Void in
+                    
+                    self.collectionView.animateFadeIn()
+                    self.loadingView.stopAnimating()
+                    if error == nil {
+                        self.dataSource = episodes as! [Episode]
+                    }
+                    
+                })
+        }
+        
     }
     
 }
@@ -90,12 +108,25 @@ extension EpisodesViewController: UICollectionViewDataSource {
         let attributedString = NSMutableAttributedString()
         attributedString.appendAttributedString(episodeNumber)
         attributedString.appendAttributedString(episodeTitle)
-            
+        
+        cell.delegate = self
         cell.titleLabel.attributedText = attributedString
         let screenshot = episode.screenshot != nil ? episode.screenshot! : anime.fanart ?? ""
-        cell.screenshotImageView.setImageFrom(urlString: screenshot)
+        cell.screenshotImageView.setImageFrom(urlString: screenshot, animated: canFadeImages)
         
         cell.firstAiredLabel.text = episode.firstAired.mediumDate()
+        
+        if let progress = anime.progress {
+            if progress.episodes < indexPath.row + 1 {
+                cell.watchedButton.backgroundColor = UIColor.clearColor()
+                cell.watchedButton.setImage(UIImage(named: "icon-check"), forState: .Normal)
+            } else {
+                cell.watchedButton.backgroundColor = UIColor.textBlue()
+                cell.watchedButton.setImage(UIImage(named: "icon-check-selected"), forState: .Normal)
+            }
+        } else {
+            cell.watchedButton.hidden = true
+        }
         
         return cell
     }
@@ -103,4 +134,34 @@ extension EpisodesViewController: UICollectionViewDataSource {
 
 extension EpisodesViewController: UICollectionViewDelegate {
     
+}
+
+extension EpisodesViewController: EpisodeCellDelegate {
+    func episodeCellWatchedPressed(cell: EpisodeCell) {
+        if let indexPath = collectionView.indexPathForCell(cell),
+        var progress = anime.progress {
+            Realm().write({ () -> Void in
+                let nextEpisode = indexPath.row + 1
+                if progress.episodes == nextEpisode {
+                    progress.episodes = nextEpisode - 1
+                } else {
+                    progress.episodes = nextEpisode
+                }
+                
+                progress.updatedEpisodes(self.anime.episodes)
+            })
+            LibrarySyncController.updateAnime(progress)
+            
+            NSNotificationCenter.defaultCenter().postNotificationName(ANAnimeKit.LibraryUpdatedNotification, object: nil)
+            
+            canFadeImages = false
+            let indexPaths = collectionView.indexPathsForVisibleItems()
+            collectionView.reloadItemsAtIndexPaths(indexPaths)
+            canFadeImages = true
+        }
+        
+    }
+    func episodeCellMorePressed(cell: EpisodeCell) {
+        let indexPath = collectionView.indexPathForCell(cell)
+    }
 }

@@ -208,7 +208,7 @@
                                 <subviews>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ended  " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uyp-jX-dBR" userLabel="AiringStatus">
                                         <rect key="frame" x="213" y="4" width="50" height="30"/>
-                                        <color key="backgroundColor" red="0.33138745780552836" green="0.77538619070350878" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" red="0.047058823529411764" green="0.35686274509803922" blue="0.67450980392156867" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="60" id="E0i-nJ-rDm"/>
                                             <constraint firstAttribute="width" constant="136" id="MNM-ql-Khp"/>
@@ -1290,7 +1290,8 @@
                                                                 <constraint firstAttribute="width" constant="44" id="7b0-bR-w9B"/>
                                                                 <constraint firstAttribute="height" constant="44" id="AEc-As-jhN"/>
                                                             </constraints>
-                                                            <state key="normal" image="icon-more-darker">
+                                                            <inset key="contentEdgeInsets" minX="12" minY="12" maxX="12" maxY="12"/>
+                                                            <state key="normal" image="icon-share">
                                                                 <color key="titleColor" red="0.47843137250000001" green="0.16862745100000001" blue="0.61176470589999998" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                             </state>
@@ -1395,6 +1396,7 @@
         <image name="icon-information" width="25" height="25"/>
         <image name="icon-more-darker" width="25" height="25"/>
         <image name="icon-play" width="50" height="50"/>
+        <image name="icon-share" width="30" height="30"/>
         <image name="text-shadow" width="10" height="45"/>
     </resources>
 </document>

@@ -29,12 +29,7 @@ class LibraryAnimeCell: AnimeCell {
         if let anime = anime, let progress = anime.progress {
             Realm().write({ () -> Void in
                 progress.episodes += 1
-                
-                if let list = MALList(rawValue: progress.status) where list == .Planning {
-                    progress.status = MALList.Watching.rawValue
-                } else if let list = MALList(rawValue: progress.status) where list == .Watching && (anime.episodes == progress.episodes && anime.episodes != 0) {
-                    progress.status = MALList.Completed.rawValue
-                }
+                progress.updatedEpisodes(anime.episodes)
             })
             LibrarySyncController.updateAnime(progress)
         }

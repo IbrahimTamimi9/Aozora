@@ -268,6 +268,7 @@ public class AnimeInformationViewController: AnimeBaseViewController {
             })
             
             anime.pinWithName(Anime.PinName.InLibrary.rawValue)
+            anime.progress = animeProgress
             
             LibrarySyncController.addAnime(animeProgress)
             
