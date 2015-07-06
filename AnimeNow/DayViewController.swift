@@ -51,6 +51,7 @@ class DayViewController: UIViewController {
                 self.sort()
                 if self.isViewLoaded() {
                     self.collectionView.reloadData()
+                    self.collectionView.animateFadeIn()
                 }
             }
             return nil

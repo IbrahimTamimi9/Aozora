@@ -17,9 +17,10 @@ class ChartViewController: UIViewController {
     enum SelectedList: Int {
         case SeasonalChart = 0
         case AllSeasons
-        case Calendar
     }
     
+    let SortTypeDefault = "Season.SortType"
+    let LayoutTypeDefault = "Season.LayoutType"
     let FirstHeaderCellHeight: CGFloat = 88.0
     let HeaderCellHeight: CGFloat = 44.0
     
@@ -28,39 +29,16 @@ class ChartViewController: UIViewController {
     
     var currentSeasonalChartName = SeasonalChartService.seasonalChartString(0).title
     
-    var currentConfiguration: Configuration =
-    [
-        (FilterSection.View, LayoutType.Chart.rawValue, LayoutType.allRawValues()),
-        (FilterSection.Sort, SortType.Rating.rawValue, [SortType.Rating.rawValue, SortType.Popularity.rawValue, SortType.Title.rawValue, SortType.NextAiringEpisode.rawValue])
-    ]
+    var currentConfiguration: Configuration!
     
-    var orders: [SortType] = [.Rating,.None,.NextAiringEpisode,.Popularity]
-    var viewTypes: [LayoutType] = [.Chart,.SeasonalChart,.Poster,.Chart]
+    var orders: [SortType] = []
+    var viewTypes: [LayoutType] = []
     var selectedList: SelectedList = .SeasonalChart {
         didSet {
             filterBar.hidden = selectedList == .AllSeasons
         }
     }
     
-    var currentSortType: SortType {
-        get {
-            return orders[selectedList.rawValue]
-        }
-        set (order) {
-            orders[selectedList.rawValue] = order
-        }
-    }
-    
-    var currentLayoutType: LayoutType {
-        get {
-            return viewTypes[selectedList.rawValue]
-        }
-        set (viewType) {
-            viewTypes[selectedList.rawValue] = viewType
-        }
-    }
-    
-    var weekdayStrings: [String] = []
     
     var timer: NSTimer!
     var animator: ZFModalTransitionAnimator!
@@ -84,6 +62,35 @@ class ChartViewController: UIViewController {
             self.collectionView.reloadData()
         }
     }
+    
+    var currentSortType: SortType {
+        get {
+            if let sortType = NSUserDefaults.standardUserDefaults().objectForKey(SortTypeDefault) as? String, let sortTypeEnum = SortType(rawValue: sortType) {
+                return sortTypeEnum
+            } else {
+                return SortType.Rating
+            }
+        }
+        set ( value ) {
+            NSUserDefaults.standardUserDefaults().setObject(value.rawValue, forKey: SortTypeDefault)
+            NSUserDefaults.standardUserDefaults().synchronize()
+        }
+    }
+    
+    var currentLayoutType: LayoutType {
+        get {
+            if let layoutType = NSUserDefaults.standardUserDefaults().objectForKey(LayoutTypeDefault) as? String, let layoutTypeEnum = LayoutType(rawValue: layoutType) {
+                return layoutTypeEnum
+            } else {
+                return LayoutType.Chart
+            }
+        }
+        set ( value ) {
+            NSUserDefaults.standardUserDefaults().setObject(value.rawValue, forKey: LayoutTypeDefault)
+            NSUserDefaults.standardUserDefaults().synchronize()
+        }
+    }
+    
     var loadingView: LoaderView!
     
     @IBOutlet weak var collectionView: UICollectionView!
@@ -98,6 +105,16 @@ class ChartViewController: UIViewController {
         AnimeCell.registerNibFor(collectionView: collectionView, style: .Chart, reuseIdentifier: "AnimeCell")
         AnimeCell.registerNibFor(collectionView: collectionView, style: .Poster, reuseIdentifier: "AnimeCellPoster")
         AnimeCell.registerNibFor(collectionView: collectionView, style: .List, reuseIdentifier: "AnimeCellList")
+        
+        // Layout and sort
+        orders = [currentSortType, .None]
+        viewTypes = [currentLayoutType, .SeasonalChart]
+        
+        // Update configuration
+        currentConfiguration = [
+            (FilterSection.View, currentLayoutType.rawValue, LayoutType.allRawValues()),
+            (FilterSection.Sort, currentSortType.rawValue, [SortType.Rating.rawValue, SortType.Popularity.rawValue, SortType.Title.rawValue, SortType.NextAiringEpisode.rawValue])
+        ]
         
         collectionView.alpha = 0.0
         
@@ -143,9 +160,6 @@ class ChartViewController: UIViewController {
         case .AllSeasons:
             navigationBarTitle.text = "All Seasons"
             fetchAllSeasons()
-        case .Calendar:
-            navigationBarTitle.text = "Calendar"
-            fetchAiring()
         }
         
         navigationBarTitle.text! += " " + FontAwesome.AngleDown.rawValue
@@ -194,59 +208,6 @@ class ChartViewController: UIViewController {
         
     }
     
-    func fetchAiring() {
-        
-        let query = Anime.query()!
-        query.whereKeyExists("startDateTime")
-        query.whereKey("status", equalTo: "currently airing")
-        query.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
-            
-            if let result = result as? [Anime] {
-                
-                var animeByWeekday: [[Anime]] = [[],[],[],[],[],[],[]]
-                
-                let calendar = NSCalendar.currentCalendar()
-                let unitFlags: NSCalendarUnit = NSCalendarUnit.CalendarUnitWeekday
-                
-                for anime in result {
-                    let startDateTime = anime.nextEpisodeDate
-                    let dateComponents = calendar.components(unitFlags, fromDate: startDateTime)
-                    let weekday = dateComponents.weekday-1
-                    animeByWeekday[weekday].append(anime)
-                    
-                }
-                
-                var todayWeekday = calendar.components(unitFlags, fromDate: NSDate()).weekday - 1
-                while (todayWeekday > 0) {
-                    var currentFirstWeekdays = animeByWeekday[0]
-                    animeByWeekday.removeAtIndex(0)
-                    animeByWeekday.append(currentFirstWeekdays)
-                    todayWeekday -= 1
-                }
-                
-                // Set weekday strings
-                
-                let today = NSDate()
-                let unitFlags2: NSCalendarUnit = NSCalendarUnit.CalendarUnitWeekday | NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitMonth
-                var dateFormatter = NSDateFormatter()
-                dateFormatter.dateFormat = "eeee, MMM dd"
-                for daysAhead in 0..<7 {
-                    let date = calendar.dateByAddingUnit(NSCalendarUnit.CalendarUnitDay, value: daysAhead, toDate: today, options: nil)
-                    let dateString = dateFormatter.stringFromDate(date!)
-                    self.weekdayStrings.append(dateString)
-                }
-                
-                self.dataSource = animeByWeekday
-                self.updateSortType(self.currentSortType)
-                
-            }
-            
-            self.loadingView.stopAnimating()
-            self.collectionView.animateFadeIn()
-        })
-        
-    }
-    
     // MARK: - Utility Functions
     
     func updateSortType(sortType: SortType) {
@@ -265,31 +226,7 @@ class ChartViewController: UIViewController {
             case .Title:
                 animeArray.sort({ $0.title < $1.title})
             case .NextAiringEpisode:
-                
-                if self.selectedList == SelectedList.Calendar {
-                    if index == 0 {
-                        animeArray.sort({ (anime1: Anime, anime2: Anime) in
-                            let anime1IsToday = anime1.nextEpisodeDate.timeIntervalSinceDate(today) < 60*60*24
-                            let anime2IsToday = anime2.nextEpisodeDate.timeIntervalSinceDate(today) < 60*60*24
-                            if anime1IsToday && anime2IsToday {
-                                return anime1.nextEpisodeDate.compare(anime2.nextEpisodeDate) == .OrderedAscending
-                            } else if !anime1IsToday && !anime2IsToday {
-                                return anime1.nextEpisodeDate.compare(anime2.nextEpisodeDate) == .OrderedDescending
-                            } else if anime1IsToday && !anime2IsToday {
-                                return false
-                            } else {
-                                return true
-                            }
-                            
-                        })
-                    } else {
-                        animeArray.sort({ $0.nextEpisodeDate.compare($1.nextEpisodeDate) == .OrderedAscending })
-                    }
-                    
-                    index += 1
-                } else {
-                    animeArray.sort({ $0.nextEpisodeDate.compare($1.nextEpisodeDate) == .OrderedAscending })
-                }
+                animeArray.sort({ $0.nextEpisodeDate.compare($1.nextEpisodeDate) == .OrderedAscending })
             default:
                 break;
             }
@@ -298,10 +235,6 @@ class ChartViewController: UIViewController {
         
         // Filter
         searchBar(searchBar, textDidChange: searchBar.text)
-    }
-    
-    func orderNextAiringEpisode(var animeArray: [Anime]) {
-        animeArray.sort({ $0.nextEpisodeDate.compare($1.nextEpisodeDate) == .OrderedAscending })
     }
     
     func updateLayoutType(layoutType: LayoutType) {
@@ -435,13 +368,7 @@ extension ChartViewController: UICollectionViewDataSource {
         
         let anime = filteredDataSource[indexPath.section][indexPath.row]
         
-        let nextDate = anime.nextEpisodeDate
-        let showEtaAsAired =
-        selectedList == SelectedList.Calendar &&
-            indexPath.section == 0 &&
-            nextDate.timeIntervalSinceNow > 60*60*24
-        
-        cell.configureWithAnime(anime, canFadeImages: canFadeImages, showEtaAsAired: showEtaAsAired)
+        cell.configureWithAnime(anime, canFadeImages: canFadeImages, showEtaAsAired: false)
         
         cell.layoutIfNeeded()
         return cell
@@ -454,10 +381,7 @@ extension ChartViewController: UICollectionViewDataSource {
         if kind == UICollectionElementKindSectionHeader {
             
             var headerView = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView", forIndexPath: indexPath) as! BasicCollectionReusableView
-            
-            if selectedList == SelectedList.Calendar {
-                headerView.titleLabel.text = weekdayStrings[indexPath.section]
-            } else {
+    
                 var title = ""
                 switch indexPath.section {
                 case 0: title = "TV"
@@ -469,7 +393,6 @@ extension ChartViewController: UICollectionViewDataSource {
                 }
                 
                 headerView.titleLabel.text = title
-            }
             
             
             reusableView = headerView;

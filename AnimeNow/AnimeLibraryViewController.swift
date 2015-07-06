@@ -37,11 +37,11 @@ enum LibraryLayout: String {
 
 class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
     
-    var planning: AnimeListViewController!
-    var watching: AnimeListViewController!
-    var completed: AnimeListViewController!
-    var dropped: AnimeListViewController!
-    var onHold: AnimeListViewController!
+    let SortTypeDefault = "Library.SortType."
+    let LayoutTypeDefault = "Library.LayoutType."
+    
+    var allAnimeLists: [AnimeList] = [.Watching, .Planning, .OnHold, .Completed, .Dropped]
+    var controllers: [AnimeListViewController] = []
     
     var currentConfiguration: Configuration {
         get {
@@ -52,32 +52,52 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
             configurations[Int(currentIndex)] = value
         }
     }
-    var configurations: [Configuration] =
-    [
-        [
-            (FilterSection.View, LibraryLayout.CheckIn.rawValue, LibraryLayout.allRawValues()),
-            (FilterSection.Sort, SortType.Title.rawValue, [SortType.Title.rawValue, SortType.NextAiringEpisode.rawValue]),
-        ],
-        [
-            (FilterSection.View, LibraryLayout.CheckIn.rawValue, LibraryLayout.allRawValues()),
-            (FilterSection.Sort, SortType.Title.rawValue, [SortType.Title.rawValue, SortType.NextAiringEpisode.rawValue]),
-        ],
-        [
-            (FilterSection.View, LibraryLayout.CheckIn.rawValue, LibraryLayout.allRawValues()),
-            (FilterSection.Sort, SortType.Title.rawValue, [SortType.Title.rawValue, SortType.NextAiringEpisode.rawValue]),
-        ],
-        [
-            (FilterSection.View, LibraryLayout.Compact.rawValue, LibraryLayout.allRawValues()),
-            (FilterSection.Sort, SortType.Title.rawValue, [SortType.Title.rawValue, SortType.NextAiringEpisode.rawValue]),
-        ],
-        [
-            (FilterSection.View, LibraryLayout.Compact.rawValue, LibraryLayout.allRawValues()),
-            (FilterSection.Sort, SortType.Title.rawValue, [SortType.Title.rawValue, SortType.NextAiringEpisode.rawValue]),
-        ]
-    ]
+    var configurations: [Configuration] = []
+    
+    func sortTypeForList(list: AnimeList) -> SortType {
+        let key = SortTypeDefault+list.rawValue
+        if let sortType = NSUserDefaults.standardUserDefaults().objectForKey(key) as? String, let sortTypeEnum = SortType(rawValue: sortType) {
+            return sortTypeEnum
+        } else {
+            return SortType.Title
+        }
+    }
+    
+    func setSortTypeForList(sort:SortType, list: AnimeList) {
+        let key = SortTypeDefault+list.rawValue
+        NSUserDefaults.standardUserDefaults().setObject(sort.rawValue, forKey: key)
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    func layoutTypeForList(list: AnimeList) -> LibraryLayout {
+        let key = LayoutTypeDefault+list.rawValue
+        if let layoutType = NSUserDefaults.standardUserDefaults().objectForKey(key) as? String, let layoutTypeEnum = LibraryLayout(rawValue: layoutType) {
+            return layoutTypeEnum
+        } else {
+            switch list {
+            case .Watching: fallthrough
+            case .Planning: fallthrough
+            case .OnHold:
+                return LibraryLayout.CheckIn
+            case .Completed: fallthrough
+            case .Dropped:
+                return LibraryLayout.Compact
+            }
+        }
+
+    }
+    
+    func setLayoutTypeForList(layout:LibraryLayout, list: AnimeList) {
+        let key = LayoutTypeDefault+list.rawValue
+        NSUserDefaults.standardUserDefaults().setObject(layout.rawValue, forKey: key)
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         
         self.isProgressiveIndicator = true
         self.buttonBarView.selectedBar.backgroundColor = UIColor.peterRiver()
@@ -99,34 +119,27 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
         return LibrarySyncController.fetchAnimeList(isRefreshing).continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
             
             var animeList = task.result as! [Anime]
-            
-            var planningList: [Anime] = []
-            var watchingList: [Anime] = []
-            var completedList: [Anime] = []
-            var droppedList: [Anime] = []
-            var onHoldList: [Anime] = []
+            var lists: [[Anime]] = [[],[],[],[],[]]
             
             for anime in animeList {
                 let malList = MALList(rawValue: anime.progress!.status) ?? .Planning
                 switch malList {
-                case .Planning:
-                    planningList.append(anime)
                 case .Watching:
-                    watchingList.append(anime)
-                case .Completed:
-                    completedList.append(anime)
-                case .Dropped:
-                    droppedList.append(anime)
+                    lists[0].append(anime)
+                case .Planning:
+                    lists[1].append(anime)
                 case .OnHold:
-                    onHoldList.append(anime)
+                    lists[2].append(anime)
+                case .Completed:
+                    lists[3].append(anime)
+                case .Dropped:
+                    lists[4].append(anime)
                 }
             }
             
-            self.planning.animeList = planningList
-            self.watching.animeList = watchingList
-            self.completed.animeList = completedList
-            self.dropped.animeList = droppedList
-            self.onHold.animeList = onHoldList
+            for index in 0...4 {
+                self.controllers[index].animeList = lists[index]
+            }
             
             return nil
         }
@@ -161,49 +174,56 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
 
 extension AnimeLibraryViewController: XLPagerTabStripViewControllerDataSource {
     override func childViewControllersForPagerTabStripViewController(pagerTabStripViewController: XLPagerTabStripViewController!) -> [AnyObject]! {
+        
+        // Initialize configurations
+        for list in allAnimeLists {
+            configurations.append(
+                [
+                    (FilterSection.View, layoutTypeForList(list).rawValue, LibraryLayout.allRawValues()),
+                    (FilterSection.Sort, sortTypeForList(list).rawValue, [SortType.Title.rawValue, SortType.NextAiringEpisode.rawValue]),
+                ]
+            )
+        }
+        
+        // Initialize controllers
         let storyboard = UIStoryboard(name: "Library", bundle: nil)
         
-        planning = storyboard.instantiateViewControllerWithIdentifier("AnimeList") as! AnimeListViewController
-        watching = storyboard.instantiateViewControllerWithIdentifier("AnimeList") as! AnimeListViewController
-        completed = storyboard.instantiateViewControllerWithIdentifier("AnimeList") as! AnimeListViewController
-        dropped = storyboard.instantiateViewControllerWithIdentifier("AnimeList") as! AnimeListViewController
-        onHold = storyboard.instantiateViewControllerWithIdentifier("AnimeList") as! AnimeListViewController
+        var lists: [AnimeListViewController] = []
         
-        watching.initWithList(.Watching, configuration: configurations[0])
-        planning.initWithList(.Planning, configuration: configurations[1])
-        onHold.initWithList(.OnHold, configuration: configurations[2])
-        completed.initWithList(.Completed, configuration: configurations[3])
-        dropped.initWithList(.Dropped, configuration: configurations[4])
+        for index in 0...4 {
+            let controller = storyboard.instantiateViewControllerWithIdentifier("AnimeList") as! AnimeListViewController
+            
+            var animeList = allAnimeLists[index]
+            
+            controller.initWithList(animeList, configuration: configurations[index])
+            controller.delegate = self
+            
+            lists.append(controller)
+        }
         
-        watching.delegate = self
-        planning.delegate = self
-        onHold.delegate = self
-        completed.delegate = self
-        dropped.delegate = self
+        controllers = lists
         
-        return [watching, planning, onHold, completed, dropped]
+        return lists
     }
 }
 
 extension AnimeLibraryViewController: FilterViewControllerDelegate {
     func finishedWith(#configuration: Configuration, selectedGenres: [String]) {
 
+        let currentListIndex = Int(currentIndex)
         currentConfiguration = configuration
+        controllers[currentListIndex].currentConfiguration = currentConfiguration
         
-        switch Int(currentIndex) {
-        case 0:
-            watching.currentConfiguration = currentConfiguration
-        case 1:
-            planning.currentConfiguration = currentConfiguration
-        case 2:
-            onHold.currentConfiguration = currentConfiguration
-        case 3:
-            completed.currentConfiguration = currentConfiguration
-        case 4:
-            dropped.currentConfiguration = currentConfiguration
-        default: break
+        if let value = currentConfiguration[0].value,
+            let layoutType = LibraryLayout(rawValue: value) {
+                setLayoutTypeForList(layoutType, list: allAnimeLists[currentListIndex])
         }
-    
+        
+        if let value = currentConfiguration[1].value,
+            let sortType = SortType(rawValue: value) {
+                setSortTypeForList(sortType, list: allAnimeLists[currentListIndex])
+        }
+        
     }
 }
 
