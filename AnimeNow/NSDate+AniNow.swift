@@ -30,11 +30,11 @@ extension NSDate {
         var timeInterval = Int(-timeIntervalSinceDate(NSDate()))
         
         if let daysAgo = timeInterval / (60*60*24) as Int? where daysAgo > 0 {
-            return "\(daysAgo) days ago"
+            return "\(daysAgo) " + (daysAgo == 1 ? "day ago" : "days ago")
         } else if let hoursAgo = timeInterval / (60*60) as Int? where hoursAgo > 0 {
-            return "\(hoursAgo) hours ago"
+            return "\(hoursAgo) " + (hoursAgo == 1 ? "hour ago" : "hours ago")
         } else if let minutesAgo = timeInterval / 60 as Int? where minutesAgo > 0 {
-            return "\(minutesAgo) minutes ago"
+            return "\(minutesAgo) " + (minutesAgo == 1 ? "minute ago" : "minutes ago")
         } else {
             return "Now"
         }

@@ -26,6 +26,7 @@ class UserProfileViewController: UserBaseViewController {
             self.userAvatar.setImageFrom(urlString: profile?.avatarURL)
             
             tableView.reloadData()
+            tableView.animateFadeIn()
         }
     }
     

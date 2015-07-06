@@ -54,10 +54,10 @@
                                                     <nil key="highlightedColor"/>
                                                     <variation key="default">
                                                         <mask key="constraints">
-                                                            <exclude reference="htA-86-cKw"/>
                                                             <exclude reference="0nE-mo-ldb"/>
-                                                            <exclude reference="hVi-Ul-9pO"/>
                                                             <exclude reference="1V5-8P-YIU"/>
+                                                            <exclude reference="hVi-Ul-9pO"/>
+                                                            <exclude reference="htA-86-cKw"/>
                                                         </mask>
                                                     </variation>
                                                 </label>
@@ -113,10 +113,10 @@
                                                     </state>
                                                     <variation key="default">
                                                         <mask key="constraints">
-                                                            <exclude reference="xST-RG-wdh"/>
-                                                            <exclude reference="oUn-yP-Tr9"/>
-                                                            <exclude reference="PjT-os-iGB"/>
                                                             <exclude reference="C5C-xH-SIa"/>
+                                                            <exclude reference="PjT-os-iGB"/>
+                                                            <exclude reference="oUn-yP-Tr9"/>
+                                                            <exclude reference="xST-RG-wdh"/>
                                                         </mask>
                                                     </variation>
                                                     <connections>
@@ -138,11 +138,11 @@
                                                     <variation key="default">
                                                         <mask key="constraints">
                                                             <exclude reference="BOW-6S-c7v"/>
-                                                            <exclude reference="lOW-9h-McH"/>
-                                                            <exclude reference="hDa-ge-kmd"/>
                                                             <exclude reference="ROU-0w-zfT"/>
-                                                            <exclude reference="nNi-Jh-3RH"/>
                                                             <exclude reference="Wh4-Ga-Byg"/>
+                                                            <exclude reference="hDa-ge-kmd"/>
+                                                            <exclude reference="lOW-9h-McH"/>
+                                                            <exclude reference="nNi-Jh-3RH"/>
                                                         </mask>
                                                     </variation>
                                                 </imageView>
@@ -273,7 +273,7 @@
                                 </connections>
                             </collectionView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.89411765336990356" green="0.89411765336990356" blue="0.89411765336990356" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="Gi7-pz-xZZ" firstAttribute="top" secondItem="Rlk-OZ-sy3" secondAttribute="bottom" id="7Yq-5Z-nqZ"/>
                             <constraint firstAttribute="trailing" secondItem="Rlk-OZ-sy3" secondAttribute="trailing" id="PDb-HD-sjD"/>

@@ -24,6 +24,7 @@ class UserHistoryViewController: UserBaseViewController {
     var dataSource: [HistoryItem] = [] {
         didSet {
             tableView.reloadData()
+            tableView.animateFadeIn()
         }
     }
     
@@ -60,6 +61,7 @@ class UserHistoryViewController: UserBaseViewController {
                 }
                 
                 self.dataSource = history
+                
             }
             
             return nil

@@ -58,6 +58,9 @@ class AnimeListViewController: UIViewController {
         didSet {
             if collectionView != nil {
                 collectionView.reloadData()
+                if animeListType == AnimeList.Watching {
+                    collectionView.animateFadeIn()
+                }
             }
         }
     }

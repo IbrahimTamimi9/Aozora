@@ -28,6 +28,8 @@ class ProfileViewController: XLButtonBarPagerTabStripViewController {
     @IBOutlet weak var reminderBBI: UIBarButtonItem!
     @IBOutlet weak var settingsBBI: UIBarButtonItem!
     
+    var loadingView: LoaderView!
+    
     
     func initWithUsername(username: String) {
         self.username = username
@@ -36,12 +38,18 @@ class ProfileViewController: XLButtonBarPagerTabStripViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        loadingView = LoaderView(parentView: view)
+        
         isProgressiveIndicator = true
         buttonBarView.selectedBar.backgroundColor = UIColor.peterRiver()
         title = username
         
+        loadingView.startAnimating()
+        
         userProfile(username!).continueWithBlock
         { (task: BFTask!) -> AnyObject! in
+            
+            self.loadingView.stopAnimating()
             
             if let result = task.result as? [String: AnyObject] {
                 
@@ -82,9 +90,6 @@ class ProfileViewController: XLButtonBarPagerTabStripViewController {
                 
                 
                 self.profile.setUserProfile(profile)
-                
-                
-                
             }
             
             return nil

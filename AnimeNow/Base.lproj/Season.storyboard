@@ -361,9 +361,9 @@
                                     </constraints>
                                     <variation key="default">
                                         <mask key="constraints">
+                                            <exclude reference="N1l-ux-W6I"/>
                                             <exclude reference="eSa-ge-328"/>
                                             <exclude reference="zFE-o8-jbb"/>
-                                            <exclude reference="N1l-ux-W6I"/>
                                         </mask>
                                     </variation>
                                     <connections>

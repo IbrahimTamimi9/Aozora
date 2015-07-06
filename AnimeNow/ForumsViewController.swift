@@ -9,6 +9,7 @@
 import UIKit
 import ANCommonKit
 import ANAnimeKit
+import ANParseKit
 
 class ForumsViewController: UIViewController {
     
@@ -16,7 +17,7 @@ class ForumsViewController: UIViewController {
     
     var dataSource: [[(title: String, subtitle: String, board: Int)]] =
         [
-            [],
+            //[],
             [
                 ("News Discussion","Current news in anime and manga",15),
                 ("Anime & Manga Recommendations","Ask the community for series recommendations or help other users looking for suggestions",16),
@@ -35,17 +36,17 @@ class ForumsViewController: UIViewController {
             ],
             
         ]
-    var titles: [String] = ["Watched Topics","Anime & Manga","General"]
+    var titles: [String] = ["Anime & Manga","General"]
     
     @IBOutlet weak var tableView: UITableView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         tableView.estimatedRowHeight = 61.0
         tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.animateFadeIn()
     }
-    
     
 }
 

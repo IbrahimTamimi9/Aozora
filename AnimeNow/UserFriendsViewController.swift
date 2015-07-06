@@ -16,6 +16,7 @@ class UserFriendsViewController: UserBaseViewController {
     var dataSource: [ProfileViewController.Profile] = [] {
         didSet {
             tableView.reloadData()
+            tableView.animateFadeIn()
         }
     }
     
