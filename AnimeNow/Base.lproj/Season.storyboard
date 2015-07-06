@@ -166,7 +166,7 @@
                     <tabBarItem key="tabBarItem" title="Item 1" id="Jsu-1p-Xx5"/>
                     <navigationItem key="navigationItem" id="hJt-Bd-P1E">
                         <nil key="title"/>
-                        <barButtonItem key="leftBarButtonItem" image="icon-sort" id="psm-xH-NbJ">
+                        <barButtonItem key="leftBarButtonItem" image="icon-sort" id="psm-xH-NbJ" userLabel="Sort">
                             <connections>
                                 <action selector="showFilterPressed:" destination="e1V-ND-r09" id="4nI-ue-ZjH"/>
                             </connections>
@@ -184,9 +184,9 @@
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         </view>
-                        <barButtonItem key="rightBarButtonItem" image="icon-calendar" id="vwO-fx-Xbs">
+                        <barButtonItem key="rightBarButtonItem" image="icon-calendar" id="vwO-fx-Xbs" userLabel="Calendar">
                             <connections>
-                                <segue destination="0ZK-kZ-TBZ" kind="presentation" id="rCp-9J-nf9"/>
+                                <action selector="showCalendarPressed:" destination="e1V-ND-r09" id="cLK-2q-KOf"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -204,7 +204,7 @@
         <!--Library-->
         <scene sceneID="ZMv-kc-yVm">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="0ZK-kZ-TBZ" customClass="CalendarViewController" customModule="Aozora" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Calendar" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="0ZK-kZ-TBZ" customClass="CalendarViewController" customModule="Aozora" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="qcL-Aj-tUp"/>
                         <viewControllerLayoutGuide type="bottom" id="Gz1-ew-Lxz"/>

@@ -32,6 +32,20 @@ extension UIViewController {
         return animator
     }
     
+    func presentViewControllerModal(controller: UIViewController) -> ZFModalTransitionAnimator {
+        
+        var animator = ZFModalTransitionAnimator(modalViewController: controller)
+        animator.dragable = true
+        animator.direction = ZFModalTransitonDirection.Bottom
+
+        controller.transitioningDelegate = animator;
+        controller.modalPresentationStyle = UIModalPresentationStyle.Custom;
+        
+        presentViewController(controller, animated: true, completion: nil)
+        
+        return animator
+    }
+    
     func presentImageViewController(imageView: UIImageView, imageUrl: NSURL? = nil) {
         
         let imageInfo = JTSImageInfo()

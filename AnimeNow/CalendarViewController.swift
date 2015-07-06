@@ -25,24 +25,17 @@ class CalendarViewController: XLButtonBarPagerTabStripViewController {
             updateControllersDataSource()
         }
     }
-   
-    var loadingView: LoaderView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.isProgressiveIndicator = true
-        self.buttonBarView.selectedBar.backgroundColor = UIColor.peterRiver()
-        
-        loadingView = LoaderView(parentView: self.view)
-        loadingView.startAnimating()
+        isProgressiveIndicator = true
+        buttonBarView.selectedBar.backgroundColor = UIColor.peterRiver()
         
         fetchAiring()
     }
-    
+        
     func updateControllersDataSource() {
-        
-        
         
         for index in 0..<7 {
             let controller = dayViewControllers[index]
@@ -86,7 +79,6 @@ class CalendarViewController: XLButtonBarPagerTabStripViewController {
                 self.airingDataSource = animeByWeekday
             }
             
-            self.loadingView.stopAnimating()
         })
         
     }

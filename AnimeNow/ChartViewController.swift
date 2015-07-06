@@ -105,7 +105,7 @@ class ChartViewController: UIViewController {
         
         timer = NSTimer.scheduledTimerWithTimeInterval(60.0, target: self, selector: "updateETACells", userInfo: nil, repeats: true)
         
-        loadingView = LoaderView(parentView: self.view)
+        loadingView = LoaderView(parentView: view)
         
         var tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "changeSeasonalChart")
         navigationController?.navigationBar.addGestureRecognizer(tapGestureRecognizer)
@@ -120,12 +120,7 @@ class ChartViewController: UIViewController {
             loadingView.stopAnimating()
             collectionView.animateFadeIn()
         }
-        
-        setNeedsStatusBarAppearanceUpdate()
-        view.setNeedsUpdateConstraints()
-        view.layoutIfNeeded()
-        navigationController?.navigationBar.setNeedsUpdateConstraints()
-        navigationController?.navigationBar.layoutIfNeeded()
+
     }
     
     // MARK: - UI Functions
@@ -379,6 +374,11 @@ class ChartViewController: UIViewController {
         }
     }
     
+    @IBAction func showCalendarPressed(sender: AnyObject) {
+        
+        let controller = UIStoryboard(name: "Season", bundle: nil).instantiateViewControllerWithIdentifier("Calendar") as! CalendarViewController
+        presentViewController(controller, animated: true, completion: nil)
+    }
 }
 
 extension ChartViewController: UICollectionViewDataSource {
@@ -488,7 +488,7 @@ extension ChartViewController: UICollectionViewDelegate {
         
         if selectedList != SelectedList.AllSeasons {
             let anime = filteredDataSource[indexPath.section][indexPath.row]
-            self.animator = presentAnimeModal(anime)
+            animator = presentAnimeModal(anime)
         }
         
         if selectedList == SelectedList.AllSeasons {

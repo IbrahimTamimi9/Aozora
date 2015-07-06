@@ -153,11 +153,11 @@ public class Anime: PFObject, PFSubclassing {
     var nextEpisodeDateInternal: NSDate = NSDate()
     
     func hasNextEpisodeInformation() -> Bool {
-        if let startDate = startDateTime {
+        if let startDate = startDateTime where AnimeStatus(rawValue: status) != .FinishedAiring {
             if nextEpisodeInternal == 0 {
                 let (nextAiringDate, nextAiringEpisode) = nextEpisodeForStartDate(startDate)
                 nextEpisodeInternal = nextAiringEpisode
-                nextEpisodeDateInternal = nextAiringDate
+                nextEpisodeDateInternal = nextAiringDate    
             }
             return true
         } else {

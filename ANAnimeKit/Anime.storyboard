@@ -10,7 +10,6 @@
         <mutableArray key="FontAwesome.ttf">
             <string>FontAwesome</string>
             <string>FontAwesome</string>
-            <string>FontAwesome</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -435,10 +434,10 @@
                                 <rect key="frame" x="0.0" y="230" width="600" height="44"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DEG-R7-36o" customClass="FBShimmeringView">
-                                        <rect key="frame" x="26" y="3" width="548" height="20"/>
+                                        <rect key="frame" x="35" y="3" width="530" height="20"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IWu-ae-zoS">
-                                                <rect key="frame" x="0.0" y="0.0" width="548" height="20.5"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IWu-ae-zoS">
+                                                <rect key="frame" x="0.0" y="0.0" width="530" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -465,13 +464,13 @@
                                             <constraint firstAttribute="height" constant="1" id="yS5-V2-Ard"/>
                                         </constraints>
                                     </view>
-                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VMZ-vS-WFH">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VMZ-vS-WFH">
                                         <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="44" id="DrW-2b-lhf"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="18"/>
-                                        <state key="normal" title="  ">
+                                        <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="0.0" maxY="5"/>
+                                        <state key="normal" image="icon-close-blue">
                                             <color key="titleColor" red="0.18823529779911041" green="0.19607843458652496" blue="0.23529411852359772" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -483,13 +482,13 @@
                                 <color key="backgroundColor" red="0.97254902124404907" green="0.97254902124404907" blue="0.97254902124404907" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="5GN-df-UiG" secondAttribute="bottom" id="8XF-ry-O6G"/>
-                                    <constraint firstItem="DEG-R7-36o" firstAttribute="leading" secondItem="YIr-RB-cEk" secondAttribute="leading" constant="26" id="8kF-tV-7X7"/>
+                                    <constraint firstItem="DEG-R7-36o" firstAttribute="leading" secondItem="YIr-RB-cEk" secondAttribute="leading" constant="35" id="8kF-tV-7X7"/>
                                     <constraint firstItem="rrJ-rX-6wZ" firstAttribute="top" secondItem="YIr-RB-cEk" secondAttribute="top" constant="22" id="DKL-AL-mXu"/>
                                     <constraint firstAttribute="trailing" secondItem="5GN-df-UiG" secondAttribute="trailing" id="Gha-PQ-ilI"/>
                                     <constraint firstItem="rrJ-rX-6wZ" firstAttribute="top" secondItem="DEG-R7-36o" secondAttribute="bottom" constant="-1" id="KM5-Mx-1Sc"/>
                                     <constraint firstAttribute="bottom" secondItem="rrJ-rX-6wZ" secondAttribute="bottom" constant="3" id="LGA-iq-9g5"/>
                                     <constraint firstAttribute="height" constant="44" id="Nqc-yW-1X9"/>
-                                    <constraint firstAttribute="trailing" secondItem="DEG-R7-36o" secondAttribute="trailing" constant="26" id="SGn-hl-HYP"/>
+                                    <constraint firstAttribute="trailing" secondItem="DEG-R7-36o" secondAttribute="trailing" constant="35" id="SGn-hl-HYP"/>
                                     <constraint firstAttribute="trailing" secondItem="rrJ-rX-6wZ" secondAttribute="trailing" id="SpM-Nz-pDO"/>
                                     <constraint firstItem="5GN-df-UiG" firstAttribute="leading" secondItem="YIr-RB-cEk" secondAttribute="leading" id="hke-XL-LWW"/>
                                     <constraint firstItem="DEG-R7-36o" firstAttribute="top" secondItem="YIr-RB-cEk" secondAttribute="top" constant="3" id="j5y-i1-Lkf"/>
@@ -1387,6 +1386,7 @@
     </scenes>
     <resources>
         <image name="icon-check" width="50" height="50"/>
+        <image name="icon-close-blue" width="23" height="23"/>
         <image name="icon-comments" width="25" height="25"/>
         <image name="icon-comments-filled" width="25" height="25"/>
         <image name="icon-episode" width="25" height="25"/>

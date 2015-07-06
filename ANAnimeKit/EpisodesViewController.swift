@@ -162,6 +162,24 @@ extension EpisodesViewController: EpisodeCellDelegate {
         
     }
     func episodeCellMorePressed(cell: EpisodeCell) {
-        let indexPath = collectionView.indexPathForCell(cell)
+        let indexPath = collectionView.indexPathForCell(cell)!
+        let episode = dataSource[indexPath.row]
+        var textToShare = ""
+            
+        if anime.episodes == indexPath.row + 1 {
+            textToShare = "Finished watching \(anime.title!) via #Aozora"
+        } else {
+            textToShare = "Just watched \(anime.title!) ep \(episode.number) via #Aozora"
+        }
+        
+        var objectsToShare: [AnyObject] = [textToShare]
+        if let image = cell.screenshotImageView.image {
+            objectsToShare.append( image )
+        }
+        
+        let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
+        activityVC.excludedActivityTypes = [UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypeAddToReadingList,UIActivityTypePrint];
+        self.presentViewController(activityVC, animated: true, completion: nil)
+    
     }
 }
