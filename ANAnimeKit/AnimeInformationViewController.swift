@@ -67,7 +67,7 @@ public class AnimeInformationViewController: AnimeBaseViewController {
                         etaLabel.backgroundColor = UIColor(red: 155/255.0, green: 225/255.0, blue: 130/255.0, alpha: 1.0)
                     case .FinishedAiring:
                         etaLabel.text = "Aired    "
-                        etaLabel.backgroundColor = UIColor(red: 225/255.0, green: 157/255.0, blue: 112/255.0, alpha: 1.0)
+                        etaLabel.backgroundColor = UIColor(red: 112/255.0, green: 154/255.0, blue: 225/255.0, alpha: 1.0)
                     case .NotYetAired:
                         etaLabel.text = "Not Aired    "
                         etaLabel.backgroundColor = UIColor(red: 225/255.0, green: 215/255.0, blue: 124/255.0, alpha: 1.0)
@@ -500,7 +500,7 @@ extension AnimeInformationViewController: UITableViewDataSource {
     }
     
     public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return self.tableView(tableView, numberOfRowsInSection: section) > 0 ? HeaderCellHeight : 0
+        return self.tableView(tableView, numberOfRowsInSection: section) > 0 ? HeaderCellHeight : 1
     }
 
 }

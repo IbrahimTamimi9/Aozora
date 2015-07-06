@@ -11,8 +11,6 @@ import ANCommonKit
 import ANParseKit
 import XLPagerTabStrip
 import RealmSwift
-import Parse
-import Bolts
 
 protocol AnimeListControllerDelegate: class {
     func controllerRequestRefresh() -> BFTask

@@ -11,8 +11,6 @@ import ANParseKit
 import SDWebImage
 import Alamofire
 import ANCommonKit
-import Parse
-import Bolts
 import XLPagerTabStrip
 
 

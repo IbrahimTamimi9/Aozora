@@ -10,8 +10,6 @@ import UIKit
 import ANCommonKit
 import ANParseKit
 import ANAnimeKit
-import Parse
-import Bolts
 import XLPagerTabStrip
 import RealmSwift
 

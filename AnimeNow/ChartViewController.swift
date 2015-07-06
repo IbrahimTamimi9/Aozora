@@ -11,8 +11,6 @@ import ANParseKit
 import SDWebImage
 import Alamofire
 import ANCommonKit
-import Parse
-import Bolts
 
 class ChartViewController: UIViewController {
     
@@ -28,7 +26,7 @@ class ChartViewController: UIViewController {
     var canFadeImages = true
     var showTableView = true
     
-    var currentSeasonalChartName: String = "Spring 2015"
+    var currentSeasonalChartName = SeasonalChartService.seasonalChartString(0).title
     
     var currentConfiguration: Configuration =
     [
@@ -366,9 +364,19 @@ class ChartViewController: UIViewController {
     
     func changeSeasonalChart() {
         if let sender = navigationController?.navigationBar,
-            let viewController = tabBarController{
-            let dataSource = [["Winter 2015","Spring 2015","Summer 2015","Fall 2015"],["All Seasons"]]
-            let imageDataSource = [["icon-winter","icon-spring","icon-summer","icon-fall"],["icon-archived"]]
+        let viewController = tabBarController{
+            
+            var titlesDataSource: [String] = []
+            var iconsDataSource: [String] = []
+            
+            for index in -1...2 {
+                let (iconName, title) = SeasonalChartService.seasonalChartString(index)
+                titlesDataSource.append(title)
+                iconsDataSource.append(iconName)
+            }
+            
+            let dataSource = [titlesDataSource,["All Seasons"]]
+            let imageDataSource = [iconsDataSource,["icon-archived"]]
             
             DropDownListViewController.showDropDownListWith(sender: sender, viewController: viewController, delegate: self, dataSource: dataSource, imageDataSource: imageDataSource)
         }

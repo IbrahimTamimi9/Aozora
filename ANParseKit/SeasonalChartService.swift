@@ -95,6 +95,35 @@ public class SeasonalChartService {
     }
     
     // MARK: - Charts generation
+    public class func seasonalChartString(seasonsAhead: Int) -> (iconName: String, title: String) {
+
+        var calendar = NSCalendar.currentCalendar()
+        
+        var seasonDate = calendar.dateByAddingUnit(NSCalendarUnit.CalendarUnitMonth, value: seasonsAhead * 3, toDate: NSDate(), options: nil)
+        
+        var components = calendar.components(NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitYear, fromDate: seasonDate!)
+        var seasonString = ""
+        
+        switch components.month + 1 {
+        case 1...3 : seasonString = "Winter"
+        case 4...6 : seasonString = "Spring"
+        case 7...9 : seasonString = "Summer"
+        case 10...12 : seasonString = "Fall"
+        default: break
+        }
+        
+        var iconName = ""
+        
+        switch SeasonalChartType(rawValue: seasonString)! {
+        case .Winter: iconName = "icon-winter"
+        case .Spring: iconName = "icon-spring"
+        case .Summer: iconName = "icon-summer"
+        case .Fall: iconName = "icon-fall"
+        default: break
+        }
+        
+        return (iconName , seasonString + " \(components.year)")
+    }
     
     public class func generateAllSeasonalCharts() {
         var seasons: [SeasonalChartType] = [.Winter, .Summer, .Spring, .Fall]

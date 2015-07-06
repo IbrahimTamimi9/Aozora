@@ -8,7 +8,6 @@
 
 import Foundation
 import ANCommonKit
-import Parse
 
 class ResetPasswordViewController: UIViewController {
     

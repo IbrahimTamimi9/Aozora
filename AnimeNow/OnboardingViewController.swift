@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Parse
 import FBSDKCoreKit
 import FBSDKLoginKit
 

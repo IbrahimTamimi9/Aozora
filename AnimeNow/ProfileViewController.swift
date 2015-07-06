@@ -9,9 +9,7 @@
 import UIKit
 import XLPagerTabStrip
 import Alamofire
-import Bolts
 import ANCommonKit
-import Parse
 
 enum ProfileSection: String {
     case History = "History"

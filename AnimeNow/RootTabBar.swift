@@ -10,7 +10,6 @@ import UIKit
 import ANParseKit
 import ANCommonKit
 import ANAnimeKit
-import Parse
 
 public class RootTabBar: UITabBarController {
     

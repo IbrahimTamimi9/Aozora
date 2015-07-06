@@ -7,18 +7,20 @@
 //
 
 import UIKit
-import Parse
-import Bolts
 import ANParseKit
 import ANAnimeKit
 import XCDYouTubeKit
 import JTSImageViewController
+import iRate
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+    override class func initialize() -> Void {
+        iRate.sharedInstance().onlyPromptIfLatestVersion = false
+    }
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         

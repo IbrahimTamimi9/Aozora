@@ -8,7 +8,6 @@
 
 import Foundation
 import ANCommonKit
-import ANParseKit
 import Parse
 import Bolts
 import Alamofire

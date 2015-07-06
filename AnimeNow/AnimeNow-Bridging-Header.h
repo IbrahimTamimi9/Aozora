@@ -14,4 +14,7 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <ParseFacebookUtilsV4/PFFacebookUtils.h>
 
+#import <Bolts/Bolts.h>
+#import <Parse/Parse.h>
+
 #endif

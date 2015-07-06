@@ -11,6 +11,7 @@
 		5D86412D23C2DF6FF9D63C06 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D27C7A8ED4F7C96DF08F5850 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		6923F76C724843F5AED124BD /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D27C7A8ED4F7C96DF08F5850 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		79AF381FB9C944A80806E321 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D27C7A8ED4F7C96DF08F5850 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		DA0347241B4ADD720025CE24 /* LibrarySyncController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF357031B45790100629A3D /* LibrarySyncController.swift */; };
 		DA27D1971AF1BA9D00CC854E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA27D1961AF1BA9D00CC854E /* AppDelegate.swift */; };
 		DA27D1991AF1BA9D00CC854E /* ParseWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA27D1981AF1BA9D00CC854E /* ParseWorker.swift */; };
 		DA27D19C1AF1BA9D00CC854E /* Season.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA27D19A1AF1BA9D00CC854E /* Season.storyboard */; };
@@ -42,7 +43,6 @@
 		DA52B1831B4838AE001CC1A9 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA52B1821B4838AE001CC1A9 /* CalendarViewController.swift */; };
 		DA52B1851B483F2A001CC1A9 /* DayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA52B1841B483F2A001CC1A9 /* DayViewController.swift */; };
 		DA52B1871B4845D4001CC1A9 /* CheckInCompact.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA52B1861B4845D4001CC1A9 /* CheckInCompact.xib */; };
-		DA52B1891B49A23E001CC1A9 /* LibrarySyncController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF357031B45790100629A3D /* LibrarySyncController.swift */; };
 		DA58C2D71B386BAC0082B626 /* UserHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58C2D61B386BAC0082B626 /* UserHistoryViewController.swift */; };
 		DA58C2D91B386BB90082B626 /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58C2D81B386BB90082B626 /* UserProfileViewController.swift */; };
 		DA58C2DB1B386BC80082B626 /* UserFriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58C2DA1B386BC80082B626 /* UserFriendsViewController.swift */; };
@@ -552,6 +552,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		DA0347251B4ADD8D0025CE24 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				DAF357031B45790100629A3D /* LibrarySyncController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
 		DA06132B1B3778310044340F /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -564,8 +572,8 @@
 		DA27D1881AF1BA9D00CC854E = {
 			isa = PBXGroup;
 			children = (
-				DA27D1931AF1BA9D00CC854E /* AnimeNow */,
-				DA27D1A91AF1BA9D00CC854E /* AnimeNowTests */,
+				DA27D1931AF1BA9D00CC854E /* Aozora */,
+				DA27D1A91AF1BA9D00CC854E /* AozoraTests */,
 				DA6E12AF1B10D94200B278B0 /* ANParseKit */,
 				DA6E12BE1B10D94200B278B0 /* ANParseKitTests */,
 				DA4AF8B61B276E060020252E /* ANCommonKit */,
@@ -593,7 +601,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		DA27D1931AF1BA9D00CC854E /* AnimeNow */ = {
+		DA27D1931AF1BA9D00CC854E /* Aozora */ = {
 			isa = PBXGroup;
 			children = (
 				DA27D1981AF1BA9D00CC854E /* ParseWorker.swift */,
@@ -612,6 +620,7 @@
 				DA27D19F1AF1BA9D00CC854E /* LaunchScreen.xib */,
 				DA27D1941AF1BA9D00CC854E /* Supporting Files */,
 			);
+			name = Aozora;
 			path = AnimeNow;
 			sourceTree = "<group>";
 		};
@@ -625,12 +634,13 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		DA27D1A91AF1BA9D00CC854E /* AnimeNowTests */ = {
+		DA27D1A91AF1BA9D00CC854E /* AozoraTests */ = {
 			isa = PBXGroup;
 			children = (
 				DA27D1AC1AF1BA9D00CC854E /* AnimeNowTests.swift */,
 				DA27D1AA1AF1BA9D00CC854E /* Supporting Files */,
 			);
+			name = AozoraTests;
 			path = AnimeNowTests;
 			sourceTree = "<group>";
 		};
@@ -848,6 +858,7 @@
 				DACE77C51B29518300037486 /* Parse classes */,
 				DA5A3BED1B346F2100C07D71 /* MALScrapper */,
 				DAF6186E1B377BBF00286517 /* Services */,
+				DA0347251B4ADD8D0025CE24 /* Controllers */,
 				DA6E12CE1B10D96F00B278B0 /* Vendor */,
 				DA6E12B01B10D94200B278B0 /* Supporting Files */,
 			);
@@ -915,7 +926,6 @@
 		DA7C84C51B43337E0036D119 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				DAF357031B45790100629A3D /* LibrarySyncController.swift */,
 				DAC13BFF1B3F4A7A0013D479 /* DataFetchController.swift */,
 			);
 			name = Controllers;
@@ -1763,7 +1773,6 @@
 				DAFD60BE1B27845F007275C1 /* BasicCollectionCell.swift in Sources */,
 				DAFD60BF1B278463007275C1 /* UIColor+AniNow.swift in Sources */,
 				DA7C84CA1B4379AD0036D119 /* UIViewController+Image.swift in Sources */,
-				DA52B1891B49A23E001CC1A9 /* LibrarySyncController.swift in Sources */,
 				DACE77C21B294D7B00037486 /* NSDate+AniNow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1792,6 +1801,7 @@
 				DACCF35F1B111016006A13EB /* AnimeService.swift in Sources */,
 				DA6E12E61B10D96F00B278B0 /* WSWebScraper.m in Sources */,
 				DAC027CC1B2A16B80085C91A /* AnimeReview.swift in Sources */,
+				DA0347241B4ADD720025CE24 /* LibrarySyncController.swift in Sources */,
 				DA6E13131B10F56B00B278B0 /* SeasonalChartService.swift in Sources */,
 				DACCF35D1B110AA2006A13EB /* ANParseKit.swift in Sources */,
 				DA6E12E21B10D96F00B278B0 /* XPathQuery.m in Sources */,
@@ -2113,7 +2123,7 @@
 				INFOPLIST_FILE = ANAnimeKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AnimeNow.app/AnimeNow";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Aozora.app/Aozora";
 			};
 			name = Debug;
 		};
@@ -2127,7 +2137,7 @@
 				INFOPLIST_FILE = ANAnimeKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AnimeNow.app/AnimeNow";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Aozora.app/Aozora";
 			};
 			name = Release;
 		};
@@ -2199,7 +2209,7 @@
 				INFOPLIST_FILE = ANCommonKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AnimeNow.app/AnimeNow";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Aozora.app/Aozora";
 			};
 			name = Debug;
 		};
@@ -2213,7 +2223,7 @@
 				INFOPLIST_FILE = ANCommonKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AnimeNow.app/AnimeNow";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Aozora.app/Aozora";
 			};
 			name = Release;
 		};
@@ -2298,7 +2308,7 @@
 				INFOPLIST_FILE = ANParseKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AnimeNow.app/AnimeNow";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Aozora.app/Aozora";
 			};
 			name = Debug;
 		};
@@ -2312,7 +2322,7 @@
 				INFOPLIST_FILE = ANParseKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AnimeNow.app/AnimeNow";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Aozora.app/Aozora";
 			};
 			name = Release;
 		};

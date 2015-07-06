@@ -8,7 +8,6 @@
 
 import Foundation
 import ANCommonKit
-import Parse
 
 enum SignType: Int {
     case Up = 0

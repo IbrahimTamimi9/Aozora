@@ -9,7 +9,6 @@
 import UIKit
 import ANCommonKit
 import ANParseKit
-import Parse
 
 enum BrowseType: String {
     case TopAnime = "Top Anime"
