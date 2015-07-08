@@ -109,6 +109,16 @@ class ProfileViewController: XLButtonBarPagerTabStripViewController {
         return completionSource.task
     }
     
+    @IBAction func showRemindersPressed(sender: AnyObject) {
+    }
+    
+    @IBAction func showSettingsPressed(sender: AnyObject) {
+        let controller = UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController() as! UIViewController
+        presentViewController(controller, animated: true, completion: nil)
+    }
+    
+    
+    
     // MARK: - Classes
     
     class Profile {

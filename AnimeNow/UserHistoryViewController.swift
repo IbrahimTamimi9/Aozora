@@ -94,7 +94,7 @@ extension UserHistoryViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCellWithIdentifier("InformationCell") as! BasicTableCell
         let historyItem = dataSource[indexPath.row]
         cell.titleLabel.text = historyItem.title
-        cell.subtitleLabel.text = "Ep. " + historyItem.episodes.description
+        cell.subtitleLabel.text = "Ep " + historyItem.episodes.description
         cell.detailLabel.text = historyItem.type
         cell.detailSubtitleLabel.text = historyItem.updatedAt.timeAgo()
         

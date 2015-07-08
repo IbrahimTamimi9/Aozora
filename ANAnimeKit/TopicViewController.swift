@@ -23,6 +23,7 @@ public class TopicViewController: UIViewController {
     var loadingView: LoaderView!
     var topic: MALScrapper.Topic!
     var scrollToBottom = false
+    var canFadeImages = true
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -229,6 +230,7 @@ extension TopicViewController: UITableViewDelegate {
             } else {
                 dataSource[indexPath.section].content.splice(spoilerButton.spoilerContent, atIndex: indexPath.row+1)
             }
+            
             tableView.reloadData()
             
         } else if content.type == .Image {

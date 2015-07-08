@@ -96,8 +96,16 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Profile" id="TTH-Rc-2ZP">
-                        <barButtonItem key="leftBarButtonItem" image="icon-reminder" style="plain" id="wKT-L9-Dxh" userLabel="Reminder"/>
-                        <barButtonItem key="rightBarButtonItem" image="icon-settings" style="plain" id="yDI-Jz-LAj" userLabel="Settings"/>
+                        <barButtonItem key="leftBarButtonItem" image="icon-reminder" style="plain" id="wKT-L9-Dxh" userLabel="Reminder">
+                            <connections>
+                                <action selector="showRemindersPressed:" destination="J6a-uT-h8t" id="Ms1-cT-3S5"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="icon-settings" style="plain" id="yDI-Jz-LAj" userLabel="Settings">
+                            <connections>
+                                <action selector="showSettingsPressed:" destination="J6a-uT-h8t" id="n5M-Jt-obN"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="buttonBarView" destination="cB0-Sb-hkR" id="wYx-ks-ewB"/>

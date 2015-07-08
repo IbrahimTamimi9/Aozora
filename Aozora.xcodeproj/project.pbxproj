@@ -12,6 +12,8 @@
 		6923F76C724843F5AED124BD /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D27C7A8ED4F7C96DF08F5850 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		79AF381FB9C944A80806E321 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D27C7A8ED4F7C96DF08F5850 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		DA0347241B4ADD720025CE24 /* LibrarySyncController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF357031B45790100629A3D /* LibrarySyncController.swift */; };
+		DA07A3481B4C2B730028B81B /* InApp.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA07A3471B4C2B730028B81B /* InApp.storyboard */; };
+		DA07A34A1B4C2B860028B81B /* InAppPurchaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA07A3491B4C2B860028B81B /* InAppPurchaseViewController.swift */; };
 		DA27D1971AF1BA9D00CC854E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA27D1961AF1BA9D00CC854E /* AppDelegate.swift */; };
 		DA27D1991AF1BA9D00CC854E /* ParseWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA27D1981AF1BA9D00CC854E /* ParseWorker.swift */; };
 		DA27D19C1AF1BA9D00CC854E /* Season.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA27D19A1AF1BA9D00CC854E /* Season.storyboard */; };
@@ -274,6 +276,8 @@
 		3ABB693D5DECE103E9514C77 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		CC7A7DA6842DABB2A3D90AB9 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		D27C7A8ED4F7C96DF08F5850 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA07A3471B4C2B730028B81B /* InApp.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = InApp.storyboard; sourceTree = "<group>"; };
+		DA07A3491B4C2B860028B81B /* InAppPurchaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InAppPurchaseViewController.swift; sourceTree = "<group>"; };
 		DA27D1911AF1BA9D00CC854E /* Aozora.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Aozora.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA27D1951AF1BA9D00CC854E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA27D1961AF1BA9D00CC854E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -569,6 +573,15 @@
 			path = ../AnimeNow;
 			sourceTree = "<group>";
 		};
+		DA07A3461B4C2B560028B81B /* In-App Purchases */ = {
+			isa = PBXGroup;
+			children = (
+				DA07A3471B4C2B730028B81B /* InApp.storyboard */,
+				DA07A3491B4C2B860028B81B /* InAppPurchaseViewController.swift */,
+			);
+			name = "In-App Purchases";
+			sourceTree = "<group>";
+		};
 		DA27D1881AF1BA9D00CC854E = {
 			isa = PBXGroup;
 			children = (
@@ -616,6 +629,7 @@
 				DA58C2E31B39BF850082B626 /* Browse */,
 				DAC13C061B41DEF00013D479 /* Onboarding */,
 				DAC13C011B40568A0013D479 /* Settings */,
+				DA07A3461B4C2B560028B81B /* In-App Purchases */,
 				DA27D19D1AF1BA9D00CC854E /* Images.xcassets */,
 				DA27D19F1AF1BA9D00CC854E /* LaunchScreen.xib */,
 				DA27D1941AF1BA9D00CC854E /* Supporting Files */,
@@ -1448,6 +1462,7 @@
 				DAC13C1E1B4228120013D479 /* AllerDisplay.ttf in Resources */,
 				DAF6189E1B378FEF00286517 /* Forum.storyboard in Resources */,
 				DAC13C1B1B4228120013D479 /* Aller_Lt.ttf in Resources */,
+				DA07A3481B4C2B730028B81B /* InApp.storyboard in Resources */,
 				DA52B1871B4845D4001CC1A9 /* CheckInCompact.xib in Resources */,
 				DAC13BF31B3EF17E0013D479 /* AnimeCellList.xib in Resources */,
 				DA58C2E51B39C0080082B626 /* Browse.storyboard in Resources */,
@@ -1682,6 +1697,7 @@
 				DAC13C2A1B424DEF0013D479 /* ResetPasswordViewController.swift in Sources */,
 				DA58C2D71B386BAC0082B626 /* UserHistoryViewController.swift in Sources */,
 				DAC13C171B4226E20013D479 /* OnboardingViewController.swift in Sources */,
+				DA07A34A1B4C2B860028B81B /* InAppPurchaseViewController.swift in Sources */,
 				DA52B1831B4838AE001CC1A9 /* CalendarViewController.swift in Sources */,
 				DA27D1991AF1BA9D00CC854E /* ParseWorker.swift in Sources */,
 				DA27D1971AF1BA9D00CC854E /* AppDelegate.swift in Sources */,
