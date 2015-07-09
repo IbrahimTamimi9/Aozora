@@ -152,11 +152,11 @@ class AnimeListViewController: UIViewController {
     
         switch self.currentSortType {
         case .Rating:
-            animeList.sort({ $0.rank < $1.rank})
+            animeList.sort({ $0.rank < $1.rank && $0.rank != 0 })
         case .Popularity:
-            animeList.sort({ $0.popularityRank < $1.popularityRank})
+            animeList.sort({ $0.popularityRank < $1.popularityRank })
         case .Title:
-            animeList.sort({ $0.title < $1.title})
+            animeList.sort({ $0.title < $1.title })
         case .NextAiringEpisode:
             animeList.sort({ $0.nextEpisodeDate.compare($1.nextEpisodeDate) == .OrderedAscending })
         default:

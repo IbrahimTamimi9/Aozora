@@ -7,12 +7,19 @@
 //
 
 import UIKit
+import iRate
 
 class SettingsViewController: UITableViewController {
     
+    let FacebookPageDeepLink = "fb://profile/713541968752502";
+    let FacebookPageURL = "http://www.facebook.com/AozoraApp";
+    let TwitterPageDeepLink = "twitter://user?id=3366576341";
+    let TwitterPageURL = "http://www.twitter.com/AozoraApp";
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        
     }
     
     // MARK: - IBActions
@@ -28,16 +35,34 @@ class SettingsViewController: UITableViewController {
         
         switch (indexPath.section, indexPath.row) {
         case (0,0):
-            break
+            break // Login / Logout
         case (1,0):
+            // Unlock features
             let controller = UIStoryboard(name: "InApp", bundle: nil).instantiateInitialViewController() as! InAppPurchaseViewController
             navigationController?.pushViewController(controller, animated: true)
+        case (1,1):
+            break // Restore purchases
         case (2,0):
-            break
+            // Rate app
+            iRate.sharedInstance().openRatingsPageInAppStore()
         case (3,0):
-            break
+            // Open Facebook
+            var url: NSURL?
+            if let twitterScheme = NSURL(string: "fb://requests") where UIApplication.sharedApplication().canOpenURL(twitterScheme) {
+                url = NSURL(string: FacebookPageDeepLink)
+            } else {
+                url = NSURL(string: FacebookPageURL)
+            }
+            UIApplication.sharedApplication().openURL(url!)
         case (3,1):
-            break
+            // Open Twitter
+            var url: NSURL?
+            if let twitterScheme = NSURL(string: "twitter://") where UIApplication.sharedApplication().canOpenURL(twitterScheme) {
+                url = NSURL(string: TwitterPageDeepLink)
+            } else {
+                url = NSURL(string: TwitterPageURL)
+            }
+            UIApplication.sharedApplication().openURL(url!)
         default:
             break
         }

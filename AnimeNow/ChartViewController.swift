@@ -220,7 +220,7 @@ class ChartViewController: UIViewController {
         dataSource = dataSource.map() { (var animeArray) -> [Anime] in
             switch self.currentSortType {
             case .Rating:
-                animeArray.sort({ $0.rank < $1.rank})
+                animeArray.sort({ $0.rank < $1.rank && $0.rank != 0 })
             case .Popularity:
                 animeArray.sort({ $0.popularityRank < $1.popularityRank})
             case .Title:

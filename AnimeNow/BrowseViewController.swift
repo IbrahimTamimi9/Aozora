@@ -106,25 +106,32 @@ class BrowseViewController: UIViewController {
         switch currentBrowseType {
         case .TopAnime:
             query
+            .whereKey("rank", greaterThan: 0)
             .orderByAscending("rank")
         case .TopAiring:
             query
+            .whereKey("rank", greaterThan: 0)
             .orderByAscending("rank")
             .whereKey("status", equalTo: AnimeStatus.CurrentlyAiring.rawValue)
         case .TopUpcoming:
-            query.orderByAscending("rank")
+            query
+            .orderByAscending("popularityRank")
             .whereKey("status", equalTo: AnimeStatus.NotYetAired.rawValue)
         case .TopTVSeries:
             query.orderByAscending("rank")
+            .whereKey("rank", greaterThan: 0)
             .whereKey("type", equalTo: AnimeType.TV.rawValue)
         case .TopMovies:
             query.orderByAscending("rank")
+            .whereKey("rank", greaterThan: 0)
             .whereKey("type", equalTo: AnimeType.Movie.rawValue)
         case .TopOVA:
             query.orderByAscending("rank")
+            .whereKey("rank", greaterThan: 0)
             .whereKey("type", equalTo: AnimeType.OVA.rawValue)
         case .TopSpecials:
             query.orderByAscending("rank")
+            .whereKey("rank", greaterThan: 0)
             .whereKey("type", equalTo: AnimeType.Special.rawValue)
         case .JustAdded:
             query.orderByDescending("createdAt")
@@ -245,6 +252,7 @@ extension BrowseViewController: FilterViewControllerDelegate {
                 case .Sort:
                     switch SortType(rawValue: value)! {
                     case .Rating:
+                        query.whereKey("rank", greaterThan: 0)
                         query.orderByAscending("rank")
                     case .Popularity:
                         query.orderByAscending("popularityRank")

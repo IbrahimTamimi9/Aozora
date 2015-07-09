@@ -27,6 +27,17 @@ class InAppPurchaseViewController: UITableViewController {
         
         self.title = "Aozora Pro"
         
+        let purchasedPro = false
+        
+        if !purchasedPro {
+            titleLabel.text = "Upgrade to Pro"
+            descriptionLabel.text = "Browse all seasonal charts, unlock calendar view, discover more anime, remove all ads forever, and more importantly helps us take Aozora to the next level"
+        } else {
+            titleLabel.text = "Sweet, you're Pro"
+            descriptionLabel.text = "Thanks for supporting Aozora! You're an exclusive Pro member is helping me create an even better app"
+        }
+        
+        
     }
     
     @IBAction func buyProPressed(sender: AnyObject) {
