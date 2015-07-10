@@ -76,7 +76,7 @@ public class Anime: PFObject, PFSubclassing {
     
     public func episodeList(pin: Bool = false, tag: PinName) -> BFTask {
     
-        if cachedEpisodeList.count != 0 || episodes == 0 {
+        if cachedEpisodeList.count != 0 || (episodes == 0 && pin) {
             return BFTask(result: cachedEpisodeList)
         }
         

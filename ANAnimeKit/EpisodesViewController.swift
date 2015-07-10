@@ -59,34 +59,15 @@ class EpisodesViewController: AnimeBaseViewController {
     func fetchEpisodes() {
         
         loadingView.startAnimating()
+        let pin = anime.progress != nil
+        anime.episodeList(pin: pin, tag: Anime.PinName.InLibrary).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
         
-        if let progress = anime.progress {
-            
-            anime.episodeList(pin: true, tag: Anime.PinName.InLibrary).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
-            
-                self.dataSource = task.result as! [Episode]
-                self.collectionView.animateFadeIn()
-                self.loadingView.stopAnimating()
+            self.dataSource = task.result as! [Episode]
+            self.collectionView.animateFadeIn()
+            self.loadingView.stopAnimating()
 
-                return nil
-            })
-
-        } else {
-            println("Episode list from network..")
-            Episode.query()!
-                .whereKey("anime", equalTo: anime)
-                .orderByAscending("number")
-                .findObjectsInBackgroundWithBlock({ (episodes, error) -> Void in
-                    
-                    self.collectionView.animateFadeIn()
-                    self.loadingView.stopAnimating()
-                    if error == nil {
-                        self.dataSource = episodes as! [Episode]
-                    }
-                    
-                })
-        }
-        
+            return nil
+        })
     }
     
 }
@@ -114,7 +95,7 @@ extension EpisodesViewController: UICollectionViewDataSource {
         let screenshot = episode.screenshot != nil ? episode.screenshot! : anime.fanart ?? ""
         cell.screenshotImageView.setImageFrom(urlString: screenshot, animated: canFadeImages)
         
-        cell.firstAiredLabel.text = episode.firstAired.mediumDate()
+        cell.firstAiredLabel.text = episode.firstAired?.mediumDate() ?? ""
         
         if let progress = anime.progress {
             if progress.episodes < indexPath.row + 1 {

@@ -24,12 +24,19 @@ public class RootTabBar: UITabBarController {
 extension RootTabBar: UITabBarControllerDelegate {
     public func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
         
-        if let navController = viewController as? UINavigationController,
-            let controller = navController.viewControllers.first as? ProfileViewController  {
+        
+        if let navController = viewController as? UINavigationController {
+            
+            let profileController = navController.viewControllers.first as? ProfileViewController
+            let libraryController = navController.viewControllers.first as? AnimeLibraryViewController
+            
+            if profileController == nil && libraryController == nil {
+                return true
+            }
             
             if PFUser.currentUserLoggedIn() {
                 // Logged in both
-                controller.initWithUsername(PFUser.malUsername!)
+                profileController?.initWithUsername(PFUser.malUsername!)
                 return true
                 
             } else if PFUser.currentUserIsGuest() {

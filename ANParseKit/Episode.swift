@@ -34,6 +34,6 @@ public class Episode: PFObject, PFSubclassing {
     @NSManaged public var screenshot: String?
     @NSManaged public var traktNumber: Int
     @NSManaged public var traktSeason: Int
-    @NSManaged public var firstAired: NSDate
+    @NSManaged public var firstAired: NSDate?
 }
     

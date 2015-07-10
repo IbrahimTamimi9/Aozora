@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E33b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="U7M-zI-QJf">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="U7M-zI-QJf">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
@@ -59,16 +59,18 @@
                                         </constraints>
                                         <state key="normal">
                                             <attributedString key="attributedTitle">
-                                                <fragment content="Login with ">
+                                                <fragment content="Link with ">
                                                     <attributes>
                                                         <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <font key="NSFont" size="15" name="HelveticaNeue"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                                     </attributes>
                                                 </fragment>
                                                 <fragment content="MyAnimeList">
                                                     <attributes>
                                                         <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <font key="NSFont" size="15" name="HelveticaNeue-Bold"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                                     </attributes>
                                                 </fragment>
                                             </attributedString>
@@ -104,7 +106,7 @@
                                     </button>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="a4e-uK-UfR" customClass="CustomTextField" customModule="ANCommonKit">
                                         <rect key="frame" x="0.0" y="277.5" width="568" height="40"/>
-                                        <color key="backgroundColor" red="0.18823529780000001" green="0.19607843459999999" blue="0.23529411850000001" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" red="0.18823529780000001" green="0.19607843459999999" blue="0.23529411850000001" alpha="0.20000000000000001" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="big-og-wgG"/>
                                         </constraints>
@@ -119,7 +121,7 @@
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ITQ-3T-AiQ" customClass="CustomTextField" customModule="ANCommonKit">
                                         <rect key="frame" x="0.0" y="229.5" width="568" height="40"/>
-                                        <color key="backgroundColor" red="0.18823529780000001" green="0.19607843459999999" blue="0.23529411850000001" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" red="0.18823529780000001" green="0.19607843459999999" blue="0.23529411850000001" alpha="0.20000000000000001" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="CpM-SW-qgB"/>
                                         </constraints>
@@ -174,7 +176,21 @@
                                             </fragment>
                                             <fragment>
                                                 <string key="content"> community.
-Login to access your </string>
+Link with </string>
+                                                <attributes>
+                                                    <color key="NSColor" red="0.18823529779911041" green="0.19607843458652496" blue="0.23529411852359772" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <font key="NSFont" size="15" name="HelveticaNeue"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment content="MyAnimeList">
+                                                <attributes>
+                                                    <color key="NSColor" red="0.18823529779911041" green="0.19607843458652496" blue="0.23529411852359772" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <font key="NSFont" size="15" name="HelveticaNeue-Medium"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment content=" to access your ">
                                                 <attributes>
                                                     <color key="NSColor" red="0.18823529779911041" green="0.19607843458652496" blue="0.23529411852359772" alpha="1" colorSpace="calibratedRGB"/>
                                                     <font key="NSFont" size="15" name="HelveticaNeue"/>
@@ -244,18 +260,10 @@ Login to access your </string>
                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                                 </attributes>
                                             </fragment>
-                                            <fragment content="friends from ">
+                                            <fragment content="friends">
                                                 <attributes>
                                                     <color key="NSColor" red="0.18823529779911041" green="0.19607843458652496" blue="0.23529411852359772" alpha="1" colorSpace="calibratedRGB"/>
                                                     <font key="NSFont" size="15" name="HelveticaNeue"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                </attributes>
-                                            </fragment>
-                                            <fragment content="MyAnimeList">
-                                                <attributes>
-                                                    <color key="NSColor" red="0.18823529779911041" green="0.19607843458652496" blue="0.23529411852359772" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <font key="NSFont" size="15" name="HelveticaNeue-Medium"/>
-                                                    <font key="NSOriginalFont" size="15" name="HelveticaNeue-Medium"/>
                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                                 </attributes>
                                             </fragment>

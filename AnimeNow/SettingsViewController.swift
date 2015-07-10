@@ -8,6 +8,7 @@
 
 import UIKit
 import iRate
+import ANParseKit
 
 class SettingsViewController: UITableViewController {
     
@@ -16,10 +17,49 @@ class SettingsViewController: UITableViewController {
     let TwitterPageDeepLink = "twitter://user?id=3366576341";
     let TwitterPageURL = "http://www.twitter.com/AozoraApp";
     
+    @IBOutlet weak var loginLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        updateLoginButton()
+    }
+    
+    func updateLoginButton() {
+        if PFUser.currentUserLoggedIn() {
+            // Logged In both
+            loginLabel.text = "Logout Aozora"
+        } else if PFUser.currentUserIsGuest() {
+            // User is guest
+            loginLabel.text = "Login Aozora"
+        }
+
+    }
+    
+    func logoutUser() {
         
+        let query = Anime.query()!
+        query.fromLocalDatastore()
+        query.findObjectsInBackgroundWithBlock { (result, error) -> Void in
+            PFObject.unpinAllInBackground(result)
+        }
+        
+        let query2 = Episode.query()!
+        query2.fromLocalDatastore()
+        query2.findObjectsInBackgroundWithBlock { (result, error) -> Void in
+            PFObject.unpinAllInBackground(result)
+        }
+        
+        PFUser.logOutInBackgroundWithBlock({ (error) -> Void in
+            PFUser.removeCredentials()
+            
+            self.updateLoginButton()
+            
+            let onboarding = UIStoryboard(name: "Onboarding", bundle: nil).instantiateInitialViewController() as! OnboardingViewController
+            onboarding.isInWindowRoot = false
+            self.presentViewController(onboarding, animated: true, completion: nil)
+            
+        })
     }
     
     // MARK: - IBActions
@@ -35,13 +75,26 @@ class SettingsViewController: UITableViewController {
         
         switch (indexPath.section, indexPath.row) {
         case (0,0):
-            break // Login / Logout
+            // Login / Logout
+            if PFUser.currentUserLoggedIn() {
+                // Logged In both, logout
+                logoutUser()
+                
+            } else if PFUser.currentUserIsGuest() {
+                // User is guest, login
+                let onboarding = UIStoryboard(name: "Onboarding", bundle: nil).instantiateInitialViewController() as! OnboardingViewController
+                onboarding.isInWindowRoot = false
+                presentViewController(onboarding, animated: true, completion: nil)
+                
+            }
+
         case (1,0):
             // Unlock features
             let controller = UIStoryboard(name: "InApp", bundle: nil).instantiateInitialViewController() as! InAppPurchaseViewController
             navigationController?.pushViewController(controller, animated: true)
         case (1,1):
-            break // Restore purchases
+            // Restore purchases
+            InAppPurchaseController.restorePurchases()
         case (2,0):
             // Rate app
             iRate.sharedInstance().openRatingsPageInAppStore()

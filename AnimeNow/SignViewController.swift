@@ -43,8 +43,8 @@ class SignViewController: UIViewController {
             forgotPasswordButton.hidden = true
             signUpSwitchButton.hidden = false
         } else {
-            navigationBar.topItem?.title = "Sign in"
-            signButton.setTitle("Sign in", forState: .Normal)
+            navigationBar.topItem?.title = "Log in"
+            signButton.setTitle("Log in", forState: .Normal)
             forgotPasswordButton.hidden = false
             signUpSwitchButton.hidden = true
         }
