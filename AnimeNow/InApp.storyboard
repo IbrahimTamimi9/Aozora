@@ -1,14 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="0JQ-Ba-rlJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="4Vk-d2-WEe">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="QLB-ue-Qmk">
+            <objects>
+                <navigationController id="4Vk-d2-WEe" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="xq6-D8-NbZ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="0JQ-Ba-rlJ" kind="relationship" relationship="rootViewController" id="5Yr-XM-AcU"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ng1-FL-mbb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-310" y="223"/>
+        </scene>
         <!--In App Purchase View Controller-->
         <scene sceneID="bga-FS-JGR">
             <objects>
-                <tableViewController id="0JQ-Ba-rlJ" customClass="InAppPurchaseViewController" customModule="Aozora" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="InApp" useStoryboardIdentifierAsRestorationIdentifier="YES" id="0JQ-Ba-rlJ" customClass="InAppPurchaseViewController" customModule="Aozora" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="jJy-Qa-8vn">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -301,14 +317,14 @@
                                                     </userDefinedRuntimeAttributes>
                                                     <variation key="default">
                                                         <mask key="constraints">
-                                                            <exclude reference="onj-9l-6Xt"/>
-                                                            <exclude reference="hCA-Xy-QnQ"/>
-                                                            <exclude reference="r76-zV-nyl"/>
-                                                            <exclude reference="geC-ta-yBO"/>
-                                                            <exclude reference="udg-aN-mf0"/>
-                                                            <exclude reference="fZX-W9-bgq"/>
                                                             <exclude reference="YcD-eL-yyd"/>
+                                                            <exclude reference="fZX-W9-bgq"/>
+                                                            <exclude reference="geC-ta-yBO"/>
                                                             <exclude reference="ggX-CA-Qei"/>
+                                                            <exclude reference="hCA-Xy-QnQ"/>
+                                                            <exclude reference="onj-9l-6Xt"/>
+                                                            <exclude reference="r76-zV-nyl"/>
+                                                            <exclude reference="udg-aN-mf0"/>
                                                         </mask>
                                                     </variation>
                                                 </imageView>
@@ -366,13 +382,13 @@
                                                     <variation key="default">
                                                         <mask key="constraints">
                                                             <exclude reference="5Bp-bw-5LO"/>
-                                                            <exclude reference="Ces-1s-ci3"/>
-                                                            <exclude reference="TzI-xE-AbW"/>
                                                             <exclude reference="7Ro-q0-lHj"/>
-                                                            <exclude reference="rd6-L3-4vb"/>
+                                                            <exclude reference="Ces-1s-ci3"/>
                                                             <exclude reference="QGi-db-bfy"/>
+                                                            <exclude reference="TzI-xE-AbW"/>
                                                             <exclude reference="kCY-KW-eQh"/>
                                                             <exclude reference="n9E-xg-7rM"/>
+                                                            <exclude reference="rd6-L3-4vb"/>
                                                         </mask>
                                                     </variation>
                                                 </imageView>
@@ -538,6 +554,7 @@
                             <outlet property="delegate" destination="0JQ-Ba-rlJ" id="Ivc-0X-Nhz"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" id="qCR-gH-8cU"/>
                     <connections>
                         <outlet property="descriptionLabel" destination="zne-0l-qXY" id="Fkm-1M-dF9"/>
                         <outlet property="proButton" destination="sKa-ir-N73" id="akn-Aa-8bf"/>

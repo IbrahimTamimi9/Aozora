@@ -102,6 +102,8 @@ class ChartViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        DialogController.sharedInstance.canShowFBAppInvite(self)
+        
         AnimeCell.registerNibFor(collectionView: collectionView, style: .Chart, reuseIdentifier: "AnimeCell")
         AnimeCell.registerNibFor(collectionView: collectionView, style: .Poster, reuseIdentifier: "AnimeCellPoster")
         AnimeCell.registerNibFor(collectionView: collectionView, style: .List, reuseIdentifier: "AnimeCellList")
@@ -317,8 +319,15 @@ class ChartViewController: UIViewController {
     
     @IBAction func showCalendarPressed(sender: AnyObject) {
         
-        let controller = UIStoryboard(name: "Season", bundle: nil).instantiateViewControllerWithIdentifier("Calendar") as! CalendarViewController
-        presentViewController(controller, animated: true, completion: nil)
+        if let _ = InAppController.purchasedAnyPro() {
+            
+            let controller = UIStoryboard(name: "Season", bundle: nil).instantiateViewControllerWithIdentifier("Calendar") as! CalendarViewController
+            presentViewController(controller, animated: true, completion: nil)
+            
+        } else {
+            InAppPurchaseViewController.showInAppPurchaseWith(self)
+        }
+        
     }
 }
 
@@ -435,17 +444,29 @@ extension ChartViewController: UICollectionViewDelegate {
 extension ChartViewController: DropDownListDelegate {
     func selectedAction(trigger: UIView, action: String, indexPath: NSIndexPath) {
         
-        if trigger.isEqual(navigationController?.navigationBar) {
-            switch (indexPath.row, indexPath.section) {
-            case (_, 0):
-                currentSeasonalChartName = action
-                prepareForList(.SeasonalChart)
-            case (0,1):
-                prepareForList(.AllSeasons)
-            default: break
+        if let _ = InAppController.purchasedAnyPro() {
+            
+            if trigger.isEqual(navigationController?.navigationBar) {
+                switch (indexPath.row, indexPath.section) {
+                case (_, 0):
+                    currentSeasonalChartName = action
+                    prepareForList(.SeasonalChart)
+                case (0,1):
+                    prepareForList(.AllSeasons)
+                default: break
+                }
+                
             }
             
         }
+        
+    }
+    
+    func dropDownDidDismissed(selectedAction: Bool) {
+        if selectedAction && InAppController.purchasedAnyPro() == nil {
+            InAppPurchaseViewController.showInAppPurchaseWith(self)
+        }
+        
     }
 }
 
@@ -472,6 +493,7 @@ extension ChartViewController: UISearchBarDelegate {
 
 extension ChartViewController: FilterViewControllerDelegate {
     func finishedWith(#configuration: Configuration, selectedGenres: [String]) {
+        
         currentConfiguration = configuration
         
         for (filterSection, value, _) in configuration {
@@ -485,5 +507,7 @@ extension ChartViewController: FilterViewControllerDelegate {
                 }
             }
         }
+    
     }
+    
 }

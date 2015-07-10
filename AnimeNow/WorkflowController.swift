@@ -19,7 +19,7 @@ class WorkflowController {
         let browse = UIStoryboard(name: "Browse", bundle: nil).instantiateInitialViewController() as! UINavigationController
         
         let tabBarController = RootTabBar()
-        tabBarController.viewControllers = [seasons, library, forum, profile, browse]
+        tabBarController.viewControllers = [seasons, library, profile, forum, browse]
         
         if animated {
             changeRootViewController(tabBarController, animationDuration: 0.5)

@@ -9,6 +9,8 @@
 import UIKit
 import iRate
 import ANParseKit
+import ANCommonKit
+import FBSDKShareKit
 
 class SettingsViewController: UITableViewController {
     
@@ -18,9 +20,12 @@ class SettingsViewController: UITableViewController {
     let TwitterPageURL = "http://www.twitter.com/AozoraApp";
     
     @IBOutlet weak var loginLabel: UILabel!
+    @IBOutlet weak var facebookLikeButton: FBSDKLikeButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        facebookLikeButton.objectID = "https://www.facebook.com/AozoraApp"
         
         updateLoginButton()
     }
@@ -90,14 +95,17 @@ class SettingsViewController: UITableViewController {
 
         case (1,0):
             // Unlock features
-            let controller = UIStoryboard(name: "InApp", bundle: nil).instantiateInitialViewController() as! InAppPurchaseViewController
+            let controller = UIStoryboard(name: "InApp", bundle: nil).instantiateViewControllerWithIdentifier("InApp") as! InAppPurchaseViewController
             navigationController?.pushViewController(controller, animated: true)
         case (1,1):
             // Restore purchases
-            InAppPurchaseController.restorePurchases()
+            InAppTransactionController.restorePurchases()
         case (2,0):
             // Rate app
             iRate.sharedInstance().openRatingsPageInAppStore()
+        case (2,1):
+            // Recommend to friends
+            DialogController.sharedInstance.showFBAppInvite()
         case (3,0):
             // Open Facebook
             var url: NSURL?

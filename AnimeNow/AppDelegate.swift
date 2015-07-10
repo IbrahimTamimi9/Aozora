@@ -12,6 +12,7 @@ import ANAnimeKit
 import XCDYouTubeKit
 import JTSImageViewController
 import iRate
+import FBSDKShareKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -21,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     override class func initialize() -> Void {
         iRate.sharedInstance().promptForNewVersionIfUserRated = true
         iRate.sharedInstance().daysUntilPrompt = 5.0
+        iRate.sharedInstance().verboseLogging = false
     }
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -50,8 +52,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let settings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
         application.registerUserNotificationSettings(settings)
         application.registerForRemoteNotifications()
-        
-        
         
         // Appearance
         customizeAppearance()
@@ -112,7 +112,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+    func application(
+        application: UIApplication,
+        didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
         PFPush.handlePush(userInfo)
         if application.applicationState == .Inactive  {
             // The application was just brought from the background to the foreground,
@@ -121,7 +123,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
+    func application(
+    application: UIApplication,
+    openURL url: NSURL,
+    sourceApplication: String?,
+    annotation: AnyObject?) -> Bool {
+        
+        // TODO: Remove this
+        if let parsedUrl = BFURL(inboundURL: url, sourceApplication: sourceApplication) where parsedUrl.appLinkData != nil {
+            let targetURL = parsedUrl.targetURL
+            UIAlertView(title: "Received Link", message: targetURL.absoluteString, delegate: nil, cancelButtonTitle: "Ok").show()
+        }
+            
         return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
     }
 
@@ -177,6 +190,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
 }
+
+
 
 extension UIApplication {
     class func topViewController(base: UIViewController? = UIApplication.sharedApplication().keyWindow?.rootViewController) -> UIViewController? {

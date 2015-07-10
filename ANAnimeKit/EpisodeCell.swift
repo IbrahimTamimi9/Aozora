@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FBSDKMessengerShareKit
 
 protocol EpisodeCellDelegate: class {
     func episodeCellWatchedPressed(cell: EpisodeCell)
@@ -31,5 +32,11 @@ class EpisodeCell: UICollectionViewCell {
     
     @IBAction func watchedPressed(sender: AnyObject) {
         delegate?.episodeCellWatchedPressed(self)
+    }
+    
+    @IBAction func shareOnMessengerPressed(sender: AnyObject) {
+        if FBSDKMessengerSharer.messengerPlatformCapabilities() & FBSDKMessengerPlatformCapability.Image != nil {
+            FBSDKMessengerSharer.shareImage(screenshotImageView.image, withOptions: nil)
+        }
     }
 }

@@ -18,6 +18,14 @@ class InAppPurchaseViewController: UITableViewController {
     @IBOutlet weak var proButton: UIButton!
     @IBOutlet weak var proPlusButton: UIButton!
     
+    
+    class func showInAppPurchaseWith(
+        viewController: UIViewController) {
+        
+        let controller = UIStoryboard(name: "InApp", bundle: nil).instantiateInitialViewController() as! UINavigationController
+        viewController.presentViewController(controller, animated: true, completion: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -29,6 +37,10 @@ class InAppPurchaseViewController: UITableViewController {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateViewForPurchaseState", name: PurchasedProNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "setPrices", name: PurchasedProNotification, object: nil)
+
+        if let _ = parentViewController as? UINavigationController {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Stop, target: self, action: "dismissViewControllerPressed")
+        }
     }
     
     deinit {
@@ -36,7 +48,7 @@ class InAppPurchaseViewController: UITableViewController {
     }
     
     func updateViewForPurchaseState() {
-        if let _ = InAppPurchaseController.purchasedAnyPro() {
+        if let _ = InAppController.purchasedAnyPro() {
             descriptionLabel.text = "Thanks for supporting Aozora! You're an exclusive Pro member that is helping me create an even better app"
         } else {
             descriptionLabel.text = "Browse all seasonal charts, unlock calendar view, discover more anime, remove all ads forever, and more importantly helps us take Aozora to the next level"
@@ -64,7 +76,7 @@ class InAppPurchaseViewController: UITableViewController {
     
     func setPrices() {
         
-        if let _ = InAppPurchaseController.purchasedPro() {
+        if let _ = InAppController.purchasedPro() {
             proButton.setTitle("Unlocked", forState: .Normal)
         } else {
             let product = RMStore.defaultStore().productForIdentifier(ProInAppPurchase)
@@ -72,7 +84,7 @@ class InAppPurchaseViewController: UITableViewController {
             proButton.setTitle(localizedPrice, forState: .Normal)
         }
         
-        if let _ = InAppPurchaseController.purchasedProPlus(){
+        if let _ = InAppController.purchasedProPlus(){
             proPlusButton.setTitle("Unlocked", forState: .Normal)
         } else {
             let product = RMStore.defaultStore().productForIdentifier(ProPlusInAppPurchase)
@@ -82,7 +94,7 @@ class InAppPurchaseViewController: UITableViewController {
     }
     
     func purchaseProductWithID(productID: String) {
-        InAppPurchaseController.purchaseProductWithID(productID).continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
+        InAppTransactionController.purchaseProductWithID(productID).continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
             
             var alert = UIAlertController(title: "Purchased!", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
             alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
@@ -91,6 +103,10 @@ class InAppPurchaseViewController: UITableViewController {
             
             return nil
         }
+    }
+    
+    func dismissViewControllerPressed() {
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
     @IBAction func buyProPressed(sender: AnyObject) {

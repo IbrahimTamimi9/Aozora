@@ -50,7 +50,7 @@ public class LibrarySyncController {
                 for data in result {
                     
                     var animeProgress = AnimeProgress()
-                    animeProgress.animeID = data["id"] as! Int
+                    animeProgress.myAnimeListID = data["id"] as! Int
                     animeProgress.status = data["watched_status"] as! String
                     animeProgress.episodes = data["watched_episodes"] as! Int
                     animeProgress.score = data["score"] as! Int
@@ -93,7 +93,7 @@ public class LibrarySyncController {
         var idList: [Int] = []
         var animeList: [Anime] = []
         for animeProgress in animeLibrary {
-            idList.append(animeProgress.animeID)
+            idList.append(animeProgress.myAnimeListID)
         }
         
         // Fetch from disk then network
@@ -166,7 +166,7 @@ public class LibrarySyncController {
                 continue
             }
             for progress in animeLibrary {
-                if progress.animeID == anime.myAnimeListID {
+                if progress.myAnimeListID == anime.myAnimeListID {
                     anime.progress = progress
                     break
                 }
@@ -190,7 +190,7 @@ public class LibrarySyncController {
     
     public class func deleteAnime(progress: AnimeProgress) -> BFTask {
         
-        return requestWithProgress(progress, router: Atarashii.Router.animeDelete(id: progress.animeID))
+        return requestWithProgress(progress, router: Atarashii.Router.animeDelete(id: progress.myAnimeListID))
     }
     
     class func requestWithProgress(progress: AnimeProgress, router: Atarashii.Router) -> BFTask {
@@ -220,7 +220,7 @@ public class LibrarySyncController {
     
     class func malProgressWithProgress(progress: AnimeProgress) -> Atarashii.Progress {
         let malList = MALList(rawValue: progress.status)!
-        return Atarashii.Progress(animeID: progress.animeID, status: malList, episodes: progress.episodes, score: progress.score)
+        return Atarashii.Progress(myAnimeListID: progress.myAnimeListID, status: malList, episodes: progress.episodes, score: progress.score)
         
     }
     

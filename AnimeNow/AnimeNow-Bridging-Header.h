@@ -17,4 +17,6 @@
 #import <Bolts/Bolts.h>
 #import <Parse/Parse.h>
 
+#import <iAd/iAd.h>
+
 #endif

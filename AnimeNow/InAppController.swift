@@ -11,25 +11,7 @@ import RMStore
 
 let PurchasedProNotification = "InApps.Purchased.Pro"
 
-let ProInAppPurchase = "com.anytap.Aozora.Pro"
-let ProPlusInAppPurchase = "com.anytap.Aozora.ProPlus"
-
-class InAppPurchaseController {
-    
-    class func purchasedAnyPro() -> Int? {
-
-        return (purchasedPro() != nil || purchasedProPlus() != nil) ? 1 : nil
-    }
-    
-    class func purchasedPro() -> Int? {
-        let pro = NSUserDefaults.standardUserDefaults().boolForKey(ProInAppPurchase)
-        return pro ? 1 : nil
-    }
-    
-    class func purchasedProPlus() -> Int? {
-        let proPlus = NSUserDefaults.standardUserDefaults().boolForKey(ProPlusInAppPurchase)
-        return proPlus ? 1 : nil
-    }
+class InAppTransactionController {
     
     class func purchaseProductWithID(productID: String) -> BFTask {
         let completionSource = BFTaskCompletionSource()

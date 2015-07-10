@@ -10,6 +10,7 @@ import UIKit
 import ANCommonKit
 import ANParseKit
 import Bolts
+import iAd
 
 extension ForumViewController: StatusBarVisibilityProtocol {
     func shouldHideStatusBar() -> Bool {
@@ -76,6 +77,9 @@ public class ForumViewController: AnimeBaseViewController {
         if segue.identifier == "ShowTopic" {
             let destination = segue.destinationViewController as! TopicViewController
             let topic = sender as! MALScrapper.Topic
+            if InAppController.purchasedAnyPro() == nil {
+                destination.interstitialPresentationPolicy = .Automatic
+            }
             destination.initWith(topic: topic, scrapper: malScrapper)
         }
     }

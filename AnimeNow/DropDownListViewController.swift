@@ -10,6 +10,7 @@ import UIKit
 
 public protocol DropDownListDelegate: class {
     func selectedAction(sender: UIView, action: String, indexPath: NSIndexPath)
+    func dropDownDidDismissed(selectedAction: Bool)
 }
 
 public class DropDownListViewController: UIViewController {
@@ -98,7 +99,13 @@ public class DropDownListViewController: UIViewController {
     }
     
     @IBAction func dismissPressed(sender: AnyObject) {
-        dismissViewControllerAnimated(true, completion: nil)
+        dismissViewControllerAnimated(true, completion: { () in
+            if let sender = sender as? DropDownListViewController {
+                self.delegate?.dropDownDidDismissed(true)
+            } else {
+                self.delegate?.dropDownDidDismissed(false)
+            }
+        })
     }
 }
 
@@ -147,5 +154,6 @@ extension DropDownListViewController: UITableViewDelegate {
         let action = dataSource[indexPath.section][indexPath.row]
         delegate?.selectedAction(trigger, action: action, indexPath: indexPath)
         dismissPressed(self)
+        
     }
 }

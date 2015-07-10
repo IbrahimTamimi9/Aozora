@@ -13,14 +13,12 @@
 		79AF381FB9C944A80806E321 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D27C7A8ED4F7C96DF08F5850 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		DA0347241B4ADD720025CE24 /* LibrarySyncController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF357031B45790100629A3D /* LibrarySyncController.swift */; };
 		DA07A3481B4C2B730028B81B /* InApp.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA07A3471B4C2B730028B81B /* InApp.storyboard */; };
-		DA07A34A1B4C2B860028B81B /* InAppPurchaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA07A3491B4C2B860028B81B /* InAppPurchaseViewController.swift */; };
 		DA27D1971AF1BA9D00CC854E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA27D1961AF1BA9D00CC854E /* AppDelegate.swift */; };
 		DA27D1991AF1BA9D00CC854E /* ParseWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA27D1981AF1BA9D00CC854E /* ParseWorker.swift */; };
 		DA27D19C1AF1BA9D00CC854E /* Season.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA27D19A1AF1BA9D00CC854E /* Season.storyboard */; };
 		DA27D19E1AF1BA9D00CC854E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA27D19D1AF1BA9D00CC854E /* Images.xcassets */; };
 		DA27D1A11AF1BA9D00CC854E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA27D19F1AF1BA9D00CC854E /* LaunchScreen.xib */; };
 		DA27D1AD1AF1BA9D00CC854E /* AnimeNowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA27D1AC1AF1BA9D00CC854E /* AnimeNowTests.swift */; };
-		DA3B61D91B4F59E700A3F7BA /* InAppPurchaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3B61D81B4F59E700A3F7BA /* InAppPurchaseController.swift */; };
 		DA41679B1B25F76F00847F56 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA41679A1B25F76F00847F56 /* FontAwesome.ttf */; };
 		DA4167B31B273B0700847F56 /* ANAnimeKit.h in Headers */ = {isa = PBXBuildFile; fileRef = DA4167B21B273B0700847F56 /* ANAnimeKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA4167B91B273B0700847F56 /* ANAnimeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA4167AE1B273B0700847F56 /* ANAnimeKit.framework */; };
@@ -132,11 +130,16 @@
 		DAC13C201B423ED90013D479 /* SignViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC13C1F1B423ED90013D479 /* SignViewController.swift */; };
 		DAC13C261B42495A0013D479 /* WorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC13C251B42495A0013D479 /* WorkflowController.swift */; };
 		DAC13C2A1B424DEF0013D479 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC13C291B424DEF0013D479 /* ResetPasswordViewController.swift */; };
-		DAC13C301B425CB70013D479 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC13C2C1B425CB70013D479 /* FBSDKCoreKit.framework */; };
 		DAC13C311B425CB70013D479 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC13C2D1B425CB70013D479 /* FBSDKLoginKit.framework */; };
-		DAC13C321B425CB70013D479 /* FBSDKMessengerShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC13C2E1B425CB70013D479 /* FBSDKMessengerShareKit.framework */; };
-		DAC13C331B425CB70013D479 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC13C2F1B425CB70013D479 /* FBSDKShareKit.framework */; };
 		DAC13C351B4262540013D479 /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC13C341B4262530013D479 /* ParseFacebookUtilsV4.framework */; };
+		DAC7D8FC1B5015FA00898FF6 /* InAppPurchaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA07A3491B4C2B860028B81B /* InAppPurchaseViewController.swift */; };
+		DAC7D8FF1B5018DE00898FF6 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC7D8FE1B5018DE00898FF6 /* iAd.framework */; };
+		DAC7D9021B50201300898FF6 /* InAppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC7D9011B50201300898FF6 /* InAppController.swift */; };
+		DAC7D9031B50201C00898FF6 /* InAppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3B61D81B4F59E700A3F7BA /* InAppController.swift */; };
+		DAC7D9041B502A1B00898FF6 /* FBSDKMessengerShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC13C2E1B425CB70013D479 /* FBSDKMessengerShareKit.framework */; };
+		DAC7D9071B5046AF00898FF6 /* DialogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC7D9051B50464B00898FF6 /* DialogController.swift */; };
+		DAC7D9081B5053F400898FF6 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC13C2F1B425CB70013D479 /* FBSDKShareKit.framework */; };
+		DAC7D90A1B50541100898FF6 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC13C2C1B425CB70013D479 /* FBSDKCoreKit.framework */; };
 		DACCF35D1B110AA2006A13EB /* ANParseKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACCF35C1B110AA2006A13EB /* ANParseKit.swift */; };
 		DACCF35F1B111016006A13EB /* AnimeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACCF35E1B111016006A13EB /* AnimeService.swift */; };
 		DACE77C21B294D7B00037486 /* NSDate+AniNow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACE77C11B294D7B00037486 /* NSDate+AniNow.swift */; };
@@ -297,7 +300,7 @@
 		DA38A98B1B223B39002FCBB4 /* Action.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Action.storyboard; sourceTree = "<group>"; };
 		DA38A98E1B223F1F002FCBB4 /* BasicTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicTableCell.swift; sourceTree = "<group>"; };
 		DA38A9901B224960002FCBB4 /* BasicView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicView.swift; sourceTree = "<group>"; };
-		DA3B61D81B4F59E700A3F7BA /* InAppPurchaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InAppPurchaseController.swift; sourceTree = "<group>"; };
+		DA3B61D81B4F59E700A3F7BA /* InAppController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InAppController.swift; sourceTree = "<group>"; };
 		DA4167991B25F1BF00847F56 /* AnimeNow-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AnimeNow-Bridging-Header.h"; sourceTree = "<group>"; };
 		DA41679A1B25F76F00847F56 /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.ttf; sourceTree = "<group>"; };
 		DA4167A41B2646F900847F56 /* BasicCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicCollectionCell.swift; sourceTree = "<group>"; };
@@ -426,6 +429,9 @@
 		DAC13C341B4262530013D479 /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
 		DAC610BB1B3115C100B60631 /* TopicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TopicViewController.swift; path = ../ANAnimeKit/TopicViewController.swift; sourceTree = "<group>"; };
 		DAC610BD1B312B0200B60631 /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserCell.swift; path = ../ANAnimeKit/UserCell.swift; sourceTree = "<group>"; };
+		DAC7D8FE1B5018DE00898FF6 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
+		DAC7D9011B50201300898FF6 /* InAppController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InAppController.swift; sourceTree = "<group>"; };
+		DAC7D9051B50464B00898FF6 /* DialogController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DialogController.swift; sourceTree = "<group>"; };
 		DACCF35C1B110AA2006A13EB /* ANParseKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ANParseKit.swift; sourceTree = "<group>"; };
 		DACCF35E1B111016006A13EB /* AnimeService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeService.swift; sourceTree = "<group>"; };
 		DACE77C11B294D7B00037486 /* NSDate+AniNow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDate+AniNow.swift"; sourceTree = "<group>"; };
@@ -460,15 +466,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DAC13C331B425CB70013D479 /* FBSDKShareKit.framework in Frameworks */,
-				DAC13C301B425CB70013D479 /* FBSDKCoreKit.framework in Frameworks */,
+				DAC7D8FF1B5018DE00898FF6 /* iAd.framework in Frameworks */,
 				DA4167C51B273B0700847F56 /* ANAnimeKit.framework in Frameworks */,
 				DAC13C311B425CB70013D479 /* FBSDKLoginKit.framework in Frameworks */,
 				DA4AF8CC1B276E060020252E /* ANCommonKit.framework in Frameworks */,
 				DAC13C351B4262540013D479 /* ParseFacebookUtilsV4.framework in Frameworks */,
 				DA6E12C51B10D94200B278B0 /* ANParseKit.framework in Frameworks */,
 				6923F76C724843F5AED124BD /* Pods.framework in Frameworks */,
-				DAC13C321B425CB70013D479 /* FBSDKMessengerShareKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -483,6 +487,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAC7D90A1B50541100898FF6 /* FBSDKCoreKit.framework in Frameworks */,
+				DAC7D9081B5053F400898FF6 /* FBSDKShareKit.framework in Frameworks */,
+				DAC7D9041B502A1B00898FF6 /* FBSDKMessengerShareKit.framework in Frameworks */,
 				DA48EA521B28951400D8610F /* ANParseKit.framework in Frameworks */,
 				DAFD60C21B27855B007275C1 /* ANCommonKit.framework in Frameworks */,
 				79AF381FB9C944A80806E321 /* Pods.framework in Frameworks */,
@@ -578,7 +585,7 @@
 		DA07A3461B4C2B560028B81B /* In-App Purchases */ = {
 			isa = PBXGroup;
 			children = (
-				DA3B61D81B4F59E700A3F7BA /* InAppPurchaseController.swift */,
+				DA3B61D81B4F59E700A3F7BA /* InAppController.swift */,
 				DA07A3471B4C2B730028B81B /* InApp.storyboard */,
 				DA07A3491B4C2B860028B81B /* InAppPurchaseViewController.swift */,
 			);
@@ -682,14 +689,14 @@
 			path = ../AnimeNow;
 			sourceTree = "<group>";
 		};
-		DA38A98A1B223B11002FCBB4 /* ActionControllers */ = {
+		DA38A98A1B223B11002FCBB4 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
 				DA38A98B1B223B39002FCBB4 /* Action.storyboard */,
 				DA38A9881B223AF1002FCBB4 /* ActionListViewController.swift */,
 				DA76A1961B235BF4006CB489 /* DropDownListViewController.swift */,
 			);
-			name = ActionControllers;
+			name = ViewControllers;
 			path = ../AnimeNow;
 			sourceTree = "<group>";
 		};
@@ -796,7 +803,7 @@
 				DA2853C01B22C5B40070B675 /* Categories */,
 				DA38A98D1B223EFC002FCBB4 /* Views */,
 				DAF6187D1B3785D600286517 /* Browser */,
-				DA38A98A1B223B11002FCBB4 /* ActionControllers */,
+				DA38A98A1B223B11002FCBB4 /* ViewControllers */,
 				DAC027CE1B2A1C1D0085C91A /* Animators */,
 				DA4AF8B71B276E060020252E /* Supporting Files */,
 			);
@@ -944,6 +951,7 @@
 			isa = PBXGroup;
 			children = (
 				DAC13BFF1B3F4A7A0013D479 /* DataFetchController.swift */,
+				DAC7D9011B50201300898FF6 /* InAppController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -960,6 +968,7 @@
 			isa = PBXGroup;
 			children = (
 				DAA393281B42F21900A8D5D5 /* RootTabBar.swift */,
+				DAC7D9051B50464B00898FF6 /* DialogController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1170,6 +1179,7 @@
 		F4F69FB5D8335951A772F9AC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DAC7D8FE1B5018DE00898FF6 /* iAd.framework */,
 				DAC13C2C1B425CB70013D479 /* FBSDKCoreKit.framework */,
 				DAC13C2D1B425CB70013D479 /* FBSDKLoginKit.framework */,
 				DAC13C2E1B425CB70013D479 /* FBSDKMessengerShareKit.framework */,
@@ -1691,20 +1701,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA8DD6411B3C95F300B05FBF /* SearchViewController.swift in Sources */,
-				DA3B61D91B4F59E700A3F7BA /* InAppPurchaseController.swift in Sources */,
 				DAF618761B377CA700286517 /* AnimeLibraryViewController.swift in Sources */,
 				DAC13C051B4056AB0013D479 /* SettingsViewController.swift in Sources */,
 				DAC13BF71B3EFC1C0013D479 /* LoadingTableCell.swift in Sources */,
 				DAE7A7191B2105FD00788614 /* AnimeCell.swift in Sources */,
+				DAC7D9031B50201C00898FF6 /* InAppController.swift in Sources */,
 				DA58C2DD1B386C7E0082B626 /* UserBaseViewController.swift in Sources */,
 				DAF6187C1B3784E300286517 /* ForumsViewController.swift in Sources */,
 				DAC13C2A1B424DEF0013D479 /* ResetPasswordViewController.swift in Sources */,
 				DA58C2D71B386BAC0082B626 /* UserHistoryViewController.swift in Sources */,
 				DAC13C171B4226E20013D479 /* OnboardingViewController.swift in Sources */,
-				DA07A34A1B4C2B860028B81B /* InAppPurchaseViewController.swift in Sources */,
+				DAC7D8FC1B5015FA00898FF6 /* InAppPurchaseViewController.swift in Sources */,
 				DA52B1831B4838AE001CC1A9 /* CalendarViewController.swift in Sources */,
 				DA27D1991AF1BA9D00CC854E /* ParseWorker.swift in Sources */,
 				DA27D1971AF1BA9D00CC854E /* AppDelegate.swift in Sources */,
+				DAC7D9071B5046AF00898FF6 /* DialogController.swift in Sources */,
 				DAF618781B377D6000286517 /* AnimeListViewController.swift in Sources */,
 				DA8DD6431B3CAEC500B05FBF /* FilterViewController.swift in Sources */,
 				DA58C2E71B39C01B0082B626 /* BrowseViewController.swift in Sources */,
@@ -1772,6 +1783,7 @@
 				DAFD60B61B278452007275C1 /* DropDownListViewController.swift in Sources */,
 				DAE43C3A1B2F971800C3092D /* UIView+Animation.swift in Sources */,
 				DA7C84C61B4333950036D119 /* DataFetchController.swift in Sources */,
+				DAC7D9021B50201300898FF6 /* InAppController.swift in Sources */,
 				DA5A3BFB1B35F19A00C07D71 /* TraktV2.swift in Sources */,
 				DA5A3BFD1B35F19A00C07D71 /* Atarashii.swift in Sources */,
 				DA5A3BFC1B35F19A00C07D71 /* AniList.swift in Sources */,
@@ -2085,6 +2097,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					/Users/paul/Documents/FacebookSDK,
 				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -2116,6 +2129,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					/Users/paul/Documents/FacebookSDK,
 				);
 				INFOPLIST_FILE = ANAnimeKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";

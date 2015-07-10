@@ -339,31 +339,23 @@
                                             <action selector="addToListPressed:" destination="Gi4-Gc-NLH" eventType="touchUpInside" id="ygU-JV-FZu"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mME-c7-d82">
-                                        <rect key="frame" x="557" y="4" width="35" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mME-c7-d82" customClass="FBSDKShareButton">
+                                        <rect key="frame" x="522" y="4" width="70" height="30"/>
                                         <color key="backgroundColor" red="0.89411765340000005" green="0.89411765340000005" blue="0.89411765340000005" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="35" id="5Ig-NV-JeX"/>
+                                            <constraint firstAttribute="width" constant="70" id="5Ig-NV-JeX"/>
                                             <constraint firstAttribute="height" constant="30" id="FYZ-XL-dQi"/>
                                             <constraint firstAttribute="width" constant="106" id="nP9-Hf-9f7"/>
                                         </constraints>
-                                        <state key="normal" image="icon-more-darker">
+                                        <state key="normal">
                                             <color key="titleColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                <integer key="value" value="2"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
                                         <variation key="default">
                                             <mask key="constraints">
                                                 <exclude reference="nP9-Hf-9f7"/>
                                             </mask>
                                         </variation>
-                                        <connections>
-                                            <action selector="moreOptionsPressed:" destination="Gi4-Gc-NLH" eventType="touchUpInside" id="phB-CP-LQj"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.97254902124404907" green="0.97254902124404907" blue="0.97254902124404907" alpha="1" colorSpace="calibratedRGB"/>
@@ -535,6 +527,7 @@
                         <outlet property="closeButton" destination="VMZ-vS-WFH" id="F4u-Oa-ryc"/>
                         <outlet property="etaLabel" destination="Uyp-jX-dBR" id="gai-5g-Hah"/>
                         <outlet property="fanartImageView" destination="rTn-ZB-ad5" id="fKb-2P-ZKA"/>
+                        <outlet property="fbShareButton" destination="mME-c7-d82" id="fFv-rw-gTz"/>
                         <outlet property="listButton" destination="w04-sa-THe" id="vCH-oZ-8MH"/>
                         <outlet property="membersCountLabel" destination="riH-A3-wgP" id="je8-c6-Dut"/>
                         <outlet property="popularityRankLabel" destination="EeG-Mn-nrN" id="VhV-FI-aE2"/>
@@ -1289,7 +1282,7 @@
                                                                 <constraint firstAttribute="width" constant="44" id="7b0-bR-w9B"/>
                                                                 <constraint firstAttribute="height" constant="44" id="AEc-As-jhN"/>
                                                             </constraints>
-                                                            <inset key="contentEdgeInsets" minX="12" minY="12" maxX="12" maxY="12"/>
+                                                            <inset key="contentEdgeInsets" minX="12" minY="10" maxX="12" maxY="14"/>
                                                             <state key="normal" image="icon-share">
                                                                 <color key="titleColor" red="0.47843137250000001" green="0.16862745100000001" blue="0.61176470589999998" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -1299,21 +1292,39 @@
                                                             </connections>
                                                         </button>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Apr 6, 2015 4:00 am" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xB0-ZF-EYy">
-                                                            <rect key="frame" x="401" y="13" width="131" height="17"/>
+                                                            <rect key="frame" x="355" y="13" width="131" height="17"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zy3-d9-9PN">
+                                                            <rect key="frame" x="490" y="0.0" width="44" height="44"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="44" id="gZA-qG-OZ3"/>
+                                                                <constraint firstAttribute="width" constant="44" id="jRQ-WU-huU"/>
+                                                            </constraints>
+                                                            <inset key="contentEdgeInsets" minX="12" minY="12" maxX="12" maxY="12"/>
+                                                            <state key="normal" image="icon-messenger">
+                                                                <color key="titleColor" red="0.47843137250000001" green="0.16862745100000001" blue="0.61176470589999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="shareOnMessengerPressed:" destination="4OR-ez-C2Q" eventType="touchUpInside" id="0NS-Ku-teK"/>
+                                                            </connections>
+                                                        </button>
                                                     </subviews>
                                                     <color key="backgroundColor" red="0.1058823529" green="0.1058823529" blue="0.1058823529" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="trailingMargin" secondItem="WyI-6c-vvN" secondAttribute="trailing" constant="-6" id="4Zt-Zw-x6k"/>
                                                         <constraint firstAttribute="height" constant="44" id="BWP-vP-kuT"/>
+                                                        <constraint firstItem="WyI-6c-vvN" firstAttribute="leading" secondItem="Zy3-d9-9PN" secondAttribute="trailing" id="Ct6-8f-0nr"/>
                                                         <constraint firstItem="lk7-Ky-pui" firstAttribute="top" secondItem="C9i-HC-OAc" secondAttribute="top" id="EOt-gL-KYs"/>
                                                         <constraint firstItem="wL6-Gt-hI5" firstAttribute="leading" secondItem="xzN-Dj-cLL" secondAttribute="leading" id="Hse-Ka-LvF"/>
                                                         <constraint firstAttribute="centerY" secondItem="WyI-6c-vvN" secondAttribute="centerY" id="NNz-2C-skm"/>
                                                         <constraint firstItem="wL6-Gt-hI5" firstAttribute="leading" secondItem="lk7-Ky-pui" secondAttribute="trailing" constant="6" id="OYz-yV-P9q"/>
+                                                        <constraint firstItem="Zy3-d9-9PN" firstAttribute="leading" secondItem="xB0-ZF-EYy" secondAttribute="trailing" constant="4" id="Yy0-id-ePM"/>
                                                         <constraint firstItem="wL6-Gt-hI5" firstAttribute="top" secondItem="C9i-HC-OAc" secondAttribute="top" constant="4" id="beu-zQ-EUQ"/>
+                                                        <constraint firstItem="Zy3-d9-9PN" firstAttribute="centerY" secondItem="WyI-6c-vvN" secondAttribute="centerY" id="cF1-MR-r9l"/>
                                                         <constraint firstItem="WyI-6c-vvN" firstAttribute="leading" secondItem="xB0-ZF-EYy" secondAttribute="trailing" constant="2" id="j7h-wh-LO4"/>
                                                         <constraint firstItem="WyI-6c-vvN" firstAttribute="centerY" secondItem="xB0-ZF-EYy" secondAttribute="centerY" constant="0.5" id="jy1-x6-Ppo"/>
                                                         <constraint firstItem="xzN-Dj-cLL" firstAttribute="top" secondItem="C9i-HC-OAc" secondAttribute="top" constant="3" id="lPf-OQ-HCf"/>
@@ -1327,6 +1338,7 @@
                                                             <exclude reference="leF-Td-ToR"/>
                                                             <exclude reference="oSP-Tt-TN3"/>
                                                             <exclude reference="wed-rQ-ewT"/>
+                                                            <exclude reference="j7h-wh-LO4"/>
                                                         </mask>
                                                     </variation>
                                                 </view>
@@ -1394,7 +1406,7 @@
         <image name="icon-group" width="25" height="25"/>
         <image name="icon-group-filled" width="25" height="25"/>
         <image name="icon-information" width="25" height="25"/>
-        <image name="icon-more-darker" width="25" height="25"/>
+        <image name="icon-messenger" width="22" height="22"/>
         <image name="icon-play" width="50" height="50"/>
         <image name="icon-share" width="30" height="30"/>
         <image name="text-shadow" width="10" height="45"/>

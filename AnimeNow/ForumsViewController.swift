@@ -46,6 +46,7 @@ class ForumsViewController: UIViewController {
         tableView.estimatedRowHeight = 61.0
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.animateFadeIn()
+        
     }
     
 }

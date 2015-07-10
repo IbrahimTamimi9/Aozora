@@ -9,14 +9,14 @@
 import RealmSwift
 
 public class AnimeProgress: Object {
-    dynamic public var animeID = 0
+    dynamic public var myAnimeListID = 0
     dynamic public var status = ""
     dynamic public var episodes = 0
     dynamic public var score = 0
     dynamic public var parseID = ""
     
     override public static func primaryKey() -> String? {
-        return "animeID"
+        return "myAnimeListID"
     }
     
     public func updatedEpisodes(animeEpisodes: Int) {

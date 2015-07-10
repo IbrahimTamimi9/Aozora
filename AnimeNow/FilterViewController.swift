@@ -95,8 +95,14 @@ class FilterViewController: UIViewController {
         dismissViewControllerAnimated(true, completion: nil)
     }
     @IBAction func applyFilterPressed(sender: AnyObject) {
-        delegate?.finishedWith(configuration: sectionsDataSource, selectedGenres: selectedGenres)
-        dismissViewControllerAnimated(true, completion: nil)
+        
+        if let _ = InAppController.purchasedAnyPro() {
+            delegate?.finishedWith(configuration: sectionsDataSource, selectedGenres: selectedGenres)
+            dismissViewControllerAnimated(true, completion: nil)
+        } else {
+            InAppPurchaseViewController.showInAppPurchaseWith(self)
+        }
+        
     }
 }
 

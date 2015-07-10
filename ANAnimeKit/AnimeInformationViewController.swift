@@ -12,6 +12,7 @@ import ANCommonKit
 import ANParseKit
 import XCDYouTubeKit
 import RealmSwift
+import FBSDKShareKit
 
 enum AnimeSection: Int {
     case Synopsis = 0
@@ -94,6 +95,8 @@ public class AnimeInformationViewController: AnimeBaseViewController {
                 } else {
                     trailerButton.hidden = true
                 }
+                
+                configureShareButton()
             
                 tableView.dataSource = self
                 tableView.delegate = self
@@ -122,6 +125,7 @@ public class AnimeInformationViewController: AnimeBaseViewController {
     @IBOutlet weak var popularityRankLabel: UILabel!
     @IBOutlet weak var posterImageView: UIImageView!
     @IBOutlet weak var fanartImageView: UIImageView!
+    @IBOutlet weak var fbShareButton: FBSDKShareButton!
     
     override public func viewDidLoad() {
         super.viewDidLoad()
@@ -155,6 +159,17 @@ public class AnimeInformationViewController: AnimeBaseViewController {
             self.ranksView.hidden = false
             self.anime = objects?.first as! Anime
         }
+    }
+    
+    func configureShareButton() {
+        let photo = FBSDKSharePhoto()
+        photo.image = fanartImageView.image
+        photo.userGenerated = true
+        
+        let content = FBSDKSharePhotoContent()
+        content.photos = [photo]
+        
+        fbShareButton.shareContent = content
     }
     
     // MARK: - IBActions
@@ -258,7 +273,7 @@ public class AnimeInformationViewController: AnimeBaseViewController {
             
             // Save
             var animeProgress = AnimeProgress()
-            animeProgress.animeID = anime.myAnimeListID
+            animeProgress.myAnimeListID = anime.myAnimeListID
             animeProgress.status = list.rawValue
             animeProgress.episodes = 0
             animeProgress.score = 0
@@ -292,20 +307,22 @@ public class AnimeInformationViewController: AnimeBaseViewController {
         
         var progress = anime.progress
  
-        var alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
-        alert.addAction(UIAlertAction(title: "Rate anime", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
-            
-        }))
-        alert.addAction(UIAlertAction(title: "Enable reminders", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
+//        var alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+//        alert.addAction(UIAlertAction(title: "Rate anime", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
+//            
+//        }))
+//        alert.addAction(UIAlertAction(title: "Enable reminders", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
+//
+//        }))
+//        alert.addAction(UIAlertAction(title: "Share", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
+//
+//        }))
+//        
+//        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler:nil))
+//        
+//        self.presentViewController(alert, animated: true, completion: nil)
 
-        }))
-        alert.addAction(UIAlertAction(title: "Share", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
-
-        }))
         
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler:nil))
-        
-        self.presentViewController(alert, animated: true, completion: nil)
         
     }
     // MARK: - Helper Functions

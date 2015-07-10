@@ -300,8 +300,19 @@ extension BrowseViewController: DataFetchControllerDelegate {
 
 extension BrowseViewController: DropDownListDelegate {
     func selectedAction(trigger: UIView, action: String, indexPath: NSIndexPath) {
-        let rawValue = BrowseType.allItems()[indexPath.row]
-        fetchListType(BrowseType(rawValue: rawValue)!)
+        
+        if let _ = InAppController.purchasedAnyPro() {
+            
+            let rawValue = BrowseType.allItems()[indexPath.row]
+            fetchListType(BrowseType(rawValue: rawValue)!)
+                
+        }
+    }
+    
+    func dropDownDidDismissed(selectedAction: Bool) {
+        if selectedAction && InAppController.purchasedAnyPro() == nil {
+            InAppPurchaseViewController.showInAppPurchaseWith(self)
+        }
     }
 }
 

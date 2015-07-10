@@ -12,13 +12,13 @@ import Alamofire
 public struct Atarashii {
     
     public struct Progress {
-        var animeID: Int
+        var myAnimeListID: Int
         var status: Int
         var episodes: Int
         var score: Int
         
-        public init(animeID: Int, status: MALList, episodes: Int, score: Int) {
-            self.animeID = animeID
+        public init(myAnimeListID: Int, status: MALList, episodes: Int, score: Int) {
+            self.myAnimeListID = myAnimeListID
             
             switch status {
             case .Planning:
@@ -38,7 +38,7 @@ public struct Atarashii {
         }
         
         func toDictionary() -> [String: Int] {
-            return ["anime_id": animeID, "status": status, "episodes": episodes, "score": score]
+            return ["anime_id": myAnimeListID, "status": status, "episodes": episodes, "score": score]
         }
     }
     
@@ -75,7 +75,7 @@ public struct Atarashii {
                 case animeAdd(let progress):
                     return (.POST,"animelist/anime", progress.toDictionary())
                 case animeUpdate(let progress):
-                    return (.PUT,"animelist/anime/\(progress.animeID)", progress.toDictionary())
+                    return (.PUT,"animelist/anime/\(progress.myAnimeListID)", progress.toDictionary())
                 case animeDelete(let id):
                     return (.DELETE,"animelist/anime/\(id)",[:])
                 }
