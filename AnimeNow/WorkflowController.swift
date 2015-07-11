@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import ANParseKit
+import ANCommonKit
 
 class WorkflowController {
     
@@ -30,6 +32,20 @@ class WorkflowController {
             }
         }
         
+    }
+    
+    class func presentOnboardingController(asRoot: Bool) {
+            
+        let onboarding = UIStoryboard(name: "Onboarding", bundle: nil).instantiateInitialViewController() as! OnboardingViewController
+        
+        if asRoot {
+            onboarding.isInWindowRoot = true
+            applicationWindow().rootViewController = onboarding
+            applicationWindow().makeKeyAndVisible()
+        } else {
+            applicationWindow().rootViewController?.presentViewController(onboarding, animated: true, completion: nil)
+        }
+
     }
     
     class func changeRootViewController(vc: UIViewController, animationDuration: NSTimeInterval = 0.5) {
@@ -59,5 +75,50 @@ class WorkflowController {
                     snapshot.removeFromSuperview()
             })
         }
+    }
+    
+    class func applicationWindow() -> UIWindow {
+        return UIApplication.sharedApplication().delegate!.window!!
+    }
+    
+    class func logoutUser() -> BFTask {
+        // Remove cookies
+        let storage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
+        for cookie in storage.cookies as! [NSHTTPCookie] {
+            storage.deleteCookie(cookie)
+        }
+        
+        // Removed saved data
+        let query = Anime.query()!
+        query.fromLocalDatastore()
+        query.findObjectsInBackgroundWithBlock { (result, error) -> Void in
+            PFObject.unpinAllInBackground(result)
+        }
+        
+        let query2 = Episode.query()!
+        query2.fromLocalDatastore()
+        query2.findObjectsInBackgroundWithBlock { (result, error) -> Void in
+            PFObject.unpinAllInBackground(result)
+        }
+        
+        // Remove defaults
+        NSUserDefaults.standardUserDefaults().removeObjectForKey(LibrarySyncController.lastSyncDateDefaultsKey)
+
+        // Logout MAL
+        PFUser.removeCredentials()
+        
+        if let user = PFUser.currentUser() {
+            PFFacebookUtils.unlinkUserInBackground(user, block: { (succeeded, error) -> Void in
+                if succeeded {
+                    println("The user is no longer associated with their Facebook account.")
+                } else {
+                    println("Failed unlinking from Facebook!")
+                }
+            })
+        }
+        
+        // Logout user
+        return PFUser.logOutInBackground()
+
     }
 }

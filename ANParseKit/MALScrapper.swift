@@ -118,14 +118,14 @@ public class MALScrapper {
     
     public func loginWith(#username: String, password: String) -> BFTask {
 
-        let urlString = "http://myanimelist.net/login.php"
+        let urlString = "http://myanimelist.net/login.php?from=%2Fpanel.php"
         let postData = "user_name:'\(username)',password:'\(password)'"
         let script = "post('\(urlString)', {\(postData)});"
         
         let completion = BFTaskCompletionSource()
         
         viewController.webScraper.makePostRequestWithScript(script, handler: { (body) -> Void in
-            if (body as NSString).containsString("\(username)") {
+            if (body.lowercaseString as NSString).containsString("\(username)") {
                 println("Logged in!")
                 completion.setResult(nil)
             } else {

@@ -42,7 +42,7 @@ class ProfileViewController: XLButtonBarPagerTabStripViewController {
         
         isProgressiveIndicator = true
         buttonBarView.selectedBar.backgroundColor = UIColor.peterRiver()
-        title = username
+        title = "Me"
         
         loadingView.startAnimating()
         

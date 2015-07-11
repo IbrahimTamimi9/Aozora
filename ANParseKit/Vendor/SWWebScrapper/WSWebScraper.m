@@ -98,7 +98,11 @@
 - (void)realizePostRequest {
     
     [self.webView evaluateJavaScript:self.script completionHandler:^(id result, NSError *error) {
-        NSLog(@"Error %@",error);
+        if (error) {
+            NSLog(@"Error %@",error);
+        } else {
+            NSLog(@"Result %@",result);
+        }
     }];
     
     self.didMadePostRequest = YES;

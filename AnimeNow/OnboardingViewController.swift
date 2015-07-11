@@ -65,7 +65,20 @@ class OnboardingViewController: UIViewController {
                 }
                 self.presentRootTabBar()
             } else {
-                println("Uh oh. The user cancelled the Facebook login.")
+                PFUser.logOutInBackgroundWithBlock({ (error) -> Void in
+                    
+                    if let error = error {
+                        println("Uh oh. \(error.localizedDescription)")
+                    } else {
+                        PFFacebookUtils.linkUserInBackground(PFUser.currentUser()!, withReadPermissions: permissions).continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
+                            
+                            self.presentRootTabBar()
+                            
+                            return nil
+                        })
+                    }
+                    
+                })
             }
         }
     }

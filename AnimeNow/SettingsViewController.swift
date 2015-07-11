@@ -41,32 +41,6 @@ class SettingsViewController: UITableViewController {
 
     }
     
-    func logoutUser() {
-        
-        let query = Anime.query()!
-        query.fromLocalDatastore()
-        query.findObjectsInBackgroundWithBlock { (result, error) -> Void in
-            PFObject.unpinAllInBackground(result)
-        }
-        
-        let query2 = Episode.query()!
-        query2.fromLocalDatastore()
-        query2.findObjectsInBackgroundWithBlock { (result, error) -> Void in
-            PFObject.unpinAllInBackground(result)
-        }
-        
-        PFUser.logOutInBackgroundWithBlock({ (error) -> Void in
-            PFUser.removeCredentials()
-            
-            self.updateLoginButton()
-            
-            let onboarding = UIStoryboard(name: "Onboarding", bundle: nil).instantiateInitialViewController() as! OnboardingViewController
-            onboarding.isInWindowRoot = false
-            self.presentViewController(onboarding, animated: true, completion: nil)
-            
-        })
-    }
-    
     // MARK: - IBActions
     
     @IBAction func dismissPressed(sender: AnyObject) {
@@ -83,14 +57,21 @@ class SettingsViewController: UITableViewController {
             // Login / Logout
             if PFUser.currentUserLoggedIn() {
                 // Logged In both, logout
-                logoutUser()
+                WorkflowController.logoutUser().continueWithExecutor( BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
+                    
+                    if let error = task.error {
+                        println("failed loggin out: \(error)")
+                    } else {
+                        println("logout succeeded")
+                    }
+                    WorkflowController.presentOnboardingController(true)
+                    return nil
+                })
+                
                 
             } else if PFUser.currentUserIsGuest() {
                 // User is guest, login
-                let onboarding = UIStoryboard(name: "Onboarding", bundle: nil).instantiateInitialViewController() as! OnboardingViewController
-                onboarding.isInWindowRoot = false
-                presentViewController(onboarding, animated: true, completion: nil)
-                
+                WorkflowController.presentOnboardingController(true)
             }
 
         case (1,0):

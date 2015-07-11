@@ -66,6 +66,7 @@ public class LoginViewController: UIViewController {
             self.loadingView.stopAnimating()
             
             if let error = task.error {
+                println(error)
                 UIAlertView(title: "Wrong credentials..", message: nil, delegate: nil, cancelButtonTitle: "What?! Ok..").show()
             } else {
                 UIAlertView(title: "Logged in!", message: nil, delegate: nil, cancelButtonTitle: "Cool").show()

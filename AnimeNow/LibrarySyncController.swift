@@ -15,7 +15,7 @@ import RealmSwift
 
 public class LibrarySyncController {
     
-    static let lastSyncDateDefaultsKey = "LibrarySync.LastSyncDate"
+    public static let lastSyncDateDefaultsKey = "LibrarySync.LastSyncDate"
     class var shouldSyncData: Bool {
         get {
             let lastSyncDate = NSUserDefaults.standardUserDefaults().objectForKey(lastSyncDateDefaultsKey) as! NSDate?

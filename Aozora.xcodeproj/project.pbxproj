@@ -1002,7 +1002,7 @@
 		DAC13C061B41DEF00013D479 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
-				DAC13C241B4249450013D479 /* Controllers */,
+				DAC13C251B42495A0013D479 /* WorkflowController.swift */,
 				DAC13C091B421A730013D479 /* anime-scenery.jpg */,
 				DAC13C071B41DF0E0013D479 /* Onboarding.storyboard */,
 				DAC13C161B4226E20013D479 /* OnboardingViewController.swift */,
@@ -1010,14 +1010,6 @@
 				DAC13C291B424DEF0013D479 /* ResetPasswordViewController.swift */,
 			);
 			name = Onboarding;
-			sourceTree = "<group>";
-		};
-		DAC13C241B4249450013D479 /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				DAC13C251B42495A0013D479 /* WorkflowController.swift */,
-			);
-			name = Controllers;
 			sourceTree = "<group>";
 		};
 		DAC13C2B1B425C200013D479 /* Fonts */ = {

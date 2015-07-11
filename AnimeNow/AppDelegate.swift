@@ -70,10 +70,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             WorkflowController.presentRootTabBar(animated: false)
             
         } else {
-            let onboarding = UIStoryboard(name: "Onboarding", bundle: nil).instantiateInitialViewController() as! OnboardingViewController
-            
-            window?.rootViewController = onboarding
-            window?.makeKeyAndVisible()
+            WorkflowController.presentOnboardingController(true)
         }
         
         return true
