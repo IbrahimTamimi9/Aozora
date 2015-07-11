@@ -43,6 +43,8 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
     var allAnimeLists: [AnimeList] = [.Watching, .Planning, .OnHold, .Completed, .Dropped]
     var controllers: [AnimeListViewController] = []
     
+    var loadingView: LoaderView!
+    
     var currentConfiguration: Configuration {
         get {
             return configurations[Int(currentIndex)]
@@ -74,15 +76,7 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
         if let layoutType = NSUserDefaults.standardUserDefaults().objectForKey(key) as? String, let layoutTypeEnum = LibraryLayout(rawValue: layoutType) {
             return layoutTypeEnum
         } else {
-            switch list {
-            case .Watching: fallthrough
-            case .Planning: fallthrough
-            case .OnHold:
-                return LibraryLayout.CheckIn
-            case .Completed: fallthrough
-            case .Dropped:
-                return LibraryLayout.Compact
-            }
+            return LibraryLayout.CheckIn
         }
 
     }
@@ -97,14 +91,15 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
         self.isProgressiveIndicator = true
         self.buttonBarView.selectedBar.backgroundColor = UIColor.peterRiver()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateDataSource", name: ANAnimeKit.LibraryUpdatedNotification, object: nil)
      
+        loadingView = LoaderView(parentView: view)
+        
         fetchAnimeList(false)
+        
     }
     
     deinit {
@@ -116,6 +111,8 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
     }
     
     func fetchAnimeList(isRefreshing: Bool) -> BFTask {
+        loadingView.startAnimating()
+        
         return LibrarySyncController.fetchAnimeList(isRefreshing).continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
             
             var animeList = task.result as! [Anime]
@@ -142,7 +139,10 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
             }
             
             return nil
-        }
+        }.continueWithBlock({ (task: BFTask!) -> AnyObject! in
+            self.loadingView.stopAnimating()
+            return nil
+        })
     }
     
     // MARK: - IBActions

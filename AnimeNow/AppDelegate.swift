@@ -9,6 +9,7 @@
 import UIKit
 import ANParseKit
 import ANAnimeKit
+import ANCommonKit
 import XCDYouTubeKit
 import JTSImageViewController
 import iRate
@@ -52,6 +53,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let settings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
         application.registerUserNotificationSettings(settings)
         application.registerForRemoteNotifications()
+        
+        // Ads
+        if InAppController.purchasedAnyPro() == nil {
+            UIViewController.prepareInterstitialAds()
+        }
         
         // Appearance
         customizeAppearance()
@@ -128,12 +134,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     openURL url: NSURL,
     sourceApplication: String?,
     annotation: AnyObject?) -> Bool {
-        
-        // TODO: Remove this
-        if let parsedUrl = BFURL(inboundURL: url, sourceApplication: sourceApplication) where parsedUrl.appLinkData != nil {
-            let targetURL = parsedUrl.targetURL
-            UIAlertView(title: "Received Link", message: targetURL.absoluteString, delegate: nil, cancelButtonTitle: "Ok").show()
-        }
             
         return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
     }

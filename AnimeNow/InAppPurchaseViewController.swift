@@ -33,14 +33,20 @@ class InAppPurchaseViewController: UITableViewController {
         
         loadingView = LoaderView(parentView: view)
         
-        updateViewForPurchaseState()
-        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateViewForPurchaseState", name: PurchasedProNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "setPrices", name: PurchasedProNotification, object: nil)
 
-        if let _ = parentViewController as? UINavigationController {
-            navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Stop, target: self, action: "dismissViewControllerPressed")
+        println(parentViewController)
+        println(presentingViewController)
+        
+        if let navController = parentViewController as? UINavigationController {
+            if let firstController = navController.viewControllers.first as? UIViewController where !firstController.isKindOfClass(SettingsViewController) {
+                navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Stop, target: self, action: "dismissViewControllerPressed")
+            }
         }
+        
+        updateViewForPurchaseState()
+        fetchProducts()
     }
     
     deinit {
@@ -49,7 +55,7 @@ class InAppPurchaseViewController: UITableViewController {
     
     func updateViewForPurchaseState() {
         if let _ = InAppController.purchasedAnyPro() {
-            descriptionLabel.text = "Thanks for supporting Aozora! You're an exclusive Pro member that is helping me create an even better app"
+            descriptionLabel.text = "Thanks for supporting Aozora! You're an exclusive Pro member that is helping us create an even better app"
         } else {
             descriptionLabel.text = "Browse all seasonal charts, unlock calendar view, discover more anime, remove all ads forever, and more importantly helps us take Aozora to the next level"
         }
@@ -96,10 +102,7 @@ class InAppPurchaseViewController: UITableViewController {
     func purchaseProductWithID(productID: String) {
         InAppTransactionController.purchaseProductWithID(productID).continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
             
-            var alert = UIAlertController(title: "Purchased!", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
             
-            self.presentViewController(alert, animated: true, completion: nil)
             
             return nil
         }

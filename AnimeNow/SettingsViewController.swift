@@ -99,7 +99,17 @@ class SettingsViewController: UITableViewController {
             navigationController?.pushViewController(controller, animated: true)
         case (1,1):
             // Restore purchases
-            InAppTransactionController.restorePurchases()
+            InAppTransactionController.restorePurchases().continueWithBlock({ (task: BFTask!) -> AnyObject! in
+                
+                if let _ = task.result {
+                    var alert = UIAlertController(title: "Restored!", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
+                    alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
+                    
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
+                
+                return nil
+            })
         case (2,0):
             // Rate app
             iRate.sharedInstance().openRatingsPageInAppStore()

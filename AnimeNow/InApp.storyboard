@@ -55,7 +55,7 @@
                                         <constraint firstAttribute="width" constant="140" id="yqZ-h5-P7n"/>
                                     </constraints>
                                     <inset key="contentEdgeInsets" minX="0.0" minY="5" maxX="0.0" maxY="0.0"/>
-                                    <state key="normal" title="$5.99">
+                                    <state key="normal">
                                         <color key="titleColor" red="0.97254902119999997" green="0.97254902119999997" blue="0.97254902119999997" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
@@ -83,7 +83,7 @@
                                         <constraint firstAttribute="height" constant="40" id="xfe-5x-Goa"/>
                                     </constraints>
                                     <inset key="contentEdgeInsets" minX="0.0" minY="5" maxX="0.0" maxY="0.0"/>
-                                    <state key="normal" title="$9.99">
+                                    <state key="normal">
                                         <color key="titleColor" red="0.97254902119999997" green="0.97254902119999997" blue="0.97254902119999997" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
