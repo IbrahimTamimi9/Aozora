@@ -42,7 +42,10 @@ public class LibrarySyncController {
         
         if shouldSyncData || isRefreshing {
             println("Fetching all anime library from network")
-            return loadAnimeList().continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
+            return pushNonSyncedChanges().continueWithBlock({ (task: BFTask!) -> AnyObject! in
+                    return self.loadAnimeList()
+                
+                }).continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
                 
                 let result = task.result["anime"] as! [[String: AnyObject]]
                 let realm = Realm()
@@ -54,6 +57,7 @@ public class LibrarySyncController {
                     animeProgress.status = data["watched_status"] as! String
                     animeProgress.episodes = data["watched_episodes"] as! Int
                     animeProgress.score = data["score"] as! Int
+                    animeProgress.syncState = SyncState.InSync.rawValue
                     newAnimeProgress.append(animeProgress)
                 }
                 
@@ -67,6 +71,35 @@ public class LibrarySyncController {
             println("Only fetching from parse")
             return fetchAllAnimeProgress()
         }
+    }
+    
+    class func pushNonSyncedChanges() -> BFTask {
+        
+        // Fetch Progress
+        let realm = Realm()
+        let animeLibrary = realm.objects(AnimeProgress).filter("syncState != \(SyncState.InSync.rawValue)")
+        
+        var tasks: [BFTask] = []
+        
+        for progress in animeLibrary {
+            let task: BFTask
+            
+            switch SyncState(rawValue: progress.syncState)! {
+            case .Created:
+                task = addAnime(progress)
+            case .Updated:
+                task = updateAnime(progress)
+            case .Deleted:
+                task = deleteAnime(progress)
+            default:
+                task = BFTask(result: nil)
+            }
+            
+            tasks.append(task)
+        }
+        println("Pushing \(tasks.count) non synced objects")
+        return BFTask(forCompletionOfAllTasks: tasks)
+        
     }
     
     
@@ -88,7 +121,7 @@ public class LibrarySyncController {
     
     class func fetchAllAnimeProgress() -> BFTask {
         let realm = Realm()
-        let animeLibrary = realm.objects(AnimeProgress)
+        let animeLibrary = realm.objects(AnimeProgress).filter("syncState != \(SyncState.Deleted.rawValue)")
         
         var idList: [Int] = []
         var animeList: [Anime] = []
@@ -97,7 +130,7 @@ public class LibrarySyncController {
         }
         
         // Fetch from disk then network
-        return fetchAnimeFromLocalDatastore(idList)
+        return fetchAnime(idList, fromLocalDataStore: true)
         .continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
             
             if let result = task.result as? [Anime] where result.count > 0 {
@@ -115,7 +148,7 @@ public class LibrarySyncController {
             })
             
             if missingIdList.count != 0 {
-                return self.fetchAnimeFromNetwork(missingIdList)
+                return self.fetchAnime(missingIdList, fromLocalDataStore: false, includeAllData: true)
             } else {
                 return nil
             }
@@ -137,22 +170,25 @@ public class LibrarySyncController {
         })
     }
     
-    public class func fetchAnimeFromLocalDatastore(myAnimeListIDs: [Int]) -> BFTask {
-        println("From local datastore...")
-        let query = Anime.query()!
+    public class func fetchAnime(myAnimeListIDs: [Int], fromLocalDataStore: Bool = false, includeAllData: Bool = false) -> BFTask {
+        
+        let query: PFQuery
+        if includeAllData {
+            query = Anime.queryIncludingAddData()
+        } else {
+            query = Anime.query()!
+        }
+        
         query.limit = 1000
-        query.fromLocalDatastore()
+        if fromLocalDataStore {
+            println("From local datastore...")
+            query.fromLocalDatastore()
+        } else {
+            println("From network...")
+        }
+        
         query.whereKey("myAnimeListID", containedIn: myAnimeListIDs)
         return query.findObjectsInBackground()
-    }
-    
-    class func fetchAnimeFromNetwork(myAnimeListIDs: [Int]) -> BFTask {
-        // Fetch from network for missing titles
-        println("From network...")
-        let networkQuery = Anime.query()!
-        networkQuery.limit = 1000
-        networkQuery.whereKey("myAnimeListID", containedIn: myAnimeListIDs)
-        return networkQuery.findObjectsInBackground()
     }
     
     public class func matchAnimeWithProgress(animeList: [Anime]) {
@@ -179,18 +215,48 @@ public class LibrarySyncController {
     public class func addAnime(progress: AnimeProgress) -> BFTask {
         
         let malProgress = malProgressWithProgress(progress)
-        return requestWithProgress(progress, router: Atarashii.Router.animeAdd(progress: malProgress))
+        return requestWithProgress(progress, router: Atarashii.Router.animeAdd(progress: malProgress)).continueWithBlock({ (task: BFTask!) -> AnyObject! in
+            
+            if let error = task.error {
+                Realm().write({ () -> Void in
+                    progress.syncState = SyncState.Created.rawValue
+                })
+            }
+            
+            return nil
+        })
     }
     
     public class func updateAnime(progress: AnimeProgress) -> BFTask {
         
         let malProgress = malProgressWithProgress(progress)
-        return requestWithProgress(progress, router: Atarashii.Router.animeUpdate(progress: malProgress))
+        return requestWithProgress(progress, router: Atarashii.Router.animeUpdate(progress: malProgress)).continueWithBlock({ (task: BFTask!) -> AnyObject! in
+            
+            if let error = task.error {
+                Realm().write({ () -> Void in
+                    progress.syncState = SyncState.Updated.rawValue
+                })
+            }
+            
+            return nil
+        })
     }
     
     public class func deleteAnime(progress: AnimeProgress) -> BFTask {
         
-        return requestWithProgress(progress, router: Atarashii.Router.animeDelete(id: progress.myAnimeListID))
+        return requestWithProgress(progress, router: Atarashii.Router.animeDelete(id: progress.myAnimeListID)).continueWithBlock({ (task: BFTask!) -> AnyObject! in
+            
+            if let error = task.error {
+                Realm().write({ () -> Void in
+                    progress.syncState = SyncState.Deleted.rawValue
+                })
+                return BFTask(error: NSError())
+            } else {
+                return BFTask(result: nil)
+            }
+            
+            
+        })
     }
     
     class func requestWithProgress(progress: AnimeProgress, router: Atarashii.Router) -> BFTask {

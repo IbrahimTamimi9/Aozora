@@ -8,12 +8,20 @@
 
 import RealmSwift
 
+public enum SyncState: Int {
+    case InSync = 0
+    case Created
+    case Updated
+    case Deleted
+}
+
 public class AnimeProgress: Object {
     dynamic public var myAnimeListID = 0
     dynamic public var status = ""
     dynamic public var episodes = 0
     dynamic public var score = 0
     dynamic public var parseID = ""
+    dynamic public var syncState = 0
     
     override public static func primaryKey() -> String? {
         return "myAnimeListID"

@@ -76,7 +76,7 @@ public class Anime: PFObject, PFSubclassing {
     
     public func episodeList(pin: Bool = false, tag: PinName) -> BFTask {
     
-        if cachedEpisodeList.count != 0 || (episodes == 0 && pin) {
+        if cachedEpisodeList.count != 0 || (episodes == 0 && pin && traktID == 0) {
             return BFTask(result: cachedEpisodeList)
         }
         
@@ -210,11 +210,8 @@ public class Anime: PFObject, PFSubclassing {
     }
     
     // Fetching
-    public class func queryWith(#objectID: String) -> PFQuery {
-        
+    public class func queryIncludingAddData() -> PFQuery {
         let query = Anime.query()!
-        query.limit = 1
-        query.whereKey("objectId", equalTo: objectID)
         query.includeKey("details")
         query.includeKey("cast")
         query.includeKey("characters")
@@ -222,15 +219,19 @@ public class Anime: PFObject, PFSubclassing {
         return query
     }
     
+    public class func queryWith(#objectID: String) -> PFQuery {
+        
+        let query = Anime.queryIncludingAddData()
+        query.limit = 1
+        query.whereKey("objectId", equalTo: objectID)
+        return query
+    }
+    
     public class func queryWith(#malID: Int) -> PFQuery {
         
-        let query = Anime.query()!
+        let query = Anime.queryIncludingAddData()
         query.limit = 1
         query.whereKey("myAnimeListID", equalTo: malID)
-        query.includeKey("details")
-        query.includeKey("cast")
-        query.includeKey("characters")
-        query.includeKey("relations")
         return query
     }
     

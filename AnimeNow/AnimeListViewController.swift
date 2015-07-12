@@ -82,6 +82,12 @@ class AnimeListViewController: UIViewController {
         addRefreshControl()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        refreshControl.endRefreshing()
+        
+    }
+    
     func addRefreshControl() {
         refreshControl.tintColor = UIColor.lightGrayColor()
         refreshControl.addTarget(self, action: "refreshLibrary", forControlEvents: UIControlEvents.ValueChanged)

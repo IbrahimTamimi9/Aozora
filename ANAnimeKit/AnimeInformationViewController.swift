@@ -13,6 +13,7 @@ import ANParseKit
 import XCDYouTubeKit
 import RealmSwift
 import FBSDKShareKit
+import Bolts
 
 enum AnimeSection: Int {
     case Synopsis = 0
@@ -47,61 +48,7 @@ public class AnimeInformationViewController: AnimeBaseViewController {
     
     override var anime: Anime! {
         didSet {
-            if anime.details.isDataAvailable() && isViewLoaded() {
-                
-                if let progress = anime.progress {
-                    updateListButtonTitle(progress.status)
-                } else {
-                    updateListButtonTitle("Add to list ")
-                }
-                
-                animeTitle.text = anime.title
-                let episodes = (anime.episodes != 0) ? anime.episodes.description : "?"
-                let duration = (anime.duration != 0) ? anime.duration.description : "?"
-                let year = (anime.year != 0) ? anime.year.description : "?"
-                tagsLabel.text = "\(anime.type) · \(ANAnimeKit.shortClassification(anime.details.classification)) · \(episodes) eps · \(duration) min · \(year)"
-                
-                if let status = AnimeStatus(rawValue: anime.status) {
-                    switch status {
-                    case .CurrentlyAiring:
-                        etaLabel.text = "Airing    "
-                        etaLabel.backgroundColor = UIColor(red: 155/255.0, green: 225/255.0, blue: 130/255.0, alpha: 1.0)
-                    case .FinishedAiring:
-                        etaLabel.text = "Aired    "
-                        etaLabel.backgroundColor = UIColor(red: 112/255.0, green: 154/255.0, blue: 225/255.0, alpha: 1.0)
-                    case .NotYetAired:
-                        etaLabel.text = "Not Aired    "
-                        etaLabel.backgroundColor = UIColor(red: 225/255.0, green: 215/255.0, blue: 124/255.0, alpha: 1.0)
-                    }
-                }
-                
-                ratingLabel.text = String(format:"%.2f", anime.membersScore)
-                membersCountLabel.text = String(anime.membersCount)
-                scoreRankLabel.text = "#\(anime.rank)"
-                popularityRankLabel.text = "#\(anime.popularityRank)"
-                
-                posterImageView.setImageFrom(urlString: anime.imageUrl)
-                
-                if let fanartUrl = anime.fanart where count(fanartUrl) != 0 {
-                    fanartImageView.setImageFrom(urlString: fanartUrl)
-                } else {
-                    fanartImageView.setImageFrom(urlString: anime.imageUrl)
-                }
-                
-                if let youtubeID = anime.details.youtubeID where count(youtubeID) > 0 {
-                    trailerButton.hidden = false
-                    trailerButton.layer.borderWidth = 1.0;
-                    trailerButton.layer.borderColor = UIColor(white: 1.0, alpha: 0.5).CGColor;
-                } else {
-                    trailerButton.hidden = true
-                }
-                
-                configureShareButton()
-            
-                tableView.dataSource = self
-                tableView.delegate = self
-                tableView.reloadData()
-            }
+            updateInformationWithAnime()
         }
     }
     
@@ -153,11 +100,21 @@ public class AnimeInformationViewController: AnimeBaseViewController {
     
     func fetchCurrentAnime() {
         loadingView.startAnimating()
+        
         let query = Anime.queryWith(objectID: anime.objectId!)
+    
+        if anime.progress != nil {
+            query.fromLocalDatastore()
+        }
+        
         query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
+            
             self.loadingView.stopAnimating()
-            self.ranksView.hidden = false
-            self.anime = objects?.first as! Anime
+            if let error = error {
+                
+            } else {
+                self.anime = objects?.first as! Anime
+            }
         }
     }
     
@@ -170,6 +127,66 @@ public class AnimeInformationViewController: AnimeBaseViewController {
         content.photos = [photo]
         
         fbShareButton.shareContent = content
+    }
+    
+    func updateInformationWithAnime() {
+        if anime.details.isDataAvailable() && isViewLoaded() {
+            
+            self.ranksView.hidden = false
+            
+            if let progress = anime.progress {
+                updateListButtonTitle(progress.status)
+            } else {
+                updateListButtonTitle("Add to list ")
+            }
+            
+            animeTitle.text = anime.title
+            let episodes = (anime.episodes != 0) ? anime.episodes.description : "?"
+            let duration = (anime.duration != 0) ? anime.duration.description : "?"
+            let year = (anime.year != 0) ? anime.year.description : "?"
+            tagsLabel.text = "\(anime.type) · \(ANAnimeKit.shortClassification(anime.details.classification)) · \(episodes) eps · \(duration) min · \(year)"
+            
+            if let status = AnimeStatus(rawValue: anime.status) {
+                switch status {
+                case .CurrentlyAiring:
+                    etaLabel.text = "Airing    "
+                    etaLabel.backgroundColor = UIColor(red: 155/255.0, green: 225/255.0, blue: 130/255.0, alpha: 1.0)
+                case .FinishedAiring:
+                    etaLabel.text = "Aired    "
+                    etaLabel.backgroundColor = UIColor(red: 112/255.0, green: 154/255.0, blue: 225/255.0, alpha: 1.0)
+                case .NotYetAired:
+                    etaLabel.text = "Not Aired    "
+                    etaLabel.backgroundColor = UIColor(red: 225/255.0, green: 215/255.0, blue: 124/255.0, alpha: 1.0)
+                }
+            }
+            
+            ratingLabel.text = String(format:"%.2f", anime.membersScore)
+            membersCountLabel.text = String(anime.membersCount)
+            scoreRankLabel.text = "#\(anime.rank)"
+            popularityRankLabel.text = "#\(anime.popularityRank)"
+            
+            posterImageView.setImageFrom(urlString: anime.imageUrl)
+            
+            if let fanartUrl = anime.fanart where count(fanartUrl) != 0 {
+                fanartImageView.setImageFrom(urlString: fanartUrl)
+            } else {
+                fanartImageView.setImageFrom(urlString: anime.imageUrl)
+            }
+            
+            if let youtubeID = anime.details.youtubeID where count(youtubeID) > 0 {
+                trailerButton.hidden = false
+                trailerButton.layer.borderWidth = 1.0;
+                trailerButton.layer.borderColor = UIColor(white: 1.0, alpha: 0.5).CGColor;
+            } else {
+                trailerButton.hidden = true
+            }
+            
+            configureShareButton()
+            
+            tableView.dataSource = self
+            tableView.delegate = self
+            tableView.reloadData()
+        }
     }
     
     // MARK: - IBActions
@@ -240,11 +257,15 @@ public class AnimeInformationViewController: AnimeBaseViewController {
             alert.addAction(UIAlertAction(title: "Remove from Library", style: UIAlertActionStyle.Destructive, handler: { (alertAction: UIAlertAction!) -> Void in
                 
                 self.anime.unpin()
-                LibrarySyncController.deleteAnime(progress)
-                let realm = Realm()
-                realm.write {
-                    realm.delete(progress)
-                }
+                LibrarySyncController.deleteAnime(progress).continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
+                    
+                    let realm = Realm()
+                    realm.write {
+                        realm.delete(progress)
+                    }
+                    return nil
+                })
+                
                 
                 NSNotificationCenter.defaultCenter().postNotificationName(ANAnimeKit.LibraryUpdatedNotification, object: nil)
                 
@@ -277,6 +298,7 @@ public class AnimeInformationViewController: AnimeBaseViewController {
             animeProgress.status = list.rawValue
             animeProgress.episodes = 0
             animeProgress.score = 0
+            animeProgress.syncState = SyncState.InSync.rawValue
             
             realm.write({ () -> Void in
                 realm.add(animeProgress, update: true)

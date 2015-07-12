@@ -37,7 +37,7 @@ class DayViewController: UIViewController {
         
         // Find existing on library
         
-        LibrarySyncController.fetchAnimeFromLocalDatastore(ids).continueWithExecutor( BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
+        LibrarySyncController.fetchAnime(ids, fromLocalDataStore: true).continueWithExecutor( BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
             
             if let result = task.result as? [Anime] {
                 

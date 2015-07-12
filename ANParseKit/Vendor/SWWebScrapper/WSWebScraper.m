@@ -90,6 +90,7 @@
 
 - (void)makePostRequestWithScript:(NSString *)script handler:(HTTPRequestHandler)handler
 {
+    NSLog(@"Script: %@",script);
     self.completion2 = handler;
     self.script = script;
     [self prepareForPOSTRequest];
