@@ -68,7 +68,7 @@ class ChartViewController: UIViewController {
             if let sortType = NSUserDefaults.standardUserDefaults().objectForKey(SortTypeDefault) as? String, let sortTypeEnum = SortType(rawValue: sortType) {
                 return sortTypeEnum
             } else {
-                return SortType.Rating
+                return SortType.Popularity
             }
         }
         set ( value ) {
@@ -165,7 +165,12 @@ class ChartViewController: UIViewController {
         }
         
         navigationBarTitle.text! += " " + FontAwesome.AngleDown.rawValue
-        updateLayoutType(currentLayoutType)
+        
+        if selectedList == SelectedList.AllSeasons {
+            updateLayoutType(LayoutType.SeasonalChart)
+        } else {
+            updateLayoutType(currentLayoutType)
+        }
     }
     
     func fetchSeasonalChart(seasonalChart: String) {
@@ -235,11 +240,14 @@ class ChartViewController: UIViewController {
     
     func updateLayoutType(layoutType: LayoutType) {
         
-        currentLayoutType = layoutType
+        if selectedList != SelectedList.SeasonalChart {
+            currentLayoutType = layoutType
+        }
+        
         var size: CGSize
         let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
         
-        switch currentLayoutType {
+        switch layoutType {
         case .Chart:
             size = CGSize(width: view.bounds.size.width, height: 132)
             layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
