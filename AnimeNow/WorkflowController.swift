@@ -102,7 +102,7 @@ class WorkflowController {
         }
         
         // Remove defaults
-        NSUserDefaults.standardUserDefaults().removeObjectForKey(LibrarySyncController.lastSyncDateDefaultsKey)
+        NSUserDefaults.standardUserDefaults().removeObjectForKey(LibrarySyncController.LastSyncDateDefaultsKey)
 
         // Logout MAL
         PFUser.removeCredentials()

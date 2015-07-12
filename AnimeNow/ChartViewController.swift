@@ -170,23 +170,17 @@ class ChartViewController: UIViewController {
     
     func fetchSeasonalChart(seasonalChart: String) {
         
-        let currentChartQuery = SeasonalChart.query()!
-        currentChartQuery.limit = 1
-        currentChartQuery.whereKey("title", equalTo:seasonalChart)
-        currentChartQuery.includeKey("tvAnime")
-        currentChartQuery.includeKey("leftOvers")
-        currentChartQuery.includeKey("movieAnime")
-        currentChartQuery.includeKey("ovaAnime")
-        currentChartQuery.includeKey("onaAnime")
-        currentChartQuery.includeKey("specialAnime")
-        currentChartQuery.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
-            if let result = result as? [SeasonalChart], let season = result.last {
+        ChartController.fetchSeasonalChart(seasonalChart).continueWithExecutor(BFExecutor.mainThreadExecutor(), withBlock: { (task: BFTask!) -> AnyObject! in
+            
+            if let result = task.result as? [SeasonalChart], let season = result.last {
                 self.dataSource = [season.tvAnime as [Anime], season.movieAnime as [Anime], season.ovaAnime as [Anime], season.onaAnime as [Anime], season.specialAnime as [Anime]]
                 self.updateSortType(self.currentSortType)
             }
             
             self.loadingView.stopAnimating()
             self.collectionView.animateFadeIn()
+            
+            return nil
         })
     }
     

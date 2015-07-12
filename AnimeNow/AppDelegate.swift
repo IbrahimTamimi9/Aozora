@@ -73,6 +73,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             WorkflowController.presentOnboardingController(true)
         }
         
+        LibrarySyncController.syncAnimeInformation()
+        LibrarySyncController.syncEpisodeInformation()
+        
         return true
     }
 

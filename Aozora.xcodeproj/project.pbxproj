@@ -19,6 +19,8 @@
 		DA27D19E1AF1BA9D00CC854E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA27D19D1AF1BA9D00CC854E /* Images.xcassets */; };
 		DA27D1A11AF1BA9D00CC854E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA27D19F1AF1BA9D00CC854E /* LaunchScreen.xib */; };
 		DA27D1AD1AF1BA9D00CC854E /* AnimeNowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA27D1AC1AF1BA9D00CC854E /* AnimeNowTests.swift */; };
+		DA2D1EF01B531B0C009A5CCD /* NSUserDefaults+Dates.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2D1EEE1B5318E1009A5CCD /* NSUserDefaults+Dates.swift */; };
+		DA2D1EF11B531B21009A5CCD /* PFQuery+LocalDatastore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2D1EEC1B530903009A5CCD /* PFQuery+LocalDatastore.swift */; };
 		DA41679B1B25F76F00847F56 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA41679A1B25F76F00847F56 /* FontAwesome.ttf */; };
 		DA4167B31B273B0700847F56 /* ANAnimeKit.h in Headers */ = {isa = PBXBuildFile; fileRef = DA4167B21B273B0700847F56 /* ANAnimeKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA4167B91B273B0700847F56 /* ANAnimeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA4167AE1B273B0700847F56 /* ANAnimeKit.framework */; };
@@ -106,6 +108,7 @@
 		DAA253B61B2B877C0092EB0B /* CharactersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA253B51B2B877C0092EB0B /* CharactersViewController.swift */; };
 		DAA393291B42F21900A8D5D5 /* RootTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA393281B42F21900A8D5D5 /* RootTabBar.swift */; };
 		DAA3932D1B42FEA100A8D5D5 /* PFUser+CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA3932A1B42F6A100A8D5D5 /* PFUser+CurrentUser.swift */; };
+		DAB83FC71B52FE200006AF96 /* ChartController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB83FC61B52FE200006AF96 /* ChartController.swift */; };
 		DAC027CA1B2A15C20085C91A /* DiscussionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC027C91B2A15C20085C91A /* DiscussionViewController.swift */; };
 		DAC027CC1B2A16B80085C91A /* AnimeReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC027CB1B2A16B80085C91A /* AnimeReview.swift */; };
 		DAC027CF1B2A1C3F0085C91A /* ZFModalTransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = DAFD60B31B277B8D007275C1 /* ZFModalTransitionAnimator.m */; };
@@ -296,6 +299,8 @@
 		DA2853BC1B22B7130070B675 /* LoaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoaderView.swift; sourceTree = "<group>"; };
 		DA2853BE1B22C1710070B675 /* HighlightButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HighlightButton.swift; sourceTree = "<group>"; };
 		DA2853C11B22C5D30070B675 /* UIColor+AniNow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+AniNow.swift"; sourceTree = "<group>"; };
+		DA2D1EEC1B530903009A5CCD /* PFQuery+LocalDatastore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "PFQuery+LocalDatastore.swift"; path = "../AnimeNow/PFQuery+LocalDatastore.swift"; sourceTree = "<group>"; };
+		DA2D1EEE1B5318E1009A5CCD /* NSUserDefaults+Dates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSUserDefaults+Dates.swift"; path = "../AnimeNow/NSUserDefaults+Dates.swift"; sourceTree = "<group>"; };
 		DA38A9881B223AF1002FCBB4 /* ActionListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionListViewController.swift; sourceTree = "<group>"; };
 		DA38A98B1B223B39002FCBB4 /* Action.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Action.storyboard; sourceTree = "<group>"; };
 		DA38A98E1B223F1F002FCBB4 /* BasicTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicTableCell.swift; sourceTree = "<group>"; };
@@ -398,6 +403,7 @@
 		DAA3932A1B42F6A100A8D5D5 /* PFUser+CurrentUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "PFUser+CurrentUser.swift"; path = "../AnimeNow/PFUser+CurrentUser.swift"; sourceTree = "<group>"; };
 		DAAD79921B30D087009D70ED /* ForumViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ForumViewController.swift; path = ../ANAnimeKit/ForumViewController.swift; sourceTree = "<group>"; };
 		DAAD79941B30D918009D70ED /* TopicCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TopicCell.swift; path = ../ANAnimeKit/TopicCell.swift; sourceTree = "<group>"; };
+		DAB83FC61B52FE200006AF96 /* ChartController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartController.swift; sourceTree = "<group>"; };
 		DAC027C91B2A15C20085C91A /* DiscussionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscussionViewController.swift; sourceTree = "<group>"; };
 		DAC027CB1B2A16B80085C91A /* AnimeReview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeReview.swift; sourceTree = "<group>"; };
 		DAC13BEE1B3EEF250013D479 /* AnimeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnimeCell.xib; sourceTree = "<group>"; };
@@ -959,6 +965,7 @@
 		DA7C84C71B43797F0036D119 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				DA2D1EEE1B5318E1009A5CCD /* NSUserDefaults+Dates.swift */,
 				DAC13BFD1B3F36AB0013D479 /* UIViewController+Image.swift */,
 			);
 			name = Extensions;
@@ -1045,6 +1052,7 @@
 		DAE43C301B2BC16F00C3092D /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				DA2D1EEC1B530903009A5CCD /* PFQuery+LocalDatastore.swift */,
 				DAA3932A1B42F6A100A8D5D5 /* PFUser+CurrentUser.swift */,
 				DAE43C311B2BC1A900C3092D /* TFHppleElement+Convenience.swift */,
 			);
@@ -1090,6 +1098,7 @@
 		DAF618711B377C6000286517 /* Season */ = {
 			isa = PBXGroup;
 			children = (
+				DAB83FC61B52FE200006AF96 /* ChartController.swift */,
 				DA27D19A1AF1BA9D00CC854E /* Season.storyboard */,
 				DAFBB0941B20EFF700495ED9 /* ChartViewController.swift */,
 				DA52B1821B4838AE001CC1A9 /* CalendarViewController.swift */,
@@ -1712,6 +1721,7 @@
 				DA8DD6431B3CAEC500B05FBF /* FilterViewController.swift in Sources */,
 				DA58C2E71B39C01B0082B626 /* BrowseViewController.swift in Sources */,
 				DA5A3C061B36255200C07D71 /* ProfileViewController.swift in Sources */,
+				DAB83FC71B52FE200006AF96 /* ChartController.swift in Sources */,
 				DAC13C261B42495A0013D479 /* WorkflowController.swift in Sources */,
 				DA52B1851B483F2A001CC1A9 /* DayViewController.swift in Sources */,
 				DAC13BF91B3EFC280013D479 /* LoadingCollectionCell.swift in Sources */,
@@ -1772,6 +1782,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DAFD60BD1B27845F007275C1 /* BasicCollectionReusableView.swift in Sources */,
+				DA2D1EF01B531B0C009A5CCD /* NSUserDefaults+Dates.swift in Sources */,
 				DAFD60B61B278452007275C1 /* DropDownListViewController.swift in Sources */,
 				DAE43C3A1B2F971800C3092D /* UIView+Animation.swift in Sources */,
 				DA7C84C61B4333950036D119 /* DataFetchController.swift in Sources */,
@@ -1824,6 +1835,7 @@
 				DAFE19B01B29F264002F3A76 /* AnimeCast.swift in Sources */,
 				DACCF35F1B111016006A13EB /* AnimeService.swift in Sources */,
 				DA6E12E61B10D96F00B278B0 /* WSWebScraper.m in Sources */,
+				DA2D1EF11B531B21009A5CCD /* PFQuery+LocalDatastore.swift in Sources */,
 				DAC027CC1B2A16B80085C91A /* AnimeReview.swift in Sources */,
 				DA0347241B4ADD720025CE24 /* LibrarySyncController.swift in Sources */,
 				DA6E13131B10F56B00B278B0 /* SeasonalChartService.swift in Sources */,

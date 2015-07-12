@@ -15,30 +15,103 @@ import RealmSwift
 
 public class LibrarySyncController {
     
-    public static let lastSyncDateDefaultsKey = "LibrarySync.LastSyncDate"
-    class var shouldSyncData: Bool {
-        get {
-            let lastSyncDate = NSUserDefaults.standardUserDefaults().objectForKey(lastSyncDateDefaultsKey) as! NSDate?
-            if let lastSyncDate = lastSyncDate {
-                
-                let cal = NSCalendar.currentCalendar()
-                let unit:NSCalendarUnit = .CalendarUnitDay
-                let components = cal.components(unit, fromDate: lastSyncDate, toDate: NSDate(), options: nil)
-                
-                return components.day >= 1 ? true : false
-                
+    public static let LastSyncDateDefaultsKey = "LibrarySync.LastSyncDate"
+    public static let AnimeSync = "LibrarySync.AnimeSync"
+    public static let EpisodeSync = "LibrarySync.EpisodeSync"
+    
+    // MARK: - Sync Objects Information
+    
+    public class func syncAnimeInformation() -> BFTask {
+        
+        let shouldSyncAnime = NSUserDefaults.shouldPerformAction(AnimeSync, expirationDays: 1)
+        
+        if !shouldSyncAnime {
+            return BFTask(result: nil)
+        }
+        
+        let pinName = Anime.PinName.InLibrary.rawValue
+        
+        let query = Anime.query()!
+        query.limit = 1
+        query.fromPinWithName(pinName)
+        query.orderByDescending("updatedAt")
+        return query.findObjectsInBackground()
+            .continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
+            
+            if let result = task.result as? [Anime], let anime = result.last {
+                return BFTask(result: anime)
             } else {
-                return true
+                return nil
             }
+            
+            }.continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
+            
+                let anime = task.result as! Anime
+                
+                let updatedQuery = Anime.queryIncludingAddData()
+                updatedQuery.whereKey("updatedAt", greaterThan: anime.updatedAt!)
+                return updatedQuery.findObjectsInBackground()
+                
+            }.continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
+                
+                let result = task.result as! [Anime]
+                
+                return PFObject.unpinAllObjectsInBackgroundWithName(pinName).continueWithBlock({ (task: BFTask!) -> AnyObject! in
+                    println("Updated \(result.count) anime")
+                    NSUserDefaults.completedAction(self.AnimeSync)
+                    return PFObject.pinAllInBackground(result, withName: pinName)
+                })
+            }
+    }
+    
+    public class func syncEpisodeInformation() -> BFTask {
+        
+        let shouldSyncEpisode = NSUserDefaults.shouldPerformAction(EpisodeSync, expirationDays: 1)
+        
+        if !shouldSyncEpisode {
+            return BFTask(result: nil)
+        }
+        
+        let pinName = Anime.PinName.InLibrary.rawValue
+        
+        let query = Episode.query()!
+        query.limit = 1
+        query.fromLocalDatastore()
+        query.orderByDescending("updatedAt")
+        return query.findObjectsInBackground()
+            .continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
+                
+                if let result = task.result as? [Episode], let episode = result.last {
+                    return BFTask(result: episode)
+                } else {
+                    return nil
+                }
+                
+            }.continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
+                
+                let episode = task.result as! Episode
+                
+                let updatedQuery = Episode.query()!
+                updatedQuery.whereKey("updatedAt", greaterThan: episode.updatedAt!)
+                return updatedQuery.findObjectsInBackground()
+                
+            }.continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
+                
+                let result = task.result as! [Episode]
+                
+                return PFObject.unpinAllObjectsInBackgroundWithName(pinName).continueWithBlock({ (task: BFTask!) -> AnyObject! in
+                    println("Updated \(result.count) episode")
+                    NSUserDefaults.completedAction(self.EpisodeSync)
+                    return PFObject.pinAllInBackground(result, withName: pinName)
+                })
         }
     }
     
-    class func syncedData() {
-        NSUserDefaults.standardUserDefaults().setObject(NSDate(), forKey: lastSyncDateDefaultsKey)
-        NSUserDefaults.standardUserDefaults().synchronize()
-    }
+    
+    // MARK: - Sync with MyAnimeList
     
     public class func fetchAnimeList(isRefreshing: Bool) -> BFTask {
+        let shouldSyncData = NSUserDefaults.shouldPerformAction(LastSyncDateDefaultsKey, expirationDays: 1)
         
         if shouldSyncData || isRefreshing {
             println("Fetching all anime library from network")
@@ -164,7 +237,7 @@ public class LibrarySyncController {
             
             self.matchAnimeWithProgress(animeList)
             // Update last sync date
-            self.syncedData()
+            NSUserDefaults.completedAction(self.LastSyncDateDefaultsKey)
             
             return BFTask(result: animeList)
         })
@@ -254,7 +327,6 @@ public class LibrarySyncController {
             } else {
                 return BFTask(result: nil)
             }
-            
             
         })
     }

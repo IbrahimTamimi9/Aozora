@@ -66,9 +66,15 @@ class LibraryAnimeCell: AnimeCell {
             
             userProgressLabel.text = "\(anime.type) · " + FontAwesome.Watched.rawValue + " \(progress.episodes)/\(anime.episodes)   " + FontAwesome.Ranking.rawValue + " \(progress.score)"
             
-            setEpisodeImageView(anime, tag: .InLibrary, nextEpisode: progress.episodes)
+            if MALList(rawValue: progress.status) != .Completed {
+                setEpisodeImageView(anime, tag: .InLibrary, nextEpisode: progress.episodes)
+            } else {
+                episodeImageView.setImageFrom(urlString: anime.fanart ?? anime.imageUrl ?? "")
+            }
             
-            if let status = MALList(rawValue: progress.status) where status == .Completed || status == .Dropped {
+            
+            if let status = MALList(rawValue: progress.status)
+                where status == .Completed || status == .Dropped {
                 watchedButton.hidden = true
             }
         }
