@@ -21,10 +21,8 @@ extension PFQuery {
         return self.fromPinWithName(pinName).findObjectsInBackground().continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
             if task.result.count == 0 || expired {
                 // Not cached, fetch from network
-                println("Objects from network..")
                 return nonLocalQuery.findObjectsInBackground()
             } else {
-                println("Objects from localdatastore..")
                 fetchResult += task.result as! [AnyObject]
                 return nil
             }
@@ -35,7 +33,8 @@ extension PFQuery {
                     
                     NSUserDefaults.completedAction(pinName)
                     PFObject.unpinAllObjectsInBackgroundWithName(pinName).continueWithBlock({ (task: BFTask!) -> AnyObject! in
-                        PFObject.pinAllInBackground(result, withName: pinName)
+                        println("Objects from network, saved with tag \(pinName)")
+                        return PFObject.pinAllInBackground(result, withName: pinName)
                     })
                     fetchResult += result
                 }

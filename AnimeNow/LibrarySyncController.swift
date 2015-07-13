@@ -16,12 +16,22 @@ import RealmSwift
 public class LibrarySyncController {
     
     public static let LastSyncDateDefaultsKey = "LibrarySync.LastSyncDate"
-    public static let AnimeSync = "LibrarySync.AnimeSync"
-    public static let EpisodeSync = "LibrarySync.EpisodeSync"
+    
+    public static let sharedInstance = LibrarySyncController()
+    
+    public let AnimeSync = "LibrarySync.AnimeSync"
+    public let EpisodeSync = "LibrarySync.EpisodeSync"
     
     // MARK: - Sync Objects Information
     
-    public class func syncAnimeInformation() -> BFTask {
+    public func syncParseInformation() -> BFTask {
+        let syncAnime = syncAnimeInformation()
+        let syncEpisodes = syncEpisodeInformation()
+        
+        return BFTask(forCompletionOfAllTasks: [syncAnime, syncEpisodes])
+    }
+    
+    public func syncAnimeInformation() -> BFTask {
         
         let shouldSyncAnime = NSUserDefaults.shouldPerformAction(AnimeSync, expirationDays: 1)
         
@@ -58,20 +68,21 @@ public class LibrarySyncController {
                 
             }.continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
                 
-                if let result = task.result as? [Anime] {
-                    return PFObject.unpinAllObjectsInBackgroundWithName(pinName).continueWithBlock({ (task: BFTask!) -> AnyObject! in
-                        println("Updated \(result.count) anime")
+                if let result = task.result as? [Anime] where result.count != 0 {
+                    return PFObject.unpinAllInBackground(result, withName: pinName).continueWithBlock({ (task: BFTask!) -> AnyObject! in
+                        println("Updated \(result.count) anime, saving with tag \(pinName)")
                         NSUserDefaults.completedAction(self.AnimeSync)
                         return PFObject.pinAllInBackground(result, withName: pinName)
                     })
                 } else {
+                    NSUserDefaults.completedAction(self.AnimeSync)
                     return nil
                 }
                 
             }
     }
     
-    public class func syncEpisodeInformation() -> BFTask {
+    public func syncEpisodeInformation() -> BFTask {
         
         let shouldSyncEpisode = NSUserDefaults.shouldPerformAction(EpisodeSync, expirationDays: 1)
         
@@ -106,13 +117,14 @@ public class LibrarySyncController {
                 
             }.continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
                 
-                if let result = task.result as? [Episode] {
-                    return PFObject.unpinAllObjectsInBackgroundWithName(pinName).continueWithBlock({ (task: BFTask!) -> AnyObject! in
-                        println("Updated \(result.count) episode")
+                if let result = task.result as? [Episode] where result.count != 0 {
+                    return PFObject.unpinAllInBackground(result, withName: pinName).continueWithBlock({ (task: BFTask!) -> AnyObject! in
+                        println("Updated \(result.count) episode, saving with tag \(pinName)")
                         NSUserDefaults.completedAction(self.EpisodeSync)
                         return PFObject.pinAllInBackground(result, withName: pinName)
                     })
                 } else {
+                    NSUserDefaults.completedAction(self.EpisodeSync)
                     return nil
                 }         
         }
@@ -125,7 +137,7 @@ public class LibrarySyncController {
         let shouldSyncData = NSUserDefaults.shouldPerformAction(LastSyncDateDefaultsKey, expirationDays: 1)
         
         if shouldSyncData || isRefreshing {
-            println("Fetching all anime library from network")
+            println("Fetching all anime library from network..")
             return pushNonSyncedChanges().continueWithBlock({ (task: BFTask!) -> AnyObject! in
                     return self.loadAnimeList()
                 
@@ -152,7 +164,6 @@ public class LibrarySyncController {
                 return self.fetchAllAnimeProgress()
             })
         } else {
-            println("Only fetching from parse")
             return fetchAllAnimeProgress()
         }
     }
@@ -181,9 +192,12 @@ public class LibrarySyncController {
             
             tasks.append(task)
         }
-        println("Pushing \(tasks.count) non synced objects")
-        return BFTask(forCompletionOfAllTasks: tasks)
         
+        if tasks.count > 0 {
+            println("Pushing \(tasks.count) non synced objects")
+        }
+        
+        return BFTask(forCompletionOfAllTasks: tasks)
     }
     
     
@@ -218,7 +232,6 @@ public class LibrarySyncController {
         .continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
             
             if let result = task.result as? [Anime] where result.count > 0 {
-                println("found \(result.count) objects from local datastore")
                 animeList = result
             }
             
@@ -238,12 +251,12 @@ public class LibrarySyncController {
             }
             
         }.continueWithExecutor( BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
-            
+            let pinName = Anime.PinName.InLibrary.rawValue
             if let result = task.result as? [Anime] where result.count > 0 {
-                println("found \(result.count) objects from network")
+                println("Found \(result.count) anime from network, saving with tag \(pinName)")
                 animeList += result
                 
-                PFObject.pinAllInBackground(result, withName: Anime.PinName.InLibrary.rawValue)
+                PFObject.pinAllInBackground(result, withName: pinName)
             }
             
             self.matchAnimeWithProgress(animeList)
@@ -265,10 +278,7 @@ public class LibrarySyncController {
         
         query.limit = 1000
         if fromLocalDataStore {
-            println("From local datastore...")
             query.fromLocalDatastore()
-        } else {
-            println("From network...")
         }
         
         query.whereKey("myAnimeListID", containedIn: myAnimeListIDs)

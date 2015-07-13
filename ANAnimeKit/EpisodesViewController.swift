@@ -92,7 +92,7 @@ extension EpisodesViewController: UICollectionViewDataSource {
         
         cell.delegate = self
         cell.titleLabel.attributedText = attributedString
-        let screenshot = episode.screenshot != nil ? episode.screenshot! : anime.fanart ?? ""
+        let screenshot = episode.screenshot ?? anime.fanart ?? anime.imageUrl ?? ""
         cell.screenshotImageView.setImageFrom(urlString: screenshot, animated: canFadeImages)
         
         cell.firstAiredLabel.text = episode.firstAired?.mediumDate() ?? ""

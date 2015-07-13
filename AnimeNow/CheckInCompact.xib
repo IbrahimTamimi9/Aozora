@@ -34,10 +34,10 @@
                         <nil key="highlightedColor"/>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="RaP-82-TEq"/>
                                 <exclude reference="NxQ-7D-3j9"/>
-                                <exclude reference="z8K-hL-L3E"/>
+                                <exclude reference="RaP-82-TEq"/>
                                 <exclude reference="vl0-QG-Jq4"/>
+                                <exclude reference="z8K-hL-L3E"/>
                             </mask>
                         </variation>
                     </label>
@@ -75,12 +75,12 @@
                         </state>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="aVn-kG-wkX"/>
                                 <exclude reference="Iem-Qv-8mO"/>
-                                <exclude reference="QM0-sv-yT9"/>
-                                <exclude reference="nsE-QA-YKB"/>
-                                <exclude reference="fI2-za-B0f"/>
                                 <exclude reference="MPU-Sk-gse"/>
+                                <exclude reference="QM0-sv-yT9"/>
+                                <exclude reference="aVn-kG-wkX"/>
+                                <exclude reference="fI2-za-B0f"/>
+                                <exclude reference="nsE-QA-YKB"/>
                             </mask>
                         </variation>
                         <connections>
@@ -101,13 +101,13 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="usk-VW-dJ0"/>
                                 <exclude reference="0AH-Hy-S4E"/>
-                                <exclude reference="rEG-40-hC0"/>
-                                <exclude reference="IXs-WB-dBV"/>
                                 <exclude reference="9VP-5U-IdD"/>
                                 <exclude reference="COg-sr-n84"/>
                                 <exclude reference="Hx3-NP-DHi"/>
+                                <exclude reference="IXs-WB-dBV"/>
+                                <exclude reference="rEG-40-hC0"/>
+                                <exclude reference="usk-VW-dJ0"/>
                             </mask>
                         </variation>
                     </imageView>

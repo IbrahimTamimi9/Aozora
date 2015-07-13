@@ -428,6 +428,8 @@ extension ChartViewController: UICollectionViewDataSource {
 extension ChartViewController: UICollectionViewDelegate {
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
+        view.endEditing(true)
+        
         if selectedList != SelectedList.AllSeasons {
             let anime = filteredDataSource[indexPath.section][indexPath.row]
             animator = presentAnimeModal(anime)

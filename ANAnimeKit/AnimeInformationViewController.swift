@@ -86,7 +86,7 @@ public class AnimeInformationViewController: AnimeBaseViewController {
         loadingView = LoaderView(parentView: self.view)
         
         ranksView.hidden = true
-        fetchCurrentAnime()
+        fetchCurrentAnime(anime.progress != nil)
         
         // Video notifications
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "moviePlayerPlaybackDidFinish:", name: MPMoviePlayerPlaybackDidFinishNotification, object: nil)
@@ -98,12 +98,12 @@ public class AnimeInformationViewController: AnimeBaseViewController {
         self.scrollViewDidScroll(tableView)
     }
     
-    func fetchCurrentAnime() {
+    func fetchCurrentAnime(fromLocalDatastore: Bool) {
         loadingView.startAnimating()
         
         let query = Anime.queryWith(objectID: anime.objectId!)
     
-        if anime.progress != nil {
+        if fromLocalDatastore {
             query.fromLocalDatastore()
         }
         
@@ -111,7 +111,11 @@ public class AnimeInformationViewController: AnimeBaseViewController {
             
             self.loadingView.stopAnimating()
             if let error = error {
-                
+                // TODO: Fix this error, for some reason an anime is not being saved?
+                if error.code == 120 {
+                    self.fetchCurrentAnime(false)
+                }
+                println(error)
             } else {
                 self.anime = objects?.first as! Anime
             }

@@ -19,6 +19,7 @@ class LibraryAnimeCell: AnimeCell {
     
     weak var delegate: LibraryAnimeCellDelegate?
     var anime: Anime?
+    var currentCancellationToken: NSOperation?
     
     @IBOutlet weak var userProgressLabel: UILabel!
     @IBOutlet weak var watchedButton: UIButton!
@@ -81,8 +82,20 @@ class LibraryAnimeCell: AnimeCell {
     }
     
     func setEpisodeImageView(anime: Anime, tag: Anime.PinName, nextEpisode: Int?) {
+        
+        if let cancelToken = currentCancellationToken {
+            cancelToken.cancel()
+        }
+        
+        let newCancelationToken = NSOperation()
+        currentCancellationToken = newCancelationToken
+        
         episodeImageView.image = nil
         anime.episodeList(pin: true, tag: tag).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
+            
+            if newCancelationToken.cancelled {
+                return nil
+            }
             
             if let episodes = task.result as? [Episode],
                 let nextEpisode = nextEpisode where episodes.count > nextEpisode {

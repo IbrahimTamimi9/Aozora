@@ -138,6 +138,10 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
                 self.controllers[index].animeList = lists[index]
             }
             
+            // Sort first controller
+            let firstController = self.controllers[0]
+            firstController.updateSortType(firstController.currentSortType)
+            
             return nil
         }.continueWithBlock({ (task: BFTask!) -> AnyObject! in
             self.loadingView.stopAnimating()
