@@ -18,14 +18,17 @@ extension PFQuery {
         
         var fetchResult: [AnyObject] = []
         let nonLocalQuery = self.copy() as! PFQuery
-        return self.fromPinWithName(pinName).findObjectsInBackground().continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
-            if task.result.count == 0 || expired {
-                // Not cached, fetch from network
-                return nonLocalQuery.findObjectsInBackground()
-            } else {
-                fetchResult += task.result as! [AnyObject]
-                return nil
-            }
+        
+        return fromPinWithName(pinName).findObjectsInBackground()
+            .continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
+            
+                if let result = task.result as? [AnyObject] where result.count == 0 || expired {
+                    // Not cached, fetch from network
+                    return nonLocalQuery.findObjectsInBackground()
+                } else {
+                    fetchResult += task.result as! [AnyObject]
+                    return nil
+                }
             
             }.continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
                 
