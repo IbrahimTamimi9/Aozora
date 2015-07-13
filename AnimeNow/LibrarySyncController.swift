@@ -46,21 +46,28 @@ public class LibrarySyncController {
             
             }.continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
             
-                let anime = task.result as! Anime
-                
-                let updatedQuery = Anime.queryIncludingAddData()
-                updatedQuery.whereKey("updatedAt", greaterThan: anime.updatedAt!)
-                return updatedQuery.findObjectsInBackground()
+                if let anime = task.result as? Anime {
+                    
+                    let updatedQuery = Anime.queryIncludingAddData()
+                    updatedQuery.whereKey("updatedAt", greaterThan: anime.updatedAt!)
+                    return updatedQuery.findObjectsInBackground()
+                    
+                } else {
+                    return nil
+                }
                 
             }.continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
                 
-                let result = task.result as! [Anime]
+                if let result = task.result as? [Anime] {
+                    return PFObject.unpinAllObjectsInBackgroundWithName(pinName).continueWithBlock({ (task: BFTask!) -> AnyObject! in
+                        println("Updated \(result.count) anime")
+                        NSUserDefaults.completedAction(self.AnimeSync)
+                        return PFObject.pinAllInBackground(result, withName: pinName)
+                    })
+                } else {
+                    return nil
+                }
                 
-                return PFObject.unpinAllObjectsInBackgroundWithName(pinName).continueWithBlock({ (task: BFTask!) -> AnyObject! in
-                    println("Updated \(result.count) anime")
-                    NSUserDefaults.completedAction(self.AnimeSync)
-                    return PFObject.pinAllInBackground(result, withName: pinName)
-                })
             }
     }
     
@@ -89,21 +96,25 @@ public class LibrarySyncController {
                 
             }.continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
                 
-                let episode = task.result as! Episode
-                
-                let updatedQuery = Episode.query()!
-                updatedQuery.whereKey("updatedAt", greaterThan: episode.updatedAt!)
-                return updatedQuery.findObjectsInBackground()
+                if let episode = task.result as? Episode {
+                    let updatedQuery = Episode.query()!
+                    updatedQuery.whereKey("updatedAt", greaterThan: episode.updatedAt!)
+                    return updatedQuery.findObjectsInBackground()
+                } else {
+                    return nil
+                }
                 
             }.continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
                 
-                let result = task.result as! [Episode]
-                
-                return PFObject.unpinAllObjectsInBackgroundWithName(pinName).continueWithBlock({ (task: BFTask!) -> AnyObject! in
-                    println("Updated \(result.count) episode")
-                    NSUserDefaults.completedAction(self.EpisodeSync)
-                    return PFObject.pinAllInBackground(result, withName: pinName)
-                })
+                if let result = task.result as? [Episode] {
+                    return PFObject.unpinAllObjectsInBackgroundWithName(pinName).continueWithBlock({ (task: BFTask!) -> AnyObject! in
+                        println("Updated \(result.count) episode")
+                        NSUserDefaults.completedAction(self.EpisodeSync)
+                        return PFObject.pinAllInBackground(result, withName: pinName)
+                    })
+                } else {
+                    return nil
+                }         
         }
     }
     

@@ -14,8 +14,11 @@ public let ProPlusInAppPurchase = "com.anytap.Aozora.ProPlus"
 public class InAppController {
     
     public class func purchasedAnyPro() -> Int? {
-        
-        return (purchasedPro() != nil || purchasedProPlus() != nil) ? 1 : nil
+        #if DEBUG
+            return 1
+        #else
+            return (purchasedPro() != nil || purchasedProPlus() != nil) ? 1 : nil
+        #endif
     }
     
     public class func purchasedPro() -> Int? {

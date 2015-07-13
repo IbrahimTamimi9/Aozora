@@ -21,6 +21,8 @@
 		DA27D1AD1AF1BA9D00CC854E /* AnimeNowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA27D1AC1AF1BA9D00CC854E /* AnimeNowTests.swift */; };
 		DA2D1EF01B531B0C009A5CCD /* NSUserDefaults+Dates.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2D1EEE1B5318E1009A5CCD /* NSUserDefaults+Dates.swift */; };
 		DA2D1EF11B531B21009A5CCD /* PFQuery+LocalDatastore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2D1EEC1B530903009A5CCD /* PFQuery+LocalDatastore.swift */; };
+		DA2D1EF51B53F475009A5CCD /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA2D1EF31B53F475009A5CCD /* Fabric.framework */; };
+		DA2D1EF61B53F475009A5CCD /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA2D1EF41B53F475009A5CCD /* Crashlytics.framework */; };
 		DA41679B1B25F76F00847F56 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA41679A1B25F76F00847F56 /* FontAwesome.ttf */; };
 		DA4167B31B273B0700847F56 /* ANAnimeKit.h in Headers */ = {isa = PBXBuildFile; fileRef = DA4167B21B273B0700847F56 /* ANAnimeKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA4167B91B273B0700847F56 /* ANAnimeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA4167AE1B273B0700847F56 /* ANAnimeKit.framework */; };
@@ -301,6 +303,8 @@
 		DA2853C11B22C5D30070B675 /* UIColor+AniNow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+AniNow.swift"; sourceTree = "<group>"; };
 		DA2D1EEC1B530903009A5CCD /* PFQuery+LocalDatastore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "PFQuery+LocalDatastore.swift"; path = "../AnimeNow/PFQuery+LocalDatastore.swift"; sourceTree = "<group>"; };
 		DA2D1EEE1B5318E1009A5CCD /* NSUserDefaults+Dates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSUserDefaults+Dates.swift"; path = "../AnimeNow/NSUserDefaults+Dates.swift"; sourceTree = "<group>"; };
+		DA2D1EF31B53F475009A5CCD /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		DA2D1EF41B53F475009A5CCD /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		DA38A9881B223AF1002FCBB4 /* ActionListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionListViewController.swift; sourceTree = "<group>"; };
 		DA38A98B1B223B39002FCBB4 /* Action.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Action.storyboard; sourceTree = "<group>"; };
 		DA38A98E1B223F1F002FCBB4 /* BasicTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicTableCell.swift; sourceTree = "<group>"; };
@@ -473,8 +477,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				DAC7D8FF1B5018DE00898FF6 /* iAd.framework in Frameworks */,
+				DA2D1EF61B53F475009A5CCD /* Crashlytics.framework in Frameworks */,
 				DA4167C51B273B0700847F56 /* ANAnimeKit.framework in Frameworks */,
 				DAC13C311B425CB70013D479 /* FBSDKLoginKit.framework in Frameworks */,
+				DA2D1EF51B53F475009A5CCD /* Fabric.framework in Frameworks */,
 				DA4AF8CC1B276E060020252E /* ANCommonKit.framework in Frameworks */,
 				DAC13C351B4262540013D479 /* ParseFacebookUtilsV4.framework in Frameworks */,
 				DA6E12C51B10D94200B278B0 /* ANParseKit.framework in Frameworks */,
@@ -1180,6 +1186,8 @@
 		F4F69FB5D8335951A772F9AC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DA2D1EF31B53F475009A5CCD /* Fabric.framework */,
+				DA2D1EF41B53F475009A5CCD /* Crashlytics.framework */,
 				DAC7D8FE1B5018DE00898FF6 /* iAd.framework */,
 				DAC13C2C1B425CB70013D479 /* FBSDKCoreKit.framework */,
 				DAC13C2D1B425CB70013D479 /* FBSDKLoginKit.framework */,
@@ -1256,6 +1264,7 @@
 				FCB548D67E364123103F724B /* Embed Pods Frameworks */,
 				486B3A44FD9EDE1C42C15E83 /* Copy Pods Resources */,
 				DA6E12CA1B10D94200B278B0 /* Embed Frameworks */,
+				DA2D1EF21B53F438009A5CCD /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1664,6 +1673,19 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		DA2D1EF21B53F438009A5CCD /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run d31dc9725e0dde61e63174070b36bfe313c8488d 671d3ff283bb351de6609a065fef69fae3e7e01aaab4f8385b76a4147b609137";
+		};
 		F974CF5C7B84ED5E81EB0F2C /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2027,6 +2049,7 @@
 				INFOPLIST_FILE = AnimeNow/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "$(inherited) -D DEBUG \"-D\" \"COCOAPODS\"";
 				PRODUCT_NAME = Aozora;
 				PROVISIONING_PROFILE = "97d93c39-509c-4a94-aa8c-6b8ae7ae090b";
 				SWIFT_OBJC_BRIDGING_HEADER = "AnimeNow/AnimeNow-Bridging-Header.h";
@@ -2048,6 +2071,7 @@
 				INFOPLIST_FILE = AnimeNow/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\"";
 				PRODUCT_NAME = Aozora;
 				PROVISIONING_PROFILE = "12055f45-b3ef-483a-b487-2cae4a4da138";
 				SWIFT_OBJC_BRIDGING_HEADER = "AnimeNow/AnimeNow-Bridging-Header.h";
@@ -2200,6 +2224,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -D DEBUG";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";

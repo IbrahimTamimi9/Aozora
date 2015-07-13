@@ -70,12 +70,7 @@ class OnboardingViewController: UIViewController {
                     if let error = error {
                         println("Uh oh. \(error.localizedDescription)")
                     } else {
-                        PFFacebookUtils.linkUserInBackground(PFUser.currentUser()!, withReadPermissions: permissions).continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
-                            
-                            self.presentRootTabBar()
-                            
-                            return nil
-                        })
+                        self.signUpWithFacebookPressed(self)
                     }
                     
                 })

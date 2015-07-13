@@ -35,9 +35,6 @@ class InAppPurchaseViewController: UITableViewController {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateViewForPurchaseState", name: PurchasedProNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "setPrices", name: PurchasedProNotification, object: nil)
-
-        println(parentViewController)
-        println(presentingViewController)
         
         if let navController = parentViewController as? UINavigationController {
             if let firstController = navController.viewControllers.first as? UIViewController where !firstController.isKindOfClass(SettingsViewController) {

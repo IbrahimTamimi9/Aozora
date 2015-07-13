@@ -11,10 +11,13 @@ import Foundation
 extension NSUserDefaults {
     
     public class func shouldPerformAction(actionID: String, expirationDays: Double) -> Bool {
-        let lastAction = NSUserDefaults.standardUserDefaults().objectForKey(actionID) as? NSDate ?? NSDate()
-        let dayTimeInterval: Double = 24*60*60
-        let timeIntervalSinceLastAction = -lastAction.timeIntervalSinceNow
-        return timeIntervalSinceLastAction > (expirationDays * dayTimeInterval)
+        if let lastAction = NSUserDefaults.standardUserDefaults().objectForKey(actionID) as? NSDate {
+            let dayTimeInterval: Double = 24*60*60
+            let timeIntervalSinceLastAction = -lastAction.timeIntervalSinceNow
+            return timeIntervalSinceLastAction > (expirationDays * dayTimeInterval)
+        } else {
+            return true
+        }
     }
     
     public class func completedAction(actionID: String) {
