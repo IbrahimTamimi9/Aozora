@@ -145,6 +145,8 @@
             <connections>
                 <outlet property="etaTimeLabel" destination="gRi-5F-Dob" id="slH-ip-eT3"/>
                 <outlet property="nextEpisodeNumberLabel" destination="HYw-8C-emP" id="LRa-7z-y0d"/>
+                <outlet property="posterDimView" destination="NNv-mQ-3ZX" id="Pey-T8-D4I"/>
+                <outlet property="posterEpisodeTitleLabel" destination="WWo-M7-kgI" id="mMk-nD-V9t"/>
                 <outlet property="posterImageView" destination="4rN-qR-nSY" id="pJQ-vb-f9a"/>
                 <outlet property="titleLabel" destination="Cwf-zR-tOB" id="rNR-A6-zOH"/>
             </connections>

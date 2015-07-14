@@ -26,8 +26,11 @@ class AnimeCell: UICollectionViewCell {
     @IBOutlet weak var ratingLabel: UILabel?
     @IBOutlet weak var genresLabel: UILabel?
     
+    // Poster only
     @IBOutlet weak var nextEpisodeNumberLabel: UILabel?
     @IBOutlet weak var etaTimeLabel: UILabel?
+    @IBOutlet weak var posterEpisodeTitleLabel: UILabel?
+    @IBOutlet weak var posterDimView: UIView?
     
     var numberFormatter: NSNumberFormatter {
         struct Static {
@@ -113,9 +116,17 @@ class AnimeCell: UICollectionViewCell {
             }
             
             nextEpisodeNumberLabel?.text = nextEpisode.description
+            posterEpisodeTitleLabel?.text = "Episode"
+            posterDimView?.hidden = false
             
         } else {
             etaLabel?.text = ""
+            nextEpisodeNumberLabel?.text = ""
+            posterEpisodeTitleLabel?.text = ""
+            posterDimView?.hidden = true
+            
+            etaTimeLabel?.textColor = UIColor.belizeHole()
+            etaTimeLabel?.text = "Aired"
         }
         
     }
