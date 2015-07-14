@@ -191,22 +191,19 @@ class ChartViewController: UIViewController {
     
     func fetchAllSeasons() {
         
-        let query = SeasonalChart.query()!
-        query.limit = 200
-        query.whereKey("startDate", lessThan: NSDate())
-        query.orderByDescending("startDate")
-        query.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
+        ChartController.fetchAllSeasons().continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
             
             var seasons: [Int:[SeasonalChart]] = [:]
-            var result = result as! [SeasonalChart]
+            var result = task.result as! [SeasonalChart]
             
             self.chartsDataSource = result
             
             self.loadingView.stopAnimating()
             self.collectionView.animateFadeIn()
+            
+            return nil
         })
-        
-        
+
     }
     
     // MARK: - Utility Functions

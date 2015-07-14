@@ -263,6 +263,27 @@
 			remoteGlobalIDString = DA6E12AD1B10D94200B278B0;
 			remoteInfo = ANParseKit;
 		};
+		DAB0126C1B5448930095AA3B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DA27D1891AF1BA9D00CC854E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DA4AF8B41B276E060020252E;
+			remoteInfo = ANCommonKit;
+		};
+		DAB0126E1B5448A30095AA3B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DA27D1891AF1BA9D00CC854E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DA4AF8B41B276E060020252E;
+			remoteInfo = ANCommonKit;
+		};
+		DAB012701B5448A80095AA3B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DA27D1891AF1BA9D00CC854E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DA6E12AD1B10D94200B278B0;
+			remoteInfo = ANParseKit;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -1269,9 +1290,9 @@
 			buildRules = (
 			);
 			dependencies = (
+				DA4AF8CB1B276E060020252E /* PBXTargetDependency */,
 				DA6E12C41B10D94200B278B0 /* PBXTargetDependency */,
 				DA4167C41B273B0700847F56 /* PBXTargetDependency */,
-				DA4AF8CB1B276E060020252E /* PBXTargetDependency */,
 			);
 			name = Aozora;
 			productName = AnimeNow;
@@ -1310,6 +1331,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				DAB012711B5448A80095AA3B /* PBXTargetDependency */,
+				DAB0126F1B5448A30095AA3B /* PBXTargetDependency */,
 			);
 			name = ANAnimeKit;
 			productName = ANAnimeKit;
@@ -1388,6 +1411,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				DAB0126D1B5448930095AA3B /* PBXTargetDependency */,
 			);
 			name = ANParseKit;
 			productName = ANParseKit;
@@ -1467,12 +1491,12 @@
 			targets = (
 				DA27D1901AF1BA9D00CC854E /* Aozora */,
 				DA27D1A51AF1BA9D00CC854E /* AozoraTests */,
+				DA4AF8B41B276E060020252E /* ANCommonKit */,
+				DA4AF8BE1B276E060020252E /* ANCommonKitTests */,
 				DA6E12AD1B10D94200B278B0 /* ANParseKit */,
 				DA6E12B71B10D94200B278B0 /* ANParseKitTests */,
 				DA4167AD1B273B0700847F56 /* ANAnimeKit */,
 				DA4167B71B273B0700847F56 /* ANAnimeKitTests */,
-				DA4AF8B41B276E060020252E /* ANCommonKit */,
-				DA4AF8BE1B276E060020252E /* ANCommonKitTests */,
 			);
 		};
 /* End PBXProject section */
@@ -1931,6 +1955,21 @@
 			target = DA6E12AD1B10D94200B278B0 /* ANParseKit */;
 			targetProxy = DA6E12C31B10D94200B278B0 /* PBXContainerItemProxy */;
 		};
+		DAB0126D1B5448930095AA3B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DA4AF8B41B276E060020252E /* ANCommonKit */;
+			targetProxy = DAB0126C1B5448930095AA3B /* PBXContainerItemProxy */;
+		};
+		DAB0126F1B5448A30095AA3B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DA4AF8B41B276E060020252E /* ANCommonKit */;
+			targetProxy = DAB0126E1B5448A30095AA3B /* PBXContainerItemProxy */;
+		};
+		DAB012711B5448A80095AA3B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DA6E12AD1B10D94200B278B0 /* ANParseKit */;
+			targetProxy = DAB012701B5448A80095AA3B /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -2331,6 +2370,7 @@
 			baseConfigurationReference = CC7A7DA6842DABB2A3D90AB9 /* Pods.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;

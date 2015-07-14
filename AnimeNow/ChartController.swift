@@ -25,10 +25,20 @@ class ChartController {
         let currentSeasonalChart = SeasonalChartService.seasonalChartString(0).title
         if currentSeasonalChart == seasonalChart {
             // Cached
-            return currentChartQuery.findCachedOrNetwork("LocalDataStore.CurrentChart", expirationDays: 1)
+            return currentChartQuery.findCachedOrNetwork("LocalDatastore.CurrentChart", expirationDays: 1)
         } else {
             return currentChartQuery.findObjectsInBackground()
         }
+    }
+    
+    class func fetchAllSeasons() -> BFTask {
+        
+        let query = SeasonalChart.query()!
+        query.limit = 200
+        query.whereKey("startDate", lessThan: NSDate())
+        query.orderByDescending("startDate")
+        
+        return query.findCachedOrNetwork("LocalDatastore.AllSeasons", expirationDays: 7)
     }
 }
 
