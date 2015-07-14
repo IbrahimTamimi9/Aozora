@@ -240,7 +240,7 @@ class ChartViewController: UIViewController {
     
     func updateLayoutType(layoutType: LayoutType) {
         
-        if selectedList != SelectedList.SeasonalChart {
+        if selectedList != SelectedList.AllSeasons {
             currentLayoutType = layoutType
         }
         
@@ -356,7 +356,6 @@ extension ChartViewController: UICollectionViewDataSource {
         if selectedList == SelectedList.AllSeasons {
             let reuseIdentifier = "SeasonCell";
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! BasicCollectionCell
-            
             let seasonalChart = chartsDataSource[indexPath.row]
             cell.titleLabel.text = seasonalChart.title
             cell.layoutIfNeeded()
@@ -376,11 +375,8 @@ extension ChartViewController: UICollectionViewDataSource {
         }
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! AnimeCell
-        
         let anime = filteredDataSource[indexPath.section][indexPath.row]
-        
         cell.configureWithAnime(anime, canFadeImages: canFadeImages, showEtaAsAired: false)
-        
         cell.layoutIfNeeded()
         return cell
     }
