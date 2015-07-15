@@ -119,7 +119,7 @@ public class MALScrapper {
     public func loginWith(#username: String, password: String) -> BFTask {
 
         let urlString = "http://myanimelist.net/login.php?from=%2Fpanel.php"
-        let postData = "user_name:'\(username)',password:'\(password)'"
+        let postData = "user_name:'\(username)',password:'\(password)',cookie:'1'"
         let script = "post('\(urlString)', {\(postData)});"
         
         let completion = BFTaskCompletionSource()
@@ -127,9 +127,12 @@ public class MALScrapper {
         viewController.webScraper.makePostRequestWithScript(script, handler: { (body) -> Void in
             if (body.lowercaseString as NSString).containsString("\(username)") {
                 println("Logged in!")
-                completion.setResult(nil)
+                if !completion.task.completed {
+                    completion.setResult(nil)
+                }
             } else {
                 println("Failed log in")
+                println(body.lowercaseString)
                 completion.setError(NSError(domain: "aninow", code: 1, userInfo: nil))
             }
         })
@@ -138,15 +141,17 @@ public class MALScrapper {
     }
     
     public func postToForum(topic: Int, message: String, with username: String) -> BFTask {
-        let urlString = "http://myanimelist.net/forum/index.php?topic_id=\(topic)&action=message"
-        let postData = "msg_text:'\(message)'"
+        let messageWithNewLines = message.stringByReplacingOccurrencesOfString("\n", withString: "\r")
+        
+        let urlString = "http://myanimelist.net/forum/?topic_id=\(topic)&action=message"
+        let postData = "msg_text:'\(messageWithNewLines)'"
         let script = "post('\(urlString)', {\(postData)});"
         
         let completion = BFTaskCompletionSource()
         
         self.viewController.webScraper.makePostRequestWithScript(script, handler: { (body) -> Void in
-            // TODO: Remove darcirius for real password
-            if (body as NSString).containsString(username) {
+            
+            if (body.lowercaseString as NSString).containsString(username) {
                 completion.setResult(nil)
             } else {
                 println(body)
@@ -227,23 +232,25 @@ public class MALScrapper {
             
             for result in results {
                 
+                let loggedIn = result.hppleElementFor(path: [1,0])?.tagName == "span" ? 1 : 0
+                
                 var type: TopicType = .Normal
-                var topicID = result.hppleElementFor(path: [1,0])?.objectForKey("href")
-                let firstElement = result.hppleElementFor(path: [1,0])
+                var topicID = result.hppleElementFor(path: [1,0+loggedIn])?.objectForKey("href")
+                let firstElement = result.hppleElementFor(path: [1,0+loggedIn])
                 var title = firstElement!.text() != nil ? firstElement?.text() : firstElement?.content
                 
                 if title == "Sticky:" {
                     type = .Sticky
-                    title = result.hppleElementFor(path: [1,1])?.text()
-                    topicID = result.hppleElementFor(path: [1,1])?.objectForKey("href")
+                    title = result.hppleElementFor(path: [1,1+loggedIn])?.text()
+                    topicID = result.hppleElementFor(path: [1,1+loggedIn])?.objectForKey("href")
                 } else if title == "Poll:" {
                     type = .Poll
-                    title = result.hppleElementFor(path: [1,1])?.text()
-                    topicID = result.hppleElementFor(path: [1,1])?.objectForKey("href")
+                    title = result.hppleElementFor(path: [1,1+loggedIn])?.text()
+                    topicID = result.hppleElementFor(path: [1,1+loggedIn])?.objectForKey("href")
                 }
                 
                 let fromUser = ""// = result.hppleElementFor(path: [1,4,0])?.text()
-                let date = result.hppleElementFor(path: [1,5])?.text()
+                let date = result.hppleElementFor(path: [1,5+loggedIn])?.text()
                 var replies = result.hppleElementFor(path: [2])?.text()
                 let lastReplyFromUser = result.hppleElementFor(path: [3,1])?.text()
                 let lastReplyDate = result.hppleElementFor(path: [3,4])?.content

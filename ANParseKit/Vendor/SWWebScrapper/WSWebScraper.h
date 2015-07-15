@@ -8,17 +8,19 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import <WebKit/WebKit.h>
 #import "TFHpple.h"
+#import <NJKWebViewProgress/NJKWebViewProgress.h>
 
-@interface WSWebScraper : NSObject <WKNavigationDelegate>
+@interface WSWebScraper : NSObject <UIWebViewDelegate, NJKWebViewProgressDelegate>
 
 typedef void(^WSRequestHandler)(TFHpple *hpple);
 typedef void(^HTTPRequestHandler)(NSString *body);
 
 @property (nonatomic, copy) WSRequestHandler completion;
-@property (nonatomic, copy) HTTPRequestHandler completion2;
-@property (strong, nonatomic) WKWebView* webView;
+@property (nonatomic, copy) HTTPRequestHandler completionPOST;
+@property (strong, nonatomic) UIWebView* webView;
+@property (strong, nonatomic) NJKWebViewProgress* progressProxy;
+
 - (id)initWithViewController:(UIViewController *)aViewController;
 
 - (void)scrape:(NSString *)url handler:(WSRequestHandler)handler;

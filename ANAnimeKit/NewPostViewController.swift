@@ -77,13 +77,13 @@ public class NewPostViewController: UIViewController {
         
         malScrapper.postToForum(topic.id, message: textView.text, with: username).continueWithBlock
             { (task: BFTask!) -> AnyObject! in
-            
-                if let _ = task.result {
-                    self.delegate?.didPost()
-                    self.dismissViewControllerAnimated(true, completion: nil)
-                } else if let error = task.error {
+                
+                if let error = task.error {
                     // TODO: Show error message/
                     println("\(error)")
+                } else {
+                    self.delegate?.didPost()
+                    self.dismissViewControllerAnimated(true, completion: nil)
                 }
                 
             return nil
