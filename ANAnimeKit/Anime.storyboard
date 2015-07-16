@@ -324,7 +324,7 @@
                                         <rect key="frame" x="99" y="4" width="106" height="30"/>
                                         <color key="backgroundColor" red="0.89411765336990356" green="0.89411765336990356" blue="0.89411765336990356" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="106" id="fdj-yM-0Ph"/>
+                                            <constraint firstAttribute="width" priority="999" constant="106" id="fdj-yM-0Ph"/>
                                             <constraint firstAttribute="height" constant="30" id="lSm-kU-Mpj"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="15"/>
@@ -341,12 +341,13 @@
                                             <action selector="addToListPressed:" destination="Gi4-Gc-NLH" eventType="touchUpInside" id="ygU-JV-FZu"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mME-c7-d82" customClass="FBSDKShareButton">
-                                        <rect key="frame" x="522" y="4" width="70" height="30"/>
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mME-c7-d82" customClass="FBSDKShareButton">
+                                        <rect key="frame" x="564" y="4" width="28" height="30"/>
                                         <color key="backgroundColor" red="0.89411765340000005" green="0.89411765340000005" blue="0.89411765340000005" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="70" id="5Ig-NV-JeX"/>
+                                            <constraint firstAttribute="width" constant="35" id="5Ig-NV-JeX"/>
                                             <constraint firstAttribute="height" constant="30" id="FYZ-XL-dQi"/>
+                                            <constraint firstAttribute="width" constant="28" id="HOe-Yi-vbS"/>
                                             <constraint firstAttribute="width" constant="106" id="nP9-Hf-9f7"/>
                                         </constraints>
                                         <state key="normal">
@@ -355,6 +356,7 @@
                                         </state>
                                         <variation key="default">
                                             <mask key="constraints">
+                                                <exclude reference="5Ig-NV-JeX"/>
                                                 <exclude reference="nP9-Hf-9f7"/>
                                             </mask>
                                         </variation>
@@ -362,6 +364,7 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.97254902124404907" green="0.97254902124404907" blue="0.97254902124404907" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
+                                    <constraint firstItem="mME-c7-d82" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Uyp-jX-dBR" secondAttribute="trailing" constant="8" id="0Xq-OF-sua"/>
                                     <constraint firstItem="riH-A3-wgP" firstAttribute="top" secondItem="adM-6b-u0d" secondAttribute="bottom" constant="2" id="2km-fx-KUT"/>
                                     <constraint firstItem="tcF-Kg-zZa" firstAttribute="top" secondItem="Kkd-4a-L0Z" secondAttribute="top" constant="45" id="5NV-39-2o6"/>
                                     <constraint firstItem="h2S-RT-rXF" firstAttribute="centerX" secondItem="w5k-tY-TLe" secondAttribute="centerX" constant="-0.5" id="5jR-l9-jmt"/>

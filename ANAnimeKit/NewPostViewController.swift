@@ -23,6 +23,7 @@ public class NewPostViewController: UIViewController {
     
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var textFieldBottomLayoutConstraint: NSLayoutConstraint!
+    @IBOutlet weak var sendButton: UIButton!
     
     public func initWithTopic(topic: MALScrapper.Topic, scrapper: MALScrapper) {
         self.topic = topic
@@ -73,14 +74,17 @@ public class NewPostViewController: UIViewController {
             return
         }
         
+        self.sendButton.setTitle("Sending... ", forState: .Normal)
+        self.sendButton.userInteractionEnabled = false
+        
         let username = PFUser.malUsername ?? ""
         
         malScrapper.postToForum(topic.id, message: textView.text, with: username).continueWithBlock
             { (task: BFTask!) -> AnyObject! in
                 
                 if let error = task.error {
-                    // TODO: Show error message/
                     println("\(error)")
+                    UIAlertView(title: "Failed sending message..", message: nil, delegate: nil, cancelButtonTitle: "Ok..").show()
                 } else {
                     self.delegate?.didPost()
                     self.dismissViewControllerAnimated(true, completion: nil)

@@ -97,7 +97,7 @@
 {
     self.estimatedProgress = progress;
     // Estimated progress when image urls have been loaded 0.5
-    
+    //NSLog(@"Progress %f",self.estimatedProgress);
     if (!self.catchFlag || self.estimatedProgress < NJKInteractiveProgressValue) {
         return;
     }

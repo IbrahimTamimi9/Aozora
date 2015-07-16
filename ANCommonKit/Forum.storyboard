@@ -490,6 +490,7 @@
                     </view>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
+                        <outlet property="sendButton" destination="xWQ-2l-7XS" id="ngk-5b-WHE"/>
                         <outlet property="textFieldBottomLayoutConstraint" destination="Q72-ib-XhN" id="Owx-SS-RYV"/>
                         <outlet property="textView" destination="rY6-rI-fBw" id="yKg-pk-Mwj"/>
                     </connections>

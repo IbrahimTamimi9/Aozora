@@ -102,6 +102,7 @@ public class TopicViewController: UIViewController {
         super.prepareForSegue(segue, sender: sender)
         if segue.identifier == "PostReply" {
             let controller = segue.destinationViewController as! NewPostViewController
+            controller.delegate = self
             controller.initWithTopic(topic, scrapper: malScrapper)
         }
     }
@@ -258,7 +259,7 @@ extension TopicViewController: TTTAttributedLabelDelegate {
 extension TopicViewController: NewPostViewControllerDelegate {
     public func didPost() {
         tableView.animateFadeOut()
-        scrollToBottom = true
+        //scrollToBottom = true
         fetchPosts(0)
     }
 }
