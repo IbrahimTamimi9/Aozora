@@ -9,6 +9,9 @@
 import UIKit
 import ANCommonKit
 
+protocol UserProfileViewControllerDelegate: class {
+    func userProfileShouldRefresh()
+}
 class UserProfileViewController: UserBaseViewController {
     
     @IBOutlet weak var userAvatar: UIImageView!
@@ -16,6 +19,8 @@ class UserProfileViewController: UserBaseViewController {
     @IBOutlet weak var lastOnlineLabel: UILabel!
     
     let HeaderCellHeight: CGFloat = 39
+    
+    weak var delegate: UserProfileViewControllerDelegate?
     
     var profile: ProfileViewController.Profile? {
         didSet {
@@ -26,6 +31,7 @@ class UserProfileViewController: UserBaseViewController {
             self.userAvatar.setImageFrom(urlString: profile?.avatarURL)
             
             tableView.reloadData()
+            refreshControl.endRefreshing()
             tableView.animateFadeIn()
         }
     }
@@ -39,7 +45,11 @@ class UserProfileViewController: UserBaseViewController {
         
         tableView.estimatedRowHeight = 44.0
         tableView.rowHeight = UITableViewAutomaticDimension
-        
+    }
+    
+    override func refreshPulled() {
+        super.refreshPulled()
+        delegate?.userProfileShouldRefresh()
     }
     
 }

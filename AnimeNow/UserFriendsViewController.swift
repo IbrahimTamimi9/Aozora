@@ -26,30 +26,43 @@ class UserFriendsViewController: UserBaseViewController {
         tableView.estimatedRowHeight = 44.0
         tableView.rowHeight = UITableViewAutomaticDimension
         
+        fetchUserFriends()
+    }
+    
+    override func refreshPulled() {
+        super.refreshPulled()
+        fetchUserFriends()
+    }
+    
+    func fetchUserFriends() {
+        loadingView.startAnimating()
         userFriends().continueWithBlock
-        { (task: BFTask!) -> AnyObject! in
-            
-            if let result = task.result as? [[String: AnyObject]] {
+            { (task: BFTask!) -> AnyObject! in
                 
-                var profiles: [ProfileViewController.Profile] = []
-                for profileItem in result {
+                self.loadingView.stopAnimating()
+                self.refreshControl.endRefreshing()
+                
+                if let result = task.result as? [[String: AnyObject]] {
                     
-                    var profile = ProfileViewController.Profile()
-                    let profileInfo = profileItem["profile"] as! [String: AnyObject]
-                    profile.username = profileItem["name"] as! String
-                    profile.avatarURL = profileInfo["avatar_url"] as! String
-                    
-                    let lastOnlineString = (profileInfo["details"] as! [String:AnyObject])["last_online"] as! String
-                    if let lastOnline = lastOnlineString.dateWithISO8601NoMinutes() ?? lastOnlineString.dateWithISO8601() {
-                        profile.lastOnline = lastOnline.timeAgo()
+                    var profiles: [ProfileViewController.Profile] = []
+                    for profileItem in result {
+                        
+                        var profile = ProfileViewController.Profile()
+                        let profileInfo = profileItem["profile"] as! [String: AnyObject]
+                        profile.username = profileItem["name"] as! String
+                        profile.avatarURL = profileInfo["avatar_url"] as! String
+                        
+                        let lastOnlineString = (profileInfo["details"] as! [String:AnyObject])["last_online"] as! String
+                        if let lastOnline = lastOnlineString.dateWithISO8601NoMinutes() ?? lastOnlineString.dateWithISO8601() {
+                            profile.lastOnline = lastOnline.timeAgo()
+                        }
+                        profiles.append(profile)
                     }
-                    profiles.append(profile)
+                    
+                    self.dataSource = profiles
                 }
                 
-                self.dataSource = profiles
-            }
-            
-            return nil
+                return nil
         }
     }
     

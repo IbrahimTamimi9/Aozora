@@ -44,57 +44,60 @@ class ProfileViewController: XLButtonBarPagerTabStripViewController {
         buttonBarView.selectedBar.backgroundColor = UIColor.peterRiver()
         title = "Me"
         
+        fetchUser()
+    }
+    
+    func fetchUser() {
         loadingView.startAnimating()
         
         userProfile(username!).continueWithBlock
-        { (task: BFTask!) -> AnyObject! in
-            
-            self.loadingView.stopAnimating()
-            
-            if let result = task.result as? [String: AnyObject] {
+            { (task: BFTask!) -> AnyObject! in
                 
-                let details = result["details"] as! [String:AnyObject]
-                let animeStatsData = result["anime_stats"] as! [String:Int]
-                let mangaStatsData = result["manga_stats"] as! [String:Int]
+                self.loadingView.stopAnimating()
                 
+                if let result = task.result as? [String: AnyObject] {
+                    
+                    let details = result["details"] as! [String:AnyObject]
+                    let animeStatsData = result["anime_stats"] as! [String:Int]
+                    let mangaStatsData = result["manga_stats"] as! [String:Int]
+                    
+                    
+                    var profile = Profile()
+                    profile.username = self.username!
+                    profile.avatarURL = result["avatar_url"] as? String ?? ""
+                    profile.lastOnline = details["last_online"] as? String ?? ""
+                    profile.gender = details["gender"] as? String ?? ""
+                    profile.joinDate = details["join_date"] as? String ?? ""
+                    profile.accessRank = details["accessRank"] as? String ?? ""
+                    profile.animeListViews = details["anime_list_views"] as! Int
+                    profile.mangaListViews = details["manga_list_views"] as! Int
+                    profile.forumPosts = details["forum_posts"] as! Int
+                    
+                    var animeStats = profile.animeStats
+                    animeStats.timeDays = Double(animeStatsData["time_days"]!)
+                    animeStats.watching = animeStatsData["watching"]!
+                    animeStats.completed = animeStatsData["completed"]!
+                    animeStats.onHold = animeStatsData["on_hold"]!
+                    animeStats.dropped = animeStatsData["dropped"]!
+                    animeStats.planToWatch = animeStatsData["plan_to_watch"]!
+                    animeStats.totalEntries = animeStatsData["total_entries"]!
+                    
+                    
+                    var mangaStats = profile.mangaStats
+                    mangaStats.timeDays = Double(mangaStatsData["time_days"]!)
+                    mangaStats.reading = mangaStatsData["reading"]!
+                    mangaStats.completed = mangaStatsData["completed"]!
+                    mangaStats.onHold = mangaStatsData["on_hold"]!
+                    mangaStats.dropped = mangaStatsData["dropped"]!
+                    mangaStats.planToRead = mangaStatsData["plan_to_read"]!
+                    mangaStats.totalEntries = mangaStatsData["total_entries"]!
+                    
+                    
+                    self.profile.setUserProfile(profile)
+                }
                 
-                var profile = Profile()
-                profile.username = self.username!
-                profile.avatarURL = result["avatar_url"] as? String ?? ""
-                profile.lastOnline = details["last_online"] as? String ?? ""
-                profile.gender = details["gender"] as? String ?? ""
-                profile.joinDate = details["join_date"] as? String ?? ""
-                profile.accessRank = details["accessRank"] as? String ?? ""
-                profile.animeListViews = details["anime_list_views"] as! Int
-                profile.mangaListViews = details["manga_list_views"] as! Int
-                profile.forumPosts = details["forum_posts"] as! Int
-                
-                var animeStats = profile.animeStats
-                animeStats.timeDays = Double(animeStatsData["time_days"]!)
-                animeStats.watching = animeStatsData["watching"]!
-                animeStats.completed = animeStatsData["completed"]!
-                animeStats.onHold = animeStatsData["on_hold"]!
-                animeStats.dropped = animeStatsData["dropped"]!
-                animeStats.planToWatch = animeStatsData["plan_to_watch"]!
-                animeStats.totalEntries = animeStatsData["total_entries"]!
-                
-                
-                var mangaStats = profile.mangaStats
-                mangaStats.timeDays = Double(mangaStatsData["time_days"]!)
-                mangaStats.reading = mangaStatsData["reading"]!
-                mangaStats.completed = mangaStatsData["completed"]!
-                mangaStats.onHold = mangaStatsData["on_hold"]!
-                mangaStats.dropped = mangaStatsData["dropped"]!
-                mangaStats.planToRead = mangaStatsData["plan_to_read"]!
-                mangaStats.totalEntries = mangaStatsData["total_entries"]!
-                
-                
-                self.profile.setUserProfile(profile)
-            }
-            
-            return nil
+                return nil
         }
-        
     }
     
     func userProfile(username: String) -> BFTask! {
@@ -173,6 +176,7 @@ extension ProfileViewController: XLPagerTabStripViewControllerDataSource {
         
         history = storyboard.instantiateViewControllerWithIdentifier("UserHistory") as! UserHistoryViewController
         profile = storyboard.instantiateViewControllerWithIdentifier("UserProfile") as! UserProfileViewController
+        profile.delegate = self
         friends = storyboard.instantiateViewControllerWithIdentifier("UserFriends") as! UserFriendsViewController
         
         history.initWithProfileSection(.History, username: username!)
@@ -180,5 +184,11 @@ extension ProfileViewController: XLPagerTabStripViewControllerDataSource {
         friends.initWithProfileSection(.Friends, username: username!)
         
         return [profile, history, friends]
+    }
+}
+
+extension ProfileViewController: UserProfileViewControllerDelegate {
+    func userProfileShouldRefresh() {
+        fetchUser()
     }
 }

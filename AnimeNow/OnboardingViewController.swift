@@ -70,7 +70,7 @@ class OnboardingViewController: UIViewController {
                     if let error = error {
                         println("Uh oh. \(error.localizedDescription)")
                     } else {
-                        self.signUpWithFacebookPressed(self)
+                        //self.signUpWithFacebookPressed(self)
                     }
                     
                 })

@@ -107,7 +107,6 @@ class AnimeListViewController: UIViewController {
             return nil
         })
         
-        
     }
     
     // MARK: - Sort and Layout

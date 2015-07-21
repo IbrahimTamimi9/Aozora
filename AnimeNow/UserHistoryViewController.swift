@@ -34,40 +34,52 @@ class UserHistoryViewController: UserBaseViewController {
         tableView.estimatedRowHeight = 44.0
         tableView.rowHeight = UITableViewAutomaticDimension         
         
-        userHistory().continueWithBlock
-        { (task: BFTask!) -> AnyObject! in
-            
-            if let result = task.result as? [[String: AnyObject]] {
-                
-                var history: [HistoryItem] = []
-                for historyItem in result {
-                    
-                    var item = HistoryItem()
-                    if let itemInfo = historyItem["item"] as? [String: AnyObject],
-                        let id = itemInfo["id"] as? Int,
-                        let title = itemInfo["title"] as? String,
-                        let episodes = itemInfo["episodes"] as? Int,
-                        let type = historyItem["type"] as? String,
-                        let timeUpdated = historyItem["time_updated"] as? String {
-                            item.id = id
-                            item.title = title
-                            item.episodes = episodes
-                            item.type = type
-                            if let updatedAt = timeUpdated.dateWithISO8601() ?? timeUpdated.dateWithISO8601NoMinutes() {
-                                item.updatedAt = updatedAt
-                            }
-                            history.append(item)
-                    }
-                }
-                
-                self.dataSource = history
-                
-            }
-            
-            return nil
-        }
+        fetchUserHistory()
     }
     
+    override func refreshPulled() {
+        super.refreshPulled()
+        fetchUserHistory()
+    }
+    
+    func fetchUserHistory() {
+        loadingView.startAnimating()
+        userHistory().continueWithBlock
+            { (task: BFTask!) -> AnyObject! in
+                
+                self.loadingView.stopAnimating()
+                self.refreshControl.endRefreshing()
+                
+                if let result = task.result as? [[String: AnyObject]] {
+                    
+                    var history: [HistoryItem] = []
+                    for historyItem in result {
+                        
+                        var item = HistoryItem()
+                        if let itemInfo = historyItem["item"] as? [String: AnyObject],
+                            let id = itemInfo["id"] as? Int,
+                            let title = itemInfo["title"] as? String,
+                            let episodes = itemInfo["episodes"] as? Int,
+                            let type = historyItem["type"] as? String,
+                            let timeUpdated = historyItem["time_updated"] as? String {
+                                item.id = id
+                                item.title = title
+                                item.episodes = episodes
+                                item.type = type
+                                if let updatedAt = timeUpdated.dateWithISO8601() ?? timeUpdated.dateWithISO8601NoMinutes() {
+                                    item.updatedAt = updatedAt
+                                }
+                                history.append(item)
+                        }
+                    }
+                    
+                    self.dataSource = history
+                    
+                }
+                
+                return nil
+        }
+    }
     
     func userHistory() -> BFTask! {
         let completionSource = BFTaskCompletionSource()
