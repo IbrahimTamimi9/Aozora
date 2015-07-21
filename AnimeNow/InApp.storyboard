@@ -270,7 +270,7 @@
                                                     <color key="textColor" red="0.18823529780000001" green="0.19607843459999999" blue="0.23529411850000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Browse past, current or upcoming anime charts. Sort by popularity, title or next episode!" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VD3-5q-VWE">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Browse past, current or upcoming anime charts. Sort by popularity, title or next episode!" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VD3-5q-VWE">
                                                     <rect key="frame" x="163" y="30" width="429" height="31.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" red="0.41226699560000002" green="0.41226699560000002" blue="0.41226699560000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -286,6 +286,7 @@
                                                 <constraint firstItem="97J-C9-0fL" firstAttribute="top" secondItem="FuH-ZJ-41c" secondAttribute="topMargin" id="cFi-tW-gFm"/>
                                                 <constraint firstItem="VD3-5q-VWE" firstAttribute="trailing" secondItem="FuH-ZJ-41c" secondAttribute="trailingMargin" id="ivT-kK-aSR"/>
                                                 <constraint firstItem="97J-C9-0fL" firstAttribute="leading" secondItem="VD3-5q-VWE" secondAttribute="leading" id="ptT-5r-6Qa"/>
+                                                <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="VD3-5q-VWE" secondAttribute="bottom" id="xBq-vL-qYz"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.94592686390000003" green="0.94592686390000003" blue="0.94592686390000003" alpha="1" colorSpace="calibratedRGB"/>
@@ -334,7 +335,7 @@
                                                     <color key="textColor" red="0.18823529780000001" green="0.19607843459999999" blue="0.23529411850000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Keep up on what's airing this week, mark episodes as watched from your library too." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1XE-hq-3ne">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Keep up on what's airing this week, mark episodes as watched from your library too." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1XE-hq-3ne">
                                                     <rect key="frame" x="163" y="30" width="429" height="31.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" red="0.41226699560000002" green="0.41226699560000002" blue="0.41226699560000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -347,6 +348,7 @@
                                                 <constraint firstItem="cIB-p2-6r1" firstAttribute="leading" secondItem="1XE-hq-3ne" secondAttribute="leading" id="NFg-O9-fek"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="cIB-p2-6r1" secondAttribute="trailing" id="ONy-Jy-LFg"/>
                                                 <constraint firstItem="1XE-hq-3ne" firstAttribute="trailing" secondItem="yFq-Mh-GXg" secondAttribute="trailingMargin" id="XfU-VS-CLt"/>
+                                                <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="1XE-hq-3ne" secondAttribute="bottom" id="Yxn-hd-Wtv"/>
                                                 <constraint firstItem="qIn-d6-vhM" firstAttribute="top" secondItem="yFq-Mh-GXg" secondAttribute="topMargin" id="dHq-BZ-Gs5"/>
                                                 <constraint firstItem="1XE-hq-3ne" firstAttribute="top" secondItem="cIB-p2-6r1" secondAttribute="bottom" constant="4" id="nbI-TA-dvL"/>
                                                 <constraint firstItem="qIn-d6-vhM" firstAttribute="leading" secondItem="yFq-Mh-GXg" secondAttribute="leadingMargin" id="yaR-4O-7qe"/>
@@ -398,7 +400,7 @@
                                                     <color key="textColor" red="0.18823529780000001" green="0.19607843459999999" blue="0.23529411850000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Browse top airing, top movies, most popular anime and many more lists. Use advanced filters to find what you're looking for." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZJS-51-x6a">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Browse top airing, top movies, most popular anime and many more lists. Use advanced filters to find what you're looking for." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZJS-51-x6a">
                                                     <rect key="frame" x="163" y="30" width="429" height="31.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" red="0.41226699560000002" green="0.41226699560000002" blue="0.41226699560000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -412,6 +414,7 @@
                                                 <constraint firstItem="XCm-Du-1YR" firstAttribute="top" secondItem="3ce-AR-Dkf" secondAttribute="topMargin" id="fcw-sS-THU"/>
                                                 <constraint firstItem="YFo-5x-AYh" firstAttribute="top" secondItem="3ce-AR-Dkf" secondAttribute="topMargin" id="oIl-u2-1tE"/>
                                                 <constraint firstItem="XCm-Du-1YR" firstAttribute="leading" secondItem="YFo-5x-AYh" secondAttribute="trailing" constant="8" id="puy-4K-RHZ"/>
+                                                <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="ZJS-51-x6a" secondAttribute="bottom" id="tl2-11-smi"/>
                                                 <constraint firstItem="ZJS-51-x6a" firstAttribute="trailing" secondItem="3ce-AR-Dkf" secondAttribute="trailingMargin" id="yQb-Nw-zLc"/>
                                                 <constraint firstItem="YFo-5x-AYh" firstAttribute="leading" secondItem="3ce-AR-Dkf" secondAttribute="leadingMargin" id="zAt-3v-Ogm"/>
                                             </constraints>
@@ -462,7 +465,7 @@
                                                     <color key="textColor" red="0.18823529780000001" green="0.19607843459999999" blue="0.23529411850000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use Check-In Compact view if you're watching lot's of anime. Or Compact view to view all your completed anime in a glance." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="co2-EQ-n09">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use Check-In Compact view if you're watching lot's of anime. Or Compact view to view all your completed anime in a glance." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="co2-EQ-n09">
                                                     <rect key="frame" x="163" y="30" width="429" height="31.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" red="0.41226699560000002" green="0.41226699560000002" blue="0.41226699560000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -475,6 +478,7 @@
                                                 <constraint firstItem="ky2-EI-aOa" firstAttribute="top" secondItem="7Gy-bl-kJe" secondAttribute="topMargin" id="EuX-tP-Bva"/>
                                                 <constraint firstItem="Fyu-wh-vbV" firstAttribute="leading" secondItem="ky2-EI-aOa" secondAttribute="trailing" constant="8" id="JY5-ms-GPQ"/>
                                                 <constraint firstItem="co2-EQ-n09" firstAttribute="top" secondItem="Fyu-wh-vbV" secondAttribute="bottom" constant="4" id="KaW-ke-D5f"/>
+                                                <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="co2-EQ-n09" secondAttribute="bottom" id="TZg-Rc-Q22"/>
                                                 <constraint firstItem="co2-EQ-n09" firstAttribute="trailing" secondItem="7Gy-bl-kJe" secondAttribute="trailingMargin" id="W7Y-vb-uiI"/>
                                                 <constraint firstItem="Fyu-wh-vbV" firstAttribute="leading" secondItem="co2-EQ-n09" secondAttribute="leading" id="lOm-hu-0ZO"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="Fyu-wh-vbV" secondAttribute="trailing" id="ldD-yV-bop"/>

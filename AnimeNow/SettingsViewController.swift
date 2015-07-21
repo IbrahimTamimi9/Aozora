@@ -132,7 +132,7 @@ class SettingsViewController: UITableViewController {
         case 2:
             return "If you're looking for support drop us a message on Facebook or Twitter"
         case 3:
-            return "Created from Anime fans for Anime fans, enjoy!\nAozora 1.0.0"
+            return "Created by Anime fans for Anime fans, enjoy!\nAozora 1.0.0"
         default:
             return nil
         }

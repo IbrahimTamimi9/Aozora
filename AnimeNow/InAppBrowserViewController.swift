@@ -52,21 +52,6 @@ public class InAppBrowserViewController: UIViewController {
 
 extension InAppBrowserViewController : WKNavigationDelegate {
     public func webView(webView: WKWebView, didFailNavigation navigation: WKNavigation!, withError error: NSError) {
-        let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .Alert)
-        
-        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action) -> Void in
-            self.dismissModal()
-        }))
-        
-        if let request = self.lastRequest {
-            alert.addAction(UIAlertAction(title: "Retry", style: .Default, handler: { (action) -> Void in
-                webView.loadRequest(request)
-            }))
-        }
-        
-        presentViewController(alert, animated: true, completion: nil)
     }
-    
-
     
 }

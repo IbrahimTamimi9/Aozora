@@ -98,7 +98,7 @@ extension UserProfileViewController: UITableViewDataSource {
                 title = "On Hold"
                 subtitle = profile?.animeStats.onHold.description
             case (1,4):
-                title = "Droped"
+                title = "Dropped"
                 subtitle = profile?.animeStats.dropped.description
             case (1,5):
                 title = "Plan to watch"
