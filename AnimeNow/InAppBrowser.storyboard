@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E33b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="fgZ-H9-hfW">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="fgZ-H9-hfW">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
@@ -7,7 +7,6 @@
         <!--Navigation Controller-->
         <scene sceneID="KVR-MJ-RBC">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="fJm-vk-1q9" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController id="fgZ-H9-hfW" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="7Gr-pU-3AE">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -17,6 +16,7 @@
                         <segue destination="Nc5-67-Let" kind="relationship" relationship="rootViewController" id="z6K-On-WId"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fJm-vk-1q9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-548" y="153"/>
         </scene>
@@ -34,6 +34,11 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="IjM-8O-GYv">
+                        <barButtonItem key="leftBarButtonItem" image="icon-safari" id="TaG-F5-9dP">
+                            <connections>
+                                <action selector="openInSafari:" destination="Nc5-67-Let" id="QPO-Ic-iCv"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Done" id="ekH-uF-j4I">
                             <connections>
                                 <action selector="dismissModal" destination="Nc5-67-Let" id="jFS-Lv-LnX"/>
@@ -46,4 +51,7 @@
             <point key="canvasLocation" x="152" y="153"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="icon-safari" width="22" height="22"/>
+    </resources>
 </document>

@@ -10,17 +10,23 @@ import WebKit
 
 public class InAppBrowserViewController: UIViewController {
 
+    var initialStatusBarStyle: UIStatusBarStyle!
     var webView: WKWebView!
-
-    public var initialUrl : NSURL? {
+    
+    var initialUrl: NSURL? {
         didSet {
             if let initialUrl = initialUrl {
                 lastRequest = NSURLRequest(URL: initialUrl)
             }
         }
     }
-
+    
     var lastRequest : NSURLRequest?
+    
+    public func initWithTitle(title: String, initialUrl: NSURL?) {
+        self.initialUrl = initialUrl
+        self.title = title
+    }
 
     override public func viewDidLoad() {
         super.viewDidLoad()
@@ -36,9 +42,28 @@ public class InAppBrowserViewController: UIViewController {
             webView.loadRequest(request)
         }
     }
+    
+    public override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        initialStatusBarStyle = UIApplication.sharedApplication().statusBarStyle
+        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
+    }
+    
+    public override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        UIApplication.sharedApplication().setStatusBarStyle(initialStatusBarStyle, animated: true)
+    }
 
     @IBAction func dismissModal() {
         dismissViewControllerAnimated(true, completion: nil)
+    }
+
+    @IBAction func openInSafari(sender: AnyObject) {
+        if let url = initialUrl {
+            UIApplication.sharedApplication().openURL(url)
+        }
     }
     
     deinit {

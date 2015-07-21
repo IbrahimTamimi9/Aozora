@@ -251,7 +251,7 @@ extension TopicViewController: TTTAttributedLabelDelegate {
     public func attributedLabel(label: TTTAttributedLabel!, didSelectLinkWithURL url: NSURL!) {
         
         let (navController, webController) = ANCommonKit.webViewController()
-        webController.initialUrl = url
+        webController.initWithTitle(url.absoluteString!, initialUrl: url)
         presentViewController(navController, animated: true, completion: nil)
     }
 }
