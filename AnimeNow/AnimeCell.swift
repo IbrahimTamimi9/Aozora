@@ -90,23 +90,27 @@ class AnimeCell: UICollectionViewCell {
                 
                 let (days, hours, minutes) = etaForDate(anime.nextEpisodeDate)
                 let etaTime: String
+                let shortEtaTime: String
                 if days != 0 {
                     etaTime = "\(days)d \(hours)h \(minutes)m"
+                    shortEtaTime = "\(days)d"
                     etaLabel?.textColor = UIColor.belizeHole()
                     etaTimeLabel?.textColor = UIColor.belizeHole()
                 } else if hours != 0 {
                     etaTime = "\(hours)h \(minutes)m"
+                    shortEtaTime = "\(hours)h"
                     etaLabel?.textColor = UIColor.nephritis()
                     etaTimeLabel?.textColor = UIColor.nephritis()
                     
                 } else {
                     etaTime = "\(minutes)m"
+                    shortEtaTime = etaTime
                     etaLabel?.textColor = UIColor.pumpkin()
                     etaTimeLabel?.textColor = UIColor.pumpkin()
                 }
                 
                 if showShortEta {
-                    etaLabel?.text = etaTime
+                    etaLabel?.text = "Ep\(nextEpisode) - " + shortEtaTime
                 } else {
                     etaLabel?.text = "Episode \(nextEpisode) - " + etaTime
                 }
