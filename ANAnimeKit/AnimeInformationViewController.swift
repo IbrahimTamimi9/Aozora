@@ -57,8 +57,8 @@ public class AnimeInformationViewController: AnimeBaseViewController {
     @IBOutlet weak var trailerButton: UIButton!
     @IBOutlet weak var shimeringView: FBShimmeringView!
     @IBOutlet weak var separatorView: UIView!
-    @IBOutlet weak var topViewHeight: NSLayoutConstraint!
-    @IBOutlet weak var shimeringViewTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var navigationBarTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var navigationBarHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var etaLabel: UILabel!
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var ranksView: UIView!
@@ -67,7 +67,6 @@ public class AnimeInformationViewController: AnimeBaseViewController {
     @IBOutlet weak var tagsLabel: UILabel!
     @IBOutlet weak var ratingLabel: UILabel!
     @IBOutlet weak var membersCountLabel: UILabel!
-    @IBOutlet weak var votesLabel: UILabel!
     @IBOutlet weak var scoreRankLabel: UILabel!
     @IBOutlet weak var popularityRankLabel: UILabel!
     @IBOutlet weak var posterImageView: UIImageView!
@@ -374,23 +373,35 @@ public class AnimeInformationViewController: AnimeBaseViewController {
 extension AnimeInformationViewController: UIScrollViewDelegate {
     public func scrollViewDidScroll(scrollView: UIScrollView) {
         
-        var newOffset = HeaderViewHeight-scrollView.contentOffset.y
-        var topBarOffset = newOffset - TopBarHeight
-        shimeringViewTopConstraint.constant = (topBarOffset > StatusBarHeight) ? topBarOffset : StatusBarHeight
-    
+        let newOffset = HeaderViewHeight-scrollView.contentOffset.y
+        let topBarOffset = newOffset - TopBarHeight
+        
         if topBarOffset > StatusBarHeight {
-            if canHideStatusBar {
-                UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: UIStatusBarAnimation.None)
-                separatorView.hidden = true
-                closeButton.hidden = true
+            if !UIApplication.sharedApplication().statusBarHidden {
+                if canHideStatusBar {
+                    UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: UIStatusBarAnimation.None)
+                    separatorView.hidden = true
+                    closeButton.hidden = true
+                    navigationBarHeightConstraint.constant = TopBarHeight
+                }
             }
+            navigationBarTopConstraint.constant = topBarOffset
+            
         } else {
-            UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: UIStatusBarAnimation.None)
+            if UIApplication.sharedApplication().statusBarHidden {
+                UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: UIStatusBarAnimation.Fade)
+            }
             separatorView.hidden = false
             closeButton.hidden = false
+            let totalHeight = TopBarHeight + StatusBarHeight
+            if totalHeight - topBarOffset <= totalHeight {
+                navigationBarHeightConstraint.constant = totalHeight - topBarOffset
+                navigationBarTopConstraint.constant = topBarOffset
+            } else {
+                navigationBarHeightConstraint.constant = totalHeight
+                navigationBarTopConstraint.constant = 0
+            }
         }
-    
-        topViewHeight.constant = newOffset
     }
 }
 
@@ -601,3 +612,9 @@ extension AnimeInformationViewController: UITableViewDelegate {
     }
 }
 
+extension AnimeInformationViewController: UIGestureRecognizerDelegate {
+    public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
+        return false
+    }
+    
+}

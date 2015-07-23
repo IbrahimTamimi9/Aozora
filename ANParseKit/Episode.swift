@@ -29,7 +29,7 @@ public class Episode: PFObject, PFSubclassing {
     @NSManaged public var tvdbID: Int
     @NSManaged public var tmdbID: Int
     @NSManaged public var number: Int
-    @NSManaged public var title: String
+    @NSManaged public var title: String?
     @NSManaged public var overview: String?
     @NSManaged public var screenshot: String?
     @NSManaged public var traktNumber: Int

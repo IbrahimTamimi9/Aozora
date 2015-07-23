@@ -84,7 +84,7 @@ extension EpisodesViewController: UICollectionViewDataSource {
         let episode = dataSource[indexPath.row]
         
         let episodeNumber = NSAttributedString(string: "Ep \(episode.number) · ", attributes: numberAttributes)
-        let episodeTitle = NSAttributedString(string: episode.title, attributes: titleAttributes)
+        let episodeTitle = NSAttributedString(string: episode.title ?? "", attributes: titleAttributes)
 
         let attributedString = NSMutableAttributedString()
         attributedString.appendAttributedString(episodeNumber)
