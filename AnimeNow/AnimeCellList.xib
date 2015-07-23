@@ -51,6 +51,13 @@
                         <color key="textColor" red="0.2666666667" green="0.52549019610000003" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i6K-9U-r4X" userLabel="InLibrary">
+                        <rect key="frame" x="333" y="0.0" width="7" height="52"/>
+                        <color key="backgroundColor" red="0.0078431377190000002" green="0.43921568989999998" blue="0.73333334920000004" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="7" id="CfJ-4A-IHn"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
@@ -58,6 +65,9 @@
             <constraints>
                 <constraint firstItem="CSc-8w-b42" firstAttribute="top" secondItem="mAS-Gw-id2" secondAttribute="bottom" id="7gf-HV-p1I"/>
                 <constraint firstItem="mAS-Gw-id2" firstAttribute="top" secondItem="uCf-8e-Hf0" secondAttribute="topMargin" constant="-2" id="CcW-kX-s1s"/>
+                <constraint firstAttribute="trailing" secondItem="i6K-9U-r4X" secondAttribute="trailing" id="LPk-Iy-KGX"/>
+                <constraint firstAttribute="bottom" secondItem="i6K-9U-r4X" secondAttribute="bottom" id="Qq8-r2-aMV"/>
+                <constraint firstItem="i6K-9U-r4X" firstAttribute="top" secondItem="uCf-8e-Hf0" secondAttribute="top" id="SxK-Ow-Pcl"/>
                 <constraint firstAttribute="bottom" secondItem="p4P-sL-YGG" secondAttribute="bottom" constant="8.5" id="YNW-Zl-gqS"/>
                 <constraint firstItem="mAS-Gw-id2" firstAttribute="leading" secondItem="CSc-8w-b42" secondAttribute="leading" id="bo1-cX-8Oz"/>
                 <constraint firstAttribute="trailing" secondItem="CSc-8w-b42" secondAttribute="trailing" constant="8" id="eAv-sc-EqB"/>
@@ -77,6 +87,7 @@
             </variation>
             <connections>
                 <outlet property="etaLabel" destination="CSc-8w-b42" id="YKP-Ez-rbn"/>
+                <outlet property="inLibraryView" destination="i6K-9U-r4X" id="Z7b-3l-JF3"/>
                 <outlet property="ratingLabel" destination="p4P-sL-YGG" id="T0L-k0-xQX"/>
                 <outlet property="titleLabel" destination="mAS-Gw-id2" id="n8M-Aj-k22"/>
             </connections>

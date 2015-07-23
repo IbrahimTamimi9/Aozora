@@ -25,6 +25,7 @@ class AnimeCell: UICollectionViewCell {
     @IBOutlet weak var informationLabel: UILabel?
     @IBOutlet weak var ratingLabel: UILabel?
     @IBOutlet weak var genresLabel: UILabel?
+    @IBOutlet weak var inLibraryView: UIView?
     
     // Poster only
     @IBOutlet weak var nextEpisodeNumberLabel: UILabel?
@@ -131,6 +132,26 @@ class AnimeCell: UICollectionViewCell {
             
             etaTimeLabel?.textColor = UIColor.belizeHole()
             etaTimeLabel?.text = "Aired"
+        }
+        
+        if let progress = anime.progress,
+            let status = MALList(rawValue: progress.status) {
+            inLibraryView?.hidden = false
+            switch status {
+            case .Planning:
+                inLibraryView?.backgroundColor = UIColor.planning()
+            case .Watching:
+                inLibraryView?.backgroundColor = UIColor.watching()
+            case .Completed:
+                inLibraryView?.backgroundColor = UIColor.completed()
+            case .OnHold:
+                inLibraryView?.backgroundColor = UIColor.onHold()
+            case .Dropped:
+                inLibraryView?.backgroundColor = UIColor.dropped()
+            }
+            
+        } else {
+            inLibraryView?.hidden = true
         }
         
     }

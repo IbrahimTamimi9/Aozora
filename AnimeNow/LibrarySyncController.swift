@@ -285,6 +285,8 @@ public class LibrarySyncController {
         return query.findObjectsInBackground()
     }
     
+    // MARK: - Anime Methods
+    
     public class func matchAnimeWithProgress(animeList: [Anime]) {
         // Match all anime with it's progress..
         let realm = Realm()

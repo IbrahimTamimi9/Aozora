@@ -91,6 +91,13 @@
                         <color key="textColor" red="0.64835526320000003" green="0.64835526320000003" blue="0.64835526320000003" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MFs-r2-AdL" userLabel="InLibrary">
+                        <rect key="frame" x="333" y="0.0" width="7" height="132"/>
+                        <color key="backgroundColor" red="0.0078431377187371254" green="0.43921568989753723" blue="0.73333334922790527" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="7" id="ea2-6s-4Kd"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
@@ -103,8 +110,10 @@
                 <constraint firstItem="fBz-UD-EJj" firstAttribute="top" secondItem="iLJ-ag-cRQ" secondAttribute="bottom" constant="1" id="Oix-Td-s3t"/>
                 <constraint firstItem="fBz-UD-EJj" firstAttribute="top" secondItem="3FS-AI-cKD" secondAttribute="bottom" id="QDG-LX-Zyk"/>
                 <constraint firstItem="3FS-AI-cKD" firstAttribute="top" secondItem="iLJ-ag-cRQ" secondAttribute="bottom" id="Sh4-QR-91m"/>
+                <constraint firstItem="MFs-r2-AdL" firstAttribute="top" secondItem="nWh-E7-yvh" secondAttribute="top" id="TgF-Oi-QzQ"/>
                 <constraint firstItem="fFG-pC-x7g" firstAttribute="leading" secondItem="5uH-cu-Dj6" secondAttribute="trailing" constant="8" id="V1Y-gt-PHX"/>
                 <constraint firstItem="fFG-pC-x7g" firstAttribute="trailing" secondItem="nWh-E7-yvh" secondAttribute="trailingMargin" id="Vmk-rp-Zgf"/>
+                <constraint firstAttribute="trailing" secondItem="MFs-r2-AdL" secondAttribute="trailing" id="Wab-c6-wIk"/>
                 <constraint firstItem="3FS-AI-cKD" firstAttribute="leading" secondItem="iLJ-ag-cRQ" secondAttribute="leading" id="WhF-Hh-r9C"/>
                 <constraint firstItem="5uH-cu-Dj6" firstAttribute="top" secondItem="nWh-E7-yvh" secondAttribute="topMargin" id="Y1f-0w-IKU"/>
                 <constraint firstItem="fBz-UD-EJj" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="nWh-E7-yvh" secondAttribute="bottomMargin" priority="750" id="Yc3-3S-OnP"/>
@@ -120,6 +129,7 @@
                 <constraint firstItem="5uH-cu-Dj6" firstAttribute="leading" secondItem="nWh-E7-yvh" secondAttribute="leadingMargin" id="vwL-B1-cqa"/>
                 <constraint firstItem="fBz-UD-EJj" firstAttribute="leading" secondItem="nWh-E7-yvh" secondAttribute="leadingMargin" constant="91" id="wCE-P1-xR8"/>
                 <constraint firstItem="iLJ-ag-cRQ" firstAttribute="top" secondItem="eOO-bR-QZj" secondAttribute="bottom" constant="1" id="wq6-Vs-zCm"/>
+                <constraint firstAttribute="bottom" secondItem="MFs-r2-AdL" secondAttribute="bottom" id="xDa-zr-SIX"/>
                 <constraint firstItem="eOO-bR-QZj" firstAttribute="top" secondItem="fFG-pC-x7g" secondAttribute="bottom" constant="1" id="xOM-6k-CH2"/>
             </constraints>
             <variation key="default">
@@ -138,12 +148,13 @@
             <connections>
                 <outlet property="etaLabel" destination="eOO-bR-QZj" id="QMA-Es-Zof"/>
                 <outlet property="genresLabel" destination="fBz-UD-EJj" id="3ER-aM-ekD"/>
+                <outlet property="inLibraryView" destination="MFs-r2-AdL" id="Trw-Xk-zbW"/>
                 <outlet property="informationLabel" destination="iLJ-ag-cRQ" id="0ym-e0-dHv"/>
                 <outlet property="posterImageView" destination="5uH-cu-Dj6" id="AUB-1Y-Fbl"/>
                 <outlet property="ratingLabel" destination="3FS-AI-cKD" id="8IU-k5-4Xb"/>
                 <outlet property="titleLabel" destination="fFG-pC-x7g" id="mH1-5t-phg"/>
             </connections>
-            <point key="canvasLocation" x="418" y="240"/>
+            <point key="canvasLocation" x="417" y="240"/>
         </collectionViewCell>
     </objects>
 </document>

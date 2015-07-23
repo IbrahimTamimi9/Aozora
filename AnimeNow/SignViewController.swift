@@ -124,3 +124,10 @@ extension SignViewController: UINavigationBarDelegate {
         return .TopAttached
     }
 }
+
+extension SignViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        view.endEditing(true)
+        return true
+     }
+}

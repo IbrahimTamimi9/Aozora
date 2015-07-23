@@ -32,6 +32,14 @@
                         <rect key="frame" x="4" y="4" width="91.5" height="132.5"/>
                         <color key="backgroundColor" red="0.14901960780000001" green="0.14901960780000001" blue="0.14901960780000001" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
                     </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tTI-2j-s6G" userLabel="InLibrary">
+                        <rect key="frame" x="83.5" y="4" width="12" height="20"/>
+                        <color key="backgroundColor" red="0.0078431377190000002" green="0.43921568989999998" blue="0.73333334920000004" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="12" id="1LO-XL-r9U"/>
+                            <constraint firstAttribute="height" constant="20" id="ryw-ST-wVL"/>
+                        </constraints>
+                    </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="MY love STORY!!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cwf-zR-tOB">
                         <rect key="frame" x="6" y="140" width="87.5" height="14.5"/>
                         <constraints>
@@ -97,10 +105,12 @@
                 <constraint firstItem="WWo-M7-kgI" firstAttribute="centerX" secondItem="4rN-qR-nSY" secondAttribute="centerX" constant="-0.75" id="OpF-Yv-pbh"/>
                 <constraint firstItem="4rN-qR-nSY" firstAttribute="leading" secondItem="foZ-B7-mSO" secondAttribute="leading" constant="4" id="QPE-XW-B4J"/>
                 <constraint firstItem="gRi-5F-Dob" firstAttribute="leading" secondItem="foZ-B7-mSO" secondAttribute="leading" constant="2" id="QQv-nF-1zI"/>
+                <constraint firstAttribute="trailing" secondItem="tTI-2j-s6G" secondAttribute="trailing" constant="4" id="QZ6-aj-h7E"/>
                 <constraint firstAttribute="bottom" secondItem="NNv-mQ-3ZX" secondAttribute="bottom" constant="40" id="Tvh-U1-LeA"/>
                 <constraint firstAttribute="bottom" secondItem="gRi-5F-Dob" secondAttribute="bottom" constant="4" id="Uia-o1-arC"/>
                 <constraint firstItem="Cwf-zR-tOB" firstAttribute="trailing" secondItem="4rN-qR-nSY" secondAttribute="trailing" constant="-2" id="WHG-hI-hqb"/>
                 <constraint firstItem="4rN-qR-nSY" firstAttribute="top" secondItem="foZ-B7-mSO" secondAttribute="top" constant="4" id="XH1-Q4-dkj"/>
+                <constraint firstItem="tTI-2j-s6G" firstAttribute="top" secondItem="foZ-B7-mSO" secondAttribute="top" constant="4" id="XWr-Ol-DUp"/>
                 <constraint firstItem="Cwf-zR-tOB" firstAttribute="trailing" secondItem="foZ-B7-mSO" secondAttribute="trailingMargin" constant="1" id="Yfw-md-Zag"/>
                 <constraint firstItem="Cwf-zR-tOB" firstAttribute="leading" secondItem="4rN-qR-nSY" secondAttribute="trailing" constant="8" id="Yru-4k-ymE"/>
                 <constraint firstAttribute="bottomMargin" secondItem="4rN-qR-nSY" secondAttribute="bottom" constant="10" id="cUs-me-3bR"/>
@@ -115,6 +125,7 @@
                 <constraint firstItem="NNv-mQ-3ZX" firstAttribute="leading" secondItem="foZ-B7-mSO" secondAttribute="leading" constant="4" id="lCM-3C-OfZ"/>
                 <constraint firstItem="4rN-qR-nSY" firstAttribute="top" secondItem="foZ-B7-mSO" secondAttribute="topMargin" id="otO-XO-ff6"/>
                 <constraint firstItem="Cwf-zR-tOB" firstAttribute="top" secondItem="foZ-B7-mSO" secondAttribute="topMargin" constant="-2" id="qs6-tJ-HBk"/>
+                <constraint firstAttribute="bottom" secondItem="tTI-2j-s6G" secondAttribute="bottom" constant="40" id="r5y-Tl-P1X"/>
                 <constraint firstAttribute="bottomMargin" secondItem="4rN-qR-nSY" secondAttribute="bottom" constant="31.5" id="wHb-aA-nJS"/>
             </constraints>
             <size key="customSize" width="99.5" height="176.5"/>
@@ -134,6 +145,7 @@
                     <exclude reference="wHb-aA-nJS"/>
                     <exclude reference="Fbt-ov-olR"/>
                     <exclude reference="J6d-Rs-dJ2"/>
+                    <exclude reference="r5y-Tl-P1X"/>
                     <exclude reference="0FG-q2-L5L"/>
                     <exclude reference="2z5-EI-AYY"/>
                     <exclude reference="8RD-zk-Gpf"/>
@@ -144,6 +156,7 @@
             </variation>
             <connections>
                 <outlet property="etaTimeLabel" destination="gRi-5F-Dob" id="slH-ip-eT3"/>
+                <outlet property="inLibraryView" destination="tTI-2j-s6G" id="YlT-lc-75k"/>
                 <outlet property="nextEpisodeNumberLabel" destination="HYw-8C-emP" id="LRa-7z-y0d"/>
                 <outlet property="posterDimView" destination="NNv-mQ-3ZX" id="Pey-T8-D4I"/>
                 <outlet property="posterEpisodeTitleLabel" destination="WWo-M7-kgI" id="mMk-nD-V9t"/>

@@ -151,6 +151,9 @@ class BrowseViewController: UIViewController {
         currentQuery.skip = skip
         currentQuery.findObjectsInBackgroundWithBlock { (result, error) -> Void in
             if let result = result as? [Anime] {
+                
+                LibrarySyncController.matchAnimeWithProgress(result)
+                
                 if skip == 0 {
                     self.dataSource = result
                 } else {

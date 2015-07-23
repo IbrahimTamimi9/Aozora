@@ -51,10 +51,13 @@ class SearchViewController: UIViewController {
         query.limit = 20
         query.whereKey("title", matchesRegex: text, modifiers: "i")
         query.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
-            if !cancellationToken.cancelled && result != nil {
+            if let anime = result as? [Anime] where !cancellationToken.cancelled && result != nil {
                 println("fetched query \(text)")
-                self.dataSource = result as! [Anime]
+                
+                LibrarySyncController.matchAnimeWithProgress(anime)
+                self.dataSource = anime
             }
+            
             self.loadingView.stopAnimating()
             self.collectionView.animateFadeIn()
         })

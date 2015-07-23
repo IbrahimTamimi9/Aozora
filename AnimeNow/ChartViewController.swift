@@ -178,7 +178,19 @@ class ChartViewController: UIViewController {
         ChartController.fetchSeasonalChart(seasonalChart).continueWithExecutor(BFExecutor.mainThreadExecutor(), withBlock: { (task: BFTask!) -> AnyObject! in
             
             if let result = task.result as? [SeasonalChart], let season = result.last {
-                self.dataSource = [season.tvAnime as [Anime], season.movieAnime as [Anime], season.ovaAnime as [Anime], season.onaAnime as [Anime], season.specialAnime as [Anime]]
+                let tvAnime = season.tvAnime
+                let movieAnime = season.movieAnime
+                let ovaAnime = season.ovaAnime
+                let onaAnime = season.onaAnime
+                let specialAnime = season.specialAnime
+                
+                LibrarySyncController.matchAnimeWithProgress(tvAnime)
+                LibrarySyncController.matchAnimeWithProgress(movieAnime)
+                LibrarySyncController.matchAnimeWithProgress(ovaAnime)
+                LibrarySyncController.matchAnimeWithProgress(onaAnime)
+                LibrarySyncController.matchAnimeWithProgress(specialAnime)
+                
+                self.dataSource = [tvAnime, movieAnime, ovaAnime, onaAnime, specialAnime]
                 self.updateSortType(self.currentSortType)
             }
             

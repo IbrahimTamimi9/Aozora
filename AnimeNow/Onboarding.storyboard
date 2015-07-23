@@ -268,6 +268,9 @@
                                         <integer key="value" value="3"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <outlet property="delegate" destination="aht-ee-gPe" id="EVq-Cl-2I4"/>
+                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ngU-8n-iqT">
                                 <rect key="frame" x="16" y="238" width="568" height="30"/>
@@ -345,6 +348,10 @@
                                         <exclude reference="t9V-5Y-GQM"/>
                                     </mask>
                                 </variation>
+                                <connections>
+                                    <outlet property="delegate" destination="aht-ee-gPe" id="xxU-OE-W8G"/>
+                                    <outlet property="nextField" destination="Llc-dY-VrR" id="7Z6-Gl-Ji5"/>
+                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DKm-99-rso">
                                 <rect key="frame" x="16" y="562" width="568" height="30"/>
@@ -498,6 +505,9 @@
                                         <exclude reference="oDc-rM-4UC"/>
                                     </mask>
                                 </variation>
+                                <connections>
+                                    <outlet property="delegate" destination="cWG-K4-PqA" id="1h3-2K-g04"/>
+                                </connections>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" red="0.18823529780000001" green="0.19607843459999999" blue="0.23529411850000001" alpha="1" colorSpace="calibratedRGB"/>
