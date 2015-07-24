@@ -55,8 +55,8 @@
                                                     <variation key="default">
                                                         <mask key="constraints">
                                                             <exclude reference="V0Y-1P-T00"/>
-                                                            <exclude reference="nBi-Yt-Shd"/>
                                                             <exclude reference="n2l-l0-ReJ"/>
+                                                            <exclude reference="nBi-Yt-Shd"/>
                                                         </mask>
                                                     </variation>
                                                 </label>
@@ -181,8 +181,8 @@
                                                     </state>
                                                     <variation key="default">
                                                         <mask key="constraints">
-                                                            <exclude reference="zW4-sK-u9x"/>
                                                             <exclude reference="NQ1-nh-noz"/>
+                                                            <exclude reference="zW4-sK-u9x"/>
                                                         </mask>
                                                     </variation>
                                                 </button>

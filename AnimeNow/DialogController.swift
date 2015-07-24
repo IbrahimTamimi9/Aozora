@@ -26,7 +26,7 @@ class DialogController: NSObject {
         
         let eventCount = NSUserDefaults.standardUserDefaults().integerForKey(DefaultFacebookAppInviteEventCount)
         if eventCount > 8 {
-            var alert = UIAlertController(title: "Help this app get Discovered", message: "If you like this app, please recommend it to your friends", preferredStyle: UIAlertControllerStyle.Alert)
+            var alert = UIAlertController(title: "Help this app get Discovered", message: "If you like this app, please recommend it to your friends (private recommendation)", preferredStyle: UIAlertControllerStyle.Alert)
             alert.addAction(UIAlertAction(title: "Sure", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
                 self.showFBAppInvite()
             }))

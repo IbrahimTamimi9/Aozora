@@ -18,6 +18,20 @@ public class RootTabBar: UITabBarController {
         
         delegate = self
     }
+    public override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let value = NSUserDefaults.standardUserDefaults().valueForKey(DefaultLoadingScreen) as? String {
+            switch value {
+            case "Season":
+                break
+            case "Library":
+                selectedIndex = 1
+            default:
+                break
+            }
+        }
+    }
     
 }
 

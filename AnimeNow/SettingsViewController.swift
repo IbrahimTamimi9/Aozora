@@ -12,6 +12,8 @@ import ANParseKit
 import ANCommonKit
 import FBSDKShareKit
 
+let DefaultLoadingScreen = "Defaults.InitialLoadingScreen";
+
 class SettingsViewController: UITableViewController {
     
     let FacebookPageDeepLink = "fb://profile/713541968752502";
@@ -73,7 +75,20 @@ class SettingsViewController: UITableViewController {
                 // User is guest, login
                 WorkflowController.presentOnboardingController(true)
             }
-
+        case (0,1):
+            // Select initial tab
+            var alert = UIAlertController(title: "Select Initial Tab", message: "This tab will load when application starts", preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "Season", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+                NSUserDefaults.standardUserDefaults().setValue("Season", forKey: DefaultLoadingScreen)
+                NSUserDefaults.standardUserDefaults().synchronize()
+            }))
+            alert.addAction(UIAlertAction(title: "Library", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+                NSUserDefaults.standardUserDefaults().setValue("Library", forKey: DefaultLoadingScreen)
+                NSUserDefaults.standardUserDefaults().synchronize()
+            }))
+            
+            self.presentViewController(alert, animated: true, completion: nil)
+            
         case (1,0):
             // Unlock features
             let controller = UIStoryboard(name: "InApp", bundle: nil).instantiateViewControllerWithIdentifier("InApp") as! InAppPurchaseViewController
