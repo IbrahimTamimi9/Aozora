@@ -133,7 +133,7 @@ public class LibrarySyncController {
     
     // MARK: - Sync with MyAnimeList
     
-    public class func fetchAnimeList(isRefreshing: Bool) -> BFTask {
+    public class func fetchWatchingList(isRefreshing: Bool) -> BFTask {
         let shouldSyncData = NSUserDefaults.shouldPerformAction(LastSyncDateDefaultsKey, expirationDays: 1)
         
         if shouldSyncData || isRefreshing {
@@ -161,11 +161,16 @@ public class LibrarySyncController {
                     realm.add(newAnimeProgress, update: true)
                 })
                 
-                return self.fetchAllAnimeProgress()
+                return self.fetchAnimeProgress(onlyWatching: true)
             })
         } else {
-            return fetchAllAnimeProgress()
+            return fetchAnimeProgress(onlyWatching: true)
         }
+    }
+    
+    public class func fetchTheRestOfLists() -> BFTask {
+
+        return fetchAnimeProgress(onlyWatching: false)
     }
     
     class func pushNonSyncedChanges() -> BFTask {
@@ -217,16 +222,24 @@ public class LibrarySyncController {
     }
     
     
-    class func fetchAllAnimeProgress() -> BFTask {
+    class func fetchAnimeProgress(onlyWatching: Bool = false) -> BFTask {
         let realm = Realm()
-        let animeLibrary = realm.objects(AnimeProgress).filter("syncState != \(SyncState.Deleted.rawValue)")
+        
+        var filterString = "syncState != \(SyncState.Deleted.rawValue)"
+        
+        if onlyWatching {
+            filterString += " && status == 'watching'"
+        } else {
+            filterString += " && status != 'watching'"
+        }
+        
+        let animeLibrary = realm.objects(AnimeProgress).filter(filterString)
         
         var idList: [Int] = []
         var animeList: [Anime] = []
         for animeProgress in animeLibrary {
             idList.append(animeProgress.myAnimeListID)
         }
-        
         // Fetch from disk then network
         return fetchAnime(idList, withPinName: Anime.PinName.InLibrary.rawValue)
         .continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
@@ -234,7 +247,6 @@ public class LibrarySyncController {
             if let result = task.result as? [Anime] where result.count > 0 {
                 animeList = result
             }
-            
             return nil
         }.continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
             
@@ -245,6 +257,7 @@ public class LibrarySyncController {
             })
             
             if missingIdList.count != 0 {
+                println("Missing IDs \(missingIdList) fetching from network..")
                 return self.fetchAnime(missingIdList, includeAllData: true)
             } else {
                 return nil
@@ -262,7 +275,6 @@ public class LibrarySyncController {
             self.matchAnimeWithProgress(animeList)
             // Update last sync date
             NSUserDefaults.completedAction(self.LastSyncDateDefaultsKey)
-            
             return BFTask(result: animeList)
         })
     }

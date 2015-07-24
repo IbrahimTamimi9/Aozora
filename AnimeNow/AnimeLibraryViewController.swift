@@ -113,40 +113,52 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
     func fetchAnimeList(isRefreshing: Bool) -> BFTask {
         loadingView.startAnimating()
         
-        return LibrarySyncController.fetchAnimeList(isRefreshing).continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
+        return LibrarySyncController.fetchWatchingList(isRefreshing).continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
             
-            var animeList = task.result as! [Anime]
-            var lists: [[Anime]] = [[],[],[],[],[]]
-            
-            for anime in animeList {
-                let malList = MALList(rawValue: anime.progress!.status) ?? .Planning
-                switch malList {
-                case .Watching:
-                    lists[0].append(anime)
-                case .Planning:
-                    lists[1].append(anime)
-                case .OnHold:
-                    lists[2].append(anime)
-                case .Completed:
-                    lists[3].append(anime)
-                case .Dropped:
-                    lists[4].append(anime)
-                }
-            }
-            
-            for index in 0...4 {
-                self.controllers[index].animeList = lists[index]
-            }
+            self.updateViewControllers(task.result as! [Anime])
             
             // Sort first controller
             let firstController = self.controllers[0]
             firstController.updateSortType(firstController.currentSortType)
             
-            return nil
-        }.continueWithBlock({ (task: BFTask!) -> AnyObject! in
             self.loadingView.stopAnimating()
+            return LibrarySyncController.fetchTheRestOfLists()
+
+        }.continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
+        
+            self.updateViewControllers(task.result as! [Anime])
             return nil
+            
         })
+    }
+    
+    func updateViewControllers(animeList: [Anime]) {
+        
+        var lists: [[Anime]] = [[],[],[],[],[]]
+        
+        for anime in animeList {
+            let malList = MALList(rawValue: anime.progress!.status) ?? .Planning
+            switch malList {
+            case .Watching:
+                lists[0].append(anime)
+            case .Planning:
+                lists[1].append(anime)
+            case .OnHold:
+                lists[2].append(anime)
+            case .Completed:
+                lists[3].append(anime)
+            case .Dropped:
+                lists[4].append(anime)
+            }
+        }
+        
+        for index in 0...4 {
+            let aList = lists[index]
+            if aList.count > 0 {
+                self.controllers[index].animeList = aList
+            }
+        }
+        
     }
     
     // MARK: - IBActions
