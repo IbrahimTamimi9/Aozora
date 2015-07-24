@@ -1390,7 +1390,13 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="" id="cOz-1V-CbH"/>
-                    <navigationItem key="navigationItem" title="Episodes" id="PwY-Mi-yXr"/>
+                    <navigationItem key="navigationItem" title="Episodes" id="PwY-Mi-yXr">
+                        <barButtonItem key="rightBarButtonItem" image="icon-go-to" id="Xgv-EL-kfl" userLabel="GoTo">
+                            <connections>
+                                <action selector="goToPressed:" destination="PVs-FU-hrj" id="fFo-GX-qSH"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="1iH-3O-1pN" id="4NG-RZ-JTc"/>
                     </connections>
@@ -1407,6 +1413,7 @@
         <image name="icon-comments-filled" width="25" height="25"/>
         <image name="icon-episode" width="25" height="25"/>
         <image name="icon-episode-filled" width="25" height="25"/>
+        <image name="icon-go-to" width="22" height="22"/>
         <image name="icon-group" width="25" height="25"/>
         <image name="icon-group-filled" width="25" height="25"/>
         <image name="icon-information" width="25" height="25"/>

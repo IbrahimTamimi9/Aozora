@@ -70,6 +70,15 @@ class EpisodesViewController: AnimeBaseViewController {
         })
     }
     
+    // MARK: - IBActions
+    
+    @IBAction func goToPressed(sender: UIBarButtonItem) {
+        
+        let dataSource = [["First Episode", "Next Episode", "Last Episode"]]
+        
+        DropDownListViewController.showDropDownListWith(sender: navigationController!.navigationBar, viewController: self, delegate: self, dataSource: dataSource)
+        
+    }
 }
 
 
@@ -162,5 +171,29 @@ extension EpisodesViewController: EpisodeCellDelegate {
         activityVC.excludedActivityTypes = [UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypeAddToReadingList,UIActivityTypePrint];
         self.presentViewController(activityVC, animated: true, completion: nil)
     
+    }
+}
+
+extension EpisodesViewController: DropDownListDelegate {
+    func selectedAction(trigger: UIView, action: String, indexPath: NSIndexPath) {
+        switch indexPath.row {
+        case 0:
+            // Go to top
+            self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: UICollectionViewScrollPosition.Top, animated: true)
+        case 1:
+            // Go to next episode
+            if let nextEpisode = anime.nextEpisode where nextEpisode > 0 {
+                self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forRow: nextEpisode - 1, inSection: 0), atScrollPosition: UICollectionViewScrollPosition.CenteredVertically, animated: true)
+            }
+        case 2:
+            // Go to bottom
+            self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forRow: dataSource.count - 1, inSection: 0), atScrollPosition: UICollectionViewScrollPosition.Bottom, animated: true)
+        default:
+            break;
+        }
+    }
+    
+    func dropDownDidDismissed(selectedAction: Bool) {
+        
     }
 }

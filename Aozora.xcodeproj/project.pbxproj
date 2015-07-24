@@ -154,6 +154,7 @@
 		DAE43C341B2BC3B700C3092D /* AnimeDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE43C331B2BC3B700C3092D /* AnimeDetail.swift */; };
 		DAE43C3A1B2F971800C3092D /* UIView+Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE43C391B2F971800C3092D /* UIView+Animation.swift */; };
 		DAE7A7191B2105FD00788614 /* AnimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE7A7181B2105FD00788614 /* AnimeCell.swift */; };
+		DAF32E3F1B62CEAF003FC372 /* Resources.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAF32E3E1B62CEAF003FC372 /* Resources.xcassets */; };
 		DAF357061B4593E200629A3D /* LibraryAnimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF357051B4593E200629A3D /* LibraryAnimeCell.swift */; };
 		DAF6186D1B377AAE00286517 /* AnimeProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF6186B1B37792900286517 /* AnimeProgress.swift */; };
 		DAF6186F1B377C2100286517 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E13051B10DDB900B278B0 /* Social.framework */; };
@@ -474,6 +475,7 @@
 		DAE43C371B2D5BC800C3092D /* Atarashii.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Atarashii.swift; sourceTree = "<group>"; };
 		DAE43C391B2F971800C3092D /* UIView+Animation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Animation.swift"; sourceTree = "<group>"; };
 		DAE7A7181B2105FD00788614 /* AnimeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeCell.swift; sourceTree = "<group>"; };
+		DAF32E3E1B62CEAF003FC372 /* Resources.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Resources.xcassets; sourceTree = "<group>"; };
 		DAF357031B45790100629A3D /* LibrarySyncController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LibrarySyncController.swift; path = ../AnimeNow/LibrarySyncController.swift; sourceTree = "<group>"; };
 		DAF357051B4593E200629A3D /* LibraryAnimeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryAnimeCell.swift; sourceTree = "<group>"; };
 		DAF6186B1B37792900286517 /* AnimeProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeProgress.swift; sourceTree = "<group>"; };
@@ -771,6 +773,7 @@
 		DA4167B01B273B0700847F56 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				DAF32E3E1B62CEAF003FC372 /* Resources.xcassets */,
 				DA4167B11B273B0700847F56 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -1549,6 +1552,7 @@
 				DAF618921B378B1F00286517 /* Forum.storyboard in Resources */,
 				DA4167EA1B2760BF00847F56 /* Images.xcassets in Resources */,
 				DA9F731E1B29370F00C2652C /* FontAwesome.ttf in Resources */,
+				DAF32E3F1B62CEAF003FC372 /* Resources.xcassets in Resources */,
 				DAF618981B378B3000286517 /* Login.storyboard in Resources */,
 				DA4167D41B273B9400847F56 /* Anime.storyboard in Resources */,
 			);
