@@ -241,7 +241,7 @@ public class LibrarySyncController {
             idList.append(animeProgress.myAnimeListID)
         }
         // Fetch from disk then network
-        return fetchAnime(idList, withPinName: Anime.PinName.InLibrary.rawValue)
+        return fetchAnime(idList)
         .continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
             
             if let result = task.result as? [Anime] where result.count > 0 {

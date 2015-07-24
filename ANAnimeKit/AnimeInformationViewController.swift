@@ -71,7 +71,6 @@ public class AnimeInformationViewController: AnimeBaseViewController {
     @IBOutlet weak var popularityRankLabel: UILabel!
     @IBOutlet weak var posterImageView: UIImageView!
     @IBOutlet weak var fanartImageView: UIImageView!
-    @IBOutlet weak var fbShareButton: FBSDKShareButton!
     
     override public func viewDidLoad() {
         super.viewDidLoad()
@@ -119,17 +118,6 @@ public class AnimeInformationViewController: AnimeBaseViewController {
                 self.anime = objects?.first as! Anime
             }
         }
-    }
-    
-    func configureShareButton() {
-        let photo = FBSDKSharePhoto()
-        photo.image = fanartImageView.image
-        photo.userGenerated = true
-        
-        let content = FBSDKSharePhotoContent()
-        content.photos = [photo]
-        
-        fbShareButton.shareContent = content
     }
     
     func updateInformationWithAnime() {
@@ -183,8 +171,6 @@ public class AnimeInformationViewController: AnimeBaseViewController {
             } else {
                 trailerButton.hidden = true
             }
-            
-            configureShareButton()
             
             tableView.dataSource = self
             tableView.delegate = self
@@ -332,22 +318,74 @@ public class AnimeInformationViewController: AnimeBaseViewController {
         
         var progress = anime.progress
  
-//        var alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        var alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
 //        alert.addAction(UIAlertAction(title: "Rate anime", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
 //            
 //        }))
 //        alert.addAction(UIAlertAction(title: "Enable reminders", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
 //
 //        }))
-//        alert.addAction(UIAlertAction(title: "Share", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
-//
-//        }))
-//        
-//        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler:nil))
-//        
-//        self.presentViewController(alert, animated: true, completion: nil)
-
         
+        alert.addAction(UIAlertAction(title: "Send on Messenger", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
+            
+            let photo = FBSDKSharePhoto()
+            photo.image = self.fanartImageView.image
+            
+            let content = FBSDKSharePhotoContent()
+            content.photos = [photo]
+            
+            FBSDKMessageDialog.showWithContent(content, delegate: nil)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Share on Facebook", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
+            
+            let photo = FBSDKSharePhoto()
+            photo.image = self.fanartImageView.image
+            
+            let content = FBSDKSharePhotoContent()
+            content.photos = [photo]
+            
+            FBSDKShareDialog.showFromViewController(self, withContent: content, delegate: nil)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Share", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
+            
+            var textToShare = ""
+            
+            if let progress = self.anime.progress, let status = MALList(rawValue: progress.status) {
+                
+                switch status {
+                case .Planning:
+                   textToShare += "I'm planning to watch"
+                case .Watching:
+                    textToShare += "I'm watching"
+                case .Completed:
+                    textToShare += "I've completed"
+                case .Dropped:
+                    textToShare += "I've dropped"
+                case .OnHold:
+                    textToShare += "I'm watching"
+                }
+                textToShare += " \(self.anime.title!) via #Aozora"
+            } else {
+                textToShare = "Check out \(self.anime.title!) via #Aozora"
+            }
+            
+            
+            var objectsToShare: [AnyObject] = [textToShare]
+            if let image = self.fanartImageView.image {
+                objectsToShare.append( image )
+            }
+            
+            let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
+            activityVC.excludedActivityTypes = [UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypeAddToReadingList,UIActivityTypePrint];
+            self.presentViewController(activityVC, animated: true, completion: nil)
+            
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler:nil))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
         
     }
     // MARK: - Helper Functions

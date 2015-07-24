@@ -166,25 +166,33 @@
                                                         <action selector="addToListPressed:" destination="Gi4-Gc-NLH" eventType="touchUpInside" id="nVE-qX-WoP"/>
                                                     </connections>
                                                 </button>
-                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G27-ea-c5h" customClass="FBSDKShareButton">
-                                                    <rect key="frame" x="564" y="4" width="28" height="30"/>
-                                                    <color key="backgroundColor" red="0.89411765340000005" green="0.89411765340000005" blue="0.89411765340000005" alpha="1" colorSpace="calibratedRGB"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G27-ea-c5h">
+                                                    <rect key="frame" x="562" y="4" width="30" height="30"/>
+                                                    <color key="backgroundColor" red="0.89411765336990356" green="0.89411765336990356" blue="0.89411765336990356" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="36S-kn-e3C"/>
                                                         <constraint firstAttribute="width" constant="106" id="NQ1-nh-noz"/>
-                                                        <constraint firstAttribute="width" constant="28" id="jNO-Cn-2Lb"/>
+                                                        <constraint firstAttribute="width" constant="30" id="jNO-Cn-2Lb"/>
                                                         <constraint firstAttribute="width" constant="35" id="zW4-sK-u9x"/>
                                                     </constraints>
-                                                    <state key="normal">
+                                                    <state key="normal" image="icon-more-darker">
                                                         <color key="titleColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                            <integer key="value" value="2"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
                                                     <variation key="default">
                                                         <mask key="constraints">
                                                             <exclude reference="NQ1-nh-noz"/>
                                                             <exclude reference="zW4-sK-u9x"/>
                                                         </mask>
                                                     </variation>
+                                                    <connections>
+                                                        <action selector="moreOptionsPressed:" destination="Gi4-Gc-NLH" eventType="touchUpInside" id="lGv-wQ-A28"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <color key="backgroundColor" red="0.97254902119999997" green="0.97254902119999997" blue="0.97254902119999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -522,7 +530,6 @@
                         <outlet property="closeButton" destination="VMZ-vS-WFH" id="F4u-Oa-ryc"/>
                         <outlet property="etaLabel" destination="0Yn-Jg-VaX" id="hC9-IW-X5c"/>
                         <outlet property="fanartImageView" destination="rTn-ZB-ad5" id="fKb-2P-ZKA"/>
-                        <outlet property="fbShareButton" destination="G27-ea-c5h" id="a2h-OR-3fC"/>
                         <outlet property="listButton" destination="QhX-BC-LME" id="gyl-JT-toE"/>
                         <outlet property="membersCountLabel" destination="YbO-Nv-6g6" id="cIl-LC-jPI"/>
                         <outlet property="navigationBarHeightConstraint" destination="Nqc-yW-1X9" id="f6R-uJ-n3t"/>
@@ -1418,6 +1425,7 @@
         <image name="icon-group-filled" width="25" height="25"/>
         <image name="icon-information" width="25" height="25"/>
         <image name="icon-messenger" width="22" height="22"/>
+        <image name="icon-more-darker" width="25" height="25"/>
         <image name="icon-play" width="50" height="50"/>
         <image name="icon-share" width="30" height="30"/>
         <image name="text-shadow" width="10" height="45"/>
