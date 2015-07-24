@@ -16,7 +16,7 @@
         <!--Anime Information View Controller-->
         <scene sceneID="bNy-oJ-i2b">
             <objects>
-                <viewController storyboardIdentifier="AnimeInformation" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Gi4-Gc-NLH" customClass="AnimeInformationViewController" customModule="ANAnimeKit" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AnimeInformation" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Gi4-Gc-NLH" customClass="AnimeInformationViewController" customModule="ANAnimeKit" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="mzA-kS-hKh"/>
                         <viewControllerLayoutGuide type="bottom" id="m3L-C8-Edn"/>
