@@ -409,7 +409,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="" id="V7Q-83-86g"/>
                     <navigationItem key="navigationItem" title="Forum" id="qfw-dd-ANv">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="AfJ-A9-skP">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" title=" " id="AfJ-A9-skP">
                             <connections>
                                 <action selector="addCommentPressed:" destination="Lis-8k-Dp6" id="Sbu-iQ-Pom"/>
                             </connections>

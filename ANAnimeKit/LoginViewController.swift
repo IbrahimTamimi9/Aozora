@@ -37,7 +37,7 @@ public class LoginViewController: UIViewController {
         Alamofire.request(Atarashii.Router.verifyCredentials()).authenticate(user: usernameTextField.text, password: passwordTextField.text).validate().responseJSON { (req, res, JSON, error) -> Void in
             if error == nil {
                 
-                PFUser.malUsername = self.usernameTextField.text.lowercaseString.stringByReplacingOccurrencesOfString(" ", withString: "")
+                PFUser.malUsername = self.usernameTextField.text.stringByReplacingOccurrencesOfString(" ", withString: "")
                 PFUser.malPassword = self.passwordTextField.text
                 
                 completionSource.setResult(JSON)
@@ -56,11 +56,7 @@ public class LoginViewController: UIViewController {
     }
     
     @IBAction func loginPressed(sender: AnyObject) {
-        verifyCredentials().continueWithSuccessBlock
-        { (task: BFTask!) -> AnyObject! in
-            return self.malScrapper.loginWith(username: PFUser.malUsername!, password: PFUser.malPassword!)
-            
-        }.continueWithBlock
+        verifyCredentials().continueWithBlock
         { (task: BFTask!) -> AnyObject! in
             
             self.loadingView.stopAnimating()

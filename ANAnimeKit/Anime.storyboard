@@ -280,20 +280,10 @@
                                             <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="ldL-P3-hAe" secondAttribute="bottom" id="0Nr-P6-gTO"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="ldL-P3-hAe" secondAttribute="bottom" constant="-8" id="6xw-W9-jHi"/>
                                                 <constraint firstAttribute="trailing" secondItem="ldL-P3-hAe" secondAttribute="trailing" constant="8" id="Fz9-4t-Knx"/>
                                                 <constraint firstItem="ldL-P3-hAe" firstAttribute="leading" secondItem="vVD-zJ-c7f" secondAttribute="leading" constant="8" id="Gcz-LQ-aDF"/>
-                                                <constraint firstItem="ldL-P3-hAe" firstAttribute="leading" secondItem="vVD-zJ-c7f" secondAttribute="leadingMargin" id="Riw-Th-0ua"/>
-                                                <constraint firstItem="ldL-P3-hAe" firstAttribute="trailing" secondItem="vVD-zJ-c7f" secondAttribute="trailingMargin" id="Wdu-yB-Rej"/>
-                                                <constraint firstItem="ldL-P3-hAe" firstAttribute="top" secondItem="vVD-zJ-c7f" secondAttribute="topMargin" id="neL-ID-Vyi"/>
+                                                <constraint firstItem="ldL-P3-hAe" firstAttribute="top" secondItem="vVD-zJ-c7f" secondAttribute="topMargin" priority="999" id="neL-ID-Vyi"/>
                                             </constraints>
-                                            <variation key="default">
-                                                <mask key="constraints">
-                                                    <exclude reference="6xw-W9-jHi"/>
-                                                    <exclude reference="Riw-Th-0ua"/>
-                                                    <exclude reference="Wdu-yB-Rej"/>
-                                                </mask>
-                                            </variation>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="titleLabel" destination="ldL-P3-hAe" id="1ev-bD-ric"/>
@@ -1279,7 +1269,7 @@
                                                             <color key="textColor" white="0.5" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xzN-Dj-cLL" userLabel="EDStarRating">
+                                                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xzN-Dj-cLL" userLabel="ratingview">
                                                             <rect key="frame" x="50" y="3" width="100" height="44"/>
                                                             <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                                             <constraints>

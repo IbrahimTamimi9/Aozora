@@ -116,52 +116,52 @@ public class MALScrapper {
             .stringByRemovingOccurencesOfString(["%"])
     }
     
-    public func loginWith(#username: String, password: String) -> BFTask {
-
-        let urlString = "http://myanimelist.net/login.php?from=%2Fpanel.php"
-        let postData = "user_name:'\(username)',password:'\(password)',cookie:'1'"
-        let script = "post('\(urlString)', {\(postData)});"
-        
-        let completion = BFTaskCompletionSource()
-        
-        viewController.webScraper.makePostRequestWithScript(script, handler: { (body) -> Void in
-            if (body.lowercaseString as NSString).containsString("\(username)") {
-                println("Logged in!")
-                if !completion.task.completed {
-                    completion.setResult(nil)
-                }
-            } else {
-                println("Failed log in")
-                println(body.lowercaseString)
-                completion.setError(NSError(domain: "aninow", code: 1, userInfo: nil))
-            }
-        })
-        
-        return completion.task
-    }
+//    public func loginWith(#username: String, password: String) -> BFTask {
+//
+//        let urlString = "http://myanimelist.net/login.php?from=%2Fpanel.php"
+//        let postData = "user_name:'\(username)',password:'\(password)',cookie:'1'"
+//        let script = "post('\(urlString)', {\(postData)});"
+//        
+//        let completion = BFTaskCompletionSource()
+//        
+//        viewController.webScraper.makePostRequestWithScript(script, handler: { (body) -> Void in
+//            if (body.lowercaseString as NSString).containsString("\(username)") {
+//                println("Logged in!")
+//                if !completion.task.completed {
+//                    completion.setResult(nil)
+//                }
+//            } else {
+//                println("Failed log in")
+//                println(body.lowercaseString)
+//                completion.setError(NSError(domain: "aninow", code: 1, userInfo: nil))
+//            }
+//        })
+//        
+//        return completion.task
+//    }
     
-    public func postToForum(topic: Int, message: String, with username: String) -> BFTask {
-        let messageWithNewLines = message.stringByReplacingOccurrencesOfString("\n", withString: "\r")
-        
-        let urlString = "http://myanimelist.net/forum/?topic_id=\(topic)&action=message"
-        let postData = "msg_text:'\(messageWithNewLines)'"
-        let script = "post('\(urlString)', {\(postData)});"
-        
-        let completion = BFTaskCompletionSource()
-        
-        self.viewController.webScraper.makePostRequestWithScript(script, handler: { (body) -> Void in
-            
-            if (body.lowercaseString as NSString).containsString(username) {
-                completion.setResult(nil)
-            } else {
-                println(body)
-                completion.setError(NSError(domain: "aninow", code: 1, userInfo: nil))
-            }
-            
-        })
-        
-        return completion.task
-    }
+//    public func postToForum(topic: Int, message: String, with username: String) -> BFTask {
+//        let messageWithNewLines = message.stringByReplacingOccurrencesOfString("\n", withString: "\r")
+//        
+//        let urlString = "http://myanimelist.net/forum/?topic_id=\(topic)&action=message"
+//        let postData = "msg_text:'\(messageWithNewLines)'"
+//        let script = "post('\(urlString)', {\(postData)});"
+//        
+//        let completion = BFTaskCompletionSource()
+//        
+//        self.viewController.webScraper.makePostRequestWithScript(script, handler: { (body) -> Void in
+//            
+//            if (body.lowercaseString as NSString).containsString(username) {
+//                completion.setResult(nil)
+//            } else {
+//                println(body)
+//                completion.setError(NSError(domain: "aninow", code: 1, userInfo: nil))
+//            }
+//            
+//        })
+//        
+//        return completion.task
+//    }
     
     public func reviewsFor(#anime: Anime) -> BFTask{
         let completion = BFTaskCompletionSource()

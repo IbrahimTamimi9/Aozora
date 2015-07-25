@@ -79,19 +79,19 @@ public class NewPostViewController: UIViewController {
         
         let username = PFUser.malUsername ?? ""
         
-        malScrapper.postToForum(topic.id, message: textView.text, with: username).continueWithBlock
-            { (task: BFTask!) -> AnyObject! in
-                
-                if let error = task.error {
-                    println("\(error)")
-                    UIAlertView(title: "Failed sending message..", message: nil, delegate: nil, cancelButtonTitle: "Ok..").show()
-                } else {
-                    self.delegate?.didPost()
-                    self.dismissViewControllerAnimated(true, completion: nil)
-                }
-                
-            return nil
-        }
+//        malScrapper.postToForum(topic.id, message: textView.text, with: username).continueWithBlock
+//            { (task: BFTask!) -> AnyObject! in
+//                
+//                if let error = task.error {
+//                    println("\(error)")
+//                    UIAlertView(title: "Failed sending message..", message: nil, delegate: nil, cancelButtonTitle: "Ok..").show()
+//                } else {
+//                    self.delegate?.didPost()
+//                    self.dismissViewControllerAnimated(true, completion: nil)
+//                }
+//                
+//            return nil
+//        }
     }
     @IBAction func cancelPressed(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)

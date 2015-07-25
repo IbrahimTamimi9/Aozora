@@ -115,7 +115,9 @@ public class AnimeInformationViewController: AnimeBaseViewController {
                 }
                 println(error)
             } else {
-                self.anime = objects?.first as! Anime
+                if let anime = objects?.first as? Anime {
+                    self.anime = anime
+                }
             }
         }
     }
