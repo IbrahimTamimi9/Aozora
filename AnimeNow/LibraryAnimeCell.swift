@@ -8,6 +8,7 @@
 
 import Foundation
 import ANParseKit
+import ANAnimeKit
 import ANCommonKit
 import Bolts
 import RealmSwift

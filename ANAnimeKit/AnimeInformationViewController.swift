@@ -151,7 +151,7 @@ public class AnimeInformationViewController: AnimeBaseViewController {
                 }
             }
             
-            ratingLabel.text = String(format:"%.2f", anime.membersScore)
+            ratingLabel.text = String(format:"%.2f / %d", anime.membersScore, anime.progress?.score ?? 0)
             membersCountLabel.text = String(anime.membersCount)
             scoreRankLabel.text = "#\(anime.rank)"
             popularityRankLabel.text = "#\(anime.popularityRank)"
@@ -319,12 +319,19 @@ public class AnimeInformationViewController: AnimeBaseViewController {
         var progress = anime.progress
  
         var alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
-//        alert.addAction(UIAlertAction(title: "Rate anime", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
-//            
-//        }))
-//        alert.addAction(UIAlertAction(title: "Enable reminders", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
-//
-//        }))
+        
+        
+        alert.addAction(UIAlertAction(title: "Rate anime", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
+            
+            if let progress = self.anime.progress, let tabBarController = self.tabBarController, let title = self.anime.title {
+                RateViewController.showRateDialogWith(tabBarController, title: "Rate \(title)", initialRating: Float(progress.score)/2.0, anime: self.anime, delegate: self)
+            }
+            
+        }))
+        alert.addAction(UIAlertAction(title: "Enable reminders", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
+            
+        }))
+    
         
         alert.addAction(UIAlertAction(title: "Send on Messenger", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
             
@@ -650,9 +657,9 @@ extension AnimeInformationViewController: UITableViewDelegate {
     }
 }
 
-extension AnimeInformationViewController: UIGestureRecognizerDelegate {
-    public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
-        return false
-    }
+extension AnimeInformationViewController: RateViewControllerProtocol {
     
+    public func rateControllerDidFinishedWith(#anime: Anime, rating: Float) {
+        RateViewController.updateAnime(anime, withRating: rating*2.0)
+    }
 }

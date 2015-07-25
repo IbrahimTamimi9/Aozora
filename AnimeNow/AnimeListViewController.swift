@@ -8,6 +8,7 @@
 
 import UIKit
 import ANCommonKit
+import ANAnimeKit
 import ANParseKit
 import XLPagerTabStrip
 import RealmSwift
@@ -228,8 +229,18 @@ extension AnimeListViewController: LibraryAnimeCellDelegate {
         if let progress = anime.progress,
             let indexPath = collectionView.indexPathForCell(cell) {
 
-            collectionView.reloadItemsAtIndexPaths([indexPath])
+                if let list = MALList(rawValue: progress.status) where list == .Completed {
+                    RateViewController.showRateDialogWith(self.tabBarController!, title: "You've finished\n\(anime.title!)!\ngive it a rating", initialRating: Float(progress.score)/2.0, anime: anime, delegate: self)
+                }
+                
+                collectionView.reloadItemsAtIndexPaths([indexPath])
         }
+    }
+}
+
+extension AnimeListViewController: RateViewControllerProtocol {
+    func rateControllerDidFinishedWith(#anime: Anime, rating: Float) {
+        RateViewController.updateAnime(anime, withRating: rating*2.0)
     }
 }
 

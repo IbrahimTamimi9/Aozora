@@ -15,5 +15,3 @@ FOUNDATION_EXPORT double ANAnimeKitVersionNumber;
 FOUNDATION_EXPORT const unsigned char ANAnimeKitVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <ANAnimeKit/PublicHeader.h>
-
-

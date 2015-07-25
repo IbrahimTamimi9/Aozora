@@ -167,12 +167,12 @@
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G27-ea-c5h">
-                                                    <rect key="frame" x="562" y="4" width="30" height="30"/>
+                                                    <rect key="frame" x="557" y="4" width="35" height="30"/>
                                                     <color key="backgroundColor" red="0.89411765336990356" green="0.89411765336990356" blue="0.89411765336990356" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="36S-kn-e3C"/>
                                                         <constraint firstAttribute="width" constant="106" id="NQ1-nh-noz"/>
-                                                        <constraint firstAttribute="width" constant="30" id="jNO-Cn-2Lb"/>
+                                                        <constraint firstAttribute="width" constant="35" id="jNO-Cn-2Lb"/>
                                                         <constraint firstAttribute="width" constant="35" id="zW4-sK-u9x"/>
                                                     </constraints>
                                                     <state key="normal" image="icon-more-darker">
