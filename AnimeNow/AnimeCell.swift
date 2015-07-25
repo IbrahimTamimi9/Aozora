@@ -81,12 +81,12 @@ class AnimeCell: UICollectionViewCell {
                 etaLabel?.textColor = UIColor.pumpkin()
                 etaTimeLabel?.textColor = UIColor.pumpkin()
                 if showShortEta {
-                    etaLabel?.text = "Aired"
+                    etaLabel?.text = "Ep\(nextEpisode-1) Aired"
                 } else {
                     etaLabel?.text = "Episode \(nextEpisode-1) - Aired"
                 }
                 
-                etaTimeLabel?.text = "Aired"
+                etaTimeLabel?.text = "Ep\(nextEpisode-1) Aired"
             } else {
                 
                 let (days, hours, minutes) = etaForDate(anime.nextEpisodeDate)
@@ -130,8 +130,13 @@ class AnimeCell: UICollectionViewCell {
             posterEpisodeTitleLabel?.text = ""
             posterDimView?.hidden = true
             
-            etaTimeLabel?.textColor = UIColor.belizeHole()
-            etaTimeLabel?.text = "Aired"
+            if let status = AnimeStatus(rawValue: anime.status) where status == AnimeStatus.FinishedAiring {
+                etaTimeLabel?.textColor = UIColor.belizeHole()
+                etaTimeLabel?.text = "Aired"
+            } else {
+                etaTimeLabel?.textColor = UIColor.planning()
+                etaTimeLabel?.text = "Not aired"
+            }
         }
         
         if let progress = anime.progress,
