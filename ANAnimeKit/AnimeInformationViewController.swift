@@ -102,7 +102,10 @@ public class AnimeInformationViewController: AnimeBaseViewController {
         let query = Anime.queryWith(objectID: anime.objectId!)
     
         if fromLocalDatastore {
+            println("\(anime.objectId) local")
             query.fromLocalDatastore()
+        } else {
+            println("\(anime.objectId) not local")
         }
         
         query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
@@ -117,6 +120,8 @@ public class AnimeInformationViewController: AnimeBaseViewController {
             } else {
                 if let anime = objects?.first as? Anime {
                     self.anime = anime
+                } else {
+                    self.fetchCurrentAnime(false)
                 }
             }
         }

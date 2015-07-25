@@ -92,7 +92,7 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
         super.viewDidLoad()
         
         self.isProgressiveIndicator = true
-        self.buttonBarView.selectedBar.backgroundColor = UIColor.peterRiver()
+        self.buttonBarView.selectedBar.backgroundColor = UIColor.watching()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateDataSource", name: ANAnimeKit.LibraryUpdatedNotification, object: nil)
      
@@ -221,6 +221,38 @@ extension AnimeLibraryViewController: XLPagerTabStripViewControllerDataSource {
         
         return lists
     }
+}
+
+extension AnimeLibraryViewController: XLPagerTabStripViewControllerDelegate {
+    
+    override func pagerTabStripViewController(pagerTabStripViewController: XLPagerTabStripViewController!, updateIndicatorFromIndex fromIndex: Int, toIndex: Int, withProgressPercentage progressPercentage: CGFloat) {
+        super.pagerTabStripViewController(pagerTabStripViewController, updateIndicatorFromIndex: fromIndex, toIndex: toIndex, withProgressPercentage: progressPercentage)
+
+        if progressPercentage > 0.5{
+            self.buttonBarView.selectedBar.backgroundColor = colorForIndex(toIndex)
+        } else {
+            self.buttonBarView.selectedBar.backgroundColor = colorForIndex(fromIndex)
+        }
+    }
+    
+    func colorForIndex(index: Int) -> UIColor {
+        var color: UIColor?
+        switch index {
+        case 0:
+            color = UIColor.watching()
+        case 1:
+            color = UIColor.planning()
+        case 2:
+            color = UIColor.onHold()
+        case 3:
+            color = UIColor.completed()
+        case 4:
+            color = UIColor.dropped()
+        default: break
+        }
+        return color ?? UIColor.completed()
+    }
+    
 }
 
 extension AnimeLibraryViewController: FilterViewControllerDelegate {
