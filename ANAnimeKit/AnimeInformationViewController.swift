@@ -325,13 +325,33 @@ public class AnimeInformationViewController: AnimeBaseViewController {
             
             if let progress = self.anime.progress, let tabBarController = self.tabBarController, let title = self.anime.title {
                 RateViewController.showRateDialogWith(tabBarController, title: "Rate \(title)", initialRating: Float(progress.score)/2.0, anime: self.anime, delegate: self)
+            } else {
+                var alert = UIAlertController(title: "Not saved", message: "Add the anime to your library first", preferredStyle: UIAlertControllerStyle.Alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Cancel, handler:nil))
+                self.presentViewController(alert, animated: true, completion: nil)
             }
             
         }))
-        alert.addAction(UIAlertAction(title: "Enable reminders", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
-            
-        }))
-    
+        
+        if let nextEpisode = anime.nextEpisode {
+            let scheduledReminder = ReminderController.scheduledReminderFor(anime)
+            let remindersTitle = scheduledReminder == nil ? "Enable reminders" : "Disable reminders"
+            let actionStyle: UIAlertActionStyle = scheduledReminder == nil ? .Default : .Destructive
+            alert.addAction(UIAlertAction(title: remindersTitle, style: actionStyle, handler: { (alertAction: UIAlertAction!) -> Void in
+                if let progress = self.anime.progress, let tabBarController = self.tabBarController, let title = self.anime.title {
+                    if let reminder = scheduledReminder {
+                        ReminderController.disableReminderForAnime(self.anime)
+                    } else {
+                        let success = ReminderController.scheduleReminderForAnime(self.anime)
+                        
+                    }
+                } else {
+                    var alert = UIAlertController(title: "Not saved", message: "Add the anime to your library first", preferredStyle: UIAlertControllerStyle.Alert)
+                    alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Cancel, handler:nil))
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
+            }))
+        }
         
         alert.addAction(UIAlertAction(title: "Send on Messenger", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
             
