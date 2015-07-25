@@ -23,17 +23,17 @@ public class AnimeRelation: PFObject, PFSubclassing {
         return "AnimeRelation"
     }
     
-    @NSManaged public var alternativeVersions: [[String:String]]
-    @NSManaged public var mangaAdaptations: [[String:String]]
-    @NSManaged public var prequels: [[String:String]]
-    @NSManaged public var sequels: [[String:String]]
-    @NSManaged public var sideStories: [[String:String]]
-    @NSManaged public var spinOffs: [[String:String]]
+    @NSManaged public var alternativeVersions: [[String:AnyObject]]
+    @NSManaged public var mangaAdaptations: [[String:AnyObject]]
+    @NSManaged public var prequels: [[String:AnyObject]]
+    @NSManaged public var sequels: [[String:AnyObject]]
+    @NSManaged public var sideStories: [[String:AnyObject]]
+    @NSManaged public var spinOffs: [[String:AnyObject]]
     
     public var totalRelations: Int {
         get {
             if self.isDataAvailable() {
-                return alternativeVersions.count + prequels.count + sequels.count + sideStories.count + spinOffs.count
+                return allRelationsCount()
             } else {
                 return 0
             }
@@ -54,38 +54,69 @@ public class AnimeRelation: PFObject, PFSubclassing {
         public var url: String
         public var relationType: RelationType
         
-        static func relationWithData(data: [String:String], relationType: RelationType) -> Relation{
+        static func relationWithData(data: [String:AnyObject], relationType: RelationType) -> Relation{
+            // All this mess of types is because of Atarashii api fault..
+            var animeIdentifier: Int?
+            if let animeID = (data["anime_id"] ?? data["manga_id"]) as? Int {
+                animeIdentifier = animeID
+            }
+            if let animeID = (data["anime_id"] ?? data["manga_id"]) as? String, let animeID2 = animeID.toInt() {
+                animeIdentifier = animeID2
+            }
             return Relation(
-                animeID: data["anime_id"]!.toInt()!,
-                title: data["title"]!,
-                url: data["url"]!,
+                animeID: animeIdentifier!,
+                title: data["title"] as! String,
+                url: data["url"] as! String,
                 relationType:relationType)
         }
     }
     
     // TODO: Improve this to don't iterate through all relations..
+    
+    func allRelationsCount() -> Int {
+        var count = 0
+        let allRelations = alternativeVersions + prequels + sequels + sideStories + spinOffs
+        for relation in allRelations {
+            if let url = relation["url"] as? String, let _ = url.rangeOfString("anime") {
+                count += 1
+            }
+        }
+        return count
+    }
+    
     public func relationAtIndex(index: Int) -> Relation {
         var allRelations: [Relation] = []
         
         for relation in alternativeVersions {
-            var newRelation = Relation.relationWithData(relation, relationType: .AlternativeVersion)
-            allRelations.append(newRelation)
+            if let url = relation["url"] as? String, let _ = url.rangeOfString("anime") {
+                var newRelation = Relation.relationWithData(relation, relationType: .AlternativeVersion)
+                allRelations.append(newRelation)
+            }
         }
+        
         for relation in prequels {
-            var newRelation = Relation.relationWithData(relation, relationType: .Prequel)
-            allRelations.append(newRelation)
+            if let url = relation["url"] as? String, let _ = url.rangeOfString("anime") {
+                var newRelation = Relation.relationWithData(relation, relationType: .Prequel)
+                allRelations.append(newRelation)
+            }
         }
         for relation in sequels {
-            var newRelation = Relation.relationWithData(relation, relationType: .Sequel)
-            allRelations.append(newRelation)
+            if let url = relation["url"] as? String, let _ = url.rangeOfString("anime") {
+                var newRelation = Relation.relationWithData(relation, relationType: .Sequel)
+                allRelations.append(newRelation)
+            }
         }
         for relation in sideStories {
-            var newRelation = Relation.relationWithData(relation, relationType: .SideStory)
-            allRelations.append(newRelation)
+            if let url = relation["url"] as? String, let _ = url.rangeOfString("anime") {
+                var newRelation = Relation.relationWithData(relation, relationType: .SideStory)
+                allRelations.append(newRelation)
+            }
         }
         for relation in spinOffs {
-            var newRelation = Relation.relationWithData(relation, relationType: .SpinOff)
-            allRelations.append(newRelation)
+            if let url = relation["url"] as? String, let _ = url.rangeOfString("anime") {
+                var newRelation = Relation.relationWithData(relation, relationType: .SpinOff)
+                allRelations.append(newRelation)
+            }
         }
         
         return allRelations[index]
