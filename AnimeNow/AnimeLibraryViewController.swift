@@ -167,6 +167,7 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
         
         if let tabBar = tabBarController {
             let controller = UIStoryboard(name: "Browse", bundle: nil).instantiateViewControllerWithIdentifier("Search") as! SearchViewController
+            controller.searchLibrary = true
             controller.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
             controller.modalPresentationStyle = .OverCurrentContext
             tabBar.presentViewController(controller, animated: true, completion: nil)

@@ -241,7 +241,7 @@ public class LibrarySyncController {
             idList.append(animeProgress.myAnimeListID)
         }
         // Fetch from disk then network
-        return fetchAnime(idList)
+        return fetchAnime(idList, fromLocalDatastore: true)
         .continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
             
             if let result = task.result as? [Anime] where result.count > 0 {
@@ -279,7 +279,7 @@ public class LibrarySyncController {
         })
     }
     
-    public class func fetchAnime(myAnimeListIDs: [Int], withPinName: String? = nil, includeAllData: Bool = false) -> BFTask {
+    public class func fetchAnime(myAnimeListIDs: [Int], withPinName: String? = nil, fromLocalDatastore: Bool = false, includeAllData: Bool = false) -> BFTask {
         
         let query: PFQuery
         if includeAllData {
@@ -289,6 +289,11 @@ public class LibrarySyncController {
         }
         
         query.limit = 1000
+        
+        if fromLocalDatastore {
+            query.fromLocalDatastore()
+        }
+        
         if let pinName = withPinName {
             query.fromPinWithName(pinName)
         }

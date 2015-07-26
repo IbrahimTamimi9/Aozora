@@ -18,7 +18,7 @@ class SearchViewController: UIViewController {
     
     var loadingView: LoaderView!
     var animator: ZFModalTransitionAnimator!
-    
+    var searchLibrary = false
     var dataSource: [Anime] = [] {
         didSet {
             collectionView.reloadData()
@@ -37,6 +37,7 @@ class SearchViewController: UIViewController {
         
         loadingView = LoaderView(parentView: self.view)
         
+        searchBar.placeholder = searchLibrary ? "Search your library" : "Search all anime"
         searchBar.becomeFirstResponder()
     }
     
@@ -44,22 +45,29 @@ class SearchViewController: UIViewController {
     
         currentCancellationToken = cancellationToken
         
-        loadingView.startAnimating()
-        collectionView.animateFadeOut()
+        if !searchLibrary {
+            loadingView.startAnimating()
+            collectionView.animateFadeOut()
+        }
         
-        let query = Anime.query()!
+        let query = PFQuery(className: "Anime")
         query.limit = 20
         query.whereKey("title", matchesRegex: text, modifiers: "i")
+        if searchLibrary {
+            query.fromPinWithName(Anime.PinName.InLibrary.rawValue)
+        }
+        
         query.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
             if let anime = result as? [Anime] where !cancellationToken.cancelled && result != nil {
-                println("fetched query \(text)")
                 
                 LibrarySyncController.matchAnimeWithProgress(anime)
                 self.dataSource = anime
             }
             
-            self.loadingView.stopAnimating()
-            self.collectionView.animateFadeIn()
+            if !self.searchLibrary {
+                self.loadingView.stopAnimating()
+                self.collectionView.animateFadeIn()
+            }
         })
     
     }
@@ -97,6 +105,10 @@ extension SearchViewController: UISearchBarDelegate {
             cancelToken.cancel()
         }
         
+        fetchAnimeWithQuery(searchBar.text, cancellationToken: NSOperation())
+    }
+    
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         fetchAnimeWithQuery(searchBar.text, cancellationToken: NSOperation())
     }
     
