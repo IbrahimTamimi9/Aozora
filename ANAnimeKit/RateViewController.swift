@@ -20,6 +20,7 @@ public class RateViewController: UIViewController {
     
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var starRating: HCSStarRatingView!
+    @IBOutlet weak var rateView: UIView!
     
     weak var delegate: RateViewControllerProtocol?
     
@@ -64,11 +65,40 @@ public class RateViewController: UIViewController {
         super.viewDidLoad()
         messageLabel.text = message
         starRating.value = CGFloat(currentRating)
+    
+        rateView.transform = CGAffineTransformMakeScale(0, 0)
+        
     }
+    
+    public override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        UIView.animateWithDuration(0.8, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 1.0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+            self.rateView.transform = CGAffineTransformIdentity
+            }) { (completed) -> Void in
+                
+        }
+    }
+    
     
     // MARK: - IBActions
     
     @IBAction func ratingChanged(sender: HCSStarRatingView) {
+        UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: UIViewAnimationOptions.BeginFromCurrentState|UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+            let scale = 1+0.05*sender.value
+            self.starRating.transform = CGAffineTransformMakeScale(scale, scale)
+            }) { (completed) -> Void in
+                
+        }
+    }
+    
+    @IBAction func ratingEnded(sender: HCSStarRatingView) {
+        
+        UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 0.3, initialSpringVelocity: 1.0, options: UIViewAnimationOptions.BeginFromCurrentState|UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+            self.starRating.transform = CGAffineTransformIdentity
+            }) { (completed) -> Void in
+                
+        }
         delegate?.rateControllerDidFinishedWith(anime: anime, rating: Float(sender.value))
     }
     

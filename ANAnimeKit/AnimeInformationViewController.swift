@@ -300,7 +300,7 @@ public class AnimeInformationViewController: AnimeBaseViewController {
                 realm.add(animeProgress, update: true)
             })
             
-            anime.pinWithName(Anime.PinName.InLibrary.rawValue)
+            anime.pinInBackgroundWithName(Anime.PinName.InLibrary.rawValue)
             anime.progress = animeProgress
             
             LibrarySyncController.addAnime(animeProgress)
