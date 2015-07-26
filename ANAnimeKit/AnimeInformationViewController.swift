@@ -252,20 +252,26 @@ public class AnimeInformationViewController: AnimeBaseViewController {
         if let progress = progress {
             alert.addAction(UIAlertAction(title: "Remove from Library", style: UIAlertActionStyle.Destructive, handler: { (alertAction: UIAlertAction!) -> Void in
                 
-                self.anime.unpin()
-                LibrarySyncController.deleteAnime(progress).continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
+                self.loadingView.startAnimating()
+                
+                let deleteFromMALTask = LibrarySyncController.deleteAnime(progress)
+                let unpinTask = self.anime.unpinInBackgroundWithName(Anime.PinName.InLibrary.rawValue)
                     
+                BFTask(forCompletionOfAllTasks: [deleteFromMALTask, unpinTask]).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
+                
+                    self.loadingView.stopAnimating()
                     let realm = Realm()
                     realm.write {
                         realm.delete(progress)
                     }
+                    
+                    NSNotificationCenter.defaultCenter().postNotificationName(ANAnimeKit.LibraryUpdatedNotification, object: nil)
+                
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                    
                     return nil
                 })
                 
-                
-                NSNotificationCenter.defaultCenter().postNotificationName(ANAnimeKit.LibraryUpdatedNotification, object: nil)
-                
-                self.dismissViewControllerAnimated(true, completion: nil)
             }))
         }
         
@@ -687,6 +693,8 @@ extension AnimeInformationViewController: UITableViewDelegate {
 extension AnimeInformationViewController: RateViewControllerProtocol {
     
     public func rateControllerDidFinishedWith(#anime: Anime, rating: Float) {
+        
         RateViewController.updateAnime(anime, withRating: rating*2.0)
+        updateInformationWithAnime()
     }
 }
