@@ -13,6 +13,7 @@ import ANAnimeKit
 
 public class RootTabBar: UITabBarController {
     
+    var selectedDefaultTabOnce = false
     override public func viewDidLoad() {
         super.viewDidLoad()
         
@@ -21,14 +22,17 @@ public class RootTabBar: UITabBarController {
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        if let value = NSUserDefaults.standardUserDefaults().valueForKey(DefaultLoadingScreen) as? String {
-            switch value {
-            case "Season":
-                break
-            case "Library":
-                selectedIndex = 1
-            default:
-                break
+        if !selectedDefaultTabOnce {
+            selectedDefaultTabOnce = true
+            if let value = NSUserDefaults.standardUserDefaults().valueForKey(DefaultLoadingScreen) as? String {
+                switch value {
+                case "Season":
+                    break
+                case "Library":
+                    selectedIndex = 1
+                default:
+                    break
+                }
             }
         }
     }

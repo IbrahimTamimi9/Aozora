@@ -11,6 +11,7 @@ import ANParseKit
 import SDWebImage
 import Alamofire
 import ANCommonKit
+import ANAnimeKit
 
 class ChartViewController: UIViewController {
     
@@ -128,6 +129,12 @@ class ChartViewController: UIViewController {
         navigationController?.navigationBar.addGestureRecognizer(tapGestureRecognizer)
         
         prepareForList(selectedList)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateETACells", name: ANAnimeKit.LibraryUpdatedNotification, object: nil)
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     override func viewWillAppear(animated: Bool) {

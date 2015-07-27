@@ -9,6 +9,7 @@
 import UIKit
 import ANCommonKit
 import ANParseKit
+import ANAnimeKit
 
 enum BrowseType: String {
     case TopAnime = "Top Anime"
@@ -86,6 +87,17 @@ class BrowseViewController: UIViewController {
         loadingView = LoaderView(parentView: self.view)
         
         fetchListType(currentBrowseType)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateETACells", name: ANAnimeKit.LibraryUpdatedNotification, object: nil)
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    func updateETACells() {
+        let indexPaths = collectionView.indexPathsForVisibleItems()
+        collectionView.reloadItemsAtIndexPaths(indexPaths)
     }
     
     func fetchListType(type: BrowseType, customQuery: PFQuery? = nil) {

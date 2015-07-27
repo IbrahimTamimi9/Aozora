@@ -9,6 +9,7 @@
 import UIKit
 import ANParseKit
 import ANCommonKit
+import ANAnimeKit
 import Bolts
 
 class SearchViewController: UIViewController {
@@ -39,6 +40,18 @@ class SearchViewController: UIViewController {
         
         searchBar.placeholder = searchLibrary ? "Search your library" : "Search all anime"
         searchBar.becomeFirstResponder()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateETACells", name: ANAnimeKit.LibraryUpdatedNotification, object: nil)
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    
+    func updateETACells() {
+        let indexPaths = collectionView.indexPathsForVisibleItems()
+        collectionView.reloadItemsAtIndexPaths(indexPaths)
     }
     
     func fetchAnimeWithQuery(text: String, cancellationToken: NSOperation) {
