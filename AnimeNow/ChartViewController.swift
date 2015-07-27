@@ -236,7 +236,12 @@ class ChartViewController: UIViewController {
             case .Title:
                 animeArray.sort({ $0.title < $1.title})
             case .NextAiringEpisode:
-                animeArray.sort({ $0.nextEpisodeDate.compare($1.nextEpisodeDate) == .OrderedAscending })
+                animeArray.sort({ (anime1: Anime, anime2: Anime) in
+                    
+                    let startDate1 = anime1.nextEpisodeDate ?? NSDate(timeIntervalSinceNow: 60*60*24*100)
+                    let startDate2 = anime2.nextEpisodeDate ?? NSDate(timeIntervalSinceNow: 60*60*24*100)
+                    return startDate1.compare(startDate2) == .OrderedAscending
+                })
             default:
                 break;
             }

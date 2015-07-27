@@ -164,8 +164,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //        Parse.setApplicationId("nLCbHmeklHp6gBly9KHZOZNSMBTyuvknAubwHGAQ",
         //            clientKey: "yVixWhPhTM9yGmjtfm1isbC7Ekxq29eNLTzu6KzM")
         
-
-
     }
     
     func customizeAppearance() {

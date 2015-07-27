@@ -164,7 +164,42 @@ class AnimeListViewController: UIViewController {
         case .Title:
             animeList.sort({ $0.title < $1.title })
         case .NextAiringEpisode:
-            animeList.sort({ $0.nextEpisodeDate.compare($1.nextEpisodeDate) == .OrderedAscending })
+            animeList.sort({ (anime1: Anime, anime2: Anime) in
+                
+                let startDate1 = anime1.nextEpisodeDate ?? NSDate(timeIntervalSinceNow: 60*60*24*1000)
+                let startDate2 = anime2.nextEpisodeDate ?? NSDate(timeIntervalSinceNow: 60*60*24*1000)
+                return startDate1.compare(startDate2) == .OrderedAscending
+            })
+        case .Newest:
+            animeList.sort({ (anime1: Anime, anime2: Anime) in
+                
+                let startDate1 = anime1.startDate ?? NSDate()
+                let startDate2 = anime2.startDate ?? NSDate()
+                return startDate1.compare(startDate2) == .OrderedDescending
+            })
+        case .Oldest:
+            animeList.sort({ (anime1: Anime, anime2: Anime) in
+                
+                let startDate1 = anime1.startDate ?? NSDate()
+                let startDate2 = anime2.startDate ?? NSDate()
+                return startDate1.compare(startDate2) == .OrderedAscending
+                
+            })
+        case .MyRating:
+            animeList.sort({ (anime1: Anime, anime2: Anime) in
+                
+                let score1 = anime1.progress?.score ?? 0
+                let score2 = anime2.progress?.score ?? 0
+                return score1 > score2
+            })
+        case .NextEpisodeToWatch:
+            animeList.sort({ (anime1: Anime, anime2: Anime) in
+                
+                let nextDate1 = anime1.nextEpisodeToWatchDate ?? NSDate(timeIntervalSinceNow: 60*60*24*365*100)
+                let nextDate2 = anime2.nextEpisodeToWatchDate ?? NSDate(timeIntervalSinceNow: 60*60*24*365*100)
+                return nextDate1.compare(nextDate2) == .OrderedAscending
+            })
+            break;
         default:
             break;
         }

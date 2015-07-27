@@ -197,7 +197,7 @@ extension AnimeLibraryViewController: XLPagerTabStripViewControllerDataSource {
             configurations.append(
                 [
                     (FilterSection.View, layoutTypeForList(list).rawValue, LibraryLayout.allRawValues()),
-                    (FilterSection.Sort, sortTypeForList(list).rawValue, [SortType.Title.rawValue, SortType.NextAiringEpisode.rawValue]),
+                    (FilterSection.Sort, sortTypeForList(list).rawValue, [SortType.Title.rawValue, SortType.NextEpisodeToWatch.rawValue, SortType.NextAiringEpisode.rawValue, SortType.MyRating.rawValue, SortType.Rating.rawValue, SortType.Popularity.rawValue, SortType.Newest.rawValue, SortType.Oldest.rawValue]),
                 ]
             )
         }

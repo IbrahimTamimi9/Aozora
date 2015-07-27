@@ -89,7 +89,7 @@ class AnimeCell: UICollectionViewCell {
                 etaTimeLabel?.text = "Ep\(nextEpisode-1) Aired"
             } else {
                 
-                let (days, hours, minutes) = etaForDate(anime.nextEpisodeDate)
+                let (days, hours, minutes) = etaForDate(anime.nextEpisodeDate!)
                 let etaTime: String
                 let shortEtaTime: String
                 if days != 0 {

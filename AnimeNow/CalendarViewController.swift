@@ -61,7 +61,7 @@ class CalendarViewController: XLButtonBarPagerTabStripViewController {
                 let unitFlags: NSCalendarUnit = NSCalendarUnit.CalendarUnitWeekday
                 
                 for anime in result {
-                    let startDateTime = anime.nextEpisodeDate
+                    let startDateTime = anime.nextEpisodeDate ?? NSDate()
                     let dateComponents = calendar.components(unitFlags, fromDate: startDateTime)
                     let weekday = dateComponents.weekday-1
                     animeByWeekday[weekday].append(anime)

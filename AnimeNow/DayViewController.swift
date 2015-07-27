@@ -76,12 +76,16 @@ class DayViewController: UIViewController {
             
             if index == 0 {
                 animeArray.sort({ (anime1: Anime, anime2: Anime) in
-                    let anime1IsToday = anime1.nextEpisodeDate.timeIntervalSinceDate(today) < 60*60*24
-                    let anime2IsToday = anime2.nextEpisodeDate.timeIntervalSinceDate(today) < 60*60*24
+                    
+                    let nextDate1 = anime1.nextEpisodeDate ?? NSDate(timeIntervalSinceNow: 60*60*24*2)
+                    let nextDate2 = anime2.nextEpisodeDate ?? NSDate(timeIntervalSinceNow: 60*60*24*2)
+                    
+                    let anime1IsToday = nextDate1.timeIntervalSinceDate(today) < 60*60*24
+                    let anime2IsToday = nextDate2.timeIntervalSinceDate(today) < 60*60*24
                     if anime1IsToday && anime2IsToday {
-                        return anime1.nextEpisodeDate.compare(anime2.nextEpisodeDate) == .OrderedAscending
+                        return nextDate1.compare(nextDate2) == .OrderedAscending
                     } else if !anime1IsToday && !anime2IsToday {
-                        return anime1.nextEpisodeDate.compare(anime2.nextEpisodeDate) == .OrderedDescending
+                        return nextDate1.compare(nextDate2) == .OrderedDescending
                     } else if anime1IsToday && !anime2IsToday {
                         return false
                     } else {
@@ -90,7 +94,12 @@ class DayViewController: UIViewController {
                     
                 })
             } else {
-                animeArray.sort({ $0.nextEpisodeDate.compare($1.nextEpisodeDate) == .OrderedAscending })
+                animeArray.sort({ (anime1: Anime, anime2: Anime) in
+                    
+                    let startDate1 = anime1.nextEpisodeDate ?? NSDate(timeIntervalSinceNow: 60*60*24*100)
+                    let startDate2 = anime2.nextEpisodeDate ?? NSDate(timeIntervalSinceNow: 60*60*24*100)
+                    return startDate1.compare(startDate2) == .OrderedAscending
+                })
             }
             
             index += 1
@@ -143,7 +152,7 @@ extension DayViewController: UICollectionViewDataSource {
         
         let anime = dataSource[indexPath.section][indexPath.row]
 
-        let nextDate = anime.nextEpisodeDate
+        let nextDate = anime.nextEpisodeDate ?? NSDate(timeIntervalSinceNow: 60*60*24*100)
         let showEtaAsAired = nextDate.timeIntervalSinceNow > 60*60*24 && section == 0
         
         cell.configureWithAnime(anime, canFadeImages: true, showEtaAsAired: showEtaAsAired, showShortEta: true)

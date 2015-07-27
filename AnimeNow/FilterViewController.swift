@@ -27,11 +27,12 @@ enum SortType: String {
     case Rating = "Rating"
     case Popularity = "Popularity"
     case Title = "Title"
-    case NextAiringEpisode = "Next Airing Episode"
+    case NextAiringEpisode = "Next Episode to Air"
+    case NextEpisodeToWatch = "Next Episode to Watch"
     case Newest = "Newest"
     case Oldest = "Oldest"
     case None = "None"
-    
+    case MyRating = "My Rating"
 }
 
 enum LayoutType: String {
