@@ -15,6 +15,7 @@ class OnboardingViewController: UIViewController {
     @IBOutlet weak var facebookLoginButton: UIButton!
     
     var isInWindowRoot = true
+    var loggedInWithFacebook = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,14 +23,13 @@ class OnboardingViewController: UIViewController {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "showSign" {
-            
-            if let senderType = sender as? Int, let type = SignType(rawValue: senderType) {
-                let sign = segue.destinationViewController as! SignViewController
-                sign.isInWindowRoot = isInWindowRoot
-                sign.initWithType(type)
-            }
-            
+        if segue.identifier == "showSignIn" {
+            let sign = segue.destinationViewController as! SignInViewController
+            sign.isInWindowRoot = isInWindowRoot
+        } else if segue.identifier == "showSignUp" {
+            let sign = segue.destinationViewController as! SignUpViewController
+            sign.isInWindowRoot = isInWindowRoot
+            sign.loggedInWithFacebook = loggedInWithFacebook
         }
     }
     
@@ -58,12 +58,15 @@ class OnboardingViewController: UIViewController {
         PFFacebookUtils.logInInBackgroundWithReadPermissions(permissions) {
             (user: PFUser?, error: NSError?) -> Void in
             if let user = user {
-                if user.isNew {
+                self.loggedInWithFacebook = true
+                if user.isNew || user["aozoraUsername"] == nil {
                     println("User signed up and logged in through Facebook!")
+                    self.performSegueWithIdentifier("showSignUp", sender: nil)
                 } else {
                     println("User logged in through Facebook!")
+                    self.presentRootTabBar()
                 }
-                self.presentRootTabBar()
+                
             } else {
                 PFUser.logOutInBackgroundWithBlock({ (error) -> Void in
                     
@@ -80,7 +83,7 @@ class OnboardingViewController: UIViewController {
     
     @IBAction func signUpWithEmailPressed(sender: AnyObject) {
 
-        performSegueWithIdentifier("showSign", sender: SignType.Up.rawValue)
+        performSegueWithIdentifier("showSignUp", sender: nil)
     }
     
     @IBAction func skipSignUpPressed(sender: AnyObject) {
@@ -106,6 +109,6 @@ class OnboardingViewController: UIViewController {
     
     @IBAction func signInPressed(sender: AnyObject) {
         
-        performSegueWithIdentifier("showSign", sender: SignType.In.rawValue)
+        performSegueWithIdentifier("showSignIn", sender: nil)
     }
 }

@@ -152,6 +152,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Anime.registerSubclass()
         SeasonalChart.registerSubclass()
         Episode.registerSubclass()
+        UserDetails.registerSubclass()
         
         // TODO: Implement this
         Parse.enableLocalDatastore()

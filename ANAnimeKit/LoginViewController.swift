@@ -72,15 +72,6 @@ public class LoginViewController: UIViewController {
         }
     }
     
-    @IBAction func signupPressed(sender: AnyObject) {
-        let (navController, controller) = ANCommonKit.webViewController()
-        
-        let initialUrl = NSURL(string: "http://myanimelist.net/login.php")
-        controller.initWithTitle("Start using MyAnimeList", initialUrl: initialUrl)
-
-        presentViewController(navController, animated: true, completion: nil)
-    }
-    
     @IBAction func cancelPressed(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)
     }

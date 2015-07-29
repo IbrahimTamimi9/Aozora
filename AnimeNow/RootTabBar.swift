@@ -12,8 +12,10 @@ import ANCommonKit
 import ANAnimeKit
 
 public class RootTabBar: UITabBarController {
+    let ShowedMyAnimeListLoginDefault = "Defaults.ShowedMyAnimeListLogin"
     
     var selectedDefaultTabOnce = false
+    
     override public func viewDidLoad() {
         super.viewDidLoad()
         
@@ -45,16 +47,14 @@ extension RootTabBar: UITabBarControllerDelegate {
         
         if let navController = viewController as? UINavigationController {
             
-            let profileController = navController.viewControllers.first as? ProfileViewController
             let libraryController = navController.viewControllers.first as? AnimeLibraryViewController
             
-            if profileController == nil && libraryController == nil {
+            if libraryController == nil {
                 return true
             }
             
             if PFUser.currentUserLoggedIn() {
                 // Logged in both
-                profileController?.initWithUsername(PFUser.malUsername!)
                 return true
                 
             } else if PFUser.currentUserIsGuest() {
@@ -65,9 +65,11 @@ extension RootTabBar: UITabBarControllerDelegate {
                 
                 return false
                 
-            } else {
+            } else if !NSUserDefaults.standardUserDefaults().boolForKey(ShowedMyAnimeListLoginDefault) {
                 
-                // Only logged with email/fb
+                NSUserDefaults.standardUserDefaults().setBool(true, forKey: ShowedMyAnimeListLoginDefault)
+                NSUserDefaults.standardUserDefaults().synchronize()
+                
                 let storyboard = UIStoryboard(name: "Login", bundle: ANAnimeKit.bundle())
                 let loginController = storyboard.instantiateInitialViewController() as! LoginViewController
                 presentViewController(loginController, animated: true, completion: nil)

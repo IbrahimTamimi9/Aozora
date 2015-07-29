@@ -122,7 +122,9 @@ extension SearchViewController: UISearchBarDelegate {
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        fetchAnimeWithQuery(searchBar.text, cancellationToken: NSOperation())
+        if searchLibrary {
+            fetchAnimeWithQuery(searchBar.text, cancellationToken: NSOperation())
+        }
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {

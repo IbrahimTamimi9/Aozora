@@ -17,6 +17,7 @@ PODS:
   - RMStore (0.7.1):
     - RMStore/Core (= 0.7.1)
   - RMStore/Core (0.7.1)
+  - RSKImageCropper (1.2.1)
   - SDWebImage (3.7.2):
     - SDWebImage/Core (= 3.7.2)
   - SDWebImage/Core (3.7.2)
@@ -34,6 +35,7 @@ DEPENDENCIES:
   - NJKWebViewProgress (~> 0.2.3)
   - RealmSwift
   - RMStore (~> 0.7)
+  - RSKImageCropper
   - SDWebImage (~> 3.7.2)
   - Shimmer
   - TTTAttributedLabel (~> 1.13.4)
@@ -59,6 +61,7 @@ SPEC CHECKSUMS:
   Realm: 2fdd0ae74f730e190384e0338d8a0d3654df8220
   RealmSwift: 231b064da9f98b1c4f325fe1f1cb8756aae2b8d6
   RMStore: 64ba13a9c040e3b7572765d169f77175cd3243e5
+  RSKImageCropper: e912419809d3a4eac47864d6fbc22f84c14879d5
   SDWebImage: 71b7cdc1d1721d6a82ed62889030225f2c249e29
   Shimmer: c5374be1c2b0c9e292fb05b339a513cf291cac86
   TTTAttributedLabel: 0a2ac7b2dd726d32a070dafb01446026b11e624f

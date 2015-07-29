@@ -19,40 +19,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dgX-Jx-zqn" userLabel="View2">
                                 <rect key="frame" x="16" y="0.0" width="568" height="600"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OSh-N7-UR9">
-                                        <rect key="frame" x="0.0" y="373.5" width="568" height="40"/>
-                                        <color key="backgroundColor" red="0.20392157137393951" green="0.59607845544815063" blue="0.85882353782653809" alpha="1" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="zjq-PM-Bal"/>
-                                        </constraints>
-                                        <state key="normal">
-                                            <attributedString key="attributedTitle">
-                                                <fragment content="Sign up ">
-                                                    <attributes>
-                                                        <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                        <font key="NSFont" size="15" name="HelveticaNeue"/>
-                                                    </attributes>
-                                                </fragment>
-                                                <fragment content="MyAnimeList">
-                                                    <attributes>
-                                                        <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                        <font key="NSFont" size="15" name="HelveticaNeue-Bold"/>
-                                                        <font key="NSOriginalFont" size="15" name="HelveticaNeue-Bold"/>
-                                                    </attributes>
-                                                </fragment>
-                                            </attributedString>
-                                        </state>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                <integer key="value" value="3"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <action selector="signupPressed:" destination="U7M-zI-QJf" eventType="touchUpInside" id="UIa-vU-fw4"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aF4-SR-tPZ">
-                                        <rect key="frame" x="0.0" y="325.5" width="568" height="40"/>
+                                        <rect key="frame" x="0.0" y="289.5" width="568" height="40"/>
                                         <color key="backgroundColor" red="0.0078431372550000003" green="0.43921568630000002" blue="0.73333333329999995" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="ZY8-lk-fkb"/>
@@ -85,13 +53,13 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iJE-Li-HRP">
-                                        <rect key="frame" x="0.0" y="421.5" width="568" height="40"/>
+                                        <rect key="frame" x="0.0" y="337.5" width="568" height="40"/>
                                         <color key="backgroundColor" red="0.69368681129999998" green="0.74783176439999999" blue="0.79085152380000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="T76-fZ-ddB"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                        <state key="normal" title="Cancel">
+                                        <state key="normal" title="I don't have one">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -105,7 +73,7 @@
                                         </connections>
                                     </button>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="a4e-uK-UfR" customClass="CustomTextField" customModule="ANCommonKit">
-                                        <rect key="frame" x="0.0" y="277.5" width="568" height="40"/>
+                                        <rect key="frame" x="0.0" y="241.5" width="568" height="40"/>
                                         <color key="backgroundColor" red="0.18823529780000001" green="0.19607843459999999" blue="0.23529411850000001" alpha="0.20000000000000001" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="big-og-wgG"/>
@@ -120,7 +88,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ITQ-3T-AiQ" customClass="CustomTextField" customModule="ANCommonKit">
-                                        <rect key="frame" x="0.0" y="229.5" width="568" height="40"/>
+                                        <rect key="frame" x="0.0" y="193.5" width="568" height="40"/>
                                         <color key="backgroundColor" red="0.18823529780000001" green="0.19607843459999999" blue="0.23529411850000001" alpha="0.20000000000000001" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="CpM-SW-qgB"/>
@@ -135,48 +103,9 @@
                                         </userDefinedRuntimeAttributes>
                                     </textField>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GU0-cy-cc7">
-                                        <rect key="frame" x="0.0" y="158" width="568" height="54"/>
+                                        <rect key="frame" x="0.0" y="158" width="568" height="18"/>
                                         <attributedString key="attributedText">
-                                            <fragment content="MyAnimeList">
-                                                <attributes>
-                                                    <color key="NSColor" red="0.18823529779911041" green="0.19607843458652496" blue="0.23529411852359772" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <font key="NSFont" size="15" name="HelveticaNeue-Medium"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                </attributes>
-                                            </fragment>
-                                            <fragment content=" is the world's most active online ">
-                                                <attributes>
-                                                    <color key="NSColor" red="0.18823529779911041" green="0.19607843458652496" blue="0.23529411852359772" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <font key="NSFont" size="15" name="HelveticaNeue"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                </attributes>
-                                            </fragment>
-                                            <fragment content="anime">
-                                                <attributes>
-                                                    <color key="NSColor" red="0.18823529779911041" green="0.19607843458652496" blue="0.23529411852359772" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <font key="NSFont" size="15" name="HelveticaNeue-Medium"/>
-                                                    <font key="NSOriginalFont" size="15" name="HelveticaNeue-Medium"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                </attributes>
-                                            </fragment>
-                                            <fragment content=" and ">
-                                                <attributes>
-                                                    <color key="NSColor" red="0.18823529779911041" green="0.19607843458652496" blue="0.23529411852359772" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <font key="NSFont" size="15" name="HelveticaNeue"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                </attributes>
-                                            </fragment>
-                                            <fragment content="manga">
-                                                <attributes>
-                                                    <color key="NSColor" red="0.18823529779911041" green="0.19607843458652496" blue="0.23529411852359772" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <font key="NSFont" size="15" name="HelveticaNeue-Medium"/>
-                                                    <font key="NSOriginalFont" size="15" name="HelveticaNeue-Medium"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                </attributes>
-                                            </fragment>
-                                            <fragment>
-                                                <string key="content"> community.
-Link with </string>
+                                            <fragment content="If you have a ">
                                                 <attributes>
                                                     <color key="NSColor" red="0.18823529779911041" green="0.19607843458652496" blue="0.23529411852359772" alpha="1" colorSpace="calibratedRGB"/>
                                                     <font key="NSFont" size="15" name="HelveticaNeue"/>
@@ -190,80 +119,17 @@ Link with </string>
                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                                 </attributes>
                                             </fragment>
-                                            <fragment content=" to access your ">
+                                            <fragment content=" account, link with it to sync your anime ">
                                                 <attributes>
                                                     <color key="NSColor" red="0.18823529779911041" green="0.19607843458652496" blue="0.23529411852359772" alpha="1" colorSpace="calibratedRGB"/>
                                                     <font key="NSFont" size="15" name="HelveticaNeue"/>
                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                                 </attributes>
                                             </fragment>
-                                            <fragment content="profile">
+                                            <fragment content="library">
                                                 <attributes>
                                                     <color key="NSColor" red="0.18823529779911041" green="0.19607843458652496" blue="0.23529411852359772" alpha="1" colorSpace="calibratedRGB"/>
                                                     <font key="NSFont" size="15" name="HelveticaNeue-Medium"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                </attributes>
-                                            </fragment>
-                                            <fragment content=", sync your anime ">
-                                                <attributes>
-                                                    <color key="NSColor" red="0.18823529779911041" green="0.19607843458652496" blue="0.23529411852359772" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <font key="NSFont" size="15" name="HelveticaNeue"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                </attributes>
-                                            </fragment>
-                                            <fragment content="library, ">
-                                                <attributes>
-                                                    <color key="NSColor" red="0.18823529779911041" green="0.19607843458652496" blue="0.23529411852359772" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <font key="NSFont" size="15" name="HelveticaNeue-Medium"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                </attributes>
-                                            </fragment>
-                                            <fragment content="post on ">
-                                                <attributes>
-                                                    <color key="NSColor" red="0.18823529779911041" green="0.19607843458652496" blue="0.23529411852359772" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <font key="NSFont" size="15" name="HelveticaNeue"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                </attributes>
-                                            </fragment>
-                                            <fragment content="forums">
-                                                <attributes>
-                                                    <color key="NSColor" red="0.18823529779911041" green="0.19607843458652496" blue="0.23529411852359772" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <font key="NSFont" size="15" name="HelveticaNeue-Medium"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                </attributes>
-                                            </fragment>
-                                            <fragment content=" and ">
-                                                <attributes>
-                                                    <color key="NSColor" red="0.18823529779911041" green="0.19607843458652496" blue="0.23529411852359772" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <font key="NSFont" size="15" name="HelveticaNeue"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                </attributes>
-                                            </fragment>
-                                            <fragment content="chat">
-                                                <attributes>
-                                                    <color key="NSColor" red="0.18823529779911041" green="0.19607843458652496" blue="0.23529411852359772" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <font key="NSFont" size="15" name="HelveticaNeue-Medium"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                </attributes>
-                                            </fragment>
-                                            <fragment content=" with">
-                                                <attributes>
-                                                    <color key="NSColor" red="0.18823529779911041" green="0.19607843458652496" blue="0.23529411852359772" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <font key="NSFont" size="15" name="HelveticaNeue"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                </attributes>
-                                            </fragment>
-                                            <fragment content=" ">
-                                                <attributes>
-                                                    <color key="NSColor" red="0.18823529779911041" green="0.19607843458652496" blue="0.23529411852359772" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <font key="NSFont" size="15" name="HelveticaNeue-Medium"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                </attributes>
-                                            </fragment>
-                                            <fragment content="friends">
-                                                <attributes>
-                                                    <color key="NSColor" red="0.18823529779911041" green="0.19607843458652496" blue="0.23529411852359772" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <font key="NSFont" size="15" name="HelveticaNeue"/>
                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                                 </attributes>
                                             </fragment>
@@ -327,23 +193,20 @@ Link with </string>
                                 </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstItem="OSh-N7-UR9" firstAttribute="top" secondItem="aF4-SR-tPZ" secondAttribute="bottom" constant="8" id="4bU-gv-mxB"/>
                                     <constraint firstItem="GU0-cy-cc7" firstAttribute="leading" secondItem="dgX-Jx-zqn" secondAttribute="leading" id="7Oi-Db-sC2"/>
                                     <constraint firstItem="a4e-uK-UfR" firstAttribute="top" secondItem="ITQ-3T-AiQ" secondAttribute="bottom" constant="8" id="9Oi-ca-g9U"/>
                                     <constraint firstAttribute="centerX" secondItem="na4-Zr-HiS" secondAttribute="centerX" constant="-1.5" id="AS5-WR-c88"/>
-                                    <constraint firstItem="iJE-Li-HRP" firstAttribute="top" secondItem="OSh-N7-UR9" secondAttribute="bottom" constant="8" id="CUT-Vb-WVD"/>
                                     <constraint firstItem="GU0-cy-cc7" firstAttribute="top" secondItem="na4-Zr-HiS" secondAttribute="bottom" constant="18" id="DYQ-oj-byW"/>
                                     <constraint firstAttribute="trailing" secondItem="aF4-SR-tPZ" secondAttribute="trailing" id="Kia-7m-sxn"/>
                                     <constraint firstItem="ITQ-3T-AiQ" firstAttribute="leading" secondItem="dgX-Jx-zqn" secondAttribute="leading" id="Vir-Io-aax"/>
                                     <constraint firstAttribute="trailing" secondItem="a4e-uK-UfR" secondAttribute="trailing" id="WIt-qW-YrY"/>
-                                    <constraint firstItem="OSh-N7-UR9" firstAttribute="leading" secondItem="dgX-Jx-zqn" secondAttribute="leading" id="XbH-1t-1m5"/>
                                     <constraint firstItem="a4e-uK-UfR" firstAttribute="leading" secondItem="dgX-Jx-zqn" secondAttribute="leading" id="YkK-FQ-zLS"/>
                                     <constraint firstAttribute="centerY" secondItem="na4-Zr-HiS" secondAttribute="centerY" constant="190" id="Yra-Eq-9Lx"/>
                                     <constraint firstItem="aF4-SR-tPZ" firstAttribute="leading" secondItem="dgX-Jx-zqn" secondAttribute="leading" id="aNe-74-crd"/>
                                     <constraint firstAttribute="trailing" secondItem="ITQ-3T-AiQ" secondAttribute="trailing" id="e0N-5O-NcW"/>
                                     <constraint firstItem="iJE-Li-HRP" firstAttribute="leading" secondItem="dgX-Jx-zqn" secondAttribute="leading" id="fjS-fW-OK9"/>
-                                    <constraint firstAttribute="trailing" secondItem="OSh-N7-UR9" secondAttribute="trailing" id="m1a-6D-ZdO"/>
                                     <constraint firstAttribute="trailing" secondItem="GU0-cy-cc7" secondAttribute="trailing" id="qHS-TO-Ehf"/>
+                                    <constraint firstItem="iJE-Li-HRP" firstAttribute="top" secondItem="aF4-SR-tPZ" secondAttribute="bottom" constant="8" id="qKo-Il-d8D"/>
                                     <constraint firstItem="ITQ-3T-AiQ" firstAttribute="top" secondItem="GU0-cy-cc7" secondAttribute="bottom" constant="17.5" id="vDt-01-yNJ"/>
                                     <constraint firstItem="aF4-SR-tPZ" firstAttribute="top" secondItem="a4e-uK-UfR" secondAttribute="bottom" constant="8" id="xE6-iT-BTU"/>
                                     <constraint firstAttribute="trailing" secondItem="iJE-Li-HRP" secondAttribute="trailing" id="xOr-va-i0Q"/>
