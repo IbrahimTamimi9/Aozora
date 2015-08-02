@@ -35,5 +35,9 @@ public class Episode: PFObject, PFSubclassing {
     @NSManaged public var traktNumber: Int
     @NSManaged public var traktSeason: Int
     @NSManaged public var firstAired: NSDate?
+    
+    public func imageURLString() -> String {
+        return self.screenshot ?? anime.fanart ?? anime.imageUrl ?? ""
+    }
 }
     

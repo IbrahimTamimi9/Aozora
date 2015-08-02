@@ -16,7 +16,7 @@ import Parse
 
 public class TopicViewController: UIViewController {
     
-    var fetchController = DataFetchController()
+    var fetchController = FetchController()
     var malScrapper: MALScrapper!
     var dataSource: [MALScrapper.Post] = []
     
@@ -40,12 +40,13 @@ public class TopicViewController: UIViewController {
         tableView.estimatedRowHeight = 40.0
         tableView.rowHeight = UITableViewAutomaticDimension
         
-        fetchController.configureWith(self, limit: 30)
+        //fetchController.configureWith(self, limit: 30)
         
         loadingView = LoaderView(parentView: self.view)
-        fetchPosts(0)
+        //fetchPosts(0)
         
     }
+    
     
     func fetchPosts(skip: Int) {
         
@@ -260,12 +261,12 @@ extension TopicViewController: NewPostViewControllerDelegate {
     public func didPost() {
         tableView.animateFadeOut()
         //scrollToBottom = true
-        fetchPosts(0)
+        //fetchPosts(0)
     }
 }
 
-extension TopicViewController: DataFetchControllerDelegate {
-    public func fetchFor(#page: Int, skip: Int) {
-        fetchPosts(skip)
+extension TopicViewController: FetchControllerDelegate {
+    public func didFetchFor(#skip: Int) {
+        
     }
 }

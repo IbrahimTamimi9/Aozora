@@ -119,19 +119,19 @@ class SignUpViewController: UIViewController {
             user.email = self.emailTextField.text
             
             let avatar = self.profilePicture.image ?? UIImage(named: "default-avatar")!
-            let regularAvatar = UIImage.imageWithImage(avatar, maxSize: CGSize(width: self.ImageMaximumSideSize, height: self.ImageMaximumSideSize))
+            
             let thumbAvatar = UIImage.imageWithImage(avatar, newSize: CGSize(width: self.ImageMinimumSideSize, height: self.ImageMinimumSideSize))
-            
-            let avatarRegularData = UIImagePNGRepresentation(regularAvatar)
-            let avatarRegularFile = PFFile(name:"avatarRegular.png", data:avatarRegularData)
-            user["avatarRegular"] = avatarRegularFile
-            
             let avatarThumbData = UIImagePNGRepresentation(thumbAvatar)
             let avatarThumbFile = PFFile(name:"avatarThumb.png", data:avatarThumbData)
             user["avatarThumb"] = avatarThumbFile
             
             // Add user detail object
+            let regularAvatar = UIImage.imageWithImage(avatar, maxSize: CGSize(width: self.ImageMaximumSideSize, height: self.ImageMaximumSideSize))
+            let avatarRegularData = UIImagePNGRepresentation(regularAvatar)
+            let avatarRegularFile = PFFile(name:"avatarRegular.png", data:avatarRegularData)
+            
             let userDetails = UserDetails()
+            userDetails.avatarRegular = avatarRegularFile
             userDetails.about = ""
             userDetails.planningAnimeCount = 0
             userDetails.watchingAnimeCount = 0

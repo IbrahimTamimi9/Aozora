@@ -33,5 +33,7 @@ public class UserDetails: PFObject, PFSubclassing {
     @NSManaged public var joinDate: NSDate
     @NSManaged public var posts: Int
     @NSManaged public var watchedTime: Double
+    @NSManaged public var avatarRegular: PFFile
+    @NSManaged public var banner: PFFile
     
 }

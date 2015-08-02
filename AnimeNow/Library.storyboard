@@ -295,7 +295,7 @@
         <scene sceneID="A9r-2g-diP">
             <objects>
                 <navigationController id="b2Y-uV-VDe" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Library" image="icon-library" id="QDB-L9-XCB">
+                    <tabBarItem key="tabBarItem" title="Library" image="icon-library-filled" id="QDB-L9-XCB">
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="icon-library-filled"/>
                         </userDefinedRuntimeAttributes>
@@ -405,7 +405,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="icon-library" width="25" height="25"/>
         <image name="icon-library-filled" width="25" height="25"/>
         <image name="icon-search" width="22" height="22"/>
         <image name="icon-sort" width="22" height="22"/>

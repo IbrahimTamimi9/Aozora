@@ -41,8 +41,6 @@ enum BrowseType: String {
 class BrowseViewController: UIViewController {
     
     var currentBrowseType: BrowseType = .TopAnime
-    var dataSource: [Anime] = []
-    
     var animator: ZFModalTransitionAnimator!
     var loadingView: LoaderView!
     var currentConfiguration: Configuration =
@@ -57,9 +55,7 @@ class BrowseViewController: UIViewController {
         (FilterSection.Genres, nil, AnimeGenre.allRawValues())
     ]
     var selectedGenres: [String] = []
-    var fetchController = DataFetchController()
-    
-    var currentQuery: PFQuery!
+    var fetchController = FetchController()
     
     @IBOutlet weak var navigationBarTitle: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
@@ -80,9 +76,6 @@ class BrowseViewController: UIViewController {
         
         let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
         layout.itemSize = CGSize(width: view.bounds.size.width, height: 132)
-        
-        
-        fetchController.configureWith(self)
         
         loadingView = LoaderView(parentView: self.view)
         
@@ -155,44 +148,7 @@ class BrowseViewController: UIViewController {
             }
         }
         
-        currentQuery = query
-        fetchCurrentQuery()
-    }
-    
-    func fetchCurrentQuery(skip: Int = 0) {
-        currentQuery.skip = skip
-        currentQuery.findObjectsInBackgroundWithBlock { (result, error) -> Void in
-            if let result = result as? [Anime] {
-                
-                LibrarySyncController.matchAnimeWithProgress(result)
-                
-                if skip == 0 {
-                    self.dataSource = result
-                } else {
-                    self.dataSource += result
-                }
-                self.fetchController.didFetch(self.dataSource.count)
-            }
-            
-            if skip == 0 {
-                // Reload data
-                self.collectionView.reloadData()
-                self.loadingView.stopAnimating()
-                self.collectionView.animateFadeIn()
-            } else if let result = result {
-                // Insert rows
-                self.collectionView.performBatchUpdates({ () -> Void in
-                    let endIndex = self.dataSource.count
-                    let startIndex = endIndex - result.count
-                    var indexPathsToInsert: [NSIndexPath] = []
-                    for index in startIndex..<endIndex {
-                        indexPathsToInsert.append(NSIndexPath(forRow: index, inSection: 0))
-                    }
-                    self.collectionView.insertItemsAtIndexPaths(indexPathsToInsert)
-                }, completion: nil)
-            }
-            
-        }
+        fetchController.configureWith(self, query: query, collectionView: collectionView)
     }
     
     func changeSeasonalChart() {
@@ -230,17 +186,15 @@ class BrowseViewController: UIViewController {
 
 extension BrowseViewController: UICollectionViewDataSource {
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dataSource.count
+        return fetchController.dataCount()
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("AnimeCell", forIndexPath: indexPath) as! AnimeCell
         
-        let anime = dataSource[indexPath.row]
+        let anime = fetchController.objectAtIndex(indexPath.row) as! Anime
         
         cell.configureWithAnime(anime)
-        
-        fetchController.didDisplayItemAt(index: indexPath.row)
         return cell
     }
 }
@@ -248,7 +202,7 @@ extension BrowseViewController: UICollectionViewDataSource {
 extension BrowseViewController: UICollectionViewDelegate {
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
-        let anime = dataSource[indexPath.row]
+        let anime = fetchController.objectAtIndex(indexPath.row) as! Anime
         self.animator = presentAnimeModal(anime)
     }
 }
@@ -306,9 +260,10 @@ extension BrowseViewController: FilterViewControllerDelegate {
     }
 }
 
-extension BrowseViewController: DataFetchControllerDelegate {
-    func fetchFor(#page: Int, skip: Int) {
-        fetchCurrentQuery(skip: skip)
+extension BrowseViewController: FetchControllerDelegate {
+
+    func didFetchFor(#skip: Int) {
+        loadingView.stopAnimating()
     }
 }
 
@@ -317,10 +272,8 @@ extension BrowseViewController: DropDownListDelegate {
     func selectedAction(trigger: UIView, action: String, indexPath: NSIndexPath) {
         
         if let _ = InAppController.purchasedAnyPro() {
-            
             let rawValue = BrowseType.allItems()[indexPath.row]
             fetchListType(BrowseType(rawValue: rawValue)!)
-                
         }
     }
     

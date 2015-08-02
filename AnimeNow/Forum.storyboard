@@ -14,7 +14,7 @@
         <scene sceneID="80q-NV-czB">
             <objects>
                 <navigationController id="M8H-6s-B3q" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Forum" image="icon-forum" id="Qxm-Dj-d5s">
+                    <tabBarItem key="tabBarItem" title="Forum" image="icon-forum-filled" id="Qxm-Dj-d5s">
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="icon-forum-filled"/>
                         </userDefinedRuntimeAttributes>
@@ -188,7 +188,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="icon-forum" width="25" height="25"/>
         <image name="icon-forum-filled" width="25" height="25"/>
     </resources>
 </document>

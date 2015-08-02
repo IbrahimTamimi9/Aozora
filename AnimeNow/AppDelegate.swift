@@ -153,6 +153,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SeasonalChart.registerSubclass()
         Episode.registerSubclass()
         UserDetails.registerSubclass()
+        TimelinePost.registerSubclass()
         
         // TODO: Implement this
         Parse.enableLocalDatastore()

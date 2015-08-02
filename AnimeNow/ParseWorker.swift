@@ -329,12 +329,12 @@ class ParseWorker {
         
     }
     
-    func getDataFromFile() {
+    func getDataFromFile() -> [[String: Int]] {
         // Read JSON and store in string
-        let filePath = NSBundle.mainBundle().pathForResource("ServiceIdentifier", ofType: "json")
+        let filePath = NSBundle.mainBundle().pathForResource("mal_anilist_ids", ofType: "json")
         let data = NSData(contentsOfFile: filePath!)
-        let result = NSJSONSerialization.JSONObjectWithData(data!, options: nil, error: nil) as! NSDictionary
-        let serviceIdentifiers = result["results"] as! [NSDictionary]
+        let result = NSJSONSerialization.JSONObjectWithData(data!, options: nil, error: nil) as! [[String: Int]]
+        return result
     }
     
     // MARK: - Anilist Init
@@ -365,138 +365,59 @@ class ParseWorker {
     }
     
     func request() {
-        anilistLinker()
+        importAnilistIDs()
     }
     
     // MARK: - Anilist Linker
     
-    func convertMALTitleToAniListTitle(title: String) -> String {
-        return title
-            .stringByReplacingOccurrencesOfString("2nd season", withString: "2")
-            .stringByReplacingOccurrencesOfString("2nd Season", withString: "2")
-            .stringByReplacingOccurrencesOfString("Second Season", withString: "2")
-            .stringByReplacingOccurrencesOfString("3rd Season", withString: "3")
-            .stringByReplacingOccurrencesOfString("TV", withString: " ")
-            .stringByReplacingOccurrencesOfString("The Animation", withString: " ")
-            .stringByReplacingOccurrencesOfString("Specials", withString: "Special")
-            .stringByReplacingOccurrencesOfString("OVA", withString: " ")
-            .stringByReplacingOccurrencesOfString("/", withString: " ")
-            .stringByReplacingOccurrencesOfString("@", withString: "a")
-            .stringByReplacingOccurrencesOfString("!", withString: " ")
-            .stringByReplacingOccurrencesOfString("-", withString: " ")
-            .stringByReplacingOccurrencesOfString("(", withString: " ")
-            .stringByReplacingOccurrencesOfString(")", withString: " ")
-        
-    }
     
-    func searchAnime(query: String) -> BFTask! {
-        let completionSource = BFTaskCompletionSource()
-        let newTitle = convertMALTitleToAniListTitle(query)
-        Alamofire.request(AniList.Router.searchAnime(query: newTitle)).validate().responseJSON { (req, res, JSON, error) -> Void in
-            if error == nil {
-                completionSource.setResult(JSON)
-            } else {
-                completionSource.setError(error)
-            }
-        }
-        return completionSource.task
-    }
-    
-    func anilistLinker() {
+    func importAnilistIDs() {
         let accessToken = NSUserDefaults.standardUserDefaults().stringForKey("access_token")
         println("using token: \(accessToken)")
         
+        let ids = getDataFromFile()
         
         let query = PFQuery(className: ParseKit.Anime)
-        query
-            .whereKeyDoesNotExist("anilistID")
-            //.whereKey("myAnimeList", equalTo: "29325") //ghost in the shell alternative architecture
+        query.selectKeys(["myAnimeListID","hummingBirdID","title"])
         
         AnimeService.findAllObjectsWith(query: query).continueWithBlock { (task: BFTask!) -> AnyObject! in
             
             var sequence = BFTask(result: nil);
             var result = task.result as! [Anime]
-            result.sort({ $0.rank < $1.rank })
-            for anime in result {
-                
-                sequence = sequence.continueWithBlock {
-                    (task: BFTask!) -> AnyObject! in
-                    
-                    return self.searchAnime(anime.title!)
-                    
-                    }.continueWithBlock({
-                        (task: BFTask!) -> AnyObject! in
-                        
-                        if task.result == nil {
-                            println("Failed for: \(anime.title!)")
-                            return BFTask(result: nil)
-                        }
-                        
-                        var matchedAnime: NSDictionary?
-                        var result = task.result as! NSArray
-                        if result.count == 1 {
-                            matchedAnime = result.firstObject as? NSDictionary
-                        } else {
-                            var matchCount = 0
-                            var lastMatch: NSDictionary?
-                            for animeDict in result {
-                                if
-                                    let type1 = animeDict["type"] as? String,
-                                    let type2 = anime["type"] as? String,
-                                    let eps1 = animeDict["total_episodes"] as? Int,
-                                    let eps2 = anime["episodes"] as? Int
-                                    where
-                                    ((type1 == type2) || (type1 == "TV Short" && type2 == "TV")) &&
-                                    (eps1 == eps2 || (eps1 == 0))
-                                {
-                                    matchCount++
-                                    lastMatch = animeDict as? NSDictionary
-                                }
-                            }
-                            if matchCount == 1 {
-                                matchedAnime = lastMatch;
-                            }
-                            
-                        }
-                        
-                        NSThread.sleepForTimeInterval(0.25)
-                        
-                        if let matchedAnime = matchedAnime,
-                            let id = matchedAnime["id"] as? Int,
-                            let id2 = anime["myAnimeListID"] as? Int
-                        where id > 20449 {
-                                println("Matched \(id) \(id2)")
-                                anime["anilistID"] = id
-                                return anime.saveEventually()
-                        } else {
-
-                            println("Failed for: \(anime.title!)")
-                            return BFTask(result: nil)
-                        }
-                        
-                    })
-                
-            }
+            result.sort({ $0.myAnimeListID < $1.myAnimeListID })
             
-            return sequence
-            }.continueWithBlock {
-                (task: BFTask!) -> AnyObject! in
-                if (task.exception != nil) {
-                    println(task.exception)
-                }
-                return nil
-        }
-        
-        
-//        Alamofire.request(AniList.Router.browseAnime(year: 2015, season: AniList.Season.Spring, type: nil, status: nil, genres: nil, excludedGenres: nil, sort: AniList.Sort.StartDate, airingData: true, fullPage: true, page: nil)).validate().responseJSON { (req, res, JSON, error) in
-//            if error == nil {
-//                println(JSON)
-//            } else {
-//                println(error)
-//            }
-//        }
-    }
+            for anime in result {
 
+                    println("\(anime.hummingBirdID ?? 0)")
+
+                
+//                sequence = sequence.continueWithBlock {
+//                    (task: BFTask!) -> AnyObject! in
+//                    
+//                    let id = ids.filter({(id1:[String: Int]) in
+//                            return id1["id_mal"] == anime.myAnimeListID
+//                        })
+//                    
+//                    if let foundID = id.last {
+//                        anime.anilistID = foundID["id_anilist"]!
+//                        NSThread.sleepForTimeInterval(0.02)
+//                        println("Saved \(anime.title!)")
+//                        return anime.saveInBackground()
+//                    } else {
+//                        println("Not found \(anime.title!)")
+//                        return nil
+//                    }
+//                }.continueWithBlock {
+//                (task: BFTask!) -> AnyObject! in
+//                    if (task.exception != nil) {
+//                        println(task.exception)
+//                    }
+//                    return nil
+//                }
+            }
+            return sequence
+        }
+    }
 }
 
 extension String {

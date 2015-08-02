@@ -79,6 +79,9 @@
                                                             <exclude reference="ob9-4y-gPW"/>
                                                         </mask>
                                                     </variation>
+                                                    <connections>
+                                                        <outletCollection property="gestureRecognizers" destination="6dx-1A-J4s" appends="YES" id="Qbd-PR-Ozo"/>
+                                                    </connections>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YbO-Nv-6g6" userLabel="MembersCount">
                                                     <rect key="frame" x="99" y="103" width="4.5" height="19"/>
@@ -776,7 +779,7 @@
         <scene sceneID="KY9-xF-vDS">
             <objects>
                 <navigationController id="6ik-8u-5Gi" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="icon-group" id="edh-EG-Sb4">
+                    <tabBarItem key="tabBarItem" title="" image="icon-group-filled" id="edh-EG-Sb4">
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="icon-group-filled"/>
                         </userDefinedRuntimeAttributes>
@@ -800,7 +803,7 @@
         <scene sceneID="Z36-0j-Jwk">
             <objects>
                 <navigationController id="12K-A1-B4Q" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="icon-comments" id="x5d-tZ-5m0">
+                    <tabBarItem key="tabBarItem" title="" image="icon-comments-filled" id="x5d-tZ-5m0">
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="icon-comments-filled"/>
                         </userDefinedRuntimeAttributes>
@@ -821,7 +824,7 @@
         <scene sceneID="12X-ru-2R8">
             <objects>
                 <navigationController navigationBarHidden="YES" id="haj-us-SzY" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="icon-information" id="n3g-M5-D6U"/>
+                    <tabBarItem key="tabBarItem" title="" image="icon-details2-filled" id="n3g-M5-D6U"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="hTB-rd-gn7">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1122,7 +1125,7 @@
         <scene sceneID="R8Y-Es-szT">
             <objects>
                 <navigationController id="ysS-TF-YDt" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="icon-episode" id="PsM-jC-vdd">
+                    <tabBarItem key="tabBarItem" title="" image="icon-episode-filled" id="PsM-jC-vdd">
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="icon-episode-filled"/>
                         </userDefinedRuntimeAttributes>
@@ -1406,12 +1409,10 @@
     <resources>
         <image name="icon-check" width="50" height="50"/>
         <image name="icon-close-blue" width="23" height="23"/>
-        <image name="icon-comments" width="25" height="25"/>
         <image name="icon-comments-filled" width="25" height="25"/>
-        <image name="icon-episode" width="25" height="25"/>
+        <image name="icon-details2-filled" width="25" height="25"/>
         <image name="icon-episode-filled" width="25" height="25"/>
         <image name="icon-go-to" width="22" height="22"/>
-        <image name="icon-group" width="25" height="25"/>
         <image name="icon-group-filled" width="25" height="25"/>
         <image name="icon-information" width="25" height="25"/>
         <image name="icon-messenger" width="22" height="22"/>

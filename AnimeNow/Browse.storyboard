@@ -223,7 +223,7 @@
         <scene sceneID="FZ1-yQ-J55">
             <objects>
                 <navigationController id="XXQ-2Y-JUt" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Browse" image="icon-search-50" id="NVS-bu-XEv">
+                    <tabBarItem key="tabBarItem" title="Browse" image="icon-search-50-filled" id="NVS-bu-XEv">
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="icon-search-50-filled"/>
                         </userDefinedRuntimeAttributes>
@@ -489,7 +489,6 @@
     <resources>
         <image name="icon-filter" width="22" height="22"/>
         <image name="icon-search" width="22" height="22"/>
-        <image name="icon-search-50" width="25" height="25"/>
         <image name="icon-search-50-filled" width="25" height="25"/>
     </resources>
 </document>

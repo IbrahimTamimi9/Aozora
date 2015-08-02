@@ -13,6 +13,10 @@
 		79AF381FB9C944A80806E321 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D27C7A8ED4F7C96DF08F5850 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		DA0347241B4ADD720025CE24 /* LibrarySyncController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF357031B45790100629A3D /* LibrarySyncController.swift */; };
 		DA07A3481B4C2B730028B81B /* InApp.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA07A3471B4C2B730028B81B /* InApp.storyboard */; };
+		DA13805D1B6D56F500C53560 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC13C2C1B425CB70013D479 /* FBSDKCoreKit.framework */; };
+		DA13805F1B6D56F500C53560 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC13C2F1B425CB70013D479 /* FBSDKShareKit.framework */; };
+		DA1380601B6D85CE00C53560 /* UserListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58C2DA1B386BC80082B626 /* UserListViewController.swift */; };
+		DA1380611B6D8D4B00C53560 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC13C2D1B425CB70013D479 /* FBSDKLoginKit.framework */; };
 		DA27D1971AF1BA9D00CC854E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA27D1961AF1BA9D00CC854E /* AppDelegate.swift */; };
 		DA27D1991AF1BA9D00CC854E /* ParseWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA27D1981AF1BA9D00CC854E /* ParseWorker.swift */; };
 		DA27D19C1AF1BA9D00CC854E /* Season.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA27D19A1AF1BA9D00CC854E /* Season.storyboard */; };
@@ -48,10 +52,7 @@
 		DA52B1831B4838AE001CC1A9 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA52B1821B4838AE001CC1A9 /* CalendarViewController.swift */; };
 		DA52B1851B483F2A001CC1A9 /* DayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA52B1841B483F2A001CC1A9 /* DayViewController.swift */; };
 		DA52B1871B4845D4001CC1A9 /* CheckInCompact.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA52B1861B4845D4001CC1A9 /* CheckInCompact.xib */; };
-		DA58C2D71B386BAC0082B626 /* UserHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58C2D61B386BAC0082B626 /* UserHistoryViewController.swift */; };
-		DA58C2D91B386BB90082B626 /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58C2D81B386BB90082B626 /* UserProfileViewController.swift */; };
-		DA58C2DB1B386BC80082B626 /* UserFriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58C2DA1B386BC80082B626 /* UserFriendsViewController.swift */; };
-		DA58C2DD1B386C7E0082B626 /* UserBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58C2DC1B386C7E0082B626 /* UserBaseViewController.swift */; };
+		DA58C2D91B386BB90082B626 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58C2D81B386BB90082B626 /* ProfileViewController.swift */; };
 		DA58C2DE1B38A3990082B626 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC610BD1B312B0200B60631 /* UserCell.swift */; };
 		DA58C2E21B38A7760082B626 /* String+NSDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58C2E11B38A7760082B626 /* String+NSDate.swift */; };
 		DA58C2E51B39C0080082B626 /* Browse.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA58C2E41B39C0080082B626 /* Browse.storyboard */; };
@@ -65,7 +66,6 @@
 		DA5A3BFB1B35F19A00C07D71 /* TraktV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6E83B31B167F1E00970D27 /* TraktV2.swift */; };
 		DA5A3BFC1B35F19A00C07D71 /* AniList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA27D1B61AF1BFA300CC854E /* AniList.swift */; };
 		DA5A3BFD1B35F19A00C07D71 /* Atarashii.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE43C371B2D5BC800C3092D /* Atarashii.swift */; };
-		DA5A3C061B36255200C07D71 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5A3C051B36255200C07D71 /* ProfileViewController.swift */; };
 		DA6E12B31B10D94200B278B0 /* ANParseKit.h in Headers */ = {isa = PBXBuildFile; fileRef = DA6E12B21B10D94200B278B0 /* ANParseKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA6E12B91B10D94200B278B0 /* ANParseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E12AE1B10D94200B278B0 /* ANParseKit.framework */; };
 		DA6E12C21B10D94200B278B0 /* ANParseKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6E12C11B10D94200B278B0 /* ANParseKitTests.swift */; };
@@ -90,20 +90,24 @@
 		DA6E13221B10FA7300B278B0 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E12FD1B10DCDF00B278B0 /* StoreKit.framework */; };
 		DA6E13231B10FA7700B278B0 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E12FB1B10DCD800B278B0 /* Security.framework */; };
 		DA6E13241B10FA7B00B278B0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E12F91B10DCD400B278B0 /* QuartzCore.framework */; };
-		DA6E13251B10FA7F00B278B0 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E12F71B10DCCF00B278B0 /* MobileCoreServices.framework */; };
 		DA6E13261B10FA8400B278B0 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E12F51B10DCCA00B278B0 /* CoreLocation.framework */; };
 		DA6E13271B10FA8900B278B0 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E12F31B10DCC600B278B0 /* CoreGraphics.framework */; };
 		DA6E13281B10FA8E00B278B0 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E12F11B10DCC100B278B0 /* CFNetwork.framework */; };
 		DA6E13291B10FA9400B278B0 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E12EF1B10DCBC00B278B0 /* AudioToolbox.framework */; };
-		DA6E132A1B10FAA100B278B0 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E12EB1B10DCA100B278B0 /* Bolts.framework */; };
-		DA6E132B1B10FAA100B278B0 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E12EC1B10DCA100B278B0 /* Parse.framework */; };
-		DA7C84C61B4333950036D119 /* DataFetchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC13BFF1B3F4A7A0013D479 /* DataFetchController.swift */; };
 		DA7C84C91B4379AA0036D119 /* UIViewController+Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7C84C81B4379AA0036D119 /* UIViewController+Navigation.swift */; };
 		DA7C84CA1B4379AD0036D119 /* UIViewController+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC13BFD1B3F36AB0013D479 /* UIViewController+Image.swift */; };
 		DA823D8C1B326940005C7AFD /* InAppBrowser.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA823D8A1B326940005C7AFD /* InAppBrowser.storyboard */; };
 		DA823D8D1B326940005C7AFD /* InAppBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA823D8B1B326940005C7AFD /* InAppBrowserViewController.swift */; };
+		DA897F891B6D1FCC00A9510C /* WriteACommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA897F881B6D1FCC00A9510C /* WriteACommentCell.xib */; };
+		DA897F8B1B6D203D00A9510C /* CommentImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA897F8A1B6D203D00A9510C /* CommentImageCell.xib */; };
+		DA897F921B6D452300A9510C /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA897F8C1B6D451C00A9510C /* Bolts.framework */; };
+		DA897F931B6D452300A9510C /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA897F8D1B6D451C00A9510C /* Parse.framework */; };
+		DA897F941B6D452300A9510C /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA897F8E1B6D451C00A9510C /* ParseFacebookUtilsV4.framework */; };
+		DA8B6E071B6C4DBF00D240FC /* UIImageView+PFFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8B6E061B6C4DBF00D240FC /* UIImageView+PFFile.swift */; };
 		DA8DD6411B3C95F300B05FBF /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8DD6401B3C95F300B05FBF /* SearchViewController.swift */; };
 		DA8DD6431B3CAEC500B05FBF /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8DD6421B3CAEC500B05FBF /* FilterViewController.swift */; };
+		DA9AE39B1B6930F60053C2EA /* TimelinePost.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9AE39A1B6930F60053C2EA /* TimelinePost.swift */; };
+		DA9AE39C1B69382D0053C2EA /* DataFetchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC13BFF1B3F4A7A0013D479 /* DataFetchController.swift */; };
 		DA9EB9311B2BA580001ECFA7 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA9EB9301B2BA580001ECFA7 /* WebKit.framework */; };
 		DA9F731D1B2931FF00C2652C /* UIImageView+SDWebImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9F731A1B2930F200C2652C /* UIImageView+SDWebImage.swift */; };
 		DA9F731E1B29370F00C2652C /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA41679A1B25F76F00847F56 /* FontAwesome.ttf */; };
@@ -119,6 +123,9 @@
 		DAC077971B68670C0067DA90 /* UIImage+Resize.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC077961B68670C0067DA90 /* UIImage+Resize.swift */; };
 		DAC077991B68698F0067DA90 /* default-avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = DAC077981B68698F0067DA90 /* default-avatar.png */; };
 		DAC0779B1B686A870067DA90 /* UserDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC0779A1B686A870067DA90 /* UserDetails.swift */; };
+		DAC077AF1B68910A0067DA90 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC077A61B6890830067DA90 /* CommentCell.swift */; };
+		DAC077B31B6891140067DA90 /* PostTextCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DAC0779D1B688DFD0067DA90 /* PostTextCell.xib */; };
+		DAC077BC1B6894670067DA90 /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC077BB1B6894670067DA90 /* PostCell.swift */; };
 		DAC13BEF1B3EEF250013D479 /* AnimeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DAC13BEE1B3EEF250013D479 /* AnimeCell.xib */; };
 		DAC13BF11B3EF15E0013D479 /* AnimeCellPoster.xib in Resources */ = {isa = PBXBuildFile; fileRef = DAC13BF01B3EF15E0013D479 /* AnimeCellPoster.xib */; };
 		DAC13BF31B3EF17E0013D479 /* AnimeCellList.xib in Resources */ = {isa = PBXBuildFile; fileRef = DAC13BF21B3EF17E0013D479 /* AnimeCellList.xib */; };
@@ -139,8 +146,6 @@
 		DAC13C201B423ED90013D479 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC13C1F1B423ED90013D479 /* SignUpViewController.swift */; };
 		DAC13C261B42495A0013D479 /* WorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC13C251B42495A0013D479 /* WorkflowController.swift */; };
 		DAC13C2A1B424DEF0013D479 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC13C291B424DEF0013D479 /* ResetPasswordViewController.swift */; };
-		DAC13C311B425CB70013D479 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC13C2D1B425CB70013D479 /* FBSDKLoginKit.framework */; };
-		DAC13C351B4262540013D479 /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC13C341B4262530013D479 /* ParseFacebookUtilsV4.framework */; };
 		DAC3F3E11B5E989E001D6072 /* Resources.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAC3F3E01B5E989E001D6072 /* Resources.xcassets */; };
 		DAC7D8FC1B5015FA00898FF6 /* InAppPurchaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA07A3491B4C2B860028B81B /* InAppPurchaseViewController.swift */; };
 		DAC7D8FF1B5018DE00898FF6 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC7D8FE1B5018DE00898FF6 /* iAd.framework */; };
@@ -148,8 +153,6 @@
 		DAC7D9031B50201C00898FF6 /* InAppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3B61D81B4F59E700A3F7BA /* InAppController.swift */; };
 		DAC7D9041B502A1B00898FF6 /* FBSDKMessengerShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC13C2E1B425CB70013D479 /* FBSDKMessengerShareKit.framework */; };
 		DAC7D9071B5046AF00898FF6 /* DialogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC7D9051B50464B00898FF6 /* DialogController.swift */; };
-		DAC7D9081B5053F400898FF6 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC13C2F1B425CB70013D479 /* FBSDKShareKit.framework */; };
-		DAC7D90A1B50541100898FF6 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC13C2C1B425CB70013D479 /* FBSDKCoreKit.framework */; };
 		DACCF35D1B110AA2006A13EB /* ANParseKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACCF35C1B110AA2006A13EB /* ANParseKit.swift */; };
 		DACCF35F1B111016006A13EB /* AnimeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACCF35E1B111016006A13EB /* AnimeService.swift */; };
 		DACD6AAC1B62E54F00DDA55C /* RateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACD6AAB1B62E54F00DDA55C /* RateViewController.swift */; };
@@ -157,6 +160,11 @@
 		DACD6AB81B6315AA00DDA55C /* ReminderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACD6AB71B6315AA00DDA55C /* ReminderController.swift */; };
 		DACE77C21B294D7B00037486 /* NSDate+AniNow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACE77C11B294D7B00037486 /* NSDate+AniNow.swift */; };
 		DACE77C41B29517F00037486 /* AnimeRelation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACE77C31B29517F00037486 /* AnimeRelation.swift */; };
+		DAD3909E1B6C2F35000A84DE /* PostImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DAD3909D1B6C2F35000A84DE /* PostImageCell.xib */; };
+		DAD390A01B6C300C000A84DE /* ViewPreviousCommentsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DAD3909F1B6C300C000A84DE /* ViewPreviousCommentsCell.xib */; };
+		DAD390A21B6C303D000A84DE /* CommentTextCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DAD390A11B6C303D000A84DE /* CommentTextCell.xib */; };
+		DAD390A41B6C3216000A84DE /* ViewPreviousCommentsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD390A31B6C3216000A84DE /* ViewPreviousCommentsCell.swift */; };
+		DAD390A61B6C322A000A84DE /* WriteACommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD390A51B6C322A000A84DE /* WriteACommentCell.swift */; };
 		DAE43C321B2BC1A900C3092D /* TFHppleElement+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE43C311B2BC1A900C3092D /* TFHppleElement+Convenience.swift */; };
 		DAE43C341B2BC3B700C3092D /* AnimeDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE43C331B2BC3B700C3092D /* AnimeDetail.swift */; };
 		DAE43C3A1B2F971800C3092D /* UIView+Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE43C391B2F971800C3092D /* UIView+Animation.swift */; };
@@ -368,10 +376,8 @@
 		DA52B1821B4838AE001CC1A9 /* CalendarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		DA52B1841B483F2A001CC1A9 /* DayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayViewController.swift; sourceTree = "<group>"; };
 		DA52B1861B4845D4001CC1A9 /* CheckInCompact.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CheckInCompact.xib; sourceTree = "<group>"; };
-		DA58C2D61B386BAC0082B626 /* UserHistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserHistoryViewController.swift; sourceTree = "<group>"; };
-		DA58C2D81B386BB90082B626 /* UserProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
-		DA58C2DA1B386BC80082B626 /* UserFriendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserFriendsViewController.swift; sourceTree = "<group>"; };
-		DA58C2DC1B386C7E0082B626 /* UserBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserBaseViewController.swift; sourceTree = "<group>"; };
+		DA58C2D81B386BB90082B626 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		DA58C2DA1B386BC80082B626 /* UserListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserListViewController.swift; sourceTree = "<group>"; };
 		DA58C2E11B38A7760082B626 /* String+NSDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+NSDate.swift"; sourceTree = "<group>"; };
 		DA58C2E41B39C0080082B626 /* Browse.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Browse.storyboard; sourceTree = "<group>"; };
 		DA58C2E61B39C01B0082B626 /* BrowseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseViewController.swift; sourceTree = "<group>"; };
@@ -383,7 +389,6 @@
 		DA5A3BF31B35EB4F00C07D71 /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		DA5A3BF51B35EB5F00C07D71 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		DA5A3BF71B35EE2200C07D71 /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
-		DA5A3C051B36255200C07D71 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		DA6E12AE1B10D94200B278B0 /* ANParseKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ANParseKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA6E12B11B10D94200B278B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA6E12B21B10D94200B278B0 /* ANParseKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ANParseKit.h; sourceTree = "<group>"; };
@@ -402,13 +407,10 @@
 		DA6E12DB1B10D96F00B278B0 /* WSWebScraper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSWebScraper.m; sourceTree = "<group>"; };
 		DA6E12E71B10DA2700B278B0 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		DA6E12E91B10DA2F00B278B0 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
-		DA6E12EB1B10DCA100B278B0 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
-		DA6E12EC1B10DCA100B278B0 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		DA6E12EF1B10DCBC00B278B0 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		DA6E12F11B10DCC100B278B0 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		DA6E12F31B10DCC600B278B0 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		DA6E12F51B10DCCA00B278B0 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		DA6E12F71B10DCCF00B278B0 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		DA6E12F91B10DCD400B278B0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		DA6E12FB1B10DCD800B278B0 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		DA6E12FD1B10DCDF00B278B0 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
@@ -427,8 +429,16 @@
 		DA7C84C81B4379AA0036D119 /* UIViewController+Navigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Navigation.swift"; sourceTree = "<group>"; };
 		DA823D8A1B326940005C7AFD /* InAppBrowser.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = InAppBrowser.storyboard; path = ../AnimeNow/InAppBrowser.storyboard; sourceTree = "<group>"; };
 		DA823D8B1B326940005C7AFD /* InAppBrowserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InAppBrowserViewController.swift; path = ../AnimeNow/InAppBrowserViewController.swift; sourceTree = "<group>"; };
+		DA897F881B6D1FCC00A9510C /* WriteACommentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WriteACommentCell.xib; sourceTree = "<group>"; };
+		DA897F8A1B6D203D00A9510C /* CommentImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentImageCell.xib; sourceTree = "<group>"; };
+		DA897F8C1B6D451C00A9510C /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
+		DA897F8D1B6D451C00A9510C /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		DA897F8E1B6D451C00A9510C /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
+		DA897F951B6D461800A9510C /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		DA8B6E061B6C4DBF00D240FC /* UIImageView+PFFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+PFFile.swift"; sourceTree = "<group>"; };
 		DA8DD6401B3C95F300B05FBF /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		DA8DD6421B3CAEC500B05FBF /* FilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
+		DA9AE39A1B6930F60053C2EA /* TimelinePost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelinePost.swift; sourceTree = "<group>"; };
 		DA9EB9301B2BA580001ECFA7 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		DA9F731A1B2930F200C2652C /* UIImageView+SDWebImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+SDWebImage.swift"; sourceTree = "<group>"; };
 		DAA253B51B2B877C0092EB0B /* CharactersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharactersViewController.swift; sourceTree = "<group>"; };
@@ -444,6 +454,9 @@
 		DAC077961B68670C0067DA90 /* UIImage+Resize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Resize.swift"; sourceTree = "<group>"; };
 		DAC077981B68698F0067DA90 /* default-avatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "default-avatar.png"; sourceTree = "<group>"; };
 		DAC0779A1B686A870067DA90 /* UserDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDetails.swift; sourceTree = "<group>"; };
+		DAC0779D1B688DFD0067DA90 /* PostTextCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostTextCell.xib; sourceTree = "<group>"; };
+		DAC077A61B6890830067DA90 /* CommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
+		DAC077BB1B6894670067DA90 /* PostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		DAC13BEE1B3EEF250013D479 /* AnimeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnimeCell.xib; sourceTree = "<group>"; };
 		DAC13BF01B3EF15E0013D479 /* AnimeCellPoster.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnimeCellPoster.xib; sourceTree = "<group>"; };
 		DAC13BF21B3EF17E0013D479 /* AnimeCellList.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnimeCellList.xib; sourceTree = "<group>"; };
@@ -470,7 +483,6 @@
 		DAC13C2D1B425CB70013D479 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../../FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		DAC13C2E1B425CB70013D479 /* FBSDKMessengerShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKMessengerShareKit.framework; path = ../../FacebookSDK/FBSDKMessengerShareKit.framework; sourceTree = "<group>"; };
 		DAC13C2F1B425CB70013D479 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = ../../FacebookSDK/FBSDKShareKit.framework; sourceTree = "<group>"; };
-		DAC13C341B4262530013D479 /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
 		DAC3F3E01B5E989E001D6072 /* Resources.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Resources.xcassets; sourceTree = "<group>"; };
 		DAC610BB1B3115C100B60631 /* TopicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TopicViewController.swift; path = ../ANAnimeKit/TopicViewController.swift; sourceTree = "<group>"; };
 		DAC610BD1B312B0200B60631 /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserCell.swift; path = ../ANAnimeKit/UserCell.swift; sourceTree = "<group>"; };
@@ -484,6 +496,11 @@
 		DACD6AB71B6315AA00DDA55C /* ReminderController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderController.swift; sourceTree = "<group>"; };
 		DACE77C11B294D7B00037486 /* NSDate+AniNow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDate+AniNow.swift"; sourceTree = "<group>"; };
 		DACE77C31B29517F00037486 /* AnimeRelation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeRelation.swift; sourceTree = "<group>"; };
+		DAD3909D1B6C2F35000A84DE /* PostImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostImageCell.xib; sourceTree = "<group>"; };
+		DAD3909F1B6C300C000A84DE /* ViewPreviousCommentsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ViewPreviousCommentsCell.xib; sourceTree = "<group>"; };
+		DAD390A11B6C303D000A84DE /* CommentTextCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentTextCell.xib; sourceTree = "<group>"; };
+		DAD390A31B6C3216000A84DE /* ViewPreviousCommentsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewPreviousCommentsCell.swift; sourceTree = "<group>"; };
+		DAD390A51B6C322A000A84DE /* WriteACommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WriteACommentCell.swift; sourceTree = "<group>"; };
 		DAE43C311B2BC1A900C3092D /* TFHppleElement+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TFHppleElement+Convenience.swift"; sourceTree = "<group>"; };
 		DAE43C331B2BC3B700C3092D /* AnimeDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeDetail.swift; sourceTree = "<group>"; };
 		DAE43C371B2D5BC800C3092D /* Atarashii.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Atarashii.swift; sourceTree = "<group>"; };
@@ -518,10 +535,8 @@
 				DAC7D8FF1B5018DE00898FF6 /* iAd.framework in Frameworks */,
 				DA2D1EF61B53F475009A5CCD /* Crashlytics.framework in Frameworks */,
 				DA4167C51B273B0700847F56 /* ANAnimeKit.framework in Frameworks */,
-				DAC13C311B425CB70013D479 /* FBSDKLoginKit.framework in Frameworks */,
 				DA2D1EF51B53F475009A5CCD /* Fabric.framework in Frameworks */,
 				DA4AF8CC1B276E060020252E /* ANCommonKit.framework in Frameworks */,
-				DAC13C351B4262540013D479 /* ParseFacebookUtilsV4.framework in Frameworks */,
 				DA6E12C51B10D94200B278B0 /* ANParseKit.framework in Frameworks */,
 				6923F76C724843F5AED124BD /* Pods.framework in Frameworks */,
 			);
@@ -538,8 +553,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DAC7D90A1B50541100898FF6 /* FBSDKCoreKit.framework in Frameworks */,
-				DAC7D9081B5053F400898FF6 /* FBSDKShareKit.framework in Frameworks */,
 				DAC7D9041B502A1B00898FF6 /* FBSDKMessengerShareKit.framework in Frameworks */,
 				DA48EA521B28951400D8610F /* ANParseKit.framework in Frameworks */,
 				DAFD60C21B27855B007275C1 /* ANCommonKit.framework in Frameworks */,
@@ -578,21 +591,24 @@
 				DAF618701B377C3000286517 /* Accounts.framework in Frameworks */,
 				DAF6186F1B377C2100286517 /* Social.framework in Frameworks */,
 				DA9EB9311B2BA580001ECFA7 /* WebKit.framework in Frameworks */,
-				DA6E132A1B10FAA100B278B0 /* Bolts.framework in Frameworks */,
-				DA6E132B1B10FAA100B278B0 /* Parse.framework in Frameworks */,
 				DA6E13291B10FA9400B278B0 /* AudioToolbox.framework in Frameworks */,
 				DA6E13281B10FA8E00B278B0 /* CFNetwork.framework in Frameworks */,
 				DA6E13271B10FA8900B278B0 /* CoreGraphics.framework in Frameworks */,
+				DA897F931B6D452300A9510C /* Parse.framework in Frameworks */,
 				DA6E13261B10FA8400B278B0 /* CoreLocation.framework in Frameworks */,
-				DA6E13251B10FA7F00B278B0 /* MobileCoreServices.framework in Frameworks */,
+				DA13805D1B6D56F500C53560 /* FBSDKCoreKit.framework in Frameworks */,
 				DA6E13241B10FA7B00B278B0 /* QuartzCore.framework in Frameworks */,
 				DA6E13231B10FA7700B278B0 /* Security.framework in Frameworks */,
+				DA1380611B6D8D4B00C53560 /* FBSDKLoginKit.framework in Frameworks */,
 				DA6E13221B10FA7300B278B0 /* StoreKit.framework in Frameworks */,
 				DA6E13211B10FA6E00B278B0 /* SystemConfiguration.framework in Frameworks */,
 				DA6E13201B10F9F500B278B0 /* libsqlite3.dylib in Frameworks */,
 				DA6E131F1B10F9EE00B278B0 /* libz.dylib in Frameworks */,
+				DA897F941B6D452300A9510C /* ParseFacebookUtilsV4.framework in Frameworks */,
+				DA13805F1B6D56F500C53560 /* FBSDKShareKit.framework in Frameworks */,
 				DA6E131E1B10F9E900B278B0 /* libxml2.dylib in Frameworks */,
 				5D86412D23C2DF6FF9D63C06 /* Pods.framework in Frameworks */,
+				DA897F921B6D452300A9510C /* Bolts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -619,6 +635,7 @@
 		DA0347251B4ADD8D0025CE24 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				DAC13BFF1B3F4A7A0013D479 /* DataFetchController.swift */,
 				DAF357031B45790100629A3D /* LibrarySyncController.swift */,
 			);
 			name = Controllers;
@@ -851,6 +868,7 @@
 				DAFD60C01B27847E007275C1 /* ANCommonKit.swift */,
 				DA4AF8B91B276E060020252E /* ANCommonKit.h */,
 				DA7C84C71B43797F0036D119 /* Extensions */,
+				DAC077AE1B6890F50067DA90 /* Posts */,
 				DA06132B1B3778310044340F /* Model */,
 				DA7C84C51B43337E0036D119 /* Controllers */,
 				DAFBB0931B20EFC600495ED9 /* API */,
@@ -1005,7 +1023,6 @@
 		DA7C84C51B43337E0036D119 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				DAC13BFF1B3F4A7A0013D479 /* DataFetchController.swift */,
 				DAC7D9011B50201300898FF6 /* InAppController.swift */,
 			);
 			name = Controllers;
@@ -1036,6 +1053,41 @@
 				DAFD60B31B277B8D007275C1 /* ZFModalTransitionAnimator.m */,
 			);
 			name = Animators;
+			sourceTree = "<group>";
+		};
+		DAC0779C1B688DCA0067DA90 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DAC0779D1B688DFD0067DA90 /* PostTextCell.xib */,
+				DAD3909D1B6C2F35000A84DE /* PostImageCell.xib */,
+				DAD390A11B6C303D000A84DE /* CommentTextCell.xib */,
+				DA897F8A1B6D203D00A9510C /* CommentImageCell.xib */,
+				DAD3909F1B6C300C000A84DE /* ViewPreviousCommentsCell.xib */,
+				DA897F881B6D1FCC00A9510C /* WriteACommentCell.xib */,
+			);
+			name = Views;
+			path = ../AnimeNow;
+			sourceTree = "<group>";
+		};
+		DAC077A51B6890620067DA90 /* Subclasses */ = {
+			isa = PBXGroup;
+			children = (
+				DAC077BB1B6894670067DA90 /* PostCell.swift */,
+				DAC077A61B6890830067DA90 /* CommentCell.swift */,
+				DAD390A31B6C3216000A84DE /* ViewPreviousCommentsCell.swift */,
+				DAD390A51B6C322A000A84DE /* WriteACommentCell.swift */,
+			);
+			name = Subclasses;
+			path = ../AnimeNow;
+			sourceTree = "<group>";
+		};
+		DAC077AE1B6890F50067DA90 /* Posts */ = {
+			isa = PBXGroup;
+			children = (
+				DAC077A51B6890620067DA90 /* Subclasses */,
+				DAC0779C1B688DCA0067DA90 /* Views */,
+			);
+			name = Posts;
 			sourceTree = "<group>";
 		};
 		DAC13BFC1B3F368D0013D479 /* Extensions */ = {
@@ -1115,6 +1167,7 @@
 				DAE43C331B2BC3B700C3092D /* AnimeDetail.swift */,
 				DA58C2EC1B3B111A0082B626 /* Episode.swift */,
 				DAC0779A1B686A870067DA90 /* UserDetails.swift */,
+				DA9AE39A1B6930F60053C2EA /* TimelinePost.swift */,
 			);
 			name = "Parse classes";
 			sourceTree = "<group>";
@@ -1125,6 +1178,7 @@
 				DA2D1EEC1B530903009A5CCD /* PFQuery+LocalDatastore.swift */,
 				DAA3932A1B42F6A100A8D5D5 /* PFUser+CurrentUser.swift */,
 				DAE43C311B2BC1A900C3092D /* TFHppleElement+Convenience.swift */,
+				DA8B6E061B6C4DBF00D240FC /* UIImageView+PFFile.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -1133,11 +1187,8 @@
 			isa = PBXGroup;
 			children = (
 				DAF6189F1B378FF700286517 /* Profile.storyboard */,
-				DA5A3C051B36255200C07D71 /* ProfileViewController.swift */,
-				DA58C2DC1B386C7E0082B626 /* UserBaseViewController.swift */,
-				DA58C2D81B386BB90082B626 /* UserProfileViewController.swift */,
-				DA58C2D61B386BAC0082B626 /* UserHistoryViewController.swift */,
-				DA58C2DA1B386BC80082B626 /* UserFriendsViewController.swift */,
+				DA58C2D81B386BB90082B626 /* ProfileViewController.swift */,
+				DA58C2DA1B386BC80082B626 /* UserListViewController.swift */,
 			);
 			name = Profile;
 			sourceTree = "<group>";
@@ -1250,6 +1301,7 @@
 		F4F69FB5D8335951A772F9AC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DA897F951B6D461800A9510C /* MobileCoreServices.framework */,
 				DA2D1EF31B53F475009A5CCD /* Fabric.framework */,
 				DA2D1EF41B53F475009A5CCD /* Crashlytics.framework */,
 				DAC7D8FE1B5018DE00898FF6 /* iAd.framework */,
@@ -1257,7 +1309,6 @@
 				DAC13C2D1B425CB70013D479 /* FBSDKLoginKit.framework */,
 				DAC13C2E1B425CB70013D479 /* FBSDKMessengerShareKit.framework */,
 				DAC13C2F1B425CB70013D479 /* FBSDKShareKit.framework */,
-				DAC13C341B4262530013D479 /* ParseFacebookUtilsV4.framework */,
 				DA9EB9301B2BA580001ECFA7 /* WebKit.framework */,
 				DA6E131C1B10F9C800B278B0 /* Accelerate.framework */,
 				DA6E13051B10DDB900B278B0 /* Social.framework */,
@@ -1267,15 +1318,15 @@
 				DA6E12FD1B10DCDF00B278B0 /* StoreKit.framework */,
 				DA6E12FB1B10DCD800B278B0 /* Security.framework */,
 				DA6E12F91B10DCD400B278B0 /* QuartzCore.framework */,
-				DA6E12F71B10DCCF00B278B0 /* MobileCoreServices.framework */,
 				DA6E12F51B10DCCA00B278B0 /* CoreLocation.framework */,
 				DA6E12F31B10DCC600B278B0 /* CoreGraphics.framework */,
 				DA6E12F11B10DCC100B278B0 /* CFNetwork.framework */,
 				DA6E12EF1B10DCBC00B278B0 /* AudioToolbox.framework */,
-				DA6E12EB1B10DCA100B278B0 /* Bolts.framework */,
-				DA6E12EC1B10DCA100B278B0 /* Parse.framework */,
 				DA6E12E91B10DA2F00B278B0 /* libxml2.dylib */,
 				DA6E12E71B10DA2700B278B0 /* libz.dylib */,
+				DA897F8C1B6D451C00A9510C /* Bolts.framework */,
+				DA897F8D1B6D451C00A9510C /* Parse.framework */,
+				DA897F8E1B6D451C00A9510C /* ParseFacebookUtilsV4.framework */,
 				D27C7A8ED4F7C96DF08F5850 /* Pods.framework */,
 			);
 			name = Frameworks;
@@ -1610,7 +1661,13 @@
 			files = (
 				DAC3F3E11B5E989E001D6072 /* Resources.xcassets in Resources */,
 				DA823D8C1B326940005C7AFD /* InAppBrowser.storyboard in Resources */,
+				DAD390A21B6C303D000A84DE /* CommentTextCell.xib in Resources */,
+				DAD3909E1B6C2F35000A84DE /* PostImageCell.xib in Resources */,
+				DA897F8B1B6D203D00A9510C /* CommentImageCell.xib in Resources */,
+				DAC077B31B6891140067DA90 /* PostTextCell.xib in Resources */,
+				DA897F891B6D1FCC00A9510C /* WriteACommentCell.xib in Resources */,
 				DAFD60B71B278459007275C1 /* Action.storyboard in Resources */,
+				DAD390A01B6C300C000A84DE /* ViewPreviousCommentsCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1800,20 +1857,18 @@
 				DAC13BF71B3EFC1C0013D479 /* LoadingTableCell.swift in Sources */,
 				DAE7A7191B2105FD00788614 /* AnimeCell.swift in Sources */,
 				DAC7D9031B50201C00898FF6 /* InAppController.swift in Sources */,
-				DA58C2DD1B386C7E0082B626 /* UserBaseViewController.swift in Sources */,
 				DAF6187C1B3784E300286517 /* ForumsViewController.swift in Sources */,
 				DAC13C2A1B424DEF0013D479 /* ResetPasswordViewController.swift in Sources */,
-				DA58C2D71B386BAC0082B626 /* UserHistoryViewController.swift in Sources */,
 				DAC13C171B4226E20013D479 /* OnboardingViewController.swift in Sources */,
 				DAC7D8FC1B5015FA00898FF6 /* InAppPurchaseViewController.swift in Sources */,
 				DA52B1831B4838AE001CC1A9 /* CalendarViewController.swift in Sources */,
 				DA27D1991AF1BA9D00CC854E /* ParseWorker.swift in Sources */,
+				DA1380601B6D85CE00C53560 /* UserListViewController.swift in Sources */,
 				DA27D1971AF1BA9D00CC854E /* AppDelegate.swift in Sources */,
 				DAC7D9071B5046AF00898FF6 /* DialogController.swift in Sources */,
 				DAF618781B377D6000286517 /* AnimeListViewController.swift in Sources */,
 				DA8DD6431B3CAEC500B05FBF /* FilterViewController.swift in Sources */,
 				DA58C2E71B39C01B0082B626 /* BrowseViewController.swift in Sources */,
-				DA5A3C061B36255200C07D71 /* ProfileViewController.swift in Sources */,
 				DAB83FC71B52FE200006AF96 /* ChartController.swift in Sources */,
 				DAC13C261B42495A0013D479 /* WorkflowController.swift in Sources */,
 				DA52B1851B483F2A001CC1A9 /* DayViewController.swift in Sources */,
@@ -1822,11 +1877,10 @@
 				DA7C84C91B4379AA0036D119 /* UIViewController+Navigation.swift in Sources */,
 				DAC077971B68670C0067DA90 /* UIImage+Resize.swift in Sources */,
 				DAC13C201B423ED90013D479 /* SignUpViewController.swift in Sources */,
-				DA58C2D91B386BB90082B626 /* UserProfileViewController.swift in Sources */,
+				DA58C2D91B386BB90082B626 /* ProfileViewController.swift in Sources */,
 				DAA2C5581B66919300152FF9 /* SignInViewController.swift in Sources */,
 				DAA393291B42F21900A8D5D5 /* RootTabBar.swift in Sources */,
 				DAFBB0951B20EFF700495ED9 /* ChartViewController.swift in Sources */,
-				DA58C2DB1B386BC80082B626 /* UserFriendsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1882,9 +1936,9 @@
 				DA2D1EF01B531B0C009A5CCD /* NSUserDefaults+Dates.swift in Sources */,
 				DAFD60B61B278452007275C1 /* DropDownListViewController.swift in Sources */,
 				DAE43C3A1B2F971800C3092D /* UIView+Animation.swift in Sources */,
-				DA7C84C61B4333950036D119 /* DataFetchController.swift in Sources */,
 				DAC7D9021B50201300898FF6 /* InAppController.swift in Sources */,
 				DA5A3BFB1B35F19A00C07D71 /* TraktV2.swift in Sources */,
+				DAC077AF1B68910A0067DA90 /* CommentCell.swift in Sources */,
 				DA5A3BFD1B35F19A00C07D71 /* Atarashii.swift in Sources */,
 				DA5A3BFC1B35F19A00C07D71 /* AniList.swift in Sources */,
 				DA9F731D1B2931FF00C2652C /* UIImageView+SDWebImage.swift in Sources */,
@@ -1892,14 +1946,17 @@
 				DAFD60B91B27845F007275C1 /* BasicTableCell.swift in Sources */,
 				DAFD60BC1B27845F007275C1 /* HighlightButton.swift in Sources */,
 				DAFD60BA1B27845F007275C1 /* BasicView.swift in Sources */,
+				DAC077BC1B6894670067DA90 /* PostCell.swift in Sources */,
 				DA5A3BFA1B35F19A00C07D71 /* TraktV1.swift in Sources */,
 				DA58C2DE1B38A3990082B626 /* UserCell.swift in Sources */,
+				DAD390A61B6C322A000A84DE /* WriteACommentCell.swift in Sources */,
 				DAFD60B81B27845F007275C1 /* CustomLabel.swift in Sources */,
 				DA5A3BF81B35EE2200C07D71 /* CustomTextField.swift in Sources */,
 				DAFD60B51B278452007275C1 /* ActionListViewController.swift in Sources */,
 				DAFD60BB1B27845F007275C1 /* LoaderView.swift in Sources */,
 				DAF6186D1B377AAE00286517 /* AnimeProgress.swift in Sources */,
 				DAC027CF1B2A1C3F0085C91A /* ZFModalTransitionAnimator.m in Sources */,
+				DAD390A41B6C3216000A84DE /* ViewPreviousCommentsCell.swift in Sources */,
 				DAFD60C11B27847E007275C1 /* ANCommonKit.swift in Sources */,
 				DA823D8D1B326940005C7AFD /* InAppBrowserViewController.swift in Sources */,
 				DAFD60BE1B27845F007275C1 /* BasicCollectionCell.swift in Sources */,
@@ -1933,12 +1990,15 @@
 				DACCF35F1B111016006A13EB /* AnimeService.swift in Sources */,
 				DA6E12E61B10D96F00B278B0 /* WSWebScraper.m in Sources */,
 				DA2D1EF11B531B21009A5CCD /* PFQuery+LocalDatastore.swift in Sources */,
+				DA9AE39C1B69382D0053C2EA /* DataFetchController.swift in Sources */,
+				DA8B6E071B6C4DBF00D240FC /* UIImageView+PFFile.swift in Sources */,
 				DAC027CC1B2A16B80085C91A /* AnimeReview.swift in Sources */,
 				DA0347241B4ADD720025CE24 /* LibrarySyncController.swift in Sources */,
 				DA6E13131B10F56B00B278B0 /* SeasonalChartService.swift in Sources */,
 				DACCF35D1B110AA2006A13EB /* ANParseKit.swift in Sources */,
 				DA6E12E21B10D96F00B278B0 /* XPathQuery.m in Sources */,
 				DAC0779B1B686A870067DA90 /* UserDetails.swift in Sources */,
+				DA9AE39B1B6930F60053C2EA /* TimelinePost.swift in Sources */,
 				DA6E12E41B10D96F00B278B0 /* UIViewController+WebScraper.m in Sources */,
 				DAA3932D1B42FEA100A8D5D5 /* PFUser+CurrentUser.swift in Sources */,
 				DA6E13111B10F2E500B278B0 /* MALScrapper.swift in Sources */,
@@ -2140,6 +2200,54 @@
 				INFOPLIST_FILE = AnimeNow/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-Wl,-U,_JSContextGetGlobalObject",
+					"-Wl,-U,_JSEvaluateScript",
+					"-Wl,-U,_JSGlobalContextCreate",
+					"-Wl,-U,_JSGlobalContextRelease",
+					"-Wl,-U,_JSObjectCallAsFunction",
+					"-Wl,-U,_JSObjectIsFunction",
+					"-Wl,-U,_JSObjectMake",
+					"-Wl,-U,_JSObjectSetProperty",
+					"-Wl,-U,_JSStringCopyCFString",
+					"-Wl,-U,_JSStringCreateWithCFString",
+					"-Wl,-U,_JSStringRelease",
+					"-Wl,-U,_JSValueIsObject",
+					"-Wl,-U,_JSValueIsString",
+					"-Wl,-U,_JSValueMakeString",
+					"-Wl,-U,_JSValueToStringCopy",
+					"-framework",
+					"\"Alamofire\"",
+					"-framework",
+					"\"FontAwesome_iOS\"",
+					"-framework",
+					"\"HCSStarRatingView\"",
+					"-framework",
+					"\"JTSImageViewController\"",
+					"-framework",
+					"\"NJKWebViewProgress\"",
+					"-framework",
+					"\"RMStore\"",
+					"-framework",
+					"\"RSKImageCropper\"",
+					"-framework",
+					"\"Realm\"",
+					"-framework",
+					"\"RealmSwift\"",
+					"-framework",
+					"\"SDWebImage\"",
+					"-framework",
+					"\"Shimmer\"",
+					"-framework",
+					"\"TTTAttributedLabel\"",
+					"-framework",
+					"\"XCDYouTubeKit\"",
+					"-framework",
+					"\"XLPagerTabStrip\"",
+					"-framework",
+					"\"iRate\"",
+				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D DEBUG \"-D\" \"COCOAPODS\"";
 				PRODUCT_NAME = Aozora;
 				PROVISIONING_PROFILE = "97d93c39-509c-4a94-aa8c-6b8ae7ae090b";
@@ -2162,6 +2270,54 @@
 				INFOPLIST_FILE = AnimeNow/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-Wl,-U,_JSContextGetGlobalObject",
+					"-Wl,-U,_JSEvaluateScript",
+					"-Wl,-U,_JSGlobalContextCreate",
+					"-Wl,-U,_JSGlobalContextRelease",
+					"-Wl,-U,_JSObjectCallAsFunction",
+					"-Wl,-U,_JSObjectIsFunction",
+					"-Wl,-U,_JSObjectMake",
+					"-Wl,-U,_JSObjectSetProperty",
+					"-Wl,-U,_JSStringCopyCFString",
+					"-Wl,-U,_JSStringCreateWithCFString",
+					"-Wl,-U,_JSStringRelease",
+					"-Wl,-U,_JSValueIsObject",
+					"-Wl,-U,_JSValueIsString",
+					"-Wl,-U,_JSValueMakeString",
+					"-Wl,-U,_JSValueToStringCopy",
+					"-framework",
+					"\"Alamofire\"",
+					"-framework",
+					"\"FontAwesome_iOS\"",
+					"-framework",
+					"\"HCSStarRatingView\"",
+					"-framework",
+					"\"JTSImageViewController\"",
+					"-framework",
+					"\"NJKWebViewProgress\"",
+					"-framework",
+					"\"RMStore\"",
+					"-framework",
+					"\"RSKImageCropper\"",
+					"-framework",
+					"\"Realm\"",
+					"-framework",
+					"\"RealmSwift\"",
+					"-framework",
+					"\"SDWebImage\"",
+					"-framework",
+					"\"Shimmer\"",
+					"-framework",
+					"\"TTTAttributedLabel\"",
+					"-framework",
+					"\"XCDYouTubeKit\"",
+					"-framework",
+					"\"XLPagerTabStrip\"",
+					"-framework",
+					"\"iRate\"",
+				);
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\"";
 				PRODUCT_NAME = Aozora;
 				PROVISIONING_PROFILE = "12055f45-b3ef-483a-b487-2cae4a4da138";
@@ -2226,6 +2382,54 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-Wl,-U,_JSContextGetGlobalObject",
+					"-Wl,-U,_JSEvaluateScript",
+					"-Wl,-U,_JSGlobalContextCreate",
+					"-Wl,-U,_JSGlobalContextRelease",
+					"-Wl,-U,_JSObjectCallAsFunction",
+					"-Wl,-U,_JSObjectIsFunction",
+					"-Wl,-U,_JSObjectMake",
+					"-Wl,-U,_JSObjectSetProperty",
+					"-Wl,-U,_JSStringCopyCFString",
+					"-Wl,-U,_JSStringCreateWithCFString",
+					"-Wl,-U,_JSStringRelease",
+					"-Wl,-U,_JSValueIsObject",
+					"-Wl,-U,_JSValueIsString",
+					"-Wl,-U,_JSValueMakeString",
+					"-Wl,-U,_JSValueToStringCopy",
+					"-framework",
+					"\"Alamofire\"",
+					"-framework",
+					"\"FontAwesome_iOS\"",
+					"-framework",
+					"\"HCSStarRatingView\"",
+					"-framework",
+					"\"JTSImageViewController\"",
+					"-framework",
+					"\"NJKWebViewProgress\"",
+					"-framework",
+					"\"RMStore\"",
+					"-framework",
+					"\"RSKImageCropper\"",
+					"-framework",
+					"\"Realm\"",
+					"-framework",
+					"\"RealmSwift\"",
+					"-framework",
+					"\"SDWebImage\"",
+					"-framework",
+					"\"Shimmer\"",
+					"-framework",
+					"\"TTTAttributedLabel\"",
+					"-framework",
+					"\"XCDYouTubeKit\"",
+					"-framework",
+					"\"XLPagerTabStrip\"",
+					"-framework",
+					"\"iRate\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -2254,6 +2458,54 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-Wl,-U,_JSContextGetGlobalObject",
+					"-Wl,-U,_JSEvaluateScript",
+					"-Wl,-U,_JSGlobalContextCreate",
+					"-Wl,-U,_JSGlobalContextRelease",
+					"-Wl,-U,_JSObjectCallAsFunction",
+					"-Wl,-U,_JSObjectIsFunction",
+					"-Wl,-U,_JSObjectMake",
+					"-Wl,-U,_JSObjectSetProperty",
+					"-Wl,-U,_JSStringCopyCFString",
+					"-Wl,-U,_JSStringCreateWithCFString",
+					"-Wl,-U,_JSStringRelease",
+					"-Wl,-U,_JSValueIsObject",
+					"-Wl,-U,_JSValueIsString",
+					"-Wl,-U,_JSValueMakeString",
+					"-Wl,-U,_JSValueToStringCopy",
+					"-framework",
+					"\"Alamofire\"",
+					"-framework",
+					"\"FontAwesome_iOS\"",
+					"-framework",
+					"\"HCSStarRatingView\"",
+					"-framework",
+					"\"JTSImageViewController\"",
+					"-framework",
+					"\"NJKWebViewProgress\"",
+					"-framework",
+					"\"RMStore\"",
+					"-framework",
+					"\"RSKImageCropper\"",
+					"-framework",
+					"\"Realm\"",
+					"-framework",
+					"\"RealmSwift\"",
+					"-framework",
+					"\"SDWebImage\"",
+					"-framework",
+					"\"Shimmer\"",
+					"-framework",
+					"\"TTTAttributedLabel\"",
+					"-framework",
+					"\"XCDYouTubeKit\"",
+					"-framework",
+					"\"XLPagerTabStrip\"",
+					"-framework",
+					"\"iRate\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2315,6 +2567,54 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-Wl,-U,_JSContextGetGlobalObject",
+					"-Wl,-U,_JSEvaluateScript",
+					"-Wl,-U,_JSGlobalContextCreate",
+					"-Wl,-U,_JSGlobalContextRelease",
+					"-Wl,-U,_JSObjectCallAsFunction",
+					"-Wl,-U,_JSObjectIsFunction",
+					"-Wl,-U,_JSObjectMake",
+					"-Wl,-U,_JSObjectSetProperty",
+					"-Wl,-U,_JSStringCopyCFString",
+					"-Wl,-U,_JSStringCreateWithCFString",
+					"-Wl,-U,_JSStringRelease",
+					"-Wl,-U,_JSValueIsObject",
+					"-Wl,-U,_JSValueIsString",
+					"-Wl,-U,_JSValueMakeString",
+					"-Wl,-U,_JSValueToStringCopy",
+					"-framework",
+					"\"Alamofire\"",
+					"-framework",
+					"\"FontAwesome_iOS\"",
+					"-framework",
+					"\"HCSStarRatingView\"",
+					"-framework",
+					"\"JTSImageViewController\"",
+					"-framework",
+					"\"NJKWebViewProgress\"",
+					"-framework",
+					"\"RMStore\"",
+					"-framework",
+					"\"RSKImageCropper\"",
+					"-framework",
+					"\"Realm\"",
+					"-framework",
+					"\"RealmSwift\"",
+					"-framework",
+					"\"SDWebImage\"",
+					"-framework",
+					"\"Shimmer\"",
+					"-framework",
+					"\"TTTAttributedLabel\"",
+					"-framework",
+					"\"XCDYouTubeKit\"",
+					"-framework",
+					"\"XLPagerTabStrip\"",
+					"-framework",
+					"\"iRate\"",
+				);
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -D DEBUG";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -2341,6 +2641,54 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-Wl,-U,_JSContextGetGlobalObject",
+					"-Wl,-U,_JSEvaluateScript",
+					"-Wl,-U,_JSGlobalContextCreate",
+					"-Wl,-U,_JSGlobalContextRelease",
+					"-Wl,-U,_JSObjectCallAsFunction",
+					"-Wl,-U,_JSObjectIsFunction",
+					"-Wl,-U,_JSObjectMake",
+					"-Wl,-U,_JSObjectSetProperty",
+					"-Wl,-U,_JSStringCopyCFString",
+					"-Wl,-U,_JSStringCreateWithCFString",
+					"-Wl,-U,_JSStringRelease",
+					"-Wl,-U,_JSValueIsObject",
+					"-Wl,-U,_JSValueIsString",
+					"-Wl,-U,_JSValueMakeString",
+					"-Wl,-U,_JSValueToStringCopy",
+					"-framework",
+					"\"Alamofire\"",
+					"-framework",
+					"\"FontAwesome_iOS\"",
+					"-framework",
+					"\"HCSStarRatingView\"",
+					"-framework",
+					"\"JTSImageViewController\"",
+					"-framework",
+					"\"NJKWebViewProgress\"",
+					"-framework",
+					"\"RMStore\"",
+					"-framework",
+					"\"RSKImageCropper\"",
+					"-framework",
+					"\"Realm\"",
+					"-framework",
+					"\"RealmSwift\"",
+					"-framework",
+					"\"SDWebImage\"",
+					"-framework",
+					"\"Shimmer\"",
+					"-framework",
+					"\"TTTAttributedLabel\"",
+					"-framework",
+					"\"XCDYouTubeKit\"",
+					"-framework",
+					"\"XLPagerTabStrip\"",
+					"-framework",
+					"\"iRate\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2394,6 +2742,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					/Users/paul/Documents/FacebookSDK,
 				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -2408,6 +2757,54 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-Wl,-U,_JSContextGetGlobalObject",
+					"-Wl,-U,_JSEvaluateScript",
+					"-Wl,-U,_JSGlobalContextCreate",
+					"-Wl,-U,_JSGlobalContextRelease",
+					"-Wl,-U,_JSObjectCallAsFunction",
+					"-Wl,-U,_JSObjectIsFunction",
+					"-Wl,-U,_JSObjectMake",
+					"-Wl,-U,_JSObjectSetProperty",
+					"-Wl,-U,_JSStringCopyCFString",
+					"-Wl,-U,_JSStringCreateWithCFString",
+					"-Wl,-U,_JSStringRelease",
+					"-Wl,-U,_JSValueIsObject",
+					"-Wl,-U,_JSValueIsString",
+					"-Wl,-U,_JSValueMakeString",
+					"-Wl,-U,_JSValueToStringCopy",
+					"-framework",
+					"\"Alamofire\"",
+					"-framework",
+					"\"FontAwesome_iOS\"",
+					"-framework",
+					"\"HCSStarRatingView\"",
+					"-framework",
+					"\"JTSImageViewController\"",
+					"-framework",
+					"\"NJKWebViewProgress\"",
+					"-framework",
+					"\"RMStore\"",
+					"-framework",
+					"\"RSKImageCropper\"",
+					"-framework",
+					"\"Realm\"",
+					"-framework",
+					"\"RealmSwift\"",
+					"-framework",
+					"\"SDWebImage\"",
+					"-framework",
+					"\"Shimmer\"",
+					"-framework",
+					"\"TTTAttributedLabel\"",
+					"-framework",
+					"\"XCDYouTubeKit\"",
+					"-framework",
+					"\"XLPagerTabStrip\"",
+					"-framework",
+					"\"iRate\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -2431,6 +2828,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					/Users/paul/Documents/FacebookSDK,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2441,6 +2839,54 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-Wl,-U,_JSContextGetGlobalObject",
+					"-Wl,-U,_JSEvaluateScript",
+					"-Wl,-U,_JSGlobalContextCreate",
+					"-Wl,-U,_JSGlobalContextRelease",
+					"-Wl,-U,_JSObjectCallAsFunction",
+					"-Wl,-U,_JSObjectIsFunction",
+					"-Wl,-U,_JSObjectMake",
+					"-Wl,-U,_JSObjectSetProperty",
+					"-Wl,-U,_JSStringCopyCFString",
+					"-Wl,-U,_JSStringCreateWithCFString",
+					"-Wl,-U,_JSStringRelease",
+					"-Wl,-U,_JSValueIsObject",
+					"-Wl,-U,_JSValueIsString",
+					"-Wl,-U,_JSValueMakeString",
+					"-Wl,-U,_JSValueToStringCopy",
+					"-framework",
+					"\"Alamofire\"",
+					"-framework",
+					"\"FontAwesome_iOS\"",
+					"-framework",
+					"\"HCSStarRatingView\"",
+					"-framework",
+					"\"JTSImageViewController\"",
+					"-framework",
+					"\"NJKWebViewProgress\"",
+					"-framework",
+					"\"RMStore\"",
+					"-framework",
+					"\"RSKImageCropper\"",
+					"-framework",
+					"\"Realm\"",
+					"-framework",
+					"\"RealmSwift\"",
+					"-framework",
+					"\"SDWebImage\"",
+					"-framework",
+					"\"Shimmer\"",
+					"-framework",
+					"\"TTTAttributedLabel\"",
+					"-framework",
+					"\"XCDYouTubeKit\"",
+					"-framework",
+					"\"XLPagerTabStrip\"",
+					"-framework",
+					"\"iRate\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";

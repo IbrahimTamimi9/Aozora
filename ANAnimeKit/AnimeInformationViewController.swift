@@ -168,7 +168,8 @@ public class AnimeInformationViewController: AnimeBaseViewController {
             if let fanartUrl = anime.fanart where count(fanartUrl) != 0 {
                 fanartImageView.setImageFrom(urlString: fanartUrl)
             } else {
-                fanartImageView.setImageFrom(urlString: anime.imageUrl)
+                let hdImage = anime.imageUrl.stringByReplacingOccurrencesOfString(".jpg", withString: "l.jpg")
+                fanartImageView.setImageFrom(urlString: hdImage)
             }
             
             if let youtubeID = anime.details.youtubeID where count(youtubeID) > 0 {
@@ -203,7 +204,8 @@ public class AnimeInformationViewController: AnimeBaseViewController {
     
     @IBAction func showPoster(sender: AnyObject) {
         
-        let imageURL = NSURL(string: anime.imageUrl)
+        let hdImage = anime.imageUrl.stringByReplacingOccurrencesOfString(".jpg", withString: "l.jpg")
+        let imageURL = NSURL(string: hdImage)
         presentImageViewController(posterImageView, imageUrl: imageURL!)
     }
    
