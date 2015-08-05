@@ -154,6 +154,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Episode.registerSubclass()
         UserDetails.registerSubclass()
         TimelinePost.registerSubclass()
+        Thread.registerSubclass()
+        Post.registerSubclass()
         
         // TODO: Implement this
         Parse.enableLocalDatastore()

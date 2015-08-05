@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--Charlotte - Episode1-->
+        <scene sceneID="7H5-KO-9ME">
+            <objects>
+                <viewController storyboardIdentifier="Profile" id="OZR-xW-cLZ" customClass="EpisodeViewController" customModule="ANAnimeKit" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Ec5-cS-CfQ"/>
+                        <viewControllerLayoutGuide type="bottom" id="0oh-A1-SWi"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="DYh-9Z-0ag">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="nHm-qh-CAq">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="605"/>
+                                <color key="backgroundColor" red="0.89411765336990356" green="0.89411765336990356" blue="0.89411765336990356" alpha="1" colorSpace="calibratedRGB"/>
+                                <view key="tableHeaderView" contentMode="scaleToFill" id="Lnu-Hf-qu2">
+                                    <rect key="frame" x="0.0" y="64" width="600" height="170"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="xnp-oz-2W6" userLabel="Screenshot">
+                                            <rect key="frame" x="10" y="10" width="580" height="150"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="150" id="YQK-Ek-8xI"/>
+                                            </constraints>
+                                        </imageView>
+                                    </subviews>
+                                    <color key="backgroundColor" red="0.97254902119999997" green="0.97254902119999997" blue="0.97254902119999997" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstItem="xnp-oz-2W6" firstAttribute="top" secondItem="Lnu-Hf-qu2" secondAttribute="top" constant="10" id="8kh-In-Jar"/>
+                                        <constraint firstAttribute="trailing" secondItem="xnp-oz-2W6" secondAttribute="trailing" constant="10" id="ijm-Pu-maX"/>
+                                        <constraint firstItem="xnp-oz-2W6" firstAttribute="leading" secondItem="Lnu-Hf-qu2" secondAttribute="leading" constant="10" id="wj2-D3-k6a"/>
+                                    </constraints>
+                                </view>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SynopsisCell" rowHeight="81" id="5KE-hY-yAZ" customClass="SynopsisCell" customModule="ANAnimeKit" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5KE-hY-yAZ" id="PK4-dg-Eng">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="8" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1mi-Zo-bOb">
+                                                    <rect key="frame" x="8" y="8" width="584" height="65"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" priority="999" constant="65" id="GuP-kE-gr0"/>
+                                                        <constraint firstAttribute="height" constant="65" id="Nwp-it-hts"/>
+                                                        <constraint firstAttribute="height" constant="65" id="hdN-O6-lx5"/>
+                                                        <constraint firstAttribute="height" constant="65" id="xPl-9G-HR6"/>
+                                                    </constraints>
+                                                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                                    <color key="textColor" red="0.18823529410000001" green="0.1960784314" blue="0.23529411759999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="GuP-kE-gr0"/>
+                                                            <exclude reference="Nwp-it-hts"/>
+                                                            <exclude reference="hdN-O6-lx5"/>
+                                                            <exclude reference="xPl-9G-HR6"/>
+                                                        </mask>
+                                                    </variation>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstItem="1mi-Zo-bOb" firstAttribute="trailing" secondItem="PK4-dg-Eng" secondAttribute="trailingMargin" id="4Ss-co-s4D"/>
+                                                <constraint firstItem="1mi-Zo-bOb" firstAttribute="leading" secondItem="PK4-dg-Eng" secondAttribute="leadingMargin" id="UnK-8b-u7M"/>
+                                                <constraint firstItem="1mi-Zo-bOb" firstAttribute="top" secondItem="PK4-dg-Eng" secondAttribute="topMargin" id="YuE-ze-sIl"/>
+                                                <constraint firstItem="1mi-Zo-bOb" firstAttribute="bottom" secondItem="PK4-dg-Eng" secondAttribute="bottomMargin" id="sJy-dx-SHp"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.97254902119999997" green="0.97254902119999997" blue="0.97254902119999997" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <outlet property="synopsisLabel" destination="1mi-Zo-bOb" id="PVg-Xx-irT"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="OZR-xW-cLZ" id="3UG-vg-Cq1"/>
+                                    <outlet property="delegate" destination="OZR-xW-cLZ" id="50M-nf-8eG"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.97254902119999997" green="0.97254902119999997" blue="0.97254902119999997" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="0oh-A1-SWi" firstAttribute="top" secondItem="nHm-qh-CAq" secondAttribute="bottom" constant="-49" id="GAs-NA-uF1"/>
+                            <constraint firstItem="nHm-qh-CAq" firstAttribute="top" secondItem="Ec5-cS-CfQ" secondAttribute="bottom" id="GnH-QB-ZlF"/>
+                            <constraint firstItem="nHm-qh-CAq" firstAttribute="leading" secondItem="DYh-9Z-0ag" secondAttribute="leading" id="gbs-AE-D6D"/>
+                            <constraint firstAttribute="trailing" secondItem="nHm-qh-CAq" secondAttribute="trailing" id="ls2-lf-Ayt"/>
+                            <constraint firstItem="nHm-qh-CAq" firstAttribute="top" secondItem="Ec5-cS-CfQ" secondAttribute="bottom" constant="-64" id="wFR-QV-B8I"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="GnH-QB-ZlF"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Charlotte - Episode1" id="ulE-cW-KjQ"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="episodeScreenshot" destination="xnp-oz-2W6" id="gdf-SG-zxk"/>
+                        <outlet property="tableView" destination="nHm-qh-CAq" id="ODo-2q-Bor"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ngV-JD-Da1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1487" y="560"/>
+        </scene>
+    </scenes>
+</document>

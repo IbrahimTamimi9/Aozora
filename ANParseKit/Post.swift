@@ -9,7 +9,7 @@
 import Foundation
 import Parse
 
-public class TimelinePost: PFObject, PFSubclassing {
+public class Post: PFObject, PFSubclassing {
     override public class func initialize() {
         struct Static {
             static var onceToken : dispatch_once_t = 0;
@@ -20,15 +20,14 @@ public class TimelinePost: PFObject, PFSubclassing {
     }
     
     public class func parseClassName() -> String {
-        return "TimelinePost"
+        return "Post"
     }
     
     @NSManaged public var content: String
     @NSManaged public var replyLevel: Int
-    @NSManaged public var episode: Episode?
-    @NSManaged public var repostedBy: [PFUser]
     @NSManaged public var postedBy: PFUser?
-    @NSManaged public var userTimeline: PFUser
+    @NSManaged public var thread: Thread
+    @NSManaged public var hasSpoilers: Bool
     @NSManaged public var images: [String]?
     @NSManaged public var youtubeID: String?
     

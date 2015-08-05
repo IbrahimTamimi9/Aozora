@@ -80,21 +80,14 @@ class AnimeListViewController: UIViewController {
         
         updateLayout(currentLayout)
         updateSortType(currentSortType)
-        addRefreshControl()
+        addRefreshControl(refreshControl, forCollectionView: collectionView)
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         refreshControl.endRefreshing()
-        
     }
     
-    func addRefreshControl() {
-        refreshControl.tintColor = UIColor.lightGrayColor()
-        refreshControl.addTarget(self, action: "refreshLibrary", forControlEvents: UIControlEvents.ValueChanged)
-        collectionView.insertSubview(refreshControl, atIndex: collectionView.subviews.count - 1)
-        collectionView.alwaysBounceVertical = true
-    }
     
     func refreshLibrary() {
         

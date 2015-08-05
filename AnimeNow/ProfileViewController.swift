@@ -34,6 +34,7 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.alpha = 0.0
         tableView.estimatedRowHeight = 112.0
         tableView.rowHeight = UITableViewAutomaticDimension
     
@@ -55,19 +56,10 @@ class ProfileViewController: UIViewController {
         followersButton.setTitle("\(followersCount.count) FOLLOWERS", forState: .Normal)
         
         loadingView = LoaderView(parentView: view)
-        addRefreshControl()
         
         fetchUserFeed()
         fetchUserDetails()
     }
-    
-    func addRefreshControl() {
-        refreshControl.tintColor = UIColor.lightGrayColor()
-        refreshControl.addTarget(self, action: "refreshPulled", forControlEvents: UIControlEvents.ValueChanged)
-        tableView.insertSubview(refreshControl, atIndex: tableView.subviews.count - 1)
-        tableView.alwaysBounceVertical = true
-    }
-    
     
     func refreshPulled() {
         fetchUserFeed()
