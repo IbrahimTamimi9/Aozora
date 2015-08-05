@@ -170,6 +170,7 @@
 		DAD390A21B6C303D000A84DE /* CommentTextCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DAD390A11B6C303D000A84DE /* CommentTextCell.xib */; };
 		DAD390A41B6C3216000A84DE /* ViewPreviousCommentsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD390A31B6C3216000A84DE /* ViewPreviousCommentsCell.swift */; };
 		DAD390A61B6C322A000A84DE /* WriteACommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD390A51B6C322A000A84DE /* WriteACommentCell.swift */; };
+		DAD67DFD1B726724000BB325 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD67DFC1B726724000BB325 /* User.swift */; };
 		DAE43C321B2BC1A900C3092D /* TFHppleElement+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE43C311B2BC1A900C3092D /* TFHppleElement+Convenience.swift */; };
 		DAE43C341B2BC3B700C3092D /* AnimeDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE43C331B2BC3B700C3092D /* AnimeDetail.swift */; };
 		DAE43C3A1B2F971800C3092D /* UIView+Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE43C391B2F971800C3092D /* UIView+Animation.swift */; };
@@ -511,6 +512,7 @@
 		DAD390A11B6C303D000A84DE /* CommentTextCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentTextCell.xib; sourceTree = "<group>"; };
 		DAD390A31B6C3216000A84DE /* ViewPreviousCommentsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewPreviousCommentsCell.swift; sourceTree = "<group>"; };
 		DAD390A51B6C322A000A84DE /* WriteACommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WriteACommentCell.swift; sourceTree = "<group>"; };
+		DAD67DFC1B726724000BB325 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		DAE43C311B2BC1A900C3092D /* TFHppleElement+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TFHppleElement+Convenience.swift"; sourceTree = "<group>"; };
 		DAE43C331B2BC3B700C3092D /* AnimeDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeDetail.swift; sourceTree = "<group>"; };
 		DAE43C371B2D5BC800C3092D /* Atarashii.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Atarashii.swift; sourceTree = "<group>"; };
@@ -1191,6 +1193,7 @@
 				DA9AE39A1B6930F60053C2EA /* TimelinePost.swift */,
 				DA1380691B6DBB4100C53560 /* Thread.swift */,
 				DA13806B1B6DBB4C00C53560 /* Post.swift */,
+				DAD67DFC1B726724000BB325 /* User.swift */,
 			);
 			name = "Parse classes";
 			sourceTree = "<group>";
@@ -2024,6 +2027,7 @@
 				DA6E13131B10F56B00B278B0 /* SeasonalChartService.swift in Sources */,
 				DACCF35D1B110AA2006A13EB /* ANParseKit.swift in Sources */,
 				DA6E12E21B10D96F00B278B0 /* XPathQuery.m in Sources */,
+				DAD67DFD1B726724000BB325 /* User.swift in Sources */,
 				DAC0779B1B686A870067DA90 /* UserDetails.swift in Sources */,
 				DA9AE39B1B6930F60053C2EA /* TimelinePost.swift in Sources */,
 				DA6E12E41B10D96F00B278B0 /* UIViewController+WebScraper.m in Sources */,

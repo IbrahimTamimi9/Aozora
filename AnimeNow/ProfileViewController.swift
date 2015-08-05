@@ -16,17 +16,22 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var reminderBBI: UIBarButtonItem!
     @IBOutlet weak var settingsBBI: UIBarButtonItem!
     
+    @IBOutlet weak var tableView: UITableView!
+    
     @IBOutlet weak var userAvatar: UIImageView!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var userBanner: UIImageView!
     @IBOutlet weak var animeListButton: UIButton!
-    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var followButton: UIButton!
     @IBOutlet weak var followingButton: UIButton!
     @IBOutlet weak var followersButton: UIButton!
     @IBOutlet weak var aboutLabel: UILabel!
     
-    var user: PFUser = PFUser.currentUser()!
+    @IBOutlet weak var proBadge: UILabel!
+    @IBOutlet weak var tagBadge: UILabel!
+    @IBOutlet weak var proBottomLayoutConstraint: NSLayoutConstraint!
+    
+    var user = User.currentUser()!
     var fetchController = FetchController()
     var refreshControl = UIRefreshControl()
     var loadingView: LoaderView!
@@ -45,30 +50,51 @@ class ProfileViewController: UIViewController {
         WriteACommentCell.registerNibFor(tableView: tableView)
         
         usernameLabel.text = user.username
-        let avatarFile = user["avatarThumb"] as! PFFile
-        let bannerFile = user["banner"] as! PFFile
+        title = user.aozoraUsername
+        let avatarFile = user.avatarThumb
+        let bannerFile = user.banner
         userAvatar.setImageWithPFFile(avatarFile)
         userBanner.setImageWithPFFile(bannerFile)
         
-        let followingCount = user["following"] as! [PFUser]
-        let followersCount = user["followers"] as! [PFUser]
+        let followingCount = user.following
+        let followersCount = user.followers
         followingButton.setTitle("\(followingCount.count) FOLLOWING", forState: .Normal)
         followersButton.setTitle("\(followersCount.count) FOLLOWERS", forState: .Normal)
         
-        loadingView = LoaderView(parentView: view)
+        if user == User.currentUser() {
+            followButton.hidden = true
+            animeListButton.hidden = true
+        } else {
+            followButton.hidden = false
+            animeListButton.hidden = false
+            navigationItem.rightBarButtonItems = nil
+            navigationItem.leftBarButtonItem = nil
+        }
         
+        if user.badges.count > 0 {
+            tagBadge.text = user.badges.first
+        } else {
+            proBottomLayoutConstraint.constant = 4
+        }
+
+        if let _ = InAppController.purchasedProPlus() {
+            proBadge.text = "PRO+"
+        } else if let _ = InAppController.purchasedPro() {
+            proBadge.text = "PRO"
+        } else {
+            proBadge.hidden = true
+        }
+        
+        loadingView = LoaderView(parentView: view)
+        addRefreshControl(refreshControl, action:"fetchUserFeed", forTableView: tableView)
         fetchUserFeed()
         fetchUserDetails()
-    }
-    
-    func refreshPulled() {
-        fetchUserFeed()
     }
     
     func fetchUserFeed() {
         let query = TimelinePost.query()!
         query.skip = 0
-        query.whereKey("userTimeline", equalTo: PFUser.currentUser()!)
+        query.whereKey("userTimeline", equalTo: user)
         query.whereKey("replyLevel", equalTo: 0)
         query.orderByDescending("createdAt")
         query.includeKey("episode")
@@ -80,7 +106,7 @@ class ProfileViewController: UIViewController {
     
     func fetchUserDetails() {
         
-        let details = user["userDetails"] as! UserDetails
+        let details = user.userDetails
         details.fetchIfNeededInBackgroundWithBlock { (details, error) -> Void in
             if let details = details as? UserDetails {
                 self.aboutLabel.text = details.about
@@ -100,17 +126,22 @@ class ProfileViewController: UIViewController {
     @IBAction func showFollowingUsers(sender: AnyObject) {
         
         let userListController = UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("UserList") as! UserListViewController
-        let followingList = user["following"] as! [PFUser]
-        userListController.initWithList(followingList, title: "Followers")
+        let followingList = user.following
+        userListController.initWithList(followingList, title: "Following")
         navigationController?.pushViewController(userListController, animated: true)
         
     }
     
     @IBAction func showFollowers(sender: AnyObject) {
         let userListController = UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("UserList") as! UserListViewController
-        let followersList = user["followers"] as! [PFUser]
+        let followersList = user.followers
         userListController.initWithList(followersList, title: "Followers")
         navigationController?.pushViewController(userListController, animated: true)
+    }
+    
+    @IBAction func showSettings(sender: AnyObject) {
+        let settings = UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController() as! UINavigationController
+        presentViewController(settings, animated: true, completion: nil)
     }
 }
 
@@ -121,7 +152,6 @@ extension ProfileViewController: UITableViewDataSource {
         return fetchController.dataCount()
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         let timelinePost = fetchController.objectAtIndex(section) as! TimelinePost
         if timelinePost.replies.count > 0 {
             return 1 + timelinePost.replies.count + 1
@@ -165,7 +195,7 @@ extension ProfileViewController: UITableViewDataSource {
             }
             
         } else if timelinePost.replies.count > 0 && indexPath.row <= timelinePost.replies.count {
-            let comment = timelinePost.replies[indexPath.row - 1] as! TimelinePost
+            let comment = timelinePost.replies[indexPath.row - 1]
             
             if let _ = comment.images {
                 // Comment image cell
@@ -199,9 +229,9 @@ extension ProfileViewController: UITableViewDataSource {
     }
     
     func updatePostCell(cell: PostCell, with timelinePost: TimelinePost) {
-        let avatarFile = timelinePost.postedBy!["avatarThumb"] as! PFFile
+        let avatarFile = timelinePost.postedBy!.avatarThumb
         cell.avatar.setImageWithPFFile(avatarFile)
-        cell.username.text = timelinePost.userTimeline["aozoraUsername"] as? String
+        cell.username.text = timelinePost.userTimeline.aozoraUsername
         cell.date.text = timelinePost.createdAt?.timeAgo()
         cell.textContent.text = timelinePost.content
         let replies = timelinePost.replies
@@ -216,8 +246,8 @@ extension ProfileViewController: UITableViewDataSource {
     }
     
     func updateCommentCell(cell: CommentCell, with timelinePost: TimelinePost) {
-        let avatarFile = timelinePost.postedBy!["avatarThumb"] as! PFFile
-        let username = timelinePost.userTimeline["aozoraUsername"] as! String
+        let avatarFile = timelinePost.postedBy!.avatarThumb
+        let username = timelinePost.userTimeline.aozoraUsername
         let content = username + " " + timelinePost.content
         cell.avatar.setImageWithPFFile(avatarFile)
         self.updateAttributedTextProperties(cell.textContent)

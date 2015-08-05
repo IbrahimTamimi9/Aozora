@@ -70,7 +70,6 @@ class BrowseViewController: UIViewController {
         let listNib = UINib(nibName: "AnimeCellList", bundle: nil)
         collectionView.registerNib(chartNib, forCellWithReuseIdentifier: "AnimeCellList")
         
-        // TODO: Remove duplicated code in BaseViewController..
         var tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "changeSeasonalChart")
         navigationController?.navigationBar.addGestureRecognizer(tapGestureRecognizer)
         

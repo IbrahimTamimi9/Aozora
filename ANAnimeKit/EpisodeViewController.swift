@@ -35,12 +35,8 @@ class EpisodeViewController: UIViewController {
         WriteACommentCell.registerNibFor(tableView: tableView)
         
         loadingView = LoaderView(parentView: view)
-        addRefreshControl(refreshControl, forTableView: tableView)
+        addRefreshControl(refreshControl, action: "fetchEpisodeComments", forTableView: tableView)
         
-        fetchEpisodeComments()
-    }
-    
-    func refreshPulled() {
         fetchEpisodeComments()
     }
     

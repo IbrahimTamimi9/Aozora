@@ -211,7 +211,7 @@
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PRO+" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i6N-oU-yq0">
+                                        <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PRO+" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i6N-oU-yq0">
                                             <rect key="frame" x="80" y="109" width="48" height="21"/>
                                             <color key="backgroundColor" red="1" green="0.68236449359999996" blue="0.1161528146" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
@@ -227,7 +227,7 @@
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LkT-EB-jxP">
+                                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LkT-EB-jxP">
                                             <rect key="frame" x="424" y="125" width="80" height="30"/>
                                             <color key="backgroundColor" red="0.89411765340000005" green="0.89411765340000005" blue="0.89411765340000005" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
@@ -264,7 +264,7 @@ Follow me for app updates.</string>
                                             </constraints>
                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
                                             <state key="normal" title="219 FOLLOWING">
-                                                <color key="titleColor" red="0.18823529779911041" green="0.19607843458652496" blue="0.23529411852359772" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="titleColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <connections>
                                                 <action selector="showFollowingUsers:" destination="M5q-uq-HPK" eventType="touchUpInside" id="0X0-Qw-ema"/>
@@ -278,7 +278,7 @@ Follow me for app updates.</string>
                                             </constraints>
                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
                                             <state key="normal" title="219 FOLLOWERS">
-                                                <color key="titleColor" red="0.18823529779911041" green="0.19607843458652496" blue="0.23529411852359772" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="titleColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <connections>
                                                 <action selector="showFollowers:" destination="M5q-uq-HPK" eventType="touchUpInside" id="eZa-a2-WcY"/>
@@ -299,16 +299,16 @@ Follow me for app updates.</string>
                                         <constraint firstAttribute="bottom" secondItem="asH-I6-fJz" secondAttribute="bottom" constant="155" id="MQf-VF-j62"/>
                                         <constraint firstAttribute="trailing" secondItem="TgH-QU-GT1" secondAttribute="trailing" constant="8" id="Ppi-A8-7Mh"/>
                                         <constraint firstAttribute="trailing" secondItem="asH-I6-fJz" secondAttribute="trailing" id="Qgg-do-Yog"/>
+                                        <constraint firstItem="9bT-p7-f1f" firstAttribute="bottom" secondItem="i6N-oU-yq0" secondAttribute="bottom" constant="30" id="VXK-cm-HSC"/>
                                         <constraint firstItem="9bT-p7-f1f" firstAttribute="top" secondItem="nYJ-CX-2KS" secondAttribute="top" constant="100" id="Vqc-tQ-eH4"/>
                                         <constraint firstItem="asH-I6-fJz" firstAttribute="top" secondItem="nYJ-CX-2KS" secondAttribute="top" id="cZP-LE-HhC"/>
                                         <constraint firstItem="i6N-oU-yq0" firstAttribute="leading" secondItem="9bT-p7-f1f" secondAttribute="trailing" constant="8" id="gA4-ec-c0v"/>
                                         <constraint firstItem="DZj-27-6Eb" firstAttribute="leading" secondItem="nYJ-CX-2KS" secondAttribute="leading" constant="12" id="j2M-Qa-ADz"/>
                                         <constraint firstItem="asH-I6-fJz" firstAttribute="leading" secondItem="nYJ-CX-2KS" secondAttribute="leading" id="k1Q-qI-V0u"/>
-                                        <constraint firstItem="MUA-4J-1Hx" firstAttribute="top" secondItem="i6N-oU-yq0" secondAttribute="bottom" constant="5" id="lfl-mE-Xc2"/>
                                         <constraint firstItem="TgH-QU-GT1" firstAttribute="leading" secondItem="nYJ-CX-2KS" secondAttribute="leading" constant="12" id="p3v-qg-i56"/>
                                         <constraint firstItem="hlo-ra-225" firstAttribute="top" secondItem="asH-I6-fJz" secondAttribute="bottom" constant="5" id="r3b-vA-x46"/>
                                         <constraint firstAttribute="bottom" secondItem="eBe-M2-du6" secondAttribute="bottom" constant="3" id="vOL-Bc-Zzw"/>
-                                        <constraint firstItem="i6N-oU-yq0" firstAttribute="centerY" secondItem="9bT-p7-f1f" secondAttribute="centerY" constant="-10" id="vXQ-1S-P9n"/>
+                                        <constraint firstItem="9bT-p7-f1f" firstAttribute="bottom" secondItem="MUA-4J-1Hx" secondAttribute="bottom" constant="4" id="xJV-aH-eSd"/>
                                         <constraint firstItem="MUA-4J-1Hx" firstAttribute="leading" secondItem="9bT-p7-f1f" secondAttribute="trailing" constant="8" id="xZg-ge-i55"/>
                                     </constraints>
                                 </view>
@@ -334,7 +334,11 @@ Follow me for app updates.</string>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Profile" id="R1g-ee-WQp">
-                        <barButtonItem key="rightBarButtonItem" image="icon-settings" id="5c8-zA-vWE" userLabel="Settings"/>
+                        <barButtonItem key="rightBarButtonItem" image="icon-settings" id="5c8-zA-vWE" userLabel="Settings">
+                            <connections>
+                                <action selector="showSettings:" destination="M5q-uq-HPK" id="z1V-Yp-7vR"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
@@ -343,7 +347,11 @@ Follow me for app updates.</string>
                         <outlet property="followButton" destination="hlo-ra-225" id="a8q-a9-OQM"/>
                         <outlet property="followersButton" destination="eBe-M2-du6" id="i6u-LJ-rcF"/>
                         <outlet property="followingButton" destination="5yX-hf-St0" id="eO3-En-ROy"/>
+                        <outlet property="proBadge" destination="i6N-oU-yq0" id="B32-23-brK"/>
+                        <outlet property="proBottomLayoutConstraint" destination="VXK-cm-HSC" id="76g-JK-5hz"/>
+                        <outlet property="settingsBBI" destination="5c8-zA-vWE" id="mo3-ee-zbA"/>
                         <outlet property="tableView" destination="sY9-wc-JPh" id="JcR-C5-OfD"/>
+                        <outlet property="tagBadge" destination="MUA-4J-1Hx" id="BxP-Er-d2T"/>
                         <outlet property="userAvatar" destination="9bT-p7-f1f" id="pFe-1U-bQf"/>
                         <outlet property="userBanner" destination="asH-I6-fJz" id="rRP-xq-J0e"/>
                         <outlet property="usernameLabel" destination="DZj-27-6Eb" id="5U4-RQ-ovX"/>

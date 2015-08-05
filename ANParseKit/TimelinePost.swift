@@ -26,18 +26,11 @@ public class TimelinePost: PFObject, PFSubclassing {
     @NSManaged public var content: String
     @NSManaged public var replyLevel: Int
     @NSManaged public var episode: Episode?
-    @NSManaged public var repostedBy: [PFUser]
-    @NSManaged public var postedBy: PFUser?
-    @NSManaged public var userTimeline: PFUser
+    @NSManaged public var repostedBy: [User]
+    @NSManaged public var postedBy: User?
+    @NSManaged public var userTimeline: User
     @NSManaged public var images: [String]?
     @NSManaged public var youtubeID: String?
+    @NSManaged public var replies: [TimelinePost]
     
-    public var replies: [PFObject] {
-        get {
-           return (self["replies"] ?? [] ) as! [PFObject]
-        }
-        set (value) {
-            self["replies"] = value
-        }
-    }
 }

@@ -80,7 +80,7 @@ class AnimeListViewController: UIViewController {
         
         updateLayout(currentLayout)
         updateSortType(currentSortType)
-        addRefreshControl(refreshControl, forCollectionView: collectionView)
+        addRefreshControl(refreshControl, action: "refreshLibrary", forCollectionView: collectionView)
     }
     
     override func viewWillAppear(animated: Bool) {

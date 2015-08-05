@@ -25,18 +25,10 @@ public class Post: PFObject, PFSubclassing {
     
     @NSManaged public var content: String
     @NSManaged public var replyLevel: Int
-    @NSManaged public var postedBy: PFUser?
+    @NSManaged public var postedBy: User?
     @NSManaged public var thread: Thread
     @NSManaged public var hasSpoilers: Bool
     @NSManaged public var images: [String]?
     @NSManaged public var youtubeID: String?
-    
-    public var replies: [PFObject] {
-        get {
-           return (self["replies"] ?? [] ) as! [PFObject]
-        }
-        set (value) {
-            self["replies"] = value
-        }
-    }
+    @NSManaged public var replies: [Post]
 }

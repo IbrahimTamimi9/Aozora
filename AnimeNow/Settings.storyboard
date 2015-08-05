@@ -185,7 +185,7 @@ Aozora 1.0.0</string>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vT0-NJ-JSn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="848" y="-156"/>
+            <point key="canvasLocation" x="700" y="-156"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="XFD-Cf-RaK">

@@ -153,6 +153,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SeasonalChart.registerSubclass()
         Episode.registerSubclass()
         UserDetails.registerSubclass()
+        User.registerSubclass()
         TimelinePost.registerSubclass()
         Thread.registerSubclass()
         Post.registerSubclass()

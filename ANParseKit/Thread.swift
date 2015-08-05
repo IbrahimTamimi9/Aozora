@@ -26,7 +26,7 @@ public class Thread: PFObject, PFSubclassing {
     @NSManaged public var title: String
     @NSManaged public var episode: Episode?
     @NSManaged public var anime: Anime?
-    @NSManaged public var startedBy: PFUser?
+    @NSManaged public var startedBy: User?
     @NSManaged public var replies: Int
     @NSManaged public var tags: [String]
 }

@@ -16,12 +16,12 @@ class UserListViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    var user: PFUser = PFUser.currentUser()!
+    var user: User = User.currentUser()!
     var loadingView: LoaderView!
     
-    var dataSource: [PFUser] = []
+    var dataSource: [User] = []
     var titleToSet = ""
-    func initWithList(userList: [PFUser], title: String) {
+    func initWithList(userList: [User], title: String) {
         dataSource = userList
         titleToSet = title
     }
@@ -45,7 +45,7 @@ class UserListViewController: UIViewController {
         
         PFObject.fetchAllIfNeededInBackground(dataSource, block: { (result, error) -> Void in
             
-            if let result = result as? [PFUser] {
+            if let result = result as? [User] {
                 self.dataSource = result
             }
             
@@ -67,7 +67,7 @@ extension UserListViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCellWithIdentifier("UserCell") as! UserCell
         
         let profile = dataSource[indexPath.row]
-        let avatarFile = profile["avatarThumb"] as! PFFile
+        let avatarFile = profile.avatarThumb
         cell.avatar.setImageWithPFFile(avatarFile)
         cell.username.text = profile.username
         cell.layoutIfNeeded()
