@@ -8,6 +8,7 @@
         <mutableArray key="FontAwesome.ttf">
             <string>FontAwesome</string>
             <string>FontAwesome</string>
+            <string>FontAwesome</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -211,7 +212,7 @@
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                         </label>
-                                        <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PRO+" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i6N-oU-yq0">
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PRO+" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i6N-oU-yq0">
                                             <rect key="frame" x="80" y="109" width="48" height="21"/>
                                             <color key="backgroundColor" red="1" green="0.68236449359999996" blue="0.1161528146" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
@@ -284,6 +285,21 @@ Follow me for app updates.</string>
                                                 <action selector="showFollowers:" destination="M5q-uq-HPK" eventType="touchUpInside" id="eZa-a2-WcY"/>
                                             </connections>
                                         </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qK8-bI-U4V">
+                                            <rect key="frame" x="464" y="125" width="40" height="30"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="40" id="7vw-qe-F5g"/>
+                                                <constraint firstAttribute="height" constant="30" id="iIs-GX-gsU"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="21"/>
+                                            <state key="normal" title="">
+                                                <color key="titleColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="showSettings:" destination="M5q-uq-HPK" eventType="touchUpInside" id="rSY-R9-knx"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                     <color key="backgroundColor" red="0.97254902124404907" green="0.97254902124404907" blue="0.97254902124404907" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
@@ -299,6 +315,7 @@ Follow me for app updates.</string>
                                         <constraint firstAttribute="bottom" secondItem="asH-I6-fJz" secondAttribute="bottom" constant="155" id="MQf-VF-j62"/>
                                         <constraint firstAttribute="trailing" secondItem="TgH-QU-GT1" secondAttribute="trailing" constant="8" id="Ppi-A8-7Mh"/>
                                         <constraint firstAttribute="trailing" secondItem="asH-I6-fJz" secondAttribute="trailing" id="Qgg-do-Yog"/>
+                                        <constraint firstItem="qK8-bI-U4V" firstAttribute="centerY" secondItem="hlo-ra-225" secondAttribute="centerY" id="UUh-lW-B8H"/>
                                         <constraint firstItem="9bT-p7-f1f" firstAttribute="bottom" secondItem="i6N-oU-yq0" secondAttribute="bottom" constant="30" id="VXK-cm-HSC"/>
                                         <constraint firstItem="9bT-p7-f1f" firstAttribute="top" secondItem="nYJ-CX-2KS" secondAttribute="top" constant="100" id="Vqc-tQ-eH4"/>
                                         <constraint firstItem="asH-I6-fJz" firstAttribute="top" secondItem="nYJ-CX-2KS" secondAttribute="top" id="cZP-LE-HhC"/>
@@ -310,6 +327,7 @@ Follow me for app updates.</string>
                                         <constraint firstAttribute="bottom" secondItem="eBe-M2-du6" secondAttribute="bottom" constant="3" id="vOL-Bc-Zzw"/>
                                         <constraint firstItem="9bT-p7-f1f" firstAttribute="bottom" secondItem="MUA-4J-1Hx" secondAttribute="bottom" constant="4" id="xJV-aH-eSd"/>
                                         <constraint firstItem="MUA-4J-1Hx" firstAttribute="leading" secondItem="9bT-p7-f1f" secondAttribute="trailing" constant="8" id="xZg-ge-i55"/>
+                                        <constraint firstAttribute="trailing" secondItem="qK8-bI-U4V" secondAttribute="trailing" constant="96" id="xdV-1E-4Rr"/>
                                     </constraints>
                                 </view>
                                 <connections>
@@ -334,9 +352,9 @@ Follow me for app updates.</string>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Profile" id="R1g-ee-WQp">
-                        <barButtonItem key="rightBarButtonItem" image="icon-settings" id="5c8-zA-vWE" userLabel="Settings">
+                        <barButtonItem key="rightBarButtonItem" image="icon-create" id="5c8-zA-vWE" userLabel="Create">
                             <connections>
-                                <action selector="showSettings:" destination="M5q-uq-HPK" id="z1V-Yp-7vR"/>
+                                <action selector="composeUpdatePressed:" destination="M5q-uq-HPK" id="dDm-KR-CCh"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -344,12 +362,14 @@ Follow me for app updates.</string>
                     <connections>
                         <outlet property="aboutLabel" destination="TgH-QU-GT1" id="fdg-yK-xJA"/>
                         <outlet property="animeListButton" destination="hlo-ra-225" id="t7R-Aq-LOG"/>
+                        <outlet property="createBBI" destination="5c8-zA-vWE" id="C1B-QI-yeu"/>
                         <outlet property="followButton" destination="hlo-ra-225" id="a8q-a9-OQM"/>
                         <outlet property="followersButton" destination="eBe-M2-du6" id="i6u-LJ-rcF"/>
                         <outlet property="followingButton" destination="5yX-hf-St0" id="eO3-En-ROy"/>
                         <outlet property="proBadge" destination="i6N-oU-yq0" id="B32-23-brK"/>
                         <outlet property="proBottomLayoutConstraint" destination="VXK-cm-HSC" id="76g-JK-5hz"/>
-                        <outlet property="settingsBBI" destination="5c8-zA-vWE" id="mo3-ee-zbA"/>
+                        <outlet property="settingsButton" destination="qK8-bI-U4V" id="2Td-7e-cr3"/>
+                        <outlet property="settingsTrailingSpaceConstraint" destination="xdV-1E-4Rr" id="TYp-il-Lry"/>
                         <outlet property="tableView" destination="sY9-wc-JPh" id="JcR-C5-OfD"/>
                         <outlet property="tagBadge" destination="MUA-4J-1Hx" id="BxP-Er-d2T"/>
                         <outlet property="userAvatar" destination="9bT-p7-f1f" id="pFe-1U-bQf"/>
@@ -364,7 +384,7 @@ Follow me for app updates.</string>
         </scene>
     </scenes>
     <resources>
+        <image name="icon-create" width="22" height="22"/>
         <image name="icon-profile-filled" width="25" height="25"/>
-        <image name="icon-settings" width="22" height="22"/>
     </resources>
 </document>

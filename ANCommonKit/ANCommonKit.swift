@@ -26,6 +26,11 @@ public class ANCommonKit {
         return controller
     }
     
+    public class func commentViewController() -> CommentViewController {
+        let controller = UIStoryboard(name: "Thread", bundle: bundle()).instantiateInitialViewController() as! CommentViewController
+        return controller
+    }
+    
     public class func webViewController() -> (UINavigationController,InAppBrowserViewController) {
         let controller = UIStoryboard(name: "InAppBrowser", bundle: NSBundle(forClass: self)).instantiateInitialViewController() as! UINavigationController
         return (controller,controller.viewControllers.last! as! InAppBrowserViewController)

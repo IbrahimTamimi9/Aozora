@@ -13,8 +13,8 @@ import TTTAttributedLabel
 
 class ProfileViewController: UIViewController {
     
-    @IBOutlet weak var reminderBBI: UIBarButtonItem!
-    @IBOutlet weak var settingsBBI: UIBarButtonItem!
+    @IBOutlet weak var createBBI: UIBarButtonItem!
+    @IBOutlet weak var settingsButton: UIButton!
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -30,6 +30,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var proBadge: UILabel!
     @IBOutlet weak var tagBadge: UILabel!
     @IBOutlet weak var proBottomLayoutConstraint: NSLayoutConstraint!
+    @IBOutlet weak var settingsTrailingSpaceConstraint: NSLayoutConstraint!
     
     var user = User.currentUser()!
     var fetchController = FetchController()
@@ -74,6 +75,7 @@ class ProfileViewController: UIViewController {
         if user.badges.count > 0 {
             tagBadge.text = user.badges.first
         } else {
+            tagBadge.hidden = true
             proBottomLayoutConstraint.constant = 4
         }
 
@@ -123,13 +125,16 @@ class ProfileViewController: UIViewController {
         
     }
     
+    @IBAction func composeUpdatePressed(sender: AnyObject) {
+        let comment = ANCommonKit.commentViewController()
+        presentViewController(comment, animated: true, completion: nil)
+    }
+    
     @IBAction func showFollowingUsers(sender: AnyObject) {
-        
         let userListController = UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("UserList") as! UserListViewController
         let followingList = user.following
         userListController.initWithList(followingList, title: "Following")
         navigationController?.pushViewController(userListController, animated: true)
-        
     }
     
     @IBAction func showFollowers(sender: AnyObject) {
@@ -293,6 +298,9 @@ extension ProfileViewController: UITableViewDataSource {
 extension ProfileViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 10
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     }
 }
 

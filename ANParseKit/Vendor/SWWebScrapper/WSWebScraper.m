@@ -18,10 +18,7 @@
 @property (nonatomic) BOOL catchFlag;
 @property (strong, nonatomic) NSURL* targetUrl;
 
-@property (nonatomic) BOOL isMakingPostRequest;
-@property (nonatomic) BOOL didMadePostRequest;
 @property (strong, nonatomic) NSString *script;
-@property (nonatomic) float estimatedProgress;
 
 @end
 
@@ -45,131 +42,75 @@
         return nil;
     }
     
-    self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, 1, 0)];
+    self.webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, 1, 0)];
     self.webView.hidden = YES;
+    self.webView.navigationDelegate = self;
+    [self.webView addObserver:self forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:NULL];
     
     self.viewController = aViewController;
     [self.viewController.view addSubview:self.webView];
-    
-    self.progressProxy = [[NJKWebViewProgress alloc] init];
-    self.webView.delegate = self.progressProxy;
-    self.progressProxy.webViewProxyDelegate = self;
-    self.progressProxy.progressDelegate = self;
     
     self.catchFlag = NO;
 
     return self;
 }
 
+- (void)dealloc {
+    [self.webView removeObserver:self forKeyPath:@"estimatedProgress"];
+    [self.webView setNavigationDelegate:nil];
+}
+
 - (void)scrape:(NSString *)url handler:(WSRequestHandler)handler
 {
     self.catchFlag = YES;
-    self.isMakingPostRequest = NO;
     [self.webView stopLoading];
     self.targetUrl = [NSURL URLWithString:url];
     self.completion = handler;
 
     NSMutableURLRequest *rq = [NSMutableURLRequest requestWithURL:self.targetUrl];
-    //[rq setValue:@"api-animetrkr-79CF0C8BFA98843F983F9D1083C54A36" forHTTPHeaderField:@"User-Agent"];
 
     [self.webView loadRequest:rq];    
 }
 
-- (void)makePostRequestWithScript:(NSString *)script handler:(HTTPRequestHandler)handler
-{
-
-    NSLog(@"Script: %@",script);
-    self.completionPOST = handler;
-    self.script = script;
-    
-    // TODO: Make a post request with a NSMutableURLRequest... if using UIWebView
-    // Prepare for POST request
-    self.isMakingPostRequest = YES;
-    self.didMadePostRequest = NO;
-    NSString *path = [[NSBundle bundleForClass:self.class] pathForResource:@"POSTRequestJS" ofType:@"html"];
-    NSString *html = [[NSString alloc] initWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
-    [self.webView loadHTMLString:html baseURL:[[NSBundle bundleForClass:self.class] bundleURL]];
-
-}
-
-
--(void)webViewProgress:(NJKWebViewProgress *)webViewProgress updateProgress:(float)progress
-{
-    self.estimatedProgress = progress;
-    // Estimated progress when image urls have been loaded 0.5
-    //NSLog(@"Progress %f",self.estimatedProgress);
-    if (!self.catchFlag || self.estimatedProgress < NJKInteractiveProgressValue) {
-        return;
-    }
-    
-    NSString *html = [self webHTML];
-    if(!html.length){
-        NSLog(@"No html");
-        return;
-    }
-    
-    self.catchFlag = NO;
-    NSLog(@"Loaded from progress %f",self.estimatedProgress);
-    
-    if(!self.isMakingPostRequest) {
-        if (self.completion) {
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"estimatedProgress"] && object == self.webView) {
+        
+        // Estimated progress when image urls have been loaded 0.7
+        if(self.catchFlag && self.webView.estimatedProgress > 0.7) {
+            self.catchFlag = NO;
+            [self.webView evaluateJavaScript:@"document.body.innerHTML" completionHandler:^(NSString *body, NSError *error) {
+                
+                NSString *newHTML = [[[body stringByReplacingOccurrencesOfString:@"\n" withString:@""] stringByReplacingOccurrencesOfString:@"  " withString:@""] stringByReplacingOccurrencesOfString:@"\t" withString:@""];
+                newHTML = [newHTML stringByReplacingOccurrencesOfString:@"> <" withString:@"><"];
+                
+                TFHpple *hpple = [TFHpple hppleWithHTMLData:[newHTML dataUsingEncoding:NSUTF8StringEncoding]];
+                self.completion(hpple);
+                [self.webView stopLoading];
+                
+            }];
             
-            NSString *newHTML = [[[html stringByReplacingOccurrencesOfString:@"\n" withString:@""] stringByReplacingOccurrencesOfString:@"  " withString:@""] stringByReplacingOccurrencesOfString:@"\t" withString:@""];
-            newHTML = [newHTML stringByReplacingOccurrencesOfString:@"> <" withString:@"><"];
-            
-            TFHpple *hpple = [TFHpple hppleWithHTMLData:[newHTML dataUsingEncoding:NSUTF8StringEncoding]];
-            self.completion(hpple);
-            [self.webView stopLoading];
-        }
-
-    } else {
-        if (self.completionPOST) {
-            self.completionPOST(html);
         }
     }
 }
 
-
-#pragma mark - UIWebViewDelegate
-
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+#pragma mark - WKNavigationDelegate
+- (void)webView:(WKWebView *)webView didCommitNavigation:(WKNavigation *)navigation
 {
-    //NSLog(@"Should startLoadWithRequest: %@", webView.request.URL);
-    return YES;
+    self.catchFlag = YES;
+    NSLog(@"didCommitNavigation");
 }
 
-- (void)webViewDidStartLoad:(UIWebView *)webView {
-    //NSLog(@"didStartLoad %@",webView.request.URL);
-}
-
-- (void)webViewDidFinishLoad:(UIWebView *)webView {
-    
-    // This is called multiple times, stupid webview..
-    if (self.isMakingPostRequest && !self.didMadePostRequest) {
-        self.didMadePostRequest = YES;
-        self.catchFlag = YES;
-        [self.webView stringByEvaluatingJavaScriptFromString:self.script];
-    }
-}
-
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation
 {
-    NSLog(@"didFailLoad");
-    
-    if ([error code] != NSURLErrorCancelled) {
+    NSLog(@"didFinishNavigation");
+}
+
+- (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error
+{
+    NSLog(@"didFailNavigation");
+    if ([error code]!=NSURLErrorCancelled) {
         NSLog(@"[ERROR] %@", [error localizedDescription]);
         self.completion(nil);
     }
 }
-
-- (NSString *)webHTML {
-    NSString* head = [self.webView stringByEvaluatingJavaScriptFromString:@"document.head.innerHTML"];
-    NSString* body = [self.webView stringByEvaluatingJavaScriptFromString:@"document.body.innerHTML"];
-    
-    NSString* html = [NSString stringWithFormat:@"<html><head>%@</head><body>%@</body></html>", head, body];
-    return html;
-}
-
-
-
 @end
