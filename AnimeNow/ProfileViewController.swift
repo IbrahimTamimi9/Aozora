@@ -127,6 +127,7 @@ class ProfileViewController: UIViewController {
     
     @IBAction func composeUpdatePressed(sender: AnyObject) {
         let comment = ANParseKit.commentViewController()
+        comment.delegate = self
         presentViewController(comment, animated: true, completion: nil)
     }
     
@@ -317,5 +318,11 @@ extension ProfileViewController: TTTAttributedLabelDelegate {
         let (navController, webController) = ANCommonKit.webViewController()
         webController.initWithTitle(url.absoluteString!, initialUrl: url)
         presentViewController(navController, animated: true, completion: nil)
+    }
+}
+
+extension ProfileViewController: CommentViewControllerDelegate {
+    func commentViewControllerDidFinishedPosting(post: PFObject) {
+        fetchUserFeed()
     }
 }

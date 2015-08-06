@@ -10,12 +10,17 @@ import Foundation
 import ANCommonKit
 import Bolts
 
-public class ImagesViewController :UIViewController {
+protocol ImagesViewControllerDelegate: class {
+    func imagesViewControllerSelected(#imageURL: String)
+}
+
+public class ImagesViewController: UIViewController {
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     
+    weak var delegate: ImagesViewControllerDelegate?
     var dataSource: [String] = []
     var malScrapper: MALScrapper!
 
@@ -79,6 +84,7 @@ extension ImagesViewController: UICollectionViewDelegate {
         
         var imageController = ANParseKit.threadStoryboard().instantiateViewControllerWithIdentifier("Image") as! ImageViewController
         imageController.initWith(imageUrl: imageURL)
+        imageController.delegate = self
         imageController.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
         presentViewController(imageController, animated: true, completion: nil)
     }
@@ -97,5 +103,13 @@ extension ImagesViewController: UISearchBarDelegate {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
+}
+
+extension ImagesViewController: ImageViewControllerDelegate {
+    
+    func imageViewControllerSelected(#imageURL: String) {
+        delegate?.imagesViewControllerSelected(imageURL: imageURL)
+        dismissViewControllerAnimated(true, completion: nil)
+    }
     
 }

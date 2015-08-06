@@ -44,8 +44,9 @@ public class ImageViewController: UIViewController {
     }
     
     @IBAction func selectPressed(sender: AnyObject) {
-        delegate?.imageViewControllerSelected(imageURL: imageUrl)
-        dismissViewControllerAnimated(true, completion: nil)
+        dismissViewControllerAnimated(true, completion: { () -> Void in
+            delegate?.imageViewControllerSelected(imageURL: imageUrl)
+        })
     }
 }
 

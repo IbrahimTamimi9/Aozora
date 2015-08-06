@@ -119,6 +119,8 @@ extension SearchViewController: UISearchBarDelegate {
         }
         
         fetchAnimeWithQuery(searchBar.text, cancellationToken: NSOperation())
+        view.endEditing(true)
+        searchBar.enableCancelButton()
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {

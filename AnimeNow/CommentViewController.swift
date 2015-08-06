@@ -7,6 +7,11 @@
 //
 
 import Foundation
+import Parse
+
+public protocol CommentViewControllerDelegate: class {
+    func commentViewControllerDidFinishedPosting(post: PFObject)
+}
 
 public class CommentViewController: UIViewController {
     
@@ -17,8 +22,31 @@ public class CommentViewController: UIViewController {
     @IBOutlet weak var photoButton: UIButton!
     @IBOutlet weak var videoButton: UIButton!
     @IBOutlet weak var sendButton: UIButton!
+    @IBOutlet weak var photoCountLabel: UILabel!
+    @IBOutlet weak var videoCountLabel: UILabel!
+    @IBOutlet weak var spoilersSwitch: UISwitch!
+    
+    public weak var delegate: CommentViewControllerDelegate?
+    
+    var selectedImageURL: String?
+    var selectedVideoID: String?
     
     var initialStatusBarStyle: UIStatusBarStyle!
+    var user = User.currentUser()!
+    var replyingToUser: User?
+    var postType: PostType = .Timeline
+    
+    public enum PostType {
+        case Timeline
+        case Episode
+        case Anime
+        case Forum
+    }
+    
+    public func initWith(#postType: PostType, replyingToUser: User? = nil) {
+        self.postType = postType
+        self.replyingToUser = replyingToUser
+    }
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +54,15 @@ public class CommentViewController: UIViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
         textView.becomeFirstResponder()
+        
+        photoCountLabel.hidden = true
+        videoCountLabel.hidden = true
+        
+        if let replyingToUser = replyingToUser {
+            inReply.text = "  In Reply to \(replyingToUser.aozoraUsername)"
+        } else {
+            inReply.text = "  New Post"
+        }
     }
     
     public override func viewWillAppear(animated: Bool) {
@@ -73,6 +110,46 @@ public class CommentViewController: UIViewController {
             }, completion: nil)
     }
     
+    func performPost() {
+        self.sendButton.setTitle("Sending...", forState: .Normal)
+        
+        switch postType {
+        case .Timeline:
+            var timelinePost = TimelinePost()
+            timelinePost.content = textView.text
+            if let selectedImageURL = selectedImageURL {
+                timelinePost.images = [selectedImageURL]
+            }
+            
+            if let youtubeID = selectedVideoID {
+                timelinePost.youtubeID = youtubeID
+            }
+            
+            if let replyingToUser = replyingToUser {
+                timelinePost.replyLevel = 1
+                timelinePost.userTimeline = replyingToUser
+            } else {
+                timelinePost.replyLevel = 0
+                timelinePost.userTimeline = user
+            }
+            
+            timelinePost.postedBy = user
+            timelinePost.saveInBackgroundWithBlock({ (result, error) -> Void in
+                if let error = error {
+                    // Show error
+                    self.sendButton.setTitle("Send", forState: .Normal)
+                } else {
+                    // Success!
+                    self.sendButton.setTitle("Sent!", forState: .Normal)
+                    self.delegate?.commentViewControllerDidFinishedPosting(timelinePost)
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                }
+            })
+        default:
+            break;
+        }
+    }
+    
     // MARK: - IBActions
     
     @IBAction func dimissViewControllerPressed(sender: AnyObject) {
@@ -81,6 +158,7 @@ public class CommentViewController: UIViewController {
     
     @IBAction func addImagePressed(sender: AnyObject) {
         let imagesController = ANParseKit.threadStoryboard().instantiateViewControllerWithIdentifier("Images") as! ImagesViewController
+        imagesController.delegate = self
         presentViewController(imagesController, animated: true, completion: nil)
     }
     
@@ -89,6 +167,15 @@ public class CommentViewController: UIViewController {
     }
 
     @IBAction func sendPressed(sender: AnyObject) {
+        performPost()
     }
     
+}
+
+extension CommentViewController: ImagesViewControllerDelegate {
+    func imagesViewControllerSelected(#imageURL: String) {
+        selectedImageURL = imageURL
+        photoCountLabel.hidden = false
+        videoButton.enabled = false
+    }
 }
