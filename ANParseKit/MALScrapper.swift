@@ -163,6 +163,35 @@ public class MALScrapper {
         return completion.task
     }
     
+    public func findImagesWithQuery(string: String, animated: Bool) -> BFTask {
+        let requestURL = "https://www.google.com/search?q=\(string)&tbm=isch&safe=active&tbs=isz:m" + (animated ? ",itp:animated" : "")
+        let encodedRequest = requestURL.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
+        let completion = BFTaskCompletionSource()
+        
+        viewController.webScraper.scrape(encodedRequest) { (hpple) -> Void in
+            if hpple == nil {
+                println("hpple is nil")
+                completion.setError(NSError())
+                return
+            }
+            
+            let results = hpple.searchWithXPathQuery("//div[@id='rg_s']/div/a") as! [TFHppleElement]
+            var images: [String] = []
+            
+            for result in results {
+                let urlString = result.objectForKey("href")
+                if let url = NSURL(string: urlString), let parameters = BFURL(URL: url).inputQueryParameters, let imageURL = parameters["imgurl"] as? String {
+                    images.append(imageURL)
+                }
+            }
+            
+            println("found \(images.count) images")
+            completion.setResult(images)
+        }
+        
+        return completion.task
+    }
+    
     // Scrapping topics from desktop version
     public func topicsFor(#anime: Anime) -> BFTask {
         let requestURL = "http://myanimelist.net/forum/?animeid=\(anime.myAnimeListID)"

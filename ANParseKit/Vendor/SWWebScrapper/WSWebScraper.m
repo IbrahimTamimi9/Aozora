@@ -75,8 +75,7 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if ([keyPath isEqualToString:@"estimatedProgress"] && object == self.webView) {
         
-        // Estimated progress when image urls have been loaded 0.7
-        if(self.catchFlag && self.webView.estimatedProgress > 0.7) {
+        if(self.catchFlag && self.webView.estimatedProgress > 0.9) {
             self.catchFlag = NO;
             [self.webView evaluateJavaScript:@"document.body.innerHTML" completionHandler:^(NSString *body, NSError *error) {
                 

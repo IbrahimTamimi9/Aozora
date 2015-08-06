@@ -189,7 +189,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return Int(UIInterfaceOrientationMask.All.rawValue);
         } else if let controller = topViewController as? XCDYouTubeVideoPlayerViewController where !controller.isBeingDismissed() {
             return Int(UIInterfaceOrientationMask.All.rawValue);
-        }else {
+        } else if let controller = topViewController as? ImageViewController where !controller.isBeingDismissed() {
+            return Int(UIInterfaceOrientationMask.All.rawValue);
+        } else {
             return Int(UIInterfaceOrientationMask.Portrait.rawValue);
         }
     }

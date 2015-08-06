@@ -18,3 +18,19 @@ public struct ParseKit {
     public static let AnimeReview = "AnimeReview"
     public static let SeasonalChart = "SeasonalChart"
 }
+
+public class ANParseKit {
+    
+    public class func bundle() -> NSBundle {
+        return NSBundle(forClass: self)
+    }
+    
+    public class func threadStoryboard() -> UIStoryboard {
+        return UIStoryboard(name: "Thread", bundle: bundle())
+    }
+    
+    public class func commentViewController() -> CommentViewController {
+        let controller = ANParseKit.threadStoryboard().instantiateInitialViewController() as! CommentViewController
+        return controller
+    }
+}

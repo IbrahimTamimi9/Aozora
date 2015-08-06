@@ -31,14 +31,18 @@ public class CommentViewController: UIViewController {
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        initialStatusBarStyle = UIApplication.sharedApplication().statusBarStyle
+        if isBeingPresented() {
+            initialStatusBarStyle = UIApplication.sharedApplication().statusBarStyle
+        }
         UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.Default, animated: true)
     }
     
     public override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
-        UIApplication.sharedApplication().setStatusBarStyle(initialStatusBarStyle, animated: true)
+        if isBeingDismissed() {
+            UIApplication.sharedApplication().setStatusBarStyle(initialStatusBarStyle, animated: true)
+        }
     }
     
     // MARK: - NSNotificationCenter
@@ -76,7 +80,8 @@ public class CommentViewController: UIViewController {
     }
     
     @IBAction func addImagePressed(sender: AnyObject) {
-        
+        let imagesController = ANParseKit.threadStoryboard().instantiateViewControllerWithIdentifier("Images") as! ImagesViewController
+        presentViewController(imagesController, animated: true, completion: nil)
     }
     
     @IBAction func addVideoPressed(sender: AnyObject) {

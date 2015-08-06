@@ -32,6 +32,7 @@
 		DA2D1EF11B531B21009A5CCD /* PFQuery+LocalDatastore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2D1EEC1B530903009A5CCD /* PFQuery+LocalDatastore.swift */; };
 		DA2D1EF51B53F475009A5CCD /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA2D1EF31B53F475009A5CCD /* Fabric.framework */; };
 		DA2D1EF61B53F475009A5CCD /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA2D1EF41B53F475009A5CCD /* Crashlytics.framework */; };
+		DA35B9951B7402F000C0AAC7 /* UISearchBar+Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA35B9941B7402F000C0AAC7 /* UISearchBar+Appearance.swift */; };
 		DA41679B1B25F76F00847F56 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA41679A1B25F76F00847F56 /* FontAwesome.ttf */; };
 		DA4167B31B273B0700847F56 /* ANAnimeKit.h in Headers */ = {isa = PBXBuildFile; fileRef = DA4167B21B273B0700847F56 /* ANAnimeKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA4167B91B273B0700847F56 /* ANAnimeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA4167AE1B273B0700847F56 /* ANAnimeKit.framework */; };
@@ -69,8 +70,10 @@
 		DA5A3BFB1B35F19A00C07D71 /* TraktV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6E83B31B167F1E00970D27 /* TraktV2.swift */; };
 		DA5A3BFC1B35F19A00C07D71 /* AniList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA27D1B61AF1BFA300CC854E /* AniList.swift */; };
 		DA5A3BFD1B35F19A00C07D71 /* Atarashii.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE43C371B2D5BC800C3092D /* Atarashii.swift */; };
-		DA6755E21B729C2100D6EA32 /* ImagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6755E11B729C2100D6EA32 /* ImagesViewController.swift */; };
 		DA6755E31B72A8F800D6EA32 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA27D19D1AF1BA9D00CC854E /* Images.xcassets */; };
+		DA6755E41B72E6D100D6EA32 /* Thread.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAD67DFF1B7275F0000BB325 /* Thread.storyboard */; };
+		DA6755E51B72E6D100D6EA32 /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD67E011B72760B000BB325 /* CommentViewController.swift */; };
+		DA6755E61B72E6D100D6EA32 /* ImagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6755E11B729C2100D6EA32 /* ImagesViewController.swift */; };
 		DA6E12B31B10D94200B278B0 /* ANParseKit.h in Headers */ = {isa = PBXBuildFile; fileRef = DA6E12B21B10D94200B278B0 /* ANParseKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA6E12B91B10D94200B278B0 /* ANParseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E12AE1B10D94200B278B0 /* ANParseKit.framework */; };
 		DA6E12C21B10D94200B278B0 /* ANParseKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6E12C11B10D94200B278B0 /* ANParseKitTests.swift */; };
@@ -171,14 +174,13 @@
 		DAD390A41B6C3216000A84DE /* ViewPreviousCommentsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD390A31B6C3216000A84DE /* ViewPreviousCommentsCell.swift */; };
 		DAD390A61B6C322A000A84DE /* WriteACommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD390A51B6C322A000A84DE /* WriteACommentCell.swift */; };
 		DAD67DFD1B726724000BB325 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD67DFC1B726724000BB325 /* User.swift */; };
-		DAD67E001B7275F0000BB325 /* Thread.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAD67DFF1B7275F0000BB325 /* Thread.storyboard */; };
-		DAD67E021B72760B000BB325 /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD67E011B72760B000BB325 /* CommentViewController.swift */; };
 		DAD67E041B7292D6000BB325 /* Resources.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAC3F3E01B5E989E001D6072 /* Resources.xcassets */; };
 		DAD67E051B7292D7000BB325 /* Resources.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAC3F3E01B5E989E001D6072 /* Resources.xcassets */; };
 		DAD67E061B7292D8000BB325 /* Resources.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAC3F3E01B5E989E001D6072 /* Resources.xcassets */; };
 		DAE43C321B2BC1A900C3092D /* TFHppleElement+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE43C311B2BC1A900C3092D /* TFHppleElement+Convenience.swift */; };
 		DAE43C341B2BC3B700C3092D /* AnimeDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE43C331B2BC3B700C3092D /* AnimeDetail.swift */; };
 		DAE43C3A1B2F971800C3092D /* UIView+Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE43C391B2F971800C3092D /* UIView+Animation.swift */; };
+		DAE64EEC1B73CCE4005A984A /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE64EEB1B73CCE4005A984A /* ImageViewController.swift */; };
 		DAE7A7191B2105FD00788614 /* AnimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE7A7181B2105FD00788614 /* AnimeCell.swift */; };
 		DAF32E3F1B62CEAF003FC372 /* Resources.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAF32E3E1B62CEAF003FC372 /* Resources.xcassets */; };
 		DAF357061B4593E200629A3D /* LibraryAnimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF357051B4593E200629A3D /* LibraryAnimeCell.swift */; };
@@ -359,6 +361,7 @@
 		DA2D1EEE1B5318E1009A5CCD /* NSUserDefaults+Dates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSUserDefaults+Dates.swift"; path = "../AnimeNow/NSUserDefaults+Dates.swift"; sourceTree = "<group>"; };
 		DA2D1EF31B53F475009A5CCD /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		DA2D1EF41B53F475009A5CCD /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		DA35B9941B7402F000C0AAC7 /* UISearchBar+Appearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UISearchBar+Appearance.swift"; sourceTree = "<group>"; };
 		DA38A9881B223AF1002FCBB4 /* ActionListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionListViewController.swift; sourceTree = "<group>"; };
 		DA38A98B1B223B39002FCBB4 /* Action.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Action.storyboard; sourceTree = "<group>"; };
 		DA38A98E1B223F1F002FCBB4 /* BasicTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicTableCell.swift; sourceTree = "<group>"; };
@@ -524,6 +527,7 @@
 		DAE43C331B2BC3B700C3092D /* AnimeDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeDetail.swift; sourceTree = "<group>"; };
 		DAE43C371B2D5BC800C3092D /* Atarashii.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Atarashii.swift; sourceTree = "<group>"; };
 		DAE43C391B2F971800C3092D /* UIView+Animation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Animation.swift"; sourceTree = "<group>"; };
+		DAE64EEB1B73CCE4005A984A /* ImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
 		DAE7A7181B2105FD00788614 /* AnimeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeCell.swift; sourceTree = "<group>"; };
 		DAF32E3E1B62CEAF003FC372 /* Resources.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Resources.xcassets; sourceTree = "<group>"; };
 		DAF357031B45790100629A3D /* LibrarySyncController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LibrarySyncController.swift; path = ../AnimeNow/LibrarySyncController.swift; sourceTree = "<group>"; };
@@ -897,7 +901,6 @@
 				DAFD60C01B27847E007275C1 /* ANCommonKit.swift */,
 				DA4AF8B91B276E060020252E /* ANCommonKit.h */,
 				DA7C84C71B43797F0036D119 /* Extensions */,
-				DAD67DFE1B72759F000BB325 /* Thread */,
 				DAC077AE1B6890F50067DA90 /* Posts */,
 				DA06132B1B3778310044340F /* Model */,
 				DA7C84C51B43337E0036D119 /* Controllers */,
@@ -983,6 +986,7 @@
 				DAE43C301B2BC16F00C3092D /* Extensions */,
 				DACE77C51B29518300037486 /* Parse classes */,
 				DA5A3BED1B346F2100C07D71 /* MALScrapper */,
+				DAD67DFE1B72759F000BB325 /* Thread */,
 				DAF6186E1B377BBF00286517 /* Services */,
 				DA0347251B4ADD8D0025CE24 /* Controllers */,
 				DA6E12CE1B10D96F00B278B0 /* Vendor */,
@@ -1063,6 +1067,7 @@
 				DA13806D1B6DC08300C53560 /* UIViewController+Aozora.swift */,
 				DA2D1EEE1B5318E1009A5CCD /* NSUserDefaults+Dates.swift */,
 				DAC13BFD1B3F36AB0013D479 /* UIViewController+Image.swift */,
+				DA35B9941B7402F000C0AAC7 /* UISearchBar+Appearance.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -1211,6 +1216,7 @@
 				DAD67DFF1B7275F0000BB325 /* Thread.storyboard */,
 				DAD67E011B72760B000BB325 /* CommentViewController.swift */,
 				DA6755E11B729C2100D6EA32 /* ImagesViewController.swift */,
+				DAE64EEB1B73CCE4005A984A /* ImageViewController.swift */,
 			);
 			name = Thread;
 			path = ../AnimeNow;
@@ -1710,7 +1716,6 @@
 				DA823D8C1B326940005C7AFD /* InAppBrowser.storyboard in Resources */,
 				DAD390A21B6C303D000A84DE /* CommentTextCell.xib in Resources */,
 				DAD3909E1B6C2F35000A84DE /* PostImageCell.xib in Resources */,
-				DAD67E001B7275F0000BB325 /* Thread.storyboard in Resources */,
 				DA897F8B1B6D203D00A9510C /* CommentImageCell.xib in Resources */,
 				DAC077B31B6891140067DA90 /* PostTextCell.xib in Resources */,
 				DA897F891B6D1FCC00A9510C /* WriteACommentCell.xib in Resources */,
@@ -1730,6 +1735,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA6755E41B72E6D100D6EA32 /* Thread.storyboard in Resources */,
 				DAD67E041B7292D6000BB325 /* Resources.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1990,6 +1996,7 @@
 				DAC077AF1B68910A0067DA90 /* CommentCell.swift in Sources */,
 				DA5A3BFD1B35F19A00C07D71 /* Atarashii.swift in Sources */,
 				DA5A3BFC1B35F19A00C07D71 /* AniList.swift in Sources */,
+				DA35B9951B7402F000C0AAC7 /* UISearchBar+Appearance.swift in Sources */,
 				DA9F731D1B2931FF00C2652C /* UIImageView+SDWebImage.swift in Sources */,
 				DA58C2E21B38A7760082B626 /* String+NSDate.swift in Sources */,
 				DAFD60B91B27845F007275C1 /* BasicTableCell.swift in Sources */,
@@ -2011,10 +2018,8 @@
 				DA823D8D1B326940005C7AFD /* InAppBrowserViewController.swift in Sources */,
 				DAFD60BE1B27845F007275C1 /* BasicCollectionCell.swift in Sources */,
 				DAFD60BF1B278463007275C1 /* UIColor+AniNow.swift in Sources */,
-				DA6755E21B729C2100D6EA32 /* ImagesViewController.swift in Sources */,
 				DA7C84CA1B4379AD0036D119 /* UIViewController+Image.swift in Sources */,
 				DACE77C21B294D7B00037486 /* NSDate+AniNow.swift in Sources */,
-				DAD67E021B72760B000BB325 /* CommentViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2030,6 +2035,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA6755E61B72E6D100D6EA32 /* ImagesViewController.swift in Sources */,
 				DAE43C321B2BC1A900C3092D /* TFHppleElement+Convenience.swift in Sources */,
 				DA13806A1B6DBB4100C53560 /* Thread.swift in Sources */,
 				DAFE19B21B29F4EC002F3A76 /* Anime.swift in Sources */,
@@ -2046,6 +2052,7 @@
 				DA9AE39C1B69382D0053C2EA /* DataFetchController.swift in Sources */,
 				DA8B6E071B6C4DBF00D240FC /* UIImageView+PFFile.swift in Sources */,
 				DAC027CC1B2A16B80085C91A /* AnimeReview.swift in Sources */,
+				DAE64EEC1B73CCE4005A984A /* ImageViewController.swift in Sources */,
 				DA0347241B4ADD720025CE24 /* LibrarySyncController.swift in Sources */,
 				DA6E13131B10F56B00B278B0 /* SeasonalChartService.swift in Sources */,
 				DACCF35D1B110AA2006A13EB /* ANParseKit.swift in Sources */,
@@ -2053,6 +2060,7 @@
 				DAD67DFD1B726724000BB325 /* User.swift in Sources */,
 				DAC0779B1B686A870067DA90 /* UserDetails.swift in Sources */,
 				DA9AE39B1B6930F60053C2EA /* TimelinePost.swift in Sources */,
+				DA6755E51B72E6D100D6EA32 /* CommentViewController.swift in Sources */,
 				DA6E12E41B10D96F00B278B0 /* UIViewController+WebScraper.m in Sources */,
 				DAA3932D1B42FEA100A8D5D5 /* PFUser+CurrentUser.swift in Sources */,
 				DA13806C1B6DBB4C00C53560 /* Post.swift in Sources */,

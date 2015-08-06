@@ -126,7 +126,7 @@ class ProfileViewController: UIViewController {
     }
     
     @IBAction func composeUpdatePressed(sender: AnyObject) {
-        let comment = ANCommonKit.commentViewController()
+        let comment = ANParseKit.commentViewController()
         presentViewController(comment, animated: true, completion: nil)
     }
     

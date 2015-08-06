@@ -7,33 +7,66 @@
 //
 
 import Foundation
+import ANCommonKit
+import Bolts
 
-class ImagesViewController :UIViewController {
+public class ImagesViewController :UIViewController {
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
     
     var dataSource: [String] = []
-    
-    override func viewDidLoad() {
+    var malScrapper: MALScrapper!
+
+    override public func viewDidLoad() {
         super.viewDidLoad()
         
+        malScrapper = MALScrapper(viewController: self)
         
+        var searchBarTextField = searchBar.valueForKey("searchField") as? UITextField
+        searchBarTextField?.textColor = UIColor.blackColor()
+        
+        searchBar.becomeFirstResponder()
+        
+        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        var size = CGSize(width: view.bounds.size.width/2-3, height: 120)
+        layout.itemSize = size
+    }
+    
+    func findImagesWithQuery(query: String, animated: Bool) {
+        malScrapper.findImagesWithQuery(query, animated: animated).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
+            
+            let result = task.result as! [String]
+            self.dataSource = result
+            self.collectionView.reloadData()
+            
+            return nil
+        })
+    }
+    
+    // MARK: - IBAction
+    
+    @IBAction func segmentedControlValueChanged(sender: AnyObject) {
+        dataSource = []
+        collectionView.reloadData()
+        let animated = segmentedControl.selectedSegmentIndex == 0 ? false : true
+        findImagesWithQuery(searchBar.text, animated: animated)
     }
     
 }
 
 extension ImagesViewController: UICollectionViewDataSource {
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return dataSource.count
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("imageCell", forIndexPath: indexPath) as! BasicCollectionCell
         
-        cell.titleimageView.setImageFrom(urlString: dataSource[indexPath.section], animated: true)
+        cell.titleimageView.setImageFrom(urlString: dataSource[indexPath.row], animated: false)
         
         return cell
     }
@@ -41,7 +74,28 @@ extension ImagesViewController: UICollectionViewDataSource {
 
 extension ImagesViewController: UICollectionViewDelegate {
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        let imageURL = dataSource[indexPath.row]
         
+        var imageController = ANParseKit.threadStoryboard().instantiateViewControllerWithIdentifier("Image") as! ImageViewController
+        imageController.initWith(imageUrl: imageURL)
+        imageController.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
+        presentViewController(imageController, animated: true, completion: nil)
     }
+}
+
+extension ImagesViewController: UISearchBarDelegate {
+    
+    public func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        let animated = segmentedControl.selectedSegmentIndex == 0 ? false : true
+        findImagesWithQuery(searchBar.text, animated: animated)
+        view.endEditing(true)
+        searchBar.enableCancelButton()
+    }
+    
+    public func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    
 }

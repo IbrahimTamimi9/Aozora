@@ -21,6 +21,7 @@ class UserListViewController: UIViewController {
     
     var dataSource: [User] = []
     var titleToSet = ""
+    
     func initWithList(userList: [User], title: String) {
         dataSource = userList
         titleToSet = title
