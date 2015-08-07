@@ -57,7 +57,7 @@
                                 <color key="textColor" red="0.0078431372550000003" green="0.43921568630000002" blue="0.73333333329999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="l7o-JT-JFL">
+                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="l7o-JT-JFL">
                                 <rect key="frame" x="8" y="8" width="44" height="44"/>
                                 <color key="backgroundColor" red="0.89411765340000005" green="0.89411765340000005" blue="0.89411765340000005" alpha="1" colorSpace="calibratedRGB"/>
                                 <gestureRecognizers/>
@@ -107,8 +107,9 @@
                             <constraint firstAttribute="height" constant="1" id="93F-IP-BOX"/>
                         </constraints>
                     </view>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7Ot-hi-3MU">
+                    <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7Ot-hi-3MU">
                         <rect key="frame" x="8" y="96.5" width="304" height="180"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstAttribute="height" constant="180" id="8kf-Ei-Ewk"/>
                             <constraint firstAttribute="width" secondItem="7Ot-hi-3MU" secondAttribute="height" multiplier="76:45" id="P09-7Y-Lvf"/>
@@ -137,6 +138,9 @@
                                 <integer key="value" value="30"/>
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
+                        <connections>
+                            <action selector="pressedOnImage:" destination="IM6-bn-eHv" eventType="touchUpInside" id="xrj-Y3-kla"/>
+                        </connections>
                     </button>
                 </subviews>
                 <color key="backgroundColor" red="0.97254902124404907" green="0.97254902124404907" blue="0.97254902124404907" alpha="1" colorSpace="calibratedRGB"/>

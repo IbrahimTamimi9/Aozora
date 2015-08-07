@@ -34,7 +34,7 @@ public class CommentViewController: UIViewController {
     
     var initialStatusBarStyle: UIStatusBarStyle!
     var user = User.currentUser()!
-    var replyingToUser: User?
+    var parentPost: TimelinePost?
     var postType: PostType = .Timeline
     var editingPost: PFObject?
     
@@ -45,11 +45,11 @@ public class CommentViewController: UIViewController {
         case Forum
     }
     
-    public func initWith(#postType: PostType, delegate: CommentViewControllerDelegate?, editingPost: PFObject? = nil,  replyingToUser: User? = nil) {
+    public func initWith(#postType: PostType, delegate: CommentViewControllerDelegate?, editingPost: PFObject? = nil, parentPost: TimelinePost? = nil) {
         self.postType = postType
         self.editingPost = editingPost
         self.delegate = delegate
-        self.replyingToUser = replyingToUser
+        self.parentPost = parentPost
     }
     
     public override func viewDidLoad() {
@@ -64,7 +64,7 @@ public class CommentViewController: UIViewController {
         
         if let editingPost = editingPost {
             textView.text = editingPost["content"] as? String
-            if let replyingToUser = replyingToUser {
+            if let replyingToUser = parentPost?.userTimeline {
                 inReply.text = "  Editing Reply to \(replyingToUser.aozoraUsername)"
             } else {
                 inReply.text = "  Editing Post"
@@ -72,7 +72,7 @@ public class CommentViewController: UIViewController {
             photoButton.hidden = true
             videoButton.hidden = true
         } else {
-            if let replyingToUser = replyingToUser {
+            if let replyingToUser = parentPost?.userTimeline {
                 inReply.text = "  In Reply to \(replyingToUser.aozoraUsername)"
             } else {
                 inReply.text = "  New Post"
@@ -141,7 +141,7 @@ public class CommentViewController: UIViewController {
                 timelinePost.youtubeID = youtubeID
             }
             
-            if let replyingToUser = replyingToUser {
+            if let replyingToUser = parentPost?.userTimeline {
                 timelinePost.replyLevel = 1
                 timelinePost.userTimeline = replyingToUser
             } else {
@@ -150,7 +150,13 @@ public class CommentViewController: UIViewController {
             }
             
             timelinePost.postedBy = user
-            timelinePost.saveInBackgroundWithBlock({ (result, error) -> Void in
+            
+            var objectsToUpdate = [timelinePost]
+            if let parentPost = parentPost {
+                parentPost.addObject(timelinePost, forKey: "replies")
+                objectsToUpdate.append(parentPost)
+            }
+            PFObject.saveAllInBackground(objectsToUpdate, block: { (result, error) -> Void in
                 self.completeRequest(timelinePost, error: error)
             })
         default:

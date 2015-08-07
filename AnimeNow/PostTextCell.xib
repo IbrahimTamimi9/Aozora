@@ -56,7 +56,7 @@
                                 <color key="textColor" red="0.0078431372550000003" green="0.43921568630000002" blue="0.73333333329999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="l7o-JT-JFL">
+                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="l7o-JT-JFL">
                                 <rect key="frame" x="8" y="8" width="44" height="44"/>
                                 <color key="backgroundColor" red="0.89411765340000005" green="0.89411765340000005" blue="0.89411765340000005" alpha="1" colorSpace="calibratedRGB"/>
                                 <gestureRecognizers/>
@@ -135,6 +135,7 @@
                     </mask>
                 </variation>
             </tableViewCellContentView>
+            <gestureRecognizers/>
             <connections>
                 <outlet property="avatar" destination="l7o-JT-JFL" id="ZOO-ol-Nl5"/>
                 <outlet property="date" destination="oSa-7l-kjl" id="1PT-wA-ypB"/>

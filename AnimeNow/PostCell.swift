@@ -9,6 +9,12 @@
 import Foundation
 import TTTAttributedLabel
 
+public protocol PostCellDelegate: class {
+    func postCellSelectedImage(postCell: PostCell)
+    func postCellSelectedUserProfile(postCell: PostCell)
+    func postCellSelectedComment(postCell: PostCell)
+}
+
 public class PostCell: UITableViewCell {
     
     @IBOutlet weak public var avatar: UIImageView!
@@ -20,6 +26,8 @@ public class PostCell: UITableViewCell {
     
     @IBOutlet weak public var replyButton: UIButton!
     @IBOutlet weak public var playButton: UIButton?
+    
+    public weak var delegate: PostCellDelegate?
     
     public enum CellType {
         case Text
@@ -58,10 +66,30 @@ public class PostCell: UITableViewCell {
         
     }
     
-    // MARK: - Functions
+    public override func awakeFromNib() {
+        super.awakeFromNib()
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: "pressedUserProfile:")
+        gestureRecognizer.numberOfTouchesRequired = 1
+        gestureRecognizer.numberOfTapsRequired = 1
+        avatar.addGestureRecognizer(gestureRecognizer)
+        
+        let gestureRecognizer2 = UITapGestureRecognizer(target: self, action: "pressedOnImage:")
+        gestureRecognizer2.numberOfTouchesRequired = 1
+        gestureRecognizer2.numberOfTapsRequired = 1
+        imageContent?.addGestureRecognizer(gestureRecognizer2)
+    }
     
     // MARK: - IBActions
     
+    func pressedUserProfile(sender: AnyObject) {
+        delegate?.postCellSelectedUserProfile(self)
+    }
+    
+    func pressedOnImage(sender: AnyObject) {
+        delegate?.postCellSelectedImage(self)
+    }
+    
     @IBAction func replyPressed(sender: AnyObject) {
+        delegate?.postCellSelectedComment(self)
     }
 }

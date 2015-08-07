@@ -10,6 +10,7 @@ import UIKit
 import ANCommonKit
 import ANParseKit
 import TTTAttributedLabel
+import XCDYouTubeKit
 
 class ProfileViewController: UIViewController {
     
@@ -36,6 +37,7 @@ class ProfileViewController: UIViewController {
     var fetchController = FetchController()
     var refreshControl = UIRefreshControl()
     var loadingView: LoaderView!
+    var playerController: XCDYouTubeVideoPlayerViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -95,6 +97,8 @@ class ProfileViewController: UIViewController {
         fetchUserDetails()
     }
     
+    // MARK: - Fetching
+    
     func fetchUserFeed() {
         let query = TimelinePost.query()!
         query.skip = 0
@@ -118,7 +122,42 @@ class ProfileViewController: UIViewController {
         }
     }
     
+    // MARK: - Internal functions
+    func openProfile(user: User) {
+        
+    }
+    
+    func showImage(imageURLString: String, imageView: UIImageView) {
+        if let imageURL = NSURL(string: imageURLString) {
+            presentImageViewController(imageView, imageUrl: imageURL)
+        }
+    }
+    
+    func playTrailer(videoID: String) {
+        playerController = XCDYouTubeVideoPlayerViewController(videoIdentifier: videoID)
+        presentMoviePlayerViewControllerAnimated(playerController)
+    }
+    
+    func replyTo(post: TimelinePost) {
+        let comment = ANParseKit.commentViewController()
+        comment.initWith(postType: .Timeline, delegate: self, parentPost: post)
+        presentViewController(comment, animated: true, completion: nil)
+    }
+    
+    func postForCell(cell: UITableViewCell) -> TimelinePost? {
+        if let indexPath = tableView.indexPathForCell(cell), let timelinePost = fetchController.objectAtIndex(indexPath.section) as? TimelinePost {
+            if indexPath.row == 0 {
+                return timelinePost
+            } else if timelinePost.replies.count > 0 && indexPath.row <= timelinePost.replies.count {
+                return timelinePost.replies[indexPath.row - 1]
+            }
+        }
+        
+        return nil
+    }
+    
     // MARK: - IBAction
+    
     @IBAction func showLibrary(sender: AnyObject) {
         
     }
@@ -177,6 +216,7 @@ extension ProfileViewController: UITableViewDataSource {
             if let episode = timelinePost.episode {
                 // Post image cell
                 let cell = tableView.dequeueReusableCellWithIdentifier("PostImageCell") as! PostCell
+                cell.delegate = self
                 updatePostCell(cell, with: timelinePost)
                 cell.imageContent?.setImageFrom(urlString: episode.imageURLString(), animated: true)
                 
@@ -185,18 +225,21 @@ extension ProfileViewController: UITableViewDataSource {
             } else if let _ = timelinePost.images {
                 // Post image cell
                 let cell = tableView.dequeueReusableCellWithIdentifier("PostImageCell") as! PostCell
+                cell.delegate = self
                 updatePostCell(cell, with: timelinePost)
                 cell.layoutIfNeeded()
                 return cell
             } else if let _ = timelinePost.youtubeID {
                 // Video comment
                 let cell = tableView.dequeueReusableCellWithIdentifier("PostImageCell") as! PostCell
+                cell.delegate = self
                 updatePostCell(cell, with: timelinePost)
                 cell.layoutIfNeeded()
                 return cell
             } else {
                 // Text post update
                 let cell = tableView.dequeueReusableCellWithIdentifier("PostTextCell") as! PostCell
+                cell.delegate = self
                 updatePostCell(cell, with: timelinePost)
                 cell.layoutIfNeeded()
                 return cell
@@ -208,18 +251,21 @@ extension ProfileViewController: UITableViewDataSource {
             if let _ = comment.images {
                 // Comment image cell
                 let cell = tableView.dequeueReusableCellWithIdentifier("CommentImageCell") as! CommentCell
+                cell.delegate = self
                 updateCommentCell(cell, with: comment)
                 cell.layoutIfNeeded()
                 return cell
             } else if let _ = comment.youtubeID {
                 // Video comment
                 let cell = tableView.dequeueReusableCellWithIdentifier("CommentImageCell") as! CommentCell
+                cell.delegate = self
                 updateCommentCell(cell, with: comment)
                 cell.layoutIfNeeded()
                 return cell
             } else {
                 // Text comment update
                 let cell = tableView.dequeueReusableCellWithIdentifier("CommentTextCell") as! CommentCell
+                cell.delegate = self
                 updateCommentCell(cell, with: comment)
                 cell.layoutIfNeeded()
                 return cell
@@ -324,40 +370,13 @@ extension ProfileViewController: UITableViewDelegate {
         let timelinePost = fetchController.objectAtIndex(indexPath.section) as! TimelinePost
         
         if indexPath.row == 0 {
-            
             showSheetFor(timelinePost: timelinePost)
-            if let episode = timelinePost.episode {
-                // Post image cell
-                
-            } else if let _ = timelinePost.images {
-                // Post image cell
-              
-            } else if let _ = timelinePost.youtubeID {
-                // Video comment
-                
-            } else {
-                // Text post update
-                
-            }
-            
         } else if timelinePost.replies.count > 0 && indexPath.row <= timelinePost.replies.count {
             let comment = timelinePost.replies[indexPath.row - 1]
             showSheetFor(timelinePost: comment)
-            
-            if let _ = comment.images {
-                // Comment image cell
-                
-            } else if let _ = comment.youtubeID {
-                // Video comment
-                
-            } else {
-                // Text comment update
-                
-            }
-            
         } else {
             // Write a comment cell
-            
+            replyTo(timelinePost)
         }
     }
     
@@ -408,5 +427,50 @@ extension ProfileViewController: TTTAttributedLabelDelegate {
 extension ProfileViewController: CommentViewControllerDelegate {
     func commentViewControllerDidFinishedPosting(post: PFObject) {
         fetchUserFeed()
+    }
+}
+
+extension ProfileViewController: PostCellDelegate {
+    func postCellSelectedImage(postCell: PostCell) {
+        if let post = postForCell(postCell), let imageView = postCell.imageContent {
+            if let imageURL = post.images?.first {
+                showImage(imageURL, imageView: imageView)
+            } else if let videoID = post.youtubeID {
+                playTrailer(videoID)
+            }
+        }
+    }
+    
+    func postCellSelectedUserProfile(postCell: PostCell) {
+        println("selected profile")
+    }
+    
+    func postCellSelectedComment(postCell: PostCell) {
+        if let post = postForCell(postCell) {
+            replyTo(post)
+        }
+    }
+}
+
+extension ProfileViewController: CommentCellDelegate {
+    func commentCellSelectedImage(commentCell: CommentCell) {
+        // TODO: remove duplicate code
+        if let post = postForCell(commentCell), let imageView = commentCell.imageContent {
+            if let imageURL = post.images?.first {
+                showImage(imageURL, imageView: imageView)
+            } else if let videoID = post.youtubeID {
+                playTrailer(videoID)
+            }
+        }
+    }
+    
+    func commentCellSelectedUserProfile(commentCell: CommentCell) {
+        println("selected profile")
+    }
+    
+    func commentCellSelectedComment(commentCell: CommentCell) {
+        if let post = postForCell(commentCell) {
+            replyTo(post)
+        }
     }
 }
