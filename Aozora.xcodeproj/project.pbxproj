@@ -17,6 +17,8 @@
 		DA0B26081B75109000A770AE /* String+Validations.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0B26071B75109000A770AE /* String+Validations.swift */; };
 		DA0B260A1B7514A400A770AE /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0B26091B7514A400A770AE /* UIViewController+Alert.swift */; };
 		DA0B260C1B75192400A770AE /* UserProfileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0B260B1B75192400A770AE /* UserProfileManager.swift */; };
+		DA0B26111B7566CF00A770AE /* Thread.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA0B26101B7566CF00A770AE /* Thread.storyboard */; };
+		DA0B26131B75671300A770AE /* ThreadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0B26121B75671300A770AE /* ThreadViewController.swift */; };
 		DA13805D1B6D56F500C53560 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC13C2C1B425CB70013D479 /* FBSDKCoreKit.framework */; };
 		DA13805F1B6D56F500C53560 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC13C2F1B425CB70013D479 /* FBSDKShareKit.framework */; };
 		DA1380601B6D85CE00C53560 /* UserListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58C2DA1B386BC80082B626 /* UserListViewController.swift */; };
@@ -76,7 +78,7 @@
 		DA5A3BFC1B35F19A00C07D71 /* AniList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA27D1B61AF1BFA300CC854E /* AniList.swift */; };
 		DA5A3BFD1B35F19A00C07D71 /* Atarashii.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE43C371B2D5BC800C3092D /* Atarashii.swift */; };
 		DA6755E31B72A8F800D6EA32 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA27D19D1AF1BA9D00CC854E /* Images.xcassets */; };
-		DA6755E41B72E6D100D6EA32 /* Thread.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAD67DFF1B7275F0000BB325 /* Thread.storyboard */; };
+		DA6755E41B72E6D100D6EA32 /* Comment.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAD67DFF1B7275F0000BB325 /* Comment.storyboard */; };
 		DA6755E51B72E6D100D6EA32 /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD67E011B72760B000BB325 /* CommentViewController.swift */; };
 		DA6755E61B72E6D100D6EA32 /* ImagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6755E11B729C2100D6EA32 /* ImagesViewController.swift */; };
 		DA6E12B31B10D94200B278B0 /* ANParseKit.h in Headers */ = {isa = PBXBuildFile; fileRef = DA6E12B21B10D94200B278B0 /* ANParseKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -347,6 +349,8 @@
 		DA0B26071B75109000A770AE /* String+Validations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Validations.swift"; sourceTree = "<group>"; };
 		DA0B26091B7514A400A770AE /* UIViewController+Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
 		DA0B260B1B75192400A770AE /* UserProfileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileManager.swift; sourceTree = "<group>"; };
+		DA0B26101B7566CF00A770AE /* Thread.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Thread.storyboard; sourceTree = "<group>"; };
+		DA0B26121B75671300A770AE /* ThreadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThreadViewController.swift; sourceTree = "<group>"; };
 		DA1380651B6DBAAA00C53560 /* Episodes.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Episodes.storyboard; sourceTree = "<group>"; };
 		DA1380671B6DBAF700C53560 /* EpisodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodeViewController.swift; sourceTree = "<group>"; };
 		DA1380691B6DBB4100C53560 /* Thread.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Thread.swift; sourceTree = "<group>"; };
@@ -531,7 +535,7 @@
 		DAD390A31B6C3216000A84DE /* ViewPreviousCommentsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewPreviousCommentsCell.swift; sourceTree = "<group>"; };
 		DAD390A51B6C322A000A84DE /* WriteACommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WriteACommentCell.swift; sourceTree = "<group>"; };
 		DAD67DFC1B726724000BB325 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		DAD67DFF1B7275F0000BB325 /* Thread.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Thread.storyboard; sourceTree = "<group>"; };
+		DAD67DFF1B7275F0000BB325 /* Comment.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Comment.storyboard; sourceTree = "<group>"; };
 		DAD67E011B72760B000BB325 /* CommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
 		DAE43C311B2BC1A900C3092D /* TFHppleElement+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TFHppleElement+Convenience.swift"; sourceTree = "<group>"; };
 		DAE43C331B2BC3B700C3092D /* AnimeDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeDetail.swift; sourceTree = "<group>"; };
@@ -691,6 +695,15 @@
 				DA07A3491B4C2B860028B81B /* InAppPurchaseViewController.swift */,
 			);
 			name = "In-App Purchases";
+			sourceTree = "<group>";
+		};
+		DA0B260F1B75666C00A770AE /* Thread */ = {
+			isa = PBXGroup;
+			children = (
+				DA0B26101B7566CF00A770AE /* Thread.storyboard */,
+				DA0B26121B75671300A770AE /* ThreadViewController.swift */,
+			);
+			name = Thread;
 			sourceTree = "<group>";
 		};
 		DA1380641B6DBA7D00C53560 /* Episodes */ = {
@@ -996,7 +1009,8 @@
 				DAE43C301B2BC16F00C3092D /* Extensions */,
 				DACE77C51B29518300037486 /* Parse classes */,
 				DA5A3BED1B346F2100C07D71 /* MALScrapper */,
-				DAD67DFE1B72759F000BB325 /* Thread */,
+				DA0B260F1B75666C00A770AE /* Thread */,
+				DAD67DFE1B72759F000BB325 /* Comment */,
 				DAF6186E1B377BBF00286517 /* Services */,
 				DA0347251B4ADD8D0025CE24 /* Controllers */,
 				DA6E12CE1B10D96F00B278B0 /* Vendor */,
@@ -1222,16 +1236,16 @@
 			name = "Parse classes";
 			sourceTree = "<group>";
 		};
-		DAD67DFE1B72759F000BB325 /* Thread */ = {
+		DAD67DFE1B72759F000BB325 /* Comment */ = {
 			isa = PBXGroup;
 			children = (
-				DAD67DFF1B7275F0000BB325 /* Thread.storyboard */,
+				DAD67DFF1B7275F0000BB325 /* Comment.storyboard */,
 				DAD67E011B72760B000BB325 /* CommentViewController.swift */,
 				DA6755E11B729C2100D6EA32 /* ImagesViewController.swift */,
 				DAE64EEB1B73CCE4005A984A /* ImageViewController.swift */,
 				DA35B9981B74145D00C0AAC7 /* InAppBrowserSelectorViewController.swift */,
 			);
-			name = Thread;
+			name = Comment;
 			path = ../AnimeNow;
 			sourceTree = "<group>";
 		};
@@ -1750,7 +1764,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA6755E41B72E6D100D6EA32 /* Thread.storyboard in Resources */,
+				DA6755E41B72E6D100D6EA32 /* Comment.storyboard in Resources */,
+				DA0B26111B7566CF00A770AE /* Thread.storyboard in Resources */,
 				DAD67E041B7292D6000BB325 /* Resources.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2062,6 +2077,7 @@
 				DAE43C341B2BC3B700C3092D /* AnimeDetail.swift in Sources */,
 				DACE77C41B29517F00037486 /* AnimeRelation.swift in Sources */,
 				DA48EA271B288DED00D8610F /* SeasonalChart.swift in Sources */,
+				DA0B26131B75671300A770AE /* ThreadViewController.swift in Sources */,
 				DAFE19AE1B29E4CD002F3A76 /* AnimeCharacter.swift in Sources */,
 				DA58C2ED1B3B111A0082B626 /* Episode.swift in Sources */,
 				DAFE19B01B29F264002F3A76 /* AnimeCast.swift in Sources */,

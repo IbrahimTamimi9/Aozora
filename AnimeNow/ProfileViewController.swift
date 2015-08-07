@@ -51,10 +51,7 @@ class ProfileViewController: UIViewController {
         tableView.estimatedRowHeight = 112.0
         tableView.rowHeight = UITableViewAutomaticDimension
     
-        PostCell.registerNibFor(tableView: tableView, type: PostCell.CellType.Text)
-        PostCell.registerNibFor(tableView: tableView, type: PostCell.CellType.Image)
-        CommentCell.registerNibFor(tableView: tableView, type: CommentCell.CellType.Text)
-        CommentCell.registerNibFor(tableView: tableView, type: CommentCell.CellType.Image)
+        CommentCell.registerNibFor(tableView: tableView)
         WriteACommentCell.registerNibFor(tableView: tableView)
         
         updateViewWithUser(user)
@@ -182,6 +179,7 @@ class ProfileViewController: UIViewController {
     @IBAction func dismissPressed(sender: AnyObject) {
         navigationController?.dismissViewControllerAnimated(true, completion: nil)
     }
+    
     @IBAction func showLibrary(sender: AnyObject) {
         
     }
@@ -198,7 +196,7 @@ class ProfileViewController: UIViewController {
     
     @IBAction func showFollowingUsers(sender: AnyObject) {
         let userListController = UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("UserList") as! UserListViewController
-        let query = user.following.query()!
+        let query = user.following().query()!
         userListController.initWithQuery(query, title: "Following")
         navigationController?.pushViewController(userListController, animated: true)
     }
@@ -226,7 +224,6 @@ class ProfileViewController: UIViewController {
         }))
         
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler:nil))
-        
         self.presentViewController(alert, animated: true, completion: nil)
     }
 }
@@ -252,63 +249,41 @@ extension ProfileViewController: UITableViewDataSource {
         
         if indexPath.row == 0 {
         
-            if let episode = timelinePost.episode {
-                // Post image cell
-                let cell = tableView.dequeueReusableCellWithIdentifier("PostImageCell") as! PostCell
-                cell.delegate = self
-                updatePostCell(cell, with: timelinePost)
-                cell.imageContent?.setImageFrom(urlString: episode.imageURLString(), animated: true)
-                
-                cell.layoutIfNeeded()
-                return cell
-            } else if let _ = timelinePost.images {
-                // Post image cell
-                let cell = tableView.dequeueReusableCellWithIdentifier("PostImageCell") as! PostCell
-                cell.delegate = self
-                updatePostCell(cell, with: timelinePost)
-                cell.layoutIfNeeded()
-                return cell
-            } else if let _ = timelinePost.youtubeID {
-                // Video comment
-                let cell = tableView.dequeueReusableCellWithIdentifier("PostImageCell") as! PostCell
-                cell.delegate = self
-                updatePostCell(cell, with: timelinePost)
-                cell.layoutIfNeeded()
-                return cell
+            var reuseIdentifier = ""
+            if timelinePost.images != nil || timelinePost.youtubeID != nil || timelinePost.episode != nil {
+                // Post image or video cell
+                reuseIdentifier = "PostImageCell"
             } else {
                 // Text post update
-                let cell = tableView.dequeueReusableCellWithIdentifier("PostTextCell") as! PostCell
-                cell.delegate = self
-                updatePostCell(cell, with: timelinePost)
-                cell.layoutIfNeeded()
-                return cell
+                reuseIdentifier = "PostTextCell"
             }
+            
+            let cell = tableView.dequeueReusableCellWithIdentifier(reuseIdentifier) as! PostCell
+            cell.delegate = self
+            updatePostCell(cell, with: timelinePost)
+            if let episode = timelinePost.episode {
+                cell.imageContent?.setImageFrom(urlString: episode.imageURLString(), animated: true)
+            }
+            cell.layoutIfNeeded()
+            return cell
             
         } else if timelinePost.replies.count > 0 && indexPath.row <= timelinePost.replies.count {
             let comment = timelinePost.replies[indexPath.row - 1]
             
-            if let _ = comment.images {
+            var reuseIdentifier = ""
+            if comment.images != nil || comment.youtubeID != nil {
                 // Comment image cell
-                let cell = tableView.dequeueReusableCellWithIdentifier("CommentImageCell") as! CommentCell
-                cell.delegate = self
-                updateCommentCell(cell, with: comment)
-                cell.layoutIfNeeded()
-                return cell
-            } else if let _ = comment.youtubeID {
-                // Video comment
-                let cell = tableView.dequeueReusableCellWithIdentifier("CommentImageCell") as! CommentCell
-                cell.delegate = self
-                updateCommentCell(cell, with: comment)
-                cell.layoutIfNeeded()
-                return cell
+                reuseIdentifier = "CommentImageCell"
             } else {
                 // Text comment update
-                let cell = tableView.dequeueReusableCellWithIdentifier("CommentTextCell") as! CommentCell
-                cell.delegate = self
-                updateCommentCell(cell, with: comment)
-                cell.layoutIfNeeded()
-                return cell
+                reuseIdentifier = "CommentTextCell"
             }
+            
+            let cell = tableView.dequeueReusableCellWithIdentifier("CommentTextCell") as! CommentCell
+            cell.delegate = self
+            updateCommentCell(cell, with: comment)
+            cell.layoutIfNeeded()
+            return cell
             
         } else {
             
@@ -509,31 +484,6 @@ extension ProfileViewController: PostCellDelegate {
     
     func postCellSelectedComment(postCell: PostCell) {
         if let post = postForCell(postCell) {
-            replyTo(post)
-        }
-    }
-}
-
-extension ProfileViewController: CommentCellDelegate {
-    func commentCellSelectedImage(commentCell: CommentCell) {
-        // TODO: remove duplicate code
-        if let post = postForCell(commentCell), let imageView = commentCell.imageContent {
-            if let imageURL = post.images?.first {
-                showImage(imageURL, imageView: imageView)
-            } else if let videoID = post.youtubeID {
-                playTrailer(videoID)
-            }
-        }
-    }
-    
-    func commentCellSelectedUserProfile(commentCell: CommentCell) {
-        if let post = postForCell(commentCell), let postedByUser = post.postedBy {
-            openProfile(postedByUser)
-        }
-    }
-    
-    func commentCellSelectedComment(commentCell: CommentCell) {
-        if let post = postForCell(commentCell) {
             replyTo(post)
         }
     }

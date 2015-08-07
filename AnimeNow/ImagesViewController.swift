@@ -39,6 +39,11 @@ public class ImagesViewController: UIViewController {
         layout.itemSize = size
     }
     
+    public override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        view.endEditing(true)
+    }
+    
     func findImagesWithQuery(query: String, animated: Bool) {
         malScrapper.findImagesWithQuery(query, animated: animated).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
             
@@ -82,7 +87,7 @@ extension ImagesViewController: UICollectionViewDelegate {
     public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let imageURL = dataSource[indexPath.row]
         
-        var imageController = ANParseKit.threadStoryboard().instantiateViewControllerWithIdentifier("Image") as! ImageViewController
+        var imageController = ANParseKit.commentStoryboard().instantiateViewControllerWithIdentifier("Image") as! ImageViewController
         imageController.initWith(imageUrl: imageURL)
         imageController.delegate = self
         imageController.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve

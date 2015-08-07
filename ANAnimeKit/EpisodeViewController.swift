@@ -28,10 +28,7 @@ class EpisodeViewController: UIViewController {
         tableView.estimatedRowHeight = 112.0
         tableView.rowHeight = UITableViewAutomaticDimension
         
-        PostCell.registerNibFor(tableView: tableView, type: PostCell.CellType.Text)
-        PostCell.registerNibFor(tableView: tableView, type: PostCell.CellType.Image)
-        CommentCell.registerNibFor(tableView: tableView, type: CommentCell.CellType.Text)
-        CommentCell.registerNibFor(tableView: tableView, type: CommentCell.CellType.Image)
+        CommentCell.registerNibFor(tableView: tableView)
         WriteACommentCell.registerNibFor(tableView: tableView)
         
         loadingView = LoaderView(parentView: view)

@@ -29,8 +29,12 @@ public class ANParseKit {
         return UIStoryboard(name: "Thread", bundle: bundle())
     }
     
+    public class func commentStoryboard() -> UIStoryboard {
+        return UIStoryboard(name: "Comment", bundle: bundle())
+    }
+    
     public class func commentViewController() -> CommentViewController {
-        let controller = ANParseKit.threadStoryboard().instantiateInitialViewController() as! CommentViewController
+        let controller = ANParseKit.commentStoryboard().instantiateInitialViewController() as! CommentViewController
         return controller
     }
 }

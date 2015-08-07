@@ -29,7 +29,7 @@ public class PostCell: UITableViewCell {
     
     public weak var delegate: PostCellDelegate?
     
-    public enum CellType {
+    public enum PostType {
         case Text
         case Image
         case Image2
@@ -39,30 +39,12 @@ public class PostCell: UITableViewCell {
         case Video
     }
     
-    public class func registerNibFor(#tableView: UITableView, type: PostCell.CellType) {
-        switch type {
-        case .Text:
-            let listNib = UINib(nibName: "PostTextCell", bundle: ANCommonKit.bundle())
-            tableView.registerNib(listNib, forCellReuseIdentifier: "PostTextCell")
-        case .Image:
-            let listNib = UINib(nibName: "PostImageCell", bundle: ANCommonKit.bundle())
-            tableView.registerNib(listNib, forCellReuseIdentifier: "PostImageCell")
-        case .Image2:
-            let listNib = UINib(nibName: "", bundle: nil)
-            tableView.registerNib(listNib, forCellReuseIdentifier: "")
-        case .Image3:
-            let listNib = UINib(nibName: "", bundle: nil)
-            tableView.registerNib(listNib, forCellReuseIdentifier: "")
-        case .Image4:
-            let listNib = UINib(nibName: "", bundle: nil)
-            tableView.registerNib(listNib, forCellReuseIdentifier: "")
-        case .Image5:
-            let listNib = UINib(nibName: "", bundle: nil)
-            tableView.registerNib(listNib, forCellReuseIdentifier: "")
-        case .Video:
-            let listNib = UINib(nibName: "", bundle: nil)
-            tableView.registerNib(listNib, forCellReuseIdentifier: "")
-        }
+    public class func registerNibFor(#tableView: UITableView) {
+
+        let listNib = UINib(nibName: "PostTextCell", bundle: ANCommonKit.bundle())
+        tableView.registerNib(listNib, forCellReuseIdentifier: "PostTextCell")
+        let listNib2 = UINib(nibName: "PostImageCell", bundle: ANCommonKit.bundle())
+        tableView.registerNib(listNib2, forCellReuseIdentifier: "PostImageCell")
         
     }
     

@@ -30,10 +30,13 @@ public class User: PFUser, PFSubclassing {
     @NSManaged public var syncingWithMyAnimeList: Bool
     @NSManaged public var syncingWithAnilist: Bool
     @NSManaged public var details: UserDetails
-    @NSManaged public var following: PFRelation
     @NSManaged public var followingCount: Int
     @NSManaged public var followersCount: Int
     
+    public func following() -> PFRelation {
+        return self["following"] as! PFRelation
+    }
+
     public override class func currentUser() -> User? {
         return PFUser.currentUser() as? User
     }

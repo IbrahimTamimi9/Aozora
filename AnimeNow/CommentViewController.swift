@@ -94,6 +94,7 @@ public class CommentViewController: UIViewController {
         
         if isBeingDismissed() {
             UIApplication.sharedApplication().setStatusBarStyle(initialStatusBarStyle, animated: true)
+            view.endEditing(true)
         }
     }
     
@@ -192,13 +193,13 @@ public class CommentViewController: UIViewController {
     }
     
     @IBAction func addImagePressed(sender: AnyObject) {
-        let imagesController = ANParseKit.threadStoryboard().instantiateViewControllerWithIdentifier("Images") as! ImagesViewController
+        let imagesController = ANParseKit.commentStoryboard().instantiateViewControllerWithIdentifier("Images") as! ImagesViewController
         imagesController.delegate = self
         presentViewController(imagesController, animated: true, completion: nil)
     }
     
     @IBAction func addVideoPressed(sender: AnyObject) {
-        let navController = ANParseKit.threadStoryboard().instantiateViewControllerWithIdentifier("BrowserSelector") as! UINavigationController
+        let navController = ANParseKit.commentStoryboard().instantiateViewControllerWithIdentifier("BrowserSelector") as! UINavigationController
         let videoController = navController.viewControllers.last as! InAppBrowserSelectorViewController
         let initialURL = NSURL(string: "https://www.youtube.com")
         videoController.initWithTitle("Select a video", initialUrl: initialURL)
