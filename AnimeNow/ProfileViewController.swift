@@ -57,17 +57,30 @@ class ProfileViewController: UIViewController {
         CommentCell.registerNibFor(tableView: tableView, type: CommentCell.CellType.Image)
         WriteACommentCell.registerNibFor(tableView: tableView)
         
+        updateViewWithUser(user)
+        
+        loadingView = LoaderView(parentView: view)
+        addRefreshControl(refreshControl, action:"updateData", forTableView: tableView)
+        updateData()
+    }
+    
+    func updateData() {
+        fetchUserFeed()
+        fetchUserDetails()
+    }
+    
+    func updateViewWithUser(user: User) {
         usernameLabel.text = user.username
         title = user.aozoraUsername
-        let avatarFile = user.avatarThumb
-        let bannerFile = user.banner
-        userAvatar.setImageWithPFFile(avatarFile)
-        userBanner.setImageWithPFFile(bannerFile)
+        if let avatarFile = user.avatarThumb {
+            userAvatar.setImageWithPFFile(avatarFile)
+        }
         
-        let followingCount = user.following
-        let followersCount = user.followers
-        followingButton.setTitle("\(followingCount.count) FOLLOWING", forState: .Normal)
-        followersButton.setTitle("\(followersCount.count) FOLLOWERS", forState: .Normal)
+        if let bannerFile = user.banner {
+            userBanner.setImageWithPFFile(bannerFile)
+        }
+        followingButton.setTitle("\(user.followingCount) FOLLOWING", forState: .Normal)
+        followersButton.setTitle("\(user.followersCount) FOLLOWERS", forState: .Normal)
         
         if user == User.currentUser() {
             followButton.hidden = true
@@ -78,7 +91,7 @@ class ProfileViewController: UIViewController {
             followButton.hidden = false
             animeListButton.hidden = false
             navigationItem.rightBarButtonItems = nil
-            settingsTrailingSpaceConstraint.constant = 96
+            settingsTrailingSpaceConstraint.constant = 88
         }
         
         if user.badges.count > 0 {
@@ -87,7 +100,7 @@ class ProfileViewController: UIViewController {
             tagBadge.hidden = true
             proBottomLayoutConstraint.constant = 4
         }
-
+        
         if let _ = InAppController.purchasedProPlus() {
             proBadge.text = "PRO+"
         } else if let _ = InAppController.purchasedPro() {
@@ -95,11 +108,6 @@ class ProfileViewController: UIViewController {
         } else {
             proBadge.hidden = true
         }
-        
-        loadingView = LoaderView(parentView: view)
-        addRefreshControl(refreshControl, action:"fetchUserFeed", forTableView: tableView)
-        fetchUserFeed()
-        fetchUserDetails()
     }
     
     // MARK: - Fetching
@@ -119,10 +127,13 @@ class ProfileViewController: UIViewController {
     
     func fetchUserDetails() {
         
-        let details = user.userDetails
-        details.fetchIfNeededInBackgroundWithBlock { (details, error) -> Void in
-            if let details = details as? UserDetails {
-                self.aboutLabel.text = details.about
+        let query = User.query()!
+        query.whereKey("objectId", equalTo: user.objectId!)
+        query.includeKey("details")
+        query.findObjectsInBackgroundWithBlock { (result, error) -> Void in
+            if let user = result?.last as? User {
+                self.updateViewWithUser(user)
+                self.aboutLabel.text = user.details.about
             }
         }
     }
@@ -150,7 +161,7 @@ class ProfileViewController: UIViewController {
     
     func replyTo(post: TimelinePost) {
         let comment = ANParseKit.commentViewController()
-        comment.initWith(postType: .Timeline, delegate: self, parentPost: post)
+        comment.initWith(postType:.Timeline, delegate: self, parentPost: post)
         presentViewController(comment, animated: true, completion: nil)
     }
     
@@ -187,21 +198,36 @@ class ProfileViewController: UIViewController {
     
     @IBAction func showFollowingUsers(sender: AnyObject) {
         let userListController = UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("UserList") as! UserListViewController
-        let followingList = user.following
-        userListController.initWithList(followingList, title: "Following")
+        let query = user.following.query()!
+        userListController.initWithQuery(query, title: "Following")
         navigationController?.pushViewController(userListController, animated: true)
     }
     
     @IBAction func showFollowers(sender: AnyObject) {
         let userListController = UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("UserList") as! UserListViewController
-        let followersList = user.followers
-        userListController.initWithList(followersList, title: "Followers")
+        let query = User.query()!
+        query.whereKey("following", equalTo: user)
+        userListController.initWithQuery(query, title: "Followers")
         navigationController?.pushViewController(userListController, animated: true)
     }
     
     @IBAction func showSettings(sender: AnyObject) {
-        let settings = UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController() as! UINavigationController
-        presentViewController(settings, animated: true, completion: nil)
+        
+        var alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        
+        alert.addAction(UIAlertAction(title: "Settings", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
+            let settings = UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController() as! UINavigationController
+            self.presentViewController(settings, animated: true, completion: nil)
+        }))
+        alert.addAction(UIAlertAction(title: "Edit Profile", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
+            let editProfileController = UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("EditProfile") as! EditProfileViewController
+            editProfileController.delegate = self
+            self.presentViewController(editProfileController, animated: true, completion: nil)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler:nil))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
     }
 }
 
@@ -296,8 +322,10 @@ extension ProfileViewController: UITableViewDataSource {
     }
     
     func updatePostCell(cell: PostCell, with timelinePost: TimelinePost) {
-        let avatarFile = timelinePost.postedBy!.avatarThumb
-        cell.avatar.setImageWithPFFile(avatarFile)
+        if let postedBy = timelinePost.postedBy, let avatarFile = postedBy.avatarThumb {
+            cell.avatar.setImageWithPFFile(avatarFile)
+        }
+        
         cell.username.text = timelinePost.userTimeline.aozoraUsername
         cell.date.text = timelinePost.createdAt?.timeAgo()
         
@@ -319,10 +347,12 @@ extension ProfileViewController: UITableViewDataSource {
     }
     
     func updateCommentCell(cell: CommentCell, with timelinePost: TimelinePost) {
-        let avatarFile = timelinePost.postedBy!.avatarThumb
+        
         let username = timelinePost.userTimeline.aozoraUsername
         let content = username + " " + timelinePost.content
-        cell.avatar.setImageWithPFFile(avatarFile)
+        if let postedBy = timelinePost.postedBy, let avatarFile = postedBy.avatarThumb {
+            cell.avatar.setImageWithPFFile(avatarFile)
+        }
         self.updateAttributedTextProperties(cell.textContent)
         cell.date.text = timelinePost.createdAt?.timeAgo()
         
@@ -506,5 +536,12 @@ extension ProfileViewController: CommentCellDelegate {
         if let post = postForCell(commentCell) {
             replyTo(post)
         }
+    }
+}
+
+extension ProfileViewController: EditProfileViewControllerProtocol {
+    
+    func editProfileViewControllerDidEditedUser() {
+        fetchUserDetails()
     }
 }

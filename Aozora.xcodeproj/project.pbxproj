@@ -13,6 +13,10 @@
 		79AF381FB9C944A80806E321 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D27C7A8ED4F7C96DF08F5850 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		DA0347241B4ADD720025CE24 /* LibrarySyncController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF357031B45790100629A3D /* LibrarySyncController.swift */; };
 		DA07A3481B4C2B730028B81B /* InApp.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA07A3471B4C2B730028B81B /* InApp.storyboard */; };
+		DA0B26061B75066B00A770AE /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0B26051B75066B00A770AE /* EditProfileViewController.swift */; };
+		DA0B26081B75109000A770AE /* String+Validations.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0B26071B75109000A770AE /* String+Validations.swift */; };
+		DA0B260A1B7514A400A770AE /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0B26091B7514A400A770AE /* UIViewController+Alert.swift */; };
+		DA0B260C1B75192400A770AE /* UserProfileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0B260B1B75192400A770AE /* UserProfileManager.swift */; };
 		DA13805D1B6D56F500C53560 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC13C2C1B425CB70013D479 /* FBSDKCoreKit.framework */; };
 		DA13805F1B6D56F500C53560 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC13C2F1B425CB70013D479 /* FBSDKShareKit.framework */; };
 		DA1380601B6D85CE00C53560 /* UserListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58C2DA1B386BC80082B626 /* UserListViewController.swift */; };
@@ -130,7 +134,7 @@
 		DAC027CF1B2A1C3F0085C91A /* ZFModalTransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = DAFD60B31B277B8D007275C1 /* ZFModalTransitionAnimator.m */; };
 		DAC027D01B2A1C750085C91A /* ZFModalTransitionAnimator.h in Headers */ = {isa = PBXBuildFile; fileRef = DAFD60B21B277B8D007275C1 /* ZFModalTransitionAnimator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DAC077971B68670C0067DA90 /* UIImage+Resize.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC077961B68670C0067DA90 /* UIImage+Resize.swift */; };
-		DAC077991B68698F0067DA90 /* default-avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = DAC077981B68698F0067DA90 /* default-avatar.png */; };
+		DAC077991B68698F0067DA90 /* default-avatar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DAC077981B68698F0067DA90 /* default-avatar@2x.png */; };
 		DAC0779B1B686A870067DA90 /* UserDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC0779A1B686A870067DA90 /* UserDetails.swift */; };
 		DAC077AF1B68910A0067DA90 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC077A61B6890830067DA90 /* CommentCell.swift */; };
 		DAC077B31B6891140067DA90 /* PostTextCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DAC0779D1B688DFD0067DA90 /* PostTextCell.xib */; };
@@ -339,6 +343,10 @@
 		D27C7A8ED4F7C96DF08F5850 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA07A3471B4C2B730028B81B /* InApp.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = InApp.storyboard; sourceTree = "<group>"; };
 		DA07A3491B4C2B860028B81B /* InAppPurchaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InAppPurchaseViewController.swift; sourceTree = "<group>"; };
+		DA0B26051B75066B00A770AE /* EditProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
+		DA0B26071B75109000A770AE /* String+Validations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Validations.swift"; sourceTree = "<group>"; };
+		DA0B26091B7514A400A770AE /* UIViewController+Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
+		DA0B260B1B75192400A770AE /* UserProfileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileManager.swift; sourceTree = "<group>"; };
 		DA1380651B6DBAAA00C53560 /* Episodes.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Episodes.storyboard; sourceTree = "<group>"; };
 		DA1380671B6DBAF700C53560 /* EpisodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodeViewController.swift; sourceTree = "<group>"; };
 		DA1380691B6DBB4100C53560 /* Thread.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Thread.swift; sourceTree = "<group>"; };
@@ -473,7 +481,7 @@
 		DAC027C91B2A15C20085C91A /* DiscussionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscussionViewController.swift; sourceTree = "<group>"; };
 		DAC027CB1B2A16B80085C91A /* AnimeReview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeReview.swift; sourceTree = "<group>"; };
 		DAC077961B68670C0067DA90 /* UIImage+Resize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Resize.swift"; sourceTree = "<group>"; };
-		DAC077981B68698F0067DA90 /* default-avatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "default-avatar.png"; sourceTree = "<group>"; };
+		DAC077981B68698F0067DA90 /* default-avatar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "default-avatar@2x.png"; sourceTree = "<group>"; };
 		DAC0779A1B686A870067DA90 /* UserDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDetails.swift; sourceTree = "<group>"; };
 		DAC0779D1B688DFD0067DA90 /* PostTextCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostTextCell.xib; sourceTree = "<group>"; };
 		DAC077A61B6890830067DA90 /* CommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
@@ -740,7 +748,7 @@
 				DAF618721B377C6D00286517 /* Forum */,
 				DAE7A7141B2105C400788614 /* Profile */,
 				DA58C2E31B39BF850082B626 /* Browse */,
-				DAC13C061B41DEF00013D479 /* Onboarding */,
+				DAC13C061B41DEF00013D479 /* Login */,
 				DAC13C011B40568A0013D479 /* Settings */,
 				DA07A3461B4C2B560028B81B /* In-App Purchases */,
 				DA27D19D1AF1BA9D00CC854E /* Images.xcassets */,
@@ -1132,6 +1140,8 @@
 			children = (
 				DA7C84C81B4379AA0036D119 /* UIViewController+Navigation.swift */,
 				DAC077961B68670C0067DA90 /* UIImage+Resize.swift */,
+				DA0B26071B75109000A770AE /* String+Validations.swift */,
+				DA0B26091B7514A400A770AE /* UIViewController+Alert.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -1145,11 +1155,11 @@
 			name = Settings;
 			sourceTree = "<group>";
 		};
-		DAC13C061B41DEF00013D479 /* Onboarding */ = {
+		DAC13C061B41DEF00013D479 /* Login */ = {
 			isa = PBXGroup;
 			children = (
 				DAC13C251B42495A0013D479 /* WorkflowController.swift */,
-				DAC077981B68698F0067DA90 /* default-avatar.png */,
+				DAC077981B68698F0067DA90 /* default-avatar@2x.png */,
 				DAC13C091B421A730013D479 /* anime-scenery.jpg */,
 				DAC13C071B41DF0E0013D479 /* Onboarding.storyboard */,
 				DAC13C161B4226E20013D479 /* OnboardingViewController.swift */,
@@ -1157,7 +1167,7 @@
 				DAC13C1F1B423ED90013D479 /* SignUpViewController.swift */,
 				DAC13C291B424DEF0013D479 /* ResetPasswordViewController.swift */,
 			);
-			name = Onboarding;
+			name = Login;
 			sourceTree = "<group>";
 		};
 		DAC13C2B1B425C200013D479 /* Fonts */ = {
@@ -1242,6 +1252,8 @@
 				DAF6189F1B378FF700286517 /* Profile.storyboard */,
 				DA58C2D81B386BB90082B626 /* ProfileViewController.swift */,
 				DA58C2DA1B386BC80082B626 /* UserListViewController.swift */,
+				DA0B26051B75066B00A770AE /* EditProfileViewController.swift */,
+				DA0B260B1B75192400A770AE /* UserProfileManager.swift */,
 			);
 			name = Profile;
 			sourceTree = "<group>";
@@ -1659,7 +1671,7 @@
 				DA07A3481B4C2B730028B81B /* InApp.storyboard in Resources */,
 				DA52B1871B4845D4001CC1A9 /* CheckInCompact.xib in Resources */,
 				DAC13BF31B3EF17E0013D479 /* AnimeCellList.xib in Resources */,
-				DAC077991B68698F0067DA90 /* default-avatar.png in Resources */,
+				DAC077991B68698F0067DA90 /* default-avatar@2x.png in Resources */,
 				DA58C2E51B39C0080082B626 /* Browse.storyboard in Resources */,
 				DAC13C081B41DF0E0013D479 /* Onboarding.storyboard in Resources */,
 				DAC13C031B40569F0013D479 /* Settings.storyboard in Resources */,
@@ -1912,6 +1924,7 @@
 				DAF618761B377CA700286517 /* AnimeLibraryViewController.swift in Sources */,
 				DAC13C051B4056AB0013D479 /* SettingsViewController.swift in Sources */,
 				DAC13BF71B3EFC1C0013D479 /* LoadingTableCell.swift in Sources */,
+				DA0B26061B75066B00A770AE /* EditProfileViewController.swift in Sources */,
 				DAE7A7191B2105FD00788614 /* AnimeCell.swift in Sources */,
 				DAC7D9031B50201C00898FF6 /* InAppController.swift in Sources */,
 				DAF6187C1B3784E300286517 /* ForumsViewController.swift in Sources */,
@@ -1922,13 +1935,16 @@
 				DA27D1991AF1BA9D00CC854E /* ParseWorker.swift in Sources */,
 				DA1380601B6D85CE00C53560 /* UserListViewController.swift in Sources */,
 				DA27D1971AF1BA9D00CC854E /* AppDelegate.swift in Sources */,
+				DA0B260A1B7514A400A770AE /* UIViewController+Alert.swift in Sources */,
 				DAC7D9071B5046AF00898FF6 /* DialogController.swift in Sources */,
 				DAF618781B377D6000286517 /* AnimeListViewController.swift in Sources */,
 				DA8DD6431B3CAEC500B05FBF /* FilterViewController.swift in Sources */,
 				DA58C2E71B39C01B0082B626 /* BrowseViewController.swift in Sources */,
+				DA0B26081B75109000A770AE /* String+Validations.swift in Sources */,
 				DAB83FC71B52FE200006AF96 /* ChartController.swift in Sources */,
 				DAC13C261B42495A0013D479 /* WorkflowController.swift in Sources */,
 				DA52B1851B483F2A001CC1A9 /* DayViewController.swift in Sources */,
+				DA0B260C1B75192400A770AE /* UserProfileManager.swift in Sources */,
 				DAC13BF91B3EFC280013D479 /* LoadingCollectionCell.swift in Sources */,
 				DAF357061B4593E200629A3D /* LibraryAnimeCell.swift in Sources */,
 				DA7C84C91B4379AA0036D119 /* UIViewController+Navigation.swift in Sources */,

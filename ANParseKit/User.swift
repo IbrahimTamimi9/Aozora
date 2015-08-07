@@ -20,23 +20,22 @@ public class User: PFUser, PFSubclassing {
         }
     }
     
-    @NSManaged public var avatarThumb: PFFile
-    @NSManaged public var banner: PFFile
+    @NSManaged public var avatarThumb: PFFile?
+    @NSManaged public var banner: PFFile?
     @NSManaged public var badges: [String]
-    @NSManaged public var followers: [User]
-    @NSManaged public var following: [User]
     @NSManaged public var joinDate: NSDate
     @NSManaged public var aozoraUsername: String
     @NSManaged public var myAnimeListUsername: String
     @NSManaged public var anilistUsername: String
     @NSManaged public var syncingWithMyAnimeList: Bool
     @NSManaged public var syncingWithAnilist: Bool
-    @NSManaged public var userDetails: UserDetails
+    @NSManaged public var details: UserDetails
+    @NSManaged public var following: PFRelation
+    @NSManaged public var followingCount: Int
+    @NSManaged public var followersCount: Int
     
     public override class func currentUser() -> User? {
         return PFUser.currentUser() as? User
     }
-    
-    
     
 }

@@ -27,7 +27,6 @@ public class TimelinePost: PFObject, PFSubclassing {
     @NSManaged public var replyLevel: Int
     @NSManaged public var edited: Bool
     @NSManaged public var episode: Episode?
-    @NSManaged public var repostedBy: [User]
     @NSManaged public var postedBy: User?
     @NSManaged public var userTimeline: User
     @NSManaged public var images: [String]?

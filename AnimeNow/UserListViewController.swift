@@ -20,10 +20,11 @@ class UserListViewController: UIViewController {
     var loadingView: LoaderView!
     
     var dataSource: [User] = []
+    var query: PFQuery!
     var titleToSet = ""
     
-    func initWithList(userList: [User], title: String) {
-        dataSource = userList
+    func initWithQuery(query: PFQuery, title: String) {
+        self.query = query
         titleToSet = title
     }
     
@@ -44,8 +45,7 @@ class UserListViewController: UIViewController {
         
         loadingView.startAnimating()
         
-        PFObject.fetchAllIfNeededInBackground(dataSource, block: { (result, error) -> Void in
-            
+        query.findObjectsInBackgroundWithBlock { (result, error) -> Void in
             if let result = result as? [User] {
                 self.dataSource = result
             }
@@ -53,7 +53,7 @@ class UserListViewController: UIViewController {
             self.loadingView.stopAnimating()
             self.tableView.reloadData()
             self.tableView.animateFadeIn()
-        })
+        }
     }
 }
 
@@ -68,8 +68,9 @@ extension UserListViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCellWithIdentifier("UserCell") as! UserCell
         
         let profile = dataSource[indexPath.row]
-        let avatarFile = profile.avatarThumb
-        cell.avatar.setImageWithPFFile(avatarFile)
+        if let avatarFile = profile.avatarThumb {
+            cell.avatar.setImageWithPFFile(avatarFile)
+        }
         cell.username.text = profile.username
         cell.layoutIfNeeded()
         
