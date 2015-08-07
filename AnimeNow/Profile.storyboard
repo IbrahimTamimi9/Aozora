@@ -352,6 +352,11 @@ Follow me for app updates.</string>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Profile" id="R1g-ee-WQp">
+                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="5R1-HE-n3u">
+                            <connections>
+                                <action selector="dismissPressed:" destination="M5q-uq-HPK" id="3tj-Fo-J1J"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="icon-create" id="5c8-zA-vWE" userLabel="Create">
                             <connections>
                                 <action selector="composeUpdatePressed:" destination="M5q-uq-HPK" id="dDm-KR-CCh"/>
@@ -363,6 +368,7 @@ Follow me for app updates.</string>
                         <outlet property="aboutLabel" destination="TgH-QU-GT1" id="fdg-yK-xJA"/>
                         <outlet property="animeListButton" destination="hlo-ra-225" id="t7R-Aq-LOG"/>
                         <outlet property="createBBI" destination="5c8-zA-vWE" id="C1B-QI-yeu"/>
+                        <outlet property="dismissBBI" destination="5R1-HE-n3u" id="4xN-iR-BFQ"/>
                         <outlet property="followButton" destination="hlo-ra-225" id="a8q-a9-OQM"/>
                         <outlet property="followersButton" destination="eBe-M2-du6" id="i6u-LJ-rcF"/>
                         <outlet property="followingButton" destination="5yX-hf-St0" id="eO3-En-ROy"/>

@@ -15,6 +15,7 @@ import XCDYouTubeKit
 class ProfileViewController: UIViewController {
     
     @IBOutlet weak var createBBI: UIBarButtonItem!
+    @IBOutlet weak var dismissBBI: UIBarButtonItem!
     @IBOutlet weak var settingsButton: UIButton!
     
     @IBOutlet weak var tableView: UITableView!
@@ -38,6 +39,10 @@ class ProfileViewController: UIViewController {
     var refreshControl = UIRefreshControl()
     var loadingView: LoaderView!
     var playerController: XCDYouTubeVideoPlayerViewController?
+    
+    func initWithUser(user: User) {
+        self.user = user
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,11 +73,11 @@ class ProfileViewController: UIViewController {
             followButton.hidden = true
             animeListButton.hidden = true
             settingsTrailingSpaceConstraint.constant = 8
+            navigationItem.leftBarButtonItem = nil
         } else {
             followButton.hidden = false
             animeListButton.hidden = false
             navigationItem.rightBarButtonItems = nil
-            navigationItem.leftBarButtonItem = nil
             settingsTrailingSpaceConstraint.constant = 96
         }
         
@@ -124,7 +129,12 @@ class ProfileViewController: UIViewController {
     
     // MARK: - Internal functions
     func openProfile(user: User) {
-        
+        if user != User.currentUser() {
+            let navController = UIStoryboard(name: "Profile", bundle: nil).instantiateInitialViewController() as! UINavigationController
+            let profileController = navController.viewControllers.first as! ProfileViewController
+            profileController.initWithUser(user)
+            presentViewController(navController, animated: true, completion: nil)
+        }
     }
     
     func showImage(imageURLString: String, imageView: UIImageView) {
@@ -158,6 +168,9 @@ class ProfileViewController: UIViewController {
     
     // MARK: - IBAction
     
+    @IBAction func dismissPressed(sender: AnyObject) {
+        navigationController?.dismissViewControllerAnimated(true, completion: nil)
+    }
     @IBAction func showLibrary(sender: AnyObject) {
         
     }
@@ -373,14 +386,14 @@ extension ProfileViewController: UITableViewDelegate {
             showSheetFor(timelinePost: timelinePost)
         } else if timelinePost.replies.count > 0 && indexPath.row <= timelinePost.replies.count {
             let comment = timelinePost.replies[indexPath.row - 1]
-            showSheetFor(timelinePost: comment)
+            showSheetFor(timelinePost: comment, parentPost: timelinePost)
         } else {
             // Write a comment cell
             replyTo(timelinePost)
         }
     }
     
-    func showSheetFor(#timelinePost: TimelinePost) {
+    func showSheetFor(#timelinePost: TimelinePost, parentPost: TimelinePost? = nil) {
         // If user's comment show delete/edit
         if timelinePost.postedBy == user {
             
@@ -392,19 +405,36 @@ extension ProfileViewController: UITableViewDelegate {
                 self.presentViewController(comment, animated: true, completion: nil)
             }))
             alert.addAction(UIAlertAction(title: "Delete", style: UIAlertActionStyle.Destructive, handler: { (alertAction: UIAlertAction!) -> Void in
-                timelinePost.deleteInBackgroundWithBlock({ (success, error) -> Void in
-                    if let error = error {
-                        // Show some error
-                    } else {
-                        self.fetchUserFeed()
-                    }
-                })
+                if let parentPost = parentPost {
+                    // Remove reference from parent
+                    parentPost.removeObject(timelinePost, forKey: "replies")
+                    parentPost.saveInBackgroundWithBlock({ (success, error) -> Void in
+                        if let error = error {
+                            // Show some error
+                        } else {
+                            self.deletePosts([timelinePost])
+                        }
+                    })
+                } else {
+                    // Remove child too
+                    self.deletePosts([timelinePost] + timelinePost.replies)
+                }
             }))
             
             alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler:nil))
             
             self.presentViewController(alert, animated: true, completion: nil)
         }
+    }
+    
+    func deletePosts(posts: [TimelinePost]) {
+        PFObject.deleteAllInBackground(posts, block: { (success, error) -> Void in
+            if let error = error {
+                // Show some error
+            } else {
+                self.fetchUserFeed()
+            }
+        })
     }
 }
 
@@ -442,7 +472,9 @@ extension ProfileViewController: PostCellDelegate {
     }
     
     func postCellSelectedUserProfile(postCell: PostCell) {
-        println("selected profile")
+        if let post = postForCell(postCell), let postedByUser = post.postedBy {
+            openProfile(postedByUser)
+        }
     }
     
     func postCellSelectedComment(postCell: PostCell) {
@@ -465,7 +497,9 @@ extension ProfileViewController: CommentCellDelegate {
     }
     
     func commentCellSelectedUserProfile(commentCell: CommentCell) {
-        println("selected profile")
+        if let post = postForCell(commentCell), let postedByUser = post.postedBy {
+            openProfile(postedByUser)
+        }
     }
     
     func commentCellSelectedComment(commentCell: CommentCell) {
