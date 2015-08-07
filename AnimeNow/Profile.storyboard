@@ -330,6 +330,22 @@ Follow me for app updates.</string>
                                         <constraint firstAttribute="trailing" secondItem="qK8-bI-U4V" secondAttribute="trailing" constant="96" id="xdV-1E-4Rr"/>
                                     </constraints>
                                 </view>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="dlo-w4-cnE">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dlo-w4-cnE" id="edP-Uw-bGW">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="zFN-VX-ziT">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zFN-VX-ziT" id="JCz-ds-yeo">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="M5q-uq-HPK" id="U7q-2S-vIT"/>
                                     <outlet property="delegate" destination="M5q-uq-HPK" id="ZxQ-AV-F7D"/>

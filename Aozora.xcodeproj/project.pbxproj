@@ -33,7 +33,7 @@
 		DA2D1EF51B53F475009A5CCD /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA2D1EF31B53F475009A5CCD /* Fabric.framework */; };
 		DA2D1EF61B53F475009A5CCD /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA2D1EF41B53F475009A5CCD /* Crashlytics.framework */; };
 		DA35B9951B7402F000C0AAC7 /* UISearchBar+Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA35B9941B7402F000C0AAC7 /* UISearchBar+Appearance.swift */; };
-		DA35B9971B74130C00C0AAC7 /* VideosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA35B9961B74130C00C0AAC7 /* VideosViewController.swift */; };
+		DA35B99A1B74165000C0AAC7 /* InAppBrowserSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA35B9981B74145D00C0AAC7 /* InAppBrowserSelectorViewController.swift */; };
 		DA41679B1B25F76F00847F56 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA41679A1B25F76F00847F56 /* FontAwesome.ttf */; };
 		DA4167B31B273B0700847F56 /* ANAnimeKit.h in Headers */ = {isa = PBXBuildFile; fileRef = DA4167B21B273B0700847F56 /* ANAnimeKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA4167B91B273B0700847F56 /* ANAnimeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA4167AE1B273B0700847F56 /* ANAnimeKit.framework */; };
@@ -363,7 +363,7 @@
 		DA2D1EF31B53F475009A5CCD /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		DA2D1EF41B53F475009A5CCD /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		DA35B9941B7402F000C0AAC7 /* UISearchBar+Appearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UISearchBar+Appearance.swift"; sourceTree = "<group>"; };
-		DA35B9961B74130C00C0AAC7 /* VideosViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideosViewController.swift; sourceTree = "<group>"; };
+		DA35B9981B74145D00C0AAC7 /* InAppBrowserSelectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InAppBrowserSelectorViewController.swift; path = ../ANCommonKit/InAppBrowserSelectorViewController.swift; sourceTree = "<group>"; };
 		DA38A9881B223AF1002FCBB4 /* ActionListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionListViewController.swift; sourceTree = "<group>"; };
 		DA38A98B1B223B39002FCBB4 /* Action.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Action.storyboard; sourceTree = "<group>"; };
 		DA38A98E1B223F1F002FCBB4 /* BasicTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicTableCell.swift; sourceTree = "<group>"; };
@@ -1219,7 +1219,7 @@
 				DAD67E011B72760B000BB325 /* CommentViewController.swift */,
 				DA6755E11B729C2100D6EA32 /* ImagesViewController.swift */,
 				DAE64EEB1B73CCE4005A984A /* ImageViewController.swift */,
-				DA35B9961B74130C00C0AAC7 /* VideosViewController.swift */,
+				DA35B9981B74145D00C0AAC7 /* InAppBrowserSelectorViewController.swift */,
 			);
 			name = Thread;
 			path = ../AnimeNow;
@@ -2065,10 +2065,10 @@
 				DA9AE39B1B6930F60053C2EA /* TimelinePost.swift in Sources */,
 				DA6755E51B72E6D100D6EA32 /* CommentViewController.swift in Sources */,
 				DA6E12E41B10D96F00B278B0 /* UIViewController+WebScraper.m in Sources */,
+				DA35B99A1B74165000C0AAC7 /* InAppBrowserSelectorViewController.swift in Sources */,
 				DAA3932D1B42FEA100A8D5D5 /* PFUser+CurrentUser.swift in Sources */,
 				DA13806C1B6DBB4C00C53560 /* Post.swift in Sources */,
 				DA6E13111B10F2E500B278B0 /* MALScrapper.swift in Sources */,
-				DA35B9971B74130C00C0AAC7 /* VideosViewController.swift in Sources */,
 				DA6E12DE1B10D96F00B278B0 /* TFHpple.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -65,11 +65,13 @@ class ProfileViewController: UIViewController {
         if user == User.currentUser() {
             followButton.hidden = true
             animeListButton.hidden = true
+            settingsTrailingSpaceConstraint.constant = 8
         } else {
             followButton.hidden = false
             animeListButton.hidden = false
             navigationItem.rightBarButtonItems = nil
             navigationItem.leftBarButtonItem = nil
+            settingsTrailingSpaceConstraint.constant = 96
         }
         
         if user.badges.count > 0 {
@@ -127,7 +129,7 @@ class ProfileViewController: UIViewController {
     
     @IBAction func composeUpdatePressed(sender: AnyObject) {
         let comment = ANParseKit.commentViewController()
-        comment.delegate = self
+        comment.initWith(postType: .Timeline, delegate: self)
         presentViewController(comment, animated: true, completion: nil)
     }
     
@@ -239,6 +241,12 @@ extension ProfileViewController: UITableViewDataSource {
         cell.avatar.setImageWithPFFile(avatarFile)
         cell.username.text = timelinePost.userTimeline.aozoraUsername
         cell.date.text = timelinePost.createdAt?.timeAgo()
+        
+        if var postedAgo = cell.date.text where timelinePost.edited {
+            postedAgo += " · Edited"
+            cell.date.text = postedAgo
+        }
+        
         cell.textContent.text = timelinePost.content
         let replies = timelinePost.replies
         let buttonTitle = replies.count > 0 ? replies.count > 1 ? " \(replies.count) Comments" : " 1 Comment" : " Comment"
@@ -258,6 +266,12 @@ extension ProfileViewController: UITableViewDataSource {
         cell.avatar.setImageWithPFFile(avatarFile)
         self.updateAttributedTextProperties(cell.textContent)
         cell.date.text = timelinePost.createdAt?.timeAgo()
+        
+        if var postedAgo = cell.date.text where timelinePost.edited {
+            postedAgo += " · Edited"
+            cell.date.text = postedAgo
+        }
+        
         cell.textContent.setText(content, afterInheritingLabelAttributesAndConfiguringWithBlock: { (attributedString) -> NSMutableAttributedString! in
             
             return attributedString
@@ -298,10 +312,80 @@ extension ProfileViewController: UITableViewDataSource {
 
 extension ProfileViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 10
+        return 0.1
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 5.0
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        let timelinePost = fetchController.objectAtIndex(indexPath.section) as! TimelinePost
+        
+        if indexPath.row == 0 {
+            
+            showSheetFor(timelinePost: timelinePost)
+            if let episode = timelinePost.episode {
+                // Post image cell
+                
+            } else if let _ = timelinePost.images {
+                // Post image cell
+              
+            } else if let _ = timelinePost.youtubeID {
+                // Video comment
+                
+            } else {
+                // Text post update
+                
+            }
+            
+        } else if timelinePost.replies.count > 0 && indexPath.row <= timelinePost.replies.count {
+            let comment = timelinePost.replies[indexPath.row - 1]
+            showSheetFor(timelinePost: comment)
+            
+            if let _ = comment.images {
+                // Comment image cell
+                
+            } else if let _ = comment.youtubeID {
+                // Video comment
+                
+            } else {
+                // Text comment update
+                
+            }
+            
+        } else {
+            // Write a comment cell
+            
+        }
+    }
+    
+    func showSheetFor(#timelinePost: TimelinePost) {
+        // If user's comment show delete/edit
+        if timelinePost.postedBy == user {
+            
+            var alert = UIAlertController(title: "Manage Post", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+            
+            alert.addAction(UIAlertAction(title: "Edit", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
+                let comment = ANParseKit.commentViewController()
+                comment.initWith(postType: .Timeline, delegate: self, editingPost: timelinePost)
+                self.presentViewController(comment, animated: true, completion: nil)
+            }))
+            alert.addAction(UIAlertAction(title: "Delete", style: UIAlertActionStyle.Destructive, handler: { (alertAction: UIAlertAction!) -> Void in
+                timelinePost.deleteInBackgroundWithBlock({ (success, error) -> Void in
+                    if let error = error {
+                        // Show some error
+                    } else {
+                        self.fetchUserFeed()
+                    }
+                })
+            }))
+            
+            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler:nil))
+            
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
     }
 }
 

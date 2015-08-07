@@ -8,6 +8,7 @@
 
 import Foundation
 import Parse
+import Bolts
 
 public protocol CommentViewControllerDelegate: class {
     func commentViewControllerDidFinishedPosting(post: PFObject)
@@ -35,6 +36,7 @@ public class CommentViewController: UIViewController {
     var user = User.currentUser()!
     var replyingToUser: User?
     var postType: PostType = .Timeline
+    var editingPost: PFObject?
     
     public enum PostType {
         case Timeline
@@ -43,8 +45,10 @@ public class CommentViewController: UIViewController {
         case Forum
     }
     
-    public func initWith(#postType: PostType, replyingToUser: User? = nil) {
+    public func initWith(#postType: PostType, delegate: CommentViewControllerDelegate?, editingPost: PFObject? = nil,  replyingToUser: User? = nil) {
         self.postType = postType
+        self.editingPost = editingPost
+        self.delegate = delegate
         self.replyingToUser = replyingToUser
     }
     
@@ -58,10 +62,21 @@ public class CommentViewController: UIViewController {
         photoCountLabel.hidden = true
         videoCountLabel.hidden = true
         
-        if let replyingToUser = replyingToUser {
-            inReply.text = "  In Reply to \(replyingToUser.aozoraUsername)"
+        if let editingPost = editingPost {
+            textView.text = editingPost["content"] as? String
+            if let replyingToUser = replyingToUser {
+                inReply.text = "  Editing Reply to \(replyingToUser.aozoraUsername)"
+            } else {
+                inReply.text = "  Editing Post"
+            }
+            photoButton.hidden = true
+            videoButton.hidden = true
         } else {
-            inReply.text = "  New Post"
+            if let replyingToUser = replyingToUser {
+                inReply.text = "  In Reply to \(replyingToUser.aozoraUsername)"
+            } else {
+                inReply.text = "  New Post"
+            }
         }
     }
     
@@ -117,6 +132,7 @@ public class CommentViewController: UIViewController {
         case .Timeline:
             var timelinePost = TimelinePost()
             timelinePost.content = textView.text
+            timelinePost.edited = false
             if let selectedImageURL = selectedImageURL {
                 timelinePost.images = [selectedImageURL]
             }
@@ -135,18 +151,31 @@ public class CommentViewController: UIViewController {
             
             timelinePost.postedBy = user
             timelinePost.saveInBackgroundWithBlock({ (result, error) -> Void in
-                if let error = error {
-                    // Show error
-                    self.sendButton.setTitle("Send", forState: .Normal)
-                } else {
-                    // Success!
-                    self.sendButton.setTitle("Sent!", forState: .Normal)
-                    self.delegate?.commentViewControllerDidFinishedPosting(timelinePost)
-                    self.dismissViewControllerAnimated(true, completion: nil)
-                }
+                self.completeRequest(timelinePost, error: error)
             })
         default:
             break;
+        }
+    }
+    
+    func performUpdate(post: TimelinePost) {
+
+        post.content = textView.text
+        post.edited = true
+        post.saveInBackgroundWithBlock ({ (result, error) -> Void in
+            self.completeRequest(post, error: error)
+        })
+    }
+    
+    func completeRequest(post: TimelinePost, error: NSError?) {
+        if let error = error {
+            // Show error
+            self.sendButton.setTitle("Send", forState: .Normal)
+        } else {
+            // Success!
+            self.sendButton.setTitle("Sent!", forState: .Normal)
+            self.delegate?.commentViewControllerDidFinishedPosting(post)
+            self.dismissViewControllerAnimated(true, completion: nil)
         }
     }
     
@@ -163,11 +192,20 @@ public class CommentViewController: UIViewController {
     }
     
     @IBAction func addVideoPressed(sender: AnyObject) {
-        
+        let navController = ANParseKit.threadStoryboard().instantiateViewControllerWithIdentifier("BrowserSelector") as! UINavigationController
+        let videoController = navController.viewControllers.last as! InAppBrowserSelectorViewController
+        let initialURL = NSURL(string: "https://www.youtube.com")
+        videoController.initWithTitle("Select a video", initialUrl: initialURL)
+        videoController.delegate = self
+        presentViewController(navController, animated: true, completion: nil)
     }
 
     @IBAction func sendPressed(sender: AnyObject) {
-        performPost()
+        if let editingPost = editingPost as? TimelinePost {
+            performUpdate(editingPost)
+        } else {
+            performPost()
+        }
     }
     
 }
@@ -177,5 +215,15 @@ extension CommentViewController: ImagesViewControllerDelegate {
         selectedImageURL = imageURL
         photoCountLabel.hidden = false
         videoButton.enabled = false
+    }
+}
+
+extension CommentViewController: InAppBrowserSelectorViewControllerDelegate {
+    public func inAppBrowserSelectorViewControllerSelectedSite(siteURL: String) {
+        if let url = NSURL(string: siteURL), let parameters = BFURL(URL: url).inputQueryParameters, let videoID = parameters["v"] as? String {
+            selectedVideoID = videoID
+            videoCountLabel.hidden = false
+            photoButton.enabled = false
+        }
     }
 }

@@ -200,6 +200,7 @@
                     </view>
                     <connections>
                         <outlet property="inReply" destination="3GB-Kt-Aew" id="Yfu-Y0-eW6"/>
+                        <outlet property="photoButton" destination="RXB-5F-hdn" id="GKR-Im-Ugw"/>
                         <outlet property="photoCountLabel" destination="ZjO-zU-sRJ" id="ryC-HH-dvR"/>
                         <outlet property="sendButton" destination="Mb4-iD-ige" id="j71-nF-RCl"/>
                         <outlet property="spoilersSwitch" destination="H4L-Iz-U0U" id="kTm-y4-XKV"/>
@@ -392,6 +393,52 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tKi-96-Kbd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1192" y="348"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="l3p-pL-G8K">
+            <objects>
+                <navigationController storyboardIdentifier="BrowserSelector" id="Cxy-qf-FYg" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="LJ3-tu-SHN">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Gat-uZ-AaC" kind="relationship" relationship="rootViewController" id="4qo-Dp-KVe"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fzH-Q2-dWb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-69" y="1037"/>
+        </scene>
+        <!--In App Browser Selector View Controller-->
+        <scene sceneID="7rD-pJ-k1a">
+            <objects>
+                <viewController storyboardIdentifier="InAppBrowserSelectorViewController" id="Gat-uZ-AaC" customClass="InAppBrowserSelectorViewController" customModule="ANParseKit" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="lXT-Nr-3QL"/>
+                        <viewControllerLayoutGuide type="bottom" id="olo-M3-Tsa"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="LZe-fS-IRb">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="7cn-y0-RX9">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="0B7-be-oep">
+                            <connections>
+                                <action selector="dismissModal" destination="Gat-uZ-AaC" id="jMw-PI-cI2"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Select" id="ZaE-Wu-vQq">
+                            <connections>
+                                <action selector="selectWebSite:" destination="Gat-uZ-AaC" id="8yR-Lo-H7x"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XeG-Bk-8Qu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="631" y="1037"/>
         </scene>
     </scenes>
     <resources>
