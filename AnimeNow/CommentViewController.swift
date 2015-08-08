@@ -35,6 +35,7 @@ public class CommentViewController: UIViewController {
     var initialStatusBarStyle: UIStatusBarStyle!
     var user = User.currentUser()!
     var parentPost: Postable?
+    var thread: Thread?
     var postType: PostType = .Timeline
     var editingPost: PFObject?
     
@@ -45,7 +46,15 @@ public class CommentViewController: UIViewController {
         case Forum
     }
     
-    public func initWith(#postType: PostType, delegate: CommentViewControllerDelegate?, editingPost: PFObject? = nil, parentPost: Postable? = nil) {
+    public func initWithTimelinePost(delegate: CommentViewControllerDelegate?, editingPost: PFObject? = nil, parentPost: Postable? = nil) {
+        self.postType = .Timeline
+        self.editingPost = editingPost
+        self.delegate = delegate
+        self.parentPost = parentPost
+    }
+    
+    public func initWithThread(thread: Thread, postType: PostType, delegate: CommentViewControllerDelegate?, editingPost: PFObject? = nil, parentPost: Postable? = nil) {
+        self.thread = thread
         self.postType = postType
         self.editingPost = editingPost
         self.delegate = delegate
@@ -160,6 +169,38 @@ public class CommentViewController: UIViewController {
             PFObject.saveAllInBackground(objectsToUpdate, block: { (result, error) -> Void in
                 self.completeRequest(timelinePost, error: error)
             })
+        case .Episode:
+            var post = Post()
+            post.content = textView.text
+            post.edited = false
+            
+            if let selectedImageURL = selectedImageURL {
+                post.images = [selectedImageURL]
+            }
+            
+            if let youtubeID = selectedVideoID {
+                post.youtubeID = youtubeID
+            }
+            
+            if let parentPost = parentPost as? ThreadPostable {
+                post.replyLevel = 1
+                post.thread = parentPost.thread
+            } else {
+                post.replyLevel = 0
+                post.thread = thread!
+            }
+            
+            post.postedBy = user
+            
+            var objectsToUpdate = [(post as PFObject)]
+            if let parentPost = parentPost as? PFObject {
+                parentPost.addObject(post, forKey: "replies")
+                objectsToUpdate.append(parentPost)
+            }
+            PFObject.saveAllInBackground(objectsToUpdate, block: { (result, error) -> Void in
+                self.completeRequest(post, error: error)
+            })
+            
         default:
             break;
         }

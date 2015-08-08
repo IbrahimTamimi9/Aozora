@@ -28,5 +28,6 @@ public protocol TimelinePostable: Postable {
 }
 
 public protocol ThreadPostable: Postable {
-    
+    var thread: Thread { get set }
+    var hasSpoilers: Bool { get set }
 }

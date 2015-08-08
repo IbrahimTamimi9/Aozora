@@ -16,6 +16,8 @@ import Parse
 public class ThreadViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var dismissBBI: UIBarButtonItem!
+    @IBOutlet weak var createBBI: UIBarButtonItem!
     
     var thread: Thread? {
         didSet {
@@ -24,14 +26,16 @@ public class ThreadViewController: UIViewController {
             }
         }
     }
+    var postType: CommentViewController.PostType!
     
     var fetchController = FetchController()
     var refreshControl = UIRefreshControl()
     var loadingView: LoaderView!
     var playerController: XCDYouTubeVideoPlayerViewController?
     
-    public func initWithThread(thread: Thread) {
+    public func initWithThread(thread: Thread, postType: CommentViewController.PostType) {
         self.thread = thread
+        self.postType = postType
     }
     
     override public func viewDidLoad() {
@@ -90,8 +94,13 @@ public class ThreadViewController: UIViewController {
     
     func replyTo(post: Postable) {
         let comment = ANParseKit.commentViewController()
-        comment.initWith(postType:.Timeline, delegate: self, parentPost: post)
+        if let post = post as? ThreadPostable, let thread = thread {
+            comment.initWithThread(thread, postType: postType, delegate: self, parentPost: post)
+        } else {
+            comment.initWithTimelinePost(self, parentPost: post)
+        }
         presentViewController(comment, animated: true, completion: nil)
+        
     }
     
     func postForCell(cell: UITableViewCell) -> Postable? {
@@ -108,10 +117,13 @@ public class ThreadViewController: UIViewController {
     
     // MARK: - IBAction
     
-    @IBAction func dismissPressed(sender: AnyObject) {
+    @IBAction public func dismissPressed(sender: AnyObject) {
         navigationController?.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    @IBAction public func replyToThreadPressed(sender: AnyObject) {
+        
+    }
 }
 
 
@@ -197,9 +209,11 @@ extension ThreadViewController: UITableViewDataSource {
         }
         
         cell.textContent.text = post.content
-        if let replies = post.replies {
-            let buttonTitle = replies.count > 0 ? replies.count > 1 ? " \(replies.count) Comments" : " 1 Comment" : " Comment"
+        if let replies = post.replies where replies.count > 0 {
+            let buttonTitle = replies.count > 1 ? " \(replies.count) Comments" : " 1 Comment"
             cell.replyButton.setTitle(buttonTitle, forState: .Normal)
+        } else {
+            cell.replyButton.setTitle(" Comment", forState: .Normal)
         }
         
         updateAttributedTextProperties(cell.textContent)
@@ -298,8 +312,11 @@ extension ThreadViewController: UITableViewDelegate {
             
             alert.addAction(UIAlertAction(title: "Edit", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
                 let comment = ANParseKit.commentViewController()
-                let post = post as! PFObject
-                comment.initWith(postType: CommentViewController.PostType.Timeline, delegate: self, editingPost: post)
+                if let post = post as? TimelinePost {
+                    comment.initWithTimelinePost(self, editingPost: post)
+                } else if let post = post as? Post, let thread = self.thread {
+                    comment.initWithThread(thread, postType: self.postType, delegate: self, editingPost: post)
+                }
                 self.presentViewController(comment, animated: true, completion: nil)
             }))
             alert.addAction(UIAlertAction(title: "Delete", style: UIAlertActionStyle.Destructive, handler: { (alertAction: UIAlertAction!) -> Void in
@@ -316,7 +333,7 @@ extension ThreadViewController: UITableViewDelegate {
                         })
                     } else {
                         // Remove child too
-                        let replies = post["replies"] as! [PFObject]
+                        let replies = post["replies"] as? [PFObject] ?? []
                         self.deletePosts([post] + replies)
                     }
                 }
@@ -358,7 +375,7 @@ extension ThreadViewController: TTTAttributedLabelDelegate {
 
 extension ThreadViewController: CommentViewControllerDelegate {
     public func commentViewControllerDidFinishedPosting(post: PFObject) {
-        
+        updateThread()
     }
 }
 

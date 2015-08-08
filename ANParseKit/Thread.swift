@@ -32,6 +32,7 @@ public class Thread: PFObject, PFSubclassing {
     
     @NSManaged public var content: String
     @NSManaged public var hasSpoilers: Bool
+    @NSManaged public var locked: Bool
     @NSManaged public var images: [String]?
     @NSManaged public var youtubeID: String?
 }

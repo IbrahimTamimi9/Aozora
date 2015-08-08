@@ -357,7 +357,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="icon-create" id="5c8-zA-vWE" userLabel="Create">
                             <connections>
-                                <action selector="composeUpdatePressed:" destination="M5q-uq-HPK" id="dDm-KR-CCh"/>
+                                <action selector="replyToThreadPressed:" destination="M5q-uq-HPK" id="RMY-o1-XFY"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

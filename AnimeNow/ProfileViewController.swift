@@ -14,8 +14,6 @@ import Parse
 
 public class ProfileViewController: ThreadViewController {
     
-    @IBOutlet weak var createBBI: UIBarButtonItem!
-    @IBOutlet weak var dismissBBI: UIBarButtonItem!
     @IBOutlet weak var settingsButton: UIButton!
     
     @IBOutlet weak var userAvatar: UIImageView!
@@ -42,12 +40,12 @@ public class ProfileViewController: ThreadViewController {
         super.viewDidLoad()
         updateViewWithUser(user)
         updateThread()
+        fetchUserDetails()
     }
     
     override func updateThread() {
         super.updateThread()
         fetchUserFeed()
-        fetchUserDetails()
     }
     
     func updateViewWithUser(user: User) {
@@ -130,9 +128,11 @@ public class ProfileViewController: ThreadViewController {
         
     }
     
-    @IBAction func composeUpdatePressed(sender: AnyObject) {
+    public override func replyToThreadPressed(sender: AnyObject) {
+        super.replyToThreadPressed(sender)
+        
         let comment = ANParseKit.commentViewController()
-        comment.initWith(postType: .Timeline, delegate: self)
+        comment.initWithTimelinePost(self)
         presentViewController(comment, animated: true, completion: nil)
     }
     

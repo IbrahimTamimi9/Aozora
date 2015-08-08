@@ -127,7 +127,15 @@ extension EpisodesViewController: UICollectionViewDelegate {
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let episode = dataSource[indexPath.row]
         let episodeThreadController = ANParseKit.episodeThreadViewController()
-        episodeThreadController.initWithEpisode(episode)
+        episodeThreadController.initWithEpisode(episode, anime: anime, postType:.Episode)
+        if InAppController.purchasedAnyPro() == nil {
+            episodeThreadController.interstitialPresentationPolicy = .Automatic
+        }
+        
+        if let tabBar = tabBarController as? CustomTabBarController {
+            tabBar.disableDragDismiss()
+        }
+        
         navigationController?.pushViewController(episodeThreadController, animated: true)
     }
 }
