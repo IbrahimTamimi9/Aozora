@@ -22,8 +22,7 @@ extension ForumViewController: StatusBarVisibilityProtocol {
 
 public class ForumViewController: AnimeBaseViewController {
     
-    var malScrapper: MALScrapper!
-    var dataSource: [MALScrapper.Topic] = [] {
+    var dataSource: [Thread] = [] {
         didSet {
             tableView.reloadData()
         }
@@ -41,48 +40,23 @@ public class ForumViewController: AnimeBaseViewController {
         tableView.rowHeight = UITableViewAutomaticDimension
         
         loadingView = LoaderView(parentView: self.view)
-        malScrapper = MALScrapper(viewController: self)
-        
         loadingView.startAnimating()
-        
-        if let anime = anime {
-            malScrapper.topicsFor(anime: anime).continueWithBlock {
-                (task: BFTask!) -> AnyObject! in
-                
-                self.tableView.animateFadeIn()
-                self.loadingView.stopAnimating()
-                if task.result != nil {
-                    self.dataSource = task.result as! [MALScrapper.Topic]
-                }
-                
-                return nil
-            }
-        } else if let board = board {
-            malScrapper.topicsFor(board: board).continueWithBlock {
-                (task: BFTask!) -> AnyObject! in
-                
-                self.tableView.animateFadeIn()
-                self.loadingView.stopAnimating()
-                if task.result != nil {
-                    self.dataSource = task.result as! [MALScrapper.Topic]
-                }
-                
-                return nil
-            }
-        }
-        
+        fetchAnimeRelatedThreads()
     }
     
-    public override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "ShowTopic" {
-            let destination = segue.destinationViewController as! TopicViewController
-            let topic = sender as! MALScrapper.Topic
-            if InAppController.purchasedAnyPro() == nil {
-                destination.interstitialPresentationPolicy = .Automatic
+    func fetchAnimeRelatedThreads() {
+        let query = Thread.query()!
+        query.whereKey("anime", equalTo: anime)
+        query.findObjectsInBackgroundWithBlock { (result, error) -> Void in
+            self.loadingView.stopAnimating()
+            if let error = error {
+                // TODO: Show errows
+            } else if let result = result as? [Thread] {
+                self.dataSource = result
             }
-            destination.initWith(topic: topic, scrapper: malScrapper)
         }
     }
+    
 }
 
 extension ForumViewController: UITableViewDataSource {
@@ -96,11 +70,11 @@ extension ForumViewController: UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("TopicCell") as! TopicCell
         
-        let topic = dataSource[indexPath.row]
-        let title = topic.title
-        cell.typeLabel.text = topic.type == MALScrapper.TopicType.Sticky ? " " : ""
+        let thread = dataSource[indexPath.row]
+        let title = thread.title
+        //cell.typeLabel.text = topic.type == MALScrapper.TopicType.Sticky ? " " : ""
         cell.title.text = title
-        cell.information.text = "\(topic.replies)  · \(topic.lastPost.date) by \(topic.lastPost.user)"
+        cell.information.text = " \(thread.replies) comments · \(thread.updatedAt!.timeAgo())"
         cell.layoutIfNeeded()
         return cell
     }
@@ -116,7 +90,16 @@ extension ForumViewController: UITableViewDelegate {
             tabBar.disableDragDismiss()
         }
         
-        performSegueWithIdentifier("ShowTopic", sender: dataSource[indexPath.row])
-
+        // TODO: Support Anime threads..
+        let thread = dataSource[indexPath.row]
+        
+        let episodeThreadController = ANParseKit.episodeThreadViewController()
+        episodeThreadController.initWithEpisode(thread.episode!, anime: thread.anime!, postType: .Episode)
+        
+        if InAppController.purchasedAnyPro() == nil {
+            episodeThreadController.interstitialPresentationPolicy = .Automatic
+        }
+        
+        navigationController?.pushViewController(episodeThreadController, animated: true)
     }
 }

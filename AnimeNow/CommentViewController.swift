@@ -137,6 +137,8 @@ public class CommentViewController: UIViewController {
     
     func performPost() {
         self.sendButton.setTitle("Sending...", forState: .Normal)
+        self.sendButton.backgroundColor = UIColor.watching()
+        self.sendButton.userInteractionEnabled = false
         
         switch postType {
         case .Timeline:
@@ -189,7 +191,7 @@ public class CommentViewController: UIViewController {
                 post.replyLevel = 0
                 post.thread = thread!
             }
-            
+            post.thread.incrementKey("replies")
             post.postedBy = user
             
             var objectsToUpdate = [(post as PFObject)]
@@ -222,9 +224,10 @@ public class CommentViewController: UIViewController {
         if let error = error {
             // Show error
             self.sendButton.setTitle("Send", forState: .Normal)
+            self.sendButton.backgroundColor = UIColor.peterRiver()
+            self.sendButton.userInteractionEnabled = true
         } else {
             // Success!
-            self.sendButton.setTitle("Sent!", forState: .Normal)
             self.delegate?.commentViewControllerDidFinishedPosting(post)
             self.dismissViewControllerAnimated(true, completion: nil)
         }

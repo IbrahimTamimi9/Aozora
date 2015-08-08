@@ -88,6 +88,7 @@ public class EpisodeThreadViewController: ThreadViewController {
                     thread.anime = anime
                     thread.locked = false
                     thread.replies = 0
+                    thread.title = "\(anime.title!) - Episode \(episode.number)"
                     thread.saveInBackgroundWithBlock({ (result, error) -> Void in
                         if result {
                             self.thread = thread
