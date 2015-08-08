@@ -9,7 +9,7 @@
 import Foundation
 import Parse
 
-public class TimelinePost: PFObject, PFSubclassing {
+public class TimelinePost: PFObject, PFSubclassing, TimelinePostable {
     override public class func initialize() {
         struct Static {
             static var onceToken : dispatch_once_t = 0;
@@ -23,14 +23,87 @@ public class TimelinePost: PFObject, PFSubclassing {
         return "TimelinePost"
     }
     
-    @NSManaged public var content: String
-    @NSManaged public var replyLevel: Int
-    @NSManaged public var edited: Bool
-    @NSManaged public var episode: Episode?
-    @NSManaged public var postedBy: User?
-    @NSManaged public var userTimeline: User
-    @NSManaged public var images: [String]?
-    @NSManaged public var youtubeID: String?
-    @NSManaged public var replies: [TimelinePost]
+    public var createdDate: NSDate? {
+        get {
+            return createdAt
+        }
+    }
     
+    public var episode: Episode? {
+        get {
+            return self["episode"] as? Episode
+        }
+    }
+    
+    public var youtubeID: String? {
+        get {
+            return self["youtubeID"] as? String
+        }
+        set(value) {
+            self["youtubeID"] = value
+        }
+    }
+    
+    public var postedBy: User? {
+        get {
+            return self["postedBy"] as? User
+        }
+        set(value) {
+            self["postedBy"] = value
+        }
+    }
+    
+    public var userTimeline: User {
+        get {
+            return self["userTimeline"] as! User
+        }
+        set(value) {
+            self["userTimeline"] = value
+        }
+    }
+    
+    public var edited: Bool {
+        get {
+            return self["edited"] as? Bool ?? false
+        }
+        set(value) {
+            self["edited"] = value
+        }
+    }
+    
+    public var content: String {
+        get {
+            return self["content"] as? String ?? ""
+        }
+        set(value) {
+            self["content"] = value
+        }
+    }
+    
+    public var replyLevel: Int {
+        get {
+            return self["replyLevel"] as? Int ?? 0
+        }
+        set(value) {
+            self["replyLevel"] = value
+        }
+    }
+    
+    public var replies: [PFObject]? {
+        get {
+            return self["replies"] as? [PFObject]
+        }
+        set(value) {
+            self["replies"] = value
+        }
+    }
+    
+    public var images: [String]? {
+        get {
+            return self["images"] as? [String]
+        }
+        set(value) {
+            self["images"] = value
+        }
+    }    
 }

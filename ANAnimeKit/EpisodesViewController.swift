@@ -124,6 +124,12 @@ extension EpisodesViewController: UICollectionViewDataSource {
 
 extension EpisodesViewController: UICollectionViewDelegate {
     
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        let episode = dataSource[indexPath.row]
+        let episodeThreadController = ANParseKit.episodeThreadViewController()
+        episodeThreadController.initWithEpisode(episode)
+        navigationController?.pushViewController(episodeThreadController, animated: true)
+    }
 }
 
 extension EpisodesViewController: EpisodeCellDelegate {

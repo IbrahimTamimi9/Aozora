@@ -42,8 +42,15 @@ public class ANParseKit {
         let controller = navController.viewControllers.last as! ProfileViewController
         return (navController, controller)
     }
+    
     public class func commentViewController() -> CommentViewController {
         let controller = ANParseKit.commentStoryboard().instantiateInitialViewController() as! CommentViewController
         return controller
+    }
+    
+    public class func episodeThreadViewController() -> EpisodeThreadViewController {
+        let controller = ANParseKit.threadStoryboard().instantiateViewControllerWithIdentifier("EpisodeThread") as! EpisodeThreadViewController
+        return controller
+        
     }
 }

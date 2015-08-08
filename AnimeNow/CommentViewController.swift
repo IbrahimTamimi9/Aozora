@@ -34,7 +34,7 @@ public class CommentViewController: UIViewController {
     
     var initialStatusBarStyle: UIStatusBarStyle!
     var user = User.currentUser()!
-    var parentPost: TimelinePost?
+    var parentPost: Postable?
     var postType: PostType = .Timeline
     var editingPost: PFObject?
     
@@ -45,7 +45,7 @@ public class CommentViewController: UIViewController {
         case Forum
     }
     
-    public func initWith(#postType: PostType, delegate: CommentViewControllerDelegate?, editingPost: PFObject? = nil, parentPost: TimelinePost? = nil) {
+    public func initWith(#postType: PostType, delegate: CommentViewControllerDelegate?, editingPost: PFObject? = nil, parentPost: Postable? = nil) {
         self.postType = postType
         self.editingPost = editingPost
         self.delegate = delegate
@@ -64,16 +64,16 @@ public class CommentViewController: UIViewController {
         
         if let editingPost = editingPost {
             textView.text = editingPost["content"] as? String
-            if let replyingToUser = parentPost?.userTimeline {
-                inReply.text = "  Editing Reply to \(replyingToUser.aozoraUsername)"
+            if let parentPost = parentPost as? TimelinePostable {
+                inReply.text = "  Editing Reply to \(parentPost.userTimeline.aozoraUsername)"
             } else {
                 inReply.text = "  Editing Post"
             }
             photoButton.hidden = true
             videoButton.hidden = true
         } else {
-            if let replyingToUser = parentPost?.userTimeline {
-                inReply.text = "  In Reply to \(replyingToUser.aozoraUsername)"
+            if let parentPost = parentPost as? TimelinePostable {
+                inReply.text = "  In Reply to \(parentPost.userTimeline.aozoraUsername)"
             } else {
                 inReply.text = "  New Post"
             }
@@ -142,9 +142,9 @@ public class CommentViewController: UIViewController {
                 timelinePost.youtubeID = youtubeID
             }
             
-            if let replyingToUser = parentPost?.userTimeline {
+            if let parentPost = parentPost as? TimelinePostable {
                 timelinePost.replyLevel = 1
-                timelinePost.userTimeline = replyingToUser
+                timelinePost.userTimeline = parentPost.userTimeline
             } else {
                 timelinePost.replyLevel = 0
                 timelinePost.userTimeline = user
@@ -152,8 +152,8 @@ public class CommentViewController: UIViewController {
             
             timelinePost.postedBy = user
             
-            var objectsToUpdate = [timelinePost]
-            if let parentPost = parentPost {
+            var objectsToUpdate = [(timelinePost as PFObject)]
+            if let parentPost = parentPost as? PFObject {
                 parentPost.addObject(timelinePost, forKey: "replies")
                 objectsToUpdate.append(parentPost)
             }
@@ -165,16 +165,19 @@ public class CommentViewController: UIViewController {
         }
     }
     
-    func performUpdate(post: TimelinePost) {
+    func performUpdate(post: PFObject) {
 
-        post.content = textView.text
-        post.edited = true
+        if var post = post as? Postable {
+            post.content = textView.text
+            post.edited = true
+        }
+
         post.saveInBackgroundWithBlock ({ (result, error) -> Void in
             self.completeRequest(post, error: error)
         })
     }
     
-    func completeRequest(post: TimelinePost, error: NSError?) {
+    func completeRequest(post: PFObject, error: NSError?) {
         if let error = error {
             // Show error
             self.sendButton.setTitle("Send", forState: .Normal)
@@ -208,7 +211,7 @@ public class CommentViewController: UIViewController {
     }
 
     @IBAction func sendPressed(sender: AnyObject) {
-        if let editingPost = editingPost as? TimelinePost {
+        if let editingPost = editingPost {
             performUpdate(editingPost)
         } else {
             performPost()

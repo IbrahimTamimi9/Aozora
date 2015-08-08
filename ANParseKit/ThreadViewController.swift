@@ -12,11 +12,18 @@ import TTTAttributedLabel
 import XCDYouTubeKit
 import Parse
 
+// Class intended to be subclassedb
 public class ThreadViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    var thread: Thread?
+    var thread: Thread? {
+        didSet {
+            if isViewLoaded() {
+                updateUIWithThread(thread!)
+            }
+        }
+    }
     
     var fetchController = FetchController()
     var refreshControl = UIRefreshControl()
@@ -42,16 +49,19 @@ public class ThreadViewController: UIViewController {
         
         if let thread = thread {
             updateUIWithThread(thread)
+        } else {
+            fetchThread()
         }
-        
-        updateThread()
     }
     
     func updateUIWithThread(thread: Thread) {
-        
+        updateThread()
     }
     
     // MARK: - Fetching
+    func fetchThread() {
+        
+    }
     
     func updateThread() {
 
@@ -78,18 +88,18 @@ public class ThreadViewController: UIViewController {
         presentMoviePlayerViewControllerAnimated(playerController)
     }
     
-    func replyTo(post: TimelinePost) {
+    func replyTo(post: Postable) {
         let comment = ANParseKit.commentViewController()
         comment.initWith(postType:.Timeline, delegate: self, parentPost: post)
         presentViewController(comment, animated: true, completion: nil)
     }
     
-    func postForCell(cell: UITableViewCell) -> TimelinePost? {
-        if let indexPath = tableView.indexPathForCell(cell), let timelinePost = fetchController.objectAtIndex(indexPath.section) as? TimelinePost {
+    func postForCell(cell: UITableViewCell) -> Postable? {
+        if let indexPath = tableView.indexPathForCell(cell), let post = fetchController.objectAtIndex(indexPath.section) as? Postable {
             if indexPath.row == 0 {
-                return timelinePost
-            } else if timelinePost.replies.count > 0 && indexPath.row <= timelinePost.replies.count {
-                return timelinePost.replies[indexPath.row - 1]
+                return post
+            } else if let replies = post.replies where indexPath.row <= replies.count {
+                return replies[indexPath.row - 1] as? Postable
             }
         }
         
@@ -112,9 +122,9 @@ extension ThreadViewController: UITableViewDataSource {
     }
     
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let timelinePost = fetchController.objectAtIndex(section) as! TimelinePost
-        if timelinePost.replies.count > 0 {
-            return 1 + timelinePost.replies.count + 1
+        let post = fetchController.objectAtIndex(section) as! Postable
+        if post.replies?.count > 0 {
+            return 1 + (post.replies?.count ?? 0) + 1
         } else {
             return 1
         }
@@ -122,12 +132,12 @@ extension ThreadViewController: UITableViewDataSource {
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let timelinePost = fetchController.objectAtIndex(indexPath.section) as! TimelinePost
+        let post = fetchController.objectAtIndex(indexPath.section) as! Postable
         
         if indexPath.row == 0 {
             
             var reuseIdentifier = ""
-            if timelinePost.images != nil || timelinePost.youtubeID != nil || timelinePost.episode != nil {
+            if post.images != nil || post.youtubeID != nil || post.episode != nil {
                 // Post image or video cell
                 reuseIdentifier = "PostImageCell"
             } else {
@@ -137,15 +147,15 @@ extension ThreadViewController: UITableViewDataSource {
             
             let cell = tableView.dequeueReusableCellWithIdentifier(reuseIdentifier) as! PostCell
             cell.delegate = self
-            updatePostCell(cell, with: timelinePost)
-            if let episode = timelinePost.episode {
+            updatePostCell(cell, with: post)
+            if let episode = post.episode {
                 cell.imageContent?.setImageFrom(urlString: episode.imageURLString(), animated: true)
             }
             cell.layoutIfNeeded()
             return cell
             
-        } else if timelinePost.replies.count > 0 && indexPath.row <= timelinePost.replies.count {
-            let comment = timelinePost.replies[indexPath.row - 1]
+        } else if let replies = post.replies where indexPath.row <= replies.count {
+            let comment = replies[indexPath.row - 1] as! Postable
             
             var reuseIdentifier = ""
             if comment.images != nil || comment.youtubeID != nil {
@@ -173,64 +183,68 @@ extension ThreadViewController: UITableViewDataSource {
         
     }
     
-    func updatePostCell(cell: PostCell, with timelinePost: TimelinePost) {
-        if let postedBy = timelinePost.postedBy, let avatarFile = postedBy.avatarThumb {
+    func updatePostCell(cell: PostCell, with post: Postable) {
+        if let postedBy = post.postedBy, let avatarFile = postedBy.avatarThumb {
             cell.avatar.setImageWithPFFile(avatarFile)
+            cell.username.text = postedBy.aozoraUsername
         }
         
-        cell.username.text = timelinePost.userTimeline.aozoraUsername
-        cell.date.text = timelinePost.createdAt?.timeAgo()
+        cell.date.text = post.createdDate?.timeAgo()
         
-        if var postedAgo = cell.date.text where timelinePost.edited {
+        if var postedAgo = cell.date.text where post.edited {
             postedAgo += " · Edited"
             cell.date.text = postedAgo
         }
         
-        cell.textContent.text = timelinePost.content
-        let replies = timelinePost.replies
-        let buttonTitle = replies.count > 0 ? replies.count > 1 ? " \(replies.count) Comments" : " 1 Comment" : " Comment"
-        cell.replyButton.setTitle(buttonTitle, forState: .Normal)
-        self.updateAttributedTextProperties(cell.textContent)
-        if let image = timelinePost.images?.first {
+        cell.textContent.text = post.content
+        if let replies = post.replies {
+            let buttonTitle = replies.count > 0 ? replies.count > 1 ? " \(replies.count) Comments" : " 1 Comment" : " Comment"
+            cell.replyButton.setTitle(buttonTitle, forState: .Normal)
+        }
+        
+        updateAttributedTextProperties(cell.textContent)
+        if let image = post.images?.first {
             cell.imageContent?.setImageFrom(urlString: image, animated: true)
         }
         
-        prepareForVideo(cell.playButton, imageView: cell.imageContent, timelinePost: timelinePost)
+        prepareForVideo(cell.playButton, imageView: cell.imageContent, post: post)
     }
     
-    func updateCommentCell(cell: CommentCell, with timelinePost: TimelinePost) {
+    func updateCommentCell(cell: CommentCell, with post: Postable) {
         
-        let username = timelinePost.userTimeline.aozoraUsername
-        let content = username + " " + timelinePost.content
-        if let postedBy = timelinePost.postedBy, let avatarFile = postedBy.avatarThumb {
+        
+        if let postedBy = post.postedBy, let avatarFile = postedBy.avatarThumb {
+            let username = postedBy.aozoraUsername
+            let content = username + " " + post.content
             cell.avatar.setImageWithPFFile(avatarFile)
-        }
-        self.updateAttributedTextProperties(cell.textContent)
-        cell.date.text = timelinePost.createdAt?.timeAgo()
-        
-        if var postedAgo = cell.date.text where timelinePost.edited {
-            postedAgo += " · Edited"
-            cell.date.text = postedAgo
-        }
-        
-        cell.textContent.setText(content, afterInheritingLabelAttributesAndConfiguringWithBlock: { (attributedString) -> NSMutableAttributedString! in
             
-            return attributedString
-        })
+            updateAttributedTextProperties(cell.textContent)
+            cell.textContent.setText(content, afterInheritingLabelAttributesAndConfiguringWithBlock: { (attributedString) -> NSMutableAttributedString! in
+                
+                return attributedString
+            })
+            
+            let url = NSURL(string: "aozoraapp://profile/"+username)
+            let range = (content as NSString).rangeOfString(username)
+            cell.textContent.addLinkToURL(url, withRange: range)
+        }
         
-        let url = NSURL(string: "aozoraapp://profile/"+username)
-        let range = (content as NSString).rangeOfString(username)
-        cell.textContent.addLinkToURL(url, withRange: range)
+        cell.date.text = post.createdDate?.timeAgo()
         
-        if let image = timelinePost.images?.first {
+        if var postedAgo = cell.date.text where post.edited {
+            postedAgo += " · Edited"
+            cell.date.text = postedAgo
+        }
+        
+        if let image = post.images?.first {
             cell.imageContent?.setImageFrom(urlString: image, animated: true)
         }
-        prepareForVideo(cell.playButton, imageView: cell.imageContent, timelinePost: timelinePost)
+        prepareForVideo(cell.playButton, imageView: cell.imageContent, post: post)
     }
     
-    func prepareForVideo(playButton: UIButton?, imageView: UIImageView?, timelinePost: TimelinePost) {
+    func prepareForVideo(playButton: UIButton?, imageView: UIImageView?, post: Postable) {
         if let playButton = playButton {
-            if let youtubeID = timelinePost.youtubeID {
+            if let youtubeID = post.youtubeID {
                 
                 let urlString = "https://i.ytimg.com/vi/\(youtubeID)/mqdefault.jpg"
                 imageView?.setImageFrom(urlString: urlString, animated: true)
@@ -262,45 +276,51 @@ extension ThreadViewController: UITableViewDelegate {
     
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        let timelinePost = fetchController.objectAtIndex(indexPath.section) as! TimelinePost
+        let post = fetchController.objectAtIndex(indexPath.section) as! Postable
         
         if indexPath.row == 0 {
-            showSheetFor(timelinePost: timelinePost)
-        } else if timelinePost.replies.count > 0 && indexPath.row <= timelinePost.replies.count {
-            let comment = timelinePost.replies[indexPath.row - 1]
-            showSheetFor(timelinePost: comment, parentPost: timelinePost)
+            showSheetFor(post: post)
+        } else if let replies = post.replies where indexPath.row <= replies.count {
+            if let comment = replies[indexPath.row - 1] as? Postable {
+                showSheetFor(post: comment, parentPost: post)
+            }
         } else {
             // Write a comment cell
-            replyTo(timelinePost)
+            replyTo(post)
         }
     }
     
-    func showSheetFor(#timelinePost: TimelinePost, parentPost: TimelinePost? = nil) {
+    func showSheetFor(#post: Postable, parentPost: Postable? = nil) {
         // If user's comment show delete/edit
-        if timelinePost.postedBy == User.currentUser() {
+        if post.postedBy == User.currentUser() {
             
             var alert = UIAlertController(title: "Manage Post", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
             
             alert.addAction(UIAlertAction(title: "Edit", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
                 let comment = ANParseKit.commentViewController()
-                comment.initWith(postType: .Timeline, delegate: self, editingPost: timelinePost)
+                let post = post as! PFObject
+                comment.initWith(postType: CommentViewController.PostType.Timeline, delegate: self, editingPost: post)
                 self.presentViewController(comment, animated: true, completion: nil)
             }))
             alert.addAction(UIAlertAction(title: "Delete", style: UIAlertActionStyle.Destructive, handler: { (alertAction: UIAlertAction!) -> Void in
-                if let parentPost = parentPost {
-                    // Remove reference from parent
-                    parentPost.removeObject(timelinePost, forKey: "replies")
-                    parentPost.saveInBackgroundWithBlock({ (success, error) -> Void in
-                        if let error = error {
-                            // Show some error
-                        } else {
-                            self.deletePosts([timelinePost])
-                        }
-                    })
-                } else {
-                    // Remove child too
-                    self.deletePosts([timelinePost] + timelinePost.replies)
+                if let post = post as? PFObject {
+                    if let parentPost = parentPost as? PFObject {
+                        // Remove reference from parent
+                        parentPost.removeObject(post, forKey: "replies")
+                        parentPost.saveInBackgroundWithBlock({ (success, error) -> Void in
+                            if let error = error {
+                                // Show some error
+                            } else {
+                                self.deletePosts([post])
+                            }
+                        })
+                    } else {
+                        // Remove child too
+                        let replies = post["replies"] as! [PFObject]
+                        self.deletePosts([post] + replies)
+                    }
                 }
+                
             }))
             
             alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler:nil))
@@ -309,7 +329,7 @@ extension ThreadViewController: UITableViewDelegate {
         }
     }
     
-    func deletePosts(posts: [TimelinePost]) {
+    func deletePosts(posts: [PFObject]) {
         PFObject.deleteAllInBackground(posts, block: { (success, error) -> Void in
             if let error = error {
                 // Show some error

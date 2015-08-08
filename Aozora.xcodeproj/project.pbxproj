@@ -28,7 +28,6 @@
 		DA13805F1B6D56F500C53560 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC13C2F1B425CB70013D479 /* FBSDKShareKit.framework */; };
 		DA1380611B6D8D4B00C53560 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC13C2D1B425CB70013D479 /* FBSDKLoginKit.framework */; };
 		DA1380661B6DBAAA00C53560 /* Episodes.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA1380651B6DBAAA00C53560 /* Episodes.storyboard */; };
-		DA1380681B6DBAF700C53560 /* EpisodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1380671B6DBAF700C53560 /* EpisodeViewController.swift */; };
 		DA13806A1B6DBB4100C53560 /* Thread.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1380691B6DBB4100C53560 /* Thread.swift */; };
 		DA13806C1B6DBB4C00C53560 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA13806B1B6DBB4C00C53560 /* Post.swift */; };
 		DA13806E1B6DC08300C53560 /* UIViewController+Aozora.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA13806D1B6DC08300C53560 /* UIViewController+Aozora.swift */; };
@@ -193,6 +192,8 @@
 		DAE7A7191B2105FD00788614 /* AnimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE7A7181B2105FD00788614 /* AnimeCell.swift */; };
 		DAF32E3F1B62CEAF003FC372 /* Resources.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAF32E3E1B62CEAF003FC372 /* Resources.xcassets */; };
 		DAF357061B4593E200629A3D /* LibraryAnimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF357051B4593E200629A3D /* LibraryAnimeCell.swift */; };
+		DAF467151B76560800095820 /* EpisodeThreadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF467141B76560800095820 /* EpisodeThreadViewController.swift */; };
+		DAF467171B76655700095820 /* PostableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF467161B76655700095820 /* PostableProtocol.swift */; };
 		DAF6186D1B377AAE00286517 /* AnimeProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF6186B1B37792900286517 /* AnimeProgress.swift */; };
 		DAF6186F1B377C2100286517 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E13051B10DDB900B278B0 /* Social.framework */; };
 		DAF618701B377C3000286517 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E13031B10DDB500B278B0 /* Accounts.framework */; };
@@ -354,7 +355,6 @@
 		DA0B26121B75671300A770AE /* ThreadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThreadViewController.swift; sourceTree = "<group>"; };
 		DA0B26241B75AC3700A770AE /* Resources.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Resources.xcassets; sourceTree = "<group>"; };
 		DA1380651B6DBAAA00C53560 /* Episodes.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Episodes.storyboard; sourceTree = "<group>"; };
-		DA1380671B6DBAF700C53560 /* EpisodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodeViewController.swift; sourceTree = "<group>"; };
 		DA1380691B6DBB4100C53560 /* Thread.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Thread.swift; sourceTree = "<group>"; };
 		DA13806B1B6DBB4C00C53560 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		DA13806D1B6DC08300C53560 /* UIViewController+Aozora.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIViewController+Aozora.swift"; path = "../AnimeNow/UIViewController+Aozora.swift"; sourceTree = "<group>"; };
@@ -548,6 +548,8 @@
 		DAF32E3E1B62CEAF003FC372 /* Resources.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Resources.xcassets; sourceTree = "<group>"; };
 		DAF357031B45790100629A3D /* LibrarySyncController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LibrarySyncController.swift; path = ../AnimeNow/LibrarySyncController.swift; sourceTree = "<group>"; };
 		DAF357051B4593E200629A3D /* LibraryAnimeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryAnimeCell.swift; sourceTree = "<group>"; };
+		DAF467141B76560800095820 /* EpisodeThreadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodeThreadViewController.swift; sourceTree = "<group>"; };
+		DAF467161B76655700095820 /* PostableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostableProtocol.swift; sourceTree = "<group>"; };
 		DAF6186B1B37792900286517 /* AnimeProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeProgress.swift; sourceTree = "<group>"; };
 		DAF618751B377CA700286517 /* AnimeLibraryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeLibraryViewController.swift; sourceTree = "<group>"; };
 		DAF618771B377D6000286517 /* AnimeListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeListViewController.swift; sourceTree = "<group>"; };
@@ -702,8 +704,10 @@
 		DA0B260F1B75666C00A770AE /* Thread */ = {
 			isa = PBXGroup;
 			children = (
+				DAF467161B76655700095820 /* PostableProtocol.swift */,
 				DA0B26101B7566CF00A770AE /* Thread.storyboard */,
 				DA0B26121B75671300A770AE /* ThreadViewController.swift */,
+				DAF467141B76560800095820 /* EpisodeThreadViewController.swift */,
 			);
 			name = Thread;
 			sourceTree = "<group>";
@@ -713,7 +717,6 @@
 			children = (
 				DA1380651B6DBAAA00C53560 /* Episodes.storyboard */,
 				DA58C2EA1B3B109D0082B626 /* EpisodesViewController.swift */,
-				DA1380671B6DBAF700C53560 /* EpisodeViewController.swift */,
 			);
 			name = Episodes;
 			sourceTree = "<group>";
@@ -1990,7 +1993,6 @@
 				DAF618901B378B1F00286517 /* CustomTabBar.swift in Sources */,
 				DAF618911B378B1F00286517 /* AnimeBaseViewController.swift in Sources */,
 				DAF618941B378B1F00286517 /* TopicViewController.swift in Sources */,
-				DA1380681B6DBAF700C53560 /* EpisodeViewController.swift in Sources */,
 				DACD6AB81B6315AA00DDA55C /* ReminderController.swift in Sources */,
 				DAFE19AC1B29E17F002F3A76 /* CharacterCell.swift in Sources */,
 				DAC027CA1B2A15C20085C91A /* DiscussionViewController.swift in Sources */,
@@ -2074,6 +2076,7 @@
 				DA13806A1B6DBB4100C53560 /* Thread.swift in Sources */,
 				DAFE19B21B29F4EC002F3A76 /* Anime.swift in Sources */,
 				DA6E12E01B10D96F00B278B0 /* TFHppleElement.m in Sources */,
+				DAF467171B76655700095820 /* PostableProtocol.swift in Sources */,
 				DAE43C341B2BC3B700C3092D /* AnimeDetail.swift in Sources */,
 				DA0B26211B75A95F00A770AE /* ProfileViewController.swift in Sources */,
 				DACE77C41B29517F00037486 /* AnimeRelation.swift in Sources */,
@@ -2085,6 +2088,7 @@
 				DACCF35F1B111016006A13EB /* AnimeService.swift in Sources */,
 				DA6E12E61B10D96F00B278B0 /* WSWebScraper.m in Sources */,
 				DA2D1EF11B531B21009A5CCD /* PFQuery+LocalDatastore.swift in Sources */,
+				DAF467151B76560800095820 /* EpisodeThreadViewController.swift in Sources */,
 				DA0B26181B758B9300A770AE /* UserProfileManager.swift in Sources */,
 				DA9AE39C1B69382D0053C2EA /* DataFetchController.swift in Sources */,
 				DA8B6E071B6C4DBF00D240FC /* UIImageView+PFFile.swift in Sources */,

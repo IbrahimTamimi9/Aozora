@@ -41,6 +41,7 @@ public class ProfileViewController: ThreadViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         updateViewWithUser(user)
+        updateThread()
     }
     
     override func updateThread() {
