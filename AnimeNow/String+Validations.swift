@@ -7,10 +7,12 @@
 //
 
 import Foundation
-import ANParseKit
+import Parse
+import Bolts
+import ANCommonKit
 
 extension String {
-    func validEmail(viewController: UIViewController) -> Bool {
+    public func validEmail(viewController: UIViewController) -> Bool {
         let email = self.stringByReplacingOccurrencesOfString(" ", withString: "")
         let emailRegex = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
         let regularExpression = NSRegularExpression(pattern: emailRegex, options: NSRegularExpressionOptions.CaseInsensitive, error: nil)
@@ -23,7 +25,7 @@ extension String {
         return validEmail
     }
     
-    func validPassword(viewController: UIViewController) -> Bool {
+    public func validPassword(viewController: UIViewController) -> Bool {
         
         let validPassword = count(self) >= 6
         if !validPassword {
@@ -32,7 +34,7 @@ extension String {
         return validPassword
     }
     
-    func validUsername(viewController: UIViewController) -> Bool {
+    public func validUsername(viewController: UIViewController) -> Bool {
         
         switch self {
         case let _ where count(self) < 3:
@@ -46,7 +48,7 @@ extension String {
         }
     }
     
-    func usernameIsUnique() -> BFTask {
+    public func usernameIsUnique() -> BFTask {
         let query = User.query()!
         query.limit = 1
         query.whereKey("aozoraUsername", equalTo: self)

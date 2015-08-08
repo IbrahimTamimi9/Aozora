@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 import Bolts
 import ANCommonKit
-import ANParseKit
+import Parse
 
 class UserListViewController: UIViewController {
     

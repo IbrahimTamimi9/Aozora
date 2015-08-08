@@ -9,7 +9,7 @@
 import Foundation
 
 extension UIImage {
-    class func imageWithImage(image: UIImage, newSize: CGSize) -> UIImage {
+    public class func imageWithImage(image: UIImage, newSize: CGSize) -> UIImage {
         UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0);
         image.drawInRect(CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
         let newImage = UIGraphicsGetImageFromCurrentImageContext();
@@ -19,7 +19,7 @@ extension UIImage {
     
     
     // Only works for squares
-    class func imageWithImage(image: UIImage, maxSize: CGSize) -> UIImage {
+    public class func imageWithImage(image: UIImage, maxSize: CGSize) -> UIImage {
         
         let imageWidth = image.size.width > maxSize.width ? maxSize.width : image.size.width
         let imageHeight = image.size.height > maxSize.height ? maxSize.height : image.size.height

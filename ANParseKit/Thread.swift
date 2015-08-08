@@ -29,4 +29,9 @@ public class Thread: PFObject, PFSubclassing {
     @NSManaged public var startedBy: User?
     @NSManaged public var replies: Int
     @NSManaged public var tags: [String]
+    
+    @NSManaged public var content: String
+    @NSManaged public var hasSpoilers: Bool
+    @NSManaged public var images: [String]?
+    @NSManaged public var youtubeID: String?
 }

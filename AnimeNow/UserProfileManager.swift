@@ -8,14 +8,15 @@
 
 import Foundation
 import RSKImageCropper
-import ANParseKit
+import Bolts
+import Parse
 
-protocol UserProfileManagerDelegate: class {
+public protocol UserProfileManagerDelegate: class {
     func selectedAvatar(avatar: UIImage)
     func selectedBanner(banner: UIImage)
 }
 
-class UserProfileManager: NSObject {
+public class UserProfileManager: NSObject {
     
     static let ImageMinimumSideSize: CGFloat = 120
     static let ImageMaximumSideSize: CGFloat = 400
@@ -25,17 +26,17 @@ class UserProfileManager: NSObject {
     var imagePicker: UIImagePickerController!
     var selectingAvatar = true
     
-    func initWith(controller: UIViewController, delegate: UserProfileManagerDelegate) {
+    public func initWith(controller: UIViewController, delegate: UserProfileManagerDelegate) {
         self.viewController = controller
         self.delegate = delegate
     }
     
-    func selectAvatar() {
+    public func selectAvatar() {
         selectingAvatar = true
         selectImage()
     }
     
-    func selectBanner() {
+    public func selectBanner() {
         selectingAvatar = false
         selectImage()
     }
@@ -54,7 +55,7 @@ class UserProfileManager: NSObject {
         }
     }
     
-    func createUser(
+    public func createUser(
         viewController: UIViewController,
         username: String,
         password: String,
@@ -117,7 +118,7 @@ class UserProfileManager: NSObject {
     }
     
     
-    func updateUser(
+    public func updateUser(
     viewController: UIViewController,
     user: User,
     email: String? = nil,
@@ -179,7 +180,7 @@ class UserProfileManager: NSObject {
 }
 
 extension UserProfileManager: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
+    public func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
         viewController.dismissViewControllerAnimated(true, completion: { () -> Void in
             
             if image.size.width < UserProfileManager.ImageMinimumSideSize || image.size.height < UserProfileManager.ImageMinimumSideSize {
@@ -203,7 +204,7 @@ extension UserProfileManager: UIImagePickerControllerDelegate, UINavigationContr
 
 extension UserProfileManager: RSKImageCropViewControllerDelegate {
     
-    func imageCropViewController(controller: RSKImageCropViewController!, didCropImage croppedImage: UIImage!, usingCropRect cropRect: CGRect) {
+    public func imageCropViewController(controller: RSKImageCropViewController!, didCropImage croppedImage: UIImage!, usingCropRect cropRect: CGRect) {
         controller.dismissViewControllerAnimated(true, completion: nil)
         
         if selectingAvatar {
@@ -213,26 +214,26 @@ extension UserProfileManager: RSKImageCropViewControllerDelegate {
         }
     }
     
-    func imageCropViewControllerDidCancelCrop(controller: RSKImageCropViewController!) {
+    public func imageCropViewControllerDidCancelCrop(controller: RSKImageCropViewController!) {
         controller.dismissViewControllerAnimated(true, completion: nil)
     }
 }
 
 extension UserProfileManager: RSKImageCropViewControllerDataSource {
     
-    func imageCropViewControllerCustomMaskRect(controller: RSKImageCropViewController!) -> CGRect {
+    public func imageCropViewControllerCustomMaskRect(controller: RSKImageCropViewController!) -> CGRect {
         let imageHeight: CGFloat = 120
         let yPosition = (viewController.view.bounds.size.height - imageHeight) / 2
         return CGRect(x: 0, y: yPosition, width: viewController.view.bounds.size.width, height: imageHeight)
     }
 
-    func imageCropViewControllerCustomMaskPath(controller: RSKImageCropViewController!) -> UIBezierPath! {
+    public func imageCropViewControllerCustomMaskPath(controller: RSKImageCropViewController!) -> UIBezierPath! {
         let imageHeight: CGFloat = 120
         let yPosition = (viewController.view.bounds.size.height - imageHeight) / 2
         return UIBezierPath(rect: CGRect(x: 0, y: yPosition, width: viewController.view.bounds.size.width, height: imageHeight))
     }
     
-    func imageCropViewControllerCustomMovementRect(controller: RSKImageCropViewController!) -> CGRect {
+    public func imageCropViewControllerCustomMovementRect(controller: RSKImageCropViewController!) -> CGRect {
         return controller.maskRect
     }
 }
