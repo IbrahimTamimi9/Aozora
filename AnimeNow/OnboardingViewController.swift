@@ -49,6 +49,17 @@ class OnboardingViewController: UIViewController {
             currentUser["joinDate"] = NSDate()
             currentUser.saveEventually()
         }
+        self.linkInstalationWithUser()
+    }
+    
+    class func linkInstalationWithUser() {
+        
+        let installation = PFInstallation.currentInstallation()
+        
+        if let user = PFUser.currentUser() where installation.objectForKey("user") == nil {
+            installation.setObject(user, forKey: "user")
+            installation.saveEventually()
+        }
     }
     
     // MARK: - IBActions

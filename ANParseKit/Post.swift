@@ -81,12 +81,12 @@ public class Post: PFObject, PFSubclassing, ThreadPostable {
         }
     }
     
-    public var replies: [PFObject]? {
+    public var parentPost: PFObject? {
         get {
-            return self["replies"] as? [PFObject]
+            return self["parentPost"] as? PFObject
         }
         set(value) {
-            self["replies"] = value
+            self["parentPost"] = value
         }
     }
     
@@ -114,6 +114,16 @@ public class Post: PFObject, PFSubclassing, ThreadPostable {
         }
         set(value) {
             self["hasSpoilers"] = value
+        }
+    }
+    
+    lazy var repliesInternal: [PFObject] = []
+    public var replies: [PFObject] {
+        get {
+            return repliesInternal
+        }
+        set(value) {
+            repliesInternal = value
         }
     }
 }

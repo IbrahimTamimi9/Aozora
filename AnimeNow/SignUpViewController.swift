@@ -69,6 +69,7 @@ class SignUpViewController: UIViewController {
             email: emailTextField.text,
             avatar: profilePicture.image)
             .continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
+                
             self.showRootTabBar()
             return nil
         })

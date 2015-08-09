@@ -39,13 +39,13 @@ public class ProfileViewController: ThreadViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         updateViewWithUser(user)
-        updateThread()
+        fetchPosts()
         fetchUserDetails()
     }
     
-    override func updateThread() {
-        super.updateThread()
-        fetchUserFeed()
+    override func fetchPosts() {
+        super.fetchPosts()
+        fetchController.configureWith(self, queryDelegate: self, tableView: tableView)
     }
     
     func updateViewWithUser(user: User) {
@@ -90,19 +90,6 @@ public class ProfileViewController: ThreadViewController {
     }
     
     // MARK: - Fetching
-    
-    func fetchUserFeed() {
-        let query = TimelinePost.query()!
-        query.skip = 0
-        query.whereKey("userTimeline", equalTo: user)
-        query.whereKey("replyLevel", equalTo: 0)
-        query.orderByDescending("createdAt")
-        query.includeKey("episode")
-        query.includeKey("postedBy")
-        query.includeKey("userTimeline")
-        query.includeKey("replies")
-        fetchController.configureWith(self, query: query, tableView: tableView)
-    }
     
     func fetchUserDetails() {
         
@@ -174,5 +161,27 @@ extension ProfileViewController: EditProfileViewControllerProtocol {
     
     func editProfileViewControllerDidEditedUser() {
         fetchUserDetails()
+    }
+}
+
+extension ProfileViewController: FetchControllerQueryDelegate {
+    
+    public override func queryForSkip(#skip: Int) -> PFQuery {
+        let query = TimelinePost.query()!
+        query.skip = skip
+        query.limit = 20
+        query.whereKey("userTimeline", equalTo: user)
+        query.whereKey("replyLevel", equalTo: 0)
+        
+        let repliesQuery = TimelinePost.query()!
+        repliesQuery.skip = 0
+        repliesQuery.limit = 1000
+        repliesQuery.whereKey("parentPost", matchesKey: "objectId", inQuery: query)
+        repliesQuery.includeKey("episode")
+        repliesQuery.includeKey("postedBy")
+        repliesQuery.includeKey("userTimeline")
+        repliesQuery.orderByAscending("createdAt")
+        
+        return repliesQuery
     }
 }

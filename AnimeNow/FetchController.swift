@@ -13,9 +13,16 @@ import Bolts
 public protocol FetchControllerDelegate: class {
     func didFetchFor(#skip: Int)
 }
+
+public protocol FetchControllerQueryDelegate: class {
+    func queryForSkip(#skip: Int) -> PFQuery
+    func processResult(#result: [PFObject]) -> [PFObject]
+}
+
 public class FetchController {
 
     public weak var delegate: FetchControllerDelegate?
+    public weak var queryDelegate: FetchControllerQueryDelegate?
     
     var isFetching = true
     var canFetchMore = true
@@ -32,7 +39,7 @@ public class FetchController {
     var tableView: UITableView?
     var collectionView: UICollectionView?
     var dataSource: [PFObject] = []
-    var query: PFQuery!
+    var query: PFQuery?
     
     var isFirstFetch = true
     
@@ -40,7 +47,8 @@ public class FetchController {
         
     }
     
-    public func configureWith(delegate: FetchControllerDelegate, query: PFQuery, collectionView: UICollectionView? = nil, tableView: UITableView? = nil, limit: Int = 100) {
+    public func configureWith(delegate: FetchControllerDelegate, query: PFQuery? = nil, queryDelegate: FetchControllerQueryDelegate? = nil, collectionView: UICollectionView? = nil, tableView: UITableView? = nil, limit: Int = 100) {
+        self.queryDelegate = queryDelegate
         self.delegate = delegate
         self.tableView = tableView
         self.collectionView = collectionView
@@ -56,7 +64,7 @@ public class FetchController {
         dataSourceCount = defaultDataSourceCount
         page = defaultPage
         limit = defaultLimit
-        query.skip = 0
+        query?.skip = 0
     }
     
     public func dataCount() -> Int {
@@ -99,10 +107,22 @@ public class FetchController {
     }
     
     func fetchWith(#skip: Int) -> BFTask {
-        query.skip = skip
-        return query.findObjectsInBackground().continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
+        
+        if let query = queryDelegate?.queryForSkip(skip: skip) {
+            self.query = query
+        } else if let query = query {
+            query.skip = skip
+        } else {
+            return BFTask(result: nil)
+        }
+        
+        return query!.findObjectsInBackground().continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
             
-            if let result = task.result as? [PFObject] {
+            if var result = task.result as? [PFObject] {
+                
+                if let processedResult = self.queryDelegate?.processResult(result: result) {
+                    result = processedResult
+                }
                 
                 if skip == 0 {
                     self.dataSource = result
@@ -113,7 +133,6 @@ public class FetchController {
             }
             
             self.delegate?.didFetchFor(skip: skip)
-            
             
             if let collectionView = self.collectionView {
                 if skip == 0 {

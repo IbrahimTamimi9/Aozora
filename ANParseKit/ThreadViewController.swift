@@ -49,7 +49,7 @@ public class ThreadViewController: UIViewController {
         WriteACommentCell.registerNibFor(tableView: tableView)
         
         loadingView = LoaderView(parentView: view)
-        addRefreshControl(refreshControl, action:"updateThread", forTableView: tableView)
+        addRefreshControl(refreshControl, action:"fetchPosts", forTableView: tableView)
         
         if let thread = thread {
             updateUIWithThread(thread)
@@ -59,7 +59,7 @@ public class ThreadViewController: UIViewController {
     }
     
     func updateUIWithThread(thread: Thread) {
-        updateThread()
+        fetchPosts()
     }
     
     // MARK: - Fetching
@@ -67,14 +67,14 @@ public class ThreadViewController: UIViewController {
         
     }
     
-    func updateThread() {
+    func fetchPosts() {
 
     }
     
     // MARK: - Internal functions
     func openProfile(user: User) {
         if user != User.currentUser() {
-            let navController = UIStoryboard(name: "Profile", bundle: nil).instantiateInitialViewController() as! UINavigationController
+            let navController = UIStoryboard(name: "Profile", bundle: ANParseKit.bundle()).instantiateInitialViewController() as! UINavigationController
             let profileController = navController.viewControllers.first as! ProfileViewController
             profileController.initWithUser(user)
             presentViewController(navController, animated: true, completion: nil)
@@ -107,8 +107,8 @@ public class ThreadViewController: UIViewController {
         if let indexPath = tableView.indexPathForCell(cell), let post = fetchController.objectAtIndex(indexPath.section) as? Postable {
             if indexPath.row == 0 {
                 return post
-            } else if let replies = post.replies where indexPath.row <= replies.count {
-                return replies[indexPath.row - 1] as? Postable
+            } else if indexPath.row <= post.replies.count {
+                return post.replies[indexPath.row - 1] as? Postable
             }
         }
         
@@ -135,8 +135,8 @@ extension ThreadViewController: UITableViewDataSource {
     
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let post = fetchController.objectAtIndex(section) as! Postable
-        if post.replies?.count > 0 {
-            return 1 + (post.replies?.count ?? 0) + 1
+        if post.replies.count > 0 {
+            return 1 + (post.replies.count ?? 0) + 1
         } else {
             return 1
         }
@@ -166,8 +166,8 @@ extension ThreadViewController: UITableViewDataSource {
             cell.layoutIfNeeded()
             return cell
             
-        } else if let replies = post.replies where indexPath.row <= replies.count {
-            let comment = replies[indexPath.row - 1] as! Postable
+        } else if indexPath.row <= post.replies.count {
+            let comment = post.replies[indexPath.row - 1] as! Postable
             
             var reuseIdentifier = ""
             if comment.images != nil || comment.youtubeID != nil {
@@ -209,8 +209,8 @@ extension ThreadViewController: UITableViewDataSource {
         }
         
         cell.textContent.text = post.content
-        if let replies = post.replies where replies.count > 0 {
-            let buttonTitle = replies.count > 1 ? " \(replies.count) Comments" : " 1 Comment"
+        if post.replies.count > 0 {
+            let buttonTitle = post.replies.count > 1 ? " \(post.replies.count) Comments" : " 1 Comment"
             cell.replyButton.setTitle(buttonTitle, forState: .Normal)
         } else {
             cell.replyButton.setTitle(" Comment", forState: .Normal)
@@ -227,7 +227,9 @@ extension ThreadViewController: UITableViewDataSource {
     func updateCommentCell(cell: CommentCell, with post: Postable) {
         
         
-        if let postedBy = post.postedBy, let avatarFile = postedBy.avatarThumb {
+        if let postedBy = post.postedBy, let avatarFile = postedBy.avatarThumb  {
+            
+            
             let username = postedBy.aozoraUsername
             let content = username + " " + post.content
             cell.avatar.setImageWithPFFile(avatarFile)
@@ -294,8 +296,8 @@ extension ThreadViewController: UITableViewDelegate {
         
         if indexPath.row == 0 {
             showSheetFor(post: post)
-        } else if let replies = post.replies where indexPath.row <= replies.count {
-            if let comment = replies[indexPath.row - 1] as? Postable {
+        } else if indexPath.row <= post.replies.count {
+            if let comment = post.replies[indexPath.row - 1] as? Postable {
                 showSheetFor(post: comment, parentPost: post)
             }
         } else {
@@ -353,7 +355,7 @@ extension ThreadViewController: UITableViewDelegate {
             } else {
                 self.thread?.incrementKey("replies", byAmount: -posts.count)
                 self.thread?.saveEventually()
-                self.updateThread()
+                self.fetchPosts()
             }
         })
     }
@@ -377,7 +379,7 @@ extension ThreadViewController: TTTAttributedLabelDelegate {
 
 extension ThreadViewController: CommentViewControllerDelegate {
     public func commentViewControllerDidFinishedPosting(post: PFObject) {
-        updateThread()
+        fetchPosts()
     }
 }
 
@@ -402,5 +404,33 @@ extension ThreadViewController: PostCellDelegate {
         if let post = postForCell(postCell) {
             replyTo(post)
         }
+    }
+}
+
+extension ThreadViewController: FetchControllerQueryDelegate {
+    
+    public func queryForSkip(#skip: Int) -> PFQuery {
+        return PFQuery()
+    }
+    
+    public func processResult(#result: [PFObject]) -> [PFObject] {
+        
+        var posts = result.filter({ $0["replyLevel"] as? Int == 0 })
+        let replies = result.filter({ $0["replyLevel"] as? Int == 1 })
+        
+        for post in posts {
+            let postReplies = replies.filter({ $0["parentPost"] as? PFObject == post }) as [PFObject]
+            var postable = post as! Postable
+            postable.replies = postReplies
+        }
+        posts.sort({ (a: PFObject, b: PFObject) -> Bool in
+            if let controller = self as? ProfileViewController {
+                return a.createdAt!.compare(b.createdAt!) == NSComparisonResult.OrderedDescending
+            } else {
+                return a.createdAt!.compare(b.createdAt!) == NSComparisonResult.OrderedAscending
+            }            
+        })
+        
+        return posts
     }
 }

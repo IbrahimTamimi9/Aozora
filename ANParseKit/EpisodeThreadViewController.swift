@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Parse
 
 public class EpisodeThreadViewController: ThreadViewController {
     
@@ -99,17 +100,9 @@ public class EpisodeThreadViewController: ThreadViewController {
         }
     }
     
-    override func updateThread() {
-        super.updateThread()
-        
-        let query = Post.query()!
-        query.skip = 0
-        query.whereKey("replyLevel", equalTo: 0)
-        query.whereKey("thread", equalTo: thread!)
-        query.orderByAscending("createdAt")
-        query.includeKey("postedBy")
-        query.includeKey("replies")
-        fetchController.configureWith(self, query: query, tableView: tableView)
+    override func fetchPosts() {
+        super.fetchPosts()
+        fetchController.configureWith(self, queryDelegate: self, tableView: tableView)
     }
     
     // MARK: - IBAction
@@ -122,5 +115,28 @@ public class EpisodeThreadViewController: ThreadViewController {
             comment.initWithThread(thread, postType: postType, delegate: self)
             presentViewController(comment, animated: true, completion: nil)
         }
+    }
+}
+
+extension EpisodeThreadViewController: FetchControllerQueryDelegate {
+    
+    public override func queryForSkip(#skip: Int) -> PFQuery {
+        
+        let query = Post.query()!
+        query.skip = skip
+        query.limit = 20
+        query.whereKey("thread", equalTo: thread!)
+        query.whereKey("replyLevel", equalTo: 0)
+        
+        let repliesQuery = Post.query()!
+        repliesQuery.skip = 0
+        repliesQuery.limit = 1000
+        repliesQuery.whereKey("parentPost", matchesKey: "objectId", inQuery: query)
+        repliesQuery.includeKey("postedBy")
+        repliesQuery.includeKey("replies")
+        repliesQuery.includeKey("replies.postedBy")
+        repliesQuery.orderByAscending("createdAt")
+        
+        return repliesQuery
     }
 }

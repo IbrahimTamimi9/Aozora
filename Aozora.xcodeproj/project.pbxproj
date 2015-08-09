@@ -124,7 +124,7 @@
 		DA8DD6411B3C95F300B05FBF /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8DD6401B3C95F300B05FBF /* SearchViewController.swift */; };
 		DA8DD6431B3CAEC500B05FBF /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8DD6421B3CAEC500B05FBF /* FilterViewController.swift */; };
 		DA9AE39B1B6930F60053C2EA /* TimelinePost.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9AE39A1B6930F60053C2EA /* TimelinePost.swift */; };
-		DA9AE39C1B69382D0053C2EA /* DataFetchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC13BFF1B3F4A7A0013D479 /* DataFetchController.swift */; };
+		DA9AE39C1B69382D0053C2EA /* FetchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC13BFF1B3F4A7A0013D479 /* FetchController.swift */; };
 		DA9EB9311B2BA580001ECFA7 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA9EB9301B2BA580001ECFA7 /* WebKit.framework */; };
 		DA9F731D1B2931FF00C2652C /* UIImageView+SDWebImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9F731A1B2930F200C2652C /* UIImageView+SDWebImage.swift */; };
 		DA9F731E1B29370F00C2652C /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA41679A1B25F76F00847F56 /* FontAwesome.ttf */; };
@@ -495,7 +495,7 @@
 		DAC13BF61B3EFC1C0013D479 /* LoadingTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingTableCell.swift; sourceTree = "<group>"; };
 		DAC13BF81B3EFC280013D479 /* LoadingCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingCollectionCell.swift; sourceTree = "<group>"; };
 		DAC13BFD1B3F36AB0013D479 /* UIViewController+Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIViewController+Image.swift"; path = "../AnimeNow/UIViewController+Image.swift"; sourceTree = "<group>"; };
-		DAC13BFF1B3F4A7A0013D479 /* DataFetchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataFetchController.swift; path = ../AnimeNow/DataFetchController.swift; sourceTree = "<group>"; };
+		DAC13BFF1B3F4A7A0013D479 /* FetchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FetchController.swift; path = ../AnimeNow/FetchController.swift; sourceTree = "<group>"; };
 		DAC13C021B40569F0013D479 /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		DAC13C041B4056AB0013D479 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		DAC13C071B41DF0E0013D479 /* Onboarding.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Onboarding.storyboard; sourceTree = "<group>"; };
@@ -672,7 +672,7 @@
 		DA0347251B4ADD8D0025CE24 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				DAC13BFF1B3F4A7A0013D479 /* DataFetchController.swift */,
+				DAC13BFF1B3F4A7A0013D479 /* FetchController.swift */,
 				DAF357031B45790100629A3D /* LibrarySyncController.swift */,
 			);
 			name = Controllers;
@@ -2074,7 +2074,7 @@
 				DA2D1EF11B531B21009A5CCD /* PFQuery+LocalDatastore.swift in Sources */,
 				DAF467151B76560800095820 /* EpisodeThreadViewController.swift in Sources */,
 				DA0B26181B758B9300A770AE /* UserProfileManager.swift in Sources */,
-				DA9AE39C1B69382D0053C2EA /* DataFetchController.swift in Sources */,
+				DA9AE39C1B69382D0053C2EA /* FetchController.swift in Sources */,
 				DA8B6E071B6C4DBF00D240FC /* UIImageView+PFFile.swift in Sources */,
 				DAC027CC1B2A16B80085C91A /* AnimeReview.swift in Sources */,
 				DAE64EEC1B73CCE4005A984A /* ImageViewController.swift in Sources */,

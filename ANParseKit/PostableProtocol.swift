@@ -19,8 +19,10 @@ public protocol Postable {
     var content: String { get set }
     var replyLevel: Int { get set }
     
-    var replies: [PFObject]? { get }
+    var parentPost: PFObject? { get }
     var images: [String]? { get }
+    
+    var replies: [PFObject] { get set }
 }
 
 public protocol TimelinePostable: Postable {

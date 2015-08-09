@@ -156,21 +156,18 @@ public class CommentViewController: UIViewController {
             if let parentPost = parentPost as? TimelinePostable {
                 timelinePost.replyLevel = 1
                 timelinePost.userTimeline = parentPost.userTimeline
+                timelinePost.parentPost = parentPost as? TimelinePost
             } else {
                 timelinePost.replyLevel = 0
                 timelinePost.userTimeline = user
+                timelinePost.parentPost = timelinePost
             }
             
             timelinePost.postedBy = user
-            
-            var objectsToUpdate = [(timelinePost as PFObject)]
-            if let parentPost = parentPost as? PFObject {
-                parentPost.addObject(timelinePost, forKey: "replies")
-                objectsToUpdate.append(parentPost)
-            }
-            PFObject.saveAllInBackground(objectsToUpdate, block: { (result, error) -> Void in
+            timelinePost.saveInBackgroundWithBlock({ (result, error) -> Void in
                 self.completeRequest(timelinePost, error: error)
             })
+            
         case .Episode:
             var post = Post()
             post.content = textView.text
@@ -193,13 +190,7 @@ public class CommentViewController: UIViewController {
             }
             post.thread.incrementKey("replies")
             post.postedBy = user
-            
-            var objectsToUpdate = [(post as PFObject)]
-            if let parentPost = parentPost as? PFObject {
-                parentPost.addObject(post, forKey: "replies")
-                objectsToUpdate.append(parentPost)
-            }
-            PFObject.saveAllInBackground(objectsToUpdate, block: { (result, error) -> Void in
+            post.saveInBackgroundWithBlock({ (result, error) -> Void in
                 self.completeRequest(post, error: error)
             })
             
@@ -222,7 +213,7 @@ public class CommentViewController: UIViewController {
     
     func completeRequest(post: PFObject, error: NSError?) {
         if let error = error {
-            // Show error
+            // TODO: Show error
             self.sendButton.setTitle("Send", forState: .Normal)
             self.sendButton.backgroundColor = UIColor.peterRiver()
             self.sendButton.userInteractionEnabled = true

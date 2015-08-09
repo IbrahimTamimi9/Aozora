@@ -89,12 +89,12 @@ public class TimelinePost: PFObject, PFSubclassing, TimelinePostable {
         }
     }
     
-    public var replies: [PFObject]? {
+    public var parentPost: PFObject? {
         get {
-            return self["replies"] as? [PFObject]
+            return self["parentPost"] as? PFObject
         }
         set(value) {
-            self["replies"] = value
+            self["parentPost"] = value
         }
     }
     
@@ -105,5 +105,16 @@ public class TimelinePost: PFObject, PFSubclassing, TimelinePostable {
         set(value) {
             self["images"] = value
         }
-    }    
+    }
+    
+    lazy var repliesInternal: [PFObject] = []
+    public var replies: [PFObject] {
+        get {
+            return repliesInternal
+        }
+        set(value) {
+            repliesInternal = value
+        }
+    }
+    
 }
