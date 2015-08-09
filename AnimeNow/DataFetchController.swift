@@ -34,6 +34,8 @@ public class FetchController {
     var dataSource: [PFObject] = []
     var query: PFQuery!
     
+    var isFirstFetch = true
+    
     public init() {
         
     }
@@ -117,7 +119,10 @@ public class FetchController {
                 if skip == 0 {
                     // Reload data
                     collectionView.reloadData()
-                    collectionView.animateFadeIn()
+                    if self.isFirstFetch {
+                        self.isFirstFetch = false
+                        collectionView.animateFadeIn()
+                    }
                     
                 } else if let result = task.result as? [PFObject] {
                     // Insert rows
@@ -135,7 +140,10 @@ public class FetchController {
                 if skip == 0 {
                     // Reload data
                     tableView.reloadData()
-                    tableView.animateFadeIn()
+                    if self.isFirstFetch {
+                        self.isFirstFetch = false
+                        tableView.animateFadeIn()
+                    }
                     
                 } else if let result = task.result as? [PFObject] {
                     // Insert rows

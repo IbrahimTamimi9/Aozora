@@ -137,14 +137,14 @@ public class ProfileViewController: ThreadViewController {
     }
     
     @IBAction func showFollowingUsers(sender: AnyObject) {
-        let userListController = UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("UserList") as! UserListViewController
+        let userListController = UIStoryboard(name: "Profile", bundle: ANParseKit.bundle()).instantiateViewControllerWithIdentifier("UserList") as! UserListViewController
         let query = user.following().query()!
         userListController.initWithQuery(query, title: "Following")
         navigationController?.pushViewController(userListController, animated: true)
     }
     
     @IBAction func showFollowers(sender: AnyObject) {
-        let userListController = UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("UserList") as! UserListViewController
+        let userListController = UIStoryboard(name: "Profile", bundle: ANParseKit.bundle()).instantiateViewControllerWithIdentifier("UserList") as! UserListViewController
         let query = User.query()!
         query.whereKey("following", equalTo: user)
         userListController.initWithQuery(query, title: "Followers")
@@ -156,24 +156,17 @@ public class ProfileViewController: ThreadViewController {
         var alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
         
         alert.addAction(UIAlertAction(title: "Settings", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
-            let settings = UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController() as! UINavigationController
+            let settings = UIStoryboard(name: "Settings", bundle: ANParseKit.bundle()).instantiateInitialViewController() as! UINavigationController
             self.presentViewController(settings, animated: true, completion: nil)
         }))
         alert.addAction(UIAlertAction(title: "Edit Profile", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
-            let editProfileController = UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("EditProfile") as! EditProfileViewController
+            let editProfileController =  UIStoryboard(name: "Profile", bundle: ANParseKit.bundle()).instantiateViewControllerWithIdentifier("EditProfile") as! EditProfileViewController
             editProfileController.delegate = self
             self.presentViewController(editProfileController, animated: true, completion: nil)
         }))
         
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler:nil))
         self.presentViewController(alert, animated: true, completion: nil)
-    }
-}
-
-extension ProfileViewController: CommentViewControllerDelegate {
-    public override func commentViewControllerDidFinishedPosting(post: PFObject) {
-        super.commentViewControllerDidFinishedPosting(post)
-        fetchUserFeed()
     }
 }
 

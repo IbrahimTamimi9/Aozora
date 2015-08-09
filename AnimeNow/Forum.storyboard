@@ -79,8 +79,8 @@
                                                     <nil key="highlightedColor"/>
                                                     <variation key="default">
                                                         <mask key="constraints">
-                                                            <exclude reference="rby-th-pYV"/>
                                                             <exclude reference="BRo-d4-EhA"/>
+                                                            <exclude reference="rby-th-pYV"/>
                                                         </mask>
                                                     </variation>
                                                 </label>

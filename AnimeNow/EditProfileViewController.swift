@@ -13,7 +13,7 @@ protocol EditProfileViewControllerProtocol: class {
     func editProfileViewControllerDidEditedUser()
 }
 
-class EditProfileViewController: UIViewController {
+public class EditProfileViewController: UIViewController {
     
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var bannerImageView: UIImageView!
@@ -27,7 +27,7 @@ class EditProfileViewController: UIViewController {
     var updatedAvatar = false
     var updatedBanner = false
     
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         emailTextField.textColor = UIColor.blackColor()
         
@@ -75,18 +75,18 @@ class EditProfileViewController: UIViewController {
 }
 
 extension EditProfileViewController: UINavigationBarDelegate {
-    func positionForBar(bar: UIBarPositioning) -> UIBarPosition {
+    public func positionForBar(bar: UIBarPositioning) -> UIBarPosition {
         return UIBarPosition.TopAttached
     }
 }
 
 extension EditProfileViewController: UserProfileManagerDelegate {
-    func selectedAvatar(avatar: UIImage) {
+    public func selectedAvatar(avatar: UIImage) {
         updatedAvatar = true
         avatarImageView.image = avatar
     }
     
-    func selectedBanner(banner: UIImage) {
+    public func selectedBanner(banner: UIImage) {
         updatedBanner = true
         bannerImageView.image = banner
     }
