@@ -31,6 +31,7 @@ public class ProfileViewController: ThreadViewController {
     @IBOutlet weak var settingsTrailingSpaceConstraint: NSLayoutConstraint!
     
     var user = User.currentUser()!
+    var followingUser: Bool?
     
     public func initWithUser(user: User) {
         self.user = user
@@ -63,14 +64,12 @@ public class ProfileViewController: ThreadViewController {
         
         if user == User.currentUser() {
             followButton.hidden = true
-            animeListButton.hidden = true
             settingsTrailingSpaceConstraint.constant = 8
             navigationItem.leftBarButtonItem = nil
         } else {
             followButton.hidden = false
-            animeListButton.hidden = false
-            navigationItem.rightBarButtonItems = nil
-            settingsTrailingSpaceConstraint.constant = 88
+            settingsButton.hidden = true
+            //settingsTrailingSpaceConstraint.constant = 88
         }
         
         if user.badges.count > 0 {
@@ -98,10 +97,34 @@ public class ProfileViewController: ThreadViewController {
         query.includeKey("details")
         query.findObjectsInBackgroundWithBlock { (result, error) -> Void in
             if let user = result?.last as? User {
+                self.user = user
                 self.updateViewWithUser(user)
                 self.aboutLabel.text = user.details.about
             }
         }
+        
+        if User.currentUser() != user {
+            
+            let relationQuery = User.currentUser()!.following().query()!
+            relationQuery.whereKey("objectId", equalTo: user.objectId!)
+            relationQuery.findObjectsInBackgroundWithBlock { (result, error) -> Void in
+                if let user = result?.last as? User {
+                    // Following this user
+                    self.followButton.setTitle("  Following", forState: .Normal)
+                    self.followButton.layoutIfNeeded()
+                    self.followingUser = true
+                } else if let error = error {
+                    // TODO: Show error
+                    
+                } else {
+                    // NOT following this user
+                    self.followButton.setTitle("  Follow", forState: .Normal)
+                    self.followButton.layoutIfNeeded()
+                    self.followingUser = false
+                }
+            }
+        }
+        
     }
     
     
@@ -113,6 +136,31 @@ public class ProfileViewController: ThreadViewController {
     
     @IBAction func followOrUnfollow(sender: AnyObject) {
         
+        let thisProfileUser = self.user
+        if let followingUser = followingUser, let currentUser = User.currentUser() where thisProfileUser != currentUser {
+
+            if !followingUser {
+                // Follow
+                self.followButton.setTitle("  Following", forState: .Normal)
+                let followingRelation = currentUser.following()
+                followingRelation.addObject(thisProfileUser)
+                thisProfileUser.incrementKey("followersCount", byAmount: 1)
+                currentUser.incrementKey("followingCount", byAmount: 1)
+                thisProfileUser.saveEventually()
+                currentUser.saveEventually()
+            } else {
+                // Unfollow
+                self.followButton.setTitle("  Follow", forState: .Normal)
+                let followingRelation = currentUser.following()
+                followingRelation.removeObject(thisProfileUser)
+                thisProfileUser.incrementKey("followersCount", byAmount: -1)
+                currentUser.incrementKey("followingCount", byAmount: -1)
+                thisProfileUser.saveEventually()
+                currentUser.saveEventually()
+            }
+            
+            self.followingUser = !followingUser
+        }
     }
     
     public override func replyToThreadPressed(sender: AnyObject) {
@@ -143,7 +191,7 @@ public class ProfileViewController: ThreadViewController {
         var alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
         
         alert.addAction(UIAlertAction(title: "Settings", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
-            let settings = UIStoryboard(name: "Settings", bundle: ANParseKit.bundle()).instantiateInitialViewController() as! UINavigationController
+            let settings = UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController() as! UINavigationController
             self.presentViewController(settings, animated: true, completion: nil)
         }))
         alert.addAction(UIAlertAction(title: "Edit Profile", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
@@ -166,22 +214,32 @@ extension ProfileViewController: EditProfileViewControllerProtocol {
 
 extension ProfileViewController: FetchControllerQueryDelegate {
     
-    public override func queryForSkip(#skip: Int) -> PFQuery {
+    public override func queriesForSkip(#skip: Int) -> [PFQuery] {
         let query = TimelinePost.query()!
         query.skip = skip
         query.limit = 20
         query.whereKey("userTimeline", equalTo: user)
         query.whereKey("replyLevel", equalTo: 0)
+        query.orderByDescending("createdAt")
+        query.includeKey("episode")
+        query.includeKey("postedBy")
+        query.includeKey("userTimeline")
+
+        let innerQuery = TimelinePost.query()!
+        innerQuery.skip = skip
+        innerQuery.limit = 20
+        innerQuery.whereKey("userTimeline", equalTo: user)
+        innerQuery.whereKey("replyLevel", equalTo: 0)
         
         let repliesQuery = TimelinePost.query()!
         repliesQuery.skip = 0
         repliesQuery.limit = 1000
-        repliesQuery.whereKey("parentPost", matchesKey: "objectId", inQuery: query)
+        repliesQuery.whereKey("parentPost", matchesKey: "objectId", inQuery: innerQuery)
+        repliesQuery.orderByAscending("createdAt")
         repliesQuery.includeKey("episode")
         repliesQuery.includeKey("postedBy")
         repliesQuery.includeKey("userTimeline")
-        repliesQuery.orderByAscending("createdAt")
         
-        return repliesQuery
+        return [query, repliesQuery]
     }
 }

@@ -90,12 +90,25 @@ public class Post: PFObject, PFSubclassing, ThreadPostable {
         }
     }
     
-    public var images: [String]? {
+    var imagesInternal: [ImageData]!
+    public var images: [ImageData] {
         get {
-            return self["images"] as? [String]
+            if imagesInternal == nil {
+                imagesInternal = []
+                if let images = self["images"] as? [[String: AnyObject]] {
+                    for image in images {
+                        imagesInternal.append(ImageData.imageDataWithDictionary(image))
+                    }
+                }
+            }
+            return imagesInternal
         }
         set(value) {
-            self["images"] = value
+            var imagesRaw: [[String: AnyObject]] = []
+            for image in value {
+                imagesRaw.append(image.toDictionary())
+            }
+            self["images"] = imagesRaw
         }
     }
     

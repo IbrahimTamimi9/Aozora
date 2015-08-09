@@ -20,7 +20,7 @@ public protocol Postable {
     var replyLevel: Int { get set }
     
     var parentPost: PFObject? { get }
-    var images: [String]? { get }
+    var images: [ImageData] { get }
     
     var replies: [PFObject] { get set }
 }

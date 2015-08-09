@@ -11,7 +11,7 @@ import ANCommonKit
 import Bolts
 
 protocol ImagesViewControllerDelegate: class {
-    func imagesViewControllerSelected(#imageURL: String)
+    func imagesViewControllerSelected(#imageData: ImageData)
 }
 
 public class ImagesViewController: UIViewController {
@@ -21,7 +21,7 @@ public class ImagesViewController: UIViewController {
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     
     weak var delegate: ImagesViewControllerDelegate?
-    var dataSource: [String] = []
+    var dataSource: [ImageData] = []
     var malScrapper: MALScrapper!
 
     override public func viewDidLoad() {
@@ -47,7 +47,7 @@ public class ImagesViewController: UIViewController {
     func findImagesWithQuery(query: String, animated: Bool) {
         malScrapper.findImagesWithQuery(query, animated: animated).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
             
-            let result = task.result as! [String]
+            let result = task.result as! [ImageData]
             self.dataSource = result
             self.collectionView.reloadData()
             
@@ -76,7 +76,8 @@ extension ImagesViewController: UICollectionViewDataSource {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("imageCell", forIndexPath: indexPath) as! BasicCollectionCell
         
-        cell.titleimageView.setImageFrom(urlString: dataSource[indexPath.row], animated: false)
+        let imageData = dataSource[indexPath.row]
+        cell.titleimageView.setImageFrom(urlString: imageData.url, animated: false)
         
         return cell
     }
@@ -85,10 +86,10 @@ extension ImagesViewController: UICollectionViewDataSource {
 extension ImagesViewController: UICollectionViewDelegate {
     
     public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let imageURL = dataSource[indexPath.row]
+        let imageData = dataSource[indexPath.row]
         
         var imageController = ANParseKit.commentStoryboard().instantiateViewControllerWithIdentifier("Image") as! ImageViewController
-        imageController.initWith(imageUrl: imageURL)
+        imageController.initWith(imageData: imageData)
         imageController.delegate = self
         imageController.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
         presentViewController(imageController, animated: true, completion: nil)
@@ -112,8 +113,8 @@ extension ImagesViewController: UISearchBarDelegate {
 
 extension ImagesViewController: ImageViewControllerDelegate {
     
-    func imageViewControllerSelected(#imageURL: String) {
-        delegate?.imagesViewControllerSelected(imageURL: imageURL)
+    func imageViewControllerSelected(#imageData: ImageData) {
+        delegate?.imagesViewControllerSelected(imageData: imageData)
         dismissViewControllerAnimated(true, completion: nil)
     }
     

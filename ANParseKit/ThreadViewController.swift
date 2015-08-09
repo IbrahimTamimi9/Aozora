@@ -149,7 +149,7 @@ extension ThreadViewController: UITableViewDataSource {
         if indexPath.row == 0 {
             
             var reuseIdentifier = ""
-            if post.images != nil || post.youtubeID != nil || post.episode != nil {
+            if post.images.count != 0 || post.youtubeID != nil || post.episode != nil {
                 // Post image or video cell
                 reuseIdentifier = "PostImageCell"
             } else {
@@ -170,7 +170,7 @@ extension ThreadViewController: UITableViewDataSource {
             let comment = post.replies[indexPath.row - 1] as! Postable
             
             var reuseIdentifier = ""
-            if comment.images != nil || comment.youtubeID != nil {
+            if comment.images.count != 0 || comment.youtubeID != nil {
                 // Comment image cell
                 reuseIdentifier = "CommentImageCell"
             } else {
@@ -217,8 +217,9 @@ extension ThreadViewController: UITableViewDataSource {
         }
         
         updateAttributedTextProperties(cell.textContent)
-        if let image = post.images?.first {
-            cell.imageContent?.setImageFrom(urlString: image, animated: true)
+        if let image = post.images.first {
+            cell.imageHeightConstraint.constant = view.bounds.size.width * CGFloat(image.height)/CGFloat(image.width)
+            cell.imageContent?.setImageFrom(urlString: image.url, animated: true)
         }
         
         prepareForVideo(cell.playButton, imageView: cell.imageContent, post: post)
@@ -226,9 +227,7 @@ extension ThreadViewController: UITableViewDataSource {
     
     func updateCommentCell(cell: CommentCell, with post: Postable) {
         
-        
         if let postedBy = post.postedBy, let avatarFile = postedBy.avatarThumb  {
-            
             
             let username = postedBy.aozoraUsername
             let content = username + " " + post.content
@@ -252,8 +251,9 @@ extension ThreadViewController: UITableViewDataSource {
             cell.date.text = postedAgo
         }
         
-        if let image = post.images?.first {
-            cell.imageContent?.setImageFrom(urlString: image, animated: true)
+        if let image = post.images.first {
+            cell.imageHeightConstraint.constant = (view.bounds.size.width-59.0) * CGFloat(image.height)/CGFloat(image.width)
+            cell.imageContent?.setImageFrom(urlString: image.url, animated: true)
         }
         prepareForVideo(cell.playButton, imageView: cell.imageContent, post: post)
     }
@@ -386,8 +386,8 @@ extension ThreadViewController: CommentViewControllerDelegate {
 extension ThreadViewController: PostCellDelegate {
     public func postCellSelectedImage(postCell: PostCell) {
         if let post = postForCell(postCell), let imageView = postCell.imageContent {
-            if let imageURL = post.images?.first {
-                showImage(imageURL, imageView: imageView)
+            if let imageData = post.images.first {
+                showImage(imageData.url, imageView: imageView)
             } else if let videoID = post.youtubeID {
                 playTrailer(videoID)
             }
@@ -409,8 +409,9 @@ extension ThreadViewController: PostCellDelegate {
 
 extension ThreadViewController: FetchControllerQueryDelegate {
     
-    public func queryForSkip(#skip: Int) -> PFQuery {
-        return PFQuery()
+    public func queriesForSkip(#skip: Int) -> [PFQuery] {
+        let query = PFQuery()
+        return [query]
     }
     
     public func processResult(#result: [PFObject]) -> [PFObject] {
@@ -423,14 +424,14 @@ extension ThreadViewController: FetchControllerQueryDelegate {
             var postable = post as! Postable
             postable.replies = postReplies
         }
-        posts.sort({ (a: PFObject, b: PFObject) -> Bool in
-            if let controller = self as? ProfileViewController {
-                return a.createdAt!.compare(b.createdAt!) == NSComparisonResult.OrderedDescending
-            } else {
-                return a.createdAt!.compare(b.createdAt!) == NSComparisonResult.OrderedAscending
-            }            
-        })
-        
+//        posts.sort({ (a: PFObject, b: PFObject) -> Bool in
+//            if let controller = self as? ProfileViewController {
+//                return a.createdAt!.compare(b.createdAt!) == NSComparisonResult.OrderedDescending
+//            } else {
+//                return a.createdAt!.compare(b.createdAt!) == NSComparisonResult.OrderedAscending
+//            }            
+//        })
+//        
         return posts
     }
 }

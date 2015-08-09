@@ -15,7 +15,7 @@ public protocol FetchControllerDelegate: class {
 }
 
 public protocol FetchControllerQueryDelegate: class {
-    func queryForSkip(#skip: Int) -> PFQuery
+    func queriesForSkip(#skip: Int) -> [PFQuery]
     func processResult(#result: [PFObject]) -> [PFObject]
 }
 
@@ -108,26 +108,41 @@ public class FetchController {
     
     func fetchWith(#skip: Int) -> BFTask {
         
-        if let query = queryDelegate?.queryForSkip(skip: skip) {
-            self.query = query
+        var secondaryQuery: PFQuery? = nil
+        if let queries = queryDelegate?.queriesForSkip(skip: skip) {
+            self.query = queries.first
+            if queries.count > 1 {
+                secondaryQuery = queries[1]
+            }
         } else if let query = query {
             query.skip = skip
         } else {
             return BFTask(result: nil)
         }
         
-        return query!.findObjectsInBackground().continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
+        var allData:[PFObject] = []
+        var fetchTask = query!.findObjectsInBackground()
+        
+        if let secondaryQuery = secondaryQuery {
+            fetchTask = fetchTask.continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
+                allData += task.result as! [PFObject]
+                return secondaryQuery.findObjectsInBackground()
+            })
+        }
+            
+        fetchTask = fetchTask.continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
             
             if var result = task.result as? [PFObject] {
+                allData += result
                 
-                if let processedResult = self.queryDelegate?.processResult(result: result) {
-                    result = processedResult
+                if let processedResult = self.queryDelegate?.processResult(result: allData) {
+                    allData = processedResult
                 }
                 
                 if skip == 0 {
-                    self.dataSource = result
+                    self.dataSource = allData
                 } else {
-                    self.dataSource += result
+                    self.dataSource += allData
                 }
                 self.didFetch(self.dataSource.count)
             }
@@ -147,6 +162,7 @@ public class FetchController {
                     // Insert rows
                     collectionView.performBatchUpdates({ () -> Void in
                         let endIndex = self.dataSource.count
+                        // TODO: Will crash here for posts
                         let startIndex = endIndex - result.count
                         var indexPathsToInsert: [NSIndexPath] = []
                         for index in startIndex..<endIndex {
@@ -179,9 +195,11 @@ public class FetchController {
             
             
             return nil
+        }).continueWithBlock({ (task: BFTask!) -> AnyObject! in
+            println(task.exception)
+            return nil
         })
 
-        
+        return fetchTask
     }
-    
 }

@@ -29,7 +29,7 @@ public class CommentViewController: UIViewController {
     
     public weak var delegate: CommentViewControllerDelegate?
     
-    var selectedImageURL: String?
+    var selectedImageData: ImageData?
     var selectedVideoID: String?
     
     var initialStatusBarStyle: UIStatusBarStyle!
@@ -145,8 +145,8 @@ public class CommentViewController: UIViewController {
             var timelinePost = TimelinePost()
             timelinePost.content = textView.text
             timelinePost.edited = false
-            if let selectedImageURL = selectedImageURL {
-                timelinePost.images = [selectedImageURL]
+            if let selectedImageData = selectedImageData {
+                timelinePost.images = [selectedImageData]
             }
             
             if let youtubeID = selectedVideoID {
@@ -160,7 +160,6 @@ public class CommentViewController: UIViewController {
             } else {
                 timelinePost.replyLevel = 0
                 timelinePost.userTimeline = user
-                timelinePost.parentPost = timelinePost
             }
             
             timelinePost.postedBy = user
@@ -173,8 +172,8 @@ public class CommentViewController: UIViewController {
             post.content = textView.text
             post.edited = false
             
-            if let selectedImageURL = selectedImageURL {
-                post.images = [selectedImageURL]
+            if let selectedImageData = selectedImageData {
+                post.images = [selectedImageData]
             }
             
             if let youtubeID = selectedVideoID {
@@ -256,8 +255,8 @@ public class CommentViewController: UIViewController {
 }
 
 extension CommentViewController: ImagesViewControllerDelegate {
-    func imagesViewControllerSelected(#imageURL: String) {
-        selectedImageURL = imageURL
+    func imagesViewControllerSelected(#imageData: ImageData) {
+        selectedImageData = imageData
         photoCountLabel.hidden = false
         videoButton.enabled = false
     }

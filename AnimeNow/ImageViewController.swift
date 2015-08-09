@@ -9,7 +9,7 @@
 import Foundation
 
 protocol ImageViewControllerDelegate: class {
-    func imageViewControllerSelected(#imageURL: String)
+    func imageViewControllerSelected(#imageData: ImageData)
 }
 
 public class ImageViewController: UIViewController {
@@ -18,15 +18,15 @@ public class ImageViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     
     weak var delegate: ImageViewControllerDelegate?
-    var imageUrl: String!
+    var imageData: ImageData!
     
-    func initWith(#imageUrl: String) {
-        self.imageUrl = imageUrl
+    func initWith(#imageData: ImageData) {
+        self.imageData = imageData
     }
     
     override public func viewDidLoad() {
         super.viewDidLoad()
-        imageView.setImageFrom(urlString: imageUrl, animated: true)
+        imageView.setImageFrom(urlString: imageData.url, animated: true)
         
         UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: UIStatusBarAnimation.Fade)
     }
@@ -45,7 +45,7 @@ public class ImageViewController: UIViewController {
     
     @IBAction func selectPressed(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: { () -> Void in
-            delegate?.imageViewControllerSelected(imageURL: imageUrl)
+            delegate?.imageViewControllerSelected(imageData: imageData)
         })
     }
 }

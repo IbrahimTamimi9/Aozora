@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -107,20 +106,12 @@
                             <constraint firstAttribute="height" constant="1" id="93F-IP-BOX"/>
                         </constraints>
                     </view>
-                    <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7Ot-hi-3MU">
-                        <rect key="frame" x="8" y="96.5" width="304" height="180"/>
+                    <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7Ot-hi-3MU">
+                        <rect key="frame" x="0.0" y="96.5" width="320" height="180"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="180" id="8kf-Ei-Ewk"/>
-                            <constraint firstAttribute="width" secondItem="7Ot-hi-3MU" secondAttribute="height" multiplier="76:45" id="P09-7Y-Lvf"/>
-                            <constraint firstAttribute="height" constant="170" id="aXo-kG-kBN"/>
+                            <constraint firstAttribute="height" constant="180" id="cq0-Qc-11O"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="8kf-Ei-Ewk"/>
-                                <exclude reference="aXo-kG-kBN"/>
-                            </mask>
-                        </variation>
                     </imageView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2fU-I8-swY" userLabel="ButtonTrailer">
                         <rect key="frame" x="130" y="157" width="60" height="60"/>
@@ -147,10 +138,12 @@
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="1BT-oF-gil" secondAttribute="bottom" constant="-0.5" id="0di-4E-zaT"/>
                     <constraint firstItem="Azh-0z-DNT" firstAttribute="top" secondItem="CE8-oB-25Y" secondAttribute="topMargin" constant="-8" id="1Xu-JE-PAO"/>
+                    <constraint firstItem="7Ot-hi-3MU" firstAttribute="leading" secondItem="CE8-oB-25Y" secondAttribute="leading" id="63m-rg-PgB"/>
                     <constraint firstItem="7Ot-hi-3MU" firstAttribute="leading" secondItem="CE8-oB-25Y" secondAttribute="leading" constant="8" id="84j-oq-8Tv"/>
                     <constraint firstItem="IIt-M3-Ebc" firstAttribute="top" secondItem="Azh-0z-DNT" secondAttribute="bottom" id="9lq-na-XDW"/>
                     <constraint firstItem="7Ot-hi-3MU" firstAttribute="leading" secondItem="CE8-oB-25Y" secondAttribute="leadingMargin" id="Hmk-Ti-3AB"/>
                     <constraint firstItem="7Ot-hi-3MU" firstAttribute="trailing" secondItem="CE8-oB-25Y" secondAttribute="trailingMargin" id="LFC-1v-E06"/>
+                    <constraint firstAttribute="trailing" secondItem="7Ot-hi-3MU" secondAttribute="trailing" id="M9s-dK-4kV"/>
                     <constraint firstItem="IIt-M3-Ebc" firstAttribute="leading" secondItem="CE8-oB-25Y" secondAttribute="leadingMargin" id="ND0-hn-B3R"/>
                     <constraint firstItem="Azh-0z-DNT" firstAttribute="leading" secondItem="CE8-oB-25Y" secondAttribute="leading" id="QD0-4V-Fbs"/>
                     <constraint firstAttribute="trailing" secondItem="1BT-oF-gil" secondAttribute="trailing" id="Sg9-sC-0Nv"/>
@@ -170,6 +163,8 @@
                 <variation key="default">
                     <mask key="constraints">
                         <exclude reference="84j-oq-8Tv"/>
+                        <exclude reference="Hmk-Ti-3AB"/>
+                        <exclude reference="LFC-1v-E06"/>
                         <exclude reference="bkU-UI-oYK"/>
                         <exclude reference="etg-We-i5B"/>
                         <exclude reference="mQE-Ni-B6B"/>
@@ -180,6 +175,7 @@
                 <outlet property="avatar" destination="l7o-JT-JFL" id="CTx-YQ-mpw"/>
                 <outlet property="date" destination="oSa-7l-kjl" id="RP1-wa-1cl"/>
                 <outlet property="imageContent" destination="7Ot-hi-3MU" id="0wf-R1-sRI"/>
+                <outlet property="imageHeightConstraint" destination="cq0-Qc-11O" id="VSy-ko-JRc"/>
                 <outlet property="playButton" destination="2fU-I8-swY" id="oYH-XN-hSg"/>
                 <outlet property="replyButton" destination="sCC-Vy-34T" id="5uJ-jj-ipV"/>
                 <outlet property="textContent" destination="IIt-M3-Ebc" id="v5M-FB-9Ee"/>

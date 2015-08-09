@@ -10,6 +10,30 @@ import UIKit
 import Bolts
 import ANCommonKit
 
+public class ImageData {
+    
+    public var url: String
+    public var width: Int
+    public var height: Int
+    
+    init(url: String, width: Int, height: Int) {
+        self.url = url
+        self.width = width
+        self.height = height
+    }
+    
+    class func imageDataWithDictionary(dictionary: [String: AnyObject]) -> ImageData {
+        return ImageData(
+            url: dictionary["url"] as! String,
+            width: dictionary["width"] as! Int,
+            height: dictionary["height"] as! Int)
+    }
+    
+    public func toDictionary() -> [String: AnyObject] {
+        return ["url": url, "width": width, "height": height]
+    }
+}
+
 public class MALScrapper {
     
     var viewController: UIViewController
@@ -176,12 +200,23 @@ public class MALScrapper {
             }
             
             let results = hpple.searchWithXPathQuery("//div[@id='rg_s']/div/a") as! [TFHppleElement]
-            var images: [String] = []
+            var images: [ImageData] = []
             
             for result in results {
+                
                 let urlString = result.objectForKey("href")
-                if let url = NSURL(string: urlString), let parameters = BFURL(URL: url).inputQueryParameters, let imageURL = parameters["imgurl"] as? String {
-                    images.append(imageURL)
+                if let url = NSURL(string: urlString),
+                    let parameters = BFURL(URL: url).inputQueryParameters,
+                    let imageURL = parameters["imgurl"] as? String,
+                    let sizeRaw = result.hppleElementFor(path: [1,0,0,0])?.content {
+                        
+                        let values = sizeRaw.componentsSeparatedByString(" ")[1]
+                        let valuesFiltered = values.componentsSeparatedByString(" × ")
+                        let width = valuesFiltered[0].toInt()!
+                        let height = valuesFiltered[1].toInt()!
+                        
+                        let imageData = ImageData(url: imageURL, width: width, height: height)
+                        images.append(imageData)
                 }
             }
             
