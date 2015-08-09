@@ -33,7 +33,7 @@
             </objects>
             <point key="canvasLocation" x="545" y="1943"/>
         </scene>
-        <!--Forum-->
+        <!--Forum View Controller-->
         <scene sceneID="3XK-X8-Ec6">
             <objects>
                 <viewController storyboardIdentifier="Forum" useStoryboardIdentifierAsRestorationIdentifier="YES" id="A6G-ah-oIs" customClass="ForumViewController" customModule="ANAnimeKit" sceneMemberID="viewController">
@@ -140,8 +140,10 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="" id="IqJ-ss-AlO"/>
-                    <navigationItem key="navigationItem" title="Forum" id="tHl-vW-tHj"/>
+                    <navigationItem key="navigationItem" id="tHl-vW-tHj"/>
                     <connections>
+                        <outlet property="navigationBar" destination="tHl-vW-tHj" id="DYc-uQ-qWo"/>
+                        <outlet property="navigationItem" destination="tHl-vW-tHj" id="O9d-Dl-4c8"/>
                         <outlet property="tableView" destination="Fmw-jU-6m7" id="5aH-kp-mqL"/>
                     </connections>
                 </viewController>

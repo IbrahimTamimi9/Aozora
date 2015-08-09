@@ -479,7 +479,7 @@
 		DAA393281B42F21900A8D5D5 /* RootTabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootTabBar.swift; sourceTree = "<group>"; };
 		DAA3932A1B42F6A100A8D5D5 /* PFUser+CurrentUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "PFUser+CurrentUser.swift"; path = "../AnimeNow/PFUser+CurrentUser.swift"; sourceTree = "<group>"; };
 		DAAD79921B30D087009D70ED /* ForumViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ForumViewController.swift; path = ../ANAnimeKit/ForumViewController.swift; sourceTree = "<group>"; };
-		DAAD79941B30D918009D70ED /* TopicCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TopicCell.swift; path = ../ANAnimeKit/TopicCell.swift; sourceTree = "<group>"; };
+		DAAD79941B30D918009D70ED /* TopicCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicCell.swift; sourceTree = "<group>"; };
 		DAB83FC61B52FE200006AF96 /* ChartController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartController.swift; sourceTree = "<group>"; };
 		DAC027C91B2A15C20085C91A /* DiscussionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscussionViewController.swift; sourceTree = "<group>"; };
 		DAC027CB1B2A16B80085C91A /* AnimeReview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeReview.swift; sourceTree = "<group>"; };
@@ -914,6 +914,7 @@
 				DA4167E61B275D3800847F56 /* TitleCell.swift */,
 				DAFE19AB1B29E17F002F3A76 /* CharacterCell.swift */,
 				DA58C2E81B3B0B680082B626 /* EpisodeCell.swift */,
+				DAAD79941B30D918009D70ED /* TopicCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1341,7 +1342,6 @@
 		DAF6187E1B3785FC00286517 /* Forum */ = {
 			isa = PBXGroup;
 			children = (
-				DAAD79941B30D918009D70ED /* TopicCell.swift */,
 				DAF6187F1B37861000286517 /* Forum.storyboard */,
 				DAAD79921B30D087009D70ED /* ForumViewController.swift */,
 			);

@@ -13,85 +13,67 @@ import ANParseKit
 
 class ForumsViewController: UIViewController {
     
-    let HeaderCellHeight: CGFloat = 39
-    
-    var dataSource: [[(title: String, subtitle: String, board: Int)]] =
-        [
-            //[],
-            [
-                ("News Discussion","Current news in anime and manga",15),
-                ("Anime & Manga Recommendations","Ask the community for series recommendations or help other users looking for suggestions",16),
-                ("Anime Discussion","General anime discussion that is not specific to any particular series",1),
-                ("Manga Discussion","General manga discussion that is not specific to any particular series",2)
-            ],
-            [
-                ("Introductions","New to MyAnimeList? Introduce yourself here",8),
-                ("Games, Computers & Tech Support","Discuss visual novels and other video games, or ask our community a computer related question",7),
-                ("Music & Entertainment","Asian music and live-action series, Western media and artists, best-selling novels, etc",10),
-                ("Current Events","World headlines, the latest in science, sports competitions, and other debate topics",6),
-                ("Casual Discussion","General interest topics that don't fall into one of the sub-categories above, such as community polls",11),
-                ("Creative Corner","Show your creations to get help or feedback from our community. Graphics, list designs, stories; anything goes",12),
-                ("MAL Contests","Our season-long anime game and other user competitions can be found here",13),
-                ("Forum Games","Fun forum games are contained here",9),
-            ],
-            
-        ]
-    var titles: [String] = ["Anime & Manga","General"]
+    var loadingView: LoaderView!
+    var dataSource: [Thread] = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     
     @IBOutlet weak var tableView: UITableView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tableView.estimatedRowHeight = 61.0
+        tableView.estimatedRowHeight = 150.0
         tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.animateFadeIn()
+
+        loadingView = LoaderView(parentView: view)
+        loadingView.startAnimating()
         
+        fetchThreads()
+    }
+    
+    func fetchThreads() {
+        let query = Thread.query()!
+        query.orderByDescending("updatedAt")
+        query.findObjectsInBackgroundWithBlock { (result, error) -> Void in
+            
+            self.loadingView.stopAnimating()
+            self.tableView.animateFadeIn()
+            if let error = error {
+                // TODO: Show error
+            } else if let result = result as? [Thread] {
+                self.dataSource = result
+            }
+        }
     }
     
 }
 
 extension ForumsViewController: UITableViewDataSource {
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return dataSource.count
-    }
-    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return dataSource[section].count
+        return dataSource.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("BoardCell") as! BasicTableCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("TopicCell") as! TopicCell
         
-        let (title, subtitle, _) = dataSource[indexPath.section][indexPath.row]
-
-        cell.titleLabel.text = title
-        cell.subtitleLabel.text = subtitle
-        
+        let thread = dataSource[indexPath.row]
+        let title = thread.title
+        //cell.typeLabel.text = topic.type == MALScrapper.TopicType.Sticky ? " " : ""
+        cell.title.text = title
+        cell.information.text = " \(thread.replies) comments · \(thread.updatedAt!.timeAgo())"
         cell.layoutIfNeeded()
         return cell
     }
-    
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let cell = tableView.dequeueReusableCellWithIdentifier("TitleCell") as! BasicTableCell
-        cell.titleLabel.text = titles[section]
-        return cell.contentView
-    }
-    
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return HeaderCellHeight
-    }
-    
 }
 
 extension ForumsViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let (_, _, board) = dataSource[indexPath.section][indexPath.row]
-        let controller = ANAnimeKit.forumViewController()
-        controller.board = board
-        navigationController?.pushViewController(controller, animated: true)
+
     }
 }

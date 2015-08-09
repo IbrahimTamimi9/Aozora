@@ -36,7 +36,7 @@ class SearchViewController: UIViewController {
         let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
         layout.itemSize = CGSize(width: view.bounds.size.width, height: 132)
         
-        loadingView = LoaderView(parentView: self.view)
+        loadingView = LoaderView(parentView: view)
         
         searchBar.placeholder = searchLibrary ? "Search your library" : "Search all anime"
         searchBar.becomeFirstResponder()

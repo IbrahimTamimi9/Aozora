@@ -81,7 +81,7 @@ public class AnimeInformationViewController: AnimeBaseViewController {
         tableView.estimatedRowHeight = 44.0
         tableView.rowHeight = UITableViewAutomaticDimension
         
-        loadingView = LoaderView(parentView: self.view)
+        loadingView = LoaderView(parentView: view)
         
         ranksView.hidden = true
         fetchCurrentAnime(anime.progress != nil)

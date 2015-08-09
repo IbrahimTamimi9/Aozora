@@ -8,9 +8,8 @@
 
 import UIKit
 
-class TopicCell: UITableViewCell {
-    @IBOutlet weak var title: UILabel!
-    @IBOutlet weak var information: UILabel!
-    
-    @IBOutlet weak var typeLabel: UILabel!
+public class TopicCell: UITableViewCell {
+    @IBOutlet public weak var title: UILabel!
+    @IBOutlet public weak var information: UILabel!
+    @IBOutlet public weak var typeLabel: UILabel!
 }

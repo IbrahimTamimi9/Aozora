@@ -76,7 +76,7 @@ class BrowseViewController: UIViewController {
         let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
         layout.itemSize = CGSize(width: view.bounds.size.width, height: 132)
         
-        loadingView = LoaderView(parentView: self.view)
+        loadingView = LoaderView(parentView: view)
         
         fetchListType(currentBrowseType)
         

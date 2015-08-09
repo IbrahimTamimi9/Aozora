@@ -37,7 +37,7 @@ class EpisodesViewController: AnimeBaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadingView = LoaderView(parentView: self.view)
+        loadingView = LoaderView(parentView: view)
         
         fetchEpisodes()
     }

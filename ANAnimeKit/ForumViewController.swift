@@ -29,17 +29,17 @@ public class ForumViewController: AnimeBaseViewController {
     }
     
     var loadingView: LoaderView!
-    
-    // Set board to load board instead of anime
-    public var board: Int?
+    @IBOutlet weak public var navigationBar: UINavigationItem!
     
     public override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationBar.title = "\(anime.title!) Discussion"
+        
         tableView.estimatedRowHeight = 150.0
         tableView.rowHeight = UITableViewAutomaticDimension
         
-        loadingView = LoaderView(parentView: self.view)
+        loadingView = LoaderView(parentView: view)
         loadingView.startAnimating()
         fetchAnimeRelatedThreads()
     }

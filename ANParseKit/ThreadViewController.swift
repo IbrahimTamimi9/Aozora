@@ -334,7 +334,7 @@ extension ThreadViewController: UITableViewDelegate {
                     } else {
                         // Remove child too
                         let replies = post["replies"] as? [PFObject] ?? []
-                        self.deletePosts([post] + replies)
+                        self.deletePosts(replies + [post])
                     }
                 }
                 
@@ -351,6 +351,8 @@ extension ThreadViewController: UITableViewDelegate {
             if let error = error {
                 // Show some error
             } else {
+                self.thread?.incrementKey("replies", byAmount: -posts.count)
+                self.thread?.saveEventually()
                 self.updateThread()
             }
         })
