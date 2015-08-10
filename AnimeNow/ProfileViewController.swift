@@ -148,6 +148,8 @@ public class ProfileViewController: ThreadViewController {
                 currentUser.incrementKey("followingCount", byAmount: 1)
                 thisProfileUser.saveEventually()
                 currentUser.saveEventually()
+                PFCloud.callFunctionInBackground("sendFollowingPushNotification", withParameters: ["toUser":thisProfileUser.objectId!])
+                
             } else {
                 // Unfollow
                 self.followButton.setTitle("  Follow", forState: .Normal)

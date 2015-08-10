@@ -289,7 +289,7 @@ extension ThreadViewController: UITableViewDelegate {
     }
     
     public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 5.0
+        return 4.0
     }
     
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -432,14 +432,7 @@ extension ThreadViewController: FetchControllerQueryDelegate {
             var postable = post as! Postable
             postable.replies = postReplies
         }
-//        posts.sort({ (a: PFObject, b: PFObject) -> Bool in
-//            if let controller = self as? ProfileViewController {
-//                return a.createdAt!.compare(b.createdAt!) == NSComparisonResult.OrderedDescending
-//            } else {
-//                return a.createdAt!.compare(b.createdAt!) == NSComparisonResult.OrderedAscending
-//            }            
-//        })
-//        
+
         return posts
     }
 }
