@@ -13,18 +13,21 @@ import Alamofire
 import ANParseKit
 import Parse
 
+public protocol LoginViewControllerDelegate: class {
+    func loginViewControllerPressedDoesntHaveAnAccount()
+}
+
 public class LoginViewController: UIViewController {
     
     @IBOutlet weak var usernameTextField: CustomTextField!
     @IBOutlet weak var passwordTextField: CustomTextField!
     
+    public weak var delegate: LoginViewControllerDelegate?
     var loadingView: LoaderView!
-    var malScrapper: MALScrapper!
     
     override public func viewDidLoad() {
         super.viewDidLoad()
         loadingView = LoaderView(parentView: view)
-        malScrapper = MALScrapper(viewController: self)
     }
     
     // MARK: - Internal methods
@@ -73,6 +76,7 @@ public class LoginViewController: UIViewController {
     }
     
     @IBAction func cancelPressed(sender: AnyObject) {
+        delegate?.loginViewControllerPressedDoesntHaveAnAccount()
         dismissViewControllerAnimated(true, completion: nil)
     }
 }

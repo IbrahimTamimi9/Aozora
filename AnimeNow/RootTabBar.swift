@@ -72,6 +72,7 @@ extension RootTabBar: UITabBarControllerDelegate {
                 
                 let storyboard = UIStoryboard(name: "Login", bundle: ANAnimeKit.bundle())
                 let loginController = storyboard.instantiateInitialViewController() as! LoginViewController
+                loginController.delegate = self
                 presentViewController(loginController, animated: true, completion: nil)
                 return false
                 
@@ -79,5 +80,11 @@ extension RootTabBar: UITabBarControllerDelegate {
         }
         
         return true
+    }
+}
+
+extension RootTabBar: LoginViewControllerDelegate {
+    public func loginViewControllerPressedDoesntHaveAnAccount() {
+        selectedIndex = 1
     }
 }

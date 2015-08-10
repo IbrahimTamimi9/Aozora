@@ -96,11 +96,11 @@ public class ThreadViewController: UIViewController {
         let comment = ANParseKit.commentViewController()
         if let post = post as? ThreadPostable, let thread = thread {
             comment.initWithThread(thread, postType: postType, delegate: self, parentPost: post)
-        } else {
-            comment.initWithTimelinePost(self, parentPost: post)
+            presentViewController(comment, animated: true, completion: nil)
+        } else if let post = post as? TimelinePostable {
+            comment.initWithTimelinePost(self, postedIn:post.userTimeline, parentPost: post)
+            presentViewController(comment, animated: true, completion: nil)
         }
-        presentViewController(comment, animated: true, completion: nil)
-        
     }
     
     func postForCell(cell: UITableViewCell) -> Postable? {
@@ -162,6 +162,7 @@ extension ThreadViewController: UITableViewDataSource {
             updatePostCell(cell, with: post)
             if let episode = post.episode {
                 cell.imageContent?.setImageFrom(urlString: episode.imageURLString(), animated: true)
+                cell.imageHeightConstraint?.constant = 180
             }
             cell.layoutIfNeeded()
             return cell
@@ -218,11 +219,11 @@ extension ThreadViewController: UITableViewDataSource {
         
         updateAttributedTextProperties(cell.textContent)
         if let image = post.images.first {
-            cell.imageHeightConstraint.constant = view.bounds.size.width * CGFloat(image.height)/CGFloat(image.width)
+            cell.imageHeightConstraint?.constant = view.bounds.size.width * CGFloat(image.height)/CGFloat(image.width)
             cell.imageContent?.setImageFrom(urlString: image.url, animated: true)
         }
         
-        prepareForVideo(cell.playButton, imageView: cell.imageContent, post: post)
+        prepareForVideo(cell.playButton, imageView: cell.imageContent, imageHeightConstraint: cell.imageHeightConstraint, post: post)
     }
     
     func updateCommentCell(cell: CommentCell, with post: Postable) {
@@ -252,18 +253,19 @@ extension ThreadViewController: UITableViewDataSource {
         }
         
         if let image = post.images.first {
-            cell.imageHeightConstraint.constant = (view.bounds.size.width-59.0) * CGFloat(image.height)/CGFloat(image.width)
+            cell.imageHeightConstraint?.constant = (view.bounds.size.width-59.0) * CGFloat(image.height)/CGFloat(image.width)
             cell.imageContent?.setImageFrom(urlString: image.url, animated: true)
         }
-        prepareForVideo(cell.playButton, imageView: cell.imageContent, post: post)
+        prepareForVideo(cell.playButton, imageView: cell.imageContent, imageHeightConstraint: cell.imageHeightConstraint, post: post)
     }
     
-    func prepareForVideo(playButton: UIButton?, imageView: UIImageView?, post: Postable) {
+    func prepareForVideo(playButton: UIButton?, imageView: UIImageView?, imageHeightConstraint: NSLayoutConstraint?, post: Postable) {
         if let playButton = playButton {
             if let youtubeID = post.youtubeID {
                 
                 let urlString = "https://i.ytimg.com/vi/\(youtubeID)/mqdefault.jpg"
                 imageView?.setImageFrom(urlString: urlString, animated: true)
+                imageHeightConstraint?.constant = 180
                 
                 playButton.hidden = false
                 playButton.layer.borderWidth = 1.0;
@@ -310,12 +312,12 @@ extension ThreadViewController: UITableViewDelegate {
         // If user's comment show delete/edit
         if post.postedBy == User.currentUser() {
             
-            var alert = UIAlertController(title: "Manage Post", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+            var alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
             
             alert.addAction(UIAlertAction(title: "Edit", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
                 let comment = ANParseKit.commentViewController()
                 if let post = post as? TimelinePost {
-                    comment.initWithTimelinePost(self, editingPost: post)
+                    comment.initWithTimelinePost(self, postedIn:User.currentUser()!, editingPost: post)
                 } else if let post = post as? Post, let thread = self.thread {
                     comment.initWithThread(thread, postType: self.postType, delegate: self, editingPost: post)
                 }
@@ -324,22 +326,28 @@ extension ThreadViewController: UITableViewDelegate {
             alert.addAction(UIAlertAction(title: "Delete", style: UIAlertActionStyle.Destructive, handler: { (alertAction: UIAlertAction!) -> Void in
                 if let post = post as? PFObject {
                     if let parentPost = parentPost as? PFObject {
-                        // Remove reference from parent
-                        parentPost.removeObject(post, forKey: "replies")
-                        parentPost.saveInBackgroundWithBlock({ (success, error) -> Void in
-                            if let error = error {
-                                // Show some error
+                        // Just delete child post
+                        self.deletePosts([post])
+                    } else {
+                        // This is parent post, remove child too
+                        var className = ""
+                        if let post = post as? Post {
+                            className = "Post"
+                        } else if let post = post as? TimelinePost {
+                            className = "TimelinePost"
+                        }
+                        
+                        let childPostsQuery = PFQuery(className: className)
+                        childPostsQuery.whereKey("parentPost", equalTo: post)
+                        childPostsQuery.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
+                            if let result = result as? [PFObject] {
+                                self.deletePosts(result+[post])
                             } else {
-                                self.deletePosts([post])
+                                // TODO: Show error
                             }
                         })
-                    } else {
-                        // Remove child too
-                        let replies = post["replies"] as? [PFObject] ?? []
-                        self.deletePosts(replies + [post])
                     }
                 }
-                
             }))
             
             alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler:nil))

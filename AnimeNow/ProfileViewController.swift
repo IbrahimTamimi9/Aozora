@@ -30,16 +30,16 @@ public class ProfileViewController: ThreadViewController {
     @IBOutlet weak var proBottomLayoutConstraint: NSLayoutConstraint!
     @IBOutlet weak var settingsTrailingSpaceConstraint: NSLayoutConstraint!
     
-    var user = User.currentUser()!
+    var userProfile = User.currentUser()!
     var followingUser: Bool?
     
     public func initWithUser(user: User) {
-        self.user = user
+        self.userProfile = user
     }
     
     override public func viewDidLoad() {
         super.viewDidLoad()
-        updateViewWithUser(user)
+        updateViewWithUser(userProfile)
         fetchPosts()
         fetchUserDetails()
     }
@@ -93,20 +93,20 @@ public class ProfileViewController: ThreadViewController {
     func fetchUserDetails() {
         
         let query = User.query()!
-        query.whereKey("objectId", equalTo: user.objectId!)
+        query.whereKey("objectId", equalTo: userProfile.objectId!)
         query.includeKey("details")
         query.findObjectsInBackgroundWithBlock { (result, error) -> Void in
             if let user = result?.last as? User {
-                self.user = user
+                self.userProfile = user
                 self.updateViewWithUser(user)
                 self.aboutLabel.text = user.details.about
             }
         }
         
-        if User.currentUser() != user {
+        if User.currentUser() != userProfile {
             
             let relationQuery = User.currentUser()!.following().query()!
-            relationQuery.whereKey("objectId", equalTo: user.objectId!)
+            relationQuery.whereKey("objectId", equalTo: userProfile.objectId!)
             relationQuery.findObjectsInBackgroundWithBlock { (result, error) -> Void in
                 if let user = result?.last as? User {
                     // Following this user
@@ -136,7 +136,7 @@ public class ProfileViewController: ThreadViewController {
     
     @IBAction func followOrUnfollow(sender: AnyObject) {
         
-        let thisProfileUser = self.user
+        let thisProfileUser = self.userProfile
         if let followingUser = followingUser, let currentUser = User.currentUser() where thisProfileUser != currentUser {
 
             if !followingUser {
@@ -167,13 +167,13 @@ public class ProfileViewController: ThreadViewController {
         super.replyToThreadPressed(sender)
         
         let comment = ANParseKit.commentViewController()
-        comment.initWithTimelinePost(self)
+        comment.initWithTimelinePost(self, postedIn: userProfile)
         presentViewController(comment, animated: true, completion: nil)
     }
     
     @IBAction func showFollowingUsers(sender: AnyObject) {
         let userListController = UIStoryboard(name: "Profile", bundle: ANParseKit.bundle()).instantiateViewControllerWithIdentifier("UserList") as! UserListViewController
-        let query = user.following().query()!
+        let query = userProfile.following().query()!
         userListController.initWithQuery(query, title: "Following")
         navigationController?.pushViewController(userListController, animated: true)
     }
@@ -181,7 +181,7 @@ public class ProfileViewController: ThreadViewController {
     @IBAction func showFollowers(sender: AnyObject) {
         let userListController = UIStoryboard(name: "Profile", bundle: ANParseKit.bundle()).instantiateViewControllerWithIdentifier("UserList") as! UserListViewController
         let query = User.query()!
-        query.whereKey("following", equalTo: user)
+        query.whereKey("following", equalTo: userProfile)
         userListController.initWithQuery(query, title: "Followers")
         navigationController?.pushViewController(userListController, animated: true)
     }
@@ -218,7 +218,7 @@ extension ProfileViewController: FetchControllerQueryDelegate {
         let query = TimelinePost.query()!
         query.skip = skip
         query.limit = 20
-        query.whereKey("userTimeline", equalTo: user)
+        query.whereKey("userTimeline", equalTo: userProfile)
         query.whereKey("replyLevel", equalTo: 0)
         query.orderByDescending("createdAt")
         query.includeKey("episode")
@@ -228,7 +228,7 @@ extension ProfileViewController: FetchControllerQueryDelegate {
         let innerQuery = TimelinePost.query()!
         innerQuery.skip = skip
         innerQuery.limit = 20
-        innerQuery.whereKey("userTimeline", equalTo: user)
+        innerQuery.whereKey("userTimeline", equalTo: userProfile)
         innerQuery.whereKey("replyLevel", equalTo: 0)
         
         let repliesQuery = TimelinePost.query()!

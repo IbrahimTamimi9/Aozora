@@ -33,7 +33,8 @@ public class CommentViewController: UIViewController {
     var selectedVideoID: String?
     
     var initialStatusBarStyle: UIStatusBarStyle!
-    var user = User.currentUser()!
+    var postedBy = User.currentUser()
+    var postedIn: User!
     var parentPost: Postable?
     var thread: Thread?
     var postType: PostType = .Timeline
@@ -46,7 +47,8 @@ public class CommentViewController: UIViewController {
         case Forum
     }
     
-    public func initWithTimelinePost(delegate: CommentViewControllerDelegate?, editingPost: PFObject? = nil, parentPost: Postable? = nil) {
+    public func initWithTimelinePost(delegate: CommentViewControllerDelegate?, postedIn: User, editingPost: PFObject? = nil, parentPost: Postable? = nil) {
+        self.postedIn = postedIn
         self.postType = .Timeline
         self.editingPost = editingPost
         self.delegate = delegate
@@ -54,6 +56,7 @@ public class CommentViewController: UIViewController {
     }
     
     public func initWithThread(thread: Thread, postType: PostType, delegate: CommentViewControllerDelegate?, editingPost: PFObject? = nil, parentPost: Postable? = nil) {
+        self.postedBy = User.currentUser()!
         self.thread = thread
         self.postType = postType
         self.editingPost = editingPost
@@ -159,10 +162,10 @@ public class CommentViewController: UIViewController {
                 timelinePost.parentPost = parentPost as? TimelinePost
             } else {
                 timelinePost.replyLevel = 0
-                timelinePost.userTimeline = user
+                timelinePost.userTimeline = postedIn
             }
             
-            timelinePost.postedBy = user
+            timelinePost.postedBy = postedBy
             timelinePost.saveInBackgroundWithBlock({ (result, error) -> Void in
                 self.completeRequest(timelinePost, error: error)
             })
@@ -183,12 +186,13 @@ public class CommentViewController: UIViewController {
             if let parentPost = parentPost as? ThreadPostable {
                 post.replyLevel = 1
                 post.thread = parentPost.thread
+                post.parentPost = parentPost as? Post
             } else {
                 post.replyLevel = 0
                 post.thread = thread!
             }
             post.thread.incrementKey("replies")
-            post.postedBy = user
+            post.postedBy = postedBy
             post.saveInBackgroundWithBlock({ (result, error) -> Void in
                 self.completeRequest(post, error: error)
             })

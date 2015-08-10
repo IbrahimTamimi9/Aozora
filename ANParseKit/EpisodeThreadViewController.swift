@@ -141,8 +141,6 @@ extension EpisodeThreadViewController: FetchControllerQueryDelegate {
         repliesQuery.whereKey("parentPost", matchesKey: "objectId", inQuery: innerQuery)
         repliesQuery.orderByAscending("createdAt")
         repliesQuery.includeKey("postedBy")
-        repliesQuery.includeKey("replies")
-        repliesQuery.includeKey("replies.postedBy")
         
         return [query, repliesQuery]
     }
