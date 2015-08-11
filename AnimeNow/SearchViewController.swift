@@ -63,7 +63,7 @@ class SearchViewController: UIViewController {
             collectionView.animateFadeOut()
         }
         
-        let query = PFQuery(className: "Anime")
+        let query = Anime.query()!
         query.limit = 20
         query.whereKey("title", matchesRegex: text, modifiers: "i")
         if searchLibrary {
@@ -74,7 +74,10 @@ class SearchViewController: UIViewController {
             if let anime = result as? [Anime] where !cancellationToken.cancelled && result != nil {
                 
                 LibrarySyncController.matchAnimeWithProgress(anime)
-                self.dataSource = anime
+                .continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
+                    self.dataSource = anime
+                    return nil
+                })
             }
             
             if !self.searchLibrary {

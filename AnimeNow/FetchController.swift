@@ -153,7 +153,7 @@ public class FetchController {
                 if skip == 0 {
                     // Reload data
                     collectionView.reloadData()
-                    if self.isFirstFetch {
+                    if self.isFirstFetch || collectionView.alpha == 0 {
                         self.isFirstFetch = false
                         collectionView.animateFadeIn()
                     }
@@ -196,7 +196,9 @@ public class FetchController {
             
             return nil
         }).continueWithBlock({ (task: BFTask!) -> AnyObject! in
-            println(task.exception)
+            if let exception = task.exception {
+                println(exception)
+            }
             return nil
         })
 

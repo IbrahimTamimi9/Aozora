@@ -191,14 +191,18 @@ class ChartViewController: UIViewController {
                 let onaAnime = season.onaAnime
                 let specialAnime = season.specialAnime
                 
-                LibrarySyncController.matchAnimeWithProgress(tvAnime)
-                LibrarySyncController.matchAnimeWithProgress(movieAnime)
-                LibrarySyncController.matchAnimeWithProgress(ovaAnime)
-                LibrarySyncController.matchAnimeWithProgress(onaAnime)
-                LibrarySyncController.matchAnimeWithProgress(specialAnime)
+                let matchTask1 = LibrarySyncController.matchAnimeWithProgress(tvAnime)
+                let matchTask2 = LibrarySyncController.matchAnimeWithProgress(movieAnime)
+                let matchTask3 = LibrarySyncController.matchAnimeWithProgress(ovaAnime)
+                let matchTask4 = LibrarySyncController.matchAnimeWithProgress(onaAnime)
+                let matchTask5 = LibrarySyncController.matchAnimeWithProgress(specialAnime)
                 
-                self.dataSource = [tvAnime, movieAnime, ovaAnime, onaAnime, specialAnime]
-                self.updateSortType(self.currentSortType)
+                BFTask(forCompletionOfAllTasks: [matchTask1, matchTask2, matchTask3, matchTask4, matchTask5])
+                    .continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
+                    self.dataSource = [tvAnime, movieAnime, ovaAnime, onaAnime, specialAnime]
+                    self.updateSortType(self.currentSortType)
+                    return nil
+                })
             }
             
             self.loadingView.stopAnimating()

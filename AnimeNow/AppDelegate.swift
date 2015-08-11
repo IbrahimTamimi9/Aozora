@@ -157,6 +157,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         TimelinePost.registerSubclass()
         Thread.registerSubclass()
         Post.registerSubclass()
+        AnimeProgress.registerSubclass()
         
         // TODO: Implement this
         Parse.enableLocalDatastore()

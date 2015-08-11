@@ -11,7 +11,6 @@ import Shimmer
 import ANCommonKit
 import ANParseKit
 import XCDYouTubeKit
-import RealmSwift
 import FBSDKShareKit
 import Bolts
 
@@ -133,7 +132,7 @@ public class AnimeInformationViewController: AnimeBaseViewController {
             self.ranksView.hidden = false
             
             if let progress = anime.progress {
-                updateListButtonTitle(progress.status)
+                updateListButtonTitle(progress.list)
             } else {
                 updateListButtonTitle("Add to list ")
             }
@@ -255,17 +254,14 @@ public class AnimeInformationViewController: AnimeBaseViewController {
             alert.addAction(UIAlertAction(title: "Remove from Library", style: UIAlertActionStyle.Destructive, handler: { (alertAction: UIAlertAction!) -> Void in
                 
                 self.loadingView.startAnimating()
-                
                 let deleteFromMALTask = LibrarySyncController.deleteAnime(progress)
-                let unpinTask = self.anime.unpinInBackgroundWithName(Anime.PinName.InLibrary.rawValue)
+                let deleteFromParseTask = progress.deleteInBackground()
+                let unpinFromLocalDatastoreTask = progress.unpinInBackground()
                     
-                BFTask(forCompletionOfAllTasks: [deleteFromMALTask, unpinTask]).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
+                BFTask(forCompletionOfAllTasks: [deleteFromMALTask, deleteFromParseTask, unpinFromLocalDatastoreTask]).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
                 
                     self.loadingView.stopAnimating()
-                    let realm = Realm()
-                    realm.write {
-                        realm.delete(progress)
-                    }
+                    self.anime.progress = nil
                     
                     NSNotificationCenter.defaultCenter().postNotificationName(ANAnimeKit.LibraryUpdatedNotification, object: nil)
                 
@@ -284,49 +280,41 @@ public class AnimeInformationViewController: AnimeBaseViewController {
     
     func updateProgressWithList(list: MALList) {
         
-        let realm = Realm()
-        
         if let progress = anime.progress {
-            realm.write({ () -> Void in
-                progress.status = list.rawValue
-            })
-            
+            progress.updateList(list)
             LibrarySyncController.updateAnime(progress)
-            updateListButtonTitle(progress.status)
+            progress.saveInBackgroundWithBlock({ (result, error) -> Void in
+                NSNotificationCenter.defaultCenter().postNotificationName(ANAnimeKit.LibraryUpdatedNotification, object: nil)
+            })
+            updateListButtonTitle(progress.list)
             
         } else {
             
-            // Save
-            var animeProgress = AnimeProgress()
-            animeProgress.myAnimeListID = anime.myAnimeListID
-            animeProgress.status = list.rawValue
-            animeProgress.episodes = 0
-            animeProgress.score = 0
-            animeProgress.syncState = SyncState.InSync.rawValue
+            // Create!
+            var progress = AnimeProgress()
+            progress.anime = anime
+            progress.user = User.currentUser()!
+            progress.startDate = NSDate()
+            progress.updateList(list)
+            progress.watchedEpisodes = 0
+            progress.collectedEpisodes = 0
+            progress.score = 0
+            progress.myAnimeListSyncState = SyncState.InSync.rawValue
             
-            realm.write({ () -> Void in
-                realm.add(animeProgress, update: true)
+            LibrarySyncController.addAnime(progress)
+            anime.progress = progress
+            
+            progress.saveEventually()
+            progress.pinInBackgroundWithBlock({ (result, error) -> Void in
+                NSNotificationCenter.defaultCenter().postNotificationName(ANAnimeKit.LibraryUpdatedNotification, object: nil)
             })
             
-            anime.pinInBackgroundWithName(Anime.PinName.InLibrary.rawValue)
-            anime.progress = animeProgress
-            
-            LibrarySyncController.addAnime(animeProgress)
-            
-            updateListButtonTitle(animeProgress.status)
+            updateListButtonTitle(progress.list)
         }
-        
-        NSNotificationCenter.defaultCenter().postNotificationName(ANAnimeKit.LibraryUpdatedNotification, object: nil)
     }
     
     func updateListButtonTitle(string: String) {
-        
-        if string == "plan to watch" {
-            listButton.setTitle("Planning " + FontAwesome.AngleDown.rawValue, forState: .Normal)
-        } else {
-            listButton.setTitle(string.capitalizedString + " " + FontAwesome.AngleDown.rawValue, forState: .Normal)
-        }
-        
+        listButton.setTitle(string + " " + FontAwesome.AngleDown.rawValue, forState: .Normal)
     }
     
     @IBAction func moreOptionsPressed(sender: AnyObject) {
@@ -394,9 +382,9 @@ public class AnimeInformationViewController: AnimeBaseViewController {
             
             var textToShare = ""
             
-            if let progress = self.anime.progress, let status = MALList(rawValue: progress.status) {
+            if let progress = self.anime.progress {
                 
-                switch status {
+                switch progress.myAnimeListList() {
                 case .Planning:
                    textToShare += "I'm planning to watch"
                 case .Watching:

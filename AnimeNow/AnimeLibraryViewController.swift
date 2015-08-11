@@ -11,7 +11,6 @@ import ANCommonKit
 import ANParseKit
 import ANAnimeKit
 import XLPagerTabStrip
-import RealmSwift
 
 enum AnimeList: String {
     case Planning = "Planning"
@@ -113,32 +112,44 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
     func fetchAnimeList(isRefreshing: Bool) -> BFTask {
         loadingView.startAnimating()
         
-        return LibrarySyncController.fetchWatchingList(isRefreshing).continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
+        return LibrarySyncController.fetchWatchingList(isRefreshing).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
             
-            self.updateViewControllers(task.result as! [Anime])
+            // Fill watching list
+            let animeList = task.result as! [AnimeProgress]
+            var list: [Anime] = []
+            for progress in animeList {
+                var anime = progress.anime
+                anime.progress = progress
+                switch progress.myAnimeListList() {
+                case .Watching:
+                    list.append(anime)
+                default:
+                    break
+                }
+            }
             
-            // Sort first controller
             let firstController = self.controllers[0]
+            firstController.animeList = list
             firstController.updateSortType(firstController.currentSortType)
             
             self.loadingView.stopAnimating()
             return LibrarySyncController.fetchTheRestOfLists()
-
-        }.continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
-        
-            self.updateViewControllers(task.result as! [Anime])
+            
+        }).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
+            self.updateViewControllers(task.result as! [AnimeProgress])
             return nil
             
         })
     }
     
-    func updateViewControllers(animeList: [Anime]) {
+    func updateViewControllers(animeList: [AnimeProgress]) {
         
         var lists: [[Anime]] = [[],[],[],[],[]]
         
-        for anime in animeList {
-            let malList = MALList(rawValue: anime.progress!.status) ?? .Planning
-            switch malList {
+        for progress in animeList {
+            var anime = progress.anime
+            anime.progress = progress
+            switch progress.myAnimeListList() {
             case .Watching:
                 lists[0].append(anime)
             case .Planning:
@@ -156,6 +167,8 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
             let aList = lists[index]
             if aList.count > 0 {
                 self.controllers[index].animeList = aList
+            } else if index != 0 {
+                self.controllers[index].animeList = []
             }
         }
         

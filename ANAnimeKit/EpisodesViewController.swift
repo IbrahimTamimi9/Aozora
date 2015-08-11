@@ -10,7 +10,6 @@ import UIKit
 import ANCommonKit
 import ANParseKit
 import Bolts
-import RealmSwift
 
 extension EpisodesViewController: StatusBarVisibilityProtocol {
     func shouldHideStatusBar() -> Bool {
@@ -107,7 +106,7 @@ extension EpisodesViewController: UICollectionViewDataSource {
         cell.firstAiredLabel.text = episode.firstAired?.mediumDate() ?? ""
         
         if let progress = anime.progress {
-            if progress.episodes < indexPath.row + 1 {
+            if progress.watchedEpisodes < indexPath.row + 1 {
                 cell.watchedButton.backgroundColor = UIColor.clearColor()
                 cell.watchedButton.setImage(UIImage(named: "icon-check"), forState: .Normal)
             } else {
@@ -144,16 +143,16 @@ extension EpisodesViewController: EpisodeCellDelegate {
     func episodeCellWatchedPressed(cell: EpisodeCell) {
         if let indexPath = collectionView.indexPathForCell(cell),
         var progress = anime.progress {
-            Realm().write({ () -> Void in
-                let nextEpisode = indexPath.row + 1
-                if progress.episodes == nextEpisode {
-                    progress.episodes = nextEpisode - 1
-                } else {
-                    progress.episodes = nextEpisode
-                }
-                
-                progress.updatedEpisodes(self.anime.episodes)
-            })
+            
+            let nextEpisode = indexPath.row + 1
+            if progress.watchedEpisodes == nextEpisode {
+                progress.watchedEpisodes = nextEpisode - 1
+            } else {
+                progress.watchedEpisodes = nextEpisode
+            }
+            
+            progress.updatedEpisodes(anime.episodes)
+            progress.saveEventually()
             LibrarySyncController.updateAnime(progress)
             
             NSNotificationCenter.defaultCenter().postNotificationName(ANAnimeKit.LibraryUpdatedNotification, object: nil)

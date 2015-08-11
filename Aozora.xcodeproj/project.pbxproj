@@ -111,6 +111,14 @@
 		DA6E13271B10FA8900B278B0 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E12F31B10DCC600B278B0 /* CoreGraphics.framework */; };
 		DA6E13281B10FA8E00B278B0 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E12F11B10DCC100B278B0 /* CFNetwork.framework */; };
 		DA6E13291B10FA9400B278B0 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E12EF1B10DCBC00B278B0 /* AudioToolbox.framework */; };
+		DA79C1961B7A621200E6B977 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC13C2C1B425CB70013D479 /* FBSDKCoreKit.framework */; };
+		DA79C1981B7A621200E6B977 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC13C2F1B425CB70013D479 /* FBSDKShareKit.framework */; };
+		DA79C1991B7A624700E6B977 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC13C2C1B425CB70013D479 /* FBSDKCoreKit.framework */; };
+		DA79C19A1B7A625300E6B977 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC13C2F1B425CB70013D479 /* FBSDKShareKit.framework */; };
+		DA79C19B1B7A625700E6B977 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC13C2D1B425CB70013D479 /* FBSDKLoginKit.framework */; };
+		DA79C19E1B7A627400E6B977 /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA897F8E1B6D451C00A9510C /* ParseFacebookUtilsV4.framework */; };
+		DA79C19F1B7A629300E6B977 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA897F8C1B6D451C00A9510C /* Bolts.framework */; };
+		DA79C1A01B7A629300E6B977 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA897F8D1B6D451C00A9510C /* Parse.framework */; };
 		DA7C84C91B4379AA0036D119 /* UIViewController+Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7C84C81B4379AA0036D119 /* UIViewController+Navigation.swift */; };
 		DA7C84CA1B4379AD0036D119 /* UIViewController+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC13BFD1B3F36AB0013D479 /* UIViewController+Image.swift */; };
 		DA823D8C1B326940005C7AFD /* InAppBrowser.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA823D8A1B326940005C7AFD /* InAppBrowser.storyboard */; };
@@ -185,6 +193,7 @@
 		DAD67E041B7292D6000BB325 /* Resources.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAC3F3E01B5E989E001D6072 /* Resources.xcassets */; };
 		DAD67E051B7292D7000BB325 /* Resources.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAC3F3E01B5E989E001D6072 /* Resources.xcassets */; };
 		DAD67E061B7292D8000BB325 /* Resources.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAC3F3E01B5E989E001D6072 /* Resources.xcassets */; };
+		DADFA9551B79342A0057FD15 /* AnimeProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADFA9541B79342A0057FD15 /* AnimeProgress.swift */; };
 		DAE43C321B2BC1A900C3092D /* TFHppleElement+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE43C311B2BC1A900C3092D /* TFHppleElement+Convenience.swift */; };
 		DAE43C341B2BC3B700C3092D /* AnimeDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE43C331B2BC3B700C3092D /* AnimeDetail.swift */; };
 		DAE43C3A1B2F971800C3092D /* UIView+Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE43C391B2F971800C3092D /* UIView+Animation.swift */; };
@@ -194,7 +203,6 @@
 		DAF357061B4593E200629A3D /* LibraryAnimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF357051B4593E200629A3D /* LibraryAnimeCell.swift */; };
 		DAF467151B76560800095820 /* EpisodeThreadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF467141B76560800095820 /* EpisodeThreadViewController.swift */; };
 		DAF467171B76655700095820 /* PostableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF467161B76655700095820 /* PostableProtocol.swift */; };
-		DAF6186D1B377AAE00286517 /* AnimeProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF6186B1B37792900286517 /* AnimeProgress.swift */; };
 		DAF6186F1B377C2100286517 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E13051B10DDB900B278B0 /* Social.framework */; };
 		DAF618701B377C3000286517 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E13031B10DDB500B278B0 /* Accounts.framework */; };
 		DAF618761B377CA700286517 /* AnimeLibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF618751B377CA700286517 /* AnimeLibraryViewController.swift */; };
@@ -535,6 +543,7 @@
 		DAD67DFC1B726724000BB325 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		DAD67DFF1B7275F0000BB325 /* Comment.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Comment.storyboard; sourceTree = "<group>"; };
 		DAD67E011B72760B000BB325 /* CommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
+		DADFA9541B79342A0057FD15 /* AnimeProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeProgress.swift; sourceTree = "<group>"; };
 		DAE43C311B2BC1A900C3092D /* TFHppleElement+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TFHppleElement+Convenience.swift"; sourceTree = "<group>"; };
 		DAE43C331B2BC3B700C3092D /* AnimeDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeDetail.swift; sourceTree = "<group>"; };
 		DAE43C371B2D5BC800C3092D /* Atarashii.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Atarashii.swift; sourceTree = "<group>"; };
@@ -546,7 +555,6 @@
 		DAF357051B4593E200629A3D /* LibraryAnimeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryAnimeCell.swift; sourceTree = "<group>"; };
 		DAF467141B76560800095820 /* EpisodeThreadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodeThreadViewController.swift; sourceTree = "<group>"; };
 		DAF467161B76655700095820 /* PostableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostableProtocol.swift; sourceTree = "<group>"; };
-		DAF6186B1B37792900286517 /* AnimeProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeProgress.swift; sourceTree = "<group>"; };
 		DAF618751B377CA700286517 /* AnimeLibraryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeLibraryViewController.swift; sourceTree = "<group>"; };
 		DAF618771B377D6000286517 /* AnimeListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeListViewController.swift; sourceTree = "<group>"; };
 		DAF618791B37825700286517 /* Library.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Library.storyboard; sourceTree = "<group>"; };
@@ -576,6 +584,12 @@
 				DA4AF8CC1B276E060020252E /* ANCommonKit.framework in Frameworks */,
 				DA6E12C51B10D94200B278B0 /* ANParseKit.framework in Frameworks */,
 				6923F76C724843F5AED124BD /* Pods.framework in Frameworks */,
+				DA79C1991B7A624700E6B977 /* FBSDKCoreKit.framework in Frameworks */,
+				DA79C19B1B7A625700E6B977 /* FBSDKLoginKit.framework in Frameworks */,
+				DA79C19A1B7A625300E6B977 /* FBSDKShareKit.framework in Frameworks */,
+				DA79C19E1B7A627400E6B977 /* ParseFacebookUtilsV4.framework in Frameworks */,
+				DA79C19F1B7A629300E6B977 /* Bolts.framework in Frameworks */,
+				DA79C1A01B7A629300E6B977 /* Parse.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -594,6 +608,8 @@
 				DA48EA521B28951400D8610F /* ANParseKit.framework in Frameworks */,
 				DAFD60C21B27855B007275C1 /* ANCommonKit.framework in Frameworks */,
 				79AF381FB9C944A80806E321 /* Pods.framework in Frameworks */,
+				DA79C1961B7A621200E6B977 /* FBSDKCoreKit.framework in Frameworks */,
+				DA79C1981B7A621200E6B977 /* FBSDKShareKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -633,16 +649,16 @@
 				DA6E13271B10FA8900B278B0 /* CoreGraphics.framework in Frameworks */,
 				DA897F931B6D452300A9510C /* Parse.framework in Frameworks */,
 				DA6E13261B10FA8400B278B0 /* CoreLocation.framework in Frameworks */,
-				DA13805D1B6D56F500C53560 /* FBSDKCoreKit.framework in Frameworks */,
 				DA6E13241B10FA7B00B278B0 /* QuartzCore.framework in Frameworks */,
 				DA6E13231B10FA7700B278B0 /* Security.framework in Frameworks */,
+				DA13805D1B6D56F500C53560 /* FBSDKCoreKit.framework in Frameworks */,
 				DA1380611B6D8D4B00C53560 /* FBSDKLoginKit.framework in Frameworks */,
+				DA13805F1B6D56F500C53560 /* FBSDKShareKit.framework in Frameworks */,
 				DA6E13221B10FA7300B278B0 /* StoreKit.framework in Frameworks */,
 				DA6E13211B10FA6E00B278B0 /* SystemConfiguration.framework in Frameworks */,
 				DA6E13201B10F9F500B278B0 /* libsqlite3.dylib in Frameworks */,
 				DA6E131F1B10F9EE00B278B0 /* libz.dylib in Frameworks */,
 				DA897F941B6D452300A9510C /* ParseFacebookUtilsV4.framework in Frameworks */,
-				DA13805F1B6D56F500C53560 /* FBSDKShareKit.framework in Frameworks */,
 				DA6E131E1B10F9E900B278B0 /* libxml2.dylib in Frameworks */,
 				5D86412D23C2DF6FF9D63C06 /* Pods.framework in Frameworks */,
 				DA897F921B6D452300A9510C /* Bolts.framework in Frameworks */,
@@ -676,15 +692,6 @@
 				DAF357031B45790100629A3D /* LibrarySyncController.swift */,
 			);
 			name = Controllers;
-			sourceTree = "<group>";
-		};
-		DA06132B1B3778310044340F /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				DAF6186B1B37792900286517 /* AnimeProgress.swift */,
-			);
-			name = Model;
-			path = ../AnimeNow;
 			sourceTree = "<group>";
 		};
 		DA07A3461B4C2B560028B81B /* In-App Purchases */ = {
@@ -926,7 +933,6 @@
 				DA4AF8B91B276E060020252E /* ANCommonKit.h */,
 				DA7C84C71B43797F0036D119 /* Extensions */,
 				DAC077AE1B6890F50067DA90 /* Posts */,
-				DA06132B1B3778310044340F /* Model */,
 				DA7C84C51B43337E0036D119 /* Controllers */,
 				DAFBB0931B20EFC600495ED9 /* API */,
 				DA2853C01B22C5B40070B675 /* Categories */,
@@ -963,15 +969,6 @@
 				DA4AF8C71B276E060020252E /* Info.plist */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		DA52B1881B4845D9001CC1A9 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				DAF618791B37825700286517 /* Library.storyboard */,
-				DA52B1861B4845D4001CC1A9 /* CheckInCompact.xib */,
-			);
-			name = View;
 			sourceTree = "<group>";
 		};
 		DA58C2E31B39BF850082B626 /* Browse */ = {
@@ -1229,6 +1226,7 @@
 				DAC027CB1B2A16B80085C91A /* AnimeReview.swift */,
 				DAE43C331B2BC3B700C3092D /* AnimeDetail.swift */,
 				DA58C2EC1B3B111A0082B626 /* Episode.swift */,
+				DADFA9541B79342A0057FD15 /* AnimeProgress.swift */,
 				DAC0779A1B686A870067DA90 /* UserDetails.swift */,
 				DA9AE39A1B6930F60053C2EA /* TimelinePost.swift */,
 				DA1380691B6DBB4100C53560 /* Thread.swift */,
@@ -1323,7 +1321,8 @@
 		DAF618731B377C7600286517 /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				DA52B1881B4845D9001CC1A9 /* View */,
+				DAF618791B37825700286517 /* Library.storyboard */,
+				DA52B1861B4845D4001CC1A9 /* CheckInCompact.xib */,
 				DAF618751B377CA700286517 /* AnimeLibraryViewController.swift */,
 				DAF618771B377D6000286517 /* AnimeListViewController.swift */,
 			);
@@ -2030,7 +2029,6 @@
 				DA5A3BF81B35EE2200C07D71 /* CustomTextField.swift in Sources */,
 				DAFD60B51B278452007275C1 /* ActionListViewController.swift in Sources */,
 				DAFD60BB1B27845F007275C1 /* LoaderView.swift in Sources */,
-				DAF6186D1B377AAE00286517 /* AnimeProgress.swift in Sources */,
 				DAC027CF1B2A1C3F0085C91A /* ZFModalTransitionAnimator.m in Sources */,
 				DAD390A41B6C3216000A84DE /* ViewPreviousCommentsCell.swift in Sources */,
 				DA0B261C1B758CED00A770AE /* UIImage+Resize.swift in Sources */,
@@ -2076,6 +2074,7 @@
 				DA0B26181B758B9300A770AE /* UserProfileManager.swift in Sources */,
 				DA9AE39C1B69382D0053C2EA /* FetchController.swift in Sources */,
 				DA8B6E071B6C4DBF00D240FC /* UIImageView+PFFile.swift in Sources */,
+				DADFA9551B79342A0057FD15 /* AnimeProgress.swift in Sources */,
 				DAC027CC1B2A16B80085C91A /* AnimeReview.swift in Sources */,
 				DAE64EEC1B73CCE4005A984A /* ImageViewController.swift in Sources */,
 				DA0347241B4ADD720025CE24 /* LibrarySyncController.swift in Sources */,
@@ -2318,15 +2317,9 @@
 					"-framework",
 					"\"JTSImageViewController\"",
 					"-framework",
-					"\"NJKWebViewProgress\"",
-					"-framework",
 					"\"RMStore\"",
 					"-framework",
 					"\"RSKImageCropper\"",
-					"-framework",
-					"\"Realm\"",
-					"-framework",
-					"\"RealmSwift\"",
 					"-framework",
 					"\"SDWebImage\"",
 					"-framework",
@@ -2388,15 +2381,9 @@
 					"-framework",
 					"\"JTSImageViewController\"",
 					"-framework",
-					"\"NJKWebViewProgress\"",
-					"-framework",
 					"\"RMStore\"",
 					"-framework",
 					"\"RSKImageCropper\"",
-					"-framework",
-					"\"Realm\"",
-					"-framework",
-					"\"RealmSwift\"",
 					"-framework",
 					"\"SDWebImage\"",
 					"-framework",
@@ -2500,15 +2487,9 @@
 					"-framework",
 					"\"JTSImageViewController\"",
 					"-framework",
-					"\"NJKWebViewProgress\"",
-					"-framework",
 					"\"RMStore\"",
 					"-framework",
 					"\"RSKImageCropper\"",
-					"-framework",
-					"\"Realm\"",
-					"-framework",
-					"\"RealmSwift\"",
 					"-framework",
 					"\"SDWebImage\"",
 					"-framework",
@@ -2576,15 +2557,9 @@
 					"-framework",
 					"\"JTSImageViewController\"",
 					"-framework",
-					"\"NJKWebViewProgress\"",
-					"-framework",
 					"\"RMStore\"",
 					"-framework",
 					"\"RSKImageCropper\"",
-					"-framework",
-					"\"Realm\"",
-					"-framework",
-					"\"RealmSwift\"",
 					"-framework",
 					"\"SDWebImage\"",
 					"-framework",
@@ -2685,15 +2660,9 @@
 					"-framework",
 					"\"JTSImageViewController\"",
 					"-framework",
-					"\"NJKWebViewProgress\"",
-					"-framework",
 					"\"RMStore\"",
 					"-framework",
 					"\"RSKImageCropper\"",
-					"-framework",
-					"\"Realm\"",
-					"-framework",
-					"\"RealmSwift\"",
 					"-framework",
 					"\"SDWebImage\"",
 					"-framework",
@@ -2759,15 +2728,9 @@
 					"-framework",
 					"\"JTSImageViewController\"",
 					"-framework",
-					"\"NJKWebViewProgress\"",
-					"-framework",
 					"\"RMStore\"",
 					"-framework",
 					"\"RSKImageCropper\"",
-					"-framework",
-					"\"Realm\"",
-					"-framework",
-					"\"RealmSwift\"",
 					"-framework",
 					"\"SDWebImage\"",
 					"-framework",
@@ -2875,15 +2838,9 @@
 					"-framework",
 					"\"JTSImageViewController\"",
 					"-framework",
-					"\"NJKWebViewProgress\"",
-					"-framework",
 					"\"RMStore\"",
 					"-framework",
 					"\"RSKImageCropper\"",
-					"-framework",
-					"\"Realm\"",
-					"-framework",
-					"\"RealmSwift\"",
 					"-framework",
 					"\"SDWebImage\"",
 					"-framework",
@@ -2957,15 +2914,9 @@
 					"-framework",
 					"\"JTSImageViewController\"",
 					"-framework",
-					"\"NJKWebViewProgress\"",
-					"-framework",
 					"\"RMStore\"",
 					"-framework",
 					"\"RSKImageCropper\"",
-					"-framework",
-					"\"Realm\"",
-					"-framework",
-					"\"RealmSwift\"",
 					"-framework",
 					"\"SDWebImage\"",
 					"-framework",

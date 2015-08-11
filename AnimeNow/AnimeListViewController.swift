@@ -11,7 +11,6 @@ import ANCommonKit
 import ANAnimeKit
 import ANParseKit
 import XLPagerTabStrip
-import RealmSwift
 
 protocol AnimeListControllerDelegate: class {
     func controllerRequestRefresh() -> BFTask
@@ -181,15 +180,14 @@ class AnimeListViewController: UIViewController {
         case .MyRating:
             animeList.sort({ (anime1: Anime, anime2: Anime) in
                 
-                let score1 = anime1.progress?.score ?? 0
-                let score2 = anime2.progress?.score ?? 0
+                let score1 = anime1.progress!.score ?? 0
+                let score2 = anime2.progress!.score ?? 0
                 return score1 > score2
             })
         case .NextEpisodeToWatch:
             animeList.sort({ (anime1: Anime, anime2: Anime) in
-                
-                let nextDate1 = anime1.nextEpisodeToWatchDate ?? NSDate(timeIntervalSinceNow: 60*60*24*365*100)
-                let nextDate2 = anime2.nextEpisodeToWatchDate ?? NSDate(timeIntervalSinceNow: 60*60*24*365*100)
+                let nextDate1 = anime1.progress!.nextEpisodeToWatchDate ?? NSDate(timeIntervalSinceNow: 60*60*24*365*100)
+                let nextDate2 = anime2.progress!.nextEpisodeToWatchDate ?? NSDate(timeIntervalSinceNow: 60*60*24*365*100)
                 return nextDate1.compare(nextDate2) == .OrderedAscending
             })
             break;
@@ -197,7 +195,9 @@ class AnimeListViewController: UIViewController {
             break;
         }
         
-        collectionView.reloadData()
+        if isViewLoaded() {
+            collectionView.reloadData()
+        }
     }
     
 }
@@ -257,7 +257,7 @@ extension AnimeListViewController: LibraryAnimeCellDelegate {
         if let progress = anime.progress,
             let indexPath = collectionView.indexPathForCell(cell) {
 
-                if let list = MALList(rawValue: progress.status) where list == .Completed {
+                if progress.myAnimeListList() == .Completed {
                     RateViewController.showRateDialogWith(self.tabBarController!, title: "You've finished\n\(anime.title!)!\ngive it a rating", initialRating: Float(progress.score)/2.0, anime: anime, delegate: self)
                 }
                 

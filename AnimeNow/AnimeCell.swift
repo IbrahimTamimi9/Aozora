@@ -139,10 +139,10 @@ class AnimeCell: UICollectionViewCell {
             }
         }
         
-        if let progress = anime.progress,
-            let status = MALList(rawValue: progress.status) {
+        if let progress = anime.progress {
+            
             inLibraryView?.hidden = false
-            switch status {
+            switch progress.myAnimeListList() {
             case .Planning:
                 inLibraryView?.backgroundColor = UIColor.planning()
             case .Watching:

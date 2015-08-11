@@ -11,7 +11,6 @@ import ANParseKit
 import ANAnimeKit
 import ANCommonKit
 import Bolts
-import RealmSwift
 
 protocol LibraryAnimeCellDelegate: class {
     func cellPressedWatched(cell: LibraryAnimeCell, anime: Anime)
@@ -29,10 +28,10 @@ class LibraryAnimeCell: AnimeCell {
     @IBAction func watchedPressed(sender: AnyObject) {
         
         if let anime = anime, let progress = anime.progress {
-            Realm().write({ () -> Void in
-                progress.episodes += 1
-                progress.updatedEpisodes(anime.episodes)
-            })
+            
+            progress.watchedEpisodes += 1
+            progress.updatedEpisodes(anime.episodes)
+            progress.saveEventually()
             LibrarySyncController.updateAnime(progress)
         }
         
@@ -63,20 +62,19 @@ class LibraryAnimeCell: AnimeCell {
         if let progress = anime.progress {
             
             watchedButton.hidden = false
-            let title = FontAwesome.Watched.rawValue + " Ep\((progress.episodes + 1))"
+            let title = FontAwesome.Watched.rawValue + " Ep\((progress.watchedEpisodes + 1))"
             watchedButton.setTitle(title, forState: UIControlState.Normal)
             
-            userProgressLabel.text = "\(anime.type) · " + FontAwesome.Watched.rawValue + " \(progress.episodes)/\(anime.episodes)   " + FontAwesome.Ranking.rawValue + " \(progress.score)"
+            userProgressLabel.text = "\(anime.type) · " + FontAwesome.Watched.rawValue + " \(progress.watchedEpisodes)/\(anime.episodes)   " + FontAwesome.Ranking.rawValue + " \(progress.score)"
             
-            if MALList(rawValue: progress.status) != .Completed {
-                setEpisodeImageView(anime, tag: .InLibrary, nextEpisode: progress.episodes)
+            if progress.myAnimeListList() != .Completed {
+                setEpisodeImageView(anime, tag: .InLibrary, nextEpisode: progress.watchedEpisodes)
             } else {
                 episodeImageView.setImageFrom(urlString: anime.fanart ?? anime.imageUrl ?? "")
             }
             
             
-            if let status = MALList(rawValue: progress.status)
-                where status == .Completed || status == .Dropped {
+            if progress.myAnimeListList() == .Completed || progress.myAnimeListList() == .Dropped {
                 watchedButton.hidden = true
             }
         }

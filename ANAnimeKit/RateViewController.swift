@@ -8,7 +8,6 @@
 
 import Foundation
 import HCSStarRatingView
-import RealmSwift
 import ANParseKit
 
 public protocol RateViewControllerProtocol: class {
@@ -40,13 +39,11 @@ public class RateViewController: UIViewController {
     }
     
     public class func updateAnime(anime: Anime, withRating rating: Float) {
-        let realm = Realm()
         
         if let progress = anime.progress {
-            realm.write({ () -> Void in
-                progress.score = Int(rating)
-            })
             
+            progress.score = Int(rating)
+            progress.saveEventually()
             LibrarySyncController.updateAnime(progress)
         }
         

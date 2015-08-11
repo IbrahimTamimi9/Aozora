@@ -63,8 +63,6 @@ public class Anime: PFObject, PFSubclassing {
     @NSManaged public var startDateTime: NSDate?
     @NSManaged public var studio: [NSDictionary]
     
-    // Progress
-    
     public var progress: AnimeProgress?
     
     // Episodes
@@ -173,62 +171,6 @@ public class Anime: PFObject, PFSubclassing {
         let nextEpisodeDate: NSDate = cal.dateByAddingComponents(components, toDate: startDate, options: nil)!
         return (nextEpisodeDate, components.weekOfYear+1)
     }
-    
-    // Next episode to Watch
-    
-    public var nextEpisodeToWatch: Int? {
-        get {
-            if !hasNextEpisodeToWatchInformation() {
-                return nil
-            }
-            return nextEpisodeToWatchInternal
-        }
-    }
-    
-    public var nextEpisodeToWatchDate: NSDate? {
-        get {
-            if !hasNextEpisodeToWatchInformation() {
-                return nil
-            }
-            
-            return nextEpisodeToWatchDateInternal
-        }
-    }
-    
-    var nextEpisodeToWatchInternal: Int = 0
-    var nextEpisodeToWatchDateInternal: NSDate = NSDate()
-    
-    func hasNextEpisodeToWatchInformation() -> Bool {
-        if let startDate = startDate, let progress = progress where MALList(rawValue: progress.status) != .Completed {
-            if nextEpisodeToWatchInternal == 0 {
-                let (nextAiringDate, nextAiringEpisode) = nextEpisodeToWatchForStartDate(startDate, progress: progress)
-                nextEpisodeToWatchInternal = nextAiringEpisode
-                nextEpisodeToWatchDateInternal = nextAiringDate
-            }
-            return true
-        } else {
-            return false
-        }
-    }
-    
-    func nextEpisodeToWatchForStartDate(startDate: NSDate, progress: AnimeProgress) -> (nextDate: NSDate, nextEpisode: Int) {
-        
-        let now = NSDate()
-        
-        if startDate.compare(now) == NSComparisonResult.OrderedDescending || progress.episodes == 0 {
-            return (startDate, 1)
-        }
-        
-        let cal = NSCalendar.currentCalendar()
-        let unit: NSCalendarUnit = .CalendarUnitWeekOfYear
-        let components = cal.components(unit, fromDate: startDate)
-        components.weekOfYear = progress.episodes
-        
-        let nextEpisodeDate: NSDate = cal.dateByAddingComponents(components, toDate: startDate, options: nil)!
-        return (nextEpisodeDate, components.weekOfYear + 1)
-    }
-    
-    
     
     // External Links
     

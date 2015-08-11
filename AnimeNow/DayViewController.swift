@@ -40,18 +40,20 @@ class DayViewController: UIViewController {
             
             if let result = task.result as? [Anime] {
                 
-                LibrarySyncController.matchAnimeWithProgress(result)
-                
-                let filtered = dataSource.filter({ (anime: Anime) -> Bool in
-                    return !contains(result, anime)
-                })
-                
-                self.dataSource = [result, filtered]
-                self.sort()
-                if self.isViewLoaded() {
-                    self.collectionView.reloadData()
-                    self.collectionView.animateFadeIn()
-                }
+                return LibrarySyncController.matchAnimeWithProgress(result)
+                    .continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
+                        let filtered = dataSource.filter({ (anime: Anime) -> Bool in
+                            return !contains(result, anime)
+                        })
+                        
+                        self.dataSource = [result, filtered]
+                        self.sort()
+                        if self.isViewLoaded() {
+                            self.collectionView.reloadData()
+                            self.collectionView.animateFadeIn()
+                        }
+                        return nil
+                    })
             }
             return nil
         })

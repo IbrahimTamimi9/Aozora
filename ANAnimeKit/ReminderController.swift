@@ -10,7 +10,6 @@ import Foundation
 import ANParseKit
 import ANCommonKit
 import Bolts
-import RealmSwift
 
 public class ReminderController {
     public class func scheduleReminderForAnime(anime: Anime) -> Bool {
@@ -86,13 +85,15 @@ public class ReminderController {
             
             if let animeList = task.result as? [Anime] {
                 
-                LibrarySyncController.matchAnimeWithProgress(animeList)
-                
-                for anime in animeList {
-                    if let progress = anime.progress, let list = MALList(rawValue: progress.status) where list != .Dropped {
-                        self.scheduleReminderForAnime(anime)
-                    }
-                }
+                return LibrarySyncController.matchAnimeWithProgress(animeList)
+                    .continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
+                        for anime in animeList {
+                            if let progress = anime.progress where progress.myAnimeListList() != .Dropped {
+                                self.scheduleReminderForAnime(anime)
+                            }
+                        }
+                        return nil
+                    })                
             }
             
             return nil
