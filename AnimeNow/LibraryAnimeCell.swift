@@ -100,7 +100,7 @@ class LibraryAnimeCell: AnimeCell {
                 let nextEpisode = nextEpisode where episodes.count > nextEpisode {
                 
                 let episode = episodes[nextEpisode]
-                self.episodeImageView.setImageFrom(urlString: episode.screenshot ?? anime.fanart ?? anime.imageUrl ?? "")
+                self.episodeImageView.setImageFrom(urlString: episode.imageURLString())
                 
             } else {
                 self.episodeImageView.setImageFrom(urlString: anime.fanart ?? anime.imageUrl ?? "")

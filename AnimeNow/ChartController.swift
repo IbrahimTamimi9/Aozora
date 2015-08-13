@@ -11,23 +11,19 @@ import ANParseKit
 
 class ChartController {
     
-    class func fetchSeasonalChart(seasonalChart: String) -> BFTask {
-        let currentChartQuery = SeasonalChart.query()!
-        currentChartQuery.limit = 1
-        currentChartQuery.whereKey("title", equalTo:seasonalChart)
-        currentChartQuery.includeKey("tvAnime")
-        currentChartQuery.includeKey("leftOvers")
-        currentChartQuery.includeKey("movieAnime")
-        currentChartQuery.includeKey("ovaAnime")
-        currentChartQuery.includeKey("onaAnime")
-        currentChartQuery.includeKey("specialAnime")
+    class func fetchSeasonalChartAnime(seasonalChart: SeasonalChart) -> BFTask {
+        let query = Anime.query()!
+        query.limit = 200
+        query.whereKey("startDate", greaterThanOrEqualTo: seasonalChart.startDate)
+        query.whereKey("startDate", lessThanOrEqualTo: seasonalChart.endDate)
+        query.whereKey("genres", notContainedIn: ["Hentai"])
         
         let currentSeasonalChart = SeasonalChartService.seasonalChartString(0).title
-        if currentSeasonalChart == seasonalChart {
+        if currentSeasonalChart == seasonalChart.title {
             // Cached
-            return currentChartQuery.findCachedOrNetwork("LocalDatastore.CurrentChart", expirationDays: 1)
+            return query.findCachedOrNetwork("LocalDatastore.Anime", expirationDays: 1)
         } else {
-            return currentChartQuery.findObjectsInBackground()
+            return query.findObjectsInBackground()
         }
     }
     
@@ -35,7 +31,6 @@ class ChartController {
         
         let query = SeasonalChart.query()!
         query.limit = 200
-        query.whereKey("startDate", lessThan: NSDate())
         query.orderByDescending("startDate")
         
         return query.findCachedOrNetwork("LocalDatastore.AllSeasons", expirationDays: 1)

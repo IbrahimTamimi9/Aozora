@@ -393,7 +393,7 @@ public class LibrarySyncController {
                 }
             }
             
-            return nil
+            return BFTask(result: animeList)
         }
     }
     

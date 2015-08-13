@@ -37,7 +37,7 @@ public class Episode: PFObject, PFSubclassing {
     @NSManaged public var firstAired: NSDate?
     
     public func imageURLString() -> String {
-        return self.screenshot ?? anime.fanart ?? anime.imageUrl ?? ""
+        return self.screenshot?.stringByReplacingOccurrencesOfString("original", withString: "thumb") ?? anime.fanart ?? anime.imageUrl ?? ""
     }
 }
     

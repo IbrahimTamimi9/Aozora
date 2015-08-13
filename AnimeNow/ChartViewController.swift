@@ -159,16 +159,16 @@ class ChartViewController: UIViewController {
     func prepareForList(selectedList: SelectedList) {
         
         self.selectedList = selectedList
-        collectionView.animateFadeOut()
-        loadingView.startAnimating()
         
         switch selectedList {
         case .SeasonalChart:
+            collectionView.animateFadeOut()
+            loadingView.startAnimating()
             navigationBarTitle.text = currentSeasonalChartName
             fetchSeasonalChart(currentSeasonalChartName)
         case .AllSeasons:
             navigationBarTitle.text = "All Seasons"
-            fetchAllSeasons()
+            collectionView.reloadData()
         }
         
         navigationBarTitle.text! += " " + FontAwesome.AngleDown.rawValue
@@ -182,51 +182,49 @@ class ChartViewController: UIViewController {
     
     func fetchSeasonalChart(seasonalChart: String) {
         
-        ChartController.fetchSeasonalChart(seasonalChart).continueWithExecutor(BFExecutor.mainThreadExecutor(), withBlock: { (task: BFTask!) -> AnyObject! in
-            
-            if let result = task.result as? [SeasonalChart], let season = result.last {
-                let tvAnime = season.tvAnime
-                let movieAnime = season.movieAnime
-                let ovaAnime = season.ovaAnime
-                let onaAnime = season.onaAnime
-                let specialAnime = season.specialAnime
-                
-                let matchTask1 = LibrarySyncController.matchAnimeWithProgress(tvAnime)
-                let matchTask2 = LibrarySyncController.matchAnimeWithProgress(movieAnime)
-                let matchTask3 = LibrarySyncController.matchAnimeWithProgress(ovaAnime)
-                let matchTask4 = LibrarySyncController.matchAnimeWithProgress(onaAnime)
-                let matchTask5 = LibrarySyncController.matchAnimeWithProgress(specialAnime)
-                
-                BFTask(forCompletionOfAllTasks: [matchTask1, matchTask2, matchTask3, matchTask4, matchTask5])
-                    .continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
-                    self.dataSource = [tvAnime, movieAnime, ovaAnime, onaAnime, specialAnime]
-                    self.updateSortType(self.currentSortType)
-                    return nil
-                })
-            }
-            
-            self.loadingView.stopAnimating()
-            self.collectionView.animateFadeIn()
-            
-            return nil
-        })
-    }
-    
-    func fetchAllSeasons() {
         
-        ChartController.fetchAllSeasons().continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
+        ChartController.fetchAllSeasons()
+        .continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
             
             var seasons: [Int:[SeasonalChart]] = [:]
             var result = task.result as! [SeasonalChart]
             
             self.chartsDataSource = result
+            let currentSeasonalChart = result.filter({$0.title == seasonalChart})
+            
+            return BFTask(result: currentSeasonalChart)
+        
+        }.continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
+            
+            if let result = task.result as? [SeasonalChart], let season = result.last {
+                return ChartController.fetchSeasonalChartAnime(season)
+            }
+            return nil
+        
+        }.continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
+            
+            if let result = task.result as? [Anime] {
+                return LibrarySyncController.matchAnimeWithProgress(result)
+            }
+            return nil
+            
+        }.continueWithExecutor(BFExecutor.mainThreadExecutor(), withBlock: { (task: BFTask!) -> AnyObject! in
+        
+            if let result = task.result as? [Anime] {
+                let tvAnime = result.filter({$0.type == "TV"})
+                let movieAnime = result.filter({$0.type == "Movie"})
+                let ovaAnime = result.filter({$0.type == "OVA"})
+                let onaAnime = result.filter({$0.type == "ONA"})
+                let specialAnime = result.filter({$0.type == "Special"})
+                
+                self.dataSource = [tvAnime, movieAnime, ovaAnime, onaAnime, specialAnime]
+                self.updateSortType(self.currentSortType)
+            }
             
             self.loadingView.stopAnimating()
             self.collectionView.animateFadeIn()
-            
             return nil
         })
-
     }
     
     // MARK: - Utility Functions

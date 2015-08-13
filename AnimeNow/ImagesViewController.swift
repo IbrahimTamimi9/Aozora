@@ -9,6 +9,7 @@
 import Foundation
 import ANCommonKit
 import Bolts
+import SDWebImage
 
 protocol ImagesViewControllerDelegate: class {
     func imagesViewControllerSelected(#imageData: ImageData)
@@ -77,7 +78,7 @@ extension ImagesViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("imageCell", forIndexPath: indexPath) as! BasicCollectionCell
         
         let imageData = dataSource[indexPath.row]
-        cell.titleimageView.setImageFrom(urlString: imageData.url, animated: false)
+        cell.titleimageView.setImageFrom(urlString: imageData.url, animated: false, options: SDWebImageOptions.CacheMemoryOnly)
         
         return cell
     }
