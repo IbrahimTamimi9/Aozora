@@ -38,7 +38,7 @@ class ChartController {
         query.whereKey("startDate", lessThan: NSDate())
         query.orderByDescending("startDate")
         
-        return query.findCachedOrNetwork("LocalDatastore.AllSeasons", expirationDays: 7)
+        return query.findCachedOrNetwork("LocalDatastore.AllSeasons", expirationDays: 1)
     }
 }
 
