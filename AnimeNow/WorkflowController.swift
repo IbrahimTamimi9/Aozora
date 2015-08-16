@@ -105,7 +105,7 @@ class WorkflowController {
         NSUserDefaults.standardUserDefaults().removeObjectForKey(LibrarySyncController.LastSyncDateDefaultsKey)
 
         // Logout MAL
-        PFUser.removeCredentials()
+        User.removeCredentials()
         
         if let user = PFUser.currentUser() {
             PFFacebookUtils.unlinkUserInBackground(user, block: { (succeeded, error) -> Void in

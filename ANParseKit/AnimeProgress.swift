@@ -74,6 +74,7 @@ public class AnimeProgress: PFObject, PFSubclassing {
             if anime.episodes != 0 {
                 watchedEpisodes = anime.episodes
             }
+            endDate = NSDate()
             list = AozoraList.Completed.rawValue
         case .Dropped:
             list = AozoraList.Dropped.rawValue

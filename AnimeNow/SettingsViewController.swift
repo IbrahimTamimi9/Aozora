@@ -33,10 +33,10 @@ class SettingsViewController: UITableViewController {
     }
     
     func updateLoginButton() {
-        if PFUser.currentUserLoggedIn() {
+        if User.currentUserLoggedIn() {
             // Logged In both
             loginLabel.text = "Logout Aozora"
-        } else if PFUser.currentUserIsGuest() {
+        } else if User.currentUserIsGuest() {
             // User is guest
             loginLabel.text = "Login Aozora"
         }
@@ -57,7 +57,7 @@ class SettingsViewController: UITableViewController {
         switch (indexPath.section, indexPath.row) {
         case (0,0):
             // Login / Logout
-            if PFUser.currentUserLoggedIn() {
+            if User.currentUserLoggedIn() {
                 // Logged In both, logout
                 WorkflowController.logoutUser().continueWithExecutor( BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
                     
@@ -71,7 +71,7 @@ class SettingsViewController: UITableViewController {
                 })
                 
                 
-            } else if PFUser.currentUserIsGuest() {
+            } else if User.currentUserIsGuest() {
                 // User is guest, login
                 WorkflowController.presentOnboardingController(true)
             }

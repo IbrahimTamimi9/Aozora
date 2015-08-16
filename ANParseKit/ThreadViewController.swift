@@ -14,6 +14,8 @@ import Parse
 
 // Class intended to be subclassedb
 public class ThreadViewController: UIViewController {
+   
+    let FetchLimit = 20
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var dismissBBI: UIBarButtonItem!
@@ -134,7 +136,7 @@ extension ThreadViewController: UITableViewDataSource {
     }
     
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let post = fetchController.objectAtIndex(section) as! Postable
+        let post = fetchController.objectInSection(section) as! Postable
         if post.replies.count > 0 {
             return 1 + (post.replies.count ?? 0) + 1
         } else {

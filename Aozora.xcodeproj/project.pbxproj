@@ -139,7 +139,6 @@
 		DAA253B61B2B877C0092EB0B /* CharactersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA253B51B2B877C0092EB0B /* CharactersViewController.swift */; };
 		DAA2C5581B66919300152FF9 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA2C5571B66919300152FF9 /* SignInViewController.swift */; };
 		DAA393291B42F21900A8D5D5 /* RootTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA393281B42F21900A8D5D5 /* RootTabBar.swift */; };
-		DAA3932D1B42FEA100A8D5D5 /* PFUser+CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA3932A1B42F6A100A8D5D5 /* PFUser+CurrentUser.swift */; };
 		DAB83FC71B52FE200006AF96 /* ChartController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB83FC61B52FE200006AF96 /* ChartController.swift */; };
 		DAC027CA1B2A15C20085C91A /* DiscussionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC027C91B2A15C20085C91A /* DiscussionViewController.swift */; };
 		DAC027CC1B2A16B80085C91A /* AnimeReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC027CB1B2A16B80085C91A /* AnimeReview.swift */; };
@@ -485,7 +484,6 @@
 		DAA253B71B2B8AF50092EB0B /* AnimeBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeBaseViewController.swift; sourceTree = "<group>"; };
 		DAA2C5571B66919300152FF9 /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		DAA393281B42F21900A8D5D5 /* RootTabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootTabBar.swift; sourceTree = "<group>"; };
-		DAA3932A1B42F6A100A8D5D5 /* PFUser+CurrentUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "PFUser+CurrentUser.swift"; path = "../AnimeNow/PFUser+CurrentUser.swift"; sourceTree = "<group>"; };
 		DAAD79921B30D087009D70ED /* ForumViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ForumViewController.swift; path = ../ANAnimeKit/ForumViewController.swift; sourceTree = "<group>"; };
 		DAAD79941B30D918009D70ED /* TopicCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicCell.swift; sourceTree = "<group>"; };
 		DAB83FC61B52FE200006AF96 /* ChartController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartController.swift; sourceTree = "<group>"; };
@@ -1254,7 +1252,6 @@
 			children = (
 				DA0B26071B75109000A770AE /* String+Validations.swift */,
 				DA2D1EEC1B530903009A5CCD /* PFQuery+LocalDatastore.swift */,
-				DAA3932A1B42F6A100A8D5D5 /* PFUser+CurrentUser.swift */,
 				DAE43C311B2BC1A900C3092D /* TFHppleElement+Convenience.swift */,
 				DA8B6E061B6C4DBF00D240FC /* UIImageView+PFFile.swift */,
 			);
@@ -2090,7 +2087,6 @@
 				DA6755E51B72E6D100D6EA32 /* CommentViewController.swift in Sources */,
 				DA6E12E41B10D96F00B278B0 /* UIViewController+WebScraper.m in Sources */,
 				DA35B99A1B74165000C0AAC7 /* InAppBrowserSelectorViewController.swift in Sources */,
-				DAA3932D1B42FEA100A8D5D5 /* PFUser+CurrentUser.swift in Sources */,
 				DA13806C1B6DBB4C00C53560 /* Post.swift in Sources */,
 				DA6E13111B10F2E500B278B0 /* MALScrapper.swift in Sources */,
 				DA6E12DE1B10D96F00B278B0 /* TFHpple.m in Sources */,

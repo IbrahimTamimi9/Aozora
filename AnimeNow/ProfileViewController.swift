@@ -46,7 +46,7 @@ public class ProfileViewController: ThreadViewController {
     
     override func fetchPosts() {
         super.fetchPosts()
-        fetchController.configureWith(self, queryDelegate: self, tableView: tableView)
+        fetchController.configureWith(self, queryDelegate: self, tableView: tableView, limit: FetchLimit, datasourceUsesSections: true)
     }
     
     func updateViewWithUser(user: User) {
@@ -219,7 +219,7 @@ extension ProfileViewController: FetchControllerQueryDelegate {
     public override func queriesForSkip(#skip: Int) -> [PFQuery] {
         let query = TimelinePost.query()!
         query.skip = skip
-        query.limit = 20
+        query.limit = FetchLimit
         query.whereKey("userTimeline", equalTo: userProfile)
         query.whereKey("replyLevel", equalTo: 0)
         query.orderByDescending("createdAt")
@@ -229,9 +229,10 @@ extension ProfileViewController: FetchControllerQueryDelegate {
 
         let innerQuery = TimelinePost.query()!
         innerQuery.skip = skip
-        innerQuery.limit = 20
+        innerQuery.limit = FetchLimit
         innerQuery.whereKey("userTimeline", equalTo: userProfile)
         innerQuery.whereKey("replyLevel", equalTo: 0)
+        innerQuery.orderByDescending("createdAt")
         
         let repliesQuery = TimelinePost.query()!
         repliesQuery.skip = 0

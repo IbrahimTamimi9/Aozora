@@ -9,6 +9,7 @@
 import Foundation
 import FBSDKCoreKit
 import FBSDKLoginKit
+import ANParseKit
 
 class OnboardingViewController: UIViewController {
 
@@ -83,10 +84,7 @@ class OnboardingViewController: UIViewController {
                     
                     if let error = error {
                         println("Uh oh. \(error.localizedDescription)")
-                    } else {
-                        //self.signUpWithFacebookPressed(self)
                     }
-                    
                 })
             }
         }
@@ -99,7 +97,7 @@ class OnboardingViewController: UIViewController {
     
     @IBAction func skipSignUpPressed(sender: AnyObject) {
         
-        if PFUser.currentUserIsGuest() {
+        if User.currentUserIsGuest() {
             presentRootTabBar()
         } else {
             PFAnonymousUtils.logInWithBlock {

@@ -29,6 +29,8 @@ public class ForumViewController: AnimeBaseViewController {
     }
     
     var loadingView: LoaderView!
+    var fetchController = FetchController()
+    
     @IBOutlet weak public var navigationBar: UINavigationItem!
     
     public override func viewDidLoad() {
@@ -47,14 +49,7 @@ public class ForumViewController: AnimeBaseViewController {
     func fetchAnimeRelatedThreads() {
         let query = Thread.query()!
         query.whereKey("anime", equalTo: anime)
-        query.findObjectsInBackgroundWithBlock { (result, error) -> Void in
-            self.loadingView.stopAnimating()
-            if let error = error {
-                // TODO: Show errows
-            } else if let result = result as? [Thread] {
-                self.dataSource = result
-            }
-        }
+        fetchController.configureWith(self, query: query, tableView: tableView, limit: 100)
     }
     
 }
@@ -63,14 +58,14 @@ extension ForumViewController: UITableViewDataSource {
     
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return dataSource.count
+        return fetchController.dataCount()
     }
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("TopicCell") as! TopicCell
         
-        let thread = dataSource[indexPath.row]
+        let thread = fetchController.objectAtIndex(indexPath.row) as! Thread
         let title = thread.title
         //cell.typeLabel.text = topic.type == MALScrapper.TopicType.Sticky ? " " : ""
         cell.title.text = title
@@ -101,5 +96,11 @@ extension ForumViewController: UITableViewDelegate {
         }
         
         navigationController?.pushViewController(episodeThreadController, animated: true)
+    }
+}
+
+extension ForumViewController: FetchControllerDelegate {
+    public func didFetchFor(#skip: Int) {
+        self.loadingView.stopAnimating()
     }
 }

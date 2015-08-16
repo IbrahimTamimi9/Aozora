@@ -22,6 +22,8 @@ class ForumsViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
 
+    var fetchController = FetchController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -37,16 +39,7 @@ class ForumsViewController: UIViewController {
     func fetchThreads() {
         let query = Thread.query()!
         query.orderByDescending("updatedAt")
-        query.findObjectsInBackgroundWithBlock { (result, error) -> Void in
-            
-            self.loadingView.stopAnimating()
-            self.tableView.animateFadeIn()
-            if let error = error {
-                // TODO: Show error
-            } else if let result = result as? [Thread] {
-                self.dataSource = result
-            }
-        }
+        fetchController.configureWith(self, query: query, tableView: tableView, limit: 100)
     }
     
 }
@@ -55,14 +48,14 @@ extension ForumsViewController: UITableViewDataSource {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return dataSource.count
+        return fetchController.dataCount()
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("TopicCell") as! TopicCell
         
-        let thread = dataSource[indexPath.row]
+        let thread = fetchController.objectAtIndex(indexPath.row) as! Thread
         let title = thread.title
         //cell.typeLabel.text = topic.type == MALScrapper.TopicType.Sticky ? " " : ""
         cell.title.text = title
@@ -74,6 +67,21 @@ extension ForumsViewController: UITableViewDataSource {
 
 extension ForumsViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let thread = fetchController.objectAtIndex(indexPath.row) as! Thread
+        
+        let episodeThreadController = ANParseKit.episodeThreadViewController()
+        episodeThreadController.initWithEpisode(thread.episode!, anime: thread.anime!, postType: .Episode)
+        
+        if InAppController.purchasedAnyPro() == nil {
+            episodeThreadController.interstitialPresentationPolicy = .Automatic
+        }
+        
+        navigationController?.pushViewController(episodeThreadController, animated: true)
+    }
+}
 
+extension ForumsViewController: FetchControllerDelegate {
+    func didFetchFor(#skip: Int) {
+        self.loadingView.stopAnimating()
     }
 }

@@ -102,7 +102,7 @@ public class EpisodeThreadViewController: ThreadViewController {
     
     override func fetchPosts() {
         super.fetchPosts()
-        fetchController.configureWith(self, queryDelegate: self, tableView: tableView)
+        fetchController.configureWith(self, queryDelegate: self, tableView: tableView, limit: FetchLimit, datasourceUsesSections: true)
     }
     
     // MARK: - IBAction
@@ -124,16 +124,19 @@ extension EpisodeThreadViewController: FetchControllerQueryDelegate {
         
         let query = Post.query()!
         query.skip = skip
-        query.limit = 20
+        query.limit = FetchLimit
         query.whereKey("thread", equalTo: thread!)
         query.whereKey("replyLevel", equalTo: 0)
         query.orderByAscending("createdAt")
+        query.includeKey("postedBy")
+        
         
         let innerQuery = Post.query()!
         innerQuery.skip = skip
-        innerQuery.limit = 20
+        innerQuery.limit = FetchLimit
         innerQuery.whereKey("thread", equalTo: thread!)
         innerQuery.whereKey("replyLevel", equalTo: 0)
+        innerQuery.orderByAscending("createdAt")
         
         let repliesQuery = Post.query()!
         repliesQuery.skip = 0

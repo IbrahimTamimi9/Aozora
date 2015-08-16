@@ -42,20 +42,30 @@ public class FetchController {
     var query: PFQuery?
     
     var isFirstFetch = true
+    var datasourceUsesSections = false
     
     public init() {
         
     }
     
-    public func configureWith(delegate: FetchControllerDelegate, query: PFQuery? = nil, queryDelegate: FetchControllerQueryDelegate? = nil, collectionView: UICollectionView? = nil, tableView: UITableView? = nil, limit: Int = 100) {
-        self.queryDelegate = queryDelegate
-        self.delegate = delegate
-        self.tableView = tableView
-        self.collectionView = collectionView
-        self.query = query
-        defaultLimit = limit
-        resetToDefaults()
-        fetchWith(skip: 0)
+    public func configureWith(
+        delegate: FetchControllerDelegate,
+        query: PFQuery? = nil,
+        queryDelegate: FetchControllerQueryDelegate? = nil,
+        collectionView: UICollectionView? = nil,
+        tableView: UITableView? = nil,
+        limit: Int = 100,
+        datasourceUsesSections: Bool = false) {
+        
+            self.queryDelegate = queryDelegate
+            self.delegate = delegate
+            self.tableView = tableView
+            self.collectionView = collectionView
+            self.query = query
+            self.datasourceUsesSections = datasourceUsesSections
+            defaultLimit = limit
+            resetToDefaults()
+            fetchWith(skip: 0)
     }
     
     func resetToDefaults() {
@@ -74,6 +84,10 @@ public class FetchController {
     public func objectAtIndex(index: Int) -> PFObject {
         didDisplayItemAt(index: index)
         return dataSource[index]
+    }
+    
+    public func objectInSection(section: Int) -> PFObject {
+        return dataSource[section]
     }
     
     public func didDisplayItemAt(#index: Int) {
@@ -180,16 +194,29 @@ public class FetchController {
                         tableView.animateFadeIn()
                     }
                     
-                } else if let result = task.result as? [PFObject] {
-                    // Insert rows
-                    let startIndex = self.dataSource.count - result.count
-                    var range = NSRange()
-                    range.location = startIndex
-                    range.length = result.count
-
-                    tableView.beginUpdates()
-                    tableView.insertSections(NSIndexSet(indexesInRange: range), withRowAnimation: UITableViewRowAnimation.Automatic)
-                    tableView.endUpdates()
+                } else {
+                    
+                    if self.datasourceUsesSections {
+                        // Insert sections
+                        let startIndex = self.dataSource.count - allData.count
+                        var range = NSRange()
+                        range.location = startIndex
+                        range.length = allData.count
+                        
+                        tableView.beginUpdates()
+                        tableView.insertSections(NSIndexSet(indexesInRange: range), withRowAnimation: UITableViewRowAnimation.Automatic)
+                        tableView.endUpdates()
+                    } else {
+                        // Insert rows
+                        var indexPaths: [NSIndexPath] = []
+                        let startIndex = self.dataSource.count - allData.count
+                        for index in startIndex..<self.dataSource.count {
+                            indexPaths.append(NSIndexPath(forRow: index, inSection: 0))
+                        }
+                        tableView.beginUpdates()
+                        tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+                        tableView.endUpdates()
+                    }
                 }
             }
             

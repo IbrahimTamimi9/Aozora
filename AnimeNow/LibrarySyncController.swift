@@ -444,14 +444,14 @@ public class LibrarySyncController {
     
     class func requestWithProgress(progress: AnimeProgress, router: Atarashii.Router) -> BFTask {
         
-        if !PFUser.currentUserLoggedIn() {
+        if !User.currentUserLoggedIn() {
             return BFTask(result: nil)
         }
         
         let completionSource = BFTaskCompletionSource()
         
-        let malUsername = PFUser.malUsername!
-        let malPassword = PFUser.malPassword!
+        let malUsername = User.currentUser()!.myAnimeListUsername
+        let malPassword = User.currentUser()!.myAnimeListPassword ?? ""
         
         Alamofire.request(router)
             .authenticate(user: malUsername, password: malPassword)

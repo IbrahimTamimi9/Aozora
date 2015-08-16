@@ -41,4 +41,34 @@ public class User: PFUser, PFSubclassing {
         return PFUser.currentUser() as? User
     }
     
+    public class func currentUserLoggedIn() -> Bool {
+        
+        return PFUser.currentUser() != nil && !currentUserIsGuest() && loggedInWithMyAnimeList()
+    }
+    
+    public class func currentUserIsGuest() -> Bool {
+        
+        return PFAnonymousUtils.isLinkedWithUser(PFUser.currentUser())
+    }
+    
+    public var myAnimeListPassword: String? {
+        get {
+        return NSUserDefaults.standardUserDefaults().objectForKey("User.Password") as! String?
+        }
+        set(object) {
+            NSUserDefaults.standardUserDefaults().setObject(object, forKey: "User.Password")
+            NSUserDefaults.standardUserDefaults().synchronize()
+        }
+    }
+    
+    public class func removeCredentials() {
+        NSUserDefaults.standardUserDefaults().removeObjectForKey("User.Password")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    
+    public class func loggedInWithMyAnimeList() -> Bool {
+        return User.currentUser()!.myAnimeListPassword != nil
+    }
+    
 }

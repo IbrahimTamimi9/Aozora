@@ -40,8 +40,8 @@ public class LoginViewController: UIViewController {
         Alamofire.request(Atarashii.Router.verifyCredentials()).authenticate(user: usernameTextField.text, password: passwordTextField.text).validate().responseJSON { (req, res, JSON, error) -> Void in
             if error == nil {
                 
-                PFUser.malUsername = self.usernameTextField.text.stringByReplacingOccurrencesOfString(" ", withString: "")
-                PFUser.malPassword = self.passwordTextField.text
+                User.currentUser()!.myAnimeListUsername = self.usernameTextField.text.stringByReplacingOccurrencesOfString(" ", withString: "")
+                User.currentUser()!.myAnimeListPassword = self.passwordTextField.text
                 
                 completionSource.setResult(JSON)
             } else {

@@ -40,7 +40,7 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
     let LayoutTypeDefault = "Library.LayoutType."
     
     var allAnimeLists: [AnimeList] = [.Watching, .Planning, .OnHold, .Completed, .Dropped]
-    var controllers: [AnimeListViewController] = []
+    var listControllers: [AnimeListViewController] = []
     
     var loadingView: LoaderView!
     
@@ -128,7 +128,7 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
                 }
             }
             
-            let firstController = self.controllers[0]
+            let firstController = self.listControllers[0]
             firstController.animeList = list
             firstController.updateSortType(firstController.currentSortType)
             
@@ -136,13 +136,13 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
             return LibrarySyncController.fetchTheRestOfLists()
             
         }).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
-            self.updateViewControllers(task.result as! [AnimeProgress])
+            self.updateListViewControllers(task.result as! [AnimeProgress])
             return nil
             
         })
     }
     
-    func updateViewControllers(animeList: [AnimeProgress]) {
+    func updateListViewControllers(animeList: [AnimeProgress]) {
         
         var lists: [[Anime]] = [[],[],[],[],[]]
         
@@ -166,9 +166,9 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
         for index in 0...4 {
             let aList = lists[index]
             if aList.count > 0 {
-                self.controllers[index].animeList = aList
+                self.listControllers[index].animeList = aList
             } else if index != 0 {
-                self.controllers[index].animeList = []
+                self.listControllers[index].animeList = []
             }
         }
         
@@ -231,7 +231,7 @@ extension AnimeLibraryViewController: XLPagerTabStripViewControllerDataSource {
             lists.append(controller)
         }
         
-        controllers = lists
+        listControllers = lists
         
         return lists
     }
@@ -242,7 +242,7 @@ extension AnimeLibraryViewController: XLPagerTabStripViewControllerDelegate {
     override func pagerTabStripViewController(pagerTabStripViewController: XLPagerTabStripViewController!, updateIndicatorFromIndex fromIndex: Int, toIndex: Int, withProgressPercentage progressPercentage: CGFloat) {
         super.pagerTabStripViewController(pagerTabStripViewController, updateIndicatorFromIndex: fromIndex, toIndex: toIndex, withProgressPercentage: progressPercentage)
 
-        if progressPercentage > 0.5{
+        if progressPercentage > 0.5 {
             self.buttonBarView.selectedBar.backgroundColor = colorForIndex(toIndex)
         } else {
             self.buttonBarView.selectedBar.backgroundColor = colorForIndex(fromIndex)
@@ -274,7 +274,7 @@ extension AnimeLibraryViewController: FilterViewControllerDelegate {
 
         let currentListIndex = Int(currentIndex)
         currentConfiguration = configuration
-        controllers[currentListIndex].currentConfiguration = currentConfiguration
+        listControllers[currentListIndex].currentConfiguration = currentConfiguration
         
         if let value = currentConfiguration[0].value,
             let layoutType = LibraryLayout(rawValue: value) {

@@ -53,11 +53,11 @@ extension RootTabBar: UITabBarControllerDelegate {
                 return true
             }
             
-            if PFUser.currentUserLoggedIn() {
+            if User.currentUserLoggedIn() {
                 // Logged in both
                 return true
                 
-            } else if PFUser.currentUserIsGuest() {
+            } else if User.currentUserIsGuest() {
                 
                 let onboarding = UIStoryboard(name: "Onboarding", bundle: nil).instantiateInitialViewController() as! OnboardingViewController
                 onboarding.isInWindowRoot = false
