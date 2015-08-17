@@ -212,12 +212,14 @@ class ChartViewController: UIViewController {
         
             if let result = task.result as? [Anime] {
                 let tvAnime = result.filter({$0.type == "TV"})
+                let tv = tvAnime.filter({$0.duration == 0 || $0.duration > 15})
+                let tvShort = tvAnime.filter({$0.duration > 0 && $0.duration <= 15})
                 let movieAnime = result.filter({$0.type == "Movie"})
                 let ovaAnime = result.filter({$0.type == "OVA"})
                 let onaAnime = result.filter({$0.type == "ONA"})
                 let specialAnime = result.filter({$0.type == "Special"})
                 
-                self.dataSource = [tvAnime, movieAnime, ovaAnime, onaAnime, specialAnime]
+                self.dataSource = [tv, tvShort, movieAnime, ovaAnime, onaAnime, specialAnime]
                 self.updateSortType(self.currentSortType)
             }
             
@@ -415,10 +417,11 @@ extension ChartViewController: UICollectionViewDataSource {
                 var title = ""
                 switch indexPath.section {
                 case 0: title = "TV"
-                case 1: title = "Movie"
-                case 2: title = "OVA"
-                case 3: title = "ONA"
-                case 4: title = "Special"
+                case 1: title = "TV Short"
+                case 2: title = "Movie"
+                case 3: title = "OVA"
+                case 4: title = "ONA"
+                case 5: title = "Special"
                 default: break
                 }
                 
