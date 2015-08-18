@@ -41,7 +41,7 @@ public class User: PFUser, PFSubclassing {
     
     public class func currentUserLoggedIn() -> Bool {
         
-        return PFUser.currentUser() != nil && !currentUserIsGuest() && syncingWithMyAnimeList()
+        return PFUser.currentUser() != nil && !currentUserIsGuest()
     }
     
     public class func currentUserIsGuest() -> Bool {

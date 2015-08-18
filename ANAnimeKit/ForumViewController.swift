@@ -86,7 +86,7 @@ extension ForumViewController: UITableViewDelegate {
         }
         
         // TODO: Support Anime threads..
-        let thread = dataSource[indexPath.row]
+        let thread = fetchController.objectAtIndex(indexPath.row) as! Thread
         
         let episodeThreadController = ANParseKit.episodeThreadViewController()
         episodeThreadController.initWithEpisode(thread.episode!, anime: thread.anime!, postType: .Episode)

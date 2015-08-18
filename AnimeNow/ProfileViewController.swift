@@ -30,7 +30,7 @@ public class ProfileViewController: ThreadViewController {
     @IBOutlet weak var proBottomLayoutConstraint: NSLayoutConstraint!
     @IBOutlet weak var settingsTrailingSpaceConstraint: NSLayoutConstraint!
     
-    var userProfile = User.currentUser()!
+    var userProfile: User!
     var followingUser: Bool?
     
     public func initWithUser(user: User) {
@@ -39,6 +39,7 @@ public class ProfileViewController: ThreadViewController {
     
     override public func viewDidLoad() {
         super.viewDidLoad()
+        userProfile = User.currentUser()!
         updateViewWithUser(userProfile)
         fetchPosts()
         fetchUserDetails()

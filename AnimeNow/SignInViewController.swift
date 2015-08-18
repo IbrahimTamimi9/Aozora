@@ -17,6 +17,10 @@
 import Foundation
 import ANCommonKit
 
+protocol SignInViewControllerDelegate: class {
+    func signInViewControllerLoggedIn()
+}
+
 class SignInViewController: UIViewController {
     
     @IBOutlet weak var usernameTextField: CustomTextField!
@@ -26,22 +30,12 @@ class SignInViewController: UIViewController {
     @IBOutlet weak var navigationBar: UINavigationBar!
     
     var isInWindowRoot = true
+    weak var delegate: SignInViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-    
-    func showRootTabBar() {
-        view.endEditing(true)
-        OnboardingViewController.initializeUserDataIfNeeded()
-        
-        if isInWindowRoot {
-            WorkflowController.presentRootTabBar(animated: true)
-        } else {
-            self.dismissViewControllerAnimated(true, completion: nil)
-        }
-    }
-    
+
     // MARK: - IBActions
     
     @IBAction func dismissPressed(sender: AnyObject) {
@@ -62,7 +56,10 @@ class SignInViewController: UIViewController {
                 alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
                 self.presentViewController(alert, animated: true, completion: nil)
             } else {
-                self.showRootTabBar()
+                self.view.endEditing(true)
+                self.dismissViewControllerAnimated(true, completion: { () -> Void in
+                    self.delegate?.signInViewControllerLoggedIn()
+                })
             }
         }
     }

@@ -424,8 +424,8 @@
 		DA58C2E81B3B0B680082B626 /* EpisodeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodeCell.swift; sourceTree = "<group>"; };
 		DA58C2EA1B3B109D0082B626 /* EpisodesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodesViewController.swift; sourceTree = "<group>"; };
 		DA58C2EC1B3B111A0082B626 /* Episode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Episode.swift; sourceTree = "<group>"; };
-		DA5A3BF31B35EB4F00C07D71 /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Login.storyboard; path = ../ANAnimeKit/Login.storyboard; sourceTree = "<group>"; };
-		DA5A3BF51B35EB5F00C07D71 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = ../ANAnimeKit/LoginViewController.swift; sourceTree = "<group>"; };
+		DA5A3BF31B35EB4F00C07D71 /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
+		DA5A3BF51B35EB5F00C07D71 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		DA5A3BF71B35EE2200C07D71 /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		DA6755E11B729C2100D6EA32 /* ImagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagesViewController.swift; sourceTree = "<group>"; };
 		DA6E12AE1B10D94200B278B0 /* ANParseKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ANParseKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -990,6 +990,8 @@
 		DA5A3BF21B35EB4000C07D71 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				DA5A3BF31B35EB4F00C07D71 /* Login.storyboard */,
+				DA5A3BF51B35EB5F00C07D71 /* LoginViewController.swift */,
 			);
 			name = Login;
 			path = ../ANAnimeKit;
@@ -1004,8 +1006,6 @@
 				DACE77C51B29518300037486 /* Parse classes */,
 				DA5A3BED1B346F2100C07D71 /* MALScrapper */,
 				DA5A3BF21B35EB4000C07D71 /* Login */,
-				DA5A3BF31B35EB4F00C07D71 /* Login.storyboard */,
-				DA5A3BF51B35EB5F00C07D71 /* LoginViewController.swift */,
 				DAE7A7141B2105C400788614 /* Profile */,
 				DA0B260F1B75666C00A770AE /* Thread */,
 				DAD67DFE1B72759F000BB325 /* Comment */,

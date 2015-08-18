@@ -26,9 +26,11 @@ class OnboardingViewController: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showSignIn" {
             let sign = segue.destinationViewController as! SignInViewController
+            sign.delegate = self
             sign.isInWindowRoot = isInWindowRoot
         } else if segue.identifier == "showSignUp" {
             let sign = segue.destinationViewController as! SignUpViewController
+            sign.delegate = self
             sign.isInWindowRoot = isInWindowRoot
             sign.loggedInWithFacebook = loggedInWithFacebook
         }
@@ -36,7 +38,7 @@ class OnboardingViewController: UIViewController {
     
     func presentRootTabBar() {
         
-        OnboardingViewController.initializeUserDataIfNeeded()
+        initializeUserDataIfNeeded()
         
         if isInWindowRoot {
             WorkflowController.presentRootTabBar(animated: true)
@@ -45,15 +47,15 @@ class OnboardingViewController: UIViewController {
         }
     }
     
-    class func initializeUserDataIfNeeded() {
+    func initializeUserDataIfNeeded() {
         if let currentUser = PFUser.currentUser() where currentUser["joinDate"] == nil {
             currentUser["joinDate"] = NSDate()
             currentUser.saveEventually()
         }
-        self.linkInstalationWithUser()
+        linkInstalationWithUser()
     }
     
-    class func linkInstalationWithUser() {
+    func linkInstalationWithUser() {
         
         let installation = PFInstallation.currentInstallation()
         
@@ -119,5 +121,17 @@ class OnboardingViewController: UIViewController {
     @IBAction func signInPressed(sender: AnyObject) {
         
         performSegueWithIdentifier("showSignIn", sender: nil)
+    }
+}
+
+extension OnboardingViewController: SignInViewControllerDelegate {
+    func signInViewControllerLoggedIn() {
+        presentRootTabBar()
+    }
+}
+
+extension OnboardingViewController: SignUpViewControllerDelegate {
+    func signUpViewControllerCreatedAccount() {
+        presentRootTabBar()
     }
 }

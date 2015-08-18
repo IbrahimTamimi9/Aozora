@@ -11,6 +11,10 @@ import ANCommonKit
 import RSKImageCropper
 import ANParseKit
 
+protocol SignUpViewControllerDelegate: class {
+    func signUpViewControllerCreatedAccount()
+}
+
 class SignUpViewController: UIViewController {
     
     @IBOutlet weak var usernameTextField: CustomTextField!
@@ -24,6 +28,7 @@ class SignUpViewController: UIViewController {
     var loggedInWithFacebook = false
     var isInWindowRoot = true
     var userProfileManager = UserProfileManager()
+    weak var delegate: SignUpViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,17 +43,6 @@ class SignUpViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
-    }
-    
-    func showRootTabBar() {
-        view.endEditing(true)
-        OnboardingViewController.initializeUserDataIfNeeded()
-        
-        if isInWindowRoot {
-            WorkflowController.presentRootTabBar(animated: true)
-        } else {
-            self.dismissViewControllerAnimated(true, completion: nil)
-        }
     }
     
     // MARK: - IBActions
@@ -70,7 +64,11 @@ class SignUpViewController: UIViewController {
             avatar: profilePicture.image)
             .continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
                 
-            self.showRootTabBar()
+                self.view.endEditing(true)
+                self.dismissViewControllerAnimated(true, completion: { () -> Void in
+                    self.delegate?.signUpViewControllerCreatedAccount()
+                })
+                
             return nil
         })
     }

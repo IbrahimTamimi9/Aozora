@@ -47,9 +47,10 @@ extension RootTabBar: UITabBarControllerDelegate {
         
         if let navController = viewController as? UINavigationController {
             
+            let profileController = navController.viewControllers.first as? ProfileViewController
             let libraryController = navController.viewControllers.first as? AnimeLibraryViewController
             
-            if libraryController == nil {
+            if profileController == nil && libraryController == nil {
                 return true
             }
             
