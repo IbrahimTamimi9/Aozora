@@ -12,6 +12,8 @@ import Parse
 import Bolts
 import Alamofire
 
+public let LibraryUpdatedNotification = "LibraryUpdatedNotification"
+
 public class LibrarySyncController {
     
     public static let LastSyncDateDefaultsKey = "LibrarySync.LastSyncDate"
@@ -21,7 +23,13 @@ public class LibrarySyncController {
     public let AnimeSync = "LibrarySync.AnimeSync"
     public let EpisodeSync = "LibrarySync.EpisodeSync"
     
-    // MARK: - Sync Objects Information
+    public enum Source {
+        case MyAnimeList
+        case Anilist
+        case Hummingbird
+    }
+    
+    // MARK: - Sync with Parse
     
     public func syncParseInformation() -> BFTask {
         let syncAnime = syncAnimeInformation()
@@ -129,52 +137,6 @@ public class LibrarySyncController {
         }
     }
     
-    
-    // MARK: - Sync with MyAnimeList
-    
-    public class func fetchWatchingList(isRefreshing: Bool) -> BFTask {
-        let shouldSyncData = NSUserDefaults.shouldPerformAction(LastSyncDateDefaultsKey, expirationDays: 1)
-        
-        if shouldSyncData || isRefreshing {
-            println("Fetching all anime library from network..")
-//            return pushNonSyncedChanges().continueWithBlock({ (task: BFTask!) -> AnyObject! in
-//                    return self.loadAnimeList()
-//                
-//                }).continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
-//                
-//                let result = task.result["anime"] as! [[String: AnyObject]]
-//
-//                var newAnimeProgress: [AnimeProgress] = []
-//                for data in result {
-//                    
-//                    var animeProgress = AnimeProgress()
-//                    animeProgress.myAnimeListID = data["id"] as! Int
-//                    animeProgress.status = data["watched_status"] as! String
-//                    animeProgress.episodes = data["watched_episodes"] as! Int
-//                    animeProgress.score = data["score"] as! Int
-//                    animeProgress.syncState = SyncState.InSync.rawValue
-//                    newAnimeProgress.append(animeProgress)
-//                }
-//                
-//                realm.write({ () -> Void in
-//                    realm.add(newAnimeProgress, update: true)
-//                })
-//                
-//                return self.fetchAnimeProgress(onlyWatching: true)
-//            })
-            return syncAnimeProgressInformation().continueWithBlock({ (task: BFTask!) -> AnyObject! in
-                return self.fetchAnimeProgress(onlyWatching: true)
-            })
-        } else {
-            return fetchAnimeProgress(onlyWatching: true)
-        }
-    }
-    
-    public class func fetchTheRestOfLists() -> BFTask {
-
-        return fetchAnimeProgress(onlyWatching: false)
-    }
-    
     public class func syncAnimeProgressInformation() -> BFTask {
         
         let query = AnimeProgress.query()!
@@ -215,7 +177,7 @@ public class LibrarySyncController {
                 
                 if let result = task.result as? [AnimeProgress] where result.count != 0 {
                     return PFObject.unpinAllInBackground(result).continueWithBlock({ (task: BFTask!) -> AnyObject! in
-                        println("Updated \(result.count) AnimeProgress")
+                        println("Got \(result.count) AnimeProgress from Parse")
                         NSUserDefaults.completedAction(self.LastSyncDateDefaultsKey)
                         return PFObject.pinAllInBackground(result)
                     })
@@ -225,56 +187,239 @@ public class LibrarySyncController {
                 }
         }
     }
-//    class func pushNonSyncedChanges() -> BFTask {
-//        
-//        // Fetch Progress
-//        let realm = Realm()
-//        let animeLibrary = realm.objects(AnimeProgress).filter("syncState != \(SyncState.InSync.rawValue)")
-//        
-//        var tasks: [BFTask] = []
-//        
-//        for progress in animeLibrary {
-//            let task: BFTask
-//            
-//            switch SyncState(rawValue: progress.syncState)! {
-//            case .Created:
-//                task = addAnime(progress)
-//            case .Updated:
-//                task = updateAnime(progress)
-//            case .Deleted:
-//                task = deleteAnime(progress)
-//            default:
-//                task = BFTask(result: nil)
-//            }
-//            
-//            tasks.append(task)
-//        }
-//        
-//        if tasks.count > 0 {
-//            println("Pushing \(tasks.count) non synced objects")
-//        }
-//        
-//        return BFTask(forCompletionOfAllTasks: tasks)
-//    }
     
+    // MARK: - Library management
     
-//    class func loadAnimeList() -> BFTask! {
-//        let completionSource = BFTaskCompletionSource()
-//        if let username = PFUser.malUsername {
-//            Alamofire.request(Atarashii.Router.animeList(username: username)).validate().responseJSON {
-//                (req, res, JSON, error) -> Void in
-//                if error == nil {
-//                    completionSource.setResult(JSON)
-//                } else {
-//                    completionSource.setError(error)
-//                }
-//            }
-//        }
-//        return completionSource.task
-//    }
+    public class func fetchWatchingList(isRefreshing: Bool) -> BFTask {
+        let shouldSyncData = NSUserDefaults.shouldPerformAction(LastSyncDateDefaultsKey, expirationDays: 1)
+        
+        if shouldSyncData || isRefreshing {
+            println("Fetching all anime library from network..")
+            
+            
+            var myAnimeListLibrary: [MALProgress] = []
+            var updatedMyAnimeListLibrary: [MALProgress] = []
+            var task = BFTask(result: nil)
+            
+            // 1. For each source fetch all library
+            if User.syncingWithMyAnimeList() {
+                task = task.continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
+                   return self.fetchMyAnimeListLibrary()
+                }).continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
+                    
+                    // 2. Save library in array
+                    if let result = task.result["anime"] as? [[String: AnyObject]] {
+                        for data in result {
+                            let myAnimeListID = data["id"] as! Int
+                            let status = data["watched_status"] as! String
+                            let episodes = data["watched_episodes"] as! Int
+                            let score = data["score"] as! Int
+                            var malProgress = MALProgress(myAnimeListID: myAnimeListID, status: MALList(rawValue: status)!, episodes: episodes, score: score)
+                            myAnimeListLibrary.append(malProgress)
+                        }
+                    }
+                    return nil
+                })
+            }
+            
+            task = task.continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
+                
+                return self.syncAnimeProgressInformation()
+                
+            }).continueWithBlock({ (task: BFTask!) -> AnyObject! in
+                
+                let query = AnimeProgress.query()!
+                query.fromLocalDatastore()
+                query.includeKey("anime")
+                query.limit = 1000
+                return query.findObjectsInBackground()
+                
+            }).continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
+                
+                // 3. Merge all existing libraries
+                let parseLibrary = task.result as! [AnimeProgress]
+                
+                for progress in parseLibrary {
+                    
+                    // Check if user is syncing with MyAnimeList
+                    if User.syncingWithMyAnimeList() {
+                        if var malProgress = myAnimeListLibrary.filter({$0.myAnimeListID == progress.anime.myAnimeListID}).last {
+                            
+                            
+                            // Update episodes
+                            if malProgress.episodes > progress.watchedEpisodes {
+                                // On Parse
+                                println("updated episodes on parse \(progress.anime.title!)")
+                                progress.watchedEpisodes = malProgress.episodes
+                                progress.saveEventually()
+                            } else if malProgress.episodes < progress.watchedEpisodes {
+                                println("updated episodes on mal \(progress.anime.title!)")
+                                // On MAL
+                                malProgress.syncState = .Updated
+                                malProgress.episodes = progress.watchedEpisodes
+                                updatedMyAnimeListLibrary.append(malProgress)
+                            }
+                            
+                            // Update Score
+                            if malProgress.score != progress.score {
+                                if malProgress.score != 0 {
+                                    println("updated score on parse \(progress.anime.title!)")
+                                    progress.score = malProgress.score
+                                    progress.saveEventually()
+                                } else if progress.score != 0 {
+                                    println("updated score on mal \(progress.anime.title!)")
+                                    malProgress.score = progress.score
+                                    malProgress.syncState = .Updated
+                                    updatedMyAnimeListLibrary.append(malProgress)
+                                }
+                            }
+                            
+                            // Update list
+                            let malListMAL = MALList(rawValue: malProgress.status)!
+                            let malListParse = progress.myAnimeListList()
+                            if malListMAL != malListParse {
+                                println("List is different for: \(progress.anime.title!)")
+                                var malList: MALList?
+                                var aozoraList: AozoraList?
+                                if malListMAL == .Completed || malListParse == .Completed {
+                                    if malListMAL != .Completed {
+                                        malList = .Completed
+                                    } else {
+                                        aozoraList = .Completed
+                                    }
+                                } else if malListMAL == .Dropped || malListParse == .Dropped {
+                                    if malListMAL != .Dropped {
+                                        malList = .Dropped
+                                    } else {
+                                        aozoraList = .Dropped
+                                    }
+                                } else if malListMAL == .OnHold || malListParse == .OnHold {
+                                    if malListMAL != .OnHold {
+                                        malList = .OnHold
+                                    } else {
+                                        aozoraList = .OnHold
+                                    }
+                                } else if malListMAL == .Watching || malListParse == .Watching {
+                                    if malListMAL != .Watching {
+                                        malList = .Watching
+                                    } else {
+                                        aozoraList = .Watching
+                                    }
+                                } else {
+                                    if malListMAL != .Planning {
+                                        malList = .Planning
+                                    } else {
+                                        aozoraList = .Planning
+                                    }
+                                }
+                                
+                                if let status = malList {
+                                    println("updated list on mal \(progress.anime.title!)")
+                                    malProgress.status = status.rawValue
+                                    malProgress.syncState = .Updated
+                                    updatedMyAnimeListLibrary.append(malProgress)
+                                }
+                                
+                                if let aozoraList = aozoraList {
+                                    println("updated list on parse \(progress.anime.title!)")
+                                    progress.list = aozoraList.rawValue
+                                    progress.saveEventually()
+                                }
+                            }
+                    
+                        } else {
+                            println("created \(progress.anime.title!) on mal")
+                            // Create on MAL
+                            var malProgress = MALProgress(myAnimeListID:
+                                progress.anime.myAnimeListID,
+                                status: progress.myAnimeListList(),
+                                episodes: progress.watchedEpisodes,
+                                score: progress.score)
+                            malProgress.syncState = .Created
+                            updatedMyAnimeListLibrary.append(malProgress)
+                        }
+                    }
+                    
+                    // TODO: Check if user is syncing with Anilist
+                }
+                
+                // Create on PARSE
+                var malProgressToCreate: [MALProgress] = []
+                for malProgress in myAnimeListLibrary {
+                    if parseLibrary.filter({$0.anime.myAnimeListID == malProgress.myAnimeListID}).last == nil {
+                        malProgressToCreate.append(malProgress)
+                    }
+                }
+                
+                let malProgressToCreateIDs = malProgressToCreate.map({ (malProgress: MALProgress) -> Int in
+                    return malProgress.myAnimeListID
+                })
+                
+                println("Need to create \(malProgressToCreateIDs.count) progress on Parse")
+                
+                let query = Anime.queryIncludingAddData()
+                query.whereKey("myAnimeListID", containedIn: malProgressToCreateIDs)
+                query.limit = 1000
+                return query.findObjectsInBackground()
+                    .continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
+                        
+                        
+                        let animeToCreate = task.result as! [Anime]
+                        println("Matched \(animeToCreate.count) anime")
+                        for anime in animeToCreate {
+                            if let malProgress = malProgressToCreate.filter({ $0.myAnimeListID == anime.myAnimeListID }).last {
+                                // Creating on PARSE
+                                let malList = MALList(rawValue: malProgress.status)!
+                                var progress = AnimeProgress()
+                                progress.anime = anime
+                                progress.user = User.currentUser()!
+                                progress.startDate = NSDate()
+                                progress.updateList(malList)
+                                progress.watchedEpisodes = malProgress.episodes
+                                progress.collectedEpisodes = 0
+                                progress.score = malProgress.score
+                                progress.saveEventually()
+                                progress.pinInBackgroundWithBlock({ (result, error) -> Void in
+                                    NSNotificationCenter.defaultCenter().postNotificationName(LibraryUpdatedNotification, object: nil)
+                                })
+                            }
+                        }
+                        return nil
+                    })
+                
+            }).continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
+                
+                // 4. Push updated objects to all sources
+                for malProgress in updatedMyAnimeListLibrary {
+                    switch malProgress.syncState {
+                    case .Created:
+                        println("Creating on MAL \(malProgress.myAnimeListID)")
+                        self.addAnime(malProgress: malProgress)
+                    case .Updated:
+                        println("Updating on MAL \(malProgress.myAnimeListID)")
+                        self.updateAnime(malProgress: malProgress)
+                    default:
+                        break
+                    }
+                }
+                return nil
+            }).continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
+                
+                return self.fetchAozoraLibrary(onlyWatching: true)
+            })
+            
+            return task
+        } else {
+            return fetchAozoraLibrary(onlyWatching: true)
+        }
+    }
     
+    public class func fetchTheRestOfLists() -> BFTask {
+
+        return fetchAozoraLibrary(onlyWatching: false)
+    }
     
-    class func fetchAnimeProgress(onlyWatching: Bool = false) -> BFTask {
+    class func fetchAozoraLibrary(onlyWatching: Bool = false) -> BFTask {
         
         let query = AnimeProgress.query()!
         query.fromLocalDatastore()
@@ -286,66 +431,9 @@ public class LibrarySyncController {
             query.whereKey("list", notEqualTo: "Watching")
         }
         return query.findObjectsInBackground()
-//            .continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
-//            
-//            return nil
-//        })
-        
-//        let realm = Realm()
-//        
-//        var filterString = "syncState != \(SyncState.Deleted.rawValue)"
-//        
-//        if onlyWatching {
-//            filterString += " && status == 'watching'"
-//        } else {
-//            filterString += " && status != 'watching'"
-//        }
-//        
-//        let animeLibrary = realm.objects(AnimeProgress).filter(filterString)
-//        
-//        var idList: [Int] = []
-//        var animeList: [Anime] = []
-//        for animeProgress in animeLibrary {
-//            idList.append(animeProgress.myAnimeListID)
-//        }
-//        // Fetch from disk then network
-//        return fetchAnime(idList, fromLocalDatastore: true)
-//        .continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
-//            
-//            if let result = task.result as? [Anime] where result.count > 0 {
-//                animeList = result
-//            }
-//            return nil
-//        }.continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
-//            
-//            let missingIdList = idList.filter({ (myAnimeListID: Int) -> Bool in
-//                
-//                var filteredAnime = animeList.filter({ $0.myAnimeListID == myAnimeListID })
-//                return filteredAnime.count == 0
-//            })
-//            
-//            if missingIdList.count != 0 {
-//                println("Missing IDs \(missingIdList) fetching from network..")
-//                return self.fetchAnime(missingIdList, includeAllData: true)
-//            } else {
-//                return nil
-//            }
-//            
-//        }.continueWithExecutor( BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
-//            let pinName = Anime.PinName.InLibrary.rawValue
-//            if let result = task.result as? [Anime] where result.count > 0 {
-//                println("Found \(result.count) anime from network, saving with tag \(pinName)")
-//                animeList += result
-//                
-//                PFObject.pinAllInBackground(result, withName: pinName)
-//            }
-//            
-//            self.matchAnimeWithProgress(animeList)
-//            // Update last sync date
-//            NSUserDefaults.completedAction(self.LastSyncDateDefaultsKey)
-//            return BFTask(result: animeList)
-//        })
     }
+    
+    // MARK: - Class Methods
     
     public class func fetchAnime(myAnimeListIDs: [Int], withPinName: String? = nil, fromLocalDatastore: Bool = false, includeAllData: Bool = false) -> BFTask {
         
@@ -369,8 +457,6 @@ public class LibrarySyncController {
         query.whereKey("myAnimeListID", containedIn: myAnimeListIDs)
         return query.findObjectsInBackground()
     }
-    
-    // MARK: - Anime Methods
     
     public class func matchAnimeWithProgress(animeList: [Anime]) -> BFTask {
         // Match all anime with it's progress..
@@ -397,52 +483,79 @@ public class LibrarySyncController {
         }
     }
     
-    // MARK: - Update Library Methods
+    // MARK: - General External Library Methods
     
-    public class func addAnime(progress: AnimeProgress) -> BFTask {
-        
-        let malProgress = malProgressWithProgress(progress)
-        return requestWithProgress(progress, router: Atarashii.Router.animeAdd(progress: malProgress)).continueWithBlock({ (task: BFTask!) -> AnyObject! in
-            
-            if let error = task.error {
-                progress.myAnimeListSyncState = SyncState.Created.rawValue
-                progress.saveEventually()
-            }
-            
-            return nil
-        })
+    public class func addAnime(progress: AnimeProgress? = nil, malProgress: MALProgress? = nil) -> BFTask {
+        var source = Source.MyAnimeList
+        switch source {
+        case .MyAnimeList:
+            let malProgress = malProgress ?? animeProgressToAtarashiiObject(progress!)
+            return myAnimeListRequestWithRouter(Atarashii.Router.animeAdd(progress: malProgress)).continueWithBlock({ (task: BFTask!) -> AnyObject! in
+                return nil
+            })
+        case .Anilist:
+            fallthrough
+        case .Hummingbird:
+            fallthrough
+        default:
+            return BFTask(result: nil)
+        }
     }
     
-    public class func updateAnime(progress: AnimeProgress) -> BFTask {
-        
-        let malProgress = malProgressWithProgress(progress)
-        return requestWithProgress(progress, router: Atarashii.Router.animeUpdate(progress: malProgress)).continueWithBlock({ (task: BFTask!) -> AnyObject! in
-            
-            if let error = task.error {
-                progress.myAnimeListSyncState = SyncState.Updated.rawValue
-                progress.saveEventually()
-            }
-            
-            return nil
-        })
+    public class func updateAnime(progress: AnimeProgress? = nil, malProgress: MALProgress? = nil) -> BFTask {
+        var source = Source.MyAnimeList
+        switch source {
+        case .MyAnimeList:
+            let malProgress = malProgress ?? animeProgressToAtarashiiObject(progress!)
+            return myAnimeListRequestWithRouter(Atarashii.Router.animeUpdate(progress: malProgress)).continueWithBlock({ (task: BFTask!) -> AnyObject! in
+                return nil
+            })
+        case .Anilist:
+            fallthrough
+        case .Hummingbird:
+            fallthrough
+        default:
+            return BFTask(result: nil)
+        }
     }
     
-    public class func deleteAnime(progress: AnimeProgress) -> BFTask {
-        
-        return requestWithProgress(progress, router: Atarashii.Router.animeDelete(id: progress.anime.myAnimeListID)).continueWithBlock({ (task: BFTask!) -> AnyObject! in
+    public class func deleteAnime(progress: AnimeProgress? = nil, malProgress: MALProgress? = nil) -> BFTask {
+        var source = Source.MyAnimeList
+        switch source {
+        case .MyAnimeList:
             
-            if let error = task.error {
-                progress.myAnimeListSyncState = SyncState.Deleted.rawValue
-                progress.saveEventually()
-                return BFTask(error: NSError())
-            } else {
-                return BFTask(result: nil)
-            }
-            
-        })
+            let malID = malProgress?.myAnimeListID ?? progress!.anime.myAnimeListID
+            return myAnimeListRequestWithRouter(Atarashii.Router.animeDelete(id: malID)).continueWithBlock({ (task: BFTask!) -> AnyObject! in
+                return nil
+            })
+        case .Anilist:
+            fallthrough
+        case .Hummingbird:
+            fallthrough
+        default:
+            return BFTask(result: nil)
+        }
     }
     
-    class func requestWithProgress(progress: AnimeProgress, router: Atarashii.Router) -> BFTask {
+    // MARK: - MyAnimeList Library Methods
+    
+    class func fetchMyAnimeListLibrary() -> BFTask! {
+        let completionSource = BFTaskCompletionSource()
+        if let username = User.currentUser()!.myAnimeListUsername {
+            Alamofire.request(Atarashii.Router.animeList(username: username)).validate().responseJSON {
+                (req, res, JSON, error) -> Void in
+                if error == nil {
+                    completionSource.setResult(JSON)
+                } else {
+                    completionSource.setError(error)
+                }
+            }
+        }
+        return completionSource.task
+    }
+
+    
+    class func myAnimeListRequestWithRouter(router: Atarashii.Router) -> BFTask {
         
         if !User.currentUserLoggedIn() {
             return BFTask(result: nil)
@@ -450,7 +563,7 @@ public class LibrarySyncController {
         
         let completionSource = BFTaskCompletionSource()
         
-        let malUsername = User.currentUser()!.myAnimeListUsername
+        let malUsername = User.currentUser()!.myAnimeListUsername ?? ""
         let malPassword = User.currentUser()!.myAnimeListPassword ?? ""
         
         Alamofire.request(router)
@@ -467,8 +580,8 @@ public class LibrarySyncController {
         
     }
     
-    class func malProgressWithProgress(progress: AnimeProgress) -> Atarashii.Progress {
-        return Atarashii.Progress(
+    class func animeProgressToAtarashiiObject(progress: AnimeProgress) -> MALProgress {
+        return MALProgress(
             myAnimeListID: progress.anime.myAnimeListID,
             status: progress.myAnimeListList(),
             episodes: progress.watchedEpisodes,
@@ -476,4 +589,7 @@ public class LibrarySyncController {
         
     }
     
+    // MARK: - Anilist Library Methods
+    
+    // TODO
 }

@@ -152,9 +152,9 @@ extension EpisodesViewController: EpisodeCellDelegate {
             
             progress.updatedEpisodes(anime.episodes)
             progress.saveEventually()
-            LibrarySyncController.updateAnime(progress)
+            LibrarySyncController.updateAnime(progress: progress)
             
-            NSNotificationCenter.defaultCenter().postNotificationName(ANAnimeKit.LibraryUpdatedNotification, object: nil)
+            NSNotificationCenter.defaultCenter().postNotificationName(LibraryUpdatedNotification, object: nil)
             
             canFadeImages = false
             let indexPaths = collectionView.indexPathsForVisibleItems()

@@ -41,7 +41,7 @@ class SearchViewController: UIViewController {
         searchBar.placeholder = searchLibrary ? "Search your library" : "Search all anime"
         searchBar.becomeFirstResponder()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateETACells", name: ANAnimeKit.LibraryUpdatedNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateETACells", name: LibraryUpdatedNotification, object: nil)
     }
     
     deinit {
@@ -62,12 +62,15 @@ class SearchViewController: UIViewController {
             loadingView.startAnimating()
             collectionView.animateFadeOut()
         }
+        let innerQuery = AnimeProgress.query()!
+        innerQuery.fromLocalDatastore()
+
         
         let query = Anime.query()!
         query.limit = 20
         query.whereKey("title", matchesRegex: text, modifiers: "i")
         if searchLibrary {
-            query.fromPinWithName(Anime.PinName.InLibrary.rawValue)
+            query.fromLocalDatastore()
         }
         
         query.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
@@ -75,7 +78,13 @@ class SearchViewController: UIViewController {
                 
                 LibrarySyncController.matchAnimeWithProgress(anime)
                 .continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
-                    self.dataSource = anime
+                    if self.searchLibrary {
+                        let animeWithProgress = anime.filter({ $0.progress != nil })
+                        self.dataSource = animeWithProgress
+                    } else {
+                        self.dataSource = anime
+                    }
+                    
                     return nil
                 })
             }

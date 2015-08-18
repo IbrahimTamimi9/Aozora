@@ -44,10 +44,10 @@ public class RateViewController: UIViewController {
             
             progress.score = Int(rating)
             progress.saveEventually()
-            LibrarySyncController.updateAnime(progress)
+            LibrarySyncController.updateAnime(progress: progress)
         }
         
-        NSNotificationCenter.defaultCenter().postNotificationName(ANAnimeKit.LibraryUpdatedNotification, object: nil)
+        NSNotificationCenter.defaultCenter().postNotificationName(LibraryUpdatedNotification, object: nil)
     }
     
     func initWith(anime: Anime, title: String, initialRating: Float, delegate: RateViewControllerProtocol) {

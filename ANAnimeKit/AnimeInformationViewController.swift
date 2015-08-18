@@ -254,7 +254,7 @@ public class AnimeInformationViewController: AnimeBaseViewController {
             alert.addAction(UIAlertAction(title: "Remove from Library", style: UIAlertActionStyle.Destructive, handler: { (alertAction: UIAlertAction!) -> Void in
                 
                 self.loadingView.startAnimating()
-                let deleteFromMALTask = LibrarySyncController.deleteAnime(progress)
+                let deleteFromMALTask = LibrarySyncController.deleteAnime(progress: progress)
                 let deleteFromParseTask = progress.deleteInBackground()
                 let unpinFromLocalDatastoreTask = progress.unpinInBackground()
                     
@@ -263,7 +263,7 @@ public class AnimeInformationViewController: AnimeBaseViewController {
                     self.loadingView.stopAnimating()
                     self.anime.progress = nil
                     
-                    NSNotificationCenter.defaultCenter().postNotificationName(ANAnimeKit.LibraryUpdatedNotification, object: nil)
+                    NSNotificationCenter.defaultCenter().postNotificationName(LibraryUpdatedNotification, object: nil)
                 
                     self.dismissViewControllerAnimated(true, completion: nil)
                     
@@ -282,9 +282,9 @@ public class AnimeInformationViewController: AnimeBaseViewController {
         
         if let progress = anime.progress {
             progress.updateList(list)
-            LibrarySyncController.updateAnime(progress)
+            LibrarySyncController.updateAnime(progress: progress)
             progress.saveInBackgroundWithBlock({ (result, error) -> Void in
-                NSNotificationCenter.defaultCenter().postNotificationName(ANAnimeKit.LibraryUpdatedNotification, object: nil)
+                NSNotificationCenter.defaultCenter().postNotificationName(LibraryUpdatedNotification, object: nil)
             })
             updateListButtonTitle(progress.list)
             
@@ -299,14 +299,13 @@ public class AnimeInformationViewController: AnimeBaseViewController {
             progress.watchedEpisodes = 0
             progress.collectedEpisodes = 0
             progress.score = 0
-            progress.myAnimeListSyncState = SyncState.InSync.rawValue
             
-            LibrarySyncController.addAnime(progress)
+            LibrarySyncController.addAnime(progress: progress)
             anime.progress = progress
             
             progress.saveEventually()
             progress.pinInBackgroundWithBlock({ (result, error) -> Void in
-                NSNotificationCenter.defaultCenter().postNotificationName(ANAnimeKit.LibraryUpdatedNotification, object: nil)
+                NSNotificationCenter.defaultCenter().postNotificationName(LibraryUpdatedNotification, object: nil)
             })
             
             updateListButtonTitle(progress.list)

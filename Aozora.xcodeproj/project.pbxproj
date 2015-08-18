@@ -57,6 +57,8 @@
 		DA4167E51B275CF500847F56 /* LinkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4167E41B275CF500847F56 /* LinkCell.swift */; };
 		DA4167E71B275D3800847F56 /* TitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4167E61B275D3800847F56 /* TitleCell.swift */; };
 		DA4167E91B275F9400847F56 /* ANAnimeKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4167E81B275F9400847F56 /* ANAnimeKit.swift */; };
+		DA45940F1B819A960044013E /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA5A3BF31B35EB4F00C07D71 /* Login.storyboard */; };
+		DA4594101B819A960044013E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5A3BF51B35EB5F00C07D71 /* LoginViewController.swift */; };
 		DA48EA271B288DED00D8610F /* SeasonalChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA76A1991B2375E1006CB489 /* SeasonalChart.swift */; };
 		DA48EA521B28951400D8610F /* ANParseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E12AE1B10D94200B278B0 /* ANParseKit.framework */; };
 		DA4AF8BA1B276E060020252E /* ANCommonKit.h in Headers */ = {isa = PBXBuildFile; fileRef = DA4AF8B91B276E060020252E /* ANCommonKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -213,8 +215,6 @@
 		DAF618921B378B1F00286517 /* Forum.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAF6187F1B37861000286517 /* Forum.storyboard */; };
 		DAF618931B378B1F00286517 /* ForumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAD79921B30D087009D70ED /* ForumViewController.swift */; };
 		DAF618971B378B2700286517 /* TopicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAD79941B30D918009D70ED /* TopicCell.swift */; };
-		DAF618981B378B3000286517 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA5A3BF31B35EB4F00C07D71 /* Login.storyboard */; };
-		DAF618991B378B3000286517 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5A3BF51B35EB5F00C07D71 /* LoginViewController.swift */; };
 		DAF6189E1B378FEF00286517 /* Forum.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAF6189D1B378FEF00286517 /* Forum.storyboard */; };
 		DAFBB0951B20EFF700495ED9 /* ChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFBB0941B20EFF700495ED9 /* ChartViewController.swift */; };
 		DAFD60B51B278452007275C1 /* ActionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA38A9881B223AF1002FCBB4 /* ActionListViewController.swift */; };
@@ -424,8 +424,8 @@
 		DA58C2E81B3B0B680082B626 /* EpisodeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodeCell.swift; sourceTree = "<group>"; };
 		DA58C2EA1B3B109D0082B626 /* EpisodesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodesViewController.swift; sourceTree = "<group>"; };
 		DA58C2EC1B3B111A0082B626 /* Episode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Episode.swift; sourceTree = "<group>"; };
-		DA5A3BF31B35EB4F00C07D71 /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
-		DA5A3BF51B35EB5F00C07D71 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		DA5A3BF31B35EB4F00C07D71 /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Login.storyboard; path = ../ANAnimeKit/Login.storyboard; sourceTree = "<group>"; };
+		DA5A3BF51B35EB5F00C07D71 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = ../ANAnimeKit/LoginViewController.swift; sourceTree = "<group>"; };
 		DA5A3BF71B35EE2200C07D71 /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		DA6755E11B729C2100D6EA32 /* ImagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagesViewController.swift; sourceTree = "<group>"; };
 		DA6E12AE1B10D94200B278B0 /* ANParseKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ANParseKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -859,7 +859,6 @@
 				DA1380641B6DBA7D00C53560 /* Episodes */,
 				DACD6AAA1B62E53900DDA55C /* Rate */,
 				DAF6187E1B3785FC00286517 /* Forum */,
-				DA5A3BF21B35EB4000C07D71 /* Login */,
 				DA4167B01B273B0700847F56 /* Supporting Files */,
 			);
 			path = ANAnimeKit;
@@ -991,10 +990,9 @@
 		DA5A3BF21B35EB4000C07D71 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				DA5A3BF31B35EB4F00C07D71 /* Login.storyboard */,
-				DA5A3BF51B35EB5F00C07D71 /* LoginViewController.swift */,
 			);
 			name = Login;
+			path = ../ANAnimeKit;
 			sourceTree = "<group>";
 		};
 		DA6E12AF1B10D94200B278B0 /* ANParseKit */ = {
@@ -1005,6 +1003,9 @@
 				DAE43C301B2BC16F00C3092D /* Extensions */,
 				DACE77C51B29518300037486 /* Parse classes */,
 				DA5A3BED1B346F2100C07D71 /* MALScrapper */,
+				DA5A3BF21B35EB4000C07D71 /* Login */,
+				DA5A3BF31B35EB4F00C07D71 /* Login.storyboard */,
+				DA5A3BF51B35EB5F00C07D71 /* LoginViewController.swift */,
 				DAE7A7141B2105C400788614 /* Profile */,
 				DA0B260F1B75666C00A770AE /* Thread */,
 				DAD67DFE1B72759F000BB325 /* Comment */,
@@ -1713,7 +1714,6 @@
 				DA9F731E1B29370F00C2652C /* FontAwesome.ttf in Resources */,
 				DAF32E3F1B62CEAF003FC372 /* Resources.xcassets in Resources */,
 				DAD67E051B7292D7000BB325 /* Resources.xcassets in Resources */,
-				DAF618981B378B3000286517 /* Login.storyboard in Resources */,
 				DA4167D41B273B9400847F56 /* Anime.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1754,6 +1754,7 @@
 			files = (
 				DA6755E41B72E6D100D6EA32 /* Comment.storyboard in Resources */,
 				DA0B26111B7566CF00A770AE /* Thread.storyboard in Resources */,
+				DA45940F1B819A960044013E /* Login.storyboard in Resources */,
 				DA0B26141B758B9300A770AE /* Profile.storyboard in Resources */,
 				DAD67E041B7292D6000BB325 /* Resources.xcassets in Resources */,
 				DA0B26251B75AC3700A770AE /* Resources.xcassets in Resources */,
@@ -1967,7 +1968,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DAF618991B378B3000286517 /* LoginViewController.swift in Sources */,
 				DA4167DF1B275CCC00847F56 /* InformationCell.swift in Sources */,
 				DA4167E71B275D3800847F56 /* TitleCell.swift in Sources */,
 				DAF618931B378B1F00286517 /* ForumViewController.swift in Sources */,
@@ -2052,6 +2052,7 @@
 			files = (
 				DA6755E61B72E6D100D6EA32 /* ImagesViewController.swift in Sources */,
 				DAE43C321B2BC1A900C3092D /* TFHppleElement+Convenience.swift in Sources */,
+				DA4594101B819A960044013E /* LoginViewController.swift in Sources */,
 				DA13806A1B6DBB4100C53560 /* Thread.swift in Sources */,
 				DAFE19B21B29F4EC002F3A76 /* Anime.swift in Sources */,
 				DA6E12E01B10D96F00B278B0 /* TFHppleElement.m in Sources */,

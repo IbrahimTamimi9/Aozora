@@ -10,13 +10,6 @@ import Foundation
 import ANCommonKit
 import Parse
 
-public enum SyncState: Int {
-    case InSync = 0
-    case Created
-    case Updated
-    case Deleted
-}
-
 public enum AozoraList: String {
     case Planning = "Planning"
     case Watching = "Watching"
@@ -50,8 +43,6 @@ public class AnimeProgress: PFObject, PFSubclassing {
     @NSManaged public var collectedEpisodes: Int
     @NSManaged public var watchedEpisodes: Int
     @NSManaged public var list: String
-    
-    @NSManaged public var myAnimeListSyncState: Int
     
     public func myAnimeListList() -> MALList {
         switch list {

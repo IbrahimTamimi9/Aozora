@@ -32,7 +32,7 @@ class LibraryAnimeCell: AnimeCell {
             progress.watchedEpisodes += 1
             progress.updatedEpisodes(anime.episodes)
             progress.saveEventually()
-            LibrarySyncController.updateAnime(progress)
+            LibrarySyncController.updateAnime(progress: progress)
         }
         
         delegate?.cellPressedWatched(self, anime:anime!)

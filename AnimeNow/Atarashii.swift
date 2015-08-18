@@ -9,38 +9,41 @@
 import Foundation
 import Alamofire
 
-public struct Atarashii {
+public enum SyncState: Int {
+    case InSync = 0
+    case Created
+    case Updated
+    case Deleted
+}
+
+public enum MALList: String {
+    case Planning = "plan to watch"
+    case Watching = "watching"
+    case Completed = "completed"
+    case Dropped = "dropped"
+    case OnHold = "on-hold"
+}
+
+public struct MALProgress {
+    public var myAnimeListID: Int
+    public var status: String
+    public var episodes: Int
+    public var score: Int
+    public var syncState: SyncState = .InSync
     
-    public struct Progress {
-        var myAnimeListID: Int
-        var status: Int
-        var episodes: Int
-        var score: Int
-        
-        public init(myAnimeListID: Int, status: MALList, episodes: Int, score: Int) {
-            self.myAnimeListID = myAnimeListID
-            
-            switch status {
-            case .Planning:
-                self.status = 6
-            case .Watching:
-                self.status = 1
-            case .Completed:
-                self.status = 2
-            case .Dropped:
-                self.status = 4
-            case .OnHold:
-                self.status = 3
-            }
-            
-            self.episodes = episodes
-            self.score = score
-        }
-        
-        func toDictionary() -> [String: Int] {
-            return ["anime_id": myAnimeListID, "status": status, "episodes": episodes, "score": score]
-        }
+    public init(myAnimeListID: Int, status: MALList, episodes: Int, score: Int) {
+        self.myAnimeListID = myAnimeListID
+        self.status = status.rawValue
+        self.episodes = episodes
+        self.score = score
     }
+    
+    func toDictionary() -> [String: AnyObject] {
+        return ["anime_id": myAnimeListID, "status": status, "episodes": episodes, "score": score]
+    }
+}
+
+public struct Atarashii {
     
     public var accessToken: String
     
@@ -53,8 +56,8 @@ public struct Atarashii {
         case profile(username: String)
         case friends(username: String)
         case history(username: String)
-        case animeAdd(progress: Progress)
-        case animeUpdate(progress: Progress)
+        case animeAdd(progress: MALProgress)
+        case animeUpdate(progress: MALProgress)
         case animeDelete(id: Int)
         
         public var URLRequest: NSURLRequest {
@@ -92,10 +95,3 @@ public struct Atarashii {
     
 }
 
-public enum MALList: String {
-    case Planning = "plan to watch"
-    case Watching = "watching"
-    case Completed = "completed"
-    case Dropped = "dropped"
-    case OnHold = "on-hold"
-}

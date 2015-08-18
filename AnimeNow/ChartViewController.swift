@@ -130,7 +130,7 @@ class ChartViewController: UIViewController {
         
         prepareForList(selectedList)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateETACells", name: ANAnimeKit.LibraryUpdatedNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateETACells", name: LibraryUpdatedNotification, object: nil)
     }
     
     deinit {

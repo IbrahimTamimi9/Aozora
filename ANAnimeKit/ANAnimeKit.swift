@@ -8,8 +8,6 @@
 
 public class ANAnimeKit {
     
-    public static let LibraryUpdatedNotification = "LibraryUpdatedNotification"
-    
     public class func bundle() -> NSBundle {
         return NSBundle(forClass: self)
     }

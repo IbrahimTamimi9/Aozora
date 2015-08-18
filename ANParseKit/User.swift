@@ -25,10 +25,8 @@ public class User: PFUser, PFSubclassing {
     @NSManaged public var badges: [String]
     @NSManaged public var joinDate: NSDate
     @NSManaged public var aozoraUsername: String
-    @NSManaged public var myAnimeListUsername: String
+    @NSManaged public var myAnimeListUsername: String?
     @NSManaged public var anilistUsername: String
-    @NSManaged public var syncingWithMyAnimeList: Bool
-    @NSManaged public var syncingWithAnilist: Bool
     @NSManaged public var details: UserDetails
     @NSManaged public var followingCount: Int
     @NSManaged public var followersCount: Int
@@ -43,7 +41,7 @@ public class User: PFUser, PFSubclassing {
     
     public class func currentUserLoggedIn() -> Bool {
         
-        return PFUser.currentUser() != nil && !currentUserIsGuest() && loggedInWithMyAnimeList()
+        return PFUser.currentUser() != nil && !currentUserIsGuest() && syncingWithMyAnimeList()
     }
     
     public class func currentUserIsGuest() -> Bool {
@@ -67,7 +65,7 @@ public class User: PFUser, PFSubclassing {
     }
     
     
-    public class func loggedInWithMyAnimeList() -> Bool {
+    public class func syncingWithMyAnimeList() -> Bool {
         return User.currentUser()!.myAnimeListPassword != nil
     }
     

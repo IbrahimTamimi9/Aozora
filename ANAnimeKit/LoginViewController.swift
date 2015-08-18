@@ -10,7 +10,6 @@ import UIKit
 import ANCommonKit
 import Bolts
 import Alamofire
-import ANParseKit
 import Parse
 
 public protocol LoginViewControllerDelegate: class {
