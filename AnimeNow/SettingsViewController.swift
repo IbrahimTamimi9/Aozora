@@ -86,6 +86,8 @@ class SettingsViewController: UITableViewController {
                 NSUserDefaults.standardUserDefaults().setValue("Library", forKey: DefaultLoadingScreen)
                 NSUserDefaults.standardUserDefaults().synchronize()
             }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: { (action) -> Void in
+            }))
             
             self.presentViewController(alert, animated: true, completion: nil)
             

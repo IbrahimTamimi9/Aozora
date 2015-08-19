@@ -12,7 +12,7 @@ import ANCommonKit
 import ANAnimeKit
 
 public class RootTabBar: UITabBarController {
-    let ShowedMyAnimeListLoginDefault = "Defaults.ShowedMyAnimeListLogin"
+    public static let ShowedMyAnimeListLoginDefault = "Defaults.ShowedMyAnimeListLogin"
     
     var selectedDefaultTabOnce = false
     
@@ -54,21 +54,15 @@ extension RootTabBar: UITabBarControllerDelegate {
                 return true
             }
             
-            if User.currentUserLoggedIn() {
-                // Logged in both
-                return true
-                
-            } else if User.currentUserIsGuest() {
-                
+            if User.currentUserIsGuest() {
                 let onboarding = UIStoryboard(name: "Onboarding", bundle: nil).instantiateInitialViewController() as! OnboardingViewController
                 onboarding.isInWindowRoot = false
                 presentViewController(onboarding, animated: true, completion: nil)
-                
                 return false
-                
-            } else if !NSUserDefaults.standardUserDefaults().boolForKey(ShowedMyAnimeListLoginDefault) {
-                
-                NSUserDefaults.standardUserDefaults().setBool(true, forKey: ShowedMyAnimeListLoginDefault)
+            }
+            
+            if let _ = libraryController where !NSUserDefaults.standardUserDefaults().boolForKey(RootTabBar.ShowedMyAnimeListLoginDefault) {
+                NSUserDefaults.standardUserDefaults().setBool(true, forKey: RootTabBar.ShowedMyAnimeListLoginDefault)
                 NSUserDefaults.standardUserDefaults().synchronize()
                 
                 let storyboard = UIStoryboard(name: "Login", bundle: ANParseKit.bundle())

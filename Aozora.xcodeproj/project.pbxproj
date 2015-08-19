@@ -59,6 +59,12 @@
 		DA4167E91B275F9400847F56 /* ANAnimeKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4167E81B275F9400847F56 /* ANAnimeKit.swift */; };
 		DA45940F1B819A960044013E /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA5A3BF31B35EB4F00C07D71 /* Login.storyboard */; };
 		DA4594101B819A960044013E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5A3BF51B35EB5F00C07D71 /* LoginViewController.swift */; };
+		DA45955F1B83C2EB0044013E /* WorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC13C251B42495A0013D479 /* WorkflowController.swift */; };
+		DA4595611B83C3500044013E /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAC13C071B41DF0E0013D479 /* Onboarding.storyboard */; };
+		DA4595621B83C3500044013E /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC13C161B4226E20013D479 /* OnboardingViewController.swift */; };
+		DA4595631B83C3500044013E /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA2C5571B66919300152FF9 /* SignInViewController.swift */; };
+		DA4595641B83C3500044013E /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC13C1F1B423ED90013D479 /* SignUpViewController.swift */; };
+		DA4595651B83C3500044013E /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC13C291B424DEF0013D479 /* ResetPasswordViewController.swift */; };
 		DA48EA271B288DED00D8610F /* SeasonalChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA76A1991B2375E1006CB489 /* SeasonalChart.swift */; };
 		DA48EA521B28951400D8610F /* ANParseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E12AE1B10D94200B278B0 /* ANParseKit.framework */; };
 		DA4AF8BA1B276E060020252E /* ANCommonKit.h in Headers */ = {isa = PBXBuildFile; fileRef = DA4AF8B91B276E060020252E /* ANCommonKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -139,7 +145,6 @@
 		DA9F731D1B2931FF00C2652C /* UIImageView+SDWebImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9F731A1B2930F200C2652C /* UIImageView+SDWebImage.swift */; };
 		DA9F731E1B29370F00C2652C /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA41679A1B25F76F00847F56 /* FontAwesome.ttf */; };
 		DAA253B61B2B877C0092EB0B /* CharactersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA253B51B2B877C0092EB0B /* CharactersViewController.swift */; };
-		DAA2C5581B66919300152FF9 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA2C5571B66919300152FF9 /* SignInViewController.swift */; };
 		DAA393291B42F21900A8D5D5 /* RootTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA393281B42F21900A8D5D5 /* RootTabBar.swift */; };
 		DAB83FC71B52FE200006AF96 /* ChartController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB83FC61B52FE200006AF96 /* ChartController.swift */; };
 		DAC027CA1B2A15C20085C91A /* DiscussionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC027C91B2A15C20085C91A /* DiscussionViewController.swift */; };
@@ -158,9 +163,7 @@
 		DAC13BF91B3EFC280013D479 /* LoadingCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC13BF81B3EFC280013D479 /* LoadingCollectionCell.swift */; };
 		DAC13C031B40569F0013D479 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAC13C021B40569F0013D479 /* Settings.storyboard */; };
 		DAC13C051B4056AB0013D479 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC13C041B4056AB0013D479 /* SettingsViewController.swift */; };
-		DAC13C081B41DF0E0013D479 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAC13C071B41DF0E0013D479 /* Onboarding.storyboard */; };
 		DAC13C0A1B421A730013D479 /* anime-scenery.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DAC13C091B421A730013D479 /* anime-scenery.jpg */; };
-		DAC13C171B4226E20013D479 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC13C161B4226E20013D479 /* OnboardingViewController.swift */; };
 		DAC13C181B4228120013D479 /* Aller_Bd.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DAC13C0F1B4223450013D479 /* Aller_Bd.ttf */; };
 		DAC13C191B4228120013D479 /* Aller_BdIt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DAC13C101B4223450013D479 /* Aller_BdIt.ttf */; };
 		DAC13C1A1B4228120013D479 /* Aller_It.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DAC13C111B4223450013D479 /* Aller_It.ttf */; };
@@ -168,9 +171,6 @@
 		DAC13C1C1B4228120013D479 /* Aller_LtIt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DAC13C131B4223450013D479 /* Aller_LtIt.ttf */; };
 		DAC13C1D1B4228120013D479 /* Aller_Rg.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DAC13C141B4223450013D479 /* Aller_Rg.ttf */; };
 		DAC13C1E1B4228120013D479 /* AllerDisplay.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DAC13C151B4223450013D479 /* AllerDisplay.ttf */; };
-		DAC13C201B423ED90013D479 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC13C1F1B423ED90013D479 /* SignUpViewController.swift */; };
-		DAC13C261B42495A0013D479 /* WorkflowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC13C251B42495A0013D479 /* WorkflowController.swift */; };
-		DAC13C2A1B424DEF0013D479 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC13C291B424DEF0013D479 /* ResetPasswordViewController.swift */; };
 		DAC3F3E11B5E989E001D6072 /* Resources.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAC3F3E01B5E989E001D6072 /* Resources.xcassets */; };
 		DAC7D8FC1B5015FA00898FF6 /* InAppPurchaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA07A3491B4C2B860028B81B /* InAppPurchaseViewController.swift */; };
 		DAC7D8FF1B5018DE00898FF6 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC7D8FE1B5018DE00898FF6 /* iAd.framework */; };
@@ -1677,7 +1677,6 @@
 				DAC13BF31B3EF17E0013D479 /* AnimeCellList.xib in Resources */,
 				DAC077991B68698F0067DA90 /* default-avatar@2x.png in Resources */,
 				DA58C2E51B39C0080082B626 /* Browse.storyboard in Resources */,
-				DAC13C081B41DF0E0013D479 /* Onboarding.storyboard in Resources */,
 				DAC13C031B40569F0013D479 /* Settings.storyboard in Resources */,
 				DAC13C1A1B4228120013D479 /* Aller_It.ttf in Resources */,
 				DA27D19C1AF1BA9D00CC854E /* Season.storyboard in Resources */,
@@ -1685,6 +1684,7 @@
 				DAC13C181B4228120013D479 /* Aller_Bd.ttf in Resources */,
 				DAD67E061B7292D8000BB325 /* Resources.xcassets in Resources */,
 				DA41679B1B25F76F00847F56 /* FontAwesome.ttf in Resources */,
+				DA4595611B83C3500044013E /* Onboarding.storyboard in Resources */,
 				DAF6187A1B37825700286517 /* Library.storyboard in Resources */,
 				DAC13C1D1B4228120013D479 /* Aller_Rg.ttf in Resources */,
 				DAC13C1C1B4228120013D479 /* Aller_LtIt.ttf in Resources */,
@@ -1933,25 +1933,25 @@
 				DAE7A7191B2105FD00788614 /* AnimeCell.swift in Sources */,
 				DAC7D9031B50201C00898FF6 /* InAppController.swift in Sources */,
 				DAF6187C1B3784E300286517 /* ForumsViewController.swift in Sources */,
-				DAC13C2A1B424DEF0013D479 /* ResetPasswordViewController.swift in Sources */,
-				DAC13C171B4226E20013D479 /* OnboardingViewController.swift in Sources */,
 				DAC7D8FC1B5015FA00898FF6 /* InAppPurchaseViewController.swift in Sources */,
+				DA4595631B83C3500044013E /* SignInViewController.swift in Sources */,
 				DA52B1831B4838AE001CC1A9 /* CalendarViewController.swift in Sources */,
 				DA27D1991AF1BA9D00CC854E /* ParseWorker.swift in Sources */,
 				DA27D1971AF1BA9D00CC854E /* AppDelegate.swift in Sources */,
+				DA45955F1B83C2EB0044013E /* WorkflowController.swift in Sources */,
 				DAC7D9071B5046AF00898FF6 /* DialogController.swift in Sources */,
 				DAF618781B377D6000286517 /* AnimeListViewController.swift in Sources */,
 				DA8DD6431B3CAEC500B05FBF /* FilterViewController.swift in Sources */,
 				DA58C2E71B39C01B0082B626 /* BrowseViewController.swift in Sources */,
 				DAB83FC71B52FE200006AF96 /* ChartController.swift in Sources */,
-				DAC13C261B42495A0013D479 /* WorkflowController.swift in Sources */,
+				DA4595651B83C3500044013E /* ResetPasswordViewController.swift in Sources */,
 				DA52B1851B483F2A001CC1A9 /* DayViewController.swift in Sources */,
 				DAC13BF91B3EFC280013D479 /* LoadingCollectionCell.swift in Sources */,
+				DA4595621B83C3500044013E /* OnboardingViewController.swift in Sources */,
 				DAF357061B4593E200629A3D /* LibraryAnimeCell.swift in Sources */,
 				DA7C84C91B4379AA0036D119 /* UIViewController+Navigation.swift in Sources */,
-				DAC13C201B423ED90013D479 /* SignUpViewController.swift in Sources */,
-				DAA2C5581B66919300152FF9 /* SignInViewController.swift in Sources */,
 				DAA393291B42F21900A8D5D5 /* RootTabBar.swift in Sources */,
+				DA4595641B83C3500044013E /* SignUpViewController.swift in Sources */,
 				DAFBB0951B20EFF700495ED9 /* ChartViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

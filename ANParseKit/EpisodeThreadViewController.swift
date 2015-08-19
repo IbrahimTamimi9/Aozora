@@ -110,10 +110,12 @@ public class EpisodeThreadViewController: ThreadViewController {
     public override func replyToThreadPressed(sender: AnyObject) {
         super.replyToThreadPressed(sender)
         
-        if let thread = thread {
+        if let thread = thread where User.currentUserLoggedIn() {
             let comment = ANParseKit.commentViewController()
             comment.initWithThread(thread, postType: postType, delegate: self)
             presentViewController(comment, animated: true, completion: nil)
+        } else {
+            presentBasicAlertWithTitle("Login first", message: "Select 'Me' tab")
         }
     }
 }

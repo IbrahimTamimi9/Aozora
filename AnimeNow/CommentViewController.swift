@@ -139,6 +139,14 @@ public class CommentViewController: UIViewController {
     }
     
     func performPost() {
+        
+        let content = textView.text
+        // Validate post
+        if count(content) < 2 {
+            presentBasicAlertWithTitle("Too Short", message: "Message should be a 3 characters or longer")
+            return
+        }
+        
         self.sendButton.setTitle("Sending...", forState: .Normal)
         self.sendButton.backgroundColor = UIColor.watching()
         self.sendButton.userInteractionEnabled = false
@@ -146,7 +154,7 @@ public class CommentViewController: UIViewController {
         switch postType {
         case .Timeline:
             var timelinePost = TimelinePost()
-            timelinePost.content = textView.text
+            timelinePost.content = content
             timelinePost.edited = false
             if let selectedImageData = selectedImageData {
                 timelinePost.images = [selectedImageData]

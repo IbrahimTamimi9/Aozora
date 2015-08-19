@@ -16,6 +16,7 @@
 
 import Foundation
 import ANCommonKit
+import ANParseKit
 
 protocol SignInViewControllerDelegate: class {
     func signInViewControllerLoggedIn()
@@ -46,7 +47,7 @@ class SignInViewController: UIViewController {
         
         usernameTextField.trimSpaces()
         
-        PFUser.logInWithUsernameInBackground(usernameTextField.text, password:passwordTextField.text) {
+        User.logInWithUsernameInBackground(usernameTextField.text, password:passwordTextField.text) {
             (user: PFUser?, error: NSError?) -> Void in
             
             if let error = error {

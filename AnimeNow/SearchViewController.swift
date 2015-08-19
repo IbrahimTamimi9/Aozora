@@ -62,13 +62,11 @@ class SearchViewController: UIViewController {
             loadingView.startAnimating()
             collectionView.animateFadeOut()
         }
-        let innerQuery = AnimeProgress.query()!
-        innerQuery.fromLocalDatastore()
-
         
         let query = Anime.query()!
         query.limit = 20
         query.whereKey("title", matchesRegex: text, modifiers: "i")
+        query.orderByAscending("popularityRank")
         if searchLibrary {
             query.fromLocalDatastore()
         }

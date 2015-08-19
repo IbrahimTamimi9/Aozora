@@ -39,19 +39,30 @@ public class ProfileViewController: ThreadViewController {
     
     override public func viewDidLoad() {
         super.viewDidLoad()
-        userProfile = User.currentUser()!
+        
+        if userProfile == nil {
+            userProfile = User.currentUser()!
+        }
         updateViewWithUser(userProfile)
         fetchPosts()
-        fetchUserDetails()
+    }
+    
+    public override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if userProfile.details.isDataAvailable() {
+            updateFollowingButtons()
+        }
     }
     
     override func fetchPosts() {
         super.fetchPosts()
+        fetchUserDetails()
         fetchController.configureWith(self, queryDelegate: self, tableView: tableView, limit: FetchLimit, datasourceUsesSections: true)
     }
     
     func updateViewWithUser(user: User) {
-        usernameLabel.text = user.username
+        usernameLabel.text = user.aozoraUsername
         title = user.aozoraUsername
         if let avatarFile = user.avatarThumb {
             userAvatar.setImageWithPFFile(avatarFile)
@@ -60,8 +71,6 @@ public class ProfileViewController: ThreadViewController {
         if let bannerFile = user.banner {
             userBanner.setImageWithPFFile(bannerFile)
         }
-        followingButton.setTitle("\(user.followingCount) FOLLOWING", forState: .Normal)
-        followersButton.setTitle("\(user.followersCount) FOLLOWERS", forState: .Normal)
         
         if user == User.currentUser() {
             followButton.hidden = true
@@ -101,6 +110,7 @@ public class ProfileViewController: ThreadViewController {
                 self.userProfile = user
                 self.updateViewWithUser(user)
                 self.aboutLabel.text = user.details.about
+                self.updateFollowingButtons()
             }
         }
         
@@ -128,6 +138,10 @@ public class ProfileViewController: ThreadViewController {
         
     }
     
+    func updateFollowingButtons() {
+        self.followingButton.setTitle("\(userProfile.details.followingCount) FOLLOWING", forState: .Normal)
+        self.followersButton.setTitle("\(userProfile.details.followersCount) FOLLOWERS", forState: .Normal)
+    }
     
     // MARK: - IBAction
     
@@ -137,29 +151,32 @@ public class ProfileViewController: ThreadViewController {
     
     @IBAction func followOrUnfollow(sender: AnyObject) {
         
-        let thisProfileUser = self.userProfile
-        if let followingUser = followingUser, let currentUser = User.currentUser() where thisProfileUser != currentUser {
+        let thisProfileUser = userProfile
+        if let followingUser = followingUser, let currentUser = User.currentUser() where userProfile != currentUser {
 
             if !followingUser {
                 // Follow
                 self.followButton.setTitle("  Following", forState: .Normal)
                 let followingRelation = currentUser.following()
                 followingRelation.addObject(thisProfileUser)
-                thisProfileUser.incrementKey("followersCount", byAmount: 1)
-                currentUser.incrementKey("followingCount", byAmount: 1)
+                thisProfileUser.details.incrementKey("followersCount", byAmount: 1)
+                currentUser.details.incrementKey("followingCount", byAmount: 1)
+                thisProfileUser.details.saveEventually()
                 thisProfileUser.saveEventually()
                 currentUser.saveEventually()
                 PFCloud.callFunctionInBackground("sendFollowingPushNotification", withParameters: ["toUser":thisProfileUser.objectId!])
-                
+                updateFollowingButtons()
             } else {
                 // Unfollow
                 self.followButton.setTitle("  Follow", forState: .Normal)
                 let followingRelation = currentUser.following()
                 followingRelation.removeObject(thisProfileUser)
-                thisProfileUser.incrementKey("followersCount", byAmount: -1)
-                currentUser.incrementKey("followingCount", byAmount: -1)
+                thisProfileUser.details.incrementKey("followersCount", byAmount: -1)
+                currentUser.details.incrementKey("followingCount", byAmount: -1)
+                thisProfileUser.details.saveEventually()
                 thisProfileUser.saveEventually()
                 currentUser.saveEventually()
+                updateFollowingButtons()
             }
             
             self.followingUser = !followingUser
@@ -169,9 +186,13 @@ public class ProfileViewController: ThreadViewController {
     public override func replyToThreadPressed(sender: AnyObject) {
         super.replyToThreadPressed(sender)
         
-        let comment = ANParseKit.commentViewController()
-        comment.initWithTimelinePost(self, postedIn: userProfile)
-        presentViewController(comment, animated: true, completion: nil)
+        if User.currentUserLoggedIn() {
+            let comment = ANParseKit.commentViewController()
+            comment.initWithTimelinePost(self, postedIn: userProfile)
+            presentViewController(comment, animated: true, completion: nil)
+        } else {
+            presentBasicAlertWithTitle("Login first", message: "Select 'Me' tab")
+        }
     }
     
     @IBAction func showFollowingUsers(sender: AnyObject) {

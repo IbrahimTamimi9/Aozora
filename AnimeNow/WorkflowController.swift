@@ -88,37 +88,39 @@ class WorkflowController {
             storage.deleteCookie(cookie)
         }
         
-        // Removed saved data
+        // Remove saved data
+        let query3 = AnimeProgress.query()!
+        query3.limit = 10000
+        query3.fromLocalDatastore()
+        query3.findObjectsInBackgroundWithBlock { (result, error) -> Void in
+            PFObject.unpinAllInBackground(result)
+        }
+        
+        let query2 = Episode.query()!
+        query2.limit = 10000
+        query2.fromLocalDatastore()
+        query2.findObjectsInBackgroundWithBlock { (result, error) -> Void in
+            println(result?.count)
+            PFObject.unpinAllInBackground(result)
+        }
+        
         let query = Anime.query()!
+        query.limit = 10000
         query.fromLocalDatastore()
         query.findObjectsInBackgroundWithBlock { (result, error) -> Void in
             PFObject.unpinAllInBackground(result)
         }
         
-        let query2 = Episode.query()!
-        query2.fromLocalDatastore()
-        query2.findObjectsInBackgroundWithBlock { (result, error) -> Void in
-            PFObject.unpinAllInBackground(result)
-        }
+        // Logout MAL
+        User.logoutMyAnimeList()
         
         // Remove defaults
         NSUserDefaults.standardUserDefaults().removeObjectForKey(LibrarySyncController.LastSyncDateDefaultsKey)
-
-        // Logout MAL
-        User.removeCredentials()
-        
-        if let user = PFUser.currentUser() {
-            PFFacebookUtils.unlinkUserInBackground(user, block: { (succeeded, error) -> Void in
-                if succeeded {
-                    println("The user is no longer associated with their Facebook account.")
-                } else {
-                    println("Failed unlinking from Facebook!")
-                }
-            })
-        }
+        NSUserDefaults.standardUserDefaults().removeObjectForKey(RootTabBar.ShowedMyAnimeListLoginDefault)
+        NSUserDefaults.standardUserDefaults().synchronize()
         
         // Logout user
-        return PFUser.logOutInBackground()
+        return User.logOutInBackground()
 
     }
 }

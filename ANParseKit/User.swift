@@ -28,8 +28,6 @@ public class User: PFUser, PFSubclassing {
     @NSManaged public var myAnimeListUsername: String?
     @NSManaged public var anilistUsername: String
     @NSManaged public var details: UserDetails
-    @NSManaged public var followingCount: Int
-    @NSManaged public var followersCount: Int
     
     public func following() -> PFRelation {
         return self["following"] as! PFRelation
@@ -51,19 +49,18 @@ public class User: PFUser, PFSubclassing {
     
     public var myAnimeListPassword: String? {
         get {
-        return NSUserDefaults.standardUserDefaults().objectForKey("User.Password") as! String?
+        return NSUserDefaults.standardUserDefaults().objectForKey("MyAnimeList.Password") as! String?
         }
         set(object) {
-            NSUserDefaults.standardUserDefaults().setObject(object, forKey: "User.Password")
+            NSUserDefaults.standardUserDefaults().setObject(object, forKey: "MyAnimeList.Password")
             NSUserDefaults.standardUserDefaults().synchronize()
         }
     }
     
-    public class func removeCredentials() {
-        NSUserDefaults.standardUserDefaults().removeObjectForKey("User.Password")
+    public class func logoutMyAnimeList() {
+        NSUserDefaults.standardUserDefaults().removeObjectForKey("MyAnimeList.Password")
         NSUserDefaults.standardUserDefaults().synchronize()
     }
-    
     
     public class func syncingWithMyAnimeList() -> Bool {
         return User.currentUser()!.myAnimeListPassword != nil

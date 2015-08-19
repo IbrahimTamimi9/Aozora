@@ -28,6 +28,7 @@ class SignUpViewController: UIViewController {
     var loggedInWithFacebook = false
     var isInWindowRoot = true
     var userProfileManager = UserProfileManager()
+    var user: User?
     weak var delegate: SignUpViewControllerDelegate?
     
     override func viewDidLoad() {
@@ -59,9 +60,10 @@ class SignUpViewController: UIViewController {
         
         userProfileManager.createUser(self,
             username: usernameTextField.text,
-            password: passwordTextField.text,
+            password: loggedInWithFacebook ? nil : passwordTextField.text,
             email: emailTextField.text,
-            avatar: profilePicture.image)
+            avatar: profilePicture.image,
+            user: user ?? User())
             .continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
                 
                 self.view.endEditing(true)

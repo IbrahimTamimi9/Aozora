@@ -58,15 +58,19 @@ public class UserProfileManager: NSObject {
     public func createUser(
         viewController: UIViewController,
         username: String,
-        password: String,
+        password: String?,
         email: String,
-        avatar: UIImage?) -> BFTask {
+        avatar: UIImage?,
+        user: User) -> BFTask {
         
-        if !email.validEmail(viewController) ||
-            !password.validPassword(viewController) ||
-            !username.validUsername(viewController){
+            if !email.validEmail(viewController) ||
+                !username.validUsername(viewController){
+                    return BFTask(error: NSError())
+            }
+            
+            if let password = password where !password.validPassword(viewController) {
                 return BFTask(error: NSError())
-        }
+            }
         
         return username.usernameIsUnique().continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
             
@@ -74,16 +78,19 @@ public class UserProfileManager: NSObject {
                 let error = NSError(domain: "Aozora.App", code: 700, userInfo: ["error": "User exists, try another one"])
                 return BFTask(error: error)
             }
-            
-            let user = User()
 
+            let createdWithFacebook: Bool
+            
             // Fill user fields
             if user.username == nil {
+                createdWithFacebook = false
                 user.username = username
+                user.password = password
+            } else {
+                createdWithFacebook = true
             }
             
             user.aozoraUsername = username
-            user.password = password
             user.email = email
             user.avatarThumb = self.avatarThumbImageToPFFile(avatar)
 
@@ -102,7 +109,11 @@ public class UserProfileManager: NSObject {
             userDetails.watchedTime = 0.0
             user.details = userDetails
             
-            return user.signUpInBackground()
+            if createdWithFacebook {
+                return user.saveInBackground()
+            } else {
+                return user.signUpInBackground()
+            }
             
         }).continueWithExecutor(BFExecutor.mainThreadExecutor(), withBlock: { (task: BFTask!) -> AnyObject! in
             

@@ -136,8 +136,8 @@
                             <rect key="frame" x="180" y="5.5" width="240" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recent" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YcK-20-N7J">
-                                    <rect key="frame" x="93.5" y="8.5" width="54" height="17.5"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Forum" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YcK-20-N7J">
+                                    <rect key="frame" x="96" y="8.5" width="49.5" height="17.5"/>
                                     <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="17"/>
                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
@@ -149,7 +149,6 @@
                                 <constraint firstAttribute="centerX" secondItem="YcK-20-N7J" secondAttribute="centerX" id="wpH-Pd-9zu"/>
                             </constraints>
                         </view>
-                        <barButtonItem key="rightBarButtonItem" image="icon-search" id="h9F-Iu-5zN" userLabel="Search"/>
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="iTn-Ub-0hQ" id="sTU-Mk-WSz"/>
@@ -162,6 +161,5 @@
     </scenes>
     <resources>
         <image name="icon-forum-filled" width="25" height="25"/>
-        <image name="icon-search" width="22" height="22"/>
     </resources>
 </document>

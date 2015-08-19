@@ -31,6 +31,7 @@ class OnboardingViewController: UIViewController {
         } else if segue.identifier == "showSignUp" {
             let sign = segue.destinationViewController as! SignUpViewController
             sign.delegate = self
+            sign.user = sender as? User
             sign.isInWindowRoot = isInWindowRoot
             sign.loggedInWithFacebook = loggedInWithFacebook
         }
@@ -75,7 +76,7 @@ class OnboardingViewController: UIViewController {
                 self.loggedInWithFacebook = true
                 if user.isNew || user["aozoraUsername"] == nil {
                     println("User signed up and logged in through Facebook!")
-                    self.performSegueWithIdentifier("showSignUp", sender: nil)
+                    self.performSegueWithIdentifier("showSignUp", sender: user)
                 } else {
                     println("User logged in through Facebook!")
                     self.presentRootTabBar()
