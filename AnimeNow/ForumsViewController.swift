@@ -23,6 +23,7 @@ class ForumsViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
 
     var fetchController = FetchController()
+    var refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,12 +34,15 @@ class ForumsViewController: UIViewController {
         loadingView = LoaderView(parentView: view)
         loadingView.startAnimating()
         
+        addRefreshControl(refreshControl, action:"fetchThreads", forTableView: tableView)
+        
         fetchThreads()
     }
     
     func fetchThreads() {
         let query = Thread.query()!
         query.orderByDescending("updatedAt")
+        query.whereKey("replies", greaterThan: 0)
         fetchController.configureWith(self, query: query, tableView: tableView, limit: 100)
     }
     
@@ -82,6 +86,7 @@ extension ForumsViewController: UITableViewDelegate {
 
 extension ForumsViewController: FetchControllerDelegate {
     func didFetchFor(#skip: Int) {
-        self.loadingView.stopAnimating()
+        refreshControl.endRefreshing()
+        loadingView.stopAnimating()
     }
 }
