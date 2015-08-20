@@ -383,9 +383,11 @@ extension ThreadViewController: TTTAttributedLabelDelegate {
         if let host = url.host where host == "profile",
             let username = url.pathComponents?[1] as? String {
                 
-                let (navController, profileController) = ANParseKit.profileViewController()
-                profileController.initWithUsername(username)
-                presentViewController(navController, animated: true, completion: nil)
+                if username != User.currentUser()!.aozoraUsername {
+                    let (navController, profileController) = ANParseKit.profileViewController()
+                    profileController.initWithUsername(username)
+                    presentViewController(navController, animated: true, completion: nil)
+                }
             
         } else {
             let (navController, webController) = ANCommonKit.webViewController()

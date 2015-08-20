@@ -29,6 +29,7 @@ public class ProfileViewController: ThreadViewController {
     @IBOutlet weak var tagBadge: UILabel!
     @IBOutlet weak var proBottomLayoutConstraint: NSLayoutConstraint!
     @IBOutlet weak var settingsTrailingSpaceConstraint: NSLayoutConstraint!
+    @IBOutlet weak var tableBottomSpaceConstraint: NSLayoutConstraint!
     
     var userProfile: User?
     var username: String?
@@ -47,6 +48,8 @@ public class ProfileViewController: ThreadViewController {
         
         if userProfile == nil && username == nil {
             userProfile = User.currentUser()!
+        } else {
+            tableBottomSpaceConstraint.constant = 0
         }
         fetchPosts()
     }

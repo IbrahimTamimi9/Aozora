@@ -337,17 +337,11 @@
                         </subviews>
                         <color key="backgroundColor" red="0.97254902124404907" green="0.97254902124404907" blue="0.97254902124404907" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="sY9-wc-JPh" firstAttribute="top" secondItem="UR8-Cc-VZl" secondAttribute="bottom" id="TbU-Pw-bG4"/>
                             <constraint firstItem="xjQ-kx-jPV" firstAttribute="top" secondItem="sY9-wc-JPh" secondAttribute="bottom" constant="-49" id="W8c-aA-Ma7"/>
                             <constraint firstItem="sY9-wc-JPh" firstAttribute="top" secondItem="UR8-Cc-VZl" secondAttribute="bottom" constant="-64" id="c5q-Xd-5Ag"/>
                             <constraint firstAttribute="trailing" secondItem="sY9-wc-JPh" secondAttribute="trailing" id="ccb-uj-bGA"/>
                             <constraint firstItem="sY9-wc-JPh" firstAttribute="leading" secondItem="wrh-pK-qrQ" secondAttribute="leading" id="xFy-eM-Tgf"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="TbU-Pw-bG4"/>
-                            </mask>
-                        </variation>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Profile" id="R1g-ee-WQp">
@@ -374,6 +368,7 @@
                         <outlet property="proBottomLayoutConstraint" destination="VXK-cm-HSC" id="76g-JK-5hz"/>
                         <outlet property="settingsButton" destination="qK8-bI-U4V" id="2Td-7e-cr3"/>
                         <outlet property="settingsTrailingSpaceConstraint" destination="xdV-1E-4Rr" id="TYp-il-Lry"/>
+                        <outlet property="tableBottomSpaceConstraint" destination="W8c-aA-Ma7" id="pu0-IY-20R"/>
                         <outlet property="tableView" destination="sY9-wc-JPh" id="JcR-C5-OfD"/>
                         <outlet property="tagBadge" destination="MUA-4J-1Hx" id="BxP-Er-d2T"/>
                         <outlet property="userAvatar" destination="9bT-p7-f1f" id="pFe-1U-bQf"/>
