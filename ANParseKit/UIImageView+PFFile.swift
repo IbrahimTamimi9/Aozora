@@ -11,6 +11,8 @@ import Parse
 
 extension UIImageView {
     public func setImageWithPFFile(file: PFFile) {
-        self.setImageFrom(urlString: file.url!, animated: true)
+        if let url = file.url {
+            self.setImageFrom(urlString: url, animated: true)
+        }
     }
 }

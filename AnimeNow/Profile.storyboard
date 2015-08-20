@@ -175,8 +175,8 @@
                                             <color key="textColor" red="0.18823529779911041" green="0.19607843458652496" blue="0.23529411852359772" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hlo-ra-225">
-                                            <rect key="frame" x="492" y="125" width="100" height="30"/>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hlo-ra-225">
+                                            <rect key="frame" x="496" y="125" width="96" height="30"/>
                                             <color key="backgroundColor" red="0.89411765336990356" green="0.89411765336990356" blue="0.89411765336990356" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="30" id="JHY-iQ-FgS"/>
@@ -228,8 +228,8 @@
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                         </label>
-                                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LkT-EB-jxP">
-                                            <rect key="frame" x="404" y="125" width="80" height="30"/>
+                                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LkT-EB-jxP">
+                                            <rect key="frame" x="408" y="125" width="80" height="30"/>
                                             <color key="backgroundColor" red="0.89411765340000005" green="0.89411765340000005" blue="0.89411765340000005" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="30" id="SDe-xN-NS4"/>
@@ -249,7 +249,7 @@
                                                 <action selector="showLibrary:" destination="M5q-uq-HPK" eventType="touchUpInside" id="sHH-cj-tVD"/>
                                             </connections>
                                         </button>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TgH-QU-GT1" userLabel="AboutLabel">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="TgH-QU-GT1" userLabel="AboutLabel">
                                             <rect key="frame" x="12" y="199" width="580" height="0.0"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <color key="textColor" red="0.18823529410000001" green="0.1960784314" blue="0.23529411759999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -317,6 +317,7 @@
                                         <constraint firstItem="9bT-p7-f1f" firstAttribute="bottom" secondItem="i6N-oU-yq0" secondAttribute="bottom" constant="30" id="VXK-cm-HSC"/>
                                         <constraint firstItem="9bT-p7-f1f" firstAttribute="top" secondItem="nYJ-CX-2KS" secondAttribute="top" constant="100" id="Vqc-tQ-eH4"/>
                                         <constraint firstItem="asH-I6-fJz" firstAttribute="top" secondItem="nYJ-CX-2KS" secondAttribute="top" id="cZP-LE-HhC"/>
+                                        <constraint firstItem="5yX-hf-St0" firstAttribute="top" relation="greaterThanOrEqual" secondItem="TgH-QU-GT1" secondAttribute="bottom" id="dSz-cj-VGU"/>
                                         <constraint firstItem="i6N-oU-yq0" firstAttribute="leading" secondItem="9bT-p7-f1f" secondAttribute="trailing" constant="8" id="gA4-ec-c0v"/>
                                         <constraint firstItem="DZj-27-6Eb" firstAttribute="leading" secondItem="nYJ-CX-2KS" secondAttribute="leading" constant="12" id="j2M-Qa-ADz"/>
                                         <constraint firstItem="asH-I6-fJz" firstAttribute="leading" secondItem="nYJ-CX-2KS" secondAttribute="leading" id="k1Q-qI-V0u"/>
@@ -570,6 +571,7 @@
                         <outlet property="avatarImageView" destination="Tu6-A8-DD9" id="ecY-Bd-mYu"/>
                         <outlet property="bannerImageView" destination="cWR-03-ZLB" id="sCm-0j-9xo"/>
                         <outlet property="emailTextField" destination="sKP-1U-sp1" id="fcG-yW-t8r"/>
+                        <outlet property="saveBBI" destination="Q3u-RM-dyH" id="7Mz-iT-0La"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oeM-2A-pMN" userLabel="First Responder" sceneMemberID="firstResponder"/>

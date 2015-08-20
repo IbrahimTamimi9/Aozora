@@ -30,35 +30,80 @@ public class ProfileViewController: ThreadViewController {
     @IBOutlet weak var proBottomLayoutConstraint: NSLayoutConstraint!
     @IBOutlet weak var settingsTrailingSpaceConstraint: NSLayoutConstraint!
     
-    var userProfile: User!
+    var userProfile: User?
+    var username: String?
     var followingUser: Bool?
     
     public func initWithUser(user: User) {
         self.userProfile = user
     }
     
+    public func initWithUsername(username: String) {
+        self.username = username
+    }
+    
     override public func viewDidLoad() {
         super.viewDidLoad()
         
-        if userProfile == nil {
+        if userProfile == nil && username == nil {
             userProfile = User.currentUser()!
         }
-        updateViewWithUser(userProfile)
         fetchPosts()
     }
     
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        if userProfile.details.isDataAvailable() {
+        if let profile = userProfile where profile.details.isDataAvailable() {
             updateFollowingButtons()
         }
     }
+
+    // MARK: - Fetching
     
     override func fetchPosts() {
         super.fetchPosts()
-        fetchUserDetails()
-        fetchController.configureWith(self, queryDelegate: self, tableView: tableView, limit: FetchLimit, datasourceUsesSections: true)
+        let username = self.username ?? userProfile!.aozoraUsername
+        fetchUserDetails(username)
+    }
+    
+    func fetchUserDetails(username: String) {
+        
+        let query = User.query()!
+        query.whereKey("aozoraUsername", equalTo: username)
+        query.includeKey("details")
+        query.findObjectsInBackgroundWithBlock { (result, error) -> Void in
+            if let user = result?.last as? User {
+                self.userProfile = user
+                self.updateViewWithUser(user)
+                self.aboutLabel.text = user.details.about
+                self.updateFollowingButtons()
+                self.fetchController.configureWith(self, queryDelegate: self, tableView: self.tableView, limit: self.FetchLimit, datasourceUsesSections: true)
+            }
+        }
+        
+        if User.currentUser() != userProfile {
+            
+            let relationQuery = User.currentUser()!.following().query()!
+            relationQuery.whereKey("aozoraUsername", equalTo: username)
+            relationQuery.findObjectsInBackgroundWithBlock { (result, error) -> Void in
+                if let user = result?.last as? User {
+                    // Following this user
+                    self.followButton.setTitle("  Following", forState: .Normal)
+                    self.followButton.layoutIfNeeded()
+                    self.followingUser = true
+                } else if let error = error {
+                    // TODO: Show error
+                    
+                } else {
+                    // NOT following this user
+                    self.followButton.setTitle("  Follow", forState: .Normal)
+                    self.followButton.layoutIfNeeded()
+                    self.followingUser = false
+                }
+            }
+        }
+        
     }
     
     func updateViewWithUser(user: User) {
@@ -98,49 +143,11 @@ public class ProfileViewController: ThreadViewController {
         }
     }
     
-    // MARK: - Fetching
-    
-    func fetchUserDetails() {
-        
-        let query = User.query()!
-        query.whereKey("objectId", equalTo: userProfile.objectId!)
-        query.includeKey("details")
-        query.findObjectsInBackgroundWithBlock { (result, error) -> Void in
-            if let user = result?.last as? User {
-                self.userProfile = user
-                self.updateViewWithUser(user)
-                self.aboutLabel.text = user.details.about
-                self.updateFollowingButtons()
-            }
-        }
-        
-        if User.currentUser() != userProfile {
-            
-            let relationQuery = User.currentUser()!.following().query()!
-            relationQuery.whereKey("objectId", equalTo: userProfile.objectId!)
-            relationQuery.findObjectsInBackgroundWithBlock { (result, error) -> Void in
-                if let user = result?.last as? User {
-                    // Following this user
-                    self.followButton.setTitle("  Following", forState: .Normal)
-                    self.followButton.layoutIfNeeded()
-                    self.followingUser = true
-                } else if let error = error {
-                    // TODO: Show error
-                    
-                } else {
-                    // NOT following this user
-                    self.followButton.setTitle("  Follow", forState: .Normal)
-                    self.followButton.layoutIfNeeded()
-                    self.followingUser = false
-                }
-            }
-        }
-        
-    }
-    
     func updateFollowingButtons() {
-        self.followingButton.setTitle("\(userProfile.details.followingCount) FOLLOWING", forState: .Normal)
-        self.followersButton.setTitle("\(userProfile.details.followersCount) FOLLOWERS", forState: .Normal)
+        if let profile = userProfile {
+            self.followingButton.setTitle("\(profile.details.followingCount) FOLLOWING", forState: .Normal)
+            self.followersButton.setTitle("\(profile.details.followersCount) FOLLOWERS", forState: .Normal)
+        }
     }
     
     // MARK: - IBAction
@@ -151,44 +158,45 @@ public class ProfileViewController: ThreadViewController {
     
     @IBAction func followOrUnfollow(sender: AnyObject) {
         
-        let thisProfileUser = userProfile
-        if let followingUser = followingUser, let currentUser = User.currentUser() where userProfile != currentUser {
-
-            if !followingUser {
-                // Follow
-                self.followButton.setTitle("  Following", forState: .Normal)
-                let followingRelation = currentUser.following()
-                followingRelation.addObject(thisProfileUser)
-                thisProfileUser.details.incrementKey("followersCount", byAmount: 1)
-                currentUser.details.incrementKey("followingCount", byAmount: 1)
-                thisProfileUser.details.saveEventually()
-                thisProfileUser.saveEventually()
-                currentUser.saveEventually()
-                PFCloud.callFunctionInBackground("sendFollowingPushNotification", withParameters: ["toUser":thisProfileUser.objectId!])
-                updateFollowingButtons()
-            } else {
-                // Unfollow
-                self.followButton.setTitle("  Follow", forState: .Normal)
-                let followingRelation = currentUser.following()
-                followingRelation.removeObject(thisProfileUser)
-                thisProfileUser.details.incrementKey("followersCount", byAmount: -1)
-                currentUser.details.incrementKey("followingCount", byAmount: -1)
-                thisProfileUser.details.saveEventually()
-                thisProfileUser.saveEventually()
-                currentUser.saveEventually()
-                updateFollowingButtons()
+        if let thisProfileUser = userProfile {
+            if let followingUser = followingUser, let currentUser = User.currentUser() where userProfile != currentUser {
+                
+                if !followingUser {
+                    // Follow
+                    self.followButton.setTitle("  Following", forState: .Normal)
+                    let followingRelation = currentUser.following()
+                    followingRelation.addObject(thisProfileUser)
+                    thisProfileUser.details.incrementKey("followersCount", byAmount: 1)
+                    currentUser.details.incrementKey("followingCount", byAmount: 1)
+                    thisProfileUser.details.saveEventually()
+                    thisProfileUser.saveEventually()
+                    currentUser.saveEventually()
+                    PFCloud.callFunctionInBackground("sendFollowingPushNotification", withParameters: ["toUser":thisProfileUser.objectId!])
+                    updateFollowingButtons()
+                } else {
+                    // Unfollow
+                    self.followButton.setTitle("  Follow", forState: .Normal)
+                    let followingRelation = currentUser.following()
+                    followingRelation.removeObject(thisProfileUser)
+                    thisProfileUser.details.incrementKey("followersCount", byAmount: -1)
+                    currentUser.details.incrementKey("followingCount", byAmount: -1)
+                    thisProfileUser.details.saveEventually()
+                    thisProfileUser.saveEventually()
+                    currentUser.saveEventually()
+                    updateFollowingButtons()
+                }
+                
+                self.followingUser = !followingUser
             }
-            
-            self.followingUser = !followingUser
         }
     }
     
     public override func replyToThreadPressed(sender: AnyObject) {
         super.replyToThreadPressed(sender)
         
-        if User.currentUserLoggedIn() {
+        if let profile = userProfile where User.currentUserLoggedIn() {
             let comment = ANParseKit.commentViewController()
-            comment.initWithTimelinePost(self, postedIn: userProfile)
+            comment.initWithTimelinePost(self, postedIn: profile)
             presentViewController(comment, animated: true, completion: nil)
         } else {
             presentBasicAlertWithTitle("Login first", message: "Select 'Me' tab")
@@ -197,7 +205,7 @@ public class ProfileViewController: ThreadViewController {
     
     @IBAction func showFollowingUsers(sender: AnyObject) {
         let userListController = UIStoryboard(name: "Profile", bundle: ANParseKit.bundle()).instantiateViewControllerWithIdentifier("UserList") as! UserListViewController
-        let query = userProfile.following().query()!
+        let query = userProfile!.following().query()!
         userListController.initWithQuery(query, title: "Following")
         navigationController?.pushViewController(userListController, animated: true)
     }
@@ -205,7 +213,7 @@ public class ProfileViewController: ThreadViewController {
     @IBAction func showFollowers(sender: AnyObject) {
         let userListController = UIStoryboard(name: "Profile", bundle: ANParseKit.bundle()).instantiateViewControllerWithIdentifier("UserList") as! UserListViewController
         let query = User.query()!
-        query.whereKey("following", equalTo: userProfile)
+        query.whereKey("following", equalTo: userProfile!)
         userListController.initWithQuery(query, title: "Followers")
         navigationController?.pushViewController(userListController, animated: true)
     }
@@ -231,8 +239,9 @@ public class ProfileViewController: ThreadViewController {
 
 extension ProfileViewController: EditProfileViewControllerProtocol {
     
-    func editProfileViewControllerDidEditedUser() {
-        fetchUserDetails()
+    func editProfileViewControllerDidEditedUser(user: User) {
+        userProfile = user
+        fetchUserDetails(user.aozoraUsername)
     }
 }
 
@@ -242,7 +251,7 @@ extension ProfileViewController: FetchControllerQueryDelegate {
         let query = TimelinePost.query()!
         query.skip = skip
         query.limit = FetchLimit
-        query.whereKey("userTimeline", equalTo: userProfile)
+        query.whereKey("userTimeline", equalTo: userProfile!)
         query.whereKey("replyLevel", equalTo: 0)
         query.orderByDescending("createdAt")
         query.includeKey("episode")
@@ -252,7 +261,7 @@ extension ProfileViewController: FetchControllerQueryDelegate {
         let innerQuery = TimelinePost.query()!
         innerQuery.skip = skip
         innerQuery.limit = FetchLimit
-        innerQuery.whereKey("userTimeline", equalTo: userProfile)
+        innerQuery.whereKey("userTimeline", equalTo: userProfile!)
         innerQuery.whereKey("replyLevel", equalTo: 0)
         innerQuery.orderByDescending("createdAt")
         

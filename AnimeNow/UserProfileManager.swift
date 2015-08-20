@@ -211,6 +211,10 @@ extension UserProfileManager: UIImagePickerControllerDelegate, UINavigationContr
             }
         })
     }
+    
+    public func navigationController(navigationController: UINavigationController, willShowViewController viewController: UIViewController, animated: Bool) {
+        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: false)
+    }
 }
 
 extension UserProfileManager: RSKImageCropViewControllerDelegate {

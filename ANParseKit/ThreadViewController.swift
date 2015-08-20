@@ -76,8 +76,7 @@ public class ThreadViewController: UIViewController {
     // MARK: - Internal functions
     func openProfile(user: User) {
         if user != User.currentUser() {
-            let navController = UIStoryboard(name: "Profile", bundle: ANParseKit.bundle()).instantiateInitialViewController() as! UINavigationController
-            let profileController = navController.viewControllers.first as! ProfileViewController
+            let (navController, profileController) = ANParseKit.profileViewController()
             profileController.initWithUser(user)
             presentViewController(navController, animated: true, completion: nil)
         }
@@ -381,9 +380,20 @@ extension ThreadViewController: TTTAttributedLabelDelegate {
     
     public func attributedLabel(label: TTTAttributedLabel!, didSelectLinkWithURL url: NSURL!) {
         
-        let (navController, webController) = ANCommonKit.webViewController()
-        webController.initWithTitle(url.absoluteString!, initialUrl: url)
-        presentViewController(navController, animated: true, completion: nil)
+        if let host = url.host where host == "profile",
+            let username = url.pathComponents?[1] as? String {
+                
+                let (navController, profileController) = ANParseKit.profileViewController()
+                profileController.initWithUsername(username)
+                presentViewController(navController, animated: true, completion: nil)
+            
+        } else {
+            let (navController, webController) = ANCommonKit.webViewController()
+            webController.initWithTitle(url.absoluteString!, initialUrl: url)
+            presentViewController(navController, animated: true, completion: nil)
+        }
+        
+        
     }
 }
 

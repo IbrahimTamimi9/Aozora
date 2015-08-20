@@ -10,7 +10,7 @@ import Foundation
 import Bolts
 
 protocol EditProfileViewControllerProtocol: class {
-    func editProfileViewControllerDidEditedUser()
+    func editProfileViewControllerDidEditedUser(user: User)
 }
 
 public class EditProfileViewController: UIViewController {
@@ -20,6 +20,8 @@ public class EditProfileViewController: UIViewController {
     
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var aboutTextView: UITextView!
+    
+    @IBOutlet weak var saveBBI: UIBarButtonItem!
     
     weak var delegate: EditProfileViewControllerProtocol?
     var user = User.currentUser()!
@@ -60,6 +62,7 @@ public class EditProfileViewController: UIViewController {
     }
     
     @IBAction func saveUser(sender: AnyObject) {
+        saveBBI.enabled = false
         userProfileManager.updateUser(
             self,
             user: user,
@@ -67,8 +70,11 @@ public class EditProfileViewController: UIViewController {
             avatar: updatedAvatar ? avatarImageView.image : nil,
             banner: updatedBanner ? bannerImageView.image : nil,
             about: aboutTextView.text).continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
-                self.delegate?.editProfileViewControllerDidEditedUser()
+                self.delegate?.editProfileViewControllerDidEditedUser(self.user)
                 self.dismissViewControllerAnimated(true, completion: nil)
+                return nil
+            }.continueWithBlock { (task: BFTask!) -> AnyObject! in
+                self.saveBBI.enabled = true
                 return nil
         }
     }
