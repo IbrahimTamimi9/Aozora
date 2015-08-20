@@ -24,7 +24,7 @@ public enum MALList: String {
     case OnHold = "on-hold"
 }
 
-public struct MALProgress {
+public struct MALProgress: Hashable {
     public var myAnimeListID: Int
     public var status: String
     public var episodes: Int
@@ -41,6 +41,16 @@ public struct MALProgress {
     func toDictionary() -> [String: AnyObject] {
         return ["anime_id": myAnimeListID, "status": status, "episodes": episodes, "score": score]
     }
+    
+    public var hashValue: Int {
+        get {
+            return myAnimeListID
+        }
+    }
+}
+
+public func ==(lhs: MALProgress, rhs: MALProgress) -> Bool {
+    return lhs.myAnimeListID == rhs.myAnimeListID
 }
 
 public struct Atarashii {

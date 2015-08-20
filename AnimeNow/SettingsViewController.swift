@@ -22,13 +22,17 @@ class SettingsViewController: UITableViewController {
     let TwitterPageURL = "http://www.twitter.com/AozoraApp";
     
     @IBOutlet weak var loginLabel: UILabel!
+    @IBOutlet weak var linkWithMyAnimeListLabel: UILabel!
     @IBOutlet weak var facebookLikeButton: FBSDKLikeButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         facebookLikeButton.objectID = "https://www.facebook.com/AozoraApp"
-        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         updateLoginButton()
     }
     
@@ -39,6 +43,12 @@ class SettingsViewController: UITableViewController {
         } else if User.currentUserIsGuest() {
             // User is guest
             loginLabel.text = "Login Aozora"
+        }
+        
+        if User.syncingWithMyAnimeList() {
+            linkWithMyAnimeListLabel.text = "Unlink MyAnimeList"
+        } else {
+            linkWithMyAnimeListLabel.text = "Sync with MyAnimeList"
         }
 
     }
@@ -59,23 +69,49 @@ class SettingsViewController: UITableViewController {
             // Login / Logout
             if User.currentUserLoggedIn() {
                 // Logged In both, logout
-                WorkflowController.logoutUser().continueWithExecutor( BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
+                var alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+                alert.addAction(UIAlertAction(title: "Logout Aozora", style: UIAlertActionStyle.Destructive, handler: { (action) -> Void in
                     
-                    if let error = task.error {
-                        println("failed loggin out: \(error)")
-                    } else {
-                        println("logout succeeded")
-                    }
-                    WorkflowController.presentOnboardingController(true)
-                    return nil
-                })
+                    WorkflowController.logoutUser().continueWithExecutor( BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
+                        
+                        if let error = task.error {
+                            println("failed loggin out: \(error)")
+                        } else {
+                            println("logout succeeded")
+                        }
+                        WorkflowController.presentOnboardingController(true)
+                        return nil
+                    })
+                }))
+                alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: { (action) -> Void in
+                }))
                 
+                self.presentViewController(alert, animated: true, completion: nil)
                 
             } else if User.currentUserIsGuest() {
                 // User is guest, login
                 WorkflowController.presentOnboardingController(true)
             }
         case (0,1):
+            // Sync with MyAnimeList
+            if User.syncingWithMyAnimeList() {
+                var alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+                alert.addAction(UIAlertAction(title: "Stop syncing with MyAnimeList", style: UIAlertActionStyle.Destructive, handler: { (action) -> Void in
+                    
+                    User.logoutMyAnimeList()
+                    self.updateLoginButton()
+                }))
+                alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: { (action) -> Void in
+                }))
+                
+                self.presentViewController(alert, animated: true, completion: nil)
+            } else {
+                
+                let loginController = ANParseKit.loginViewController()
+                presentViewController(loginController, animated: true, completion: nil)
+            }
+            
+        case (0,2):
             // Select initial tab
             var alert = UIAlertController(title: "Select Initial Tab", message: "This tab will load when application starts", preferredStyle: UIAlertControllerStyle.Alert)
             alert.addAction(UIAlertAction(title: "Season", style: UIAlertActionStyle.Default, handler: { (action) -> Void in

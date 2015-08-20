@@ -198,7 +198,7 @@ public class LibrarySyncController {
             
             
             var myAnimeListLibrary: [MALProgress] = []
-            var updatedMyAnimeListLibrary: [MALProgress] = []
+            var updatedMyAnimeListLibrary = Set<MALProgress>()
             var task = BFTask(result: nil)
             
             // 1. For each source fetch all library
@@ -257,7 +257,7 @@ public class LibrarySyncController {
                                 // On MAL
                                 malProgress.syncState = .Updated
                                 malProgress.episodes = progress.watchedEpisodes
-                                updatedMyAnimeListLibrary.append(malProgress)
+                                updatedMyAnimeListLibrary.insert(malProgress)
                             }
                             
                             // Update Score
@@ -270,7 +270,7 @@ public class LibrarySyncController {
                                     println("updated score on mal \(progress.anime.title!)")
                                     malProgress.score = progress.score
                                     malProgress.syncState = .Updated
-                                    updatedMyAnimeListLibrary.append(malProgress)
+                                    updatedMyAnimeListLibrary.insert(malProgress)
                                 }
                             }
                             
@@ -317,7 +317,7 @@ public class LibrarySyncController {
                                     println("updated list on mal \(progress.anime.title!)")
                                     malProgress.status = status.rawValue
                                     malProgress.syncState = .Updated
-                                    updatedMyAnimeListLibrary.append(malProgress)
+                                    updatedMyAnimeListLibrary.insert(malProgress)
                                 }
                                 
                                 if let aozoraList = aozoraList {
@@ -336,7 +336,7 @@ public class LibrarySyncController {
                                 episodes: progress.watchedEpisodes,
                                 score: progress.score)
                             malProgress.syncState = .Created
-                            updatedMyAnimeListLibrary.append(malProgress)
+                            updatedMyAnimeListLibrary.insert(malProgress)
                         }
                     }
                     

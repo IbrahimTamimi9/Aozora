@@ -53,4 +53,10 @@ public class ANParseKit {
         return controller
         
     }
+    
+    public class func loginViewController() -> LoginViewController {
+        let storyboard = UIStoryboard(name: "Login", bundle: ANParseKit.bundle())
+        let loginController = storyboard.instantiateInitialViewController() as! LoginViewController
+        return loginController
+    }
 }
