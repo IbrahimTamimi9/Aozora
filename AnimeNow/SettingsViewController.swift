@@ -109,6 +109,9 @@ class SettingsViewController: UITableViewController {
                 
                 let loginController = ANParseKit.loginViewController()
                 presentViewController(loginController, animated: true, completion: nil)
+                
+                NSUserDefaults.standardUserDefaults().setBool(true, forKey: RootTabBar.ShowedMyAnimeListLoginDefault)
+                NSUserDefaults.standardUserDefaults().synchronize()
             }
             
         case (0,2):
