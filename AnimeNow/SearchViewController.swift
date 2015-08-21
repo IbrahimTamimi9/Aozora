@@ -17,10 +17,15 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var collectionView: UICollectionView!
     
+    enum SearchScope: Int {
+        case AllAnime = 0
+        case MyLibrary
+        case Users
+    }
+    
     var loadingView: LoaderView!
     var animator: ZFModalTransitionAnimator!
-    var searchLibrary = false
-    var dataSource: [Anime] = [] {
+    var dataSource: [PFObject] = [] {
         didSet {
             collectionView.reloadData()
         }
@@ -38,7 +43,7 @@ class SearchViewController: UIViewController {
         
         loadingView = LoaderView(parentView: view)
         
-        searchBar.placeholder = searchLibrary ? "Search your library" : "Search all anime"
+        searchBar.placeholder = "Enter your search"
         searchBar.becomeFirstResponder()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateETACells", name: LibraryUpdatedNotification, object: nil)
@@ -58,17 +63,26 @@ class SearchViewController: UIViewController {
     
         currentCancellationToken = cancellationToken
         
-        if !searchLibrary {
+        if searchBar.selectedScopeButtonIndex != SearchScope.MyLibrary.rawValue {
             loadingView.startAnimating()
             collectionView.animateFadeOut()
         }
         
-        let query = Anime.query()!
-        query.limit = 20
-        query.whereKey("title", matchesRegex: text, modifiers: "i")
-        query.orderByAscending("popularityRank")
-        if searchLibrary {
-            query.fromLocalDatastore()
+        var query: PFQuery!
+        
+        if searchBar.selectedScopeButtonIndex != SearchScope.Users.rawValue {
+            query = Anime.query()!
+            query.limit = 20
+            query.whereKey("title", matchesRegex: text, modifiers: "i")
+            query.orderByAscending("popularityRank")
+            if searchBar.selectedScopeButtonIndex == SearchScope.MyLibrary.rawValue {
+                query.fromLocalDatastore()
+            }
+        } else {
+            query = User.query()!
+            query.limit = 20
+            query.whereKey("aozoraUsername", matchesRegex: text, modifiers: "i")
+            query.orderByAscending("aozoraUsername")
         }
         
         query.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
@@ -76,7 +90,7 @@ class SearchViewController: UIViewController {
                 
                 LibrarySyncController.matchAnimeWithProgress(anime)
                 .continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
-                    if self.searchLibrary {
+                    if self.searchBar.selectedScopeButtonIndex == SearchScope.MyLibrary.rawValue {
                         let animeWithProgress = anime.filter({ $0.progress != nil })
                         self.dataSource = animeWithProgress
                     } else {
@@ -85,9 +99,11 @@ class SearchViewController: UIViewController {
                     
                     return nil
                 })
+            } else if let users = result as? [User] where !cancellationToken.cancelled && result != nil {
+                self.dataSource = users
             }
             
-            if !self.searchLibrary {
+            if self.searchBar.selectedScopeButtonIndex != SearchScope.MyLibrary.rawValue {
                 self.loadingView.stopAnimating()
                 self.collectionView.animateFadeIn()
             }
@@ -103,21 +119,53 @@ extension SearchViewController: UICollectionViewDataSource {
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("AnimeCell", forIndexPath: indexPath) as! AnimeCell
         
-        let anime = dataSource[indexPath.row]
+        let object = dataSource[indexPath.row]
+        if let anime = object as? Anime {
+            
+            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("AnimeCell", forIndexPath: indexPath) as! AnimeCell
+            cell.configureWithAnime(anime)
+            return cell
+            
+        } else if let profile = object as? User {
+
+            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("UserCell", forIndexPath: indexPath) as! BasicCollectionCell
+            if let avatarFile = profile.avatarThumb {
+                cell.titleimageView.setImageWithPFFile(avatarFile)
+            }
+            cell.titleLabel.text = profile.aozoraUsername
+            cell.layoutIfNeeded()
+            return cell
+        }
         
-        cell.configureWithAnime(anime)
-        
-        return cell
+        return UICollectionViewCell()
     }
 }
 
 extension SearchViewController: UICollectionViewDelegate {
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
-        let anime = dataSource[indexPath.row]
-        self.animator = presentAnimeModal(anime)
+        let object = dataSource[indexPath.row]
+        if let anime = object as? Anime {
+            self.animator = presentAnimeModal(anime)
+        } else if let user = object as? User {
+            let (navController, profileController) = ANParseKit.profileViewController()
+            profileController.initWithUser(user)
+            presentViewController(navController, animated: true, completion: nil)
+        }
+    }
+}
+
+extension SearchViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        let object = dataSource[indexPath.row]
+        if let anime = object as? Anime {
+            return CGSize(width: view.bounds.size.width, height: 132)
+        } else if let user = object as? User {
+            return CGSize(width: view.bounds.size.width, height: 44)
+        }
+        return CGSizeZero
     }
 }
 
@@ -134,7 +182,7 @@ extension SearchViewController: UISearchBarDelegate {
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchLibrary {
+        if searchBar.selectedScopeButtonIndex == SearchScope.MyLibrary.rawValue {
             fetchAnimeWithQuery(searchBar.text, cancellationToken: NSOperation())
         }
     }
