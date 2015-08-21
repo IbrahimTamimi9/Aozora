@@ -13,6 +13,7 @@ import ANParseKit
 import XCDYouTubeKit
 import FBSDKShareKit
 import Bolts
+import Parse
 
 enum AnimeSection: Int {
     case Synopsis = 0
@@ -354,6 +355,13 @@ public class AnimeInformationViewController: AnimeBaseViewController {
                 }
             }))
         }
+        
+        alert.addAction(UIAlertAction(title: "Refresh Images", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
+            PFCloud.callFunctionInBackground("updateAnimeInformation", withParameters: ["malID":self.anime.myAnimeListID], block: { (result, error) -> Void in
+                self.presentBasicAlertWithTitle("Refreshing..", message: "Data will be refreshed soon")
+                println("Refreshed!!")
+            })
+        }))
         
         alert.addAction(UIAlertAction(title: "Send on Messenger", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
             
