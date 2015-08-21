@@ -1449,6 +1449,7 @@
 				486B3A44FD9EDE1C42C15E83 /* Copy Pods Resources */,
 				DA6E12CA1B10D94200B278B0 /* Embed Frameworks */,
 				DA2D1EF21B53F438009A5CCD /* ShellScript */,
+				DA4595A51B85A9750044013E /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1888,6 +1889,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "./Fabric.framework/run d31dc9725e0dde61e63174070b36bfe313c8488d 671d3ff283bb351de6609a065fef69fae3e7e01aaab4f8385b76a4147b609137";
+		};
+		DA4595A51B85A9750044013E /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "# xcode-build-bump.sh\n# @desc Auto-increment the build number every time the project is run.\n# @usage\n# 1. Select: your Target in Xcode\n# 2. Select: Build Phases Tab\n# 3. Select: Add Build Phase -> Add Run Script\n# 4. Paste code below in to new \"Run Script\" section\n# 5. Drag the \"Run Script\" below \"Link Binaries With Libraries\"\n# 6. Insure that your starting build number is set to a whole integer and not a float (e.g. 1, not 1.0)\n\n\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${INFOPLIST_FILE}\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${INFOPLIST_FILE}\"";
+			showEnvVarsInLog = 0;
 		};
 		F974CF5C7B84ED5E81EB0F2C /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2332,7 +2347,7 @@
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D DEBUG \"-D\" \"COCOAPODS\"";
 				PRODUCT_NAME = Aozora;
-				PROVISIONING_PROFILE = "97d93c39-509c-4a94-aa8c-6b8ae7ae090b";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "AnimeNow/AnimeNow-Bridging-Header.h";
 			};
 			name = Debug;

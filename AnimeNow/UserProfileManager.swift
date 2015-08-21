@@ -65,11 +65,11 @@ public class UserProfileManager: NSObject {
         
             if !email.validEmail(viewController) ||
                 !username.validUsername(viewController){
-                    return BFTask(error: NSError())
+                    return BFTask(error: NSError(domain: "", code: 0, userInfo: nil))
             }
             
             if let password = password where !password.validPassword(viewController) {
-                return BFTask(error: NSError())
+                return BFTask(error: NSError(domain: "", code: 0, userInfo: nil))
             }
         
         return username.usernameIsUnique().continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
@@ -120,7 +120,7 @@ public class UserProfileManager: NSObject {
             if let error = task.error {
                 let errorMessage = error.userInfo?["error"] as! String
                 viewController.presentBasicAlertWithTitle("Error", message: errorMessage)
-                return BFTask(error: NSError())
+                return BFTask(error: NSError(domain: "", code: 0, userInfo: nil))
             } else {
                 return nil
             }
@@ -139,11 +139,12 @@ public class UserProfileManager: NSObject {
     ) -> BFTask {
         
         if let email = email where !email.validEmail(viewController) {
-            return BFTask(error: NSError())
+            return BFTask(error: NSError(domain: "", code: 0, userInfo: nil))
         }
         
         if let avatar = avatar {
-            self.avatarThumbImageToPFFile(avatar)
+            user.avatarThumb = self.avatarThumbImageToPFFile(avatar)
+            user.details.avatarRegular = self.avatarRegularImageToPFFile(avatar)
         }
         
         if let email = email {

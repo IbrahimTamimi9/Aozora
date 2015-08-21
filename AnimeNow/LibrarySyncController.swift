@@ -13,6 +13,7 @@ import Bolts
 import Alamofire
 
 public let LibraryUpdatedNotification = "LibraryUpdatedNotification"
+public let LibraryCreatedNotification = "LibraryCreatedNotification"
 
 public class LibrarySyncController {
     
@@ -165,8 +166,13 @@ public class LibrarySyncController {
                 // TODO: Support more than 1000 anime in library
                 
                 if let animeProgress = task.result as? AnimeProgress {
-                    query.whereKey("updatedAt", greaterThan: animeProgress.updatedAt!)
-                    return query.findObjectsInBackground()
+                    if let updatedAt = animeProgress.updatedAt {
+                        query.whereKey("updatedAt", greaterThan: updatedAt)
+                        return query.findObjectsInBackground()
+                    } else {
+                        // Most likely syncing, do nothing
+                        return BFTask(error: NSError(domain: "", code: 0, userInfo: nil))
+                    }
                 } else if task.result == nil && task.error == nil {
                     return query.findObjectsInBackground()
                 } else {
@@ -203,12 +209,14 @@ public class LibrarySyncController {
             
             // 1. For each source fetch all library
             if User.syncingWithMyAnimeList() {
+                println("Syncing with mal, continuing..")
                 task = task.continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
                    return self.fetchMyAnimeListLibrary()
                 }).continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
                     
                     // 2. Save library in array
                     if let result = task.result["anime"] as? [[String: AnyObject]] {
+                        println("MAL Library count \(result.count)")
                         for data in result {
                             let myAnimeListID = data["id"] as! Int
                             let status = data["watched_status"] as! String
@@ -220,13 +228,17 @@ public class LibrarySyncController {
                     }
                     return nil
                 })
+            } else {
+                println("Not syncing with mal, continuing..")
             }
             
-            task = task.continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
+            var allProgress: [AnimeProgress] = []
+            
+            task = task.continueWithBlock({ (task: BFTask!) -> AnyObject! in
                 
                 return self.syncAnimeProgressInformation()
                 
-            }).continueWithBlock({ (task: BFTask!) -> AnyObject! in
+            }).continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
                 
                 let query = AnimeProgress.query()!
                 query.fromLocalDatastore()
@@ -238,6 +250,7 @@ public class LibrarySyncController {
                 
                 // 3. Merge all existing libraries
                 let parseLibrary = task.result as! [AnimeProgress]
+                allProgress += parseLibrary
                 
                 for progress in parseLibrary {
                     
@@ -328,7 +341,7 @@ public class LibrarySyncController {
                             }
                     
                         } else {
-                            println("created \(progress.anime.title!) on mal")
+                            println("Created \(progress.anime.title!) progress on mal")
                             // Create on MAL
                             var malProgress = MALProgress(myAnimeListID:
                                 progress.anime.myAnimeListID,
@@ -355,37 +368,46 @@ public class LibrarySyncController {
                     return malProgress.myAnimeListID
                 })
                 
-                println("Need to create \(malProgressToCreateIDs.count) progress on Parse")
-                
-                let query = Anime.queryIncludingAddData()
-                query.whereKey("myAnimeListID", containedIn: malProgressToCreateIDs)
-                query.limit = 1000
-                return query.findObjectsInBackground()
-                    .continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
-                        
-                        
-                        let animeToCreate = task.result as! [Anime]
-                        println("Matched \(animeToCreate.count) anime")
-                        for anime in animeToCreate {
-                            if let malProgress = malProgressToCreate.filter({ $0.myAnimeListID == anime.myAnimeListID }).last {
-                                // Creating on PARSE
-                                let malList = MALList(rawValue: malProgress.status)!
-                                var progress = AnimeProgress()
-                                progress.anime = anime
-                                progress.user = User.currentUser()!
-                                progress.startDate = NSDate()
-                                progress.updateList(malList)
-                                progress.watchedEpisodes = malProgress.episodes
-                                progress.collectedEpisodes = 0
-                                progress.score = malProgress.score
-                                progress.saveEventually()
-                                progress.pinInBackgroundWithBlock({ (result, error) -> Void in
-                                    NSNotificationCenter.defaultCenter().postNotificationName(LibraryUpdatedNotification, object: nil)
-                                })
+                if malProgressToCreateIDs.count > 0 {
+                    println("Need to create \(malProgressToCreateIDs.count) AnimeProgress on Parse")
+                    let query = Anime.queryIncludingAddData()
+                    query.whereKey("myAnimeListID", containedIn: malProgressToCreateIDs)
+                    query.limit = 1000
+                    return query.findObjectsInBackground()
+                        .continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
+                            let animeToCreate = task.result as! [Anime]
+                            println("Creating \(animeToCreate.count) AnimeProgress on Parse")
+                            var queue = BFTask(result: nil)
+                            for anime in animeToCreate {
+                                if let malProgress = malProgressToCreate.filter({ $0.myAnimeListID == anime.myAnimeListID }).last {
+                                    // Creating on PARSE
+                                    let malList = MALList(rawValue: malProgress.status)!
+                                    var progress = AnimeProgress()
+                                    progress.anime = anime
+                                    progress.user = User.currentUser()!
+                                    progress.startDate = NSDate()
+                                    progress.updateList(malList)
+                                    progress.watchedEpisodes = malProgress.episodes
+                                    progress.collectedEpisodes = 0
+                                    progress.score = malProgress.score
+                                    allProgress.append(progress)
+                                    
+                                    queue = queue.continueWithBlock({ (task: BFTask!) -> AnyObject! in
+                                        return progress.saveEventually()
+                                    })
+                                }
                             }
-                        }
-                        return nil
-                    })
+                        
+                            queue.continueWithBlock({ (task: BFTask!) -> AnyObject! in
+                                // All has been saved fetch again!
+                                NSNotificationCenter.defaultCenter().postNotificationName(LibraryCreatedNotification, object: nil)
+                                return nil
+                            })
+                            return nil
+                        })
+                } else {
+                    return nil
+                }
                 
             }).continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
                 
@@ -405,7 +427,16 @@ public class LibrarySyncController {
                 return nil
             }).continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
                 
-                return self.fetchAozoraLibrary(onlyWatching: true)
+                return BFTask(result: allProgress)
+                
+            }).continueWithBlock({ (task: BFTask!) -> AnyObject! in
+                if let error = task.error {
+                    println(error)
+                } else if let exception = task.exception {
+                    println(exception)
+                }
+                
+                return task
             })
             
             return task

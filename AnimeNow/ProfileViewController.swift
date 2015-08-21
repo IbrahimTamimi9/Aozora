@@ -120,7 +120,7 @@ public class ProfileViewController: ThreadViewController {
             userBanner.setImageWithPFFile(bannerFile)
         }
         
-        if user == User.currentUser() {
+        if let _ = tabBarController {
             followButton.hidden = true
             settingsTrailingSpaceConstraint.constant = 8
             navigationItem.leftBarButtonItem = nil

@@ -43,6 +43,7 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
     var listControllers: [AnimeListViewController] = []
     
     var loadingView: LoaderView!
+    var currentlySyncing = false
     
     var currentConfiguration: Configuration {
         get {
@@ -94,6 +95,7 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
         self.buttonBarView.selectedBar.backgroundColor = UIColor.watching()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateDataSource", name: LibraryUpdatedNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "controllerRequestRefresh", name: LibraryCreatedNotification, object: nil)
      
         loadingView = LoaderView(parentView: view)
         
@@ -110,36 +112,49 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
     }
     
     func fetchAnimeList(isRefreshing: Bool) -> BFTask {
-        loadingView.startAnimating()
         
+        if currentlySyncing {
+            return BFTask(result: nil)
+        }
+        
+        loadingView.startAnimating()
+        currentlySyncing = true
         return LibrarySyncController.fetchWatchingList(isRefreshing).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
             
             // Fill watching list
             let animeList = task.result as! [AnimeProgress]
-            var list: [Anime] = []
-            for progress in animeList {
-                var anime = progress.anime
-                anime.progress = progress
-                switch progress.myAnimeListList() {
-                case .Watching:
-                    list.append(anime)
-                default:
-                    break
-                }
-            }
-            
-            let firstController = self.listControllers[0]
-            firstController.animeList = list
-            firstController.updateSortType(firstController.currentSortType)
-            
+            self.updateWatchingList(animeList)
+            self.updateListViewControllers(animeList)
             self.loadingView.stopAnimating()
             return LibrarySyncController.fetchTheRestOfLists()
             
         }).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
-            self.updateListViewControllers(task.result as! [AnimeProgress])
+            if let result = task.result as? [AnimeProgress] where result.count > 0 {
+                self.updateListViewControllers(result)
+            }
             return nil
-            
+        }).continueWithBlock({ (task: BFTask!) -> AnyObject! in
+            self.currentlySyncing = false
+            return nil
         })
+    }
+    
+    func updateWatchingList(animeList: [AnimeProgress]) {
+        var list: [Anime] = []
+        for progress in animeList {
+            var anime = progress.anime
+            anime.progress = progress
+            switch progress.myAnimeListList() {
+            case .Watching:
+                list.append(anime)
+            default:
+                break
+            }
+        }
+        
+        let firstController = self.listControllers[0]
+        firstController.animeList = list
+        firstController.updateSortType(firstController.currentSortType)
     }
     
     func updateListViewControllers(animeList: [AnimeProgress]) {
