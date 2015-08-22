@@ -7,6 +7,7 @@
     <customFonts key="customFonts">
         <mutableArray key="FontAwesome.ttf">
             <string>FontAwesome</string>
+            <string>FontAwesome</string>
         </mutableArray>
     </customFonts>
     <objects>
@@ -56,6 +57,18 @@
                                 <color key="textColor" red="0.0078431372550000003" green="0.43921568630000002" blue="0.73333333329999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8dw-ly-VoN" userLabel="ToIcon">
+                                <rect key="frame" x="148" y="14.5" width="6.5" height="17.5"/>
+                                <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="17"/>
+                                <color key="textColor" red="0.0078431372550000003" green="0.43921568630000002" blue="0.73333333329999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Darkcirius" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rPv-d8-Ius" userLabel="ToUser">
+                                <rect key="frame" x="162" y="13.5" width="79.5" height="20.5"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <color key="textColor" red="0.0078431372550000003" green="0.43921568630000002" blue="0.73333333329999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="l7o-JT-JFL">
                                 <rect key="frame" x="8" y="8" width="44" height="44"/>
                                 <color key="backgroundColor" red="0.89411765340000005" green="0.89411765340000005" blue="0.89411765340000005" alpha="1" colorSpace="calibratedRGB"/>
@@ -76,10 +89,14 @@
                             <constraint firstItem="l7o-JT-JFL" firstAttribute="top" secondItem="Azh-0z-DNT" secondAttribute="top" constant="8" id="0Oh-Z7-vUp"/>
                             <constraint firstItem="Y4P-VU-g43" firstAttribute="leading" secondItem="l7o-JT-JFL" secondAttribute="trailing" constant="8" id="1OM-aO-lkM"/>
                             <constraint firstAttribute="height" constant="60" id="Dbl-8j-nBC"/>
+                            <constraint firstItem="8dw-ly-VoN" firstAttribute="leading" secondItem="Y4P-VU-g43" secondAttribute="trailing" constant="8.5" id="M23-cn-9dh"/>
                             <constraint firstItem="hrB-sN-Lx3" firstAttribute="top" secondItem="Azh-0z-DNT" secondAttribute="top" id="MZT-hX-QFv"/>
                             <constraint firstItem="hrB-sN-Lx3" firstAttribute="leading" secondItem="Azh-0z-DNT" secondAttribute="leading" id="PVG-Pu-Qyt"/>
                             <constraint firstItem="Y4P-VU-g43" firstAttribute="top" secondItem="Azh-0z-DNT" secondAttribute="top" constant="13" id="PhP-16-YFQ"/>
                             <constraint firstItem="oSa-7l-kjl" firstAttribute="top" secondItem="Y4P-VU-g43" secondAttribute="bottom" constant="-0.5" id="Tcu-Jv-bFa"/>
+                            <constraint firstItem="Y4P-VU-g43" firstAttribute="centerY" secondItem="8dw-ly-VoN" secondAttribute="centerY" id="ZFb-Hw-cNF"/>
+                            <constraint firstItem="rPv-d8-Ius" firstAttribute="leading" secondItem="8dw-ly-VoN" secondAttribute="trailing" constant="8" id="aas-pr-MRP"/>
+                            <constraint firstItem="8dw-ly-VoN" firstAttribute="centerY" secondItem="rPv-d8-Ius" secondAttribute="centerY" id="kCW-fX-jDm"/>
                             <constraint firstItem="oSa-7l-kjl" firstAttribute="leading" secondItem="l7o-JT-JFL" secondAttribute="trailing" constant="8" id="sp5-eq-XnT"/>
                             <constraint firstItem="l7o-JT-JFL" firstAttribute="leading" secondItem="Azh-0z-DNT" secondAttribute="leading" constant="8" id="wFF-oN-T1o"/>
                             <constraint firstAttribute="trailing" secondItem="hrB-sN-Lx3" secondAttribute="trailing" id="xyF-ga-I4o"/>
@@ -141,6 +158,8 @@
                 <outlet property="date" destination="oSa-7l-kjl" id="1PT-wA-ypB"/>
                 <outlet property="replyButton" destination="sCC-Vy-34T" id="z2A-Dq-kXf"/>
                 <outlet property="textContent" destination="IIt-M3-Ebc" id="6ub-ie-VQM"/>
+                <outlet property="toIcon" destination="8dw-ly-VoN" id="1sD-xm-lmh"/>
+                <outlet property="toUsername" destination="rPv-d8-Ius" id="fHS-nZ-48O"/>
                 <outlet property="username" destination="Y4P-VU-g43" id="69j-fL-7e5"/>
             </connections>
             <point key="canvasLocation" x="458" y="457"/>

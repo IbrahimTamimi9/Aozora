@@ -21,6 +21,9 @@ public class PostCell: UITableViewCell {
     @IBOutlet weak public var username: UILabel!
     @IBOutlet weak public var date: UILabel!
     
+    @IBOutlet weak public var toIcon: UILabel!
+    @IBOutlet weak public var toUsername: UILabel!
+    
     @IBOutlet weak public var imageContent: UIImageView?
     @IBOutlet weak public var imageHeightConstraint: NSLayoutConstraint?
     @IBOutlet weak public var textContent: TTTAttributedLabel!

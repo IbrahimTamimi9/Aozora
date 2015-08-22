@@ -203,6 +203,14 @@ extension ThreadViewController: UITableViewDataSource {
             cell.username.text = postedBy.aozoraUsername
         }
         
+        if let timelinePostable = post as? TimelinePostable where timelinePostable.userTimeline != post.postedBy {
+            cell.toUsername.text = timelinePostable.userTimeline.aozoraUsername
+            cell.toIcon.text = ""
+        } else {
+            cell.toUsername.text = ""
+            cell.toIcon.text = ""
+        }
+        
         cell.date.text = post.createdDate?.timeAgo()
         
         if var postedAgo = cell.date.text where post.edited {

@@ -124,21 +124,15 @@ extension EpisodeThreadViewController: FetchControllerQueryDelegate {
     
     public override func queriesForSkip(#skip: Int) -> [PFQuery] {
         
-        let query = Post.query()!
-        query.skip = skip
-        query.limit = FetchLimit
-        query.whereKey("thread", equalTo: thread!)
-        query.whereKey("replyLevel", equalTo: 0)
-        query.orderByAscending("createdAt")
-        query.includeKey("postedBy")
-        
-        
         let innerQuery = Post.query()!
         innerQuery.skip = skip
         innerQuery.limit = FetchLimit
         innerQuery.whereKey("thread", equalTo: thread!)
         innerQuery.whereKey("replyLevel", equalTo: 0)
         innerQuery.orderByAscending("createdAt")
+        
+        let query = innerQuery.copy() as! PFQuery
+        query.includeKey("postedBy")
         
         let repliesQuery = Post.query()!
         repliesQuery.skip = 0

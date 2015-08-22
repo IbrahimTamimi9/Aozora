@@ -7,6 +7,7 @@
     <customFonts key="customFonts">
         <mutableArray key="FontAwesome.ttf">
             <string>FontAwesome</string>
+            <string>FontAwesome</string>
         </mutableArray>
     </customFonts>
     <objects>
@@ -70,16 +71,32 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zJt-XM-phf" userLabel="ToIcon">
+                                <rect key="frame" x="147" y="14.5" width="6.5" height="17.5"/>
+                                <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="17"/>
+                                <color key="textColor" red="0.0078431372550000003" green="0.43921568630000002" blue="0.73333333329999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Darkcirius" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lNq-wy-2hR" userLabel="ToUser">
+                                <rect key="frame" x="161.5" y="13" width="79.5" height="20.5"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <color key="textColor" red="0.0078431372550000003" green="0.43921568630000002" blue="0.73333333329999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.97254902124404907" green="0.97254902124404907" blue="0.97254902124404907" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="l7o-JT-JFL" firstAttribute="top" secondItem="Azh-0z-DNT" secondAttribute="top" constant="8" id="0Oh-Z7-vUp"/>
                             <constraint firstItem="Y4P-VU-g43" firstAttribute="leading" secondItem="l7o-JT-JFL" secondAttribute="trailing" constant="8" id="1OM-aO-lkM"/>
+                            <constraint firstItem="zJt-XM-phf" firstAttribute="centerY" secondItem="lNq-wy-2hR" secondAttribute="centerY" id="3y7-gw-Hvb"/>
                             <constraint firstAttribute="trailing" secondItem="nuf-UA-Og9" secondAttribute="trailing" id="7Aa-nF-WbL"/>
                             <constraint firstAttribute="height" constant="60" id="Dbl-8j-nBC"/>
+                            <constraint firstItem="zJt-XM-phf" firstAttribute="leading" secondItem="Y4P-VU-g43" secondAttribute="trailing" constant="7.5" id="Fec-Yj-fdM"/>
+                            <constraint firstItem="Y4P-VU-g43" firstAttribute="centerY" secondItem="zJt-XM-phf" secondAttribute="centerY" id="LBV-Uq-1y4"/>
                             <constraint firstItem="Y4P-VU-g43" firstAttribute="top" secondItem="Azh-0z-DNT" secondAttribute="top" constant="13" id="PhP-16-YFQ"/>
                             <constraint firstItem="oSa-7l-kjl" firstAttribute="top" secondItem="Y4P-VU-g43" secondAttribute="bottom" constant="-0.5" id="Tcu-Jv-bFa"/>
                             <constraint firstItem="nuf-UA-Og9" firstAttribute="top" secondItem="Azh-0z-DNT" secondAttribute="top" id="Ub3-YT-y8F"/>
+                            <constraint firstItem="lNq-wy-2hR" firstAttribute="leading" secondItem="zJt-XM-phf" secondAttribute="trailing" constant="8" id="cSN-5l-GXz"/>
                             <constraint firstItem="nuf-UA-Og9" firstAttribute="leading" secondItem="Azh-0z-DNT" secondAttribute="leading" id="hEo-Bx-xuC"/>
                             <constraint firstItem="oSa-7l-kjl" firstAttribute="leading" secondItem="l7o-JT-JFL" secondAttribute="trailing" constant="8" id="sp5-eq-XnT"/>
                             <constraint firstItem="l7o-JT-JFL" firstAttribute="leading" secondItem="Azh-0z-DNT" secondAttribute="leading" constant="8" id="wFF-oN-T1o"/>
@@ -179,6 +196,8 @@
                 <outlet property="playButton" destination="2fU-I8-swY" id="oYH-XN-hSg"/>
                 <outlet property="replyButton" destination="sCC-Vy-34T" id="5uJ-jj-ipV"/>
                 <outlet property="textContent" destination="IIt-M3-Ebc" id="v5M-FB-9Ee"/>
+                <outlet property="toIcon" destination="zJt-XM-phf" id="MOf-uf-uUs"/>
+                <outlet property="toUsername" destination="lNq-wy-2hR" id="Onc-c0-MtE"/>
                 <outlet property="username" destination="Y4P-VU-g43" id="a8K-VS-icD"/>
             </connections>
             <point key="canvasLocation" x="458" y="554.5"/>

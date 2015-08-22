@@ -72,16 +72,25 @@ public class ProfileViewController: ThreadViewController {
     
     func fetchUserDetails(username: String) {
         
+        if let profile = self.userProfile {
+            self.fetchController.configureWith(self, queryDelegate: self, tableView: self.tableView, limit: self.FetchLimit, datasourceUsesSections: true)
+        }
+        
         let query = User.query()!
         query.whereKey("aozoraUsername", equalTo: username)
         query.includeKey("details")
         query.findObjectsInBackgroundWithBlock { (result, error) -> Void in
+
             if let user = result?.last as? User {
                 self.userProfile = user
                 self.updateViewWithUser(user)
                 self.aboutLabel.text = user.details.about
                 self.updateFollowingButtons()
-                self.fetchController.configureWith(self, queryDelegate: self, tableView: self.tableView, limit: self.FetchLimit, datasourceUsesSections: true)
+                
+                // Start fetching if didn't had User class
+                if let _ = self.username {
+                    self.fetchController.configureWith(self, queryDelegate: self, tableView: self.tableView, limit: self.FetchLimit, datasourceUsesSections: true)
+                }
             }
         }
         
@@ -251,27 +260,31 @@ extension ProfileViewController: EditProfileViewControllerProtocol {
 extension ProfileViewController: FetchControllerQueryDelegate {
     
     public override func queriesForSkip(#skip: Int) -> [PFQuery] {
-        let query = TimelinePost.query()!
-        query.skip = skip
-        query.limit = FetchLimit
-        query.whereKey("userTimeline", equalTo: userProfile!)
-        query.whereKey("replyLevel", equalTo: 0)
-        query.orderByDescending("createdAt")
-        query.includeKey("episode")
-        query.includeKey("postedBy")
-        query.includeKey("userTimeline")
-
+        // 'Me' query
         let innerQuery = TimelinePost.query()!
         innerQuery.skip = skip
         innerQuery.limit = FetchLimit
         innerQuery.whereKey("userTimeline", equalTo: userProfile!)
         innerQuery.whereKey("replyLevel", equalTo: 0)
         innerQuery.orderByDescending("createdAt")
+
+        // 'Feed' query
+//        let innerQuery = TimelinePost.query()!
+//        innerQuery.skip = skip
+//        innerQuery.limit = FetchLimit
+//        innerQuery.whereKey("userTimeline", matchesQuery: userProfile!.following().query()!)
+//        innerQuery.whereKey("replyLevel", equalTo: 0)
+//        innerQuery.orderByDescending("createdAt")
+        
+        let query = innerQuery.copy() as! PFQuery
+        query.includeKey("episode")
+        query.includeKey("postedBy")
+        query.includeKey("userTimeline")
         
         let repliesQuery = TimelinePost.query()!
         repliesQuery.skip = 0
         repliesQuery.limit = 1000
-        repliesQuery.whereKey("parentPost", matchesKey: "objectId", inQuery: innerQuery)
+        repliesQuery.whereKey("parentPost", matchesQuery: innerQuery)
         repliesQuery.orderByAscending("createdAt")
         repliesQuery.includeKey("episode")
         repliesQuery.includeKey("postedBy")
