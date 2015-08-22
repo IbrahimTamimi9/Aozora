@@ -26,10 +26,14 @@ public class ProfileViewController: ThreadViewController {
     @IBOutlet weak var aboutLabel: UILabel!
     
     @IBOutlet weak var proBadge: UILabel!
+    @IBOutlet weak var postsBadge: UILabel!
     @IBOutlet weak var tagBadge: UILabel!
     @IBOutlet weak var proBottomLayoutConstraint: NSLayoutConstraint!
     @IBOutlet weak var settingsTrailingSpaceConstraint: NSLayoutConstraint!
     @IBOutlet weak var tableBottomSpaceConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
+    @IBOutlet weak var segmentedControlHeight: NSLayoutConstraint!
     
     var userProfile: User?
     var username: String?
@@ -48,9 +52,12 @@ public class ProfileViewController: ThreadViewController {
         
         if userProfile == nil && username == nil {
             userProfile = User.currentUser()!
+            segmentedControl.selectedSegmentIndex = 0
         } else {
+            segmentedControl.selectedSegmentIndex = 1
             tableBottomSpaceConstraint.constant = 0
         }
+        
         fetchPosts()
     }
     
@@ -60,6 +67,27 @@ public class ProfileViewController: ThreadViewController {
         if let profile = userProfile where profile.details.isDataAvailable() {
             updateFollowingButtons()
         }
+    }
+    
+    func sizeHeaderToFit() {
+        var header = tableView.tableHeaderView!
+
+        if userProfile != User.currentUser() {
+            segmentedControlHeight.constant = 0
+            segmentedControl.hidden = true
+        }
+        
+        header.setNeedsLayout()
+        header.layoutIfNeeded()
+        
+        aboutLabel.preferredMaxLayoutWidth = aboutLabel.frame.size.width
+        
+        var height = header.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height
+        var frame = header.frame
+        
+        frame.size.height = height
+        header.frame = frame
+        tableView.tableHeaderView = header
     }
 
     // MARK: - Fetching
@@ -73,7 +101,7 @@ public class ProfileViewController: ThreadViewController {
     func fetchUserDetails(username: String) {
         
         if let profile = self.userProfile {
-            self.fetchController.configureWith(self, queryDelegate: self, tableView: self.tableView, limit: self.FetchLimit, datasourceUsesSections: true)
+            configureFetchController()
         }
         
         let query = User.query()!
@@ -85,11 +113,17 @@ public class ProfileViewController: ThreadViewController {
                 self.userProfile = user
                 self.updateViewWithUser(user)
                 self.aboutLabel.text = user.details.about
-                self.updateFollowingButtons()
+                if user.details.posts >= 1000 {
+                    self.postsBadge.text = (user.details.posts/1000).description + "k"
+                } else {
+                    self.postsBadge.text = user.details.posts.description
+                }
                 
+                self.updateFollowingButtons()
+                self.sizeHeaderToFit()
                 // Start fetching if didn't had User class
                 if let _ = self.username {
-                    self.fetchController.configureWith(self, queryDelegate: self, tableView: self.tableView, limit: self.FetchLimit, datasourceUsesSections: true)
+                    self.configureFetchController()
                 }
             }
         }
@@ -140,6 +174,7 @@ public class ProfileViewController: ThreadViewController {
         }
         
         if user.badges.count > 0 {
+            tagBadge.hidden = false
             tagBadge.text = user.badges.first
         } else {
             tagBadge.hidden = true
@@ -147,8 +182,10 @@ public class ProfileViewController: ThreadViewController {
         }
         
         if let _ = InAppController.purchasedProPlus() {
+            proBadge.hidden = false
             proBadge.text = "PRO+"
         } else if let _ = InAppController.purchasedPro() {
+            proBadge.hidden = false
             proBadge.text = "PRO"
         } else {
             proBadge.hidden = true
@@ -162,7 +199,14 @@ public class ProfileViewController: ThreadViewController {
         }
     }
     
+    func configureFetchController() {
+        self.fetchController.configureWith(self, queryDelegate: self, tableView: self.tableView, limit: self.FetchLimit, datasourceUsesSections: true)
+    }
+    
     // MARK: - IBAction
+    @IBAction func segmentedControlValueChanged(sender: AnyObject) {
+        configureFetchController()
+    }
     
     @IBAction func showLibrary(sender: AnyObject) {
         
@@ -260,22 +304,21 @@ extension ProfileViewController: EditProfileViewControllerProtocol {
 extension ProfileViewController: FetchControllerQueryDelegate {
     
     public override func queriesForSkip(#skip: Int) -> [PFQuery] {
-        // 'Me' query
+        
         let innerQuery = TimelinePost.query()!
         innerQuery.skip = skip
         innerQuery.limit = FetchLimit
-        innerQuery.whereKey("userTimeline", equalTo: userProfile!)
         innerQuery.whereKey("replyLevel", equalTo: 0)
         innerQuery.orderByDescending("createdAt")
+        
+        if segmentedControl.selectedSegmentIndex == 1 {
+            // 'Me' query
+            innerQuery.whereKey("userTimeline", equalTo: userProfile!)
+        } else {
+            innerQuery.whereKey("userTimeline", matchesQuery: userProfile!.following().query()!)
+        }
 
         // 'Feed' query
-//        let innerQuery = TimelinePost.query()!
-//        innerQuery.skip = skip
-//        innerQuery.limit = FetchLimit
-//        innerQuery.whereKey("userTimeline", matchesQuery: userProfile!.following().query()!)
-//        innerQuery.whereKey("replyLevel", equalTo: 0)
-//        innerQuery.orderByDescending("createdAt")
-        
         let query = innerQuery.copy() as! PFQuery
         query.includeKey("episode")
         query.includeKey("postedBy")
