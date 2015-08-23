@@ -227,7 +227,7 @@
                             <searchBar contentMode="redraw" misplaced="YES" searchBarStyle="minimal" placeholder="Search anime" showsCancelButton="YES" showsScopeBar="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fBa-yb-TpV">
                                 <rect key="frame" x="0.0" y="20" width="600" height="88"/>
                                 <color key="tintColor" red="0.97254902124404907" green="0.97254902124404907" blue="0.97254902124404907" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="barTintColor" red="0.039215686274509803" green="0.050980392156862744" blue="0.086274509803921567" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="barTintColor" red="0.15686274509803921" green="0.15686274509803921" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                 <scopeButtonTitles>
                                     <string>All Anime</string>

@@ -15,6 +15,7 @@ public class EpisodeThreadViewController: ThreadViewController {
     @IBOutlet weak var animeTitle: UILabel!
     @IBOutlet weak var episodeTitle: UILabel!
     @IBOutlet weak var airedLabel: UILabel!
+    @IBOutlet weak var overviewLabel: UILabel!
     
     var episode: Episode?
     var anime: Anime?
@@ -46,7 +47,7 @@ public class EpisodeThreadViewController: ThreadViewController {
         if let episode = thread.episode {
             episodeImage.setImageFrom(urlString: episode.imageURLString(), animated: true)
             if let title = episode.title {
-                episodeTitle.text = "Episode \(episode.number) · \(title) discussion"
+                episodeTitle.text = "Episode \(episode.number) discussion\n\(title)"
             } else {
                 episodeTitle.text = "Episode \(episode.number) discussion"
             }
@@ -56,6 +57,12 @@ public class EpisodeThreadViewController: ThreadViewController {
             } else {
                 airedLabel.text = ""
             }
+            
+            if let overview = episode.overview {
+                overviewLabel.text = overview
+            } else {
+                overviewLabel.text = ""
+            }
         }
         
         if let anime = thread.anime, let animeTitle = anime.title, let episode = thread.episode {
@@ -63,6 +70,24 @@ public class EpisodeThreadViewController: ThreadViewController {
         } else {
             title = "Episode Discussion"
         }
+        sizeHeaderToFit()
+    }
+    
+    func sizeHeaderToFit() {
+        var header = tableView.tableHeaderView!
+        
+        header.setNeedsLayout()
+        header.layoutIfNeeded()
+        
+        episodeTitle.preferredMaxLayoutWidth = episodeTitle.frame.size.width
+        overviewLabel.preferredMaxLayoutWidth = overviewLabel.frame.size.width
+        
+        var height = header.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height
+        var frame = header.frame
+        
+        frame.size.height = height
+        header.frame = frame
+        tableView.tableHeaderView = header
     }
     
     override func fetchThread() {
