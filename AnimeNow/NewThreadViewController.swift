@@ -46,6 +46,10 @@ public class NewThreadViewController: CommentViewController {
             return
         }
         
+        self.sendButton.setTitle("Creating...", forState: .Normal)
+        self.sendButton.backgroundColor = UIColor.watching()
+        self.sendButton.userInteractionEnabled = false
+        
         var thread = Thread()
         thread.edited = false
         thread.title = threadTitle.text

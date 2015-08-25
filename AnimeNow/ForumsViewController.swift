@@ -45,7 +45,7 @@ class ForumsViewController: UIViewController {
         loadingView = LoaderView(parentView: view)
         loadingView.startAnimating()
         
-        addRefreshControl(refreshControl, action:"fetchThreads", forTableView: tableView)
+        addRefreshControl(refreshControl, action:"refetchThreads", forTableView: tableView)
         
         var tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "changeList")
         navigationController?.navigationBar.addGestureRecognizer(tapGestureRecognizer)
@@ -109,6 +109,10 @@ class ForumsViewController: UIViewController {
     
     
     // MARK: - Fetching
+    
+    func refetchThreads() {
+        prepareForList(selectedList)
+    }
     
     func fetchThreads() {
         let query = Thread.query()!
