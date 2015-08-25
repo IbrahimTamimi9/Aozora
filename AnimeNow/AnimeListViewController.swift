@@ -85,6 +85,7 @@ class AnimeListViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         refreshControl.endRefreshing()
+        collectionView.animateFadeIn()
     }
     
     

@@ -10,10 +10,18 @@ import UIKit
 import ANCommonKit
 import ANAnimeKit
 import ANParseKit
+import TTTAttributedLabel
 
 class ForumsViewController: UIViewController {
     
+    enum SelectedList: Int {
+        case Recent = 0
+        case New
+        case Tag
+    }
+    
     var loadingView: LoaderView!
+    var tagsDataSource: [ThreadTag] = []
     var dataSource: [Thread] = [] {
         didSet {
             tableView.reloadData()
@@ -21,10 +29,13 @@ class ForumsViewController: UIViewController {
     }
     
     @IBOutlet weak var tableView: UITableView!
-
+    @IBOutlet weak var navigationBarTitle: UILabel!
+    
     var fetchController = FetchController()
     var refreshControl = UIRefreshControl()
-    
+    var selectedList: SelectedList = .Recent
+    var selectedTag: PFObject?
+        
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -36,10 +47,70 @@ class ForumsViewController: UIViewController {
         
         addRefreshControl(refreshControl, action:"fetchThreads", forTableView: tableView)
         
-        fetchThreads()
+        var tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "changeList")
+        navigationController?.navigationBar.addGestureRecognizer(tapGestureRecognizer)
+        
+        fetchThreadTags()
+        prepareForList(selectedList)
     }
     
-    func fetchThreads() {
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if loadingView.animating == false {
+            loadingView.stopAnimating()
+            tableView.animateFadeIn()
+        }
+    }
+    
+    // MARK: - NavigationBar Options
+    
+    func prepareForList(selectedList: SelectedList) {
+        self.selectedList = selectedList
+        
+        switch selectedList {
+        case .Recent:
+            navigationBarTitle.text = "Recent Threads"
+            fetchThreads(selectedList)
+        case .New:
+            navigationBarTitle.text = "New Threads"
+            fetchThreads(selectedList)
+        case .Tag:
+            if let tag = selectedTag {
+                if let anime = tag as? Anime {
+                    navigationBarTitle.text = anime.title!
+                } else if let tag = tag as? ThreadTag {
+                    navigationBarTitle.text = tag.name
+                }
+                fetchTagThreads(tag)
+            }
+        }
+        
+        navigationBarTitle.text! += " " + FontAwesome.AngleDown.rawValue
+    }
+    
+    func changeList() {
+        if let sender = navigationController?.navigationBar,
+        let viewController = tabBarController where view.window != nil {
+            var tagsTitles: [String] = []
+            
+            for tag in tagsDataSource {
+                tagsTitles.append(" #"+tag.name)
+            }
+            
+            let dataSource = [["Recent Threads", "New Threads"], tagsTitles]
+            DropDownListViewController.showDropDownListWith(
+                sender: sender,
+                viewController: viewController,
+                delegate: self,
+                dataSource: dataSource)
+        }
+    }
+    
+    
+    // MARK: - Fetching
+    
+    func fetchThreads(selectedList: SelectedList) {
         let query = Thread.query()!
         query.whereKey("replies", greaterThan: 0)
         query.whereKeyExists("episode")
@@ -49,8 +120,46 @@ class ForumsViewController: UIViewController {
         
         let orQuery = PFQuery.orQueryWithSubqueries([query, query2])
         orQuery.includeKey("tags")
-        orQuery.orderByDescending("updatedAt")
+        
+        switch selectedList {
+        case .Recent:
+            orQuery.orderByDescending("updatedAt")
+        case .New:
+            orQuery.orderByDescending("createdAt")
+        default:
+            break
+        }
+        
         fetchController.configureWith(self, query: orQuery, tableView: tableView, limit: 100)
+    }
+    
+    func fetchTagThreads(tag: PFObject) {
+
+        let query = Thread.query()!
+        query.whereKey("tags", containedIn: [tag])
+        query.includeKey("tags")
+        query.orderByDescending("updatedAt")
+        fetchController.configureWith(self, query: query, tableView: tableView, limit: 100)
+    }
+    
+    func fetchThreadTags() {
+        let query = ThreadTag.query()!
+        query.orderByAscending("order")
+        query.findObjectsInBackgroundWithBlock { (result, error) -> Void in
+            if let error = error {
+                // Show error
+            } else {
+                self.tagsDataSource = result as! [ThreadTag]
+            }
+        }
+    }
+    
+    // MARK: - IBActions
+    
+    @IBAction func createThread(sender: AnyObject) {
+        let comment = ANParseKit.newThreadViewController()
+        comment.initWith(threadType: ThreadType.Custom, delegate: self)
+        presentViewController(comment, animated: true, completion: nil)
     }
     
 }
@@ -77,6 +186,7 @@ extension ForumsViewController: UITableViewDataSource {
         
         cell.title.text = title
         cell.information.text = "\(thread.replies) comments · \(thread.updatedAt!.timeAgo())"
+        cell.tagsLabel.updateTags(thread.tags, delegate: self, addLinks: false)
         cell.layoutIfNeeded()
         return cell
     }
@@ -106,5 +216,44 @@ extension ForumsViewController: FetchControllerDelegate {
     func didFetchFor(#skip: Int) {
         refreshControl.endRefreshing()
         loadingView.stopAnimating()
+    }
+}
+
+extension ForumsViewController: DropDownListDelegate {
+    func selectedAction(trigger: UIView, action: String, indexPath: NSIndexPath) {
+        
+        if trigger.isEqual(navigationController?.navigationBar) {
+            switch (indexPath.row, indexPath.section) {
+            case (0, 0):
+                prepareForList(.Recent)
+            case (1, 0):
+                prepareForList(.New)
+            case (_, 1):
+                selectedTag = tagsDataSource[indexPath.row]
+                prepareForList(.Tag)
+            default: break
+            }
+        }
+    }
+    
+    func dropDownDidDismissed(selectedAction: Bool) {
+    }
+}
+
+extension ForumsViewController: TTTAttributedLabelDelegate {
+    
+    func attributedLabel(label: TTTAttributedLabel!, didSelectLinkWithURL url: NSURL!) {
+        
+        if let host = url.host where host == "tag",
+            let index = url.pathComponents?[1] as? String,
+            let idx = index.toInt() {
+                println(idx)
+        }
+    }
+}
+
+extension ForumsViewController: CommentViewControllerDelegate {
+    func commentViewControllerDidFinishedPosting(post: PFObject) {
+        prepareForList(selectedList)
     }
 }

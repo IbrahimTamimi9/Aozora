@@ -36,7 +36,7 @@ public class DropDownListViewController: UIViewController {
         viewController: UIViewController,
         delegate: DropDownListDelegate?,
         dataSource: [[String]],
-        imageDataSource: [[String]]? = []) {
+        imageDataSource: [[String]] = []) {
         
         let frameRelativeToViewController = sender.convertRect(sender.bounds, toView: viewController.view)
         
@@ -49,12 +49,12 @@ public class DropDownListViewController: UIViewController {
         
     }
     
-    public func setDataSource(trigger: UIView, viewController: UIViewController, dataSource: [[String]], yPosition: CGFloat, imageDataSource: [[String]]? = [[]]) {
+    public func setDataSource(trigger: UIView, viewController: UIViewController, dataSource: [[String]], yPosition: CGFloat, imageDataSource: [[String]] = [[]]) {
         self.trigger = trigger
         self.viewController = viewController
         self.dataSource = dataSource
         self.yPosition = yPosition
-        self.imageDataSource = imageDataSource!
+        self.imageDataSource = imageDataSource
     }
     
     override public func viewDidLoad() {

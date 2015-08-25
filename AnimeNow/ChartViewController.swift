@@ -98,7 +98,6 @@ class ChartViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var navigationBarTitle: UILabel!
     @IBOutlet weak var filterBar: UIView!
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -306,9 +305,8 @@ class ChartViewController: UIViewController {
         canFadeImages = true
     }
     
-    
-    
     // MARK: - IBActions
+    
     @IBAction func showFilterPressed(sender: AnyObject) {
         
         if let tabBar = tabBarController {
@@ -323,10 +321,9 @@ class ChartViewController: UIViewController {
         
     }
     
-    
     func changeSeasonalChart() {
         if let sender = navigationController?.navigationBar,
-        let viewController = tabBarController{
+        let viewController = tabBarController {
             
             var titlesDataSource: [String] = []
             var iconsDataSource: [String] = []

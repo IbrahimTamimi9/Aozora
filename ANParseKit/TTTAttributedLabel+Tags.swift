@@ -10,8 +10,9 @@ import TTTAttributedLabel
 import Parse
 
 extension TTTAttributedLabel {
-    func updateTags(tags: [PFObject], delegate: TTTAttributedLabelDelegate) {
+    public func updateTags(tags: [PFObject], delegate: TTTAttributedLabelDelegate, addLinks: Bool = true) {
         linkAttributes = [kCTForegroundColorAttributeName: UIColor.peterRiver()]
+        textColor = UIColor.peterRiver()
         self.delegate = delegate
         
         var tagsString = ""
@@ -28,20 +29,22 @@ extension TTTAttributedLabel {
             return attributedString
         })
         
-        var idx = 0
-        for tag in tags {
-            var tagName: String?
-            if let tag = tag as? ThreadTag {
-                tagName = "#\(tag.name)  "
-            } else if let anime = tag as? Anime {
-                tagName = "#\(anime.title!)  "
-            }
-            
-            if let tag = tagName {
-                let url = NSURL(string: "aozoraapp://tag/\(idx)")
-                let range = (tagsString as NSString).rangeOfString(tag)
-                addLinkToURL(url, withRange: range)
-                idx += 1
+        if addLinks {
+            var idx = 0
+            for tag in tags {
+                var tagName: String?
+                if let tag = tag as? ThreadTag {
+                    tagName = "#\(tag.name)  "
+                } else if let anime = tag as? Anime {
+                    tagName = "#\(anime.title!)  "
+                }
+                
+                if let tag = tagName {
+                    let url = NSURL(string: "aozoraapp://tag/\(idx)")
+                    let range = (tagsString as NSString).rangeOfString(tag)
+                    addLinkToURL(url, withRange: range)
+                    idx += 1
+                }
             }
         }
     }

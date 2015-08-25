@@ -10,7 +10,7 @@
         </mutableArray>
     </customFonts>
     <scenes>
-        <!--Charlotte - Is this anime worth watching?-->
+        <!--Loading...-->
         <scene sceneID="eRg-d5-9Ag">
             <objects>
                 <viewController storyboardIdentifier="CustomThread" hidesBottomBarWhenPushed="YES" id="8jA-5m-8Uw" customClass="CustomThreadViewController" customModule="ANParseKit" customModuleProvider="target" sceneMemberID="viewController">
@@ -29,8 +29,8 @@
                                     <rect key="frame" x="0.0" y="64" width="600" height="429"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="#General  #Suggestions" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2DU-49-vOb" customClass="TTTAttributedLabel">
-                                            <rect key="frame" x="8" y="367" width="160.5" height="18"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="#General  #Suggestions" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2DU-49-vOb" customClass="TTTAttributedLabel">
+                                            <rect key="frame" x="8" y="367" width="584" height="18"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="18" id="Ty2-n5-OpN"/>
                                             </constraints>
@@ -38,7 +38,7 @@
                                             <color key="textColor" red="0.20392157137393951" green="0.59607845544815063" blue="0.85882353782653809" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Text.." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qHF-Vg-b4h" customClass="TTTAttributedLabel">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Text.." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qHF-Vg-b4h" customClass="TTTAttributedLabel">
                                             <rect key="frame" x="9" y="288" width="583" height="67"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <color key="textColor" red="0.18823529780000001" green="0.19607843459999999" blue="0.23529411850000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -63,7 +63,7 @@
                                             </constraints>
                                         </imageView>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aEv-eL-xII" userLabel="ButtonTrailer">
-                                            <rect key="frame" x="269.5" y="61" width="60" height="60"/>
+                                            <rect key="frame" x="270" y="61" width="60" height="60"/>
                                             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="60" id="cPl-CV-dat"/>
@@ -118,7 +118,7 @@
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Is this anime worth watching? Is this anime worth watching? Is this anime worth watching? Is this anime worth watching? " lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eWc-RE-BVZ">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Is this anime worth watching? Is this anime worth watching? Is this anime worth watching? Is this anime worth watching? " lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eWc-RE-BVZ">
                                             <rect key="frame" x="10" y="244" width="580" height="36"/>
                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                             <color key="textColor" red="0.18823529780000001" green="0.19607843459999999" blue="0.23529411850000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -129,6 +129,7 @@
                                     <constraints>
                                         <constraint firstItem="PPE-Sl-fKl" firstAttribute="leading" secondItem="vqq-Qs-fOq" secondAttribute="leading" id="4BY-as-k6g"/>
                                         <constraint firstItem="Fij-H7-TJE" firstAttribute="top" secondItem="PPE-Sl-fKl" secondAttribute="bottom" constant="8" id="79s-mN-jEs"/>
+                                        <constraint firstItem="wyq-NM-QVH" firstAttribute="top" secondItem="PPE-Sl-fKl" secondAttribute="bottom" constant="13" id="8To-0T-VHX"/>
                                         <constraint firstAttribute="trailing" secondItem="wyq-NM-QVH" secondAttribute="trailing" constant="8" id="8wj-xg-hAh"/>
                                         <constraint firstItem="aEv-eL-xII" firstAttribute="centerX" secondItem="PPE-Sl-fKl" secondAttribute="centerX" id="A00-gn-Q2P"/>
                                         <constraint firstItem="56s-GO-BXr" firstAttribute="top" secondItem="2DU-49-vOb" secondAttribute="bottom" constant="4" id="ByS-7o-wA7"/>
@@ -143,6 +144,7 @@
                                         <constraint firstAttribute="trailing" secondItem="PPE-Sl-fKl" secondAttribute="trailing" id="cwa-8w-4Wa"/>
                                         <constraint firstItem="PPE-Sl-fKl" firstAttribute="top" secondItem="vqq-Qs-fOq" secondAttribute="top" id="dHq-0X-qgb"/>
                                         <constraint firstItem="Fxk-ZV-cyf" firstAttribute="leading" secondItem="Fij-H7-TJE" secondAttribute="trailing" constant="8" id="dQo-pl-N2e"/>
+                                        <constraint firstAttribute="trailing" secondItem="2DU-49-vOb" secondAttribute="trailing" constant="8" id="dTj-zt-hBB"/>
                                         <constraint firstItem="56s-GO-BXr" firstAttribute="leading" secondItem="vqq-Qs-fOq" secondAttribute="leading" constant="9" id="fgn-Cc-faU"/>
                                         <constraint firstItem="2DU-49-vOb" firstAttribute="leading" secondItem="vqq-Qs-fOq" secondAttribute="leading" constant="8" id="iMk-CB-PyY"/>
                                         <constraint firstItem="2DU-49-vOb" firstAttribute="top" secondItem="qHF-Vg-b4h" secondAttribute="bottom" constant="12" id="kE0-fO-bkb"/>
@@ -154,6 +156,7 @@
                                     </constraints>
                                     <variation key="default">
                                         <mask key="constraints">
+                                            <exclude reference="Dsr-zy-SbA"/>
                                             <exclude reference="KCj-0a-6eA"/>
                                         </mask>
                                     </variation>
@@ -179,12 +182,7 @@
                         </variation>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Charlotte - Is this anime worth watching?" id="sR8-KG-wgj">
-                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="bcW-mS-OAi">
-                            <connections>
-                                <action selector="dismissPressed:" destination="8jA-5m-8Uw" id="vlA-HX-CDd"/>
-                            </connections>
-                        </barButtonItem>
+                    <navigationItem key="navigationItem" title="Loading..." id="sR8-KG-wgj">
                         <barButtonItem key="rightBarButtonItem" image="icon-create" id="a0L-cN-OrX" userLabel="Create">
                             <connections>
                                 <action selector="replyToThreadPressed:" destination="8jA-5m-8Uw" id="ZY1-Bt-U6G"/>
@@ -196,7 +194,6 @@
                     <connections>
                         <outlet property="avatar" destination="Fij-H7-TJE" id="Q9z-NH-GMJ"/>
                         <outlet property="commentsButton" destination="56s-GO-BXr" id="wVU-Xs-A2t"/>
-                        <outlet property="dismissBBI" destination="bcW-mS-OAi" id="DZP-bX-QaV"/>
                         <outlet property="imageContent" destination="PPE-Sl-fKl" id="6N6-Jh-mRq"/>
                         <outlet property="imageHeightConstraint" destination="OHr-L0-5zK" id="oJo-vO-ftO"/>
                         <outlet property="playButton" destination="aEv-eL-xII" id="Bxk-ab-XHD"/>

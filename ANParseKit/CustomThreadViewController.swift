@@ -40,27 +40,31 @@ public class CustomThreadViewController: ThreadViewController {
     
     override public func viewDidLoad() {
         super.viewDidLoad()
-        
     }
     
     override func updateUIWithThread(thread: Thread) {
         super.updateUIWithThread(thread)
         
         title = "Loading..."
-        navigationItem.leftBarButtonItems = nil
         
         if let episode = episode {
             updateUIWithEpisodeThread(thread)
         } else {
             updateUIWithGeneralThread(thread)
         }
+        
+        let repliesTitle = repliesButtonTitle(thread.replies)
+        commentsButton.setTitle(repliesTitle, forState: .Normal)
+        
+        tagsLabel.updateTags(thread.tags, delegate: self)
+        prepareForVideo(playButton, imageView: imageContent, imageHeightConstraint: imageHeightConstraint, youtubeID: thread.youtubeID)
     }
     
     var resizedTableHeader = false
     public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        if !resizedTableHeader {
+        if !resizedTableHeader && title != nil {
             resizedTableHeader = true
             sizeHeaderToFit()
         }
@@ -110,8 +114,6 @@ public class CustomThreadViewController: ThreadViewController {
             threadContent.text = content
         }
         
-        tagsLabel.updateTags(thread.tags, delegate: self)
-        
         // TODO: Merge this repeated code
         if let startedBy = thread.startedBy {
             avatar.setImageWithPFFile(startedBy.avatarThumb!)
@@ -119,12 +121,7 @@ public class CustomThreadViewController: ThreadViewController {
             postedDate.text = thread.createdAt!.timeAgo()
         }
         
-        let repliesTitle = repliesButtonTitle(thread.replies)
-        commentsButton.setTitle(repliesTitle, forState: .Normal)
-        
         setImages(thread.images, imageView: imageContent, imageHeightConstraint: imageHeightConstraint)
-        
-        prepareForVideo(playButton, imageView: imageContent, imageHeightConstraint: imageHeightConstraint, youtubeID: thread.youtubeID)
     }
     
     func sizeHeaderToFit() {
@@ -133,8 +130,10 @@ public class CustomThreadViewController: ThreadViewController {
         header.setNeedsLayout()
         header.layoutIfNeeded()
         
+        username.preferredMaxLayoutWidth = username.frame.size.width
         threadTitle.preferredMaxLayoutWidth = threadTitle.frame.size.width
         threadContent.preferredMaxLayoutWidth = threadContent.frame.size.width
+        tagsLabel.preferredMaxLayoutWidth = tagsLabel.frame.size.width
         
         var height = header.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height
         var frame = header.frame

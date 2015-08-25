@@ -83,6 +83,15 @@ class BrowseViewController: UIViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateETACells", name: LibraryUpdatedNotification, object: nil)
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if loadingView.animating == false {
+            loadingView.stopAnimating()
+            collectionView.animateFadeIn()
+        }
+    }
+    
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }

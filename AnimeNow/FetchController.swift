@@ -184,7 +184,7 @@ public class FetchController {
                         collectionView.insertItemsAtIndexPaths(indexPathsToInsert)
                         }, completion: nil)
                 }
-            } else if let tableView = self.tableView {
+            } else if let tableView = self.tableView as? AnyObject as? UITableView {
                 if skip == 0 {
                     // Reload data
                     tableView.reloadData()

@@ -7,9 +7,11 @@
 //
 
 import UIKit
+import TTTAttributedLabel
 
 public class TopicCell: UITableViewCell {
     @IBOutlet public weak var title: UILabel!
     @IBOutlet public weak var information: UILabel!
     @IBOutlet public weak var typeLabel: UILabel!
+    @IBOutlet public weak var tagsLabel: TTTAttributedLabel!
 }
