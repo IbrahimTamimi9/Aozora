@@ -58,6 +58,7 @@ public class ForumViewController: AnimeBaseViewController {
         let orQuery = PFQuery.orQueryWithSubqueries([query,query2])
         orQuery.includeKey("tags")
         orQuery.includeKey("anime")
+        orQuery.includeKey("startedBy")
         fetchController.configureWith(self, query: orQuery, tableView: tableView, limit: 100)
     }
     

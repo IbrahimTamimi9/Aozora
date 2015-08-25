@@ -124,6 +124,7 @@ class ForumsViewController: UIViewController {
         
         let orQuery = PFQuery.orQueryWithSubqueries([query, query2])
         orQuery.includeKey("tags")
+        orQuery.includeKey("startedBy")
         
         switch selectedList {
         case .Recent:
@@ -142,6 +143,7 @@ class ForumsViewController: UIViewController {
         let query = Thread.query()!
         query.whereKey("tags", containedIn: [tag])
         query.includeKey("tags")
+        query.includeKey("startedBy")
         query.orderByDescending("updatedAt")
         fetchController.configureWith(self, query: query, tableView: tableView, limit: 100)
     }

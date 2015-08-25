@@ -18,8 +18,6 @@ public class ThreadViewController: UIViewController {
     let FetchLimit = 20
     
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var dismissBBI: UIBarButtonItem!
-    @IBOutlet weak var createBBI: UIBarButtonItem!
     
     var thread: Thread? {
         didSet {
