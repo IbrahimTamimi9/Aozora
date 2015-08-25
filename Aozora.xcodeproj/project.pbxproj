@@ -12,6 +12,12 @@
 		6923F76C724843F5AED124BD /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D27C7A8ED4F7C96DF08F5850 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		79AF381FB9C944A80806E321 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D27C7A8ED4F7C96DF08F5850 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		DA0347241B4ADD720025CE24 /* LibrarySyncController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF357031B45790100629A3D /* LibrarySyncController.swift */; };
+		DA03F14C1B89852C00402AC4 /* CustomThreadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA03F1491B897E4300402AC4 /* CustomThreadViewController.swift */; };
+		DA03F1541B8B188000402AC4 /* NewPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA03F1531B8B188000402AC4 /* NewPostViewController.swift */; };
+		DA03F1561B8B188F00402AC4 /* NewThreadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA03F1551B8B188F00402AC4 /* NewThreadViewController.swift */; };
+		DA03F1581B8B435400402AC4 /* TagsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA03F1571B8B435400402AC4 /* TagsViewController.swift */; };
+		DA03F15A1B8B47FA00402AC4 /* ThreadTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA03F1591B8B47FA00402AC4 /* ThreadTag.swift */; };
+		DA03F15C1B8B818E00402AC4 /* TTTAttributedLabel+Tags.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA03F15B1B8B818E00402AC4 /* TTTAttributedLabel+Tags.swift */; };
 		DA07A3481B4C2B730028B81B /* InApp.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA07A3471B4C2B730028B81B /* InApp.storyboard */; };
 		DA0B26111B7566CF00A770AE /* Thread.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA0B26101B7566CF00A770AE /* Thread.storyboard */; };
 		DA0B26131B75671300A770AE /* ThreadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0B26121B75671300A770AE /* ThreadViewController.swift */; };
@@ -202,7 +208,6 @@
 		DAE7A7191B2105FD00788614 /* AnimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE7A7181B2105FD00788614 /* AnimeCell.swift */; };
 		DAF32E3F1B62CEAF003FC372 /* Resources.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAF32E3E1B62CEAF003FC372 /* Resources.xcassets */; };
 		DAF357061B4593E200629A3D /* LibraryAnimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF357051B4593E200629A3D /* LibraryAnimeCell.swift */; };
-		DAF467151B76560800095820 /* EpisodeThreadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF467141B76560800095820 /* EpisodeThreadViewController.swift */; };
 		DAF467171B76655700095820 /* PostableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF467161B76655700095820 /* PostableProtocol.swift */; };
 		DAF6186F1B377C2100286517 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E13051B10DDB900B278B0 /* Social.framework */; };
 		DAF618701B377C3000286517 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E13031B10DDB500B278B0 /* Accounts.framework */; };
@@ -350,6 +355,12 @@
 		3ABB693D5DECE103E9514C77 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		CC7A7DA6842DABB2A3D90AB9 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		D27C7A8ED4F7C96DF08F5850 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA03F1491B897E4300402AC4 /* CustomThreadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomThreadViewController.swift; sourceTree = "<group>"; };
+		DA03F1531B8B188000402AC4 /* NewPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewPostViewController.swift; sourceTree = "<group>"; };
+		DA03F1551B8B188F00402AC4 /* NewThreadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewThreadViewController.swift; sourceTree = "<group>"; };
+		DA03F1571B8B435400402AC4 /* TagsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagsViewController.swift; sourceTree = "<group>"; };
+		DA03F1591B8B47FA00402AC4 /* ThreadTag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThreadTag.swift; sourceTree = "<group>"; };
+		DA03F15B1B8B818E00402AC4 /* TTTAttributedLabel+Tags.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TTTAttributedLabel+Tags.swift"; sourceTree = "<group>"; };
 		DA07A3471B4C2B730028B81B /* InApp.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = InApp.storyboard; sourceTree = "<group>"; };
 		DA07A3491B4C2B860028B81B /* InAppPurchaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InAppPurchaseViewController.swift; sourceTree = "<group>"; };
 		DA0B26051B75066B00A770AE /* EditProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
@@ -551,7 +562,6 @@
 		DAF32E3E1B62CEAF003FC372 /* Resources.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Resources.xcassets; sourceTree = "<group>"; };
 		DAF357031B45790100629A3D /* LibrarySyncController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LibrarySyncController.swift; path = ../AnimeNow/LibrarySyncController.swift; sourceTree = "<group>"; };
 		DAF357051B4593E200629A3D /* LibraryAnimeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryAnimeCell.swift; sourceTree = "<group>"; };
-		DAF467141B76560800095820 /* EpisodeThreadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodeThreadViewController.swift; sourceTree = "<group>"; };
 		DAF467161B76655700095820 /* PostableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostableProtocol.swift; sourceTree = "<group>"; };
 		DAF618751B377CA700286517 /* AnimeLibraryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeLibraryViewController.swift; sourceTree = "<group>"; };
 		DAF618771B377D6000286517 /* AnimeListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeListViewController.swift; sourceTree = "<group>"; };
@@ -708,7 +718,7 @@
 				DAF467161B76655700095820 /* PostableProtocol.swift */,
 				DA0B26101B7566CF00A770AE /* Thread.storyboard */,
 				DA0B26121B75671300A770AE /* ThreadViewController.swift */,
-				DAF467141B76560800095820 /* EpisodeThreadViewController.swift */,
+				DA03F1491B897E4300402AC4 /* CustomThreadViewController.swift */,
 			);
 			name = Thread;
 			sourceTree = "<group>";
@@ -1231,6 +1241,7 @@
 				DA1380691B6DBB4100C53560 /* Thread.swift */,
 				DA13806B1B6DBB4C00C53560 /* Post.swift */,
 				DAD67DFC1B726724000BB325 /* User.swift */,
+				DA03F1591B8B47FA00402AC4 /* ThreadTag.swift */,
 			);
 			name = "Parse classes";
 			sourceTree = "<group>";
@@ -1240,6 +1251,9 @@
 			children = (
 				DAD67DFF1B7275F0000BB325 /* Comment.storyboard */,
 				DAD67E011B72760B000BB325 /* CommentViewController.swift */,
+				DA03F1531B8B188000402AC4 /* NewPostViewController.swift */,
+				DA03F1551B8B188F00402AC4 /* NewThreadViewController.swift */,
+				DA03F1571B8B435400402AC4 /* TagsViewController.swift */,
 				DA6755E11B729C2100D6EA32 /* ImagesViewController.swift */,
 				DAE64EEB1B73CCE4005A984A /* ImageViewController.swift */,
 				DA35B9981B74145D00C0AAC7 /* InAppBrowserSelectorViewController.swift */,
@@ -1255,6 +1269,7 @@
 				DA2D1EEC1B530903009A5CCD /* PFQuery+LocalDatastore.swift */,
 				DAE43C311B2BC1A900C3092D /* TFHppleElement+Convenience.swift */,
 				DA8B6E061B6C4DBF00D240FC /* UIImageView+PFFile.swift */,
+				DA03F15B1B8B818E00402AC4 /* TTTAttributedLabel+Tags.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -2074,8 +2089,10 @@
 				DAF467171B76655700095820 /* PostableProtocol.swift in Sources */,
 				DAE43C341B2BC3B700C3092D /* AnimeDetail.swift in Sources */,
 				DA0B26211B75A95F00A770AE /* ProfileViewController.swift in Sources */,
+				DA03F1581B8B435400402AC4 /* TagsViewController.swift in Sources */,
 				DACE77C41B29517F00037486 /* AnimeRelation.swift in Sources */,
 				DA48EA271B288DED00D8610F /* SeasonalChart.swift in Sources */,
+				DA03F15A1B8B47FA00402AC4 /* ThreadTag.swift in Sources */,
 				DA0B26131B75671300A770AE /* ThreadViewController.swift in Sources */,
 				DAFE19AE1B29E4CD002F3A76 /* AnimeCharacter.swift in Sources */,
 				DA58C2ED1B3B111A0082B626 /* Episode.swift in Sources */,
@@ -2083,9 +2100,9 @@
 				DACCF35F1B111016006A13EB /* AnimeService.swift in Sources */,
 				DA6E12E61B10D96F00B278B0 /* WSWebScraper.m in Sources */,
 				DA2D1EF11B531B21009A5CCD /* PFQuery+LocalDatastore.swift in Sources */,
-				DAF467151B76560800095820 /* EpisodeThreadViewController.swift in Sources */,
 				DA0B26181B758B9300A770AE /* UserProfileManager.swift in Sources */,
 				DA9AE39C1B69382D0053C2EA /* FetchController.swift in Sources */,
+				DA03F1561B8B188F00402AC4 /* NewThreadViewController.swift in Sources */,
 				DA8B6E071B6C4DBF00D240FC /* UIImageView+PFFile.swift in Sources */,
 				DADFA9551B79342A0057FD15 /* AnimeProgress.swift in Sources */,
 				DAC027CC1B2A16B80085C91A /* AnimeReview.swift in Sources */,
@@ -2094,17 +2111,20 @@
 				DA6E13131B10F56B00B278B0 /* SeasonalChartService.swift in Sources */,
 				DACCF35D1B110AA2006A13EB /* ANParseKit.swift in Sources */,
 				DA0B261B1B758C3B00A770AE /* String+Validations.swift in Sources */,
+				DA03F1541B8B188000402AC4 /* NewPostViewController.swift in Sources */,
 				DA6E12E21B10D96F00B278B0 /* XPathQuery.m in Sources */,
 				DA0B26231B75A95F00A770AE /* EditProfileViewController.swift in Sources */,
 				DAD67DFD1B726724000BB325 /* User.swift in Sources */,
 				DA0B26221B75A95F00A770AE /* UserListViewController.swift in Sources */,
 				DAC0779B1B686A870067DA90 /* UserDetails.swift in Sources */,
 				DA9AE39B1B6930F60053C2EA /* TimelinePost.swift in Sources */,
+				DA03F14C1B89852C00402AC4 /* CustomThreadViewController.swift in Sources */,
 				DA6755E51B72E6D100D6EA32 /* CommentViewController.swift in Sources */,
 				DA6E12E41B10D96F00B278B0 /* UIViewController+WebScraper.m in Sources */,
 				DA35B99A1B74165000C0AAC7 /* InAppBrowserSelectorViewController.swift in Sources */,
 				DA13806C1B6DBB4C00C53560 /* Post.swift in Sources */,
 				DA6E13111B10F2E500B278B0 /* MALScrapper.swift in Sources */,
+				DA03F15C1B8B818E00402AC4 /* TTTAttributedLabel+Tags.swift in Sources */,
 				DA6E12DE1B10D96F00B278B0 /* TFHpple.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -21,6 +21,10 @@ extension UIColor {
         return UIColor(red: 228/255.0, green: 228/255.0, blue: 228/255.0, alpha: 1.0)
     }
     
+    public class func backgroundWhite() -> UIColor! {
+        return UIColor(red: 248/255.0, green: 248/255.0, blue: 248/255.0, alpha: 1.0)
+    }
+    
     // Backish
     public class func darkBlue() -> UIColor! {
         return UIColor(red: 10/255.0, green: 13/255.0, blue: 22/255.0, alpha: 1.0)

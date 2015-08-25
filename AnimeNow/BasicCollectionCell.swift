@@ -19,6 +19,7 @@ public class BasicCollectionCell: UICollectionViewCell {
     @IBOutlet public weak var titleLabel: UILabel!
     @IBOutlet public weak var titleimageView: UIImageView!
     @IBOutlet public weak var actionButton: UIButton!
+    @IBOutlet public weak var subtitleLabel: UILabel!
     
     @IBAction public func actionButtonPressed(sender: AnyObject) {
         delegate?.cellSelectedActionButton(self)

@@ -41,9 +41,16 @@ class ForumsViewController: UIViewController {
     
     func fetchThreads() {
         let query = Thread.query()!
-        query.orderByDescending("updatedAt")
         query.whereKey("replies", greaterThan: 0)
-        fetchController.configureWith(self, query: query, tableView: tableView, limit: 100)
+        query.whereKeyExists("episode")
+        
+        let query2 = Thread.query()!
+        query2.whereKeyDoesNotExist("episode")
+        
+        let orQuery = PFQuery.orQueryWithSubqueries([query, query2])
+        orQuery.includeKey("tags")
+        orQuery.orderByDescending("updatedAt")
+        fetchController.configureWith(self, query: orQuery, tableView: tableView, limit: 100)
     }
     
 }
@@ -61,9 +68,15 @@ extension ForumsViewController: UITableViewDataSource {
         
         let thread = fetchController.objectAtIndex(indexPath.row) as! Thread
         let title = thread.title
-        //cell.typeLabel.text = topic.type == MALScrapper.TopicType.Sticky ? " " : ""
+        
+        if let _ = thread.episode {
+            cell.typeLabel.text = " "
+        } else {
+            cell.typeLabel.text = ""
+        }
+        
         cell.title.text = title
-        cell.information.text = " \(thread.replies) comments · \(thread.updatedAt!.timeAgo())"
+        cell.information.text = "\(thread.replies) comments · \(thread.updatedAt!.timeAgo())"
         cell.layoutIfNeeded()
         return cell
     }
@@ -73,14 +86,19 @@ extension ForumsViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let thread = fetchController.objectAtIndex(indexPath.row) as! Thread
         
-        let episodeThreadController = ANParseKit.episodeThreadViewController()
-        episodeThreadController.initWithEpisode(thread.episode!, anime: thread.anime!, postType: .Episode)
+        let threadController = ANParseKit.customThreadViewController()
         
-        if InAppController.purchasedAnyPro() == nil {
-            episodeThreadController.interstitialPresentationPolicy = .Automatic
+        if let episode = thread.episode, let anime = thread.anime {
+            threadController.initWithEpisode(episode, anime: anime)
+        } else {
+            threadController.initWithThread(thread)
         }
         
-        navigationController?.pushViewController(episodeThreadController, animated: true)
+        if InAppController.purchasedAnyPro() == nil {
+            threadController.interstitialPresentationPolicy = .Automatic
+        }
+        
+        navigationController?.pushViewController(threadController, animated: true)
     }
 }
 

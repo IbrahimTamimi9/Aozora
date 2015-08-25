@@ -14,6 +14,12 @@ public protocol CommentViewControllerDelegate: class {
     func commentViewControllerDidFinishedPosting(post: PFObject)
 }
 
+public enum ThreadType {
+    case Timeline
+    case Episode
+    case Custom
+}
+
 public class CommentViewController: UIViewController {
     
     @IBOutlet weak var textView: UITextView!
@@ -27,6 +33,8 @@ public class CommentViewController: UIViewController {
     @IBOutlet weak var videoCountLabel: UILabel!
     @IBOutlet weak var spoilersSwitch: UISwitch!
     
+    @IBOutlet weak var threadTitle: UITextField!
+    
     public weak var delegate: CommentViewControllerDelegate?
     
     var selectedImageData: ImageData?
@@ -37,31 +45,26 @@ public class CommentViewController: UIViewController {
     var postedIn: User!
     var parentPost: Postable?
     var thread: Thread?
-    var postType: PostType = .Timeline
+    var threadType: ThreadType = .Timeline
     var editingPost: PFObject?
-    
-    public enum PostType {
-        case Timeline
-        case Episode
-        case Anime
-        case Forum
-    }
+    var anime: Anime?
     
     public func initWithTimelinePost(delegate: CommentViewControllerDelegate?, postedIn: User, editingPost: PFObject? = nil, parentPost: Postable? = nil) {
         self.postedIn = postedIn
-        self.postType = .Timeline
+        self.threadType = .Timeline
         self.editingPost = editingPost
         self.delegate = delegate
         self.parentPost = parentPost
     }
     
-    public func initWithThread(thread: Thread, postType: PostType, delegate: CommentViewControllerDelegate?, editingPost: PFObject? = nil, parentPost: Postable? = nil) {
+    public func initWith(thread: Thread? = nil, threadType: ThreadType, delegate: CommentViewControllerDelegate?, editingPost: PFObject? = nil, parentPost: Postable? = nil, anime: Anime? = nil) {
         self.postedBy = User.currentUser()!
         self.thread = thread
-        self.postType = postType
+        self.threadType = threadType
         self.editingPost = editingPost
         self.delegate = delegate
         self.parentPost = parentPost
+        self.anime = anime
     }
     
     public override func viewDidLoad() {
@@ -69,27 +72,9 @@ public class CommentViewController: UIViewController {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
-        textView.becomeFirstResponder()
         
         photoCountLabel.hidden = true
         videoCountLabel.hidden = true
-        
-        if let editingPost = editingPost {
-            textView.text = editingPost["content"] as? String
-            if let parentPost = parentPost as? TimelinePostable {
-                inReply.text = "  Editing Reply to \(parentPost.userTimeline.aozoraUsername)"
-            } else {
-                inReply.text = "  Editing Post"
-            }
-            photoButton.hidden = true
-            videoButton.hidden = true
-        } else {
-            if let parentPost = parentPost as? TimelinePostable {
-                inReply.text = "  In Reply to \(parentPost.userTimeline.aozoraUsername)"
-            } else {
-                inReply.text = "  New Post"
-            }
-        }
     }
     
     public override func viewWillAppear(animated: Bool) {
@@ -138,92 +123,11 @@ public class CommentViewController: UIViewController {
             }, completion: nil)
     }
     
+    // MARK: - Override
     func performPost() {
-        
-        let content = textView.text
-        // Validate post
-        if count(content) < 2 {
-            presentBasicAlertWithTitle("Too Short", message: "Message should be a 3 characters or longer")
-            return
-        }
-        
-        self.sendButton.setTitle("Sending...", forState: .Normal)
-        self.sendButton.backgroundColor = UIColor.watching()
-        self.sendButton.userInteractionEnabled = false
-        
-        switch postType {
-        case .Timeline:
-            var timelinePost = TimelinePost()
-            timelinePost.content = content
-            timelinePost.edited = false
-            if let selectedImageData = selectedImageData {
-                timelinePost.images = [selectedImageData]
-            }
-            
-            if let youtubeID = selectedVideoID {
-                timelinePost.youtubeID = youtubeID
-            }
-            
-            if let parentPost = parentPost as? TimelinePostable {
-                timelinePost.replyLevel = 1
-                timelinePost.userTimeline = parentPost.userTimeline
-                timelinePost.parentPost = parentPost as? TimelinePost
-            } else {
-                timelinePost.replyLevel = 0
-                timelinePost.userTimeline = postedIn
-            }
-            
-            timelinePost.postedBy = postedBy
-            timelinePost.saveInBackgroundWithBlock({ (result, error) -> Void in
-                self.postedBy?.details.incrementKey("posts", byAmount: 1)
-                self.postedBy?.saveEventually()
-                self.completeRequest(timelinePost, error: error)
-            })
-            
-        case .Episode:
-            var post = Post()
-            post.content = textView.text
-            post.edited = false
-            
-            if let selectedImageData = selectedImageData {
-                post.images = [selectedImageData]
-            }
-            
-            if let youtubeID = selectedVideoID {
-                post.youtubeID = youtubeID
-            }
-            
-            if let parentPost = parentPost as? ThreadPostable {
-                post.replyLevel = 1
-                post.thread = parentPost.thread
-                post.parentPost = parentPost as? Post
-            } else {
-                post.replyLevel = 0
-                post.thread = thread!
-            }
-            post.thread.incrementKey("replies")
-            post.postedBy = postedBy
-            post.saveInBackgroundWithBlock({ (result, error) -> Void in
-                self.postedBy?.details.incrementKey("posts", byAmount: 1)
-                self.postedBy?.saveEventually()
-                self.completeRequest(post, error: error)
-            })
-            
-        default:
-            break;
-        }
     }
     
     func performUpdate(post: PFObject) {
-
-        if var post = post as? Postable {
-            post.content = textView.text
-            post.edited = true
-        }
-
-        post.saveInBackgroundWithBlock ({ (result, error) -> Void in
-            self.completeRequest(post, error: error)
-        })
     }
     
     func completeRequest(post: PFObject, error: NSError?) {

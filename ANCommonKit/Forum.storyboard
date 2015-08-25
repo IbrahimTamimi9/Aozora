@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="x4L-h4-vA7">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="x4L-h4-vA7">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -46,7 +46,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="61" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Fmw-jU-6m7">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="605"/>
                                 <color key="backgroundColor" red="0.97254902119999997" green="0.97254902119999997" blue="0.97254902119999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="YFv-zO-dUD">
                                     <rect key="frame" x="0.0" y="636" width="600" height="20"/>
@@ -140,7 +140,15 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="" id="IqJ-ss-AlO"/>
-                    <navigationItem key="navigationItem" id="tHl-vW-tHj"/>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="tHl-vW-tHj">
+                        <barButtonItem key="rightBarButtonItem" image="icon-create" id="IWt-6n-a33" userLabel="Create">
+                            <connections>
+                                <action selector="createAnimeThread:" destination="A6G-ah-oIs" id="bbz-1O-zrY"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="navigationBar" destination="tHl-vW-tHj" id="DYc-uQ-qWo"/>
                         <outlet property="navigationItem" destination="tHl-vW-tHj" id="O9d-Dl-4c8"/>
@@ -153,6 +161,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="icon-create" width="22" height="22"/>
         <image name="icon-forum-filled" width="25" height="25"/>
     </resources>
 </document>

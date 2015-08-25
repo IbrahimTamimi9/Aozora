@@ -251,7 +251,7 @@ public class ProfileViewController: ThreadViewController {
         super.replyToThreadPressed(sender)
         
         if let profile = userProfile where User.currentUserLoggedIn() {
-            let comment = ANParseKit.commentViewController()
+            let comment = ANParseKit.newPostViewController()
             comment.initWithTimelinePost(self, postedIn: profile)
             presentViewController(comment, animated: true, completion: nil)
         } else {

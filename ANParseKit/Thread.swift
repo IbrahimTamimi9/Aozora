@@ -28,11 +28,33 @@ public class Thread: PFObject, PFSubclassing {
     @NSManaged public var anime: Anime?
     @NSManaged public var startedBy: User?
     @NSManaged public var replies: Int
-    @NSManaged public var tags: [String]
+    @NSManaged public var tags: [PFObject]
     
-    @NSManaged public var content: String
+    @NSManaged public var content: String?
     @NSManaged public var hasSpoilers: Bool
     @NSManaged public var locked: Bool
-    @NSManaged public var images: [String]?
+    @NSManaged public var edited: Bool
     @NSManaged public var youtubeID: String?
+    
+    var imagesInternal: [ImageData]!
+    public var images: [ImageData] {
+        get {
+            if imagesInternal == nil {
+                imagesInternal = []
+                if let images = self["images"] as? [[String: AnyObject]] {
+                    for image in images {
+                        imagesInternal.append(ImageData.imageDataWithDictionary(image))
+                    }
+                }
+            }
+            return imagesInternal
+        }
+        set(value) {
+            var imagesRaw: [[String: AnyObject]] = []
+            for image in value {
+                imagesRaw.append(image.toDictionary())
+            }
+            self["images"] = imagesRaw
+        }
+    }
 }

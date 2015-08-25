@@ -65,6 +65,21 @@ public class Anime: PFObject, PFSubclassing {
     
     public var progress: AnimeProgress?
     
+    public func fanartURLString() -> String {
+        if let fanartUrl = fanart where count(fanartUrl) != 0 {
+            return fanartUrl
+        } else {
+            return imageUrl.stringByReplacingOccurrencesOfString(".jpg", withString: "l.jpg")
+        }
+    }
+    
+    public func informationString() -> String {
+        let episodes = (self.episodes != 0) ? self.episodes.description : "?"
+        let duration = (self.duration != 0) ? self.duration.description : "?"
+        let year = (self.year != 0) ? self.year.description : "?"
+        return "\(type) · \(ANParseKit.shortClassification(details.classification)) · \(episodes) eps · \(duration) min · \(year)"
+    }
+    
     // Episodes
     var cachedEpisodeList: [Episode] = []
     

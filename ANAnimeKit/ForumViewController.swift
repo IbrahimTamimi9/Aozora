@@ -11,6 +11,7 @@ import ANCommonKit
 import ANParseKit
 import Bolts
 import iAd
+import Parse
 
 extension ForumViewController: StatusBarVisibilityProtocol {
     func shouldHideStatusBar() -> Bool {
@@ -47,11 +48,24 @@ public class ForumViewController: AnimeBaseViewController {
     }
     
     func fetchAnimeRelatedThreads() {
+        // TODO: Delete this query
         let query = Thread.query()!
         query.whereKey("anime", equalTo: anime)
-        fetchController.configureWith(self, query: query, tableView: tableView, limit: 100)
+        
+        let query2 = Thread.query()!
+        query2.whereKey("tags", containedIn: [anime])
+        
+        let orQuery = PFQuery.orQueryWithSubqueries([query,query2])
+        orQuery.includeKey("tags")
+        orQuery.includeKey("anime")
+        fetchController.configureWith(self, query: orQuery, tableView: tableView, limit: 100)
     }
     
+    @IBAction func createAnimeThread(sender: AnyObject) {
+        let comment = ANParseKit.newThreadViewController()
+        comment.initWith(threadType: .Custom, delegate: self, anime: anime)
+        presentViewController(comment, animated: true, completion: nil)
+    }
 }
 
 extension ForumViewController: UITableViewDataSource {
@@ -67,9 +81,15 @@ extension ForumViewController: UITableViewDataSource {
         
         let thread = fetchController.objectAtIndex(indexPath.row) as! Thread
         let title = thread.title
-        //cell.typeLabel.text = topic.type == MALScrapper.TopicType.Sticky ? " " : ""
+        
+        if let _ = thread.episode {
+            cell.typeLabel.text = " "
+        } else {
+            cell.typeLabel.text = ""
+        }
+        
         cell.title.text = title
-        cell.information.text = " \(thread.replies) comments · \(thread.updatedAt!.timeAgo())"
+        cell.information.text = "\(thread.replies) comments · \(thread.updatedAt!.timeAgo())"
         cell.layoutIfNeeded()
         return cell
     }
@@ -85,22 +105,36 @@ extension ForumViewController: UITableViewDelegate {
             tabBar.disableDragDismiss()
         }
         
-        // TODO: Support Anime threads..
         let thread = fetchController.objectAtIndex(indexPath.row) as! Thread
         
-        let episodeThreadController = ANParseKit.episodeThreadViewController()
-        episodeThreadController.initWithEpisode(thread.episode!, anime: thread.anime!, postType: .Episode)
+        let controller: UIViewController!
         
-        if InAppController.purchasedAnyPro() == nil {
-            episodeThreadController.interstitialPresentationPolicy = .Automatic
+        let threadController = ANParseKit.customThreadViewController()
+        if let episode = thread.episode {
+            // Episode thread
+            threadController.initWithEpisode(thread.episode!, anime: thread.anime!)
+        } else {
+            // Custom thread
+            threadController.initWithThread(thread)
         }
         
-        navigationController?.pushViewController(episodeThreadController, animated: true)
+        controller = threadController
+        
+        if InAppController.purchasedAnyPro() == nil {
+            controller.interstitialPresentationPolicy = .Automatic
+        }
+        navigationController?.pushViewController(controller, animated: true)
     }
 }
 
 extension ForumViewController: FetchControllerDelegate {
     public func didFetchFor(#skip: Int) {
         self.loadingView.stopAnimating()
+    }
+}
+
+extension ForumViewController: CommentViewControllerDelegate {
+    public func commentViewControllerDidFinishedPosting(post: PFObject) {
+        fetchAnimeRelatedThreads()
     }
 }

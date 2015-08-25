@@ -36,8 +36,8 @@ public class FetchController {
     var defaultPage = 0
     var defaultLimit = 100
 
-    var tableView: UITableView?
-    var collectionView: UICollectionView?
+    weak var tableView: UITableView?
+    weak var collectionView: UICollectionView?
     var dataSource: [PFObject] = []
     var query: PFQuery?
     
@@ -176,7 +176,6 @@ public class FetchController {
                     // Insert rows
                     collectionView.performBatchUpdates({ () -> Void in
                         let endIndex = self.dataSource.count
-                        // TODO: Will crash here for posts
                         let startIndex = endIndex - result.count
                         var indexPathsToInsert: [NSIndexPath] = []
                         for index in startIndex..<endIndex {

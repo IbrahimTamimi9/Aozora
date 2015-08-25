@@ -139,10 +139,7 @@ public class AnimeInformationViewController: AnimeBaseViewController {
             }
             
             animeTitle.text = anime.title
-            let episodes = (anime.episodes != 0) ? anime.episodes.description : "?"
-            let duration = (anime.duration != 0) ? anime.duration.description : "?"
-            let year = (anime.year != 0) ? anime.year.description : "?"
-            tagsLabel.text = "\(anime.type) · \(ANAnimeKit.shortClassification(anime.details.classification)) · \(episodes) eps · \(duration) min · \(year)"
+            tagsLabel.text = anime.informationString()
             
             if let status = AnimeStatus(rawValue: anime.status) {
                 switch status {
@@ -164,13 +161,7 @@ public class AnimeInformationViewController: AnimeBaseViewController {
             popularityRankLabel.text = "#\(anime.popularityRank)"
             
             posterImageView.setImageFrom(urlString: anime.imageUrl)
-            
-            if let fanartUrl = anime.fanart where count(fanartUrl) != 0 {
-                fanartImageView.setImageFrom(urlString: fanartUrl)
-            } else {
-                let hdImage = anime.imageUrl.stringByReplacingOccurrencesOfString(".jpg", withString: "l.jpg")
-                fanartImageView.setImageFrom(urlString: hdImage)
-            }
+            fanartImageView.setImageFrom(urlString: anime.fanartURLString())
             
             if let youtubeID = anime.details.youtubeID where count(youtubeID) > 0 {
                 trailerButton.hidden = false

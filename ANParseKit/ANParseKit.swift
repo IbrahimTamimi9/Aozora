@@ -43,20 +43,43 @@ public class ANParseKit {
         return (navController, controller)
     }
     
-    public class func commentViewController() -> CommentViewController {
-        let controller = ANParseKit.commentStoryboard().instantiateInitialViewController() as! CommentViewController
+    public class func newPostViewController() -> NewPostViewController {
+        let controller = ANParseKit.commentStoryboard().instantiateViewControllerWithIdentifier("NewPost") as! NewPostViewController
         return controller
     }
     
-    public class func episodeThreadViewController() -> EpisodeThreadViewController {
-        let controller = ANParseKit.threadStoryboard().instantiateViewControllerWithIdentifier("EpisodeThread") as! EpisodeThreadViewController
+    public class func newThreadViewController() -> NewThreadViewController {
+        let controller = ANParseKit.commentStoryboard().instantiateViewControllerWithIdentifier("NewThread") as! NewThreadViewController
         return controller
-        
+    }
+    
+    public class func customThreadViewController() -> CustomThreadViewController {
+        let controller = ANParseKit.threadStoryboard().instantiateViewControllerWithIdentifier("CustomThread") as! CustomThreadViewController
+        return controller
     }
     
     public class func loginViewController() -> LoginViewController {
         let storyboard = UIStoryboard(name: "Login", bundle: ANParseKit.bundle())
         let loginController = storyboard.instantiateInitialViewController() as! LoginViewController
         return loginController
+    }
+    
+    public class func shortClassification(classification: String) -> String {
+        
+        switch classification {
+        case "None":
+            return "?"
+        case "G - All Ages":
+            return "G"
+        case "PG-13 - Teens 13 or older":
+            return "PG-13"
+        case "R - 17+ (violence & profanity)":
+            return "R17+"
+        case "Rx - Hentai":
+            return "Rx"
+        default:
+            return "?"
+        }
+        
     }
 }

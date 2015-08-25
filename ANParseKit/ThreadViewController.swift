@@ -12,7 +12,7 @@ import TTTAttributedLabel
 import XCDYouTubeKit
 import Parse
 
-// Class intended to be subclassedb
+// Class intended to be subclassed
 public class ThreadViewController: UIViewController {
    
     let FetchLimit = 20
@@ -28,16 +28,16 @@ public class ThreadViewController: UIViewController {
             }
         }
     }
-    var postType: CommentViewController.PostType!
+    var threadType: ThreadType!
     
     var fetchController = FetchController()
     var refreshControl = UIRefreshControl()
     var loadingView: LoaderView!
     var playerController: XCDYouTubeVideoPlayerViewController?
     
-    public func initWithThread(thread: Thread, postType: CommentViewController.PostType) {
+    public func initWithThread(thread: Thread) {
         self.thread = thread
-        self.postType = postType
+        self.threadType = .Custom
     }
     
     override public func viewDidLoad() {
@@ -58,6 +58,7 @@ public class ThreadViewController: UIViewController {
         } else {
             fetchThread()
         }
+        
     }
     
     func updateUIWithThread(thread: Thread) {
@@ -94,9 +95,9 @@ public class ThreadViewController: UIViewController {
     }
     
     func replyTo(post: Postable) {
-        let comment = ANParseKit.commentViewController()
+        let comment = ANParseKit.newPostViewController()
         if let post = post as? ThreadPostable, let thread = thread {
-            comment.initWithThread(thread, postType: postType, delegate: self, parentPost: post)
+            comment.initWith(thread: thread, threadType: threadType, delegate: self, parentPost: post)
             presentViewController(comment, animated: true, completion: nil)
         } else if let post = post as? TimelinePostable {
             comment.initWithTimelinePost(self, postedIn:post.userTimeline, parentPost: post)
@@ -219,20 +220,15 @@ extension ThreadViewController: UITableViewDataSource {
         }
         
         cell.textContent.text = post.content
-        if post.replies.count > 0 {
-            let buttonTitle = post.replies.count > 1 ? " \(post.replies.count) Comments" : " 1 Comment"
-            cell.replyButton.setTitle(buttonTitle, forState: .Normal)
-        } else {
-            cell.replyButton.setTitle(" Comment", forState: .Normal)
-        }
+        
+        let repliesTitle = repliesButtonTitle(post.replies.count)
+        cell.replyButton.setTitle(repliesTitle, forState: .Normal)
         
         updateAttributedTextProperties(cell.textContent)
-        if let image = post.images.first {
-            cell.imageHeightConstraint?.constant = view.bounds.size.width * CGFloat(image.height)/CGFloat(image.width)
-            cell.imageContent?.setImageFrom(urlString: image.url, animated: true)
-        }
         
-        prepareForVideo(cell.playButton, imageView: cell.imageContent, imageHeightConstraint: cell.imageHeightConstraint, post: post)
+        setImages(post.images, imageView: cell.imageContent, imageHeightConstraint: cell.imageHeightConstraint)
+        
+        prepareForVideo(cell.playButton, imageView: cell.imageContent, imageHeightConstraint: cell.imageHeightConstraint, youtubeID: post.youtubeID)
     }
     
     func updateCommentCell(cell: CommentCell, with post: Postable) {
@@ -261,16 +257,31 @@ extension ThreadViewController: UITableViewDataSource {
             cell.date.text = postedAgo
         }
         
-        if let image = post.images.first {
-            cell.imageHeightConstraint?.constant = (view.bounds.size.width-59.0) * CGFloat(image.height)/CGFloat(image.width)
-            cell.imageContent?.setImageFrom(urlString: image.url, animated: true)
-        }
-        prepareForVideo(cell.playButton, imageView: cell.imageContent, imageHeightConstraint: cell.imageHeightConstraint, post: post)
+        setImages(post.images, imageView: cell.imageContent, imageHeightConstraint: cell.imageHeightConstraint)
+        
+        prepareForVideo(cell.playButton, imageView: cell.imageContent, imageHeightConstraint: cell.imageHeightConstraint, youtubeID: post.youtubeID)
     }
     
-    func prepareForVideo(playButton: UIButton?, imageView: UIImageView?, imageHeightConstraint: NSLayoutConstraint?, post: Postable) {
+    func setImages(images: [ImageData], imageView: UIImageView?, imageHeightConstraint: NSLayoutConstraint?) {
+        if let image = images.first {
+            imageHeightConstraint?.constant = (view.bounds.size.width-59.0) * CGFloat(image.height)/CGFloat(image.width)
+            imageView?.setImageFrom(urlString: image.url, animated: true)
+        } else {
+            imageHeightConstraint?.constant = 0
+        }
+    }
+    
+    func repliesButtonTitle(repliesCount: Int) -> String {
+        if repliesCount > 0 {
+            return repliesCount > 1 ? " \(repliesCount) Comments" : " 1 Comment"
+        } else {
+            return " Comment"
+        }
+    }
+    
+    func prepareForVideo(playButton: UIButton?, imageView: UIImageView?, imageHeightConstraint: NSLayoutConstraint?, youtubeID: String?) {
         if let playButton = playButton {
-            if let youtubeID = post.youtubeID {
+            if let youtubeID = youtubeID {
                 
                 let urlString = "https://i.ytimg.com/vi/\(youtubeID)/mqdefault.jpg"
                 imageView?.setImageFrom(urlString: urlString, animated: true)
@@ -324,11 +335,11 @@ extension ThreadViewController: UITableViewDelegate {
             var alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
             
             alert.addAction(UIAlertAction(title: "Edit", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
-                let comment = ANParseKit.commentViewController()
+                let comment = ANParseKit.newPostViewController()
                 if let post = post as? TimelinePost {
                     comment.initWithTimelinePost(self, postedIn:User.currentUser()!, editingPost: post)
                 } else if let post = post as? Post, let thread = self.thread {
-                    comment.initWithThread(thread, postType: self.postType, delegate: self, editingPost: post)
+                    comment.initWith(thread: thread, threadType: self.threadType, delegate: self, editingPost: post)
                 }
                 self.presentViewController(comment, animated: true, completion: nil)
             }))
@@ -397,13 +408,11 @@ extension ThreadViewController: TTTAttributedLabelDelegate {
                     presentViewController(navController, animated: true, completion: nil)
                 }
             
-        } else {
+        } else if let scheme = url.scheme where scheme != "aozoraapp" {
             let (navController, webController) = ANCommonKit.webViewController()
             webController.initWithTitle(url.absoluteString!, initialUrl: url)
             presentViewController(navController, animated: true, completion: nil)
         }
-        
-        
     }
 }
 
