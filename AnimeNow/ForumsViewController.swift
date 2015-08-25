@@ -71,10 +71,10 @@ class ForumsViewController: UIViewController {
         switch selectedList {
         case .Recent:
             navigationBarTitle.text = "Recent Threads"
-            fetchThreads(selectedList)
+            fetchThreads()
         case .New:
             navigationBarTitle.text = "New Threads"
-            fetchThreads(selectedList)
+            fetchThreads()
         case .Tag:
             if let tag = selectedTag {
                 if let anime = tag as? Anime {
@@ -110,7 +110,7 @@ class ForumsViewController: UIViewController {
     
     // MARK: - Fetching
     
-    func fetchThreads(selectedList: SelectedList) {
+    func fetchThreads() {
         let query = Thread.query()!
         query.whereKey("replies", greaterThan: 0)
         query.whereKeyExists("episode")
@@ -145,12 +145,9 @@ class ForumsViewController: UIViewController {
     func fetchThreadTags() {
         let query = ThreadTag.query()!
         query.orderByAscending("order")
-        query.findObjectsInBackgroundWithBlock { (result, error) -> Void in
-            if let error = error {
-                // Show error
-            } else {
-                self.tagsDataSource = result as! [ThreadTag]
-            }
+        query.findCachedOrNetwork(AllThreadTagsPin, expirationDays: 1).continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
+            self.tagsDataSource = task.result as! [ThreadTag]
+            return nil
         }
     }
     

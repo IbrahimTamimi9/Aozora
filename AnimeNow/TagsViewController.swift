@@ -16,6 +16,8 @@ protocol TagsViewControllerDelegate: class {
     func tagsViewControllerSelected(#tags: [PFObject])
 }
 
+public let AllThreadTagsPin = "Pin.ThreadTag"
+
 public class TagsViewController: UIViewController {
     
     @IBOutlet weak var searchBar: UISearchBar!
@@ -60,14 +62,14 @@ public class TagsViewController: UIViewController {
         
         let query = ThreadTag.query()!
         query.orderByAscending("order")
-        query.findObjectsInBackgroundWithBlock { (result, error) -> Void in
-            if let _ = error {
-                // Show error
-            } else {
-                self.dataSource = result as! [ThreadTag]
+        query.findCachedOrNetwork(AllThreadTagsPin, expirationDays: 1).continueWithExecutor(BFExecutor.mainThreadExecutor(),
+            withSuccessBlock: { (task: BFTask!) -> AnyObject! in
+                
+                self.dataSource = task.result as! [ThreadTag]
                 self.collectionView.reloadData()
-            }
-        }
+                
+            return nil
+        })
     }
     
     func fetchAnimeTags(text: String) {
