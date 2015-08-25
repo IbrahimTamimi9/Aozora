@@ -67,11 +67,6 @@ public class ProfileViewController: ThreadViewController {
         if let profile = userProfile where profile.details.isDataAvailable() {
             updateFollowingButtons()
         }
-        
-        if loadingView.animating == false {
-            loadingView.stopAnimating()
-            tableView.animateFadeIn()
-        }
     }
     
     func sizeHeaderToFit() {
