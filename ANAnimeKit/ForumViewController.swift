@@ -108,23 +108,18 @@ extension ForumViewController: UITableViewDelegate {
         
         let thread = fetchController.objectAtIndex(indexPath.row) as! Thread
         
-        let controller: UIViewController!
-        
         let threadController = ANParseKit.customThreadViewController()
-        if let episode = thread.episode {
-            // Episode thread
-            threadController.initWithEpisode(thread.episode!, anime: thread.anime!)
+        if let episode = thread.episode, let anime = thread.anime  {
+            threadController.initWithEpisode(episode, anime: anime)
         } else {
-            // Custom thread
             threadController.initWithThread(thread)
         }
         
-        controller = threadController
-        
         if InAppController.purchasedAnyPro() == nil {
-            controller.interstitialPresentationPolicy = .Automatic
+            threadController.interstitialPresentationPolicy = .Automatic
         }
-        navigationController?.pushViewController(controller, animated: true)
+        
+        navigationController?.pushViewController(threadController, animated: true)
     }
 }
 
