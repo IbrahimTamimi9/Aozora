@@ -71,6 +71,15 @@ public class TimelinePost: PFObject, PFSubclassing, TimelinePostable {
         }
     }
     
+    public var hasSpoilers: Bool {
+        get {
+            return self["hasSpoilers"] as? Bool ?? false
+        }
+        set(value) {
+            self["hasSpoilers"] = value
+        }
+    }
+    
     public var content: String {
         get {
             return self["content"] as? String ?? ""
@@ -127,6 +136,16 @@ public class TimelinePost: PFObject, PFSubclassing, TimelinePostable {
         }
         set(value) {
             repliesInternal = value
+        }
+    }
+    
+    var isSpoilerHiddenInternal = true
+    public var isSpoilerHidden: Bool {
+        get {
+            return isSpoilerHiddenInternal
+        }
+        set(value) {
+            isSpoilerHiddenInternal = value
         }
     }
     

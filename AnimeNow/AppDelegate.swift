@@ -77,10 +77,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         LibrarySyncController.sharedInstance.syncParseInformation()
-        
         return true
     }
 
+//    func addEnglishTitles() {
+//        let query = Anime.query()!
+//        query.includeKey("details")
+//        query.selectKeys(["details"])
+//        
+//        AnimeService.findAllObjectsWith(query: query).continueWithBlock { (task: BFTask!) -> AnyObject! in
+//            
+//            var sequence = BFTask(result: nil);
+//            var result = task.result as! [Anime]
+//        
+//            for anime in result {
+//                sequence = sequence.continueWithBlock {
+//                    (task: BFTask!) -> AnyObject! in
+//
+//                    if let englishTitle = anime.details.englishTitles.first {
+//                        anime.titleEnglish = englishTitle
+//                    }
+//                    return anime.saveInBackground()
+//                    
+//                }.continueWithBlock {
+//                (task: BFTask!) -> AnyObject! in
+//                    if (task.exception != nil) {
+//                        println(task.exception)
+//                    }
+//                    return nil
+//                }
+//            }
+//            return sequence
+//        }
+//    }
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.

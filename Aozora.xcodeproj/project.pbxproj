@@ -192,9 +192,7 @@
 		DACE77C21B294D7B00037486 /* NSDate+AniNow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACE77C11B294D7B00037486 /* NSDate+AniNow.swift */; };
 		DACE77C41B29517F00037486 /* AnimeRelation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACE77C31B29517F00037486 /* AnimeRelation.swift */; };
 		DAD3909E1B6C2F35000A84DE /* PostImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DAD3909D1B6C2F35000A84DE /* PostImageCell.xib */; };
-		DAD390A01B6C300C000A84DE /* ViewPreviousCommentsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DAD3909F1B6C300C000A84DE /* ViewPreviousCommentsCell.xib */; };
 		DAD390A21B6C303D000A84DE /* CommentTextCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DAD390A11B6C303D000A84DE /* CommentTextCell.xib */; };
-		DAD390A41B6C3216000A84DE /* ViewPreviousCommentsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD390A31B6C3216000A84DE /* ViewPreviousCommentsCell.swift */; };
 		DAD390A61B6C322A000A84DE /* WriteACommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD390A51B6C322A000A84DE /* WriteACommentCell.swift */; };
 		DAD67DFD1B726724000BB325 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD67DFC1B726724000BB325 /* User.swift */; };
 		DAD67E041B7292D6000BB325 /* Resources.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAC3F3E01B5E989E001D6072 /* Resources.xcassets */; };
@@ -545,9 +543,7 @@
 		DACE77C11B294D7B00037486 /* NSDate+AniNow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDate+AniNow.swift"; sourceTree = "<group>"; };
 		DACE77C31B29517F00037486 /* AnimeRelation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeRelation.swift; sourceTree = "<group>"; };
 		DAD3909D1B6C2F35000A84DE /* PostImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostImageCell.xib; sourceTree = "<group>"; };
-		DAD3909F1B6C300C000A84DE /* ViewPreviousCommentsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ViewPreviousCommentsCell.xib; sourceTree = "<group>"; };
 		DAD390A11B6C303D000A84DE /* CommentTextCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentTextCell.xib; sourceTree = "<group>"; };
-		DAD390A31B6C3216000A84DE /* ViewPreviousCommentsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewPreviousCommentsCell.swift; sourceTree = "<group>"; };
 		DAD390A51B6C322A000A84DE /* WriteACommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WriteACommentCell.swift; sourceTree = "<group>"; };
 		DAD67DFC1B726724000BB325 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		DAD67DFF1B7275F0000BB325 /* Comment.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Comment.storyboard; sourceTree = "<group>"; };
@@ -1133,7 +1129,6 @@
 				DAD3909D1B6C2F35000A84DE /* PostImageCell.xib */,
 				DAD390A11B6C303D000A84DE /* CommentTextCell.xib */,
 				DA897F8A1B6D203D00A9510C /* CommentImageCell.xib */,
-				DAD3909F1B6C300C000A84DE /* ViewPreviousCommentsCell.xib */,
 				DA897F881B6D1FCC00A9510C /* WriteACommentCell.xib */,
 			);
 			name = Views;
@@ -1145,7 +1140,6 @@
 			children = (
 				DAC077BB1B6894670067DA90 /* PostCell.swift */,
 				DAC077A61B6890830067DA90 /* CommentCell.swift */,
-				DAD390A31B6C3216000A84DE /* ViewPreviousCommentsCell.swift */,
 				DAD390A51B6C322A000A84DE /* WriteACommentCell.swift */,
 			);
 			name = Subclasses;
@@ -1753,7 +1747,6 @@
 				DAC077B31B6891140067DA90 /* PostTextCell.xib in Resources */,
 				DA897F891B6D1FCC00A9510C /* WriteACommentCell.xib in Resources */,
 				DAFD60B71B278459007275C1 /* Action.storyboard in Resources */,
-				DAD390A01B6C300C000A84DE /* ViewPreviousCommentsCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2057,7 +2050,6 @@
 				DAFD60B51B278452007275C1 /* ActionListViewController.swift in Sources */,
 				DAFD60BB1B27845F007275C1 /* LoaderView.swift in Sources */,
 				DAC027CF1B2A1C3F0085C91A /* ZFModalTransitionAnimator.m in Sources */,
-				DAD390A41B6C3216000A84DE /* ViewPreviousCommentsCell.swift in Sources */,
 				DA0B261C1B758CED00A770AE /* UIImage+Resize.swift in Sources */,
 				DAFD60C11B27847E007275C1 /* ANCommonKit.swift in Sources */,
 				DA823D8D1B326940005C7AFD /* InAppBrowserViewController.swift in Sources */,

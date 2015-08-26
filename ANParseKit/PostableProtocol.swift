@@ -18,6 +18,8 @@ public protocol Postable {
     var edited: Bool { get set }
     var content: String { get set }
     var replyLevel: Int { get set }
+    var hasSpoilers: Bool { get set }
+    var isSpoilerHidden: Bool { get set }
     
     var parentPost: PFObject? { get }
     var images: [ImageData] { get }
@@ -31,5 +33,4 @@ public protocol TimelinePostable: Postable {
 
 public protocol ThreadPostable: Postable {
     var thread: Thread { get set }
-    var hasSpoilers: Bool { get set }
 }

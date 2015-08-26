@@ -71,16 +71,22 @@ class SearchViewController: UIViewController {
         var query: PFQuery!
         
         if searchBar.selectedScopeButtonIndex != SearchScope.Users.rawValue {
-            query = Anime.query()!
-            query.limit = 20
-            query.whereKey("title", matchesRegex: text, modifiers: "i")
-            query.orderByAscending("popularityRank")
+            let query1 = Anime.query()!
+            query1.whereKey("title", matchesRegex: text, modifiers: "i")
+
+            let query2 = Anime.query()!
+            query2.whereKey("titleEnglish", matchesRegex: text, modifiers: "i")
+            
+            let orQuery = PFQuery.orQueryWithSubqueries([query1, query2])
+            orQuery.limit = 40
+            orQuery.orderByAscending("popularityRank")
             if searchBar.selectedScopeButtonIndex == SearchScope.MyLibrary.rawValue {
-                query.fromLocalDatastore()
+                orQuery.fromLocalDatastore()
             }
+            query = orQuery
         } else {
             query = User.query()!
-            query.limit = 20
+            query.limit = 40
             query.whereKey("aozoraUsername", matchesRegex: text, modifiers: "i")
             query.orderByAscending("aozoraUsername")
         }

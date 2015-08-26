@@ -33,6 +33,7 @@ public class Anime: PFObject, PFSubclassing {
     @NSManaged public var traktID: Int
     @NSManaged public var traktSlug: String
     @NSManaged public var title: String?
+    @NSManaged public var titleEnglish: String?
     @NSManaged public var type: String
     @NSManaged public var episodes: Int
     

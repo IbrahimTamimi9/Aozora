@@ -139,4 +139,15 @@ public class Post: PFObject, PFSubclassing, ThreadPostable {
             repliesInternal = value
         }
     }
+    
+    var isSpoilerHiddenInternal = true
+    public var isSpoilerHidden: Bool {
+        get {
+            return isSpoilerHiddenInternal
+        }
+        set(value) {
+            isSpoilerHiddenInternal = value
+        }
+    }
+    
 }

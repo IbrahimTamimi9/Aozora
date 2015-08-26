@@ -217,14 +217,20 @@ extension ThreadViewController: UITableViewDataSource {
             cell.date.text = postedAgo
         }
         
-        cell.textContent.text = post.content
+        if post.hasSpoilers && post.isSpoilerHidden {
+            cell.textContent.text = "Show Spoilers"
+            cell.imageHeightConstraint?.constant = 0
+        } else {
+            cell.textContent.text = post.content
+            setImages(post.images, imageView: cell.imageContent, imageHeightConstraint: cell.imageHeightConstraint)
+        }
         
         let repliesTitle = repliesButtonTitle(post.replies.count)
         cell.replyButton.setTitle(repliesTitle, forState: .Normal)
         
         updateAttributedTextProperties(cell.textContent)
         
-        setImages(post.images, imageView: cell.imageContent, imageHeightConstraint: cell.imageHeightConstraint)
+        
         
         prepareForVideo(cell.playButton, imageView: cell.imageContent, imageHeightConstraint: cell.imageHeightConstraint, youtubeID: post.youtubeID)
     }
@@ -234,7 +240,16 @@ extension ThreadViewController: UITableViewDataSource {
         if let postedBy = post.postedBy, let avatarFile = postedBy.avatarThumb  {
             
             let username = postedBy.aozoraUsername
-            let content = username + " " + post.content
+            var content = username + " "
+            
+            if post.hasSpoilers && post.isSpoilerHidden {
+                content += "Show Spoilers"
+                cell.imageHeightConstraint?.constant = 0
+            } else {
+                content += post.content
+                setImages(post.images, imageView: cell.imageContent, imageHeightConstraint: cell.imageHeightConstraint)
+            }
+            
             cell.avatar.setImageWithPFFile(avatarFile)
             
             updateAttributedTextProperties(cell.textContent)
@@ -254,8 +269,6 @@ extension ThreadViewController: UITableViewDataSource {
             postedAgo += " · Edited"
             cell.date.text = postedAgo
         }
-        
-        setImages(post.images, imageView: cell.imageContent, imageHeightConstraint: cell.imageHeightConstraint)
         
         prepareForVideo(cell.playButton, imageView: cell.imageContent, imageHeightConstraint: cell.imageHeightConstraint, youtubeID: post.youtubeID)
     }
@@ -312,13 +325,25 @@ extension ThreadViewController: UITableViewDelegate {
     
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        let post = fetchController.objectAtIndex(indexPath.section) as! Postable
+        var post = fetchController.objectAtIndex(indexPath.section) as! Postable
         
         if indexPath.row == 0 {
-            showSheetFor(post: post)
+            if post.hasSpoilers && post.isSpoilerHidden == true {
+                post.isSpoilerHidden = false
+                tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+            } else {
+                showSheetFor(post: post)
+            }
+            
         } else if indexPath.row <= post.replies.count {
-            if let comment = post.replies[indexPath.row - 1] as? Postable {
-                showSheetFor(post: comment, parentPost: post)
+            if var comment = post.replies[indexPath.row - 1] as? Postable {
+                if comment.hasSpoilers && comment.isSpoilerHidden == true {
+                    comment.isSpoilerHidden = false
+                    tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+                } else {
+                    showSheetFor(post: comment, parentPost: post)
+                }
+
             }
         } else {
             // Write a comment cell

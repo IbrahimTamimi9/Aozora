@@ -12,12 +12,27 @@ import Bolts
 
 public class NewPostViewController: CommentViewController {
     
+    @IBOutlet weak var spoilersButton: UIButton!
+    
+    var hasSpoilers = false {
+        didSet {
+            if hasSpoilers {
+                spoilersButton.setTitle(" Spoilers", forState: .Normal)
+                spoilersButton.setTitleColor(UIColor.dropped(), forState: .Normal)
+            } else {
+                spoilersButton.setTitle("No Spoilers", forState: .Normal)
+                spoilersButton.setTitleColor(UIColor(white: 0.75, alpha: 1.0), forState: .Normal)
+            }
+        }
+    }
+    
     public override func viewDidLoad() {
         super.viewDidLoad()
         
         textView.becomeFirstResponder()
         
         if let editingPost = editingPost {
+            hasSpoilers = (editingPost as! Postable).hasSpoilers
             textView.text = editingPost["content"] as? String
             if let parentPost = parentPost as? TimelinePostable {
                 inReply.text = "  Editing Reply to \(parentPost.userTimeline.aozoraUsername)"
@@ -34,7 +49,7 @@ public class NewPostViewController: CommentViewController {
             }
         }
     }
-    
+
     override func performPost() {
         super.performPost()
         
@@ -51,6 +66,7 @@ public class NewPostViewController: CommentViewController {
             var timelinePost = TimelinePost()
             timelinePost.content = textView.text
             timelinePost.edited = false
+            timelinePost.hasSpoilers = hasSpoilers
             if let selectedImageData = selectedImageData {
                 timelinePost.images = [selectedImageData]
             }
@@ -79,7 +95,7 @@ public class NewPostViewController: CommentViewController {
             var post = Post()
             post.content = textView.text
             post.edited = false
-            
+            post.hasSpoilers = hasSpoilers
             if let selectedImageData = selectedImageData {
                 post.images = [selectedImageData]
             }
@@ -109,6 +125,7 @@ public class NewPostViewController: CommentViewController {
     override func performUpdate(post: PFObject) {
         super.performUpdate(post)
         if var post = post as? Postable {
+            post.hasSpoilers = hasSpoilers
             post.content = textView.text
             post.edited = true
         }
@@ -126,5 +143,12 @@ public class NewPostViewController: CommentViewController {
             return false
         }
         return true
+    }
+  
+    // MARK: - IBActions
+    
+    @IBAction func spoilersButtonPressed(sender: AnyObject) {
+        
+        hasSpoilers = !hasSpoilers
     }
 }
