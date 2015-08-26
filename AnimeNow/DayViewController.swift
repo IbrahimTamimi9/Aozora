@@ -234,6 +234,17 @@ extension DayViewController: LibraryAnimeCellDelegate {
             collectionView.reloadItemsAtIndexPaths([indexPath])
         }
     }
+    
+    func cellPressedEpisodeThread(cell: LibraryAnimeCell, anime: Anime, episode: Episode) {
+        let threadController = ANParseKit.customThreadViewController()
+        threadController.initWithEpisode(episode, anime: anime)
+        
+        if InAppController.purchasedAnyPro() == nil {
+            threadController.interstitialPresentationPolicy = .Automatic
+        }
+        
+        navigationController?.pushViewController(threadController, animated: true)
+    }
 }
 
 extension DayViewController: XLPagerTabStripChildItem {

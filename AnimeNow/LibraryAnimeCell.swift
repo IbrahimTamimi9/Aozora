@@ -14,11 +14,13 @@ import Bolts
 
 protocol LibraryAnimeCellDelegate: class {
     func cellPressedWatched(cell: LibraryAnimeCell, anime: Anime)
+    func cellPressedEpisodeThread(cell: LibraryAnimeCell, anime: Anime, episode: Episode)
 }
 class LibraryAnimeCell: AnimeCell {
     
     weak var delegate: LibraryAnimeCellDelegate?
     var anime: Anime?
+    weak var episode: Episode?
     var currentCancellationToken: NSOperation?
     
     @IBOutlet weak var userProgressLabel: UILabel!
@@ -36,6 +38,14 @@ class LibraryAnimeCell: AnimeCell {
         }
         
         delegate?.cellPressedWatched(self, anime:anime!)
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: "pressedEpisodeImageView:")
+        gestureRecognizer.numberOfTouchesRequired = 1
+        gestureRecognizer.numberOfTapsRequired = 1
+        episodeImageView.addGestureRecognizer(gestureRecognizer)
     }
     
     override class func registerNibFor(#collectionView: UICollectionView, style: CellStyle, reuseIdentifier: String) {
@@ -100,6 +110,7 @@ class LibraryAnimeCell: AnimeCell {
                 let nextEpisode = nextEpisode where episodes.count > nextEpisode {
                 
                 let episode = episodes[nextEpisode]
+                self.episode = episode
                 self.episodeImageView.setImageFrom(urlString: episode.imageURLString())
                 
             } else {
@@ -107,6 +118,14 @@ class LibraryAnimeCell: AnimeCell {
             }
             return nil
         })
+    }
+    
+    // MARK: - IBActions
+    
+    func pressedEpisodeImageView(sender: AnyObject) {
+        if let anime = anime, let episode = episode {
+            delegate?.cellPressedEpisodeThread(self, anime: anime, episode: episode)
+        }
     }
 
 }

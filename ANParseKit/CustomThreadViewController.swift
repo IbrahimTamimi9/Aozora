@@ -158,6 +158,7 @@ public class CustomThreadViewController: ThreadViewController {
         
         query.includeKey("anime")
         query.includeKey("startedBy")
+        query.includeKey("tags")
         query.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
             
             if let error = error {

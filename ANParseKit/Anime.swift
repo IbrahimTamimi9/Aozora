@@ -140,7 +140,6 @@ public class Anime: PFObject, PFSubclassing {
         return episodesQuery.findObjectsInBackground()
     }
     
-    
     // ETA
     
     public var nextEpisode: Int? {
