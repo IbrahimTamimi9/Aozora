@@ -30,7 +30,7 @@ public class User: PFUser, PFSubclassing {
     @NSManaged public var details: UserDetails
     
     public func following() -> PFRelation {
-        return self["following"] as! PFRelation
+        return self.relationForKey("following")
     }
 
     public override class func currentUser() -> User? {
