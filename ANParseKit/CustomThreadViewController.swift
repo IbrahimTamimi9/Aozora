@@ -166,20 +166,21 @@ public class CustomThreadViewController: ThreadViewController {
                 self.thread = thread
             } else if let episode = self.episode, let anime = self.anime where self.threadType == ThreadType.Episode {
                 
-                let releaseDiscussionTag = ThreadTag(withoutDataWithObjectId: "RJsWGXGsBQ")
-                let animeTag = ThreadTag(withoutDataWithObjectId: "6Yv0cRDTfc")
-                
                 // Create episode threads lazily
-                let thread = Thread()
-                thread.episode = episode
-                thread.anime = anime
-                thread.locked = false
-                thread.replies = 0
-                thread.tags = [anime, releaseDiscussionTag, animeTag]
-                thread.title = "\(anime.title!) - Episode \(episode.number)"
-                thread.saveInBackgroundWithBlock({ (result, error) -> Void in
-                    if result {
-                        self.thread = thread
+                let parameters = [
+                    "animeID":anime.objectId!,
+                    "episodeID":episode.objectId!,
+                    "animeTitle": anime.title!,
+                    "episodeNumber": episode.number
+                ] as [String : AnyObject]
+                
+                PFCloud.callFunctionInBackground("createEpisodeThread", withParameters: parameters, block: { (result, error) -> Void in
+                    
+                    if let _ = error {
+                        
+                    } else {
+                        println("Created episode thread")
+                        self.fetchThread()
                     }
                 })
             }
