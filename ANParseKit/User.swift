@@ -66,4 +66,9 @@ public class User: PFUser, PFSubclassing {
         return User.currentUser()!.myAnimeListPassword != nil
     }
     
+    public func incrementPostCount() {
+        details.incrementKey("posts", byAmount: 1)
+        details.saveEventually()
+    }
+    
 }

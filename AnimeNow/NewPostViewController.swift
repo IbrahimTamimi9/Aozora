@@ -86,8 +86,7 @@ public class NewPostViewController: CommentViewController {
             
             timelinePost.postedBy = postedBy
             timelinePost.saveInBackgroundWithBlock({ (result, error) -> Void in
-                self.postedBy?.details.incrementKey("posts", byAmount: 1)
-                self.postedBy?.saveEventually()
+                self.postedBy?.incrementPostCount()
                 self.completeRequest(timelinePost, error: error)
             })
             
@@ -115,8 +114,7 @@ public class NewPostViewController: CommentViewController {
             post.thread.incrementKey("replies")
             post.postedBy = postedBy
             post.saveInBackgroundWithBlock({ (result, error) -> Void in
-                self.postedBy?.details.incrementKey("posts", byAmount: 1)
-                self.postedBy?.saveEventually()
+                self.postedBy?.incrementPostCount()
                 self.completeRequest(post, error: error)
             })
         }
