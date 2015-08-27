@@ -131,16 +131,31 @@
                                             <color key="textColor" red="0.18823529780000001" green="0.19607843459999999" blue="0.23529411850000001" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n6c-gu-qnc" userLabel="MoreButton">
+                                            <rect key="frame" x="562" y="191" width="30" height="25"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="30" id="M5v-O9-T65"/>
+                                                <constraint firstAttribute="height" constant="25" id="jxk-aQ-jp6"/>
+                                            </constraints>
+                                            <state key="normal" image="icon-more-darker">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="editThread:" destination="8jA-5m-8Uw" eventType="touchUpInside" id="w7G-ww-kSo"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                     <color key="backgroundColor" red="0.97254902119999997" green="0.97254902119999997" blue="0.97254902119999997" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstItem="PPE-Sl-fKl" firstAttribute="leading" secondItem="vqq-Qs-fOq" secondAttribute="leading" id="4BY-as-k6g"/>
                                         <constraint firstItem="Fij-H7-TJE" firstAttribute="top" secondItem="PPE-Sl-fKl" secondAttribute="bottom" constant="8" id="79s-mN-jEs"/>
+                                        <constraint firstItem="n6c-gu-qnc" firstAttribute="top" secondItem="vqq-Qs-fOq" secondAttribute="top" constant="191" id="7w8-9i-Etm"/>
                                         <constraint firstItem="wyq-NM-QVH" firstAttribute="top" secondItem="PPE-Sl-fKl" secondAttribute="bottom" constant="13" id="8To-0T-VHX"/>
                                         <constraint firstAttribute="trailing" secondItem="wyq-NM-QVH" secondAttribute="trailing" constant="8" id="8wj-xg-hAh"/>
                                         <constraint firstItem="aEv-eL-xII" firstAttribute="centerX" secondItem="PPE-Sl-fKl" secondAttribute="centerX" id="A00-gn-Q2P"/>
                                         <constraint firstItem="56s-GO-BXr" firstAttribute="top" secondItem="2DU-49-vOb" secondAttribute="bottom" constant="4" id="ByS-7o-wA7"/>
                                         <constraint firstItem="Fij-H7-TJE" firstAttribute="centerY" secondItem="wyq-NM-QVH" secondAttribute="centerY" constant="6.25" id="Dsr-zy-SbA"/>
+                                        <constraint firstItem="n6c-gu-qnc" firstAttribute="centerY" secondItem="wyq-NM-QVH" secondAttribute="centerY" constant="0.25" id="E1r-PX-07I"/>
                                         <constraint firstItem="eWc-RE-BVZ" firstAttribute="top" secondItem="Fij-H7-TJE" secondAttribute="bottom" constant="12" id="KCj-0a-6eA"/>
                                         <constraint firstItem="Fij-H7-TJE" firstAttribute="leading" secondItem="vqq-Qs-fOq" secondAttribute="leading" constant="8" id="OdN-qn-hZG"/>
                                         <constraint firstAttribute="trailing" secondItem="eWc-RE-BVZ" secondAttribute="trailing" constant="10" id="SIU-Bp-dcV"/>
@@ -152,6 +167,7 @@
                                         <constraint firstItem="PPE-Sl-fKl" firstAttribute="top" secondItem="vqq-Qs-fOq" secondAttribute="top" id="dHq-0X-qgb"/>
                                         <constraint firstItem="Fxk-ZV-cyf" firstAttribute="leading" secondItem="Fij-H7-TJE" secondAttribute="trailing" constant="8" id="dQo-pl-N2e"/>
                                         <constraint firstAttribute="trailing" secondItem="2DU-49-vOb" secondAttribute="trailing" constant="8" id="dTj-zt-hBB"/>
+                                        <constraint firstAttribute="trailing" secondItem="n6c-gu-qnc" secondAttribute="trailing" constant="8" id="euN-GH-qUr"/>
                                         <constraint firstItem="56s-GO-BXr" firstAttribute="leading" secondItem="vqq-Qs-fOq" secondAttribute="leading" constant="9" id="fgn-Cc-faU"/>
                                         <constraint firstItem="2DU-49-vOb" firstAttribute="leading" secondItem="vqq-Qs-fOq" secondAttribute="leading" constant="8" id="iMk-CB-PyY"/>
                                         <constraint firstItem="2DU-49-vOb" firstAttribute="top" secondItem="qHF-Vg-b4h" secondAttribute="bottom" constant="12" id="kE0-fO-bkb"/>
@@ -165,6 +181,7 @@
                                         <mask key="constraints">
                                             <exclude reference="Dsr-zy-SbA"/>
                                             <exclude reference="KCj-0a-6eA"/>
+                                            <exclude reference="7w8-9i-Etm"/>
                                         </mask>
                                     </variation>
                                 </view>
@@ -203,6 +220,7 @@
                         <outlet property="commentsButton" destination="56s-GO-BXr" id="wVU-Xs-A2t"/>
                         <outlet property="imageContent" destination="PPE-Sl-fKl" id="6N6-Jh-mRq"/>
                         <outlet property="imageHeightConstraint" destination="OHr-L0-5zK" id="oJo-vO-ftO"/>
+                        <outlet property="moreButton" destination="n6c-gu-qnc" id="tcL-ym-igZ"/>
                         <outlet property="playButton" destination="aEv-eL-xII" id="Bxk-ab-XHD"/>
                         <outlet property="postedDate" destination="Fxk-ZV-cyf" id="rAx-Qm-UkY"/>
                         <outlet property="tableView" destination="TuD-tp-4eV" id="FoO-Ev-RY7"/>
@@ -229,6 +247,7 @@
     </scenes>
     <resources>
         <image name="icon-create" width="22" height="22"/>
+        <image name="icon-more-darker" width="25" height="25"/>
         <image name="icon-play" width="50" height="50"/>
     </resources>
 </document>

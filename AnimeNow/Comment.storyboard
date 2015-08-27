@@ -566,7 +566,6 @@
                                         </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="addTags:" destination="doA-zG-TTf" eventType="touchUpInside" id="qgT-mO-s4a"/>
-                                            <action selector="sendPressed:" destination="doA-zG-TTf" eventType="touchUpInside" id="SyS-fN-SLK"/>
                                         </connections>
                                     </button>
                                 </subviews>

@@ -59,6 +59,10 @@ public class ThreadViewController: UIViewController {
         
     }
     
+    deinit {
+        fetchController.tableView = nil
+    }
+    
     func updateUIWithThread(thread: Thread) {
         fetchPosts()
     }

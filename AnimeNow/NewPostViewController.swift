@@ -124,6 +124,15 @@ public class NewPostViewController: CommentViewController {
     
     override func performUpdate(post: PFObject) {
         super.performUpdate(post)
+        
+        if !validPost() {
+            return
+        }
+        
+        self.sendButton.setTitle("Updating...", forState: .Normal)
+        self.sendButton.backgroundColor = UIColor.watching()
+        self.sendButton.userInteractionEnabled = false
+        
         if var post = post as? Postable {
             post.hasSpoilers = hasSpoilers
             post.content = textView.text

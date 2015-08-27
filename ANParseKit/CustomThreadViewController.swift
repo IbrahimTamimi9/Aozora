@@ -22,6 +22,7 @@ public class CustomThreadViewController: ThreadViewController {
     @IBOutlet weak var postedDate: UILabel!
     @IBOutlet weak var commentsButton: UIButton!
     @IBOutlet weak var playButton: UIButton!
+    @IBOutlet weak var moreButton: UIButton!
     
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     
@@ -74,6 +75,7 @@ public class CustomThreadViewController: ThreadViewController {
     
     func updateUIWithEpisodeThread(thread: Thread) {
         
+        moreButton.hidden = true
         if let episode = thread.episode, let anime = thread.anime, let animeTitle = anime.title {
             
             if anime.type != "Movie" {
@@ -86,7 +88,7 @@ public class CustomThreadViewController: ThreadViewController {
                 threadContent.text = ""
                 title = animeTitle
                 imageHeightConstraint.constant = 360
-                postedDate.text = anime.startDate != nil ? "Movie aired on \(episode.firstAired!.mediumDate())" : ""
+                postedDate.text = anime.startDate != nil ? "Movie aired on \(anime.startDate!.mediumDate())" : ""
                 anime.details.fetchIfNeededInBackgroundWithBlock({ (details, error) -> Void in
                     if let error = error {
                         
@@ -104,7 +106,7 @@ public class CustomThreadViewController: ThreadViewController {
     }
     
     func updateUIWithGeneralThread(thread: Thread) {
-
+        
         title = thread.title
         threadTitle.text = thread.title
         
@@ -117,6 +119,8 @@ public class CustomThreadViewController: ThreadViewController {
             avatar.setImageWithPFFile(startedBy.avatarThumb!)
             username.text = startedBy.aozoraUsername
             postedDate.text = thread.createdAt!.timeAgo()
+            
+            moreButton.hidden = startedBy != User.currentUser()!
         }
         
         setImages(thread.images, imageView: imageContent, imageHeightConstraint: imageHeightConstraint)
@@ -217,6 +221,43 @@ public class CustomThreadViewController: ThreadViewController {
             openProfile(startedBy)
         }
     }
+    
+    @IBAction func editThread(sender: AnyObject) {
+        if let thread = thread {
+            var alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+            
+            alert.addAction(UIAlertAction(title: "Edit", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
+                let comment = ANParseKit.newThreadViewController()
+                comment.initWith(thread: thread, threadType: self.threadType, delegate: self, editingPost: thread)
+                self.presentViewController(comment, animated: true, completion: nil)
+            }))
+            
+            alert.addAction(UIAlertAction(title: "Delete", style: UIAlertActionStyle.Destructive, handler: { (alertAction: UIAlertAction!) -> Void in
+                
+                let childPostsQuery = Post.query()!
+                childPostsQuery.whereKey("thread", equalTo: thread)
+                childPostsQuery.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
+                    if let result = result as? [PFObject] {
+                        
+                        PFObject.deleteAllInBackground(result+[thread], block: { (success, error) -> Void in
+                            if let error = error {
+                                // Show some error
+                            } else {
+                                self.navigationController?.popViewControllerAnimated(true)
+                            }
+                        })
+                        
+                    } else {
+                        // TODO: Show error
+                    }
+                })
+            }))
+            
+            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler:nil))
+            
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
+    }
 }
 
 extension CustomThreadViewController: FetchControllerQueryDelegate {
@@ -256,5 +297,11 @@ extension CustomThreadViewController: TTTAttributedLabelDelegate {
                     self.animator = presentAnimeModal(anime)
                 }
         }
+    }
+}
+
+extension CustomThreadViewController: CommentViewControllerDelegate {
+    public override func commentViewControllerDidFinishedPosting(post: PFObject) {
+        fetchThread()
     }
 }

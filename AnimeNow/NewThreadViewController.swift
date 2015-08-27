@@ -37,6 +37,14 @@ public class NewThreadViewController: CommentViewController {
         if let anime = anime {
             tags = [anime]
         }
+        
+        if let thread = editingPost as? Thread {
+            textView.text = thread.content
+            threadTitle.text = thread.title
+            tags = thread.tags
+            photoButton.hidden = true
+            videoButton.hidden = true
+        }
     }
     
     override func performPost() {
@@ -69,17 +77,7 @@ public class NewThreadViewController: CommentViewController {
         thread.saveInBackgroundWithBlock({ (result, error) -> Void in
             self.postedBy?.details.incrementKey("posts", byAmount: 1)
             self.postedBy?.saveEventually()
-            
-            if let error = error {
-                // TODO: Show error
-                self.sendButton.setTitle("Send", forState: .Normal)
-                self.sendButton.backgroundColor = UIColor.peterRiver()
-                self.sendButton.userInteractionEnabled = true
-            } else {
-                // Success!
-                self.delegate?.commentViewControllerDidFinishedPosting(thread)
-                self.dismissViewControllerAnimated(true, completion: nil)
-            }
+            self.completeRequest(thread, error: error)
         })
         
     }
@@ -89,6 +87,20 @@ public class NewThreadViewController: CommentViewController {
         
         if !validThread() {
             return
+        }
+        
+        self.sendButton.setTitle("Updating...", forState: .Normal)
+        self.sendButton.backgroundColor = UIColor.watching()
+        self.sendButton.userInteractionEnabled = false
+        
+        if var thread = post as? Thread {
+            thread.edited = true
+            thread.title = threadTitle.text
+            thread.content = textView.text
+            thread.tags = tags
+            thread.saveInBackgroundWithBlock({ (result, error) -> Void in
+                self.completeRequest(thread, error: error)
+            })
         }
     }
     
