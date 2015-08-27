@@ -199,15 +199,15 @@ extension ThreadViewController: UITableViewDataSource {
     func updatePostCell(cell: PostCell, with post: Postable) {
         if let postedBy = post.postedBy, let avatarFile = postedBy.avatarThumb {
             cell.avatar.setImageWithPFFile(avatarFile)
-            cell.username.text = postedBy.aozoraUsername
+            cell.username?.text = postedBy.aozoraUsername
         }
         
         if let timelinePostable = post as? TimelinePostable where timelinePostable.userTimeline != post.postedBy {
-            cell.toUsername.text = timelinePostable.userTimeline.aozoraUsername
-            cell.toIcon.text = ""
+            cell.toUsername?.text = timelinePostable.userTimeline.aozoraUsername
+            cell.toIcon?.text = ""
         } else {
-            cell.toUsername.text = ""
-            cell.toIcon.text = ""
+            cell.toUsername?.text = ""
+            cell.toIcon?.text = ""
         }
         
         cell.date.text = post.createdDate?.timeAgo()
@@ -465,6 +465,12 @@ extension ThreadViewController: PostCellDelegate {
     public func postCellSelectedComment(postCell: PostCell) {
         if let post = postForCell(postCell) {
             replyTo(post)
+        }
+    }
+    
+    public func postCellSelectedToUserProfile(postCell: PostCell) {
+        if let post = postForCell(postCell) as? TimelinePostable {
+            openProfile(post.userTimeline)
         }
     }
 }

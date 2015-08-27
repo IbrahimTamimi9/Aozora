@@ -117,7 +117,7 @@ public class CustomThreadViewController: ThreadViewController {
         // TODO: Merge this repeated code
         if let startedBy = thread.startedBy {
             avatar.setImageWithPFFile(startedBy.avatarThumb!)
-            username.text = startedBy.username
+            username.text = startedBy.aozoraUsername
             postedDate.text = thread.createdAt!.timeAgo()
         }
         
@@ -211,6 +211,12 @@ public class CustomThreadViewController: ThreadViewController {
     @IBAction func playTrailerPressed(sender: AnyObject) {
         if let thread = thread, let youtubeID = thread.youtubeID {
             playTrailer(youtubeID)
+        }
+    }
+    
+    @IBAction func openUserProfile(sender: AnyObject) {
+        if let startedBy = thread?.startedBy {
+            openProfile(startedBy)
         }
     }
 }

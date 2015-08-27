@@ -98,11 +98,15 @@
                                                 </mask>
                                             </variation>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Darkcirius" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wyq-NM-QVH">
+                                        <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Darkcirius" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wyq-NM-QVH">
                                             <rect key="frame" x="60" y="193" width="532" height="20.5"/>
+                                            <gestureRecognizers/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                             <color key="textColor" red="0.0078431372550000003" green="0.43921568630000002" blue="0.73333333329999995" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
+                                            <connections>
+                                                <outletCollection property="gestureRecognizers" destination="Tz5-Dh-hB9" appends="YES" id="JW0-KK-6s1"/>
+                                            </connections>
                                         </label>
                                         <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Fij-H7-TJE">
                                             <rect key="frame" x="8" y="188" width="44" height="44"/>
@@ -117,6 +121,9 @@
                                                     <integer key="value" value="22"/>
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
+                                            <connections>
+                                                <outletCollection property="gestureRecognizers" destination="JIj-IJ-WDk" appends="YES" id="x0f-aj-3yw"/>
+                                            </connections>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Is this anime worth watching? Is this anime worth watching? Is this anime worth watching? Is this anime worth watching? " lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eWc-RE-BVZ">
                                             <rect key="frame" x="10" y="244" width="580" height="36"/>
@@ -206,6 +213,16 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4K5-Dw-ZlU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="Tz5-Dh-hB9">
+                    <connections>
+                        <action selector="openUserProfile:" destination="8jA-5m-8Uw" id="ykz-WN-gpH"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="JIj-IJ-WDk">
+                    <connections>
+                        <action selector="openUserProfile:" destination="8jA-5m-8Uw" id="hhj-bE-qKj"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1485" y="1238"/>
         </scene>

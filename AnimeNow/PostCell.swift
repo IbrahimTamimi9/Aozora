@@ -12,17 +12,18 @@ import TTTAttributedLabel
 public protocol PostCellDelegate: class {
     func postCellSelectedImage(postCell: PostCell)
     func postCellSelectedUserProfile(postCell: PostCell)
+    func postCellSelectedToUserProfile(postCell: PostCell)
     func postCellSelectedComment(postCell: PostCell)
 }
 
 public class PostCell: UITableViewCell {
     
     @IBOutlet weak public var avatar: UIImageView!
-    @IBOutlet weak public var username: UILabel!
+    @IBOutlet weak public var username: UILabel?
     @IBOutlet weak public var date: UILabel!
     
-    @IBOutlet weak public var toIcon: UILabel!
-    @IBOutlet weak public var toUsername: UILabel!
+    @IBOutlet weak public var toIcon: UILabel?
+    @IBOutlet weak public var toUsername: UILabel?
     
     @IBOutlet weak public var imageContent: UIImageView?
     @IBOutlet weak public var imageHeightConstraint: NSLayoutConstraint?
@@ -59,16 +60,36 @@ public class PostCell: UITableViewCell {
         gestureRecognizer.numberOfTapsRequired = 1
         avatar.addGestureRecognizer(gestureRecognizer)
         
-        let gestureRecognizer2 = UITapGestureRecognizer(target: self, action: "pressedOnImage:")
-        gestureRecognizer2.numberOfTouchesRequired = 1
-        gestureRecognizer2.numberOfTapsRequired = 1
-        imageContent?.addGestureRecognizer(gestureRecognizer2)
+        if let imageContent = imageContent {
+            let gestureRecognizer2 = UITapGestureRecognizer(target: self, action: "pressedOnImage:")
+            gestureRecognizer2.numberOfTouchesRequired = 1
+            gestureRecognizer2.numberOfTapsRequired = 1
+            imageContent.addGestureRecognizer(gestureRecognizer2)
+        }
+        
+        if let username = username {
+            let gestureRecognizer3 = UITapGestureRecognizer(target: self, action: "pressedUserProfile:")
+            gestureRecognizer3.numberOfTouchesRequired = 1
+            gestureRecognizer3.numberOfTapsRequired = 1
+            username.addGestureRecognizer(gestureRecognizer3)
+        }
+        
+        if let toUsername = toUsername {
+            let gestureRecognizer4 = UITapGestureRecognizer(target: self, action: "pressedToUserProfile:")
+            gestureRecognizer4.numberOfTouchesRequired = 1
+            gestureRecognizer4.numberOfTapsRequired = 1
+            toUsername.addGestureRecognizer(gestureRecognizer4)
+        }
     }
     
     // MARK: - IBActions
     
     func pressedUserProfile(sender: AnyObject) {
         delegate?.postCellSelectedUserProfile(self)
+    }
+    
+    func pressedToUserProfile(sender: AnyObject) {
+        delegate?.postCellSelectedToUserProfile(self)
     }
     
     func pressedOnImage(sender: AnyObject) {
