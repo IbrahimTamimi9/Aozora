@@ -9,6 +9,7 @@
 import Foundation
 import Parse
 import TTTAttributedLabel
+import ANCommonKit
 
 public class CustomThreadViewController: ThreadViewController {
     
@@ -26,6 +27,7 @@ public class CustomThreadViewController: ThreadViewController {
     
     var episode: Episode?
     var anime: Anime?
+    var animator: ZFModalTransitionAnimator!
     
     public override func initWithThread(thread: Thread) {
         self.thread = thread
@@ -72,36 +74,32 @@ public class CustomThreadViewController: ThreadViewController {
     
     func updateUIWithEpisodeThread(thread: Thread) {
         
-        if let episode = thread.episode {
-            imageContent.setImageFrom(urlString: episode.imageURLString(), animated: true)
-            if let title = episode.title {
-                threadTitle.text = title
+        if let episode = thread.episode, let anime = thread.anime, let animeTitle = anime.title {
+            
+            if anime.type != "Movie" {
+                threadTitle.text = episode.title ?? ""
+                threadContent.text = episode.overview ?? ""
+                title = "\(animeTitle) - Episode \(episode.number)"
+                postedDate.text = episode.firstAired != nil ? "Aired on \(episode.firstAired!.mediumDate())" : ""
             } else {
                 threadTitle.text = ""
-            }
-            
-            if let firstAired = episode.firstAired {
-                postedDate.text = "Aired on \(firstAired.mediumDate())"
-            } else {
-                postedDate.text = ""
-            }
-            
-            if let overview = episode.overview {
-                threadContent.text = overview
-            } else {
                 threadContent.text = ""
+                title = animeTitle
+                imageHeightConstraint.constant = 360
+                postedDate.text = anime.startDate != nil ? "Movie aired on \(episode.firstAired!.mediumDate())" : ""
+                anime.details.fetchIfNeededInBackgroundWithBlock({ (details, error) -> Void in
+                    if let error = error {
+                        
+                    } else {
+                        self.threadContent.text = (details as! AnimeDetail).synopsis ?? ""
+                        self.sizeHeaderToFit()
+                    }
+                })
             }
-        }
-        
-        if let anime = thread.anime, let animeTitle = anime.title, let episode = thread.episode {
-            title = "\(animeTitle) - Episode \(episode.number)"
-        } else {
-            title = ""
-        }
-        
-        if let anime = thread.anime {
-            avatar.setImageFrom(urlString: anime.imageUrl)
             username.text = title
+            
+            imageContent.setImageFrom(urlString: episode.imageURLString(), animated: true)
+            avatar.setImageFrom(urlString: anime.imageUrl)
         }
     }
     
@@ -172,7 +170,7 @@ public class CustomThreadViewController: ThreadViewController {
                     "animeID":anime.objectId!,
                     "episodeID":episode.objectId!,
                     "animeTitle": anime.title!,
-                    "episodeNumber": episode.number
+                    "episodeNumber": anime.type == "Movie" ? -1 : episode.number
                 ] as [String : AnyObject]
                 
                 PFCloud.callFunctionInBackground("createEpisodeThread", withParameters: parameters, block: { (result, error) -> Void in
@@ -254,7 +252,9 @@ extension CustomThreadViewController: TTTAttributedLabelDelegate {
         if let host = url.host where host == "tag",
             let index = url.pathComponents?[1] as? String,
             let idx = index.toInt() {
-               println(idx)
+                if let thread = thread, let anime = thread.tags[idx] as? Anime {
+                    self.animator = presentAnimeModal(anime)
+                }
         }
     }
 }

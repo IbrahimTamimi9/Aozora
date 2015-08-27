@@ -133,8 +133,8 @@
 		DA79C19E1B7A627400E6B977 /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA897F8E1B6D451C00A9510C /* ParseFacebookUtilsV4.framework */; };
 		DA79C19F1B7A629300E6B977 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA897F8C1B6D451C00A9510C /* Bolts.framework */; };
 		DA79C1A01B7A629300E6B977 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA897F8D1B6D451C00A9510C /* Parse.framework */; };
-		DA7C84C91B4379AA0036D119 /* UIViewController+Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7C84C81B4379AA0036D119 /* UIViewController+Navigation.swift */; };
 		DA7C84CA1B4379AD0036D119 /* UIViewController+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC13BFD1B3F36AB0013D479 /* UIViewController+Image.swift */; };
+		DA7F457E1B8EDE35006F9321 /* UIViewController+Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7C84C81B4379AA0036D119 /* UIViewController+Navigation.swift */; };
 		DA823D8C1B326940005C7AFD /* InAppBrowser.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA823D8A1B326940005C7AFD /* InAppBrowser.storyboard */; };
 		DA823D8D1B326940005C7AFD /* InAppBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA823D8B1B326940005C7AFD /* InAppBrowserViewController.swift */; };
 		DA897F891B6D1FCC00A9510C /* WriteACommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA897F881B6D1FCC00A9510C /* WriteACommentCell.xib */; };
@@ -1972,7 +1972,6 @@
 				DAC13BF91B3EFC280013D479 /* LoadingCollectionCell.swift in Sources */,
 				DA4595621B83C3500044013E /* OnboardingViewController.swift in Sources */,
 				DAF357061B4593E200629A3D /* LibraryAnimeCell.swift in Sources */,
-				DA7C84C91B4379AA0036D119 /* UIViewController+Navigation.swift in Sources */,
 				DAA393291B42F21900A8D5D5 /* RootTabBar.swift in Sources */,
 				DA4595641B83C3500044013E /* SignUpViewController.swift in Sources */,
 				DAFBB0951B20EFF700495ED9 /* ChartViewController.swift in Sources */,
@@ -2112,6 +2111,7 @@
 				DA9AE39B1B6930F60053C2EA /* TimelinePost.swift in Sources */,
 				DA03F14C1B89852C00402AC4 /* CustomThreadViewController.swift in Sources */,
 				DA6755E51B72E6D100D6EA32 /* CommentViewController.swift in Sources */,
+				DA7F457E1B8EDE35006F9321 /* UIViewController+Navigation.swift in Sources */,
 				DA6E12E41B10D96F00B278B0 /* UIViewController+WebScraper.m in Sources */,
 				DA35B99A1B74165000C0AAC7 /* InAppBrowserSelectorViewController.swift in Sources */,
 				DA13806C1B6DBB4C00C53560 /* Post.swift in Sources */,

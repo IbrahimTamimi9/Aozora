@@ -14,7 +14,7 @@ import JTSImageViewController
 
 extension UIViewController {
     
-    func presentAnimeModal(anime: Anime) -> ZFModalTransitionAnimator {
+    public func presentAnimeModal(anime: Anime) -> ZFModalTransitionAnimator {
         
         let tabBarController = ANAnimeKit.rootTabBarController()
         tabBarController.initWithAnime(anime)
@@ -32,7 +32,7 @@ extension UIViewController {
         return animator
     }
     
-    func presentViewControllerModal(controller: UIViewController) -> ZFModalTransitionAnimator {
+    public func presentViewControllerModal(controller: UIViewController) -> ZFModalTransitionAnimator {
         
         var animator = ZFModalTransitionAnimator(modalViewController: controller)
         animator.dragable = true
@@ -44,22 +44,6 @@ extension UIViewController {
         presentViewController(controller, animated: true, completion: nil)
         
         return animator
-    }
-    
-    func presentImageViewController(imageView: UIImageView, imageUrl: NSURL? = nil) {
-        
-        let imageInfo = JTSImageInfo()
-        if let image = imageView.image {
-            imageInfo.image = image
-        } else {
-            imageInfo.imageURL = imageUrl
-        }
-        imageInfo.referenceRect = imageView.frame
-        imageInfo.referenceView = imageView
-        
-        let controller = JTSImageViewController(imageInfo: imageInfo, mode: JTSImageViewControllerMode.Image, backgroundStyle: JTSImageViewControllerBackgroundOptions.Blurred)
-        controller.showFromViewController(self, transition: JTSImageViewControllerTransition._FromOriginalPosition)
-        
     }
     
 }
