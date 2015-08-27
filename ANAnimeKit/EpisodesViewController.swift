@@ -124,7 +124,7 @@ extension EpisodesViewController: UICollectionViewDelegate {
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let episode = dataSource[indexPath.row]
-        let threadController = ANParseKit.customThreadViewController()
+        let threadController = ANAnimeKit.customThreadViewController()
         threadController.initWithEpisode(episode, anime: anime)
         if InAppController.purchasedAnyPro() == nil {
             threadController.interstitialPresentationPolicy = .Automatic

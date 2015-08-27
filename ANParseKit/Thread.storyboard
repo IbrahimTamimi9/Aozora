@@ -13,7 +13,7 @@
         <!--Loading...-->
         <scene sceneID="eRg-d5-9Ag">
             <objects>
-                <viewController storyboardIdentifier="CustomThread" hidesBottomBarWhenPushed="YES" id="8jA-5m-8Uw" customClass="CustomThreadViewController" customModule="ANParseKit" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CustomThread" hidesBottomBarWhenPushed="YES" id="8jA-5m-8Uw" customClass="CustomThreadViewController" customModule="ANAnimeKit" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="yso-45-GXv"/>
                         <viewControllerLayoutGuide type="bottom" id="5TH-lI-urx"/>

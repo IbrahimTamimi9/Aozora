@@ -11,26 +11,28 @@ import ANCommonKit
 import TTTAttributedLabel
 import XCDYouTubeKit
 import Parse
+import ANParseKit
 
 // Class intended to be subclassed
 public class ThreadViewController: UIViewController {
    
-    let FetchLimit = 20
+    public let FetchLimit = 20
     
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet public weak var tableView: UITableView!
     
-    var thread: Thread? {
+    public var thread: Thread? {
         didSet {
             if isViewLoaded() {
                 updateUIWithThread(thread!)
             }
         }
     }
-    var threadType: ThreadType!
+    public var threadType: ThreadType!
     
-    var fetchController = FetchController()
-    var refreshControl = UIRefreshControl()
-    var loadingView: LoaderView!
+    public var fetchController = FetchController()
+    public var refreshControl = UIRefreshControl()
+    public var loadingView: LoaderView!
+    
     var playerController: XCDYouTubeVideoPlayerViewController?
     
     public func initWithThread(thread: Thread) {
@@ -63,21 +65,22 @@ public class ThreadViewController: UIViewController {
         fetchController.tableView = nil
     }
     
-    func updateUIWithThread(thread: Thread) {
+    public func updateUIWithThread(thread: Thread) {
         fetchPosts()
     }
     
     // MARK: - Fetching
-    func fetchThread() {
+    public func fetchThread() {
         
     }
     
-    func fetchPosts() {
+    public func fetchPosts() {
 
     }
     
     // MARK: - Internal functions
-    func openProfile(user: User) {
+    
+    public func openProfile(user: User) {
         if user != User.currentUser() {
             let (navController, profileController) = ANParseKit.profileViewController()
             profileController.initWithUser(user)
@@ -85,18 +88,23 @@ public class ThreadViewController: UIViewController {
         }
     }
     
-    func showImage(imageURLString: String, imageView: UIImageView) {
+    public func showImage(imageURLString: String, imageView: UIImageView) {
         if let imageURL = NSURL(string: imageURLString) {
             presentImageViewController(imageView, imageUrl: imageURL)
         }
     }
     
-    func playTrailer(videoID: String) {
+    public func playTrailer(videoID: String) {
         playerController = XCDYouTubeVideoPlayerViewController(videoIdentifier: videoID)
         presentMoviePlayerViewControllerAnimated(playerController)
     }
     
-    func replyTo(post: Postable) {
+    public func replyTo(post: Postable) {
+        if !User.currentUserLoggedIn() {
+            presentBasicAlertWithTitle("Login first", message: "Select 'Me' tab")
+            return
+        }
+        
         let comment = ANParseKit.newPostViewController()
         if let post = post as? ThreadPostable, let thread = thread {
             comment.initWith(thread: thread, threadType: threadType, delegate: self, parentPost: post)
@@ -107,7 +115,7 @@ public class ThreadViewController: UIViewController {
         }
     }
     
-    func postForCell(cell: UITableViewCell) -> Postable? {
+    public func postForCell(cell: UITableViewCell) -> Postable? {
         if let indexPath = tableView.indexPathForCell(cell), let post = fetchController.objectAtIndex(indexPath.section) as? Postable {
             if indexPath.row == 0 {
                 return post
@@ -277,7 +285,7 @@ extension ThreadViewController: UITableViewDataSource {
         prepareForVideo(cell.playButton, imageView: cell.imageContent, imageHeightConstraint: cell.imageHeightConstraint, youtubeID: post.youtubeID)
     }
     
-    func setImages(images: [ImageData], imageView: UIImageView?, imageHeightConstraint: NSLayoutConstraint?) {
+    public func setImages(images: [ImageData], imageView: UIImageView?, imageHeightConstraint: NSLayoutConstraint?) {
         if let image = images.first {
             imageHeightConstraint?.constant = (view.bounds.size.width-59.0) * CGFloat(image.height)/CGFloat(image.width)
             imageView?.setImageFrom(urlString: image.url, animated: true)
@@ -286,7 +294,7 @@ extension ThreadViewController: UITableViewDataSource {
         }
     }
     
-    func repliesButtonTitle(repliesCount: Int) -> String {
+    public func repliesButtonTitle(repliesCount: Int) -> String {
         if repliesCount > 0 {
             return repliesCount > 1 ? " \(repliesCount) Comments" : " 1 Comment"
         } else {
@@ -294,7 +302,7 @@ extension ThreadViewController: UITableViewDataSource {
         }
     }
     
-    func prepareForVideo(playButton: UIButton?, imageView: UIImageView?, imageHeightConstraint: NSLayoutConstraint?, youtubeID: String?) {
+    public func prepareForVideo(playButton: UIButton?, imageView: UIImageView?, imageHeightConstraint: NSLayoutConstraint?, youtubeID: String?) {
         if let playButton = playButton {
             if let youtubeID = youtubeID {
                 

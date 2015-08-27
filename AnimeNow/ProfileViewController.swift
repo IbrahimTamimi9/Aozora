@@ -92,7 +92,7 @@ public class ProfileViewController: ThreadViewController {
 
     // MARK: - Fetching
     
-    override func fetchPosts() {
+    override public func fetchPosts() {
         super.fetchPosts()
         let username = self.username ?? userProfile!.aozoraUsername
         fetchUserDetails(username)

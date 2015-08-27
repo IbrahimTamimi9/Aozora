@@ -10,6 +10,7 @@ import Foundation
 import Parse
 import TTTAttributedLabel
 import ANCommonKit
+import ANParseKit
 
 public class CustomThreadViewController: ThreadViewController {
     
@@ -45,7 +46,7 @@ public class CustomThreadViewController: ThreadViewController {
         super.viewDidLoad()
     }
     
-    override func updateUIWithThread(thread: Thread) {
+    override public func updateUIWithThread(thread: Thread) {
         super.updateUIWithThread(thread)
         
         title = "Loading..."
@@ -145,7 +146,7 @@ public class CustomThreadViewController: ThreadViewController {
         tableView.tableHeaderView = header
     }
     
-    override func fetchThread() {
+    override public func fetchThread() {
         super.fetchThread()
 
         let query = Thread.query()!
@@ -191,7 +192,7 @@ public class CustomThreadViewController: ThreadViewController {
         
     }
     
-    override func fetchPosts() {
+    override public func fetchPosts() {
         super.fetchPosts()
         fetchController.configureWith(self, queryDelegate: self, tableView: tableView, limit: FetchLimit, datasourceUsesSections: true)
     }

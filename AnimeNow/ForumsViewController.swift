@@ -160,9 +160,14 @@ class ForumsViewController: UIViewController {
     // MARK: - IBActions
     
     @IBAction func createThread(sender: AnyObject) {
-        let comment = ANParseKit.newThreadViewController()
-        comment.initWith(threadType: ThreadType.Custom, delegate: self)
-        presentViewController(comment, animated: true, completion: nil)
+        
+        if User.currentUserLoggedIn() {
+            let comment = ANParseKit.newThreadViewController()
+            comment.initWith(threadType: ThreadType.Custom, delegate: self)
+            presentViewController(comment, animated: true, completion: nil)
+        } else {
+            presentBasicAlertWithTitle("Login first", message: "Select 'Me' tab to login", style: .Alert)
+        }
     }
     
 }
@@ -199,7 +204,7 @@ extension ForumsViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let thread = fetchController.objectAtIndex(indexPath.row) as! Thread
         
-        let threadController = ANParseKit.customThreadViewController()
+        let threadController = ANAnimeKit.customThreadViewController()
         
         if let episode = thread.episode, let anime = thread.anime {
             threadController.initWithEpisode(episode, anime: anime)

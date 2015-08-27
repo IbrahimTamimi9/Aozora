@@ -63,9 +63,14 @@ public class ForumViewController: AnimeBaseViewController {
     }
     
     @IBAction func createAnimeThread(sender: AnyObject) {
-        let comment = ANParseKit.newThreadViewController()
-        comment.initWith(threadType: .Custom, delegate: self, anime: anime)
-        presentViewController(comment, animated: true, completion: nil)
+        
+        if User.currentUserLoggedIn() {
+            let comment = ANParseKit.newThreadViewController()
+            comment.initWith(threadType: .Custom, delegate: self, anime: anime)
+            presentViewController(comment, animated: true, completion: nil)
+        } else {
+            presentBasicAlertWithTitle("Login first", message: "Select 'Me' tab to login", style: .Alert)
+        }
     }
 }
 
@@ -108,7 +113,7 @@ extension ForumViewController: UITableViewDelegate {
         
         let thread = fetchController.objectAtIndex(indexPath.row) as! Thread
         
-        let threadController = ANParseKit.customThreadViewController()
+        let threadController = ANAnimeKit.customThreadViewController()
         if let episode = thread.episode, let anime = thread.anime  {
             threadController.initWithEpisode(episode, anime: anime)
         } else {

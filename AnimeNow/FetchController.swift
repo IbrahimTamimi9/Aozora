@@ -36,8 +36,8 @@ public class FetchController {
     var defaultPage = 0
     var defaultLimit = 100
 
-    weak var tableView: UITableView?
-    weak var collectionView: UICollectionView?
+    public var tableView: UITableView?
+    public var collectionView: UICollectionView?
     var dataSource: [PFObject] = []
     var query: PFQuery?
     

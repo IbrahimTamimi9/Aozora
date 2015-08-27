@@ -25,10 +25,6 @@ public class ANParseKit {
         return NSBundle(forClass: self)
     }
     
-    public class func threadStoryboard() -> UIStoryboard {
-        return UIStoryboard(name: "Thread", bundle: bundle())
-    }
-    
     public class func commentStoryboard() -> UIStoryboard {
         return UIStoryboard(name: "Comment", bundle: bundle())
     }
@@ -50,11 +46,6 @@ public class ANParseKit {
     
     public class func newThreadViewController() -> NewThreadViewController {
         let controller = ANParseKit.commentStoryboard().instantiateViewControllerWithIdentifier("NewThread") as! NewThreadViewController
-        return controller
-    }
-    
-    public class func customThreadViewController() -> CustomThreadViewController {
-        let controller = ANParseKit.threadStoryboard().instantiateViewControllerWithIdentifier("CustomThread") as! CustomThreadViewController
         return controller
     }
     

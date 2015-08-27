@@ -9,28 +9,9 @@
 import Foundation
 import ANParseKit
 import ANCommonKit
-import ANAnimeKit
 import JTSImageViewController
 
 extension UIViewController {
-    
-    public func presentAnimeModal(anime: Anime) -> ZFModalTransitionAnimator {
-        
-        let tabBarController = ANAnimeKit.rootTabBarController()
-        tabBarController.initWithAnime(anime)
-        
-        var animator = ZFModalTransitionAnimator(modalViewController: tabBarController)
-        animator.dragable = true
-        animator.direction = ZFModalTransitonDirection.Bottom
-        
-        tabBarController.animator = animator
-        tabBarController.transitioningDelegate = animator;
-        tabBarController.modalPresentationStyle = UIModalPresentationStyle.Custom;
-        
-        presentViewController(tabBarController, animated: true, completion: nil)
-        
-        return animator
-    }
     
     public func presentViewControllerModal(controller: UIViewController) -> ZFModalTransitionAnimator {
         
