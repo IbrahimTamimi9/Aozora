@@ -48,7 +48,7 @@ class ForumsViewController: UIViewController {
         addRefreshControl(refreshControl, action:"refetchThreads", forTableView: tableView)
         
         var tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "changeList")
-        navigationController?.navigationBar.addGestureRecognizer(tapGestureRecognizer)
+        navigationBarTitle.addGestureRecognizer(tapGestureRecognizer)
         
         fetchThreadTags()
         prepareForList(selectedList)

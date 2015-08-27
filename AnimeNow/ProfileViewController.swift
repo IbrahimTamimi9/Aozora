@@ -278,14 +278,15 @@ public class ProfileViewController: ThreadViewController {
         
         var alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
         
-        alert.addAction(UIAlertAction(title: "Settings", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
-            let settings = UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController() as! UINavigationController
-            self.presentViewController(settings, animated: true, completion: nil)
-        }))
         alert.addAction(UIAlertAction(title: "Edit Profile", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
             let editProfileController =  UIStoryboard(name: "Profile", bundle: ANParseKit.bundle()).instantiateViewControllerWithIdentifier("EditProfile") as! EditProfileViewController
             editProfileController.delegate = self
             self.presentViewController(editProfileController, animated: true, completion: nil)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Settings", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
+            let settings = UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController() as! UINavigationController
+            self.presentViewController(settings, animated: true, completion: nil)
         }))
         
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler:nil))
