@@ -94,7 +94,13 @@ public class CustomThreadViewController: ThreadViewController {
                     if let error = error {
                         
                     } else {
-                        self.threadContent.text = (details as! AnimeDetail).synopsis ?? ""
+                        if let string = (details as! AnimeDetail).attributedSynopsis() {
+                            println(string.string)
+                            self.threadContent.text = string.string
+                        } else {
+                            self.threadContent.text = ""
+                        }
+                        
                         self.sizeHeaderToFit()
                     }
                 })

@@ -32,4 +32,19 @@ public class AnimeDetail: PFObject, PFSubclassing {
     @NSManaged public var japaneseTitles: [String]
     @NSManaged public var synonyms: [String]
     @NSManaged public var youtubeID: String?
+    
+    public func attributedSynopsis() -> NSAttributedString? {
+        if let synopsis = synopsis, let data = synopsis.dataUsingEncoding(NSUnicodeStringEncoding) {
+            let font = UIFont.systemFontOfSize(15)
+            if let attributedString = NSMutableAttributedString(
+                data: data,
+                options: [NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType],
+                documentAttributes: nil,
+                error: nil) {
+                    attributedString.addAttribute(NSFontAttributeName, value: font, range: NSMakeRange(0, attributedString.length))
+                    return attributedString
+            }
+        }
+        return nil
+    }
 }

@@ -97,9 +97,10 @@ public struct Atarashii {
             let URL = NSURL(string: Router.BaseURLString)
             let URLRequest = NSMutableURLRequest(URL: URL!.URLByAppendingPathComponent(path))
             URLRequest.HTTPMethod = method.rawValue
+            URLRequest.cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData
             let encoding = Alamofire.ParameterEncoding.URL
             
-            return encoding.encode(URLRequest, parameters: parameters).0
+            return encoding.encode(URLRequest, parameters: parameters.count > 0 ? parameters : nil).0
         }
     }
     

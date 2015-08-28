@@ -100,6 +100,7 @@ class LibraryAnimeCell: AnimeCell {
         currentCancellationToken = newCancelationToken
         
         episodeImageView.image = nil
+        episode = nil
         anime.episodeList(pin: true, tag: tag).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
             
             if newCancelationToken.cancelled {
@@ -123,8 +124,8 @@ class LibraryAnimeCell: AnimeCell {
     // MARK: - IBActions
     
     func pressedEpisodeImageView(sender: AnyObject) {
-        if let anime = anime, let episode = episode {
-            delegate?.cellPressedEpisodeThread(self, anime: anime, episode: episode)
+        if let episode = episode {
+            delegate?.cellPressedEpisodeThread(self, anime: episode.anime, episode: episode)
         }
     }
 

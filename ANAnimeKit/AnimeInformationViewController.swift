@@ -499,24 +499,7 @@ extension AnimeInformationViewController: UITableViewDataSource {
         switch AnimeSection(rawValue: indexPath.section)! {
         case .Synopsis:
             let cell = tableView.dequeueReusableCellWithIdentifier("SynopsisCell") as! SynopsisCell
-            if let synopsis = anime.details.synopsis, let data = synopsis.dataUsingEncoding(NSUnicodeStringEncoding) {
-                let font = UIFont.systemFontOfSize(15)
-            
-                if let attributedString = NSMutableAttributedString(
-                    data: data,
-                    options: [NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType],
-                    documentAttributes: nil
-                    , error: nil) {
-                    attributedString.addAttribute(NSFontAttributeName, value: font, range: NSMakeRange(0, attributedString.length))
-                    cell.synopsisLabel.attributedText = attributedString
-                } else {
-                    cell.synopsisLabel.text = ""
-                }
-                
-            } else {
-                cell.synopsisLabel.text = ""
-            }
-            
+            cell.synopsisLabel.attributedText = anime.details.attributedSynopsis()
             cell.layoutIfNeeded()
             return cell
         case .Relations:

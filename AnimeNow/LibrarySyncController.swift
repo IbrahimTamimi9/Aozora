@@ -573,7 +573,11 @@ public class LibrarySyncController {
     class func fetchMyAnimeListLibrary() -> BFTask! {
         let completionSource = BFTaskCompletionSource()
         if let username = User.currentUser()!.myAnimeListUsername {
-            Alamofire.request(Atarashii.Router.animeList(username: username)).validate().responseJSON {
+            
+            let configuration = NSURLSessionConfiguration.ephemeralSessionConfiguration()
+            let manager = Alamofire.Manager(configuration: configuration)
+            let request = Atarashii.Router.animeList(username: username.lowercaseString)
+            manager.request(request.URLRequest).validate().responseJSON {
                 (req, res, JSON, error) -> Void in
                 if error == nil {
                     completionSource.setResult(JSON)
