@@ -84,7 +84,7 @@ class LibraryAnimeCell: AnimeCell {
             }
             
             
-            if progress.myAnimeListList() == .Completed || progress.myAnimeListList() == .Dropped {
+            if progress.myAnimeListList() == .Completed || progress.myAnimeListList() == .Dropped || progress.watchedEpisodes == anime.episodes {
                 watchedButton.hidden = true
             }
         }

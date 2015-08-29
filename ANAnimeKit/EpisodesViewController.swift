@@ -151,6 +151,11 @@ extension EpisodesViewController: EpisodeCellDelegate {
             }
             
             progress.updatedEpisodes(anime.episodes)
+            
+            if progress.myAnimeListList() == .Completed {
+                RateViewController.showRateDialogWith(self.tabBarController!, title: "You've finished\n\(anime.title!)!\ngive it a rating", initialRating: Float(progress.score)/2.0, anime: anime, delegate: self)
+            }
+            
             progress.saveEventually()
             LibrarySyncController.updateAnime(progress: progress)
             
@@ -207,5 +212,11 @@ extension EpisodesViewController: DropDownListDelegate {
     
     func dropDownDidDismissed(selectedAction: Bool) {
         
+    }
+}
+
+extension EpisodesViewController: RateViewControllerProtocol {
+    func rateControllerDidFinishedWith(#anime: Anime, rating: Float) {
+        RateViewController.updateAnime(anime, withRating: rating*2.0)
     }
 }

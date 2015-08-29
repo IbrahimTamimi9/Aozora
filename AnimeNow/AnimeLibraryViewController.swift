@@ -134,6 +134,9 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
             }
             return nil
         }).continueWithBlock({ (task: BFTask!) -> AnyObject! in
+            if let error = task.error {
+                println(error)
+            }
             self.currentlySyncing = false
             return nil
         })

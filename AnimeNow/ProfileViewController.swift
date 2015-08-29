@@ -164,13 +164,25 @@ public class ProfileViewController: ThreadViewController {
         }
         
         if let _ = tabBarController {
+            navigationItem.leftBarButtonItem = nil
+        }
+        
+        proBadge.hidden = true
+        
+        if user == User.currentUser()! {
             followButton.hidden = true
             settingsTrailingSpaceConstraint.constant = 8
-            navigationItem.leftBarButtonItem = nil
+            
+            if let _ = InAppController.purchasedProPlus() {
+                proBadge.hidden = false
+                proBadge.text = "PRO+"
+            } else if let _ = InAppController.purchasedPro() {
+                proBadge.hidden = false
+                proBadge.text = "PRO"
+            }
         } else {
             followButton.hidden = false
             settingsButton.hidden = true
-            //settingsTrailingSpaceConstraint.constant = 88
         }
         
         if user.badges.count > 0 {
@@ -181,15 +193,6 @@ public class ProfileViewController: ThreadViewController {
             proBottomLayoutConstraint.constant = 4
         }
         
-        if let _ = InAppController.purchasedProPlus() {
-            proBadge.hidden = false
-            proBadge.text = "PRO+"
-        } else if let _ = InAppController.purchasedPro() {
-            proBadge.hidden = false
-            proBadge.text = "PRO"
-        } else {
-            proBadge.hidden = true
-        }
     }
     
     func updateFollowingButtons() {

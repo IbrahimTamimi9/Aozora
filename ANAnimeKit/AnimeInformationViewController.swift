@@ -112,7 +112,6 @@ public class AnimeInformationViewController: AnimeBaseViewController {
             
             self.loadingView.stopAnimating()
             if let error = error {
-                // TODO: Fix this error, for some reason an anime is not being saved?
                 if error.code == 120 {
                     self.fetchCurrentAnime(false)
                 }
@@ -292,15 +291,26 @@ public class AnimeInformationViewController: AnimeBaseViewController {
             progress.collectedEpisodes = 0
             progress.score = 0
             
-            LibrarySyncController.addAnime(progress: progress)
-            anime.progress = progress
-            
-            progress.saveEventually()
-            progress.pinInBackgroundWithBlock({ (result, error) -> Void in
-                NSNotificationCenter.defaultCenter().postNotificationName(LibraryUpdatedNotification, object: nil)
+            let query = AnimeProgress.query()!
+            query.whereKey("anime", equalTo: anime)
+            query.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
+                if let error = error {
+                    // Handle error
+                } else if let result = result as? [AnimeProgress] where result.count == 0 {
+                    // Create AnimeProgress, if it's not on Parse
+                    LibrarySyncController.addAnime(progress: progress)
+                    self.anime.progress = progress
+                    
+                    progress.saveEventually()
+                    progress.pinInBackgroundWithBlock({ (result, error) -> Void in
+                        NSNotificationCenter.defaultCenter().postNotificationName(LibraryUpdatedNotification, object: nil)
+                    })
+                    
+                    self.updateListButtonTitle(progress.list)
+                } else {
+                    self.presentBasicAlertWithTitle("Anime already in Library", message: "You might need to sync your library first, select 'Library' tab")
+                }
             })
-            
-            updateListButtonTitle(progress.list)
         }
     }
     
