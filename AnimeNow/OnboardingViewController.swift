@@ -10,6 +10,7 @@ import Foundation
 import FBSDKCoreKit
 import FBSDKLoginKit
 import ANParseKit
+import ParseFacebookUtilsV4
 
 class OnboardingViewController: UIViewController {
 

@@ -16,6 +16,7 @@ import iRate
 import FBSDKShareKit
 import Fabric
 import Crashlytics
+import ParseFacebookUtilsV4
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
