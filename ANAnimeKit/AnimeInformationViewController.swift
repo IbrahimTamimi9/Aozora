@@ -293,6 +293,7 @@ public class AnimeInformationViewController: AnimeBaseViewController {
             
             let query = AnimeProgress.query()!
             query.whereKey("anime", equalTo: anime)
+            query.whereKey("user", equalTo: User.currentUser()!)
             query.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
                 if let error = error {
                     // Handle error
