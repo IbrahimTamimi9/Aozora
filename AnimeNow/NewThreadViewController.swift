@@ -75,7 +75,7 @@ public class NewThreadViewController: CommentViewController {
     
         thread.startedBy = postedBy
         thread.saveInBackgroundWithBlock({ (result, error) -> Void in
-            self.postedBy?.incrementPostCount()
+            self.postedBy?.incrementPostCount(1)
             self.completeRequest(thread, error: error)
         })
         

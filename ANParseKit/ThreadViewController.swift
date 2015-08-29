@@ -416,6 +416,9 @@ extension ThreadViewController: UITableViewDelegate {
             if let error = error {
                 // Show some error
             } else {
+                for post in posts {
+                    (post["postedBy"] as? User)?.incrementPostCount(-1)
+                }
                 self.thread?.incrementKey("replies", byAmount: -posts.count)
                 self.thread?.saveEventually()
                 self.fetchPosts()

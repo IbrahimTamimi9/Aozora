@@ -243,6 +243,7 @@ public class CustomThreadViewController: ThreadViewController {
                 
                 let childPostsQuery = Post.query()!
                 childPostsQuery.whereKey("thread", equalTo: thread)
+                childPostsQuery.includeKey("postedBy")
                 childPostsQuery.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
                     if let result = result as? [PFObject] {
                         
@@ -250,6 +251,10 @@ public class CustomThreadViewController: ThreadViewController {
                             if let error = error {
                                 // Show some error
                             } else {
+                                thread.startedBy?.incrementPostCount(-1)
+                                for post in result {
+                                    (post["postedBy"] as? User)?.incrementPostCount(-1)
+                                }
                                 self.navigationController?.popViewControllerAnimated(true)
                             }
                         })
