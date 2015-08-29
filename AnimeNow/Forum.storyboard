@@ -64,7 +64,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What Song is this in FMA Brotherhoos Soundtrack? " lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2kG-0g-6h2">
                                                     <rect key="frame" x="21" y="12" width="570.5" height="20.5"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="sT5-rg-HPx"/>
+                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="999" constant="20" id="sT5-rg-HPx"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                                     <color key="textColor" red="0.0078431372550000003" green="0.43921568630000002" blue="0.73333333329999995" alpha="1" colorSpace="calibratedRGB"/>
@@ -74,7 +74,7 @@
                                                     <rect key="frame" x="8" y="32" width="584" height="19"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="40" id="BRo-d4-EhA"/>
-                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="19" id="cxr-KU-Bl8"/>
+                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="999" constant="19" id="cxr-KU-Bl8"/>
                                                         <constraint firstAttribute="height" constant="31" id="rby-th-pYV"/>
                                                         <constraint firstAttribute="height" constant="19" id="rht-0v-vPN"/>
                                                     </constraints>
@@ -99,7 +99,7 @@
                                                     <rect key="frame" x="8" y="51" width="584" height="19"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="31" id="2f7-Zi-AX5"/>
-                                                        <constraint firstAttribute="height" constant="19" id="EEK-d6-5Yh"/>
+                                                        <constraint firstAttribute="height" priority="999" constant="19" id="EEK-d6-5Yh"/>
                                                         <constraint firstAttribute="width" constant="40" id="vgY-xX-aXp"/>
                                                         <constraint firstAttribute="height" constant="19" id="xOk-Pr-hpH"/>
                                                     </constraints>

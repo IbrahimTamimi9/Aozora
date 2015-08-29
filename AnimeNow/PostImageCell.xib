@@ -127,7 +127,7 @@
                         <rect key="frame" x="0.0" y="96" width="320" height="180"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="180" id="cq0-Qc-11O"/>
+                            <constraint firstAttribute="height" priority="999" constant="180" id="cq0-Qc-11O"/>
                         </constraints>
                     </imageView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2fU-I8-swY" userLabel="ButtonTrailer">

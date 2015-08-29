@@ -376,9 +376,17 @@
                             <constraint firstItem="XWP-tV-gBT" firstAttribute="leading" secondItem="cqb-Ge-2Ei" secondAttribute="leadingMargin" constant="-16" id="KXi-Bh-wNb"/>
                             <constraint firstItem="AFD-f9-o6a" firstAttribute="top" secondItem="XWP-tV-gBT" secondAttribute="bottom" id="M30-Mu-WRY"/>
                             <constraint firstAttribute="trailingMargin" secondItem="XWP-tV-gBT" secondAttribute="trailing" constant="-16" id="h2I-hb-xB2"/>
+                            <constraint firstAttribute="trailing" secondItem="XWP-tV-gBT" secondAttribute="trailing" id="lLI-am-DLs"/>
                             <constraint firstItem="reF-51-ZXy" firstAttribute="top" secondItem="AFD-f9-o6a" secondAttribute="bottom" constant="-49" id="m2i-ia-puB"/>
                             <constraint firstItem="AFD-f9-o6a" firstAttribute="leading" secondItem="cqb-Ge-2Ei" secondAttribute="leading" constant="-5" id="me6-GB-2nR"/>
+                            <constraint firstItem="XWP-tV-gBT" firstAttribute="leading" secondItem="cqb-Ge-2Ei" secondAttribute="leading" id="v7l-3h-JR0"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="KXi-Bh-wNb"/>
+                                <exclude reference="h2I-hb-xB2"/>
+                            </mask>
+                        </variation>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Library" id="lOj-rd-NWO">

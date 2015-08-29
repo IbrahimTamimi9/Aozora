@@ -42,7 +42,7 @@
                     <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="I4l-rA-bmP">
                         <rect key="frame" x="51" y="34" width="261" height="154.5"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="154.5" id="6nc-GJ-d8e"/>
+                            <constraint firstAttribute="height" priority="999" constant="154" id="6nc-GJ-d8e"/>
                         </constraints>
                     </imageView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XA6-jf-YTc" userLabel="ButtonTrailer">

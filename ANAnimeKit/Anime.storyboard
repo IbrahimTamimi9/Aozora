@@ -503,16 +503,24 @@
                         <constraints>
                             <constraint firstItem="d1u-7S-LMD" firstAttribute="leading" secondItem="HlU-X1-Ecf" secondAttribute="leading" id="3u2-wE-CTZ"/>
                             <constraint firstAttribute="trailing" secondItem="d1u-7S-LMD" secondAttribute="trailing" id="Lwd-wf-oNb"/>
+                            <constraint firstAttribute="trailing" secondItem="rTn-ZB-ad5" secondAttribute="trailing" id="NqO-Zb-7Os"/>
                             <constraint firstItem="YIr-RB-cEk" firstAttribute="top" secondItem="mzA-kS-hKh" secondAttribute="top" constant="230" id="Ntl-0C-B1J"/>
                             <constraint firstItem="rTn-ZB-ad5" firstAttribute="top" secondItem="mzA-kS-hKh" secondAttribute="top" id="YRq-vP-h5M"/>
                             <constraint firstItem="d1u-7S-LMD" firstAttribute="top" secondItem="mzA-kS-hKh" secondAttribute="top" constant="64" id="aQU-6G-VFS"/>
                             <constraint firstItem="YIr-RB-cEk" firstAttribute="leading" secondItem="HlU-X1-Ecf" secondAttribute="leading" id="adW-lr-F2E"/>
                             <constraint firstItem="rTn-ZB-ad5" firstAttribute="leading" secondItem="HlU-X1-Ecf" secondAttribute="leadingMargin" constant="-16" id="crp-Ag-bfi"/>
+                            <constraint firstItem="rTn-ZB-ad5" firstAttribute="leading" secondItem="HlU-X1-Ecf" secondAttribute="leading" id="dTv-TP-PmD"/>
                             <constraint firstAttribute="trailingMargin" secondItem="rTn-ZB-ad5" secondAttribute="trailing" constant="-16" id="k8T-CM-Hoj"/>
                             <constraint firstItem="m3L-C8-Edn" firstAttribute="top" secondItem="d1u-7S-LMD" secondAttribute="bottom" constant="-44" id="lOO-xj-JQd"/>
                             <constraint firstAttribute="trailing" secondItem="YIr-RB-cEk" secondAttribute="trailing" id="pec-jE-cL0"/>
                             <constraint firstItem="YIr-RB-cEk" firstAttribute="top" secondItem="rTn-ZB-ad5" secondAttribute="bottom" id="uYE-3a-prC"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="crp-Ag-bfi"/>
+                                <exclude reference="k8T-CM-Hoj"/>
+                            </mask>
+                        </variation>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <tabBarItem key="tabBarItem" title="" image="icon-information" id="eyG-JC-eyu"/>

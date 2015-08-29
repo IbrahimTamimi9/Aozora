@@ -111,15 +111,15 @@ public class Anime: PFObject, PFSubclassing {
         }.continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
             
             if let result = task.result as? [Episode] where result.count > 0 {
-                println("Found \(result.count) eps from network, saving with tag \(tag.rawValue)")
+                println("Found \(result.count) eps from network")
                 self.cachedEpisodeList += result
                 if pin {
                     let query = Episode.query()!
                     query.fromPinWithName(tag.rawValue)
                     query.findObjectsInBackground().continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
-                        return PFObject.unpinAll(task.result as! [Episode], withName: tag.rawValue)
+                        return PFObject.unpinAll(task.result as! [Episode])
                     }).continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
-                        return PFObject.pinAllInBackground(result, withName: tag.rawValue)
+                        return PFObject.pinAllInBackground(result)
                     })
                 }
             }

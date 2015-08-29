@@ -59,7 +59,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="180"/>
                                             <gestureRecognizers/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="180" id="OHr-L0-5zK"/>
+                                                <constraint firstAttribute="height" priority="999" constant="180" id="OHr-L0-5zK"/>
                                             </constraints>
                                         </imageView>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aEv-eL-xII" userLabel="ButtonTrailer">

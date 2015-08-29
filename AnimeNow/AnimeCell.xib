@@ -105,46 +105,24 @@
             <constraints>
                 <constraint firstItem="fFG-pC-x7g" firstAttribute="leading" secondItem="eOO-bR-QZj" secondAttribute="leading" id="Cbe-hT-99c"/>
                 <constraint firstItem="fFG-pC-x7g" firstAttribute="top" secondItem="nWh-E7-yvh" secondAttribute="topMargin" constant="-2" id="Cjo-cb-loT"/>
-                <constraint firstItem="fFG-pC-x7g" firstAttribute="leading" secondItem="nWh-E7-yvh" secondAttribute="leadingMargin" constant="91" id="Dod-G3-e5K"/>
                 <constraint firstItem="eOO-bR-QZj" firstAttribute="leading" secondItem="iLJ-ag-cRQ" secondAttribute="leading" id="LGm-Tk-FRO"/>
                 <constraint firstItem="fBz-UD-EJj" firstAttribute="top" secondItem="iLJ-ag-cRQ" secondAttribute="bottom" constant="1" id="Oix-Td-s3t"/>
-                <constraint firstItem="fBz-UD-EJj" firstAttribute="top" secondItem="3FS-AI-cKD" secondAttribute="bottom" id="QDG-LX-Zyk"/>
-                <constraint firstItem="3FS-AI-cKD" firstAttribute="top" secondItem="iLJ-ag-cRQ" secondAttribute="bottom" id="Sh4-QR-91m"/>
                 <constraint firstItem="MFs-r2-AdL" firstAttribute="top" secondItem="nWh-E7-yvh" secondAttribute="top" id="TgF-Oi-QzQ"/>
                 <constraint firstItem="fFG-pC-x7g" firstAttribute="leading" secondItem="5uH-cu-Dj6" secondAttribute="trailing" constant="8" id="V1Y-gt-PHX"/>
                 <constraint firstItem="fFG-pC-x7g" firstAttribute="trailing" secondItem="nWh-E7-yvh" secondAttribute="trailingMargin" id="Vmk-rp-Zgf"/>
                 <constraint firstAttribute="trailing" secondItem="MFs-r2-AdL" secondAttribute="trailing" id="Wab-c6-wIk"/>
                 <constraint firstItem="3FS-AI-cKD" firstAttribute="leading" secondItem="iLJ-ag-cRQ" secondAttribute="leading" id="WhF-Hh-r9C"/>
                 <constraint firstItem="5uH-cu-Dj6" firstAttribute="top" secondItem="nWh-E7-yvh" secondAttribute="topMargin" id="Y1f-0w-IKU"/>
-                <constraint firstItem="fBz-UD-EJj" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="nWh-E7-yvh" secondAttribute="bottomMargin" priority="750" id="Yc3-3S-OnP"/>
-                <constraint firstItem="fBz-UD-EJj" firstAttribute="trailing" secondItem="nWh-E7-yvh" secondAttribute="trailingMargin" id="ZS5-OZ-jnA"/>
-                <constraint firstItem="fFG-pC-x7g" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="nWh-E7-yvh" secondAttribute="trailingMargin" id="bUs-cK-TTR"/>
                 <constraint firstAttribute="bottomMargin" secondItem="3FS-AI-cKD" secondAttribute="bottom" constant="0.5" id="kGf-hv-Cqw"/>
-                <constraint firstAttribute="bottomMargin" secondItem="fBz-UD-EJj" secondAttribute="bottom" constant="6" id="m2i-WG-oFy"/>
-                <constraint firstAttribute="bottomMargin" secondItem="fBz-UD-EJj" secondAttribute="bottom" constant="6" id="pe3-CF-ZNc"/>
                 <constraint firstItem="3FS-AI-cKD" firstAttribute="top" relation="greaterThanOrEqual" secondItem="fBz-UD-EJj" secondAttribute="bottom" constant="1" id="rH5-xU-4mE"/>
                 <constraint firstItem="3FS-AI-cKD" firstAttribute="leading" secondItem="nWh-E7-yvh" secondAttribute="leadingMargin" constant="91" id="rZp-Cs-bah"/>
                 <constraint firstAttribute="trailingMargin" secondItem="fBz-UD-EJj" secondAttribute="trailing" id="rgY-lj-60O"/>
-                <constraint firstItem="3FS-AI-cKD" firstAttribute="leading" secondItem="fBz-UD-EJj" secondAttribute="leading" id="uqY-NZ-DBf"/>
                 <constraint firstItem="5uH-cu-Dj6" firstAttribute="leading" secondItem="nWh-E7-yvh" secondAttribute="leadingMargin" id="vwL-B1-cqa"/>
                 <constraint firstItem="fBz-UD-EJj" firstAttribute="leading" secondItem="nWh-E7-yvh" secondAttribute="leadingMargin" constant="91" id="wCE-P1-xR8"/>
                 <constraint firstItem="iLJ-ag-cRQ" firstAttribute="top" secondItem="eOO-bR-QZj" secondAttribute="bottom" constant="1" id="wq6-Vs-zCm"/>
                 <constraint firstAttribute="bottom" secondItem="MFs-r2-AdL" secondAttribute="bottom" id="xDa-zr-SIX"/>
                 <constraint firstItem="eOO-bR-QZj" firstAttribute="top" secondItem="fFG-pC-x7g" secondAttribute="bottom" constant="1" id="xOM-6k-CH2"/>
             </constraints>
-            <variation key="default">
-                <mask key="constraints">
-                    <exclude reference="Dod-G3-e5K"/>
-                    <exclude reference="bUs-cK-TTR"/>
-                    <exclude reference="QDG-LX-Zyk"/>
-                    <exclude reference="Yc3-3S-OnP"/>
-                    <exclude reference="ZS5-OZ-jnA"/>
-                    <exclude reference="m2i-WG-oFy"/>
-                    <exclude reference="pe3-CF-ZNc"/>
-                    <exclude reference="Sh4-QR-91m"/>
-                    <exclude reference="uqY-NZ-DBf"/>
-                </mask>
-            </variation>
             <connections>
                 <outlet property="etaLabel" destination="eOO-bR-QZj" id="QMA-Es-Zof"/>
                 <outlet property="genresLabel" destination="fBz-UD-EJj" id="3ER-aM-ekD"/>

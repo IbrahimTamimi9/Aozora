@@ -156,12 +156,20 @@
                         <constraints>
                             <constraint firstItem="qNO-UV-LtX" firstAttribute="top" secondItem="m5v-5k-u0e" secondAttribute="bottom" constant="-40" id="2UA-fn-o8w"/>
                             <constraint firstItem="haP-dC-pfL" firstAttribute="top" secondItem="ZvF-JW-mkc" secondAttribute="bottom" constant="-49" id="3fh-su-gfC"/>
+                            <constraint firstAttribute="trailing" secondItem="ZvF-JW-mkc" secondAttribute="trailing" id="5fT-np-2T1"/>
                             <constraint firstItem="qNO-UV-LtX" firstAttribute="leading" secondItem="kcU-gF-Gza" secondAttribute="leading" id="9Ew-FQ-M0Z"/>
                             <constraint firstItem="ZvF-JW-mkc" firstAttribute="leading" secondItem="kcU-gF-Gza" secondAttribute="leadingMargin" constant="-16" id="BEZ-dq-2Cj"/>
                             <constraint firstAttribute="trailingMargin" secondItem="ZvF-JW-mkc" secondAttribute="trailing" constant="-16" id="GtQ-iU-4lP"/>
+                            <constraint firstItem="ZvF-JW-mkc" firstAttribute="leading" secondItem="kcU-gF-Gza" secondAttribute="leading" id="hF3-KQ-0ZR"/>
                             <constraint firstAttribute="trailing" secondItem="qNO-UV-LtX" secondAttribute="trailing" id="zFt-ir-8Qo"/>
                             <constraint firstItem="ZvF-JW-mkc" firstAttribute="top" secondItem="m5v-5k-u0e" secondAttribute="bottom" constant="-64" id="ztV-ne-0fz"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="BEZ-dq-2Cj"/>
+                                <exclude reference="GtQ-iU-4lP"/>
+                            </mask>
+                        </variation>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item 1" id="Jsu-1p-Xx5"/>
                     <navigationItem key="navigationItem" id="hJt-Bd-P1E">
@@ -278,6 +286,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Nx5-fM-jwg" firstAttribute="leading" secondItem="vug-hO-2Pp" secondAttribute="leading" id="1KG-UZ-Tjk"/>
                             <constraint firstAttribute="trailing" secondItem="5mO-W8-Sf6" secondAttribute="trailing" id="427-jo-OTA"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Nx5-fM-jwg" secondAttribute="trailing" constant="-16" id="5ey-FJ-NpN"/>
                             <constraint firstAttribute="trailing" secondItem="OqV-3g-Ea8" secondAttribute="trailing" constant="-5" id="KHY-os-vVo"/>
@@ -287,8 +296,15 @@
                             <constraint firstItem="5mO-W8-Sf6" firstAttribute="top" secondItem="qcL-Aj-tUp" secondAttribute="bottom" id="u6R-Wm-eiQ"/>
                             <constraint firstItem="5mO-W8-Sf6" firstAttribute="leading" secondItem="vug-hO-2Pp" secondAttribute="leading" id="v3e-9m-Fo7"/>
                             <constraint firstItem="Nx5-fM-jwg" firstAttribute="top" secondItem="qcL-Aj-tUp" secondAttribute="bottom" constant="44" id="wWm-G9-5Dl"/>
+                            <constraint firstAttribute="trailing" secondItem="Nx5-fM-jwg" secondAttribute="trailing" id="woA-y7-sRi"/>
                             <constraint firstItem="OqV-3g-Ea8" firstAttribute="top" secondItem="Nx5-fM-jwg" secondAttribute="bottom" id="wua-SY-du2"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="5ey-FJ-NpN"/>
+                                <exclude reference="q9w-fZ-6mt"/>
+                            </mask>
+                        </variation>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Library" id="0KE-Rz-p8e">
