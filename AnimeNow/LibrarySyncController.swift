@@ -163,34 +163,9 @@ public class LibrarySyncController {
                 query.includeKey("anime.relations")
                 query.whereKey("user", equalTo: User.currentUser()!)
                 query.limit = 1000
-                // TODO: Support more than 1000 anime in library
                 
+                // TODO: Support more than 1000 anime in library
                 if let animeProgress = task.result as? [AnimeProgress] {
-                    // Some progress was saved without object id? remove this for when that's fixed, also uncomment the limit = 1 in query on line 144
-                    // From here
-//                    var firstProgressThatHasId: AnimeProgress?
-//                    for prog in animeProgress {
-//                        if prog.objectId == nil {
-//                            println("Warning: AnimeProgress without objectId with anime \(prog.anime.objectId), saving again")
-//                            prog.saveInBackground().continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
-//                                return prog.unpinInBackground()
-//                            }).continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
-//                                let query = AnimeProgress.query()!
-//                                query.whereKey("user", equalTo: User.currentUser()!)
-//                                query.whereKey("anime", equalTo: prog.anime)
-//                                return query.findObjectsInBackground()
-//                            }).continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
-//                                let result = task.result as! [AnimeProgress]
-//                                println(result.count)
-//                                return PFObject.pinAllInBackground(result)
-//                            })
-//                            
-//                        } else {
-//                            firstProgressThatHasId = prog
-//                            break
-//                        }
-//                    }
-                    // Up to here
                     if let progress = animeProgress.last, let updatedAt = progress.updatedAt {
                         query.whereKey("updatedAt", greaterThan: updatedAt)
                         return query.findObjectsInBackground()
@@ -270,14 +245,19 @@ public class LibrarySyncController {
                 
                 // 3. Merge all existing libraries
                 let parseLibrary = task.result as! [AnimeProgress]
+                
+                // Caching ID to speed up loops
+                for progress in parseLibrary {
+                    progress.myAnimeListID = progress.anime.myAnimeListID
+                }
+                
                 allProgress += parseLibrary
                 
                 for progress in parseLibrary {
                     
                     // Check if user is syncing with MyAnimeList
                     if User.syncingWithMyAnimeList() {
-                        if var malProgress = myAnimeListLibrary.filter({$0.myAnimeListID == progress.anime.myAnimeListID}).last {
-                            
+                        if var malProgress = myAnimeListLibrary.filter({$0.myAnimeListID == progress.myAnimeListID}).last {
                             
                             // Update episodes
                             if malProgress.episodes > progress.watchedEpisodes {
@@ -378,8 +358,9 @@ public class LibrarySyncController {
                 
                 // Create on PARSE
                 var malProgressToCreate: [MALProgress] = []
+                
                 for malProgress in myAnimeListLibrary {
-                    if parseLibrary.filter({$0.anime.myAnimeListID == malProgress.myAnimeListID}).last == nil {
+                    if parseLibrary.filter({$0.myAnimeListID == malProgress.myAnimeListID}).last == nil {
                         malProgressToCreate.append(malProgress)
                     }
                 }
@@ -413,7 +394,7 @@ public class LibrarySyncController {
                                     allProgress.append(progress)
                                     
                                     queue = queue.continueWithBlock({ (task: BFTask!) -> AnyObject! in
-                                        return progress.saveEventually()
+                                        return progress.saveInBackground()
                                     })
                                 }
                             }
@@ -483,17 +464,7 @@ public class LibrarySyncController {
                 query.whereKey("list", notEqualTo: "Watching")
             }
         }
-        return query.findObjectsInBackground().continueWithBlock({ (task: BFTask!) -> AnyObject! in
-            if let error = task.error {
-                println(error)
-            } else if let exception = task.exception {
-                println(exception)
-            } else {
-                let result = task.result as! [AnimeProgress]
-                println(result.count)
-            }
-            return task
-        })
+        return query.findObjectsInBackground()
     }
     
     // MARK: - Class Methods

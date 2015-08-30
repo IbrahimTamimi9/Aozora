@@ -44,6 +44,9 @@ public class AnimeProgress: PFObject, PFSubclassing {
     @NSManaged public var watchedEpisodes: Int
     @NSManaged public var list: String
     
+    // Used to cache the ID to sync with MyAnimeList faster
+    var myAnimeListID: Int = 0
+    
     public func myAnimeListList() -> MALList {
         switch list {
         case "Planning": return .Planning
