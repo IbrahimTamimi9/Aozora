@@ -301,12 +301,15 @@ public class AnimeInformationViewController: AnimeBaseViewController {
                     // Create AnimeProgress, if it's not on Parse
                     LibrarySyncController.addAnime(progress: progress)
                     self.anime.progress = progress
-                    
-                    progress.saveEventually()
-                    progress.pinInBackgroundWithBlock({ (result, error) -> Void in
-                        NSNotificationCenter.defaultCenter().postNotificationName(LibraryUpdatedNotification, object: nil)
+                    progress.saveInBackgroundWithBlock({ (result, error) -> Void in
+                        if let error = error {
+                            // Handle error
+                        } else if result {
+                            progress.pinInBackgroundWithBlock({ (result, error) -> Void in
+                                NSNotificationCenter.defaultCenter().postNotificationName(LibraryUpdatedNotification, object: nil)
+                            })
+                        }
                     })
-                    
                     self.updateListButtonTitle(progress.list)
                 } else {
                     self.presentBasicAlertWithTitle("Anime already in Library", message: "You might need to sync your library first, select 'Library' tab")

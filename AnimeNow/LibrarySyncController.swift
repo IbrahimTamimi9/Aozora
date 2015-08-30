@@ -148,7 +148,7 @@ public class LibrarySyncController {
             .continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
                 
                 if let result = task.result as? [AnimeProgress], let AnimeProgress = result.last {
-                    return BFTask(result: AnimeProgress)
+                    return BFTask(result: result)
                 } else {
                     return nil
                 }
@@ -165,13 +165,38 @@ public class LibrarySyncController {
                 query.limit = 1000
                 // TODO: Support more than 1000 anime in library
                 
-                if let animeProgress = task.result as? AnimeProgress {
-                    if let updatedAt = animeProgress.updatedAt {
+                if let animeProgress = task.result as? [AnimeProgress] {
+                    // Some progress was saved without object id? remove this for when that's fixed, also uncomment the limit = 1 in query on line 144
+                    // From here
+//                    var firstProgressThatHasId: AnimeProgress?
+//                    for prog in animeProgress {
+//                        if prog.objectId == nil {
+//                            println("Warning: AnimeProgress without objectId with anime \(prog.anime.objectId), saving again")
+//                            prog.saveInBackground().continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
+//                                return prog.unpinInBackground()
+//                            }).continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
+//                                let query = AnimeProgress.query()!
+//                                query.whereKey("user", equalTo: User.currentUser()!)
+//                                query.whereKey("anime", equalTo: prog.anime)
+//                                return query.findObjectsInBackground()
+//                            }).continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
+//                                let result = task.result as! [AnimeProgress]
+//                                println(result.count)
+//                                return PFObject.pinAllInBackground(result)
+//                            })
+//                            
+//                        } else {
+//                            firstProgressThatHasId = prog
+//                            break
+//                        }
+//                    }
+                    // Up to here
+                    if let progress = animeProgress.last, let updatedAt = progress.updatedAt {
                         query.whereKey("updatedAt", greaterThan: updatedAt)
                         return query.findObjectsInBackground()
                     } else {
                         // Most likely syncing, do nothing
-                        return BFTask(error: NSError(domain: "", code: 0, userInfo: nil))
+                        return BFTask(error: NSError(domain: "Aozora.Error", code: 0, userInfo: nil))
                     }
                 } else if task.result == nil && task.error == nil {
                     return query.findObjectsInBackground()
@@ -201,7 +226,6 @@ public class LibrarySyncController {
         
         if shouldSyncData || isRefreshing {
             println("Fetching all anime library from network..")
-            
             
             var myAnimeListLibrary: [MALProgress] = []
             var updatedMyAnimeListLibrary = Set<MALProgress>()
@@ -240,11 +264,7 @@ public class LibrarySyncController {
                 
             }).continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
                 
-                let query = AnimeProgress.query()!
-                query.fromLocalDatastore()
-                query.includeKey("anime")
-                query.limit = 1000
-                return query.findObjectsInBackground()
+                return self.fetchAozoraLibrary(onlyWatching: nil)
                 
             }).continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
                 
@@ -450,18 +470,30 @@ public class LibrarySyncController {
         return fetchAozoraLibrary(onlyWatching: false)
     }
     
-    class func fetchAozoraLibrary(onlyWatching: Bool = false) -> BFTask {
+    class func fetchAozoraLibrary(#onlyWatching: Bool?) -> BFTask {
         
         let query = AnimeProgress.query()!
         query.fromLocalDatastore()
         query.includeKey("anime")
         query.limit = 1000
-        if onlyWatching {
-            query.whereKey("list", equalTo: "Watching")
-        } else {
-            query.whereKey("list", notEqualTo: "Watching")
+        if let onlyWatching = onlyWatching {
+            if onlyWatching {
+                query.whereKey("list", equalTo: "Watching")
+            } else {
+                query.whereKey("list", notEqualTo: "Watching")
+            }
         }
-        return query.findObjectsInBackground()
+        return query.findObjectsInBackground().continueWithBlock({ (task: BFTask!) -> AnyObject! in
+            if let error = task.error {
+                println(error)
+            } else if let exception = task.exception {
+                println(exception)
+            } else {
+                let result = task.result as! [AnimeProgress]
+                println(result.count)
+            }
+            return task
+        })
     }
     
     // MARK: - Class Methods
