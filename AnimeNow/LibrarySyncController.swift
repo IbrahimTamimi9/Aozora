@@ -380,7 +380,9 @@ public class LibrarySyncController {
                             println("Creating \(animeToCreate.count) AnimeProgress on Parse")
                             var queue = BFTask(result: nil)
                             for anime in animeToCreate {
-                                if let malProgress = malProgressToCreate.filter({ $0.myAnimeListID == anime.myAnimeListID }).last {
+                                // This prevents all anime object to be iterated thousands of times..
+                                let myAnimeListID = anime.myAnimeListID
+                                if let malProgress = malProgressToCreate.filter({ $0.myAnimeListID == myAnimeListID }).last {
                                     // Creating on PARSE
                                     let malList = MALList(rawValue: malProgress.status)!
                                     var progress = AnimeProgress()
