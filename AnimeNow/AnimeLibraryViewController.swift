@@ -117,7 +117,10 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
             return BFTask(result: nil)
         }
         
-        loadingView.startAnimating()
+        if !isRefreshing {
+            loadingView.startAnimating()
+        }
+        
         currentlySyncing = true
         return LibrarySyncController.fetchWatchingList(isRefreshing).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
             
@@ -125,7 +128,9 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
             let animeList = task.result as! [AnimeProgress]
             self.updateWatchingList(animeList)
             self.updateListViewControllers(animeList)
-            self.loadingView.stopAnimating()
+            if !isRefreshing {
+                self.loadingView.stopAnimating()
+            }
             return LibrarySyncController.fetchTheRestOfLists()
             
         }).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
