@@ -104,11 +104,18 @@ public class SeasonalChartService {
         var components = calendar.components(NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitYear, fromDate: seasonDate!)
         var seasonString = ""
         
-        switch components.month + 1 {
-        case 1...3 : seasonString = "Winter"
-        case 4...6 : seasonString = "Spring"
-        case 7...9 : seasonString = "Summer"
-        case 10...12 : seasonString = "Fall"
+        var monthNumber = components.month + 1
+        var yearNumber = components.year
+        if monthNumber > 12 {
+            monthNumber -= 12
+        }
+        
+        switch monthNumber {
+        case 2...4 : seasonString = "Winter"
+        case 5...7 : seasonString = "Spring"
+        case 8...10 : seasonString = "Summer"
+        case 1 : fallthrough
+        case 11...12 : seasonString = "Fall"
         default: break
         }
         
@@ -122,7 +129,7 @@ public class SeasonalChartService {
         default: break
         }
         
-        return (iconName , seasonString + " \(components.year)")
+        return (iconName , seasonString + " \(yearNumber)")
     }
     
     public class func generateAllSeasonalCharts() {
