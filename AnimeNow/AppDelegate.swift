@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     override class func initialize() -> Void {
         iRate.sharedInstance().promptForNewVersionIfUserRated = true
-        iRate.sharedInstance().daysUntilPrompt = 5.0
+        iRate.sharedInstance().daysUntilPrompt = 2.0
         iRate.sharedInstance().verboseLogging = false
     }
 
