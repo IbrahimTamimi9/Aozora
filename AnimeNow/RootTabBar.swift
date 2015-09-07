@@ -32,6 +32,10 @@ public class RootTabBar: UITabBarController {
                     break
                 case "Library":
                     selectedIndex = 1
+                case "Profile":
+                    selectedIndex = 2
+                case "Forum":
+                    selectedIndex = 3
                 default:
                     break
                 }
