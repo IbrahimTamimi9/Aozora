@@ -57,8 +57,14 @@ public class CustomThreadViewController: ThreadViewController {
             updateUIWithGeneralThread(thread)
         }
         
-        let repliesTitle = repliesButtonTitle(thread.replies)
-        commentsButton.setTitle(repliesTitle, forState: .Normal)
+        if thread.locked {
+            commentsButton.setTitle("Locked", forState: .Normal)
+            navigationItem.rightBarButtonItem?.enabled = false
+        } else {
+            let repliesTitle = repliesButtonTitle(thread.replies)
+            commentsButton.setTitle(repliesTitle, forState: .Normal)
+        }
+        
         
         tagsLabel.updateTags(thread.tags, delegate: self)
         prepareForVideo(playButton, imageView: imageContent, imageHeightConstraint: imageHeightConstraint, youtubeID: thread.youtubeID)
@@ -216,6 +222,8 @@ public class CustomThreadViewController: ThreadViewController {
             let comment = ANParseKit.newPostViewController()
             comment.initWith(thread: thread, threadType: threadType, delegate: self)
             presentViewController(comment, animated: true, completion: nil)
+        } else if let thread = thread where thread.locked {
+            presentBasicAlertWithTitle("Thread is locked", message: nil)
         } else {
             presentBasicAlertWithTitle("Login first", message: "Select 'Me' tab")
         }
