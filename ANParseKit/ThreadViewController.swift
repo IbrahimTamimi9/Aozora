@@ -16,7 +16,7 @@ import ANParseKit
 // Class intended to be subclassed
 public class ThreadViewController: UIViewController {
    
-    public let FetchLimit = 20
+    public let FetchLimit = 12
     
     @IBOutlet public weak var tableView: UITableView!
     
