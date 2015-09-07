@@ -57,6 +57,7 @@
                                         </button>
                                         <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PPE-Sl-fKl">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="180"/>
+                                            <color key="backgroundColor" red="0.89411765336990356" green="0.89411765336990356" blue="0.89411765336990356" alpha="1" colorSpace="calibratedRGB"/>
                                             <gestureRecognizers/>
                                             <constraints>
                                                 <constraint firstAttribute="height" priority="999" constant="180" id="OHr-L0-5zK"/>

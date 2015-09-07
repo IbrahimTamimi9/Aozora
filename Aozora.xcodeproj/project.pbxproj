@@ -1169,8 +1169,8 @@
 		DAC077AE1B6890F50067DA90 /* Posts */ = {
 			isa = PBXGroup;
 			children = (
-				DAC077A51B6890620067DA90 /* Subclasses */,
 				DAC0779C1B688DCA0067DA90 /* Views */,
+				DAC077A51B6890620067DA90 /* Subclasses */,
 			);
 			name = Posts;
 			sourceTree = "<group>";

@@ -102,7 +102,14 @@ public class PostCell: UITableViewCell {
     
     public override func layoutSubviews() {
         super.layoutSubviews()
+        contentView.setNeedsLayout()
         contentView.layoutIfNeeded()
         textContent.preferredMaxLayoutWidth = textContent.frame.size.width
     }
+    
+    
+    public override func prepareForReuse() {
+        super.prepareForReuse()
+    }
+    
 }

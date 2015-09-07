@@ -173,7 +173,7 @@ extension ThreadViewController: UITableViewDataSource {
             cell.delegate = self
             updatePostCell(cell, with: post)
             if let episode = post.episode {
-                cell.imageContent?.setImageFrom(urlString: episode.imageURLString(), animated: true)
+                cell.imageContent?.setImageFrom(urlString: episode.imageURLString(), animated: false)
                 cell.imageHeightConstraint?.constant = 180
             }
             cell.layoutIfNeeded()
@@ -288,7 +288,7 @@ extension ThreadViewController: UITableViewDataSource {
     public func setImages(images: [ImageData], imageView: UIImageView?, imageHeightConstraint: NSLayoutConstraint?) {
         if let image = images.first {
             imageHeightConstraint?.constant = (view.bounds.size.width-59.0) * CGFloat(image.height)/CGFloat(image.width)
-            imageView?.setImageFrom(urlString: image.url, animated: true)
+            imageView?.setImageFrom(urlString: image.url, animated: false)
         } else {
             imageHeightConstraint?.constant = 0
         }
@@ -307,7 +307,7 @@ extension ThreadViewController: UITableViewDataSource {
             if let youtubeID = youtubeID {
                 
                 let urlString = "https://i.ytimg.com/vi/\(youtubeID)/mqdefault.jpg"
-                imageView?.setImageFrom(urlString: urlString, animated: true)
+                imageView?.setImageFrom(urlString: urlString, animated: false)
                 imageHeightConstraint?.constant = 180
                 
                 playButton.hidden = false
