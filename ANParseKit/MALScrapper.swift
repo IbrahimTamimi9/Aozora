@@ -215,8 +215,15 @@ public class MALScrapper {
                         let width = valuesFiltered[0].toInt()!
                         let height = valuesFiltered[1].toInt()!
                         
-                        let imageData = ImageData(url: imageURL, width: width, height: height)
-                        images.append(imageData)
+                        if width <= 1400 && height <= 1400 {
+                            if animated && imageURL.endsWith(".gif") {
+                                let imageData = ImageData(url: imageURL, width: width, height: height)
+                                images.append(imageData)
+                            } else if !animated && (imageURL.endsWith(".jpg") || imageURL.endsWith(".jpeg") || imageURL.endsWith(".png")) {
+                                let imageData = ImageData(url: imageURL, width: width, height: height)
+                                images.append(imageData)
+                            }
+                        }
                 }
             }
             
@@ -573,6 +580,21 @@ public class MALScrapper {
 }
 
 extension String {
+    
+    func beginsWith (str: String) -> Bool {
+        if let range = self.rangeOfString(str) {
+            return range.startIndex == self.startIndex
+        }
+        return false
+    }
+    
+    func endsWith (str: String) -> Bool {
+        if let range = self.rangeOfString(str, options:NSStringCompareOptions.BackwardsSearch) {
+            return range.endIndex == self.endIndex
+        }
+        return false
+    }
+    
     func stringByRemovingOccurencesOfString(occurences: [String]) -> String {
         var allOccurences = occurences
         var finalString = self

@@ -125,7 +125,11 @@ public class CustomThreadViewController: ThreadViewController {
         if let startedBy = thread.startedBy {
             avatar.setImageWithPFFile(startedBy.avatarThumb!)
             username.text = startedBy.aozoraUsername
-            postedDate.text = thread.createdAt!.timeAgo()
+            var postedAt = thread.createdAt!.timeAgo()
+            if thread.edited {
+                postedAt += " · Edited"
+            }
+            postedDate.text = postedAt
             
             moreButton.hidden = startedBy != User.currentUser()!
         }
