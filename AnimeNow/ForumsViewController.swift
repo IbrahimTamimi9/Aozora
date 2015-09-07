@@ -35,7 +35,8 @@ class ForumsViewController: UIViewController {
     var refreshControl = UIRefreshControl()
     var selectedList: SelectedList = .Recent
     var selectedTag: PFObject?
-        
+    var timer: NSTimer!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -47,10 +48,13 @@ class ForumsViewController: UIViewController {
         
         addRefreshControl(refreshControl, action:"refetchThreads", forTableView: tableView)
         
+        timer = NSTimer.scheduledTimerWithTimeInterval(60.0, target: self, selector: "reloadTableView", userInfo: nil, repeats: true)
+        
         var tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "changeList")
         navigationBarTitle.addGestureRecognizer(tapGestureRecognizer)
         
         fetchThreadTags()
+        cachePinnedPosts()
         prepareForList(selectedList)
     }
     
@@ -107,6 +111,9 @@ class ForumsViewController: UIViewController {
         }
     }
     
+    func reloadTableView() {
+        tableView.reloadData()
+    }
     
     // MARK: - Fetching
     
@@ -115,6 +122,10 @@ class ForumsViewController: UIViewController {
     }
     
     func fetchThreads() {
+        
+        self.fetchController.resetToDefaults()
+        self.fetchController.tableView?.reloadData()
+        
         let query = Thread.query()!
         query.whereKey("replies", greaterThan: 0)
         query.whereKeyExists("episode")
@@ -123,6 +134,7 @@ class ForumsViewController: UIViewController {
         query2.whereKeyDoesNotExist("episode")
         
         let orQuery = PFQuery.orQueryWithSubqueries([query, query2])
+        orQuery.whereKey("pinned", notEqualTo: true)
         orQuery.includeKey("tags")
         orQuery.includeKey("startedBy")
         
@@ -135,17 +147,28 @@ class ForumsViewController: UIViewController {
             break
         }
         
-        fetchController.configureWith(self, query: orQuery, tableView: tableView, limit: 100)
+        fetchController.configureWith(self, query: orQuery, tableView: tableView, limit: 50)
     }
     
     func fetchTagThreads(tag: PFObject) {
 
+        self.fetchController.resetToDefaults()
+        self.fetchController.tableView?.reloadData()
+        
         let query = Thread.query()!
+        query.fromLocalDatastore()
         query.whereKey("tags", containedIn: [tag])
-        query.includeKey("tags")
-        query.includeKey("startedBy")
-        query.orderByDescending("updatedAt")
-        fetchController.configureWith(self, query: query, tableView: tableView, limit: 100)
+        query.findObjectsInBackgroundWithBlock { (result, error) -> Void in
+            if let pinnedData = result as? [Thread] {
+                let query = Thread.query()!
+                query.whereKey("tags", containedIn: [tag])
+                query.whereKey("pinned", notEqualTo: true)
+                query.includeKey("tags")
+                query.includeKey("startedBy")
+                query.orderByDescending("updatedAt")
+                self.fetchController.configureWith(self, query: query, tableView: self.tableView, limit: 50, pinnedData: pinnedData)
+            }
+        }
     }
     
     func fetchThreadTags() {
@@ -155,6 +178,12 @@ class ForumsViewController: UIViewController {
             self.tagsDataSource = task.result as! [ThreadTag]
             return nil
         }
+    }
+    
+    func cachePinnedPosts() {
+        let query = Thread.query()!
+        query.whereKey("pinned", equalTo: true)
+        query.findCachedOrNetwork(PinnedThreadsPin, expirationDays: 1)
     }
     
     // MARK: - IBActions
@@ -188,6 +217,8 @@ extension ForumsViewController: UITableViewDataSource {
         
         if let _ = thread.episode {
             cell.typeLabel.text = " "
+        } else if thread.pinned {
+            cell.typeLabel.text = " "
         } else {
             cell.typeLabel.text = ""
         }

@@ -38,6 +38,7 @@ public class ProfileViewController: ThreadViewController {
     var userProfile: User?
     var username: String?
     var followingUser: Bool?
+    var timer: NSTimer!
     
     public func initWithUser(user: User) {
         self.userProfile = user
@@ -57,6 +58,7 @@ public class ProfileViewController: ThreadViewController {
             segmentedControl.selectedSegmentIndex = 1
             tableBottomSpaceConstraint.constant = 0
         }
+        timer = NSTimer.scheduledTimerWithTimeInterval(60.0, target: self, selector: "reloadTableView", userInfo: nil, repeats: true)
         
         fetchPosts()
     }
@@ -67,6 +69,10 @@ public class ProfileViewController: ThreadViewController {
         if let profile = userProfile where profile.details.isDataAvailable() {
             updateFollowingButtons()
         }
+    }
+    
+    func reloadTableView() {
+        tableView.reloadData()
     }
     
     func sizeHeaderToFit() {

@@ -46,6 +46,9 @@ public class ImagesViewController: UIViewController {
     }
     
     func findImagesWithQuery(query: String, animated: Bool) {
+        self.dataSource = []
+        self.collectionView.reloadData()
+        
         malScrapper.findImagesWithQuery(query, animated: animated).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
             
             let result = task.result as! [ImageData]
