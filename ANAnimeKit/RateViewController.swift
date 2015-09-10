@@ -29,7 +29,7 @@ public class RateViewController: UIViewController {
     
     public class func showRateDialogWith(viewController: UIViewController, title: String, initialRating: Float, anime: Anime, delegate: RateViewControllerProtocol) {
         
-        let controller = UIStoryboard(name: "Rate", bundle: ANAnimeKit.bundle()).instantiateInitialViewController() as! RateViewController
+        let controller = UIStoryboard(name: "Rate", bundle: nil).instantiateInitialViewController() as! RateViewController
         
         controller.initWith(anime, title: title, initialRating: initialRating, delegate: delegate)
         

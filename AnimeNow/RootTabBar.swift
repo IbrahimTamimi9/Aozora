@@ -9,7 +9,6 @@
 import UIKit
 import ANParseKit
 import ANCommonKit
-import ANAnimeKit
 
 public class RootTabBar: UITabBarController {
     public static let ShowedMyAnimeListLoginDefault = "Defaults.ShowedMyAnimeListLogin"

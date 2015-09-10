@@ -15,6 +15,7 @@ import Parse
 public class ProfileViewController: ThreadViewController {
     
     @IBOutlet weak var settingsButton: UIButton!
+    @IBOutlet weak var notificationsButton: UIButton!
     
     @IBOutlet weak var userAvatar: UIImageView!
     @IBOutlet weak var usernameLabel: UILabel!
@@ -189,6 +190,7 @@ public class ProfileViewController: ThreadViewController {
         } else {
             followButton.hidden = false
             settingsButton.hidden = true
+            notificationsButton.hidden = true
         }
         
         if user.badges.count > 0 {
@@ -236,7 +238,7 @@ public class ProfileViewController: ThreadViewController {
                     thisProfileUser.details.saveEventually()
                     thisProfileUser.saveEventually()
                     currentUser.saveEventually()
-                    PFCloud.callFunctionInBackground("sendFollowingPushNotification", withParameters: ["toUser":thisProfileUser.objectId!])
+                    PFCloud.callFunctionInBackground("sendFollowingPushNotificationV2", withParameters: ["toUser":thisProfileUser.objectId!])
                     updateFollowingButtons()
                 } else {
                     // Unfollow
@@ -300,6 +302,11 @@ public class ProfileViewController: ThreadViewController {
         
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler:nil))
         self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    @IBAction func showNotifications(sender: AnyObject) {
+        let notificationsVC = UIStoryboard(name: "Profile", bundle: ANParseKit.bundle()).instantiateViewControllerWithIdentifier("Notifications") as! NotificationsViewController
+        self.presentViewController(notificationsVC, animated: true, completion: nil)
     }
 }
 

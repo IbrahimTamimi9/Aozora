@@ -9,16 +9,12 @@ import ANParseKit
 
 public class ANAnimeKit {
     
-    public class func bundle() -> NSBundle {
-        return NSBundle(forClass: self)
-    }
-    
     public class func defaultStoryboard() -> UIStoryboard {
-        return UIStoryboard(name: "Anime", bundle: bundle())
+        return UIStoryboard(name: "Anime", bundle: nil)
     }
     
     public class func threadStoryboard() -> UIStoryboard {
-        return UIStoryboard(name: "Thread", bundle: bundle())
+        return UIStoryboard(name: "Thread", bundle: nil)
     }
     
     public class func rootTabBarController() -> CustomTabBarController {
@@ -27,7 +23,7 @@ public class ANAnimeKit {
     }
     
     public class func animeForumViewController() -> (UINavigationController,ForumViewController) {
-        let controller = UIStoryboard(name: "Forum", bundle: bundle()).instantiateInitialViewController() as! UINavigationController
+        let controller = UIStoryboard(name: "Forum", bundle: nil).instantiateInitialViewController() as! UINavigationController
         return (controller,controller.viewControllers.last! as! ForumViewController)
     }
     
@@ -36,4 +32,8 @@ public class ANAnimeKit {
         return controller
     }
     
+    public class func notificationThreadViewController() -> NotificationThreadViewController {
+        let controller = ANAnimeKit.threadStoryboard().instantiateViewControllerWithIdentifier("NotificationThread") as! NotificationThreadViewController
+        return controller
+    }
 }

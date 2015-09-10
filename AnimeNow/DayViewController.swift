@@ -12,7 +12,6 @@ import SDWebImage
 import Alamofire
 import ANCommonKit
 import XLPagerTabStrip
-import ANAnimeKit
 
 class DayViewController: UIViewController {
     

@@ -11,7 +11,6 @@ import ANParseKit
 import SDWebImage
 import Alamofire
 import ANCommonKit
-import ANAnimeKit
 
 class ChartViewController: UIViewController {
     

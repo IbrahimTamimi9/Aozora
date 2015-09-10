@@ -8,7 +8,6 @@
 
 import UIKit
 import ANParseKit
-import ANAnimeKit
 import ANCommonKit
 import XCDYouTubeKit
 import JTSImageViewController
@@ -32,12 +31,56 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         Fabric.with([Crashlytics()])
-        // Initialization
-        registerParse()
-        // Track statistics around application opens.
+        initializeParse()
         PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
         PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions)
         
+        if let userInfo = launchOptions?[UIApplicationLaunchOptionsRemoteNotificationKey] as? [NSObject : AnyObject] {
+            handleIncomingNotification(userInfo, completionHandler: nil)
+        }
+        trackPushOpen(application, didFinishLaunchingWithOptions:launchOptions)
+        registerForPushNotifications(application)
+        prepareForAds()
+        customizeAppearance()
+    
+        window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        
+        var currentUser = PFUser.currentUser()
+        if currentUser != nil {
+            WorkflowController.presentRootTabBar(animated: false)
+        } else {
+            WorkflowController.presentOnboardingController(true)
+        }
+        
+        LibrarySyncController.sharedInstance.syncParseInformation()
+        
+        return true
+    }
+    
+    func application(application: UIApplication,
+        didReceiveRemoteNotification userInfo: [NSObject : AnyObject],
+        fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
+        handleIncomingNotification(userInfo, completionHandler: completionHandler)
+    }
+    
+    func handleIncomingNotification(userInfo: [NSObject: AnyObject], completionHandler: ((UIBackgroundFetchResult) -> Void)? ) {
+        // Extract the notification data
+        if let objectClass = userInfo["targetClass"] as? String,
+            let objectId = userInfo["targetID"] as? String {
+                
+                NotificationsController.handleNotification(objectClass, objectId: objectId)
+                if let completionHandler = completionHandler {
+                    completionHandler(UIBackgroundFetchResult.NewData)
+                }
+                
+        } else {
+            if let completionHandler = completionHandler {
+                completionHandler(UIBackgroundFetchResult.Failed)
+            }
+        }
+    }
+    
+    func trackPushOpen(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) {
         // Tracking push opens when application is not running nor in background
         if application.applicationState != UIApplicationState.Background {
             // Track an app open here if we launch with a push, unless
@@ -50,35 +93,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
             }
         }
-        
+    }
+    
+    func registerForPushNotifications(application: UIApplication) {
         // Push notifications
         let userNotificationTypes = (UIUserNotificationType.Alert |  UIUserNotificationType.Badge |  UIUserNotificationType.Sound);
         
         let settings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
         application.registerUserNotificationSettings(settings)
         application.registerForRemoteNotifications()
-        
+    }
+    
+    func prepareForAds() {
         // Ads
         if InAppController.purchasedAnyPro() == nil {
             UIViewController.prepareInterstitialAds()
         }
-        
-        // Appearance
-        customizeAppearance()
-    
-        window = UIWindow(frame: UIScreen.mainScreen().bounds)
-        
-        var currentUser = PFUser.currentUser()
-        
-        if currentUser != nil {
-            WorkflowController.presentRootTabBar(animated: false)
-            
-        } else {
-            WorkflowController.presentOnboardingController(true)
-        }
-        
-        LibrarySyncController.sharedInstance.syncParseInformation()
-        return true
     }
 
 //    func addEnglishTitles() {
@@ -172,8 +202,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: - Internal functions
     
-    func registerParse() {
-        // Register subclasses
+    func initializeParse() {
         AnimeDetail.registerSubclass()
         AnimeCast.registerSubclass()
         AnimeCharacter.registerSubclass()
@@ -189,18 +218,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Post.registerSubclass()
         AnimeProgress.registerSubclass()
         ThreadTag.registerSubclass()
+        Notification.registerSubclass()
         
-        // TODO: Implement this
         Parse.enableLocalDatastore()
         
-        // Initialize Parse.
         Parse.setApplicationId("X95vv1iNbXWqoEClbK5XzGvjuydWKQk2Ti2n8OPn",
             clientKey: "vvsbzUBBgnPKCoYQlltREy5S0gSIgMfBp34aDrkc")
-        
-        // AnimeTrakr Keys temp
-        //        Parse.setApplicationId("nLCbHmeklHp6gBly9KHZOZNSMBTyuvknAubwHGAQ",
-        //            clientKey: "yVixWhPhTM9yGmjtfm1isbC7Ekxq29eNLTzu6KzM")
-        
     }
     
     func customizeAppearance() {
@@ -231,20 +254,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 
 
-
-extension UIApplication {
-    class func topViewController(base: UIViewController? = UIApplication.sharedApplication().keyWindow?.rootViewController) -> UIViewController? {
-        if let nav = base as? UINavigationController {
-            return topViewController(base: nav.visibleViewController)
-        }
-        if let tab = base as? UITabBarController {
-            if let selected = tab.selectedViewController {
-                return topViewController(base: selected)
-            }
-        }
-        if let presented = base?.presentedViewController {
-            return topViewController(base: presented)
-        }
-        return base
-    }
-}

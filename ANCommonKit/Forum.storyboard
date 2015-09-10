@@ -36,7 +36,7 @@
         <!--Forum View Controller-->
         <scene sceneID="3XK-X8-Ec6">
             <objects>
-                <viewController storyboardIdentifier="Forum" useStoryboardIdentifierAsRestorationIdentifier="YES" id="A6G-ah-oIs" customClass="ForumViewController" customModule="ANAnimeKit" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Forum" useStoryboardIdentifierAsRestorationIdentifier="YES" id="A6G-ah-oIs" customClass="ForumViewController" customModule="Aozora" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="h5Y-mc-GGy"/>
                         <viewControllerLayoutGuide type="bottom" id="tIw-Kj-Jqx"/>
@@ -54,7 +54,7 @@
                                     <color key="backgroundColor" red="0.97254902119999997" green="0.97254902119999997" blue="0.97254902119999997" alpha="1" colorSpace="calibratedRGB"/>
                                 </view>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="TopicCell" id="dph-KB-iqA" customClass="TopicCell" customModule="ANAnimeKit" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="TopicCell" id="dph-KB-iqA" customClass="TopicCell" customModule="Aozora" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dph-KB-iqA" id="kMT-rj-9wN">

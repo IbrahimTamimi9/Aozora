@@ -9,7 +9,6 @@
 import UIKit
 import ANParseKit
 import ANCommonKit
-import ANAnimeKit
 import Bolts
 
 class SearchViewController: UIViewController {
