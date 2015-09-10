@@ -22,6 +22,12 @@ public class ANAnimeKit {
         return tabBarController
     }
     
+    public class func profileViewController() -> (UINavigationController, ProfileViewController) {
+        let navController = UIStoryboard(name: "Profile", bundle: nil).instantiateInitialViewController() as! UINavigationController
+        let controller = navController.viewControllers.last as! ProfileViewController
+        return (navController, controller)
+    }
+    
     public class func animeForumViewController() -> (UINavigationController,ForumViewController) {
         let controller = UIStoryboard(name: "Forum", bundle: nil).instantiateInitialViewController() as! UINavigationController
         return (controller,controller.viewControllers.last! as! ForumViewController)

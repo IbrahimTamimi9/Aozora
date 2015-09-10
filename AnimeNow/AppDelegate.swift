@@ -68,7 +68,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let objectClass = userInfo["targetClass"] as? String,
             let objectId = userInfo["targetID"] as? String {
                 
-                NotificationsController.handleNotification(objectClass, objectId: objectId)
+                
+                let state = UIApplication.sharedApplication().applicationState;
+                if state == UIApplicationState.Background || state == UIApplicationState.Inactive
+                {
+                    NotificationsController.handleNotification(objectClass, objectId: objectId)
+                } else {
+                    // Not from background
+                }
+                
                 if let completionHandler = completionHandler {
                     completionHandler(UIBackgroundFetchResult.NewData)
                 }

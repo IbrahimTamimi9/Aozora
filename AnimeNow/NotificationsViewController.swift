@@ -8,6 +8,7 @@
 
 import Foundation
 import ANCommonKit
+import ANParseKit
 
 class NotificationsViewController: UIViewController {
     
@@ -85,6 +86,15 @@ extension NotificationsViewController: UITableViewDataSource {
 extension NotificationsViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         // Open
+        let notification = fetchController.objectAtIndex(indexPath.row) as! Notification
+        
+        if !contains(notification.readBy, User.currentUser()!) {
+            notification.addUniqueObject(User.currentUser()!, forKey: "readBy")
+            notification.saveEventually()
+            tableView.reloadData()
+        }
+        
+        NotificationsController.handleNotification(notification.targetClass, objectId: notification.targetID)
     }
 }
 

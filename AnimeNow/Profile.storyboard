@@ -38,7 +38,7 @@
         <!--User List View Controller-->
         <scene sceneID="38l-bX-nJn">
             <objects>
-                <viewController storyboardIdentifier="UserList" id="e1Y-uM-1lt" customClass="UserListViewController" customModule="ANParseKit" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UserList" id="e1Y-uM-1lt" customClass="UserListViewController" customModule="Aozora" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="xYF-wJ-boq"/>
                         <viewControllerLayoutGuide type="bottom" id="7N8-Q6-ha0"/>
@@ -135,7 +135,7 @@
         <!--Profile-->
         <scene sceneID="mQm-aZ-M6o">
             <objects>
-                <viewController storyboardIdentifier="Profile" id="M5q-uq-HPK" customClass="ProfileViewController" customModule="ANParseKit" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Profile" id="M5q-uq-HPK" customClass="ProfileViewController" customModule="Aozora" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="UR8-Cc-VZl"/>
                         <viewControllerLayoutGuide type="bottom" id="xjQ-kx-jPV"/>
@@ -467,7 +467,7 @@
         <!--Profile-->
         <scene sceneID="Cm1-Ys-SJw">
             <objects>
-                <viewController storyboardIdentifier="EditProfile" id="aw2-Ga-TB0" customClass="EditProfileViewController" customModule="ANParseKit" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EditProfile" id="aw2-Ga-TB0" customClass="EditProfileViewController" customModule="Aozora" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="vDB-rc-b0z"/>
                         <viewControllerLayoutGuide type="bottom" id="VS4-jf-n5t"/>
@@ -674,7 +674,7 @@
         <!--Notifications View Controller-->
         <scene sceneID="CqE-DF-zuE">
             <objects>
-                <viewController storyboardIdentifier="Notifications" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BV2-hV-SI6" customClass="NotificationsViewController" customModule="ANParseKit" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Notifications" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BV2-hV-SI6" customClass="NotificationsViewController" customModule="Aozora" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="c7a-ob-NOH"/>
                         <viewControllerLayoutGuide type="bottom" id="Nw9-Jz-uIa"/>

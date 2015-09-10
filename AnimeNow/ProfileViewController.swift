@@ -11,6 +11,7 @@ import ANCommonKit
 import TTTAttributedLabel
 import XCDYouTubeKit
 import Parse
+import ANParseKit
 
 public class ProfileViewController: ThreadViewController {
     
@@ -271,14 +272,14 @@ public class ProfileViewController: ThreadViewController {
     }
     
     @IBAction func showFollowingUsers(sender: AnyObject) {
-        let userListController = UIStoryboard(name: "Profile", bundle: ANParseKit.bundle()).instantiateViewControllerWithIdentifier("UserList") as! UserListViewController
+        let userListController = UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("UserList") as! UserListViewController
         let query = userProfile!.following().query()!
         userListController.initWithQuery(query, title: "Following")
         navigationController?.pushViewController(userListController, animated: true)
     }
     
     @IBAction func showFollowers(sender: AnyObject) {
-        let userListController = UIStoryboard(name: "Profile", bundle: ANParseKit.bundle()).instantiateViewControllerWithIdentifier("UserList") as! UserListViewController
+        let userListController = UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("UserList") as! UserListViewController
         let query = User.query()!
         query.whereKey("following", equalTo: userProfile!)
         userListController.initWithQuery(query, title: "Followers")
@@ -290,7 +291,7 @@ public class ProfileViewController: ThreadViewController {
         var alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
         
         alert.addAction(UIAlertAction(title: "Edit Profile", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
-            let editProfileController =  UIStoryboard(name: "Profile", bundle: ANParseKit.bundle()).instantiateViewControllerWithIdentifier("EditProfile") as! EditProfileViewController
+            let editProfileController =  UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("EditProfile") as! EditProfileViewController
             editProfileController.delegate = self
             self.presentViewController(editProfileController, animated: true, completion: nil)
         }))
@@ -305,7 +306,7 @@ public class ProfileViewController: ThreadViewController {
     }
     
     @IBAction func showNotifications(sender: AnyObject) {
-        let notificationsVC = UIStoryboard(name: "Profile", bundle: ANParseKit.bundle()).instantiateViewControllerWithIdentifier("Notifications") as! NotificationsViewController
+        let notificationsVC = UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("Notifications") as! NotificationsViewController
         self.presentViewController(notificationsVC, animated: true, completion: nil)
     }
 }

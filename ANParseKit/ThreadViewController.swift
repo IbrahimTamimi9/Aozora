@@ -82,7 +82,7 @@ public class ThreadViewController: UIViewController {
     
     public func openProfile(user: User) {
         if user != User.currentUser() {
-            let (navController, profileController) = ANParseKit.profileViewController()
+            let (navController, profileController) = ANAnimeKit.profileViewController()
             profileController.initWithUser(user)
             presentViewController(navController, animated: true, completion: nil)
         }
@@ -441,7 +441,7 @@ extension ThreadViewController: TTTAttributedLabelDelegate {
             let username = url.pathComponents?[1] as? String {
                 
                 if username != User.currentUser()!.aozoraUsername {
-                    let (navController, profileController) = ANParseKit.profileViewController()
+                    let (navController, profileController) = ANAnimeKit.profileViewController()
                     profileController.initWithUsername(username)
                     presentViewController(navController, animated: true, completion: nil)
                 }

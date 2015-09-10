@@ -29,16 +29,6 @@ public class ANParseKit {
         return UIStoryboard(name: "Comment", bundle: bundle())
     }
     
-    public class func profileStoryboard() -> UIStoryboard {
-        return UIStoryboard(name: "Profile", bundle: bundle())
-    }
-    
-    public class func profileViewController() -> (UINavigationController, ProfileViewController) {
-        let navController = ANParseKit.profileStoryboard().instantiateInitialViewController() as! UINavigationController
-        let controller = navController.viewControllers.last as! ProfileViewController
-        return (navController, controller)
-    }
-    
     public class func newPostViewController() -> NewPostViewController {
         let controller = ANParseKit.commentStoryboard().instantiateViewControllerWithIdentifier("NewPost") as! NewPostViewController
         return controller

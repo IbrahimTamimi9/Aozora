@@ -11,6 +11,7 @@ import Alamofire
 import Bolts
 import ANCommonKit
 import Parse
+import ANParseKit
 
 class UserListViewController: UIViewController {
     
@@ -84,7 +85,7 @@ extension UserListViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         let profile = dataSource[indexPath.row]
-        let (navController, profileController) = ANParseKit.profileViewController()
+        let (navController, profileController) = ANAnimeKit.profileViewController()
         profileController.initWithUser(profile)
         presentViewController(navController, animated: true, completion: nil)
     }
