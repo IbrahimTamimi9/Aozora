@@ -80,6 +80,10 @@ public class PostCell: UITableViewCell {
             gestureRecognizer4.numberOfTapsRequired = 1
             toUsername.addGestureRecognizer(gestureRecognizer4)
         }
+        
+        textContent.preferredMaxLayoutWidth = textContent.frame.size.width
+        contentView.setNeedsLayout()
+        contentView.layoutIfNeeded()
     }
     
     // MARK: - IBActions
@@ -99,17 +103,4 @@ public class PostCell: UITableViewCell {
     @IBAction func replyPressed(sender: AnyObject) {
         delegate?.postCellSelectedComment(self)
     }
-    
-    public override func layoutSubviews() {
-        super.layoutSubviews()
-        contentView.setNeedsLayout()
-        contentView.layoutIfNeeded()
-        textContent.preferredMaxLayoutWidth = textContent.frame.size.width
-    }
-    
-    
-    public override func prepareForReuse() {
-        super.prepareForReuse()
-    }
-    
 }

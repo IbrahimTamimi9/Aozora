@@ -71,13 +71,13 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zJt-XM-phf" userLabel="ToIcon">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zJt-XM-phf" userLabel="ToIcon">
                                 <rect key="frame" x="147" y="14.5" width="6.5" height="17.5"/>
                                 <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="17"/>
                                 <color key="textColor" red="0.0078431372550000003" green="0.43921568630000002" blue="0.73333333329999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Darkcirius" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lNq-wy-2hR" userLabel="ToUser">
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Darkcirius" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lNq-wy-2hR" userLabel="ToUser">
                                 <rect key="frame" x="161.5" y="13" width="79.5" height="20.5"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <color key="textColor" red="0.0078431372550000003" green="0.43921568630000002" blue="0.73333333329999995" alpha="1" colorSpace="calibratedRGB"/>
@@ -102,7 +102,7 @@
                             <constraint firstItem="l7o-JT-JFL" firstAttribute="leading" secondItem="Azh-0z-DNT" secondAttribute="leading" constant="8" id="wFF-oN-T1o"/>
                         </constraints>
                     </view>
-                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sCC-Vy-34T">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sCC-Vy-34T">
                         <rect key="frame" x="8" y="284" width="104" height="30"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="bdA-UG-bHh"/>
@@ -168,10 +168,18 @@
                     <constraint firstItem="IIt-M3-Ebc" firstAttribute="trailing" secondItem="CE8-oB-25Y" secondAttribute="trailingMargin" id="Xlu-jE-sbC"/>
                     <constraint firstAttribute="trailing" secondItem="Azh-0z-DNT" secondAttribute="trailing" id="c2d-ui-B4U"/>
                     <constraint firstAttribute="bottomMargin" secondItem="sCC-Vy-34T" secondAttribute="bottom" id="dIR-Ro-8OL"/>
+                    <constraint firstAttribute="trailing" secondItem="IIt-M3-Ebc" secondAttribute="trailing" constant="8" id="f7L-rm-x5D"/>
                     <constraint firstItem="sCC-Vy-34T" firstAttribute="top" secondItem="7Ot-hi-3MU" secondAttribute="bottom" constant="8" id="kNL-TA-Lmt"/>
                     <constraint firstItem="sCC-Vy-34T" firstAttribute="leading" secondItem="CE8-oB-25Y" secondAttribute="leadingMargin" id="oGS-jI-hnY"/>
+                    <constraint firstItem="IIt-M3-Ebc" firstAttribute="leading" secondItem="CE8-oB-25Y" secondAttribute="leading" constant="8" id="u0z-Gs-qNf"/>
                     <constraint firstItem="7Ot-hi-3MU" firstAttribute="top" secondItem="IIt-M3-Ebc" secondAttribute="bottom" constant="8" id="ylK-qQ-MgJ"/>
                 </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="ND0-hn-B3R"/>
+                        <exclude reference="Xlu-jE-sbC"/>
+                    </mask>
+                </variation>
             </tableViewCellContentView>
             <connections>
                 <outlet property="avatar" destination="l7o-JT-JFL" id="CTx-YQ-mpw"/>

@@ -132,13 +132,21 @@
                     <constraint firstItem="IIt-M3-Ebc" firstAttribute="top" secondItem="Azh-0z-DNT" secondAttribute="bottom" id="9lq-na-XDW"/>
                     <constraint firstAttribute="trailing" secondItem="DFr-ZH-YGC" secondAttribute="trailing" id="Dr3-Hc-YSB"/>
                     <constraint firstItem="Azh-0z-DNT" firstAttribute="leading" secondItem="CE8-oB-25Y" secondAttribute="leading" id="GO5-4W-Dx0"/>
+                    <constraint firstAttribute="trailing" secondItem="IIt-M3-Ebc" secondAttribute="trailing" constant="8" id="HtF-JL-EGY"/>
                     <constraint firstAttribute="bottomMargin" secondItem="DFr-ZH-YGC" secondAttribute="bottom" constant="-8.5" id="ItV-Jr-9FD"/>
                     <constraint firstItem="IIt-M3-Ebc" firstAttribute="leading" secondItem="CE8-oB-25Y" secondAttribute="leadingMargin" id="ND0-hn-B3R"/>
+                    <constraint firstItem="IIt-M3-Ebc" firstAttribute="leading" secondItem="CE8-oB-25Y" secondAttribute="leading" constant="8" id="VkN-v5-yLe"/>
                     <constraint firstItem="IIt-M3-Ebc" firstAttribute="trailing" secondItem="CE8-oB-25Y" secondAttribute="trailingMargin" id="Xlu-jE-sbC"/>
                     <constraint firstAttribute="bottomMargin" secondItem="sCC-Vy-34T" secondAttribute="bottom" id="dIR-Ro-8OL"/>
                     <constraint firstItem="sCC-Vy-34T" firstAttribute="top" secondItem="IIt-M3-Ebc" secondAttribute="bottom" constant="8" id="khE-wS-Ma4"/>
                     <constraint firstItem="sCC-Vy-34T" firstAttribute="leading" secondItem="CE8-oB-25Y" secondAttribute="leadingMargin" id="oGS-jI-hnY"/>
                 </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="ND0-hn-B3R"/>
+                        <exclude reference="Xlu-jE-sbC"/>
+                    </mask>
+                </variation>
             </tableViewCellContentView>
             <gestureRecognizers/>
             <connections>
