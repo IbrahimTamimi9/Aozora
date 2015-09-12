@@ -74,7 +74,7 @@ public class UserProfileManager: NSObject {
         
         return username.usernameIsUnique().continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
             
-            if let user = task.result as? User {
+            if let users = task.result as? [User] where users.count != 0 {
                 let error = NSError(domain: "Aozora.App", code: 700, userInfo: ["error": "User exists, try another one"])
                 return BFTask(error: error)
             }

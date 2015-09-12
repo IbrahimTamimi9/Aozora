@@ -51,7 +51,7 @@ extension String {
     public func usernameIsUnique() -> BFTask {
         let query = User.query()!
         query.limit = 1
-        query.whereKey("aozoraUsername", equalTo: self)
+        query.whereKey("aozoraUsername", matchesRegex: self, modifiers: "i")
         return query.findObjectsInBackground()
     }
 }
