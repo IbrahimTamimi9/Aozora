@@ -15,7 +15,7 @@ public protocol FetchControllerDelegate: class {
 }
 
 public protocol FetchControllerQueryDelegate: class {
-    func queriesForSkip(#skip: Int) -> [PFQuery]
+    func queriesForSkip(#skip: Int) -> [PFQuery]?
     func processResult(#result: [PFObject]) -> [PFObject]
 }
 
@@ -128,11 +128,9 @@ public class FetchController {
     func fetchWith(#skip: Int) -> BFTask {
         
         var secondaryQuery: PFQuery? = nil
-        if let queries = queryDelegate?.queriesForSkip(skip: skip) {
+        if let queries = queryDelegate?.queriesForSkip(skip: skip) where queries.count > 1 {
             self.query = queries.first
-            if queries.count > 1 {
-                secondaryQuery = queries[1]
-            }
+            secondaryQuery = queries[1]
         } else if let query = query {
             query.skip = skip
         } else {

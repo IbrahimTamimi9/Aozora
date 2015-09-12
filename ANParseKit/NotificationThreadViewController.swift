@@ -14,8 +14,7 @@ import ANParseKit
 
 public class NotificationThreadViewController: ThreadViewController {
     
-    @IBOutlet weak var threadTitle: UILabel!
-    
+    @IBOutlet weak var viewMoreButton: UIButton!
     var timelinePost: TimelinePostable?
     var post: ThreadPostable?
     
@@ -24,12 +23,24 @@ public class NotificationThreadViewController: ThreadViewController {
             self.timelinePost = timelinePost
         } else if let threadPost = post as? ThreadPostable {
             self.post = threadPost
+            self.thread = threadPost.thread
         }
         self.threadType = .Custom
     }
     
     override public func viewDidLoad() {
         super.viewDidLoad()
+        
+        if let timelinePost = timelinePost where timelinePost.userTimeline == User.currentUser() {
+            tableView.tableHeaderView = nil
+        }
+        
+        if let timelinePost = timelinePost {
+            viewMoreButton.setTitle("View Timeline  ", forState: .Normal)
+        } else if let threadPost = post {
+            viewMoreButton.setTitle("View Thread  ", forState: .Normal)
+        }
+        
         fetchPosts()
     }
     
@@ -41,33 +52,6 @@ public class NotificationThreadViewController: ThreadViewController {
         if thread.locked {
             navigationItem.rightBarButtonItem?.enabled = false
         }
-    }
-    
-    var resizedTableHeader = false
-    public override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        if !resizedTableHeader && title != nil {
-            resizedTableHeader = true
-            sizeHeaderToFit()
-        }
-    }
-
-    
-    func sizeHeaderToFit() {
-        var header = tableView.tableHeaderView!
-        
-        header.setNeedsLayout()
-        header.layoutIfNeeded()
-        
-        threadTitle.preferredMaxLayoutWidth = threadTitle.frame.size.width
-        
-        var height = header.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height
-        var frame = header.frame
-        
-        frame.size.height = height
-        header.frame = frame
-        tableView.tableHeaderView = header
     }
     
     override public func fetchPosts() {
@@ -100,12 +84,27 @@ public class NotificationThreadViewController: ThreadViewController {
     @IBAction func dismissViewController(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)
     }
+    
+    @IBAction func viewAllPostsPressed(sender: AnyObject) {
+        if let timelinePost = timelinePost {
+            openProfile(timelinePost.userTimeline)
+            
+        } else if let threadPost = post {
+            
+            let threadController = ANAnimeKit.customThreadViewController()
+            threadController.initWithThread(thread!)
+            if InAppController.purchasedAnyPro() == nil {
+                threadController.interstitialPresentationPolicy = .Automatic
+            }
+            navigationController?.pushViewController(threadController, animated: true)
+        }
+    }
 }
 
 extension NotificationThreadViewController: FetchControllerQueryDelegate {
     
-    public override func queriesForSkip(#skip: Int) -> [PFQuery] {
-        
+    public override func queriesForSkip(#skip: Int) -> [PFQuery]? {
+        super.queriesForSkip(skip: skip)
         var innerQuery: PFQuery!
         var repliesQuery: PFQuery!
         if let timelinePost = timelinePost as? TimelinePost {
@@ -135,18 +134,19 @@ extension NotificationThreadViewController: FetchControllerQueryDelegate {
 
 extension NotificationThreadViewController: CommentViewControllerDelegate {
     public override func commentViewControllerDidFinishedPosting(post: PFObject) {
+        super.commentViewControllerDidFinishedPosting(post)
         fetchThread()
     }
 }
 
 extension NotificationThreadViewController: FetchControllerDelegate {
     public override func didFetchFor(#skip: Int) {
-        
+        super.didFetchFor(skip: skip)
         let post = fetchController.objectInSection(0)
         if let post = post as? TimelinePostable {
-            navigationItem.title = "Timeline Post"
-        } else {
-            navigationItem.title = "Thread Post"
+            navigationItem.title = "In " + post.userTimeline.aozoraUsername + " timeline"
+        } else if let post = post as? ThreadPostable {
+            navigationItem.title = "In " + post.thread.title
         }
     }
 }

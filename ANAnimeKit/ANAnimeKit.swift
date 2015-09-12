@@ -38,8 +38,8 @@ public class ANAnimeKit {
         return controller
     }
     
-    public class func notificationThreadViewController() -> NotificationThreadViewController {
-        let controller = ANAnimeKit.threadStoryboard().instantiateViewControllerWithIdentifier("NotificationThread") as! NotificationThreadViewController
-        return controller
+    public class func notificationThreadViewController() -> (UINavigationController, NotificationThreadViewController) {
+        let controller = ANAnimeKit.threadStoryboard().instantiateViewControllerWithIdentifier("NotificationThreadNav") as! UINavigationController
+        return (controller, controller.viewControllers.last! as! NotificationThreadViewController)
     }
 }

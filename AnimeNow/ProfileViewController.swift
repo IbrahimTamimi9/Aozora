@@ -307,7 +307,7 @@ public class ProfileViewController: ThreadViewController {
     
     @IBAction func showNotifications(sender: AnyObject) {
         let notificationsVC = UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("Notifications") as! NotificationsViewController
-        self.presentViewController(notificationsVC, animated: true, completion: nil)
+        navigationController?.pushViewController(notificationsVC, animated: true)
     }
 }
 
@@ -321,7 +321,7 @@ extension ProfileViewController: EditProfileViewControllerProtocol {
 
 extension ProfileViewController: FetchControllerQueryDelegate {
     
-    public override func queriesForSkip(#skip: Int) -> [PFQuery] {
+    public override func queriesForSkip(#skip: Int) -> [PFQuery]? {
         
         let innerQuery = TimelinePost.query()!
         innerQuery.skip = skip

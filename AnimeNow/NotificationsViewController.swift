@@ -18,7 +18,7 @@ class NotificationsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchNotifications()
-        
+        title = "Notifications"
         tableView.estimatedRowHeight = 112.0
         tableView.rowHeight = UITableViewAutomaticDimension
     }
@@ -36,7 +36,7 @@ class NotificationsViewController: UIViewController {
         query.includeKey("readBy")
         query.whereKey("subscribers", containedIn: [User.currentUser()!])
         query.orderByDescending("updatedAt")
-        fetchController.configureWith(self, query: query, tableView: tableView, limit: 50)
+        fetchController.configureWith(self, query: query, queryDelegate:self, tableView: tableView, limit: 50)
     }
     
     @IBAction func dismissViewController(sender: AnyObject) {
@@ -57,18 +57,25 @@ extension NotificationsViewController: UITableViewDataSource {
         
 
         if notification.lastTriggeredBy == User.currentUser() {
-            cell.titleimageView.setImageWithPFFile(notification.triggeredBy.last!.avatarThumb!)
+            var selectedUser = notification.lastTriggeredBy
+            for user in notification.triggeredBy {
+                if user != User.currentUser() {
+                    selectedUser = user
+                    break
+                }
+            }
+            cell.titleimageView.setImageWithPFFile(selectedUser.avatarThumb!)
         } else {
             cell.titleimageView.setImageWithPFFile(notification.lastTriggeredBy.avatarThumb!)
         }
         
 
         if notification.owner == User.currentUser() {
-            cell.titleLabel.text =  notification.messageOwner
+            cell.titleLabel.text = notification.messageOwner
         } else if notification.lastTriggeredBy == User.currentUser() {
-            cell.titleLabel.text =  notification.previousMessage
+            cell.titleLabel.text = notification.previousMessage ?? notification.message
         } else {
-            cell.titleLabel.text =  notification.message
+            cell.titleLabel.text = notification.message
         }
         
         if contains(notification.readBy, User.currentUser()!) {
@@ -77,7 +84,7 @@ extension NotificationsViewController: UITableViewDataSource {
             cell.contentView.backgroundColor = UIColor.backgroundDarker()
         }
         
-        cell.subtitleLabel.text = notification.createdAt!.timeAgo()
+        cell.subtitleLabel.text = notification.updatedAt!.timeAgo()
         cell.layoutIfNeeded()
         return cell
     }
@@ -95,6 +102,19 @@ extension NotificationsViewController: UITableViewDelegate {
         }
         
         NotificationsController.handleNotification(notification.targetClass, objectId: notification.targetID)
+    }
+}
+
+extension NotificationsViewController: FetchControllerQueryDelegate {
+    func queriesForSkip(#skip: Int) -> [PFQuery]? {
+        return nil
+    }
+    func processResult(#result: [PFObject]) -> [PFObject] {
+        let filtered = result.filter({ (object: PFObject) -> Bool in
+            let notification = object as! Notification
+            return notification.triggeredBy.count > 1 || (notification.triggeredBy.count == 1 && notification.triggeredBy.last != User.currentUser()!)
+        })
+        return filtered
     }
 }
 

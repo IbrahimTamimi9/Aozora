@@ -173,11 +173,16 @@ public class NewPostViewController: CommentViewController {
                     PFCloud.callFunctionInBackground("sendNewPostReplyPushNotification", withParameters: parameters)
                 } else {
                     if self.postedBy! != self.postedIn {
-                        let parameters = [
-                            "toUserId": post.thread.startedBy!.objectId!,
+                        var parameters = [
                             "postId": post.objectId!,
                             "threadName": post.thread.title
                             ] as [String : AnyObject]
+                        
+                        // Only on user threads, episode threads do not have startedBy
+                        if let startedBy = post.thread.startedBy {
+                            parameters["toUserId"] = startedBy.objectId!
+                        }
+                        
                         PFCloud.callFunctionInBackground("sendNewPostPushNotification", withParameters: parameters)
                     }
                 }

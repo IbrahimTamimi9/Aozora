@@ -492,7 +492,7 @@ extension ThreadViewController: PostCellDelegate {
 
 extension ThreadViewController: FetchControllerQueryDelegate {
     
-    public func queriesForSkip(#skip: Int) -> [PFQuery] {
+    public func queriesForSkip(#skip: Int) -> [PFQuery]? {
         let query = PFQuery()
         return [query]
     }

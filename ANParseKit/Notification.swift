@@ -29,7 +29,7 @@ public class Notification: PFObject, PFSubclassing {
     @NSManaged public var subscribers: [User]
     @NSManaged public var message: String
     @NSManaged public var messageOwner: String
-    @NSManaged public var previousMessage: String
+    @NSManaged public var previousMessage: String?
     @NSManaged public var owner: User
     @NSManaged public var lastTriggeredBy: User
     @NSManaged public var readBy: [User]

@@ -286,7 +286,7 @@ public class CustomThreadViewController: ThreadViewController {
 
 extension CustomThreadViewController: FetchControllerQueryDelegate {
     
-    public override func queriesForSkip(#skip: Int) -> [PFQuery] {
+    public override func queriesForSkip(#skip: Int) -> [PFQuery]? {
         
         let innerQuery = Post.query()!
         innerQuery.skip = skip

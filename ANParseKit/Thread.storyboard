@@ -7,6 +7,7 @@
         <mutableArray key="FontAwesome.ttf">
             <string>FontAwesome</string>
             <string>FontAwesome</string>
+            <string>FontAwesome</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -245,6 +246,22 @@
             </objects>
             <point key="canvasLocation" x="1457" y="1280"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="jNu-vK-v7w">
+            <objects>
+                <navigationController storyboardIdentifier="NotificationThreadNav" id="p6R-16-N8h" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="lpy-95-dIB">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="iEE-0x-ByV" kind="relationship" relationship="rootViewController" id="Whr-NX-nVV"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HLd-14-Ctt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1457" y="596"/>
+        </scene>
         <!--Loading...-->
         <scene sceneID="dyJ-Ou-aCu">
             <objects>
@@ -258,25 +275,30 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="bMD-FM-WCJ">
-                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" red="0.89411765340000005" green="0.89411765340000005" blue="0.89411765340000005" alpha="1" colorSpace="calibratedRGB"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="Bqm-mp-7XN">
                                     <rect key="frame" x="0.0" y="64" width="600" height="47"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Go to [NAME] thread / user profile" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ovf-Y0-dX6">
-                                            <rect key="frame" x="10" y="15" width="580" height="18"/>
-                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
-                                            <color key="textColor" red="0.18823529780000001" green="0.19607843459999999" blue="0.23529411850000001" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YPA-y6-O6m">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="47"/>
+                                            <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="15"/>
+                                            <state key="normal" title="View all posts  ">
+                                                <color key="titleColor" red="0.0078431377187371254" green="0.43921568989753723" blue="0.73333334922790527" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="viewAllPostsPressed:" destination="iEE-0x-ByV" eventType="touchUpInside" id="UPW-LY-6Mq"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                     <color key="backgroundColor" red="0.97254902119999997" green="0.97254902119999997" blue="0.97254902119999997" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
-                                        <constraint firstAttribute="bottom" secondItem="ovf-Y0-dX6" secondAttribute="bottom" constant="14" id="9Hy-sZ-zay"/>
-                                        <constraint firstAttribute="trailing" secondItem="ovf-Y0-dX6" secondAttribute="trailing" constant="10" id="kRF-er-ltD"/>
-                                        <constraint firstItem="ovf-Y0-dX6" firstAttribute="leading" secondItem="Bqm-mp-7XN" secondAttribute="leading" constant="10" id="oar-cJ-owH"/>
-                                        <constraint firstItem="ovf-Y0-dX6" firstAttribute="top" secondItem="Bqm-mp-7XN" secondAttribute="top" constant="15" id="wZP-4J-jft"/>
+                                        <constraint firstAttribute="bottom" secondItem="YPA-y6-O6m" secondAttribute="bottom" id="GsQ-rn-J3g"/>
+                                        <constraint firstItem="YPA-y6-O6m" firstAttribute="top" secondItem="Bqm-mp-7XN" secondAttribute="top" id="MgP-kd-fjF"/>
+                                        <constraint firstItem="YPA-y6-O6m" firstAttribute="leading" secondItem="Bqm-mp-7XN" secondAttribute="leading" id="NvS-GZ-cSf"/>
+                                        <constraint firstAttribute="trailing" secondItem="YPA-y6-O6m" secondAttribute="trailing" id="Ypb-bV-lXb"/>
                                     </constraints>
                                 </view>
                                 <connections>
@@ -284,21 +306,6 @@
                                     <outlet property="delegate" destination="iEE-0x-ByV" id="pFb-bD-ucm"/>
                                 </connections>
                             </tableView>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yit-ij-4iH">
-                                <rect key="frame" x="0.0" y="20" width="600" height="44"/>
-                                <items>
-                                    <navigationItem title="Loading..." id="ddt-5X-4kK">
-                                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="W1J-Bp-Q9S">
-                                            <connections>
-                                                <action selector="dismissViewController:" destination="iEE-0x-ByV" id="c74-US-e3a"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                                <connections>
-                                    <outlet property="delegate" destination="iEE-0x-ByV" id="IcB-qm-Qhg"/>
-                                </connections>
-                            </navigationBar>
                         </subviews>
                         <color key="backgroundColor" red="0.97254902119999997" green="0.97254902119999997" blue="0.97254902119999997" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -306,10 +313,7 @@
                             <constraint firstItem="bMD-FM-WCJ" firstAttribute="top" secondItem="37r-ZU-h0n" secondAttribute="bottom" id="89y-oO-G6g"/>
                             <constraint firstAttribute="trailing" secondItem="bMD-FM-WCJ" secondAttribute="trailing" id="DA4-Fz-Mde"/>
                             <constraint firstItem="bMD-FM-WCJ" firstAttribute="leading" secondItem="gUD-d7-3Tt" secondAttribute="leading" id="LKY-6a-Zsk"/>
-                            <constraint firstItem="Yit-ij-4iH" firstAttribute="top" secondItem="37r-ZU-h0n" secondAttribute="bottom" id="Lhh-Ln-pr9"/>
-                            <constraint firstItem="Yit-ij-4iH" firstAttribute="leading" secondItem="gUD-d7-3Tt" secondAttribute="leading" id="ag0-vd-ZxA"/>
-                            <constraint firstItem="bMD-FM-WCJ" firstAttribute="top" secondItem="37r-ZU-h0n" secondAttribute="bottom" constant="44" id="hM2-6d-NBr"/>
-                            <constraint firstAttribute="trailing" secondItem="Yit-ij-4iH" secondAttribute="trailing" id="wGh-FI-sF8"/>
+                            <constraint firstItem="bMD-FM-WCJ" firstAttribute="top" secondItem="37r-ZU-h0n" secondAttribute="bottom" constant="-64" id="hM2-6d-NBr"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -318,23 +322,22 @@
                         </variation>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Loading..." id="0y2-MR-rbI">
-                        <barButtonItem key="rightBarButtonItem" image="icon-create" id="L63-bp-0NS" userLabel="Create">
+                    <navigationItem key="navigationItem" title="Loading..." id="d4g-iR-hjJ">
+                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="c7Y-Op-KqJ">
                             <connections>
-                                <action selector="replyToThreadPressed:" destination="iEE-0x-ByV" id="pfG-Pz-1AM"/>
+                                <action selector="dismissViewController:" destination="iEE-0x-ByV" id="Qfe-sZ-HuS"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="navigationItem" destination="ddt-5X-4kK" id="zAS-fh-dm8"/>
                         <outlet property="tableView" destination="bMD-FM-WCJ" id="57N-Ax-bkm"/>
-                        <outlet property="threadTitle" destination="ovf-Y0-dX6" id="4T8-Cm-D9o"/>
+                        <outlet property="viewMoreButton" destination="YPA-y6-O6m" id="XPw-xR-kIy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dA7-3t-bAs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2087" y="1280"/>
+            <point key="canvasLocation" x="2139" y="596"/>
         </scene>
     </scenes>
     <resources>

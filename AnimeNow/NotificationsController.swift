@@ -26,19 +26,44 @@ class NotificationsController {
                 }
             })
         case "TimelinePost":
-            let targetTimelinePost = TimelinePost(withoutDataWithObjectId: objectId)
-            let profileController = ANAnimeKit.notificationThreadViewController()
-            profileController.initWithPost(targetTimelinePost)
-            if let topVC = UIApplication.topViewController() {
-                topVC.presentViewController(profileController, animated: true, completion: nil)
-            }
+            let query = TimelinePost.query()!
+            query.whereKey("objectId", equalTo: objectId)
+            query.includeKey("userTimeline")
+            query.limit = 1
+            query.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
+                if let error = error {
+                    
+                } else {
+                    let targetTimelinePost = result?.last as! TimelinePost
+                    let (navVC, profileController) = ANAnimeKit.notificationThreadViewController()
+                    profileController.initWithPost(targetTimelinePost)
+                    if let topVC = UIApplication.topViewController() {
+                        topVC.presentViewController(navVC, animated: true, completion: nil)
+                    }
+                }
+            })
+            
+            
         case "Post":
-            let targetPost = Post(withoutDataWithObjectId: objectId)
-            let profileController = ANAnimeKit.notificationThreadViewController()
-            profileController.initWithPost(targetPost)
-            if let topVC = UIApplication.topViewController() {
-                topVC.presentViewController(profileController, animated: true, completion: nil)
-            }
+            let query = Post.query()!
+            query.whereKey("objectId", equalTo: objectId)
+            query.includeKey("thread")
+            query.includeKey("thread.tags")
+            query.limit = 1
+            query.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
+                if let error = error {
+                    
+                } else {
+                    let targetPost = result?.last as! Post
+                    let (navVC, profileController) = ANAnimeKit.notificationThreadViewController()
+                    profileController.initWithPost(targetPost)
+                    if let topVC = UIApplication.topViewController() {
+                        topVC.presentViewController(navVC, animated: true, completion: nil)
+                    }
+                }
+            })
+            
+            
         default:
             break
         }
