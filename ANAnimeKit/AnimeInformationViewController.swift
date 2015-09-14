@@ -408,9 +408,9 @@ public class AnimeInformationViewController: AnimeBaseViewController {
                 case .OnHold:
                     textToShare += "I'm watching"
                 }
-                textToShare += " \(self.anime.title!) via #Aozora"
+                textToShare += " \(self.anime.title!) via #AozoraApp"
             } else {
-                textToShare = "Check out \(self.anime.title!) via #Aozora"
+                textToShare = "Check out \(self.anime.title!) via #AozoraApp"
             }
             
             

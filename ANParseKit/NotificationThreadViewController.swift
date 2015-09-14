@@ -92,7 +92,12 @@ public class NotificationThreadViewController: ThreadViewController {
         } else if let threadPost = post {
             
             let threadController = ANAnimeKit.customThreadViewController()
-            threadController.initWithThread(thread!)
+            if let thread = thread, let episode = thread.episode, let anime = thread.anime {
+                threadController.initWithEpisode(episode, anime: anime)
+            } else {
+                threadController.initWithThread(thread!)
+            }
+            
             if InAppController.purchasedAnyPro() == nil {
                 threadController.interstitialPresentationPolicy = .Automatic
             }

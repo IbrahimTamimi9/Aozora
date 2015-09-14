@@ -49,6 +49,8 @@ class NotificationsController {
             query.whereKey("objectId", equalTo: objectId)
             query.includeKey("thread")
             query.includeKey("thread.tags")
+            query.includeKey("thread.anime")
+            query.includeKey("thread.episode")
             query.limit = 1
             query.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
                 if let error = error {
