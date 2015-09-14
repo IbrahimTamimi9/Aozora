@@ -16,7 +16,7 @@ public class CustomThreadViewController: ThreadViewController {
     
     @IBOutlet weak var imageContent: UIImageView!
     @IBOutlet weak var threadTitle: UILabel!
-    @IBOutlet weak var threadContent: UILabel!
+    @IBOutlet weak var threadContent: TTTAttributedLabel!
     @IBOutlet weak var tagsLabel: TTTAttributedLabel!
     @IBOutlet weak var avatar: UIImageView!
     @IBOutlet weak var username: UILabel!
@@ -51,6 +51,10 @@ public class CustomThreadViewController: ThreadViewController {
         
         title = "Loading..."
         
+        threadContent.linkAttributes = [kCTForegroundColorAttributeName: UIColor.peterRiver()]
+        threadContent.enabledTextCheckingTypes = NSTextCheckingType.Link.rawValue
+        threadContent.delegate = self;
+        
         if let episode = episode {
             updateUIWithEpisodeThread(thread)
         } else {
@@ -64,7 +68,6 @@ public class CustomThreadViewController: ThreadViewController {
             let repliesTitle = repliesButtonTitle(thread.replies)
             commentsButton.setTitle(repliesTitle, forState: .Normal)
         }
-        
         
         tagsLabel.updateTags(thread.tags, delegate: self)
         prepareForVideo(playButton, imageView: imageContent, imageHeightConstraint: imageHeightConstraint, youtubeID: thread.youtubeID)
@@ -124,7 +127,9 @@ public class CustomThreadViewController: ThreadViewController {
         threadTitle.text = thread.title
         
         if let content = thread.content {
-            threadContent.text = content
+            threadContent.setText(content, afterInheritingLabelAttributesAndConfiguringWithBlock: { (attributedString) -> NSMutableAttributedString! in
+                return attributedString
+            })
         }
         
         // TODO: Merge this repeated code

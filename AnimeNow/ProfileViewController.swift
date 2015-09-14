@@ -25,7 +25,7 @@ public class ProfileViewController: ThreadViewController {
     @IBOutlet weak var followButton: UIButton!
     @IBOutlet weak var followingButton: UIButton!
     @IBOutlet weak var followersButton: UIButton!
-    @IBOutlet weak var aboutLabel: UILabel!
+    @IBOutlet weak var aboutLabel: TTTAttributedLabel!
     
     @IBOutlet weak var proBadge: UILabel!
     @IBOutlet weak var postsBadge: UILabel!
@@ -59,6 +59,10 @@ public class ProfileViewController: ThreadViewController {
             segmentedControl.selectedSegmentIndex = 1
             tableBottomSpaceConstraint.constant = 0
         }
+        
+        aboutLabel.linkAttributes = [kCTForegroundColorAttributeName: UIColor.peterRiver()]
+        aboutLabel.enabledTextCheckingTypes = NSTextCheckingType.Link.rawValue
+        aboutLabel.delegate = self;
         
         fetchPosts()
     }
@@ -114,7 +118,11 @@ public class ProfileViewController: ThreadViewController {
             if let user = result?.last as? User {
                 self.userProfile = user
                 self.updateViewWithUser(user)
-                self.aboutLabel.text = user.details.about
+                self.aboutLabel.setText(user.details.about, afterInheritingLabelAttributesAndConfiguringWithBlock: { (attributedString) -> NSMutableAttributedString! in
+                    return attributedString
+                })
+                
+                
                 if user.details.posts >= 1000 {
                     self.postsBadge.text = (user.details.posts/1000).description + "k"
                 } else {

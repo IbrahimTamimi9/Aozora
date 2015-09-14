@@ -53,7 +53,7 @@ class SignInViewController: UIViewController {
             if let error = error {
                 // The login failed. Check error to see why.
                 let errorMessage = error.userInfo?["error"] as! String
-                var alert = UIAlertController(title: "Hmm", message: errorMessage, preferredStyle: UIAlertControllerStyle.Alert)
+                var alert = UIAlertController(title: "Hmm", message: errorMessage+". Tip: Make sure you're using capital letters correctly", preferredStyle: UIAlertControllerStyle.Alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
                 self.presentViewController(alert, animated: true, completion: nil)
             } else {
