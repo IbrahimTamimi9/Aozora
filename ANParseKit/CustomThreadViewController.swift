@@ -16,7 +16,7 @@ public class CustomThreadViewController: ThreadViewController {
     
     @IBOutlet weak var imageContent: UIImageView!
     @IBOutlet weak var threadTitle: UILabel!
-    @IBOutlet weak var threadContent: UILabel!
+    @IBOutlet weak var threadContent: TTTAttributedLabel!
     @IBOutlet weak var tagsLabel: TTTAttributedLabel!
     @IBOutlet weak var avatar: UIImageView!
     @IBOutlet weak var username: UILabel!
@@ -51,14 +51,23 @@ public class CustomThreadViewController: ThreadViewController {
         
         title = "Loading..."
         
+        threadContent.linkAttributes = [kCTForegroundColorAttributeName: UIColor.peterRiver()]
+        threadContent.enabledTextCheckingTypes = NSTextCheckingType.Link.rawValue
+        threadContent.delegate = self;
+        
         if let episode = episode {
             updateUIWithEpisodeThread(thread)
         } else {
             updateUIWithGeneralThread(thread)
         }
         
-        let repliesTitle = repliesButtonTitle(thread.replies)
-        commentsButton.setTitle(repliesTitle, forState: .Normal)
+        if thread.locked {
+            commentsButton.setTitle("Locked", forState: .Normal)
+            navigationItem.rightBarButtonItem?.enabled = false
+        } else {
+            let repliesTitle = repliesButtonTitle(thread.replies)
+            commentsButton.setTitle(repliesTitle, forState: .Normal)
+        }
         
         tagsLabel.updateTags(thread.tags, delegate: self)
         prepareForVideo(playButton, imageView: imageContent, imageHeightConstraint: imageHeightConstraint, youtubeID: thread.youtubeID)
@@ -118,14 +127,20 @@ public class CustomThreadViewController: ThreadViewController {
         threadTitle.text = thread.title
         
         if let content = thread.content {
-            threadContent.text = content
+            threadContent.setText(content, afterInheritingLabelAttributesAndConfiguringWithBlock: { (attributedString) -> NSMutableAttributedString! in
+                return attributedString
+            })
         }
         
         // TODO: Merge this repeated code
         if let startedBy = thread.startedBy {
             avatar.setImageWithPFFile(startedBy.avatarThumb!)
             username.text = startedBy.aozoraUsername
-            postedDate.text = thread.createdAt!.timeAgo()
+            var postedAt = thread.createdAt!.timeAgo()
+            if thread.edited {
+                postedAt += " · Edited"
+            }
+            postedDate.text = postedAt
             
             moreButton.hidden = startedBy != User.currentUser()!
         }
@@ -212,6 +227,8 @@ public class CustomThreadViewController: ThreadViewController {
             let comment = ANParseKit.newPostViewController()
             comment.initWith(thread: thread, threadType: threadType, delegate: self)
             presentViewController(comment, animated: true, completion: nil)
+        } else if let thread = thread where thread.locked {
+            presentBasicAlertWithTitle("Thread is locked", message: nil)
         } else {
             presentBasicAlertWithTitle("Login first", message: "Select 'Me' tab")
         }
@@ -274,7 +291,7 @@ public class CustomThreadViewController: ThreadViewController {
 
 extension CustomThreadViewController: FetchControllerQueryDelegate {
     
-    public override func queriesForSkip(#skip: Int) -> [PFQuery] {
+    public override func queriesForSkip(#skip: Int) -> [PFQuery]? {
         
         let innerQuery = Post.query()!
         innerQuery.skip = skip

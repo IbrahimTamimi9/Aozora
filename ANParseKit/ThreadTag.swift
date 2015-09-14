@@ -26,5 +26,6 @@ public class ThreadTag: PFObject, PFSubclassing {
     @NSManaged public var name: String
     @NSManaged public var detail: String?
     @NSManaged public var order: Int
+    @NSManaged public var privateTag: Bool
     
 }

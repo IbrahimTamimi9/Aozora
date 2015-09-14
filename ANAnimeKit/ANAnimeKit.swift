@@ -9,16 +9,12 @@ import ANParseKit
 
 public class ANAnimeKit {
     
-    public class func bundle() -> NSBundle {
-        return NSBundle(forClass: self)
-    }
-    
     public class func defaultStoryboard() -> UIStoryboard {
-        return UIStoryboard(name: "Anime", bundle: bundle())
+        return UIStoryboard(name: "Anime", bundle: nil)
     }
     
     public class func threadStoryboard() -> UIStoryboard {
-        return UIStoryboard(name: "Thread", bundle: bundle())
+        return UIStoryboard(name: "Thread", bundle: nil)
     }
     
     public class func rootTabBarController() -> CustomTabBarController {
@@ -26,8 +22,14 @@ public class ANAnimeKit {
         return tabBarController
     }
     
+    public class func profileViewController() -> (UINavigationController, ProfileViewController) {
+        let navController = UIStoryboard(name: "Profile", bundle: nil).instantiateInitialViewController() as! UINavigationController
+        let controller = navController.viewControllers.last as! ProfileViewController
+        return (navController, controller)
+    }
+    
     public class func animeForumViewController() -> (UINavigationController,ForumViewController) {
-        let controller = UIStoryboard(name: "Forum", bundle: bundle()).instantiateInitialViewController() as! UINavigationController
+        let controller = UIStoryboard(name: "Forum", bundle: nil).instantiateInitialViewController() as! UINavigationController
         return (controller,controller.viewControllers.last! as! ForumViewController)
     }
     
@@ -36,4 +38,8 @@ public class ANAnimeKit {
         return controller
     }
     
+    public class func notificationThreadViewController() -> (UINavigationController, NotificationThreadViewController) {
+        let controller = ANAnimeKit.threadStoryboard().instantiateViewControllerWithIdentifier("NotificationThreadNav") as! UINavigationController
+        return (controller, controller.viewControllers.last! as! NotificationThreadViewController)
+    }
 }

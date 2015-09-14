@@ -27,6 +27,7 @@ public class Thread: PFObject, PFSubclassing {
     @NSManaged public var episode: Episode?
     @NSManaged public var anime: Anime?
     @NSManaged public var startedBy: User?
+    @NSManaged public var subscribers: [User]
     @NSManaged public var replies: Int
     @NSManaged public var tags: [PFObject]
     
@@ -34,6 +35,7 @@ public class Thread: PFObject, PFSubclassing {
     @NSManaged public var hasSpoilers: Bool
     @NSManaged public var locked: Bool
     @NSManaged public var edited: Bool
+    @NSManaged public var pinType: String?
     @NSManaged public var youtubeID: String?
     
     var imagesInternal: [ImageData]!

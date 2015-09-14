@@ -125,6 +125,14 @@ class SettingsViewController: UITableViewController {
                 NSUserDefaults.standardUserDefaults().setValue("Library", forKey: DefaultLoadingScreen)
                 NSUserDefaults.standardUserDefaults().synchronize()
             }))
+            alert.addAction(UIAlertAction(title: "Profile", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+                NSUserDefaults.standardUserDefaults().setValue("Profile", forKey: DefaultLoadingScreen)
+                NSUserDefaults.standardUserDefaults().synchronize()
+            }))
+            alert.addAction(UIAlertAction(title: "Forum", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+                NSUserDefaults.standardUserDefaults().setValue("Forum", forKey: DefaultLoadingScreen)
+                NSUserDefaults.standardUserDefaults().synchronize()
+            }))
             alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: { (action) -> Void in
             }))
             

@@ -62,6 +62,15 @@ public class TimelinePost: PFObject, PFSubclassing, TimelinePostable {
         }
     }
     
+    public var subscribers: [User] {
+        get {
+            return self["subscribers"] as! [User]
+        }
+        set(value) {
+            self["subscribers"] = value
+        }
+    }
+    
     public var edited: Bool {
         get {
             return self["edited"] as? Bool ?? false

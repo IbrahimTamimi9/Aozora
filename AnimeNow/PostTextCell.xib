@@ -57,13 +57,13 @@
                                 <color key="textColor" red="0.0078431372550000003" green="0.43921568630000002" blue="0.73333333329999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8dw-ly-VoN" userLabel="ToIcon">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8dw-ly-VoN" userLabel="ToIcon">
                                 <rect key="frame" x="148" y="14.5" width="6.5" height="17.5"/>
                                 <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="17"/>
                                 <color key="textColor" red="0.0078431372550000003" green="0.43921568630000002" blue="0.73333333329999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Darkcirius" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rPv-d8-Ius" userLabel="ToUser">
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Darkcirius" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rPv-d8-Ius" userLabel="ToUser">
                                 <rect key="frame" x="162" y="13.5" width="79.5" height="20.5"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <color key="textColor" red="0.0078431372550000003" green="0.43921568630000002" blue="0.73333333329999995" alpha="1" colorSpace="calibratedRGB"/>
@@ -102,7 +102,7 @@
                             <constraint firstAttribute="trailing" secondItem="hrB-sN-Lx3" secondAttribute="trailing" id="xyF-ga-I4o"/>
                         </constraints>
                     </view>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sCC-Vy-34T">
+                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sCC-Vy-34T">
                         <rect key="frame" x="8" y="89" width="104" height="30"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="bdA-UG-bHh"/>
@@ -132,13 +132,21 @@
                     <constraint firstItem="IIt-M3-Ebc" firstAttribute="top" secondItem="Azh-0z-DNT" secondAttribute="bottom" id="9lq-na-XDW"/>
                     <constraint firstAttribute="trailing" secondItem="DFr-ZH-YGC" secondAttribute="trailing" id="Dr3-Hc-YSB"/>
                     <constraint firstItem="Azh-0z-DNT" firstAttribute="leading" secondItem="CE8-oB-25Y" secondAttribute="leading" id="GO5-4W-Dx0"/>
+                    <constraint firstAttribute="trailing" secondItem="IIt-M3-Ebc" secondAttribute="trailing" constant="8" id="HtF-JL-EGY"/>
                     <constraint firstAttribute="bottomMargin" secondItem="DFr-ZH-YGC" secondAttribute="bottom" constant="-8.5" id="ItV-Jr-9FD"/>
                     <constraint firstItem="IIt-M3-Ebc" firstAttribute="leading" secondItem="CE8-oB-25Y" secondAttribute="leadingMargin" id="ND0-hn-B3R"/>
+                    <constraint firstItem="IIt-M3-Ebc" firstAttribute="leading" secondItem="CE8-oB-25Y" secondAttribute="leading" constant="8" id="VkN-v5-yLe"/>
                     <constraint firstItem="IIt-M3-Ebc" firstAttribute="trailing" secondItem="CE8-oB-25Y" secondAttribute="trailingMargin" id="Xlu-jE-sbC"/>
                     <constraint firstAttribute="bottomMargin" secondItem="sCC-Vy-34T" secondAttribute="bottom" id="dIR-Ro-8OL"/>
                     <constraint firstItem="sCC-Vy-34T" firstAttribute="top" secondItem="IIt-M3-Ebc" secondAttribute="bottom" constant="8" id="khE-wS-Ma4"/>
                     <constraint firstItem="sCC-Vy-34T" firstAttribute="leading" secondItem="CE8-oB-25Y" secondAttribute="leadingMargin" id="oGS-jI-hnY"/>
                 </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="ND0-hn-B3R"/>
+                        <exclude reference="Xlu-jE-sbC"/>
+                    </mask>
+                </variation>
             </tableViewCellContentView>
             <gestureRecognizers/>
             <connections>

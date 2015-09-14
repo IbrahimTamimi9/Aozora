@@ -9,7 +9,6 @@
 import UIKit
 import ANParseKit
 import ANCommonKit
-import ANAnimeKit
 import Bolts
 
 class SearchViewController: UIViewController {
@@ -155,7 +154,7 @@ extension SearchViewController: UICollectionViewDelegate {
         if let anime = object as? Anime {
             self.animator = presentAnimeModal(anime)
         } else if let user = object as? User {
-            let (navController, profileController) = ANParseKit.profileViewController()
+            let (navController, profileController) = ANAnimeKit.profileViewController()
             profileController.initWithUser(user)
             presentViewController(navController, animated: true, completion: nil)
         }

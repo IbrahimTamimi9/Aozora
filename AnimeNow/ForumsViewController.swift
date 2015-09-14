@@ -8,7 +8,6 @@
 
 import UIKit
 import ANCommonKit
-import ANAnimeKit
 import ANParseKit
 import TTTAttributedLabel
 
@@ -35,7 +34,8 @@ class ForumsViewController: UIViewController {
     var refreshControl = UIRefreshControl()
     var selectedList: SelectedList = .Recent
     var selectedTag: PFObject?
-        
+    var timer: NSTimer!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -47,10 +47,13 @@ class ForumsViewController: UIViewController {
         
         addRefreshControl(refreshControl, action:"refetchThreads", forTableView: tableView)
         
+        timer = NSTimer.scheduledTimerWithTimeInterval(60.0, target: self, selector: "reloadTableView", userInfo: nil, repeats: true)
+        
         var tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "changeList")
         navigationBarTitle.addGestureRecognizer(tapGestureRecognizer)
         
         fetchThreadTags()
+        cachePinnedPosts()
         prepareForList(selectedList)
     }
     
@@ -107,6 +110,9 @@ class ForumsViewController: UIViewController {
         }
     }
     
+    func reloadTableView() {
+        tableView.reloadData()
+    }
     
     // MARK: - Fetching
     
@@ -115,37 +121,61 @@ class ForumsViewController: UIViewController {
     }
     
     func fetchThreads() {
+        
+        self.fetchController.resetToDefaults()
+        self.fetchController.tableView?.reloadData()
+        
         let query = Thread.query()!
-        query.whereKey("replies", greaterThan: 0)
-        query.whereKeyExists("episode")
-        
-        let query2 = Thread.query()!
-        query2.whereKeyDoesNotExist("episode")
-        
-        let orQuery = PFQuery.orQueryWithSubqueries([query, query2])
-        orQuery.includeKey("tags")
-        orQuery.includeKey("startedBy")
-        
-        switch selectedList {
-        case .Recent:
-            orQuery.orderByDescending("updatedAt")
-        case .New:
-            orQuery.orderByDescending("createdAt")
-        default:
-            break
+        query.fromLocalDatastore()
+        query.whereKey("pinType", equalTo: "global")
+        query.findObjectsInBackgroundWithBlock { (result, error) -> Void in
+            if let pinnedData = result as? [Thread] {
+                let query = Thread.query()!
+                query.whereKey("replies", greaterThan: 0)
+                query.whereKeyExists("episode")
+                
+                let query2 = Thread.query()!
+                query2.whereKeyDoesNotExist("episode")
+                
+                let orQuery = PFQuery.orQueryWithSubqueries([query, query2])
+                orQuery.whereKeyDoesNotExist("pinType")
+                orQuery.includeKey("tags")
+                orQuery.includeKey("startedBy")
+                
+                switch self.selectedList {
+                case .Recent:
+                    orQuery.orderByDescending("updatedAt")
+                case .New:
+                    orQuery.orderByDescending("createdAt")
+                default:
+                    break
+                }
+                
+                self.fetchController.configureWith(self, query: orQuery, tableView: self.tableView, limit: 50, pinnedData: pinnedData)
+            }
         }
-        
-        fetchController.configureWith(self, query: orQuery, tableView: tableView, limit: 100)
     }
     
     func fetchTagThreads(tag: PFObject) {
 
+        self.fetchController.resetToDefaults()
+        self.fetchController.tableView?.reloadData()
+        
         let query = Thread.query()!
+        query.fromLocalDatastore()
+        query.whereKey("pinType", equalTo: "tag")
         query.whereKey("tags", containedIn: [tag])
-        query.includeKey("tags")
-        query.includeKey("startedBy")
-        query.orderByDescending("updatedAt")
-        fetchController.configureWith(self, query: query, tableView: tableView, limit: 100)
+        query.findObjectsInBackgroundWithBlock { (result, error) -> Void in
+            if let pinnedData = result as? [Thread] {
+                let query = Thread.query()!
+                query.whereKey("tags", containedIn: [tag])
+                query.whereKeyDoesNotExist("pinType")
+                query.includeKey("tags")
+                query.includeKey("startedBy")
+                query.orderByDescending("updatedAt")
+                self.fetchController.configureWith(self, query: query, tableView: self.tableView, limit: 50, pinnedData: pinnedData)
+            }
+        }
     }
     
     func fetchThreadTags() {
@@ -155,6 +185,12 @@ class ForumsViewController: UIViewController {
             self.tagsDataSource = task.result as! [ThreadTag]
             return nil
         }
+    }
+    
+    func cachePinnedPosts() {
+        let query = Thread.query()!
+        query.whereKeyExists("pinType")
+        query.findCachedOrNetwork(PinnedThreadsPin, expirationDays: 1)
     }
     
     // MARK: - IBActions
@@ -188,6 +224,8 @@ extension ForumsViewController: UITableViewDataSource {
         
         if let _ = thread.episode {
             cell.typeLabel.text = " "
+        } else if let _ = thread.pinType {
+            cell.typeLabel.text = " "
         } else {
             cell.typeLabel.text = ""
         }

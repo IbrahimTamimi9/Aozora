@@ -8,6 +8,7 @@
 
 import Foundation
 import Bolts
+import ANParseKit
 
 protocol EditProfileViewControllerProtocol: class {
     func editProfileViewControllerDidEditedUser(user: User)

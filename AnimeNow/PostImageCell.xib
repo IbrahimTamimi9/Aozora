@@ -125,6 +125,7 @@
                     </view>
                     <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7Ot-hi-3MU">
                         <rect key="frame" x="0.0" y="96" width="320" height="180"/>
+                        <color key="backgroundColor" red="0.89411765336990356" green="0.89411765336990356" blue="0.89411765336990356" alpha="1" colorSpace="calibratedRGB"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstAttribute="height" priority="999" constant="180" id="cq0-Qc-11O"/>
@@ -167,10 +168,18 @@
                     <constraint firstItem="IIt-M3-Ebc" firstAttribute="trailing" secondItem="CE8-oB-25Y" secondAttribute="trailingMargin" id="Xlu-jE-sbC"/>
                     <constraint firstAttribute="trailing" secondItem="Azh-0z-DNT" secondAttribute="trailing" id="c2d-ui-B4U"/>
                     <constraint firstAttribute="bottomMargin" secondItem="sCC-Vy-34T" secondAttribute="bottom" id="dIR-Ro-8OL"/>
+                    <constraint firstAttribute="trailing" secondItem="IIt-M3-Ebc" secondAttribute="trailing" constant="8" id="f7L-rm-x5D"/>
                     <constraint firstItem="sCC-Vy-34T" firstAttribute="top" secondItem="7Ot-hi-3MU" secondAttribute="bottom" constant="8" id="kNL-TA-Lmt"/>
                     <constraint firstItem="sCC-Vy-34T" firstAttribute="leading" secondItem="CE8-oB-25Y" secondAttribute="leadingMargin" id="oGS-jI-hnY"/>
+                    <constraint firstItem="IIt-M3-Ebc" firstAttribute="leading" secondItem="CE8-oB-25Y" secondAttribute="leading" constant="8" id="u0z-Gs-qNf"/>
                     <constraint firstItem="7Ot-hi-3MU" firstAttribute="top" secondItem="IIt-M3-Ebc" secondAttribute="bottom" constant="8" id="ylK-qQ-MgJ"/>
                 </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="ND0-hn-B3R"/>
+                        <exclude reference="Xlu-jE-sbC"/>
+                    </mask>
+                </variation>
             </tableViewCellContentView>
             <connections>
                 <outlet property="avatar" destination="l7o-JT-JFL" id="CTx-YQ-mpw"/>

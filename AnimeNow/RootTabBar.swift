@@ -9,7 +9,6 @@
 import UIKit
 import ANParseKit
 import ANCommonKit
-import ANAnimeKit
 
 public class RootTabBar: UITabBarController {
     public static let ShowedMyAnimeListLoginDefault = "Defaults.ShowedMyAnimeListLogin"
@@ -32,6 +31,10 @@ public class RootTabBar: UITabBarController {
                     break
                 case "Library":
                     selectedIndex = 1
+                case "Profile":
+                    selectedIndex = 2
+                case "Forum":
+                    selectedIndex = 3
                 default:
                     break
                 }

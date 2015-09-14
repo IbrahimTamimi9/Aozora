@@ -41,6 +41,7 @@
                     </label>
                     <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="I4l-rA-bmP">
                         <rect key="frame" x="51" y="34" width="261" height="154.5"/>
+                        <color key="backgroundColor" red="0.89411765336990356" green="0.89411765336990356" blue="0.89411765336990356" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" priority="999" constant="154" id="6nc-GJ-d8e"/>
                         </constraints>
@@ -68,8 +69,11 @@
                     <constraint firstItem="l7o-JT-JFL" firstAttribute="top" secondItem="CE8-oB-25Y" secondAttribute="topMargin" id="0ao-dR-NHv"/>
                     <constraint firstItem="XA6-jf-YTc" firstAttribute="centerX" secondItem="I4l-rA-bmP" secondAttribute="centerX" constant="-0.5" id="3ha-mt-cSh"/>
                     <constraint firstAttribute="bottomMargin" secondItem="dBO-Hh-gNw" secondAttribute="bottom" id="5Ty-FA-UDj"/>
+                    <constraint firstItem="l7o-JT-JFL" firstAttribute="leading" secondItem="CE8-oB-25Y" secondAttribute="leading" constant="8" id="7VS-UU-9In"/>
+                    <constraint firstAttribute="trailing" secondItem="IIt-M3-Ebc" secondAttribute="trailing" constant="8" id="DB4-Ww-Bz6"/>
                     <constraint firstItem="XA6-jf-YTc" firstAttribute="centerY" secondItem="I4l-rA-bmP" secondAttribute="centerY" constant="0.25" id="DBW-KV-x38"/>
                     <constraint firstItem="IIt-M3-Ebc" firstAttribute="trailing" secondItem="CE8-oB-25Y" secondAttribute="trailingMargin" id="E82-oc-aVl"/>
+                    <constraint firstAttribute="trailing" secondItem="l7o-JT-JFL" secondAttribute="trailing" constant="277" id="GrD-Ke-WGs"/>
                     <constraint firstItem="IIt-M3-Ebc" firstAttribute="leading" secondItem="l7o-JT-JFL" secondAttribute="trailing" constant="8" id="RWG-CZ-iFu"/>
                     <constraint firstItem="IIt-M3-Ebc" firstAttribute="leading" secondItem="dBO-Hh-gNw" secondAttribute="leading" id="Su4-Ju-2fW"/>
                     <constraint firstItem="dBO-Hh-gNw" firstAttribute="top" secondItem="I4l-rA-bmP" secondAttribute="bottom" constant="8.5" id="afP-CG-QfB"/>
@@ -79,6 +83,13 @@
                     <constraint firstItem="I4l-rA-bmP" firstAttribute="trailing" secondItem="CE8-oB-25Y" secondAttribute="trailingMargin" id="tov-yA-TSB"/>
                     <constraint firstItem="I4l-rA-bmP" firstAttribute="top" secondItem="IIt-M3-Ebc" secondAttribute="bottom" constant="8.5" id="wkR-Uv-4X5"/>
                 </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="GrD-Ke-WGs"/>
+                        <exclude reference="j4y-fp-vwp"/>
+                        <exclude reference="E82-oc-aVl"/>
+                    </mask>
+                </variation>
             </tableViewCellContentView>
             <connections>
                 <outlet property="avatar" destination="l7o-JT-JFL" id="D6y-os-8fE"/>

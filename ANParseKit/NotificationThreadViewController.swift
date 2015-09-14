@@ -1,0 +1,163 @@
+//
+//  AnimeThreadViewController.swift
+//  Aozora
+//
+//  Created by Paul Chavarria Podoliako on 8/8/15.
+//  Copyright (c) 2015 AnyTap. All rights reserved.
+//
+
+import Foundation
+import Parse
+import TTTAttributedLabel
+import ANCommonKit
+import ANParseKit
+
+public class NotificationThreadViewController: ThreadViewController {
+    
+    @IBOutlet weak var viewMoreButton: UIButton!
+    var timelinePost: TimelinePostable?
+    var post: ThreadPostable?
+    
+    public func initWithPost(post: Postable) {
+        if let timelinePost = post as? TimelinePostable {
+            self.timelinePost = timelinePost
+        } else if let threadPost = post as? ThreadPostable {
+            self.post = threadPost
+            self.thread = threadPost.thread
+        }
+        self.threadType = .Custom
+    }
+    
+    override public func viewDidLoad() {
+        super.viewDidLoad()
+        
+        if let timelinePost = timelinePost where timelinePost.userTimeline == User.currentUser() {
+            tableView.tableHeaderView = nil
+        }
+        
+        if let timelinePost = timelinePost {
+            viewMoreButton.setTitle("View Timeline  ", forState: .Normal)
+        } else if let threadPost = post {
+            viewMoreButton.setTitle("View Thread  ", forState: .Normal)
+        }
+        
+        fetchPosts()
+    }
+    
+    override public func updateUIWithThread(thread: Thread) {
+        super.updateUIWithThread(thread)
+        
+        title = "Loading..."
+        
+        if thread.locked {
+            navigationItem.rightBarButtonItem?.enabled = false
+        }
+    }
+    
+    override public func fetchPosts() {
+        super.fetchPosts()
+        fetchController.configureWith(self, queryDelegate: self, tableView: tableView, limit: FetchLimit, datasourceUsesSections: true)
+    }
+    
+    // MARK: - IBAction
+    
+    public override func replyToThreadPressed(sender: AnyObject) {
+        super.replyToThreadPressed(sender)
+        
+        if let thread = thread where User.currentUserLoggedIn() {
+            let comment = ANParseKit.newPostViewController()
+            comment.initWith(thread: thread, threadType: threadType, delegate: self)
+            presentViewController(comment, animated: true, completion: nil)
+        } else if let thread = thread where thread.locked {
+            presentBasicAlertWithTitle("Thread is locked", message: nil)
+        } else {
+            presentBasicAlertWithTitle("Login first", message: "Select 'Me' tab")
+        }
+    }
+    
+    @IBAction func openUserProfile(sender: AnyObject) {
+        if let startedBy = thread?.startedBy {
+            openProfile(startedBy)
+        }
+    }
+    
+    @IBAction func dismissViewController(sender: AnyObject) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    @IBAction func viewAllPostsPressed(sender: AnyObject) {
+        if let timelinePost = timelinePost {
+            openProfile(timelinePost.userTimeline)
+            
+        } else if let threadPost = post {
+            
+            let threadController = ANAnimeKit.customThreadViewController()
+            if let thread = thread, let episode = thread.episode, let anime = thread.anime {
+                threadController.initWithEpisode(episode, anime: anime)
+            } else {
+                threadController.initWithThread(thread!)
+            }
+            
+            if InAppController.purchasedAnyPro() == nil {
+                threadController.interstitialPresentationPolicy = .Automatic
+            }
+            navigationController?.pushViewController(threadController, animated: true)
+        }
+    }
+}
+
+extension NotificationThreadViewController: FetchControllerQueryDelegate {
+    
+    public override func queriesForSkip(#skip: Int) -> [PFQuery]? {
+        super.queriesForSkip(skip: skip)
+        var innerQuery: PFQuery!
+        var repliesQuery: PFQuery!
+        if let timelinePost = timelinePost as? TimelinePost {
+            innerQuery = TimelinePost.query()!
+            innerQuery.whereKey("objectId", equalTo: timelinePost.objectId!)
+            
+            repliesQuery = TimelinePost.query()!
+        } else if let post = post as? Post {
+            innerQuery = Post.query()!
+            innerQuery.whereKey("objectId", equalTo: post.objectId!)
+            
+            repliesQuery = Post.query()!
+        }
+        
+        var query = innerQuery.copy() as! PFQuery
+        query.includeKey("postedBy")
+        
+        repliesQuery.skip = 0
+        repliesQuery.limit = 1000
+        repliesQuery.whereKey("parentPost", matchesKey: "objectId", inQuery: innerQuery)
+        repliesQuery.orderByAscending("createdAt")
+        repliesQuery.includeKey("postedBy")
+        
+        return [query, repliesQuery]
+    }
+}
+
+extension NotificationThreadViewController: CommentViewControllerDelegate {
+    public override func commentViewControllerDidFinishedPosting(post: PFObject) {
+        super.commentViewControllerDidFinishedPosting(post)
+        fetchThread()
+    }
+}
+
+extension NotificationThreadViewController: FetchControllerDelegate {
+    public override func didFetchFor(#skip: Int) {
+        super.didFetchFor(skip: skip)
+        let post = fetchController.objectInSection(0)
+        if let post = post as? TimelinePostable {
+            navigationItem.title = "In " + post.userTimeline.aozoraUsername + " timeline"
+        } else if let post = post as? ThreadPostable {
+            navigationItem.title = "In " + post.thread.title
+        }
+    }
+}
+
+extension NotificationThreadViewController: UINavigationBarDelegate {
+    public func positionForBar(bar: UIBarPositioning) -> UIBarPosition {
+        return UIBarPosition.TopAttached
+    }
+}

@@ -174,9 +174,9 @@ extension EpisodesViewController: EpisodeCellDelegate {
         var textToShare = ""
             
         if anime.episodes == indexPath.row + 1 {
-            textToShare = "Finished watching \(anime.title!) via #Aozora"
+            textToShare = "Finished watching \(anime.title!) via #AozoraApp"
         } else {
-            textToShare = "Just watched \(anime.title!) ep \(episode.number) via #Aozora"
+            textToShare = "Just watched \(anime.title!) ep \(episode.number) via #AozoraApp"
         }
         
         var objectsToShare: [AnyObject] = [textToShare]

@@ -11,10 +11,12 @@ import ANCommonKit
 import TTTAttributedLabel
 import XCDYouTubeKit
 import Parse
+import ANParseKit
 
 public class ProfileViewController: ThreadViewController {
     
     @IBOutlet weak var settingsButton: UIButton!
+    @IBOutlet weak var notificationsButton: UIButton!
     
     @IBOutlet weak var userAvatar: UIImageView!
     @IBOutlet weak var usernameLabel: UILabel!
@@ -23,7 +25,7 @@ public class ProfileViewController: ThreadViewController {
     @IBOutlet weak var followButton: UIButton!
     @IBOutlet weak var followingButton: UIButton!
     @IBOutlet weak var followersButton: UIButton!
-    @IBOutlet weak var aboutLabel: UILabel!
+    @IBOutlet weak var aboutLabel: TTTAttributedLabel!
     
     @IBOutlet weak var proBadge: UILabel!
     @IBOutlet weak var postsBadge: UILabel!
@@ -57,6 +59,10 @@ public class ProfileViewController: ThreadViewController {
             segmentedControl.selectedSegmentIndex = 1
             tableBottomSpaceConstraint.constant = 0
         }
+        
+        aboutLabel.linkAttributes = [kCTForegroundColorAttributeName: UIColor.peterRiver()]
+        aboutLabel.enabledTextCheckingTypes = NSTextCheckingType.Link.rawValue
+        aboutLabel.delegate = self;
         
         fetchPosts()
     }
@@ -112,7 +118,11 @@ public class ProfileViewController: ThreadViewController {
             if let user = result?.last as? User {
                 self.userProfile = user
                 self.updateViewWithUser(user)
-                self.aboutLabel.text = user.details.about
+                self.aboutLabel.setText(user.details.about, afterInheritingLabelAttributesAndConfiguringWithBlock: { (attributedString) -> NSMutableAttributedString! in
+                    return attributedString
+                })
+                
+                
                 if user.details.posts >= 1000 {
                     self.postsBadge.text = (user.details.posts/1000).description + "k"
                 } else {
@@ -183,6 +193,7 @@ public class ProfileViewController: ThreadViewController {
         } else {
             followButton.hidden = false
             settingsButton.hidden = true
+            notificationsButton.hidden = true
         }
         
         if user.badges.count > 0 {
@@ -230,7 +241,7 @@ public class ProfileViewController: ThreadViewController {
                     thisProfileUser.details.saveEventually()
                     thisProfileUser.saveEventually()
                     currentUser.saveEventually()
-                    PFCloud.callFunctionInBackground("sendFollowingPushNotification", withParameters: ["toUser":thisProfileUser.objectId!])
+                    PFCloud.callFunctionInBackground("sendFollowingPushNotificationV2", withParameters: ["toUser":thisProfileUser.objectId!])
                     updateFollowingButtons()
                 } else {
                     // Unfollow
@@ -263,14 +274,14 @@ public class ProfileViewController: ThreadViewController {
     }
     
     @IBAction func showFollowingUsers(sender: AnyObject) {
-        let userListController = UIStoryboard(name: "Profile", bundle: ANParseKit.bundle()).instantiateViewControllerWithIdentifier("UserList") as! UserListViewController
+        let userListController = UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("UserList") as! UserListViewController
         let query = userProfile!.following().query()!
         userListController.initWithQuery(query, title: "Following")
         navigationController?.pushViewController(userListController, animated: true)
     }
     
     @IBAction func showFollowers(sender: AnyObject) {
-        let userListController = UIStoryboard(name: "Profile", bundle: ANParseKit.bundle()).instantiateViewControllerWithIdentifier("UserList") as! UserListViewController
+        let userListController = UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("UserList") as! UserListViewController
         let query = User.query()!
         query.whereKey("following", equalTo: userProfile!)
         userListController.initWithQuery(query, title: "Followers")
@@ -282,7 +293,7 @@ public class ProfileViewController: ThreadViewController {
         var alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
         
         alert.addAction(UIAlertAction(title: "Edit Profile", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
-            let editProfileController =  UIStoryboard(name: "Profile", bundle: ANParseKit.bundle()).instantiateViewControllerWithIdentifier("EditProfile") as! EditProfileViewController
+            let editProfileController =  UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("EditProfile") as! EditProfileViewController
             editProfileController.delegate = self
             self.presentViewController(editProfileController, animated: true, completion: nil)
         }))
@@ -294,6 +305,11 @@ public class ProfileViewController: ThreadViewController {
         
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler:nil))
         self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    @IBAction func showNotifications(sender: AnyObject) {
+        let notificationsVC = UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("Notifications") as! NotificationsViewController
+        navigationController?.pushViewController(notificationsVC, animated: true)
     }
 }
 
@@ -307,7 +323,7 @@ extension ProfileViewController: EditProfileViewControllerProtocol {
 
 extension ProfileViewController: FetchControllerQueryDelegate {
     
-    public override func queriesForSkip(#skip: Int) -> [PFQuery] {
+    public override func queriesForSkip(#skip: Int) -> [PFQuery]? {
         
         let innerQuery = TimelinePost.query()!
         innerQuery.skip = skip

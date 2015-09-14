@@ -15,7 +15,7 @@ public protocol FetchControllerDelegate: class {
 }
 
 public protocol FetchControllerQueryDelegate: class {
-    func queriesForSkip(#skip: Int) -> [PFQuery]
+    func queriesForSkip(#skip: Int) -> [PFQuery]?
     func processResult(#result: [PFObject]) -> [PFObject]
 }
 
@@ -43,6 +43,7 @@ public class FetchController {
     
     var isFirstFetch = true
     var datasourceUsesSections = false
+    var pinnedData: [PFObject] = []
     
     public init() {
         
@@ -55,20 +56,25 @@ public class FetchController {
         collectionView: UICollectionView? = nil,
         tableView: UITableView? = nil,
         limit: Int = 100,
-        datasourceUsesSections: Bool = false) {
+        datasourceUsesSections: Bool = false,
+        pinnedData: [PFObject] = []) {
         
             self.queryDelegate = queryDelegate
             self.delegate = delegate
             self.tableView = tableView
             self.collectionView = collectionView
+            query?.limit = limit
             self.query = query
             self.datasourceUsesSections = datasourceUsesSections
+            self.pinnedData = pinnedData
             defaultLimit = limit
             resetToDefaults()
             fetchWith(skip: 0)
     }
     
-    func resetToDefaults() {
+    public func resetToDefaults() {
+        println("Reset to defaults")
+        dataSource = []
         isFetching = defaultIsFetching
         canFetchMore = defaultCanFetchMore
         dataSourceCount = defaultDataSourceCount
@@ -113,7 +119,7 @@ public class FetchController {
         if isFetching {
             
             isFetching = false
-            canFetchMore = newDataSourceCount == dataSourceCount + limit ? true : false
+            canFetchMore = newDataSourceCount < dataSourceCount + limit ? false : true
             dataSourceCount = newDataSourceCount
             
             println("Fetched page \(page)")
@@ -123,11 +129,9 @@ public class FetchController {
     func fetchWith(#skip: Int) -> BFTask {
         
         var secondaryQuery: PFQuery? = nil
-        if let queries = queryDelegate?.queriesForSkip(skip: skip) {
+        if let queries = queryDelegate?.queriesForSkip(skip: skip) where queries.count > 1 {
             self.query = queries.first
-            if queries.count > 1 {
-                secondaryQuery = queries[1]
-            }
+            secondaryQuery = queries[1]
         } else if let query = query {
             query.skip = skip
         } else {
@@ -154,7 +158,7 @@ public class FetchController {
                 }
                 
                 if skip == 0 {
-                    self.dataSource = allData
+                    self.dataSource = self.pinnedData + allData
                 } else {
                     self.dataSource += allData
                 }
@@ -186,7 +190,6 @@ public class FetchController {
                 }
             } else if let tableView = self.tableView {
                 if skip == 0 {
-                    // TODO: Fix crash here
                     tableView.reloadData()
                     if self.isFirstFetch {
                         self.isFirstFetch = false

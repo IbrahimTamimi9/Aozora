@@ -61,7 +61,7 @@ class OnboardingViewController: UIViewController {
         
         let installation = PFInstallation.currentInstallation()
         
-        if let user = PFUser.currentUser() where installation.objectForKey("user") == nil {
+        if let user = PFUser.currentUser() {
             installation.setObject(user, forKey: "user")
             installation.saveEventually()
         }

@@ -17,6 +17,7 @@ protocol TagsViewControllerDelegate: class {
 }
 
 public let AllThreadTagsPin = "Pin.ThreadTag"
+public let PinnedThreadsPin = "Pin.PinnedThreads"
 
 public class TagsViewController: UIViewController {
     
@@ -61,6 +62,7 @@ public class TagsViewController: UIViewController {
         }
         
         let query = ThreadTag.query()!
+        query.whereKey("privateTag", equalTo: false)
         query.orderByAscending("order")
         query.findCachedOrNetwork(AllThreadTagsPin, expirationDays: 1).continueWithExecutor(BFExecutor.mainThreadExecutor(),
             withSuccessBlock: { (task: BFTask!) -> AnyObject! in

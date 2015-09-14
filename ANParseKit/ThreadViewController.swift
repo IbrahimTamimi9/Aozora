@@ -16,7 +16,7 @@ import ANParseKit
 // Class intended to be subclassed
 public class ThreadViewController: UIViewController {
    
-    public let FetchLimit = 20
+    public let FetchLimit = 12
     
     @IBOutlet public weak var tableView: UITableView!
     
@@ -82,7 +82,7 @@ public class ThreadViewController: UIViewController {
     
     public func openProfile(user: User) {
         if user != User.currentUser() {
-            let (navController, profileController) = ANParseKit.profileViewController()
+            let (navController, profileController) = ANAnimeKit.profileViewController()
             profileController.initWithUser(user)
             presentViewController(navController, animated: true, completion: nil)
         }
@@ -155,7 +155,7 @@ extension ThreadViewController: UITableViewDataSource {
     }
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
+        // TODO: Crash 'fatal error: Array index out of range' after posting
         let post = fetchController.objectAtIndex(indexPath.section) as! Postable
         
         if indexPath.row == 0 {
@@ -173,7 +173,7 @@ extension ThreadViewController: UITableViewDataSource {
             cell.delegate = self
             updatePostCell(cell, with: post)
             if let episode = post.episode {
-                cell.imageContent?.setImageFrom(urlString: episode.imageURLString(), animated: true)
+                cell.imageContent?.setImageFrom(urlString: episode.imageURLString(), animated: false)
                 cell.imageHeightConstraint?.constant = 180
             }
             cell.layoutIfNeeded()
@@ -288,7 +288,7 @@ extension ThreadViewController: UITableViewDataSource {
     public func setImages(images: [ImageData], imageView: UIImageView?, imageHeightConstraint: NSLayoutConstraint?) {
         if let image = images.first {
             imageHeightConstraint?.constant = (view.bounds.size.width-59.0) * CGFloat(image.height)/CGFloat(image.width)
-            imageView?.setImageFrom(urlString: image.url, animated: true)
+            imageView?.setImageFrom(urlString: image.url, animated: false)
         } else {
             imageHeightConstraint?.constant = 0
         }
@@ -307,7 +307,7 @@ extension ThreadViewController: UITableViewDataSource {
             if let youtubeID = youtubeID {
                 
                 let urlString = "https://i.ytimg.com/vi/\(youtubeID)/mqdefault.jpg"
-                imageView?.setImageFrom(urlString: urlString, animated: true)
+                imageView?.setImageFrom(urlString: urlString, animated: false)
                 imageHeightConstraint?.constant = 180
                 
                 playButton.hidden = false
@@ -441,7 +441,7 @@ extension ThreadViewController: TTTAttributedLabelDelegate {
             let username = url.pathComponents?[1] as? String {
                 
                 if username != User.currentUser()!.aozoraUsername {
-                    let (navController, profileController) = ANParseKit.profileViewController()
+                    let (navController, profileController) = ANAnimeKit.profileViewController()
                     profileController.initWithUsername(username)
                     presentViewController(navController, animated: true, completion: nil)
                 }
@@ -492,7 +492,7 @@ extension ThreadViewController: PostCellDelegate {
 
 extension ThreadViewController: FetchControllerQueryDelegate {
     
-    public func queriesForSkip(#skip: Int) -> [PFQuery] {
+    public func queriesForSkip(#skip: Int) -> [PFQuery]? {
         let query = PFQuery()
         return [query]
     }

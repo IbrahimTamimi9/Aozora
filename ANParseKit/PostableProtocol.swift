@@ -20,6 +20,7 @@ public protocol Postable {
     var replyLevel: Int { get set }
     var hasSpoilers: Bool { get set }
     var isSpoilerHidden: Bool { get set }
+    var subscribers: [User] { get set }
     
     var parentPost: PFObject? { get }
     var images: [ImageData] { get }

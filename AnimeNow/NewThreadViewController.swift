@@ -64,6 +64,7 @@ public class NewThreadViewController: CommentViewController {
         thread.content = textView.text
         thread.replies = 0
         thread.tags = tags
+        thread.subscribers = [postedBy!]
         
         if let selectedImageData = selectedImageData {
             thread.images = [selectedImageData]

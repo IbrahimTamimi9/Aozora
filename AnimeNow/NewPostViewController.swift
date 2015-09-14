@@ -64,15 +64,30 @@ public class NewPostViewController: CommentViewController {
         switch threadType {
         case .Timeline:
             var timelinePost = TimelinePost()
+            
             timelinePost.content = textView.text
             timelinePost.edited = false
             timelinePost.hasSpoilers = hasSpoilers
+            timelinePost.postedBy = postedBy
             if let selectedImageData = selectedImageData {
                 timelinePost.images = [selectedImageData]
             }
             
             if let youtubeID = selectedVideoID {
                 timelinePost.youtubeID = youtubeID
+            }
+            
+            var parentSaveTask = BFTask(result: nil)
+            
+            if let parentPost = parentPost as? TimelinePost {
+                parentPost.addUniqueObject(postedBy!, forKey: "subscribers")
+                parentSaveTask = parentPost.saveInBackground()
+            } else {
+                if postedBy! != postedIn {
+                    timelinePost.subscribers = [postedBy!, postedIn]
+                } else {
+                    timelinePost.subscribers = [postedBy!]
+                }
             }
             
             if let parentPost = parentPost as? TimelinePostable {
@@ -84,10 +99,31 @@ public class NewPostViewController: CommentViewController {
                 timelinePost.userTimeline = postedIn
             }
             
-            timelinePost.postedBy = postedBy
-            timelinePost.saveInBackgroundWithBlock({ (result, error) -> Void in
+            var postSaveTask = timelinePost.saveInBackground()
+            
+            BFTask(forCompletionOfAllTasks: [parentSaveTask, postSaveTask]).continueWithBlock({ (task: BFTask!) -> AnyObject! in
+                
+                // Send timeline post notification
+                if let parentPost = self.parentPost as? TimelinePost {
+                    let parameters = [
+                        "toUserId": self.postedIn.objectId!,
+                        "timelinePostId": parentPost.objectId!,
+                        "toUserUsername": self.postedIn.username!
+                        ] as [String : AnyObject]
+                    PFCloud.callFunctionInBackground("sendNewTimelinePostReplyPushNotification", withParameters: parameters)
+                } else {
+                    if self.postedBy! != self.postedIn {
+                        let parameters = [
+                            "toUserId": self.postedIn.objectId!,
+                            "timelinePostId": timelinePost.objectId!
+                            ] as [String : AnyObject]
+                        PFCloud.callFunctionInBackground("sendNewTimelinePostPushNotification", withParameters: parameters)
+                    }
+                }
+                
                 self.postedBy?.incrementPostCount(1)
-                self.completeRequest(timelinePost, error: error)
+                self.completeRequest(timelinePost, error: task.error)
+                return nil
             })
             
         default:
@@ -95,12 +131,22 @@ public class NewPostViewController: CommentViewController {
             post.content = textView.text
             post.edited = false
             post.hasSpoilers = hasSpoilers
+            post.postedBy = postedBy
             if let selectedImageData = selectedImageData {
                 post.images = [selectedImageData]
             }
             
             if let youtubeID = selectedVideoID {
                 post.youtubeID = youtubeID
+            }
+            
+            // Add subscribers to parent post or current post if there is no parent
+            var parentSaveTask = BFTask(result: nil)
+            if let parentPost = parentPost as? Post {
+                parentPost.addUniqueObject(postedBy!, forKey: "subscribers")
+                parentSaveTask = parentPost.saveInBackground()
+            } else {
+                post.subscribers = [postedBy!]
             }
             
             if let parentPost = parentPost as? ThreadPostable {
@@ -112,10 +158,38 @@ public class NewPostViewController: CommentViewController {
                 post.thread = thread!
             }
             post.thread.incrementKey("replies")
-            post.postedBy = postedBy
-            post.saveInBackgroundWithBlock({ (result, error) -> Void in
+               
+            var postSaveTask = post.saveInBackground()
+            
+            BFTask(forCompletionOfAllTasks: [parentSaveTask, postSaveTask]).continueWithBlock({ (task: BFTask!) -> AnyObject! in
+                
+                // Send post notification
+                if let parentPost = self.parentPost as? Post {
+                    let parameters = [
+                        "toUserId": parentPost.postedBy!.objectId!,
+                        "postId": parentPost.objectId!,
+                        "threadName": post.thread.title
+                        ] as [String : AnyObject]
+                    PFCloud.callFunctionInBackground("sendNewPostReplyPushNotification", withParameters: parameters)
+                } else {
+                    if self.postedBy! != self.postedIn {
+                        var parameters = [
+                            "postId": post.objectId!,
+                            "threadName": post.thread.title
+                            ] as [String : AnyObject]
+                        
+                        // Only on user threads, episode threads do not have startedBy
+                        if let startedBy = post.thread.startedBy {
+                            parameters["toUserId"] = startedBy.objectId!
+                        }
+                        
+                        PFCloud.callFunctionInBackground("sendNewPostPushNotification", withParameters: parameters)
+                    }
+                }
+                
                 self.postedBy?.incrementPostCount(1)
-                self.completeRequest(post, error: error)
+                self.completeRequest(post, error: task.error)
+                return nil
             })
         }
     }

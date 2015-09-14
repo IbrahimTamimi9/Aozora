@@ -8,7 +8,6 @@
 
 import UIKit
 import ANCommonKit
-import ANAnimeKit
 import ANParseKit
 import XLPagerTabStrip
 
