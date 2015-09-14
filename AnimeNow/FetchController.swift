@@ -73,6 +73,7 @@ public class FetchController {
     }
     
     public func resetToDefaults() {
+        println("Reset to defaults")
         dataSource = []
         isFetching = defaultIsFetching
         canFetchMore = defaultCanFetchMore

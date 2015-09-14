@@ -126,27 +126,34 @@ class ForumsViewController: UIViewController {
         self.fetchController.tableView?.reloadData()
         
         let query = Thread.query()!
-        query.whereKey("replies", greaterThan: 0)
-        query.whereKeyExists("episode")
-        
-        let query2 = Thread.query()!
-        query2.whereKeyDoesNotExist("episode")
-        
-        let orQuery = PFQuery.orQueryWithSubqueries([query, query2])
-        orQuery.whereKey("pinned", notEqualTo: true)
-        orQuery.includeKey("tags")
-        orQuery.includeKey("startedBy")
-        
-        switch selectedList {
-        case .Recent:
-            orQuery.orderByDescending("updatedAt")
-        case .New:
-            orQuery.orderByDescending("createdAt")
-        default:
-            break
+        query.fromLocalDatastore()
+        query.whereKey("pinType", equalTo: "global")
+        query.findObjectsInBackgroundWithBlock { (result, error) -> Void in
+            if let pinnedData = result as? [Thread] {
+                let query = Thread.query()!
+                query.whereKey("replies", greaterThan: 0)
+                query.whereKeyExists("episode")
+                
+                let query2 = Thread.query()!
+                query2.whereKeyDoesNotExist("episode")
+                
+                let orQuery = PFQuery.orQueryWithSubqueries([query, query2])
+                orQuery.whereKeyDoesNotExist("pinType")
+                orQuery.includeKey("tags")
+                orQuery.includeKey("startedBy")
+                
+                switch self.selectedList {
+                case .Recent:
+                    orQuery.orderByDescending("updatedAt")
+                case .New:
+                    orQuery.orderByDescending("createdAt")
+                default:
+                    break
+                }
+                
+                self.fetchController.configureWith(self, query: orQuery, tableView: self.tableView, limit: 50, pinnedData: pinnedData)
+            }
         }
-        
-        fetchController.configureWith(self, query: orQuery, tableView: tableView, limit: 50)
     }
     
     func fetchTagThreads(tag: PFObject) {
@@ -156,12 +163,13 @@ class ForumsViewController: UIViewController {
         
         let query = Thread.query()!
         query.fromLocalDatastore()
+        query.whereKey("pinType", equalTo: "tag")
         query.whereKey("tags", containedIn: [tag])
         query.findObjectsInBackgroundWithBlock { (result, error) -> Void in
             if let pinnedData = result as? [Thread] {
                 let query = Thread.query()!
                 query.whereKey("tags", containedIn: [tag])
-                query.whereKey("pinned", notEqualTo: true)
+                query.whereKeyDoesNotExist("pinType")
                 query.includeKey("tags")
                 query.includeKey("startedBy")
                 query.orderByDescending("updatedAt")
@@ -181,7 +189,7 @@ class ForumsViewController: UIViewController {
     
     func cachePinnedPosts() {
         let query = Thread.query()!
-        query.whereKey("pinned", equalTo: true)
+        query.whereKeyExists("pinType")
         query.findCachedOrNetwork(PinnedThreadsPin, expirationDays: 1)
     }
     
@@ -216,7 +224,7 @@ extension ForumsViewController: UITableViewDataSource {
         
         if let _ = thread.episode {
             cell.typeLabel.text = " "
-        } else if thread.pinned {
+        } else if let _ = thread.pinType {
             cell.typeLabel.text = " "
         } else {
             cell.typeLabel.text = ""

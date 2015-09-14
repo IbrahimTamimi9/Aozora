@@ -35,7 +35,7 @@ public class Thread: PFObject, PFSubclassing {
     @NSManaged public var hasSpoilers: Bool
     @NSManaged public var locked: Bool
     @NSManaged public var edited: Bool
-    @NSManaged public var pinned: Bool
+    @NSManaged public var pinType: String?
     @NSManaged public var youtubeID: String?
     
     var imagesInternal: [ImageData]!
