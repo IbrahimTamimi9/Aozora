@@ -325,7 +325,7 @@
                                             </connections>
                                         </segmentedControl>
                                         <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PRO+" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FUt-Aj-Vp8">
-                                            <rect key="frame" x="118" y="109" width="48" height="21"/>
+                                            <rect key="frame" x="115" y="109" width="48" height="21"/>
                                             <color key="backgroundColor" red="1" green="0.68236449359999996" blue="0.1161528146" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="3bN-Zk-K9L"/>
@@ -376,7 +376,7 @@
                                         <constraint firstItem="eBe-M2-du6" firstAttribute="leading" secondItem="5yX-hf-St0" secondAttribute="trailing" constant="8" id="ELZ-ax-mzA"/>
                                         <constraint firstItem="hlo-ra-225" firstAttribute="leading" secondItem="LkT-EB-jxP" secondAttribute="trailing" constant="8" id="GVx-4L-Izw"/>
                                         <constraint firstItem="hlo-ra-225" firstAttribute="centerY" secondItem="LkT-EB-jxP" secondAttribute="centerY" id="Hcd-xJ-XOq"/>
-                                        <constraint firstItem="FUt-Aj-Vp8" firstAttribute="leading" secondItem="i6N-oU-yq0" secondAttribute="trailing" constant="8" id="IK6-P7-Zbb"/>
+                                        <constraint firstItem="FUt-Aj-Vp8" firstAttribute="leading" secondItem="i6N-oU-yq0" secondAttribute="trailing" constant="5" id="IK6-P7-Zbb"/>
                                         <constraint firstItem="5yX-hf-St0" firstAttribute="centerY" secondItem="eBe-M2-du6" secondAttribute="centerY" id="KSg-9b-atT"/>
                                         <constraint firstAttribute="trailing" secondItem="TgH-QU-GT1" secondAttribute="trailing" constant="8" id="Ppi-A8-7Mh"/>
                                         <constraint firstAttribute="trailing" secondItem="asH-I6-fJz" secondAttribute="trailing" id="Qgg-do-Yog"/>

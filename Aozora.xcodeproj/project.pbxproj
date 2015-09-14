@@ -185,7 +185,6 @@
 		DAC55CB91B91EF540086D0DB /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC55CB31B91EF540086D0DB /* ParseFacebookUtilsV4.framework */; };
 		DAC7D8FC1B5015FA00898FF6 /* InAppPurchaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA07A3491B4C2B860028B81B /* InAppPurchaseViewController.swift */; };
 		DAC7D8FF1B5018DE00898FF6 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC7D8FE1B5018DE00898FF6 /* iAd.framework */; };
-		DAC7D9021B50201300898FF6 /* InAppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC7D9011B50201300898FF6 /* InAppController.swift */; };
 		DAC7D9031B50201C00898FF6 /* InAppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3B61D81B4F59E700A3F7BA /* InAppController.swift */; };
 		DAC7D9071B5046AF00898FF6 /* DialogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC7D9051B50464B00898FF6 /* DialogController.swift */; };
 		DACCF35D1B110AA2006A13EB /* ANParseKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACCF35C1B110AA2006A13EB /* ANParseKit.swift */; };
@@ -229,6 +228,7 @@
 		DAFE19AE1B29E4CD002F3A76 /* AnimeCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFE19AD1B29E4CD002F3A76 /* AnimeCharacter.swift */; };
 		DAFE19B01B29F264002F3A76 /* AnimeCast.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFE19AF1B29F264002F3A76 /* AnimeCast.swift */; };
 		DAFE19B21B29F4EC002F3A76 /* Anime.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFE19B11B29F4EC002F3A76 /* Anime.swift */; };
+		DAFED2531BA717DE009697E4 /* InAppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC7D9011B50201300898FF6 /* InAppController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -489,7 +489,7 @@
 		DAC55CB31B91EF540086D0DB /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
 		DAC610BD1B312B0200B60631 /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserCell.swift; path = ../ANAnimeKit/UserCell.swift; sourceTree = "<group>"; };
 		DAC7D8FE1B5018DE00898FF6 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
-		DAC7D9011B50201300898FF6 /* InAppController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InAppController.swift; sourceTree = "<group>"; };
+		DAC7D9011B50201300898FF6 /* InAppController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InAppController.swift; path = ../ANCommonKit/InAppController.swift; sourceTree = "<group>"; };
 		DAC7D9051B50464B00898FF6 /* DialogController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DialogController.swift; sourceTree = "<group>"; };
 		DACCF35C1B110AA2006A13EB /* ANParseKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ANParseKit.swift; sourceTree = "<group>"; };
 		DACCF35E1B111016006A13EB /* AnimeService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeService.swift; sourceTree = "<group>"; };
@@ -529,6 +529,7 @@
 		DAFE19AD1B29E4CD002F3A76 /* AnimeCharacter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeCharacter.swift; sourceTree = "<group>"; };
 		DAFE19AF1B29F264002F3A76 /* AnimeCast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeCast.swift; sourceTree = "<group>"; };
 		DAFE19B11B29F4EC002F3A76 /* Anime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Anime.swift; sourceTree = "<group>"; };
+		DAFED2511BA716C4009697E4 /* libcommonCrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcommonCrypto.dylib; path = usr/lib/system/libcommonCrypto.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -829,7 +830,6 @@
 				DA4AF8B91B276E060020252E /* ANCommonKit.h */,
 				DA7C84C71B43797F0036D119 /* Extensions */,
 				DAC077AE1B6890F50067DA90 /* Posts */,
-				DA7C84C51B43337E0036D119 /* Controllers */,
 				DAFBB0931B20EFC600495ED9 /* API */,
 				DA2853C01B22C5B40070B675 /* Categories */,
 				DA38A98D1B223EFC002FCBB4 /* Views */,
@@ -901,6 +901,7 @@
 			children = (
 				DA6E12B21B10D94200B278B0 /* ANParseKit.h */,
 				DACCF35C1B110AA2006A13EB /* ANParseKit.swift */,
+				DAC7D9011B50201300898FF6 /* InAppController.swift */,
 				DAE43C301B2BC16F00C3092D /* Extensions */,
 				DACE77C51B29518300037486 /* Parse classes */,
 				DA5A3BED1B346F2100C07D71 /* MALScrapper */,
@@ -971,14 +972,6 @@
 				DA6E12DB1B10D96F00B278B0 /* WSWebScraper.m */,
 			);
 			path = SWWebScrapper;
-			sourceTree = "<group>";
-		};
-		DA7C84C51B43337E0036D119 /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				DAC7D9011B50201300898FF6 /* InAppController.swift */,
-			);
-			name = Controllers;
 			sourceTree = "<group>";
 		};
 		DA7C84C71B43797F0036D119 /* Extensions */ = {
@@ -1304,6 +1297,7 @@
 		F4F69FB5D8335951A772F9AC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DAFED2511BA716C4009697E4 /* libcommonCrypto.dylib */,
 				DA897F951B6D461800A9510C /* MobileCoreServices.framework */,
 				DA2D1EF31B53F475009A5CCD /* Fabric.framework */,
 				DA2D1EF41B53F475009A5CCD /* Crashlytics.framework */,
@@ -1847,7 +1841,6 @@
 				DAA546D61BA090C0003989DE /* UIApplication+Navigation.swift in Sources */,
 				DAFD60B61B278452007275C1 /* DropDownListViewController.swift in Sources */,
 				DAE43C3A1B2F971800C3092D /* UIView+Animation.swift in Sources */,
-				DAC7D9021B50201300898FF6 /* InAppController.swift in Sources */,
 				DA5A3BFB1B35F19A00C07D71 /* TraktV2.swift in Sources */,
 				DAC077AF1B68910A0067DA90 /* CommentCell.swift in Sources */,
 				DA5A3BFD1B35F19A00C07D71 /* Atarashii.swift in Sources */,
@@ -1930,6 +1923,7 @@
 				DA6E12E41B10D96F00B278B0 /* UIViewController+WebScraper.m in Sources */,
 				DA35B99A1B74165000C0AAC7 /* InAppBrowserSelectorViewController.swift in Sources */,
 				DA13806C1B6DBB4C00C53560 /* Post.swift in Sources */,
+				DAFED2531BA717DE009697E4 /* InAppController.swift in Sources */,
 				DA6E13111B10F2E500B278B0 /* MALScrapper.swift in Sources */,
 				DA03F15C1B8B818E00402AC4 /* TTTAttributedLabel+Tags.swift in Sources */,
 				DA6E12DE1B10D96F00B278B0 /* TFHpple.m in Sources */,
@@ -2105,6 +2099,10 @@
 				INFOPLIST_FILE = AnimeNow/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/lib/system",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-Wl,-U,_JSContextGetGlobalObject",
@@ -2169,6 +2167,10 @@
 				INFOPLIST_FILE = AnimeNow/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/lib/system",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-Wl,-U,_JSContextGetGlobalObject",

@@ -23,6 +23,7 @@ public class User: PFUser, PFSubclassing {
     @NSManaged public var avatarThumb: PFFile?
     @NSManaged public var banner: PFFile?
     @NSManaged public var badges: [String]
+    @NSManaged public var unlockedContent: [String]
     @NSManaged public var joinDate: NSDate
     @NSManaged public var aozoraUsername: String
     @NSManaged public var myAnimeListUsername: String?
