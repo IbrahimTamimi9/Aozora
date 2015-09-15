@@ -122,7 +122,7 @@ public class NewPostViewController: CommentViewController {
                 }
                 
                 self.postedBy?.incrementPostCount(1)
-                self.completeRequest(timelinePost, error: task.error)
+                self.completeRequest(timelinePost, parentPost: self.parentPost as? PFObject, error: task.error)
                 return nil
             })
             
@@ -188,7 +188,7 @@ public class NewPostViewController: CommentViewController {
                 }
                 
                 self.postedBy?.incrementPostCount(1)
-                self.completeRequest(post, error: task.error)
+                self.completeRequest(post, parentPost: self.parentPost as? PFObject, error: task.error)
                 return nil
             })
         }
@@ -212,7 +212,7 @@ public class NewPostViewController: CommentViewController {
         }
         
         post.saveInBackgroundWithBlock ({ (result, error) -> Void in
-            self.completeRequest(post, error: error)
+            self.completeRequest(post, parentPost: self.parentPost as? PFObject, error: error)
         })
     }
     

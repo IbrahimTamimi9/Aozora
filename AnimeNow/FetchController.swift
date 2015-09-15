@@ -38,7 +38,7 @@ public class FetchController {
 
     public var tableView: UITableView?
     public var collectionView: UICollectionView?
-    var dataSource: [PFObject] = []
+    public var dataSource: [PFObject] = []
     var query: PFQuery?
     
     var isFirstFetch = true
@@ -73,7 +73,6 @@ public class FetchController {
     }
     
     public func resetToDefaults() {
-        println("Reset to defaults")
         dataSource = []
         isFetching = defaultIsFetching
         canFetchMore = defaultCanFetchMore
@@ -123,6 +122,12 @@ public class FetchController {
             dataSourceCount = newDataSourceCount
             
             println("Fetched page \(page)")
+        }
+    }
+    
+    public var canFetchMoreData: Bool {
+        get {
+            return canFetchMore
         }
     }
     

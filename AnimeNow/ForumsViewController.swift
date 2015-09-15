@@ -312,7 +312,7 @@ extension ForumsViewController: TTTAttributedLabelDelegate {
 }
 
 extension ForumsViewController: CommentViewControllerDelegate {
-    func commentViewControllerDidFinishedPosting(post: PFObject) {
+    func commentViewControllerDidFinishedPosting(post: PFObject, parentPost: PFObject?) {
         prepareForList(selectedList)
     }
 }

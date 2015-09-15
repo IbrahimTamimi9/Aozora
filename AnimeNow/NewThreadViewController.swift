@@ -77,7 +77,7 @@ public class NewThreadViewController: CommentViewController {
         thread.startedBy = postedBy
         thread.saveInBackgroundWithBlock({ (result, error) -> Void in
             self.postedBy?.incrementPostCount(1)
-            self.completeRequest(thread, error: error)
+            self.completeRequest(thread, parentPost:nil, error: error)
         })
         
     }
@@ -99,7 +99,7 @@ public class NewThreadViewController: CommentViewController {
             thread.content = textView.text
             thread.tags = tags
             thread.saveInBackgroundWithBlock({ (result, error) -> Void in
-                self.completeRequest(thread, error: error)
+                self.completeRequest(thread, parentPost:nil, error: error)
             })
         }
     }

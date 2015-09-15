@@ -138,9 +138,21 @@ extension NotificationThreadViewController: FetchControllerQueryDelegate {
 }
 
 extension NotificationThreadViewController: CommentViewControllerDelegate {
-    public override func commentViewControllerDidFinishedPosting(post: PFObject) {
-        super.commentViewControllerDidFinishedPosting(post)
-        fetchThread()
+    public override func commentViewControllerDidFinishedPosting(post: PFObject, parentPost: PFObject?) {
+        super.commentViewControllerDidFinishedPosting(post, parentPost: parentPost)
+
+        if let parentPost = parentPost {
+            // Inserting a new reply in-place
+            var parentPost = parentPost as! Postable
+            parentPost.replies.append(post)
+            tableView.reloadData()
+        } else if parentPost == nil {
+            // Inserting a new post in the bottom, if we're in the bottom of the thread
+            if !fetchController.canFetchMoreData {
+                fetchController.dataSource.append(post)
+                tableView.reloadData()
+            }
+        }
     }
 }
 

@@ -362,3 +362,20 @@ extension ProfileViewController: FetchControllerQueryDelegate {
         return [query, repliesQuery]
     }
 }
+
+extension ProfileViewController: CommentViewControllerDelegate {
+    public override func commentViewControllerDidFinishedPosting(post: PFObject, parentPost: PFObject?) {
+        super.commentViewControllerDidFinishedPosting(post, parentPost: parentPost)
+        
+        if let parentPost = parentPost {
+            // Inserting a new reply in-place
+            var parentPost = parentPost as! Postable
+            parentPost.replies.append(post)
+            tableView.reloadData()
+        } else if parentPost == nil {
+            // Inserting a new post in the top, if we're in the top of the thread
+            fetchController.dataSource.insert(post, atIndex: 0)
+            tableView.reloadData()
+        }
+    }
+}

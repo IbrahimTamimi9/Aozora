@@ -11,7 +11,7 @@ import Parse
 import Bolts
 
 public protocol CommentViewControllerDelegate: class {
-    func commentViewControllerDidFinishedPosting(post: PFObject)
+    func commentViewControllerDidFinishedPosting(newPost: PFObject, parentPost: PFObject?)
 }
 
 public enum ThreadType {
@@ -130,7 +130,7 @@ public class CommentViewController: UIViewController {
     func performUpdate(post: PFObject) {
     }
     
-    func completeRequest(post: PFObject, error: NSError?) {
+    func completeRequest(post: PFObject, parentPost: PFObject?, error: NSError?) {
         if let error = error {
             // TODO: Show error
             self.sendButton.setTitle("Send", forState: .Normal)
@@ -138,7 +138,7 @@ public class CommentViewController: UIViewController {
             self.sendButton.userInteractionEnabled = true
         } else {
             // Success!
-            self.delegate?.commentViewControllerDidFinishedPosting(post)
+            self.delegate?.commentViewControllerDidFinishedPosting(post, parentPost:parentPost)
             self.dismissViewControllerAnimated(true, completion: nil)
         }
     }

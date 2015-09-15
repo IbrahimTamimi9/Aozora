@@ -48,18 +48,14 @@ public class ForumViewController: AnimeBaseViewController {
     }
     
     func fetchAnimeRelatedThreads() {
-        // TODO: Delete this query
+        
         let query = Thread.query()!
-        query.whereKey("anime", equalTo: anime)
+        query.whereKey("tags", containedIn: [anime])
+        query.includeKey("tags")
+        query.includeKey("anime")
+        query.includeKey("startedBy")
         
-        let query2 = Thread.query()!
-        query2.whereKey("tags", containedIn: [anime])
-        
-        let orQuery = PFQuery.orQueryWithSubqueries([query,query2])
-        orQuery.includeKey("tags")
-        orQuery.includeKey("anime")
-        orQuery.includeKey("startedBy")
-        fetchController.configureWith(self, query: orQuery, tableView: tableView, limit: 100)
+        fetchController.configureWith(self, query: query, tableView: tableView, limit: 100)
     }
     
     @IBAction func createAnimeThread(sender: AnyObject) {
@@ -131,7 +127,7 @@ extension ForumViewController: FetchControllerDelegate {
 }
 
 extension ForumViewController: CommentViewControllerDelegate {
-    public func commentViewControllerDidFinishedPosting(post: PFObject) {
+    public func commentViewControllerDidFinishedPosting(post: PFObject, parentPost: PFObject?) {
         fetchAnimeRelatedThreads()
     }
 }
