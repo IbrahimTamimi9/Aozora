@@ -120,10 +120,6 @@ extension ForumViewController: UITableViewDelegate {
             threadController.initWithThread(thread)
         }
         
-        if InAppController.purchasedAnyPro() == nil {
-            threadController.interstitialPresentationPolicy = .Automatic
-        }
-        
         navigationController?.pushViewController(threadController, animated: true)
     }
 }

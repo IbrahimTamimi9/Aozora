@@ -10,9 +10,9 @@ import Foundation
 import Parse
 
 extension UIImageView {
-    public func setImageWithPFFile(file: PFFile) {
+    public func setImageWithPFFile(file: PFFile, animated: Bool = true) {
         if let url = file.url {
-            self.setImageFrom(urlString: url, animated: true)
+            self.setImageFrom(urlString: url, animated: animated)
         }
     }
 }
