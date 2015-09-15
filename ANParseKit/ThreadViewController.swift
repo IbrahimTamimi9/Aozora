@@ -419,7 +419,7 @@ extension ThreadViewController: UITableViewDelegate {
                 if let post = post as? PFObject {
                     if let parentPost = parentPost as? PFObject {
                         // Just delete child post
-                        self.deletePosts([post])
+                        self.deletePosts(childPosts: [post], parentPost: parentPost, removeParent: false)
                     } else {
                         // This is parent post, remove child too
                         var className = ""
@@ -433,7 +433,7 @@ extension ThreadViewController: UITableViewDelegate {
                         childPostsQuery.whereKey("parentPost", equalTo: post)
                         childPostsQuery.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
                             if let result = result as? [PFObject] {
-                                self.deletePosts(result+[post])
+                                self.deletePosts(childPosts: result, parentPost: post, removeParent: true)
                             } else {
                                 // TODO: Show error
                             }
@@ -448,17 +448,37 @@ extension ThreadViewController: UITableViewDelegate {
         }
     }
     
-    func deletePosts(posts: [PFObject]) {
-        PFObject.deleteAllInBackground(posts, block: { (success, error) -> Void in
+    func deletePosts(childPosts: [PFObject] = [], parentPost: PFObject, removeParent: Bool) {
+        var allPosts = childPosts
+        
+        if removeParent {
+            allPosts.append(parentPost)
+        }
+        
+        PFObject.deleteAllInBackground(allPosts, block: { (success, error) -> Void in
             if let error = error {
                 // Show some error
             } else {
-                for post in posts {
+                for post in allPosts {
                     (post["postedBy"] as? User)?.incrementPostCount(-1)
                 }
-                self.thread?.incrementKey("replies", byAmount: -posts.count)
+                self.thread?.incrementKey("replies", byAmount: -allPosts.count)
                 self.thread?.saveEventually()
-                self.fetchPosts()
+                
+                if removeParent {
+                    // Delete parent post, and entire section
+                    if let section = find(self.fetchController.dataSource, parentPost) {
+                        self.fetchController.dataSource.removeAtIndex(section)
+                        self.tableView.reloadData()
+                    }
+                } else {
+                    // Delete child post
+                    var parentPost = parentPost as! Postable
+                    if let index = find(parentPost.replies, childPosts.last!) {
+                        parentPost.replies.removeAtIndex(index)
+                        self.tableView.reloadData()
+                    }
+                }
             }
         })
     }
