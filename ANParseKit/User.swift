@@ -30,6 +30,10 @@ public class User: PFUser, PFSubclassing {
     @NSManaged public var anilistUsername: String
     @NSManaged public var details: UserDetails
     
+    @NSManaged public var activeStart: NSDate
+    @NSManaged public var activeEnd: NSDate
+    @NSManaged public var active: Bool
+    
     public func following() -> PFRelation {
         return self.relationForKey("following")
     }

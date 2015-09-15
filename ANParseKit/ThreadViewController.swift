@@ -270,9 +270,12 @@ extension ThreadViewController: UITableViewDataSource {
                 return attributedString
             })
             
-            let url = NSURL(string: "aozoraapp://profile/"+username)
-            let range = (content as NSString).rangeOfString(username)
-            cell.textContent.addLinkToURL(url, withRange: range)
+            
+            if let encodedUsername = username.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding),
+                let url = NSURL(string: "aozoraapp://profile/"+encodedUsername) {
+                let range = (content as NSString).rangeOfString(username)
+                cell.textContent.addLinkToURL(url, withRange: range)
+            }
         }
         
         cell.date.text = post.createdDate?.timeAgo()

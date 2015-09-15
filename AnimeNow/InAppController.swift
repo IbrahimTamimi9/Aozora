@@ -8,6 +8,7 @@
 
 import Foundation
 import RMStore
+import ANParseKit
 
 let PurchasedProNotification = "InApps.Purchased.Pro"
 
@@ -50,7 +51,15 @@ class InAppTransactionController {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         
         for transaction in transactions {
-            NSUserDefaults.standardUserDefaults().setBool(true, forKey: transaction.payment.productIdentifier)
+            let productIdentifier = transaction.payment.productIdentifier
+            
+            if productIdentifier == ProPlusInAppPurchase {
+                User.currentUser()!.addUniqueObject("PRO+", forKey: "badges")
+            } else if productIdentifier == ProInAppPurchase {
+                User.currentUser()!.addUniqueObject("PRO", forKey: "badges")
+            }
+            User.currentUser()!.saveEventually()
+            NSUserDefaults.standardUserDefaults().setBool(true, forKey: productIdentifier)
         }
         NSUserDefaults.standardUserDefaults().synchronize()
         

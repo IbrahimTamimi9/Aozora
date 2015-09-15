@@ -188,7 +188,9 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
         for index in 0...4 {
             let aList = lists[index]
             if aList.count > 0 {
-                self.listControllers[index].animeList = aList
+                let controller = self.listControllers[index]
+                controller.animeList = aList
+                controller.updateSortType(controller.currentSortType)
             } else if index != 0 {
                 self.listControllers[index].animeList = []
             }

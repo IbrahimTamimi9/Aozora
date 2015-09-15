@@ -183,10 +183,12 @@ public class ProfileViewController: ThreadViewController {
             followButton.hidden = true
             settingsTrailingSpaceConstraint.constant = 8
             
-            if let _ = InAppController.purchasedProPlus() {
+            if InAppController.purchasedProPlus() != nil ||
+                contains(user.badges, "PRO+") {
                 proBadge.hidden = false
                 proBadge.text = "PRO+"
-            } else if let _ = InAppController.purchasedPro() {
+            } else if InAppController.purchasedPro() != nil ||
+                contains(user.badges, "PRO") {
                 proBadge.hidden = false
                 proBadge.text = "PRO"
             }
