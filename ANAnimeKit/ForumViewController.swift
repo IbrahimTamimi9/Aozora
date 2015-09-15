@@ -54,7 +54,7 @@ public class ForumViewController: AnimeBaseViewController {
         query.includeKey("tags")
         query.includeKey("anime")
         query.includeKey("startedBy")
-        
+        query.includeKey("lastPostedBy")
         fetchController.configureWith(self, query: query, tableView: tableView, limit: 100)
     }
     
@@ -91,7 +91,8 @@ extension ForumViewController: UITableViewDataSource {
         }
         
         cell.title.text = title
-        cell.information.text = "\(thread.replies) comments · \(thread.updatedAt!.timeAgo())"
+        let lastPostedByUsername = thread.lastPostedBy?.aozoraUsername ?? ""
+        cell.information.text = "\(thread.replies) comments · \(thread.updatedAt!.timeAgo()) · \(lastPostedByUsername)"
         cell.layoutIfNeeded()
         return cell
     }

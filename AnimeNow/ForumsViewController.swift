@@ -141,6 +141,7 @@ class ForumsViewController: UIViewController {
                 orQuery.whereKeyDoesNotExist("pinType")
                 orQuery.includeKey("tags")
                 orQuery.includeKey("startedBy")
+                orQuery.includeKey("lastPostedBy")
                 
                 let appAnnouncements = ThreadTag(withoutDataWithObjectId: "zXotNtfVg1")
                 let news = ThreadTag(withoutDataWithObjectId: "H3dDEdJyqu")
@@ -184,6 +185,7 @@ class ForumsViewController: UIViewController {
                 query.whereKey("tags", containedIn: [tag])
                 query.whereKeyDoesNotExist("pinType")
                 query.includeKey("tags")
+                query.includeKey("lastPostedBy")
                 query.includeKey("startedBy")
                 query.orderByDescending("updatedAt")
                 self.fetchController.configureWith(self, query: query, tableView: self.tableView, limit: 50, pinnedData: pinnedData)
@@ -244,7 +246,8 @@ extension ForumsViewController: UITableViewDataSource {
         }
         
         cell.title.text = title
-        cell.information.text = "\(thread.replies) comments · \(thread.updatedAt!.timeAgo())"
+        let lastPostedByUsername = thread.lastPostedBy?.aozoraUsername ?? ""
+        cell.information.text = "\(thread.replies) comments · \(thread.updatedAt!.timeAgo()) · \(lastPostedByUsername)"
         cell.tagsLabel.updateTags(thread.tags, delegate: self, addLinks: false)
         cell.layoutIfNeeded()
         return cell

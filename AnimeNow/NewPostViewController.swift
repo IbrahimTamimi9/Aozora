@@ -158,6 +158,7 @@ public class NewPostViewController: CommentViewController {
                 post.thread = thread!
             }
             post.thread.incrementKey("replies")
+            post.thread.lastPostedBy = postedBy
                
             var postSaveTask = post.saveInBackground()
             
