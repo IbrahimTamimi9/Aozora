@@ -210,13 +210,14 @@ public class ProfileViewController: ThreadViewController {
     
     func updateFollowingButtons() {
         if let profile = userProfile {
-            self.followingButton.setTitle("\(profile.details.followingCount) FOLLOWING", forState: .Normal)
-            self.followersButton.setTitle("\(profile.details.followersCount) FOLLOWERS", forState: .Normal)
+            followingButton.setTitle("\(profile.details.followingCount) FOLLOWING", forState: .Normal)
+            followersButton.setTitle("\(profile.details.followersCount) FOLLOWERS", forState: .Normal)
         }
     }
     
     func configureFetchController() {
-        self.fetchController.configureWith(self, queryDelegate: self, tableView: self.tableView, limit: self.FetchLimit, datasourceUsesSections: true)
+        tableView.scrollEnabled = false
+        fetchController.configureWith(self, queryDelegate: self, tableView: self.tableView, limit: self.FetchLimit, datasourceUsesSections: true)
     }
     
     // MARK: - IBAction
@@ -377,5 +378,12 @@ extension ProfileViewController: CommentViewControllerDelegate {
             fetchController.dataSource.insert(post, atIndex: 0)
             tableView.reloadData()
         }
+    }
+}
+
+extension ProfileViewController: FetchControllerDelegate {
+    public override func didFetchFor(#skip: Int) {
+        super.didFetchFor(skip: skip)
+        tableView.scrollEnabled = true
     }
 }
