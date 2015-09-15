@@ -21,6 +21,7 @@ public protocol Postable {
     var hasSpoilers: Bool { get set }
     var isSpoilerHidden: Bool { get set }
     var subscribers: [User] { get set }
+    var likedBy: [User]? { get set }
     
     var parentPost: PFObject? { get }
     var images: [ImageData] { get }

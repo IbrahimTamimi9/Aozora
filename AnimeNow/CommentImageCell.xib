@@ -63,11 +63,36 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RYD-4Y-Aas">
+                        <rect key="frame" x="99" y="189.5" width="44" height="35"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="52" id="Fux-db-1Qt"/>
+                            <constraint firstAttribute="height" constant="35" id="GJI-so-gqI"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="30" id="eMM-dS-7V3"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="30" id="pYR-5h-Huk"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <inset key="contentEdgeInsets" minX="4" minY="0.0" maxX="4" maxY="0.0"/>
+                        <state key="normal" title=" 10" image="icon-like-red">
+                            <color key="titleColor" white="0.64999997620000005" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Fux-db-1Qt"/>
+                                <exclude reference="eMM-dS-7V3"/>
+                            </mask>
+                        </variation>
+                        <connections>
+                            <action selector="likePressed:" destination="IM6-bn-eHv" eventType="touchUpInside" id="ep8-Cz-Akl"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <color key="backgroundColor" red="0.95294117649999999" green="0.95294117649999999" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>
                     <constraint firstItem="l7o-JT-JFL" firstAttribute="top" secondItem="CE8-oB-25Y" secondAttribute="topMargin" id="0ao-dR-NHv"/>
                     <constraint firstItem="XA6-jf-YTc" firstAttribute="centerX" secondItem="I4l-rA-bmP" secondAttribute="centerX" constant="-0.5" id="3ha-mt-cSh"/>
+                    <constraint firstItem="RYD-4Y-Aas" firstAttribute="centerY" secondItem="dBO-Hh-gNw" secondAttribute="centerY" constant="0.5" id="4Bn-Fg-OOm"/>
                     <constraint firstAttribute="bottomMargin" secondItem="dBO-Hh-gNw" secondAttribute="bottom" id="5Ty-FA-UDj"/>
                     <constraint firstItem="l7o-JT-JFL" firstAttribute="leading" secondItem="CE8-oB-25Y" secondAttribute="leading" constant="8" id="7VS-UU-9In"/>
                     <constraint firstAttribute="trailing" secondItem="IIt-M3-Ebc" secondAttribute="trailing" constant="8" id="DB4-Ww-Bz6"/>
@@ -77,6 +102,7 @@
                     <constraint firstItem="IIt-M3-Ebc" firstAttribute="leading" secondItem="l7o-JT-JFL" secondAttribute="trailing" constant="8" id="RWG-CZ-iFu"/>
                     <constraint firstItem="IIt-M3-Ebc" firstAttribute="leading" secondItem="dBO-Hh-gNw" secondAttribute="leading" id="Su4-Ju-2fW"/>
                     <constraint firstItem="dBO-Hh-gNw" firstAttribute="top" secondItem="I4l-rA-bmP" secondAttribute="bottom" constant="8.5" id="afP-CG-QfB"/>
+                    <constraint firstItem="RYD-4Y-Aas" firstAttribute="leading" secondItem="dBO-Hh-gNw" secondAttribute="trailing" constant="4" id="bpT-cb-Nic"/>
                     <constraint firstItem="IIt-M3-Ebc" firstAttribute="top" secondItem="CE8-oB-25Y" secondAttribute="topMargin" id="dId-hZ-2TR"/>
                     <constraint firstItem="l7o-JT-JFL" firstAttribute="leading" secondItem="CE8-oB-25Y" secondAttribute="leadingMargin" id="j4y-fp-vwp"/>
                     <constraint firstItem="I4l-rA-bmP" firstAttribute="leading" secondItem="CE8-oB-25Y" secondAttribute="leadingMargin" constant="43" id="s3O-rP-sB3"/>
@@ -96,6 +122,7 @@
                 <outlet property="date" destination="dBO-Hh-gNw" id="ZcA-Tc-rlk"/>
                 <outlet property="imageContent" destination="I4l-rA-bmP" id="Fe2-6h-b5g"/>
                 <outlet property="imageHeightConstraint" destination="6nc-GJ-d8e" id="QMe-0W-nAw"/>
+                <outlet property="likeButton" destination="RYD-4Y-Aas" id="c5g-Qw-G3C"/>
                 <outlet property="playButton" destination="XA6-jf-YTc" id="HVj-d9-6FA"/>
                 <outlet property="textContent" destination="IIt-M3-Ebc" id="tyh-A1-7Ru"/>
             </connections>
@@ -103,6 +130,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="icon-like-red" width="15" height="15"/>
         <image name="icon-play" width="50" height="50"/>
     </resources>
 </document>

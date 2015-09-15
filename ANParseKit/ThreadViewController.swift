@@ -127,6 +127,24 @@ public class ThreadViewController: UIViewController {
         return nil
     }
     
+    public func like(post: Postable) {
+        if !User.currentUserLoggedIn() {
+            presentBasicAlertWithTitle("Login first", message: "Select 'Me' tab")
+            return
+        }
+        
+        if let post = post as? PFObject {
+            let likedBy = (post as! Postable).likedBy ?? []
+            let currentUser = User.currentUser()!
+            if contains(likedBy, currentUser){
+                post.removeObject(currentUser, forKey: "likedBy")
+            } else {
+                post.addUniqueObject(currentUser, forKey: "likedBy")
+            }
+            post.saveEventually()
+        }
+    }
+    
     // MARK: - IBAction
     
     @IBAction public func dismissPressed(sender: AnyObject) {
@@ -242,9 +260,9 @@ extension ThreadViewController: UITableViewDataSource {
         
         updateAttributedTextProperties(cell.textContent)
         
-        
-        
         prepareForVideo(cell.playButton, imageView: cell.imageContent, imageHeightConstraint: cell.imageHeightConstraint, youtubeID: post.youtubeID)
+        
+        updateLikeButton(cell, post: post)
     }
     
     func updateCommentCell(cell: CommentCell, with post: Postable) {
@@ -286,6 +304,8 @@ extension ThreadViewController: UITableViewDataSource {
         }
         
         prepareForVideo(cell.playButton, imageView: cell.imageContent, imageHeightConstraint: cell.imageHeightConstraint, youtubeID: post.youtubeID)
+        
+        updateLikeButton(cell, post: post)
     }
     
     public func setImages(images: [ImageData], imageView: UIImageView?, imageHeightConstraint: NSLayoutConstraint?) {
@@ -299,9 +319,9 @@ extension ThreadViewController: UITableViewDataSource {
     
     public func repliesButtonTitle(repliesCount: Int) -> String {
         if repliesCount > 0 {
-            return repliesCount > 1 ? " \(repliesCount) Comments" : " 1 Comment"
+            return " \(repliesCount)"
         } else {
-            return " Comment"
+            return " "
         }
     }
     
@@ -326,6 +346,20 @@ extension ThreadViewController: UITableViewDataSource {
         textContent.linkAttributes = [kCTForegroundColorAttributeName: UIColor.peterRiver()]
         textContent.enabledTextCheckingTypes = NSTextCheckingType.Link.rawValue
         textContent.delegate = self;
+    }
+    
+    func updateLikeButton(cell: PostCell, post: Postable) {
+        if let likedBy = post.likedBy where likedBy.count > 0 {
+            cell.likeButton.setTitle(" \(likedBy.count)", forState: .Normal)
+        } else {
+            cell.likeButton.setTitle(" ", forState: .Normal)
+        }
+        
+        if let likedBy = post.likedBy where contains(likedBy, User.currentUser()!) {
+            cell.likeButton.setImage(UIImage(named: "icon-like-red"), forState: .Normal)
+        } else {
+            cell.likeButton.setImage(UIImage(named: "icon-like-gray"), forState: .Normal)
+        }
     }
 }
 
@@ -489,6 +523,13 @@ extension ThreadViewController: PostCellDelegate {
     public func postCellSelectedToUserProfile(postCell: PostCell) {
         if let post = postForCell(postCell) as? TimelinePostable {
             openProfile(post.userTimeline)
+        }
+    }
+    
+    public func postCellSelectedLike(postCell: PostCell) {
+        if let post = postForCell(postCell) {
+            like(post)
+            updateLikeButton(postCell, post: post)
         }
     }
 }

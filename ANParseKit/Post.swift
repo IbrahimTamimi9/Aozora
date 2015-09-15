@@ -63,6 +63,15 @@ public class Post: PFObject, PFSubclassing, ThreadPostable {
         }
     }
     
+    public var likedBy: [User]? {
+        get {
+            return self["likedBy"] as? [User]
+        }
+        set(value) {
+            self["likedBy"] = value
+        }
+    }
+        
     public var edited: Bool {
         get {
             return self["edited"] as? Bool ?? false

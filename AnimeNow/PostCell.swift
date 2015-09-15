@@ -14,6 +14,7 @@ public protocol PostCellDelegate: class {
     func postCellSelectedUserProfile(postCell: PostCell)
     func postCellSelectedToUserProfile(postCell: PostCell)
     func postCellSelectedComment(postCell: PostCell)
+    func postCellSelectedLike(postCell: PostCell)
 }
 
 public class PostCell: UITableViewCell {
@@ -30,6 +31,7 @@ public class PostCell: UITableViewCell {
     @IBOutlet weak public var textContent: TTTAttributedLabel!
     
     @IBOutlet weak public var replyButton: UIButton!
+    @IBOutlet weak public var likeButton: UIButton!
     @IBOutlet weak public var playButton: UIButton?
     
     public weak var delegate: PostCellDelegate?
@@ -102,5 +104,9 @@ public class PostCell: UITableViewCell {
     
     @IBAction func replyPressed(sender: AnyObject) {
         delegate?.postCellSelectedComment(self)
+    }
+    
+    @IBAction func likePressed(sender: AnyObject) {
+        delegate?.postCellSelectedLike(self)
     }
 }

@@ -102,20 +102,6 @@
                             <constraint firstItem="l7o-JT-JFL" firstAttribute="leading" secondItem="Azh-0z-DNT" secondAttribute="leading" constant="8" id="wFF-oN-T1o"/>
                         </constraints>
                     </view>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sCC-Vy-34T">
-                        <rect key="frame" x="8" y="284" width="104" height="30"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="30" id="bdA-UG-bHh"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="15"/>
-                        <state key="normal" title=" 2 Comments">
-                            <color key="titleColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                        <connections>
-                            <action selector="replyPressed:" destination="IM6-bn-eHv" eventType="touchUpInside" id="Tf7-Kg-h4Z"/>
-                        </connections>
-                    </button>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1BT-oF-gil" userLabel="Separator Btm">
                         <rect key="frame" x="0.0" y="322" width="320" height="1"/>
                         <color key="backgroundColor" red="0.89411765340000005" green="0.89411765340000005" blue="0.89411765340000005" alpha="1" colorSpace="calibratedRGB"/>
@@ -147,8 +133,53 @@
                                 <integer key="value" value="30"/>
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rGh-GA-AH6">
+                        <rect key="frame" x="54" y="284" width="50" height="38"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="0rB-Rf-TWf"/>
+                            <constraint firstAttribute="height" constant="38.5" id="95z-qU-Tdf"/>
+                            <constraint firstAttribute="height" constant="30" id="dMz-Nz-1q8"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="15"/>
+                        <inset key="contentEdgeInsets" minX="4" minY="0.0" maxX="4" maxY="2"/>
+                        <state key="normal" title=" ">
+                            <color key="titleColor" white="0.64999997620000005" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="dMz-Nz-1q8"/>
+                            </mask>
+                        </variation>
                         <connections>
-                            <action selector="pressedOnImage:" destination="IM6-bn-eHv" eventType="touchUpInside" id="xrj-Y3-kla"/>
+                            <action selector="replyPressed:" destination="IM6-bn-eHv" eventType="touchUpInside" id="VcM-8Q-I5w"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YrK-Q4-cFZ">
+                        <rect key="frame" x="4" y="283" width="50" height="38"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="6sO-0z-lDg"/>
+                            <constraint firstAttribute="height" constant="44" id="9pa-5g-xmn"/>
+                            <constraint firstAttribute="width" constant="52" id="B3P-PT-PDb"/>
+                            <constraint firstAttribute="height" constant="38" id="SlU-3I-usE"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="30" id="luP-4A-MVF"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                        <inset key="contentEdgeInsets" minX="4" minY="0.0" maxX="4" maxY="0.0"/>
+                        <state key="normal" title=" 10" image="icon-like-red">
+                            <color key="titleColor" white="0.64999997620000005" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="luP-4A-MVF"/>
+                                <exclude reference="B3P-PT-PDb"/>
+                                <exclude reference="9pa-5g-xmn"/>
+                            </mask>
+                        </variation>
+                        <connections>
+                            <action selector="likePressed:" destination="IM6-bn-eHv" eventType="touchUpInside" id="yu3-J3-wTi"/>
                         </connections>
                     </button>
                 </subviews>
@@ -158,20 +189,22 @@
                     <constraint firstItem="Azh-0z-DNT" firstAttribute="top" secondItem="CE8-oB-25Y" secondAttribute="topMargin" constant="-8" id="1Xu-JE-PAO"/>
                     <constraint firstItem="7Ot-hi-3MU" firstAttribute="leading" secondItem="CE8-oB-25Y" secondAttribute="leading" id="63m-rg-PgB"/>
                     <constraint firstItem="IIt-M3-Ebc" firstAttribute="top" secondItem="Azh-0z-DNT" secondAttribute="bottom" id="9lq-na-XDW"/>
+                    <constraint firstItem="rGh-GA-AH6" firstAttribute="centerY" secondItem="YrK-Q4-cFZ" secondAttribute="centerY" constant="1" id="AsL-oz-cC7"/>
+                    <constraint firstItem="rGh-GA-AH6" firstAttribute="leading" secondItem="YrK-Q4-cFZ" secondAttribute="trailing" id="FMQ-dA-xSk"/>
                     <constraint firstAttribute="trailing" secondItem="7Ot-hi-3MU" secondAttribute="trailing" id="M9s-dK-4kV"/>
                     <constraint firstItem="IIt-M3-Ebc" firstAttribute="leading" secondItem="CE8-oB-25Y" secondAttribute="leadingMargin" id="ND0-hn-B3R"/>
                     <constraint firstItem="Azh-0z-DNT" firstAttribute="leading" secondItem="CE8-oB-25Y" secondAttribute="leading" id="QD0-4V-Fbs"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="YrK-Q4-cFZ" secondAttribute="bottom" constant="-6.5" id="SAT-Nc-BSb"/>
+                    <constraint firstItem="YrK-Q4-cFZ" firstAttribute="leading" secondItem="CE8-oB-25Y" secondAttribute="leading" constant="4" id="SOw-5q-aaz"/>
                     <constraint firstAttribute="trailing" secondItem="1BT-oF-gil" secondAttribute="trailing" id="Sg9-sC-0Nv"/>
                     <constraint firstItem="1BT-oF-gil" firstAttribute="leading" secondItem="CE8-oB-25Y" secondAttribute="leading" id="UwX-oQ-faf"/>
                     <constraint firstItem="2fU-I8-swY" firstAttribute="centerX" secondItem="7Ot-hi-3MU" secondAttribute="centerX" id="VE9-Rv-yuJ"/>
                     <constraint firstItem="2fU-I8-swY" firstAttribute="centerY" secondItem="7Ot-hi-3MU" secondAttribute="centerY" constant="0.5" id="Xba-0G-RK6"/>
                     <constraint firstItem="IIt-M3-Ebc" firstAttribute="trailing" secondItem="CE8-oB-25Y" secondAttribute="trailingMargin" id="Xlu-jE-sbC"/>
                     <constraint firstAttribute="trailing" secondItem="Azh-0z-DNT" secondAttribute="trailing" id="c2d-ui-B4U"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="sCC-Vy-34T" secondAttribute="bottom" id="dIR-Ro-8OL"/>
                     <constraint firstAttribute="trailing" secondItem="IIt-M3-Ebc" secondAttribute="trailing" constant="8" id="f7L-rm-x5D"/>
-                    <constraint firstItem="sCC-Vy-34T" firstAttribute="top" secondItem="7Ot-hi-3MU" secondAttribute="bottom" constant="8" id="kNL-TA-Lmt"/>
-                    <constraint firstItem="sCC-Vy-34T" firstAttribute="leading" secondItem="CE8-oB-25Y" secondAttribute="leadingMargin" id="oGS-jI-hnY"/>
                     <constraint firstItem="IIt-M3-Ebc" firstAttribute="leading" secondItem="CE8-oB-25Y" secondAttribute="leading" constant="8" id="u0z-Gs-qNf"/>
+                    <constraint firstItem="YrK-Q4-cFZ" firstAttribute="top" secondItem="7Ot-hi-3MU" secondAttribute="bottom" constant="7" id="x04-1O-pGf"/>
                     <constraint firstItem="7Ot-hi-3MU" firstAttribute="top" secondItem="IIt-M3-Ebc" secondAttribute="bottom" constant="8" id="ylK-qQ-MgJ"/>
                 </constraints>
                 <variation key="default">
@@ -186,8 +219,9 @@
                 <outlet property="date" destination="oSa-7l-kjl" id="RP1-wa-1cl"/>
                 <outlet property="imageContent" destination="7Ot-hi-3MU" id="0wf-R1-sRI"/>
                 <outlet property="imageHeightConstraint" destination="cq0-Qc-11O" id="VSy-ko-JRc"/>
+                <outlet property="likeButton" destination="YrK-Q4-cFZ" id="t20-A3-NDs"/>
                 <outlet property="playButton" destination="2fU-I8-swY" id="oYH-XN-hSg"/>
-                <outlet property="replyButton" destination="sCC-Vy-34T" id="5uJ-jj-ipV"/>
+                <outlet property="replyButton" destination="rGh-GA-AH6" id="nf5-dj-kWw"/>
                 <outlet property="textContent" destination="IIt-M3-Ebc" id="v5M-FB-9Ee"/>
                 <outlet property="toIcon" destination="zJt-XM-phf" id="MOf-uf-uUs"/>
                 <outlet property="toUsername" destination="lNq-wy-2hR" id="Onc-c0-MtE"/>
@@ -197,6 +231,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="icon-like-red" width="15" height="15"/>
         <image name="icon-play" width="50" height="50"/>
     </resources>
 </document>
