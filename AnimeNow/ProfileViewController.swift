@@ -347,7 +347,7 @@ extension ProfileViewController: FetchControllerQueryDelegate {
         let repliesQuery = TimelinePost.query()!
         repliesQuery.skip = 0
         repliesQuery.limit = 1000
-        repliesQuery.whereKey("parentPost", matchesQuery: innerQuery)
+        repliesQuery.whereKey("parentPost", matchesKey: "objectId", inQuery: innerQuery)
         repliesQuery.orderByAscending("createdAt")
         repliesQuery.includeKey("episode")
         repliesQuery.includeKey("postedBy")

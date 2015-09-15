@@ -139,32 +139,32 @@ public class FetchController {
         }
         
         var allData:[PFObject] = []
-        var fetchTask = query!.findObjectsInBackground()
         
+        var fetchTask = query!.findObjectsInBackground().continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
+            allData += task.result as! [PFObject]
+            return nil
+        })
+        
+        var fetchTask2 = BFTask(result: nil)
         if let secondaryQuery = secondaryQuery {
-            fetchTask = fetchTask.continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
+            fetchTask2 = secondaryQuery.findObjectsInBackground().continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
                 allData += task.result as! [PFObject]
-                return secondaryQuery.findObjectsInBackground()
+                return nil
             })
         }
             
-        fetchTask = fetchTask.continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
+        var allFetchTasks = BFTask(forCompletionOfAllTasks: [fetchTask, fetchTask2]).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
             
-            if var result = task.result as? [PFObject] {
-                allData += result
-                
-                if let processedResult = self.queryDelegate?.processResult(result: allData) {
-                    allData = processedResult
-                }
-                
-                if skip == 0 {
-                    self.dataSource = self.pinnedData + allData
-                } else {
-                    self.dataSource += allData
-                }
-                self.didFetch(self.dataSource.count)
+            if let processedResult = self.queryDelegate?.processResult(result: allData) {
+                allData = processedResult
             }
             
+            if skip == 0 {
+                self.dataSource = self.pinnedData + allData
+            } else {
+                self.dataSource += allData
+            }
+            self.didFetch(self.dataSource.count)
             self.delegate?.didFetchFor(skip: skip)
             
             if let collectionView = self.collectionView {
@@ -231,6 +231,6 @@ public class FetchController {
             return nil
         })
 
-        return fetchTask
+        return allFetchTasks
     }
 }
