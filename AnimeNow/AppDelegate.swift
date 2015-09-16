@@ -70,6 +70,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let objectClass = userInfo["targetClass"] as? String,
             let objectId = userInfo["targetID"] as? String {
                 
+                NSNotificationCenter.defaultCenter().postNotificationName("newNotification", object: nil)
                 
                 let state = UIApplication.sharedApplication().applicationState;
                 if state == UIApplicationState.Background || state == UIApplicationState.Inactive

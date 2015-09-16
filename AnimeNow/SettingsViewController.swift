@@ -198,7 +198,7 @@ class SettingsViewController: UITableViewController {
         case 3:
             let version = NSBundle.mainBundle().infoDictionary!["CFBundleShortVersionString"] as! String
             let build = NSBundle.mainBundle().infoDictionary!["CFBundleVersion"] as! String
-            return "Created by Anime fans for Anime fans, enjoy!\nAozora \(version)(\(build))"
+            return "Created by Anime fans for Anime fans, enjoy!\nAozora \(version) (\(build))"
         default:
             return nil
         }

@@ -65,6 +65,10 @@ public class ProfileViewController: ThreadViewController {
         aboutLabel.delegate = self;
         
         fetchPosts()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "newNotifications", name: "newNotification", object: nil)
+        
+        checkIfThereAreNotifications()
     }
     
     public override func viewWillAppear(animated: Bool) {
@@ -73,6 +77,18 @@ public class ProfileViewController: ThreadViewController {
         if let profile = userProfile where profile.details.isDataAvailable() {
             updateFollowingButtons()
         }
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    func newNotifications() {
+        notificationsButton.setTitle("", forState: .Normal)
+    }
+    
+    func noNewNotifications() {
+        notificationsButton.setTitle("", forState: .Normal)
     }
     
     func sizeHeaderToFit() {
@@ -94,6 +110,29 @@ public class ProfileViewController: ThreadViewController {
         frame.size.height = height
         header.frame = frame
         tableView.tableHeaderView = header
+    }
+    
+    func checkIfThereAreNotifications() {
+        // TODO: Fix this mess with notificationsViewController
+        let query = Notification.query()!
+        query.limit = 50
+        query.includeKey("readBy")
+        query.includeKey("triggeredBy")
+        query.whereKey("subscribers", containedIn: [User.currentUser()!])
+        query.orderByDescending("updatedAt")
+        query.findObjectsInBackgroundWithBlock { (result, error) -> Void in
+            if let result = result as? [Notification] {
+                let unreadNotifications = result.filter { (notification: PFObject) -> Bool in
+                    let notification = notification as! Notification
+                    return !contains(notification.readBy, User.currentUser()!) && (notification.triggeredBy.count > 1 || (notification.triggeredBy.count == 1 && notification.triggeredBy.last != User.currentUser()!))
+                }
+                if unreadNotifications.count == 0 {
+                    self.noNewNotifications()
+                } else {
+                    self.newNotifications()
+                }
+            }
+        }
     }
 
     // MARK: - Fetching
@@ -327,6 +366,7 @@ public class ProfileViewController: ThreadViewController {
     
     @IBAction func showNotifications(sender: AnyObject) {
         let notificationsVC = UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("Notifications") as! NotificationsViewController
+        notificationsVC.delegate = self
         navigationController?.pushViewController(notificationsVC, animated: true)
     }
 }
@@ -401,5 +441,11 @@ extension ProfileViewController: FetchControllerDelegate {
     public override func didFetchFor(#skip: Int) {
         super.didFetchFor(skip: skip)
         tableView.scrollEnabled = true
+    }
+}
+
+extension ProfileViewController: NotificationsViewControllerDelegate {
+    func notificationsViewControllerClearedAllNotifications() {
+        noNewNotifications()
     }
 }

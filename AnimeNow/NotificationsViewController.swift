@@ -10,10 +10,15 @@ import Foundation
 import ANCommonKit
 import ANParseKit
 
+protocol NotificationsViewControllerDelegate: class {
+    func notificationsViewControllerClearedAllNotifications()
+}
+
 class NotificationsViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     var fetchController = FetchController()
+    weak var delegate: NotificationsViewControllerDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,10 +29,27 @@ class NotificationsViewController: UIViewController {
         
         let clearAll = UIBarButtonItem(title: "Clear all", style: UIBarButtonItemStyle.Plain, target: self, action: "clearAllPressed:")
         navigationItem.rightBarButtonItem = clearAll
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "fetchNotifications", name: "newNotification", object: nil)
     }
     
     deinit {
         fetchController.tableView = nil
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        if isMovingFromParentViewController() {
+            let unreadNotifications = fetchController.dataSource.filter { (notification: PFObject) -> Bool in
+                let notification = notification as! Notification
+                return !contains(notification.readBy, User.currentUser()!)
+            }
+            
+            if unreadNotifications.count == 0 {
+                delegate?.notificationsViewControllerClearedAllNotifications()
+            }
+        }
     }
     
     func fetchNotifications() {
@@ -54,8 +76,10 @@ class NotificationsViewController: UIViewController {
             }
         }
         
-        PFObject.saveAllInBackground(unreadNotifications)
-        tableView.reloadData()
+        if unreadNotifications.count != 0 {
+            PFObject.saveAllInBackground(unreadNotifications)
+            tableView.reloadData()
+        }
     }
     
     @IBAction func dismissViewController(sender: AnyObject) {
