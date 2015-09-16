@@ -141,6 +141,11 @@ extension NotificationThreadViewController: CommentViewControllerDelegate {
     public override func commentViewControllerDidFinishedPosting(post: PFObject, parentPost: PFObject?, edited: Bool) {
         super.commentViewControllerDidFinishedPosting(post, parentPost: parentPost, edited: edited)
 
+        if edited {
+            // Don't insert if edited
+            return
+        }
+        
         if let parentPost = parentPost {
             // Inserting a new reply in-place
             var parentPost = parentPost as! Postable
