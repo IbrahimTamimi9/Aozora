@@ -173,7 +173,7 @@ extension ThreadViewController: UITableViewDataSource {
     }
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        // TODO: Crash 'fatal error: Array index out of range' after posting
+        
         let post = fetchController.objectAtIndex(indexPath.section) as! Postable
         
         if indexPath.row == 0 {
