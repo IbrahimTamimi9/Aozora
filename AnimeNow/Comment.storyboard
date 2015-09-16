@@ -244,7 +244,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="149" height="149"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Wvq-l8-zGJ">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Wvq-l8-zGJ" customClass="FLAnimatedImageView">
                                                     <rect key="frame" x="0.0" y="0.0" width="149" height="149"/>
                                                 </imageView>
                                             </subviews>
@@ -258,7 +258,7 @@
                                             <constraint firstAttribute="bottom" secondItem="Wvq-l8-zGJ" secondAttribute="bottom" id="uRQ-Az-lXg"/>
                                         </constraints>
                                         <connections>
-                                            <outlet property="titleimageView" destination="Wvq-l8-zGJ" id="Fr6-jL-DsK"/>
+                                            <outlet property="animatedImageView" destination="Wvq-l8-zGJ" id="8AT-Jx-6nK"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

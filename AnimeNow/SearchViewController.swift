@@ -54,6 +54,11 @@ class SearchViewController: UIViewController {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateETACells", name: LibraryUpdatedNotification, object: nil)
     }
+
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        view.endEditing(true)
+    }
     
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)

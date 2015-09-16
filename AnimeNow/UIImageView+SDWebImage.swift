@@ -11,7 +11,7 @@ import SDWebImage
 
 extension UIImageView {
     
-    public func setImageFrom(#urlString:String!, animated:Bool = true, options: SDWebImageOptions = nil)
+    public func setImageFrom(#urlString:String!, animated:Bool = false, options: SDWebImageOptions = nil)
     {
         if let url = NSURL(string: urlString) {
             if !animated {

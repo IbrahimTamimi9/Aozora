@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FLAnimatedImage
 
 public protocol BasicCollectionCellDelegate: class {
     func cellSelectedActionButton(cell: BasicCollectionCell)
@@ -20,6 +21,8 @@ public class BasicCollectionCell: UICollectionViewCell {
     @IBOutlet public weak var titleimageView: UIImageView!
     @IBOutlet public weak var actionButton: UIButton!
     @IBOutlet public weak var subtitleLabel: UILabel!
+    
+    @IBOutlet public weak var animatedImageView: FLAnimatedImageView!
     
     @IBAction public func actionButtonPressed(sender: AnyObject) {
         delegate?.cellSelectedActionButton(self)

@@ -55,8 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         LibrarySyncController.sharedInstance.syncParseInformation()
         
-        SDImageCache.sharedImageCache().maxCacheSize = 1024 * 1024 * 200
-        
+        SDImageCache.sharedImageCache().maxCacheSize = 1024 * 1024 * 250
         return true
     }
     

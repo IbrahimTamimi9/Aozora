@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (1.2.1)
+  - FLAnimatedImage (1.0.8)
   - FontAwesome+iOS (0.1.4)
   - HCSStarRatingView (1.2)
   - iRate (1.11.4)
@@ -18,6 +19,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (~> 1.2)
+  - FLAnimatedImage (~> 1.0)
   - FontAwesome+iOS
   - HCSStarRatingView (from `https://github.com/hugocampossousa/HCSStarRatingView.git`)
   - iRate (~> 1.11.4)
@@ -41,6 +43,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: 1acfdf179aff68b41a48dff70c1ac7fa263e2bcb
+  FLAnimatedImage: f9422f796135aff80d8c00b2afc48015bb746e24
   FontAwesome+iOS: 9070b682a9255ca0fdc34bcfb129ad0ba2b73b87
   HCSStarRatingView: 398beb411f6197f3445bac8eb90962c3166597cb
   iRate: 599ed07c854e0695f3c605d1b2a64c67d912acb7

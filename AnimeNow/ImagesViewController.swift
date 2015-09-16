@@ -10,6 +10,7 @@ import Foundation
 import ANCommonKit
 import Bolts
 import SDWebImage
+import FLAnimatedImage
 
 protocol ImagesViewControllerDelegate: class {
     func imagesViewControllerSelected(#imageData: ImageData)
@@ -24,10 +25,13 @@ public class ImagesViewController: UIViewController {
     weak var delegate: ImagesViewControllerDelegate?
     var dataSource: [ImageData] = []
     var malScrapper: MALScrapper!
+    var loadingView: LoaderView!
 
+    var imageDatasource: [String: FLAnimatedImage] = [:]
+    
     override public func viewDidLoad() {
         super.viewDidLoad()
-        
+        loadingView = LoaderView(parentView: view)
         malScrapper = MALScrapper(viewController: self)
         
         var searchBarTextField = searchBar.valueForKey("searchField") as? UITextField
@@ -45,16 +49,22 @@ public class ImagesViewController: UIViewController {
         view.endEditing(true)
     }
     
+    deinit {
+        imageDatasource = [:]
+    }
+    
     func findImagesWithQuery(query: String, animated: Bool) {
-        self.dataSource = []
-        self.collectionView.reloadData()
+        dataSource = []
+        imageDatasource = [:]
+        collectionView.reloadData()
+        loadingView.startAnimating()
         
         malScrapper.findImagesWithQuery(query, animated: animated).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
             
             let result = task.result as! [ImageData]
             self.dataSource = result
             self.collectionView.reloadData()
-            
+            self.loadingView.stopAnimating()
             return nil
         })
     }
@@ -81,7 +91,26 @@ extension ImagesViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("imageCell", forIndexPath: indexPath) as! BasicCollectionCell
         
         let imageData = dataSource[indexPath.row]
-        cell.titleimageView.setImageFrom(urlString: imageData.url, animated: false, options: SDWebImageOptions.CacheMemoryOnly)
+
+        if segmentedControl.selectedSegmentIndex == 1 {
+            if let image = imageDatasource[imageData.url] {
+                cell.animatedImageView.animatedImage = image
+            } else {
+                cell.animatedImageView.image = nil
+                cell.animatedImageView.animatedImage = nil
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+                    // do some task
+                    let image = FLAnimatedImage(GIFData: NSData(contentsOfURL: NSURL(string: imageData.url)!))
+                    dispatch_async(dispatch_get_main_queue(), {
+                        // update some UI
+                        self.imageDatasource[imageData.url] = image
+                        cell.animatedImageView.animatedImage = image
+                    });
+                });
+            }
+        } else {
+            cell.animatedImageView.setImageFrom(urlString: imageData.url, animated: false, options: SDWebImageOptions.CacheMemoryOnly)
+        }
         
         return cell
     }
