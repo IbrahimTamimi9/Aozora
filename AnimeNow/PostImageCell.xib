@@ -173,9 +173,9 @@
                         </state>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="luP-4A-MVF"/>
-                                <exclude reference="B3P-PT-PDb"/>
                                 <exclude reference="9pa-5g-xmn"/>
+                                <exclude reference="B3P-PT-PDb"/>
+                                <exclude reference="luP-4A-MVF"/>
                             </mask>
                         </variation>
                         <connections>

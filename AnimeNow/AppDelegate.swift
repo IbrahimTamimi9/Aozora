@@ -16,6 +16,7 @@ import FBSDKShareKit
 import Fabric
 import Crashlytics
 import ParseFacebookUtilsV4
+import SDWebImage
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -53,6 +54,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         LibrarySyncController.sharedInstance.syncParseInformation()
+        
+        SDImageCache.sharedImageCache().maxCacheSize = 1024 * 1024 * 200
         
         return true
     }
