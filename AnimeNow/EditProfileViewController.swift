@@ -37,11 +37,11 @@ public class EditProfileViewController: UIViewController {
         userProfileManager.initWith(self, delegate: self)
         
         if let avatarFile = user.avatarThumb {
-            avatarImageView.setImageWithPFFile(avatarFile)
+            avatarImageView.setImageWithPFFile(avatarFile, animated: true)
         }
         
         if let bannerFile = user.banner {
-            bannerImageView.setImageWithPFFile(bannerFile)
+            bannerImageView.setImageWithPFFile(bannerFile, animated: true)
         }
         
         emailTextField.text = user.email

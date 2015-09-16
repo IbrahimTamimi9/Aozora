@@ -169,10 +169,9 @@ class BrowseViewController: UIViewController {
     @IBAction func presentSearchPressed(sender: AnyObject) {
         
         if let tabBar = tabBarController {
-            let controller = UIStoryboard(name: "Browse", bundle: nil).instantiateViewControllerWithIdentifier("Search") as! SearchViewController
-            controller.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
-            controller.modalPresentationStyle = .OverCurrentContext
-            tabBar.presentViewController(controller, animated: true, completion: nil)
+            let (navigation, controller) = ANAnimeKit.searchViewController()
+            controller.initWithSearchScope(SearchViewController.SearchScope.AllAnime)
+            tabBar.presentViewController(navigation, animated: true, completion: nil)
         }
     }
     
@@ -185,8 +184,7 @@ class BrowseViewController: UIViewController {
             controller.initWith(configuration: currentConfiguration, selectedGenres: selectedGenres)
             controller.modalTransitionStyle = UIModalTransitionStyle.CoverVertical
             tabBar.presentViewController(controller, animated: true, completion: nil)
-        }
-        
+        }   
     }
 }
 

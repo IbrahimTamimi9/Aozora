@@ -137,6 +137,22 @@
             </objects>
             <point key="canvasLocation" x="938" y="465"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="T68-KA-WLG">
+            <objects>
+                <navigationController storyboardIdentifier="NavSearch" navigationBarHidden="YES" id="DuS-hc-Y7x" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="KgI-Z0-iDR">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="YvL-lf-zev" kind="relationship" relationship="rootViewController" id="FD0-f2-ue7"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="m1b-WM-q7M" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="260" y="1133"/>
+        </scene>
         <!--Search View Controller-->
         <scene sceneID="LIX-N5-w5H">
             <objects>
@@ -209,6 +225,42 @@
                                             <outlet property="titleimageView" destination="t1T-Cj-ci7" id="qTv-Uj-oCy"/>
                                         </connections>
                                     </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ThreadCell" id="4Zo-3C-ARR" customClass="BasicCollectionCell" customModule="ANCommonKit">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="340" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dar" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Ex-55-cXn">
+                                                    <rect key="frame" x="8" y="12" width="324" height="18"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                    <color key="textColor" red="0.0078431372550000003" green="0.43921568630000002" blue="0.73333333329999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jfH-X4-TFR" userLabel="BottomLine">
+                                                    <rect key="frame" x="8" y="43" width="332" height="1"/>
+                                                    <color key="backgroundColor" red="0.89411765336990356" green="0.89411765336990356" blue="0.89411765336990356" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="1" id="Cxq-eX-DPg"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" red="0.97254902119999997" green="0.97254902119999997" blue="0.97254902119999997" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="3Ex-55-cXn" secondAttribute="trailing" constant="8" id="EOu-3O-zIp"/>
+                                            <constraint firstAttribute="trailing" secondItem="jfH-X4-TFR" secondAttribute="trailing" id="FyU-Ma-uPg"/>
+                                            <constraint firstItem="jfH-X4-TFR" firstAttribute="leading" secondItem="4Zo-3C-ARR" secondAttribute="leading" constant="8" id="HaP-tK-Ssa"/>
+                                            <constraint firstItem="3Ex-55-cXn" firstAttribute="leading" secondItem="4Zo-3C-ARR" secondAttribute="leading" constant="8" id="In8-PE-6my"/>
+                                            <constraint firstAttribute="centerY" secondItem="3Ex-55-cXn" secondAttribute="centerY" constant="0.5" id="QZg-Gw-sDA"/>
+                                            <constraint firstAttribute="bottom" secondItem="jfH-X4-TFR" secondAttribute="bottom" id="gmD-6I-7lk"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="titleLabel" destination="3Ex-55-cXn" id="hkf-Nk-ONg"/>
+                                        </connections>
+                                    </collectionViewCell>
                                 </cells>
                                 <connections>
                                     <outlet property="dataSource" destination="YvL-lf-zev" id="o6I-Ll-8Pp"/>
@@ -233,6 +285,7 @@
                                     <string>All Anime</string>
                                     <string>My Library</string>
                                     <string>Users</string>
+                                    <string>Forum</string>
                                 </scopeButtonTitles>
                                 <connections>
                                     <outlet property="delegate" destination="YvL-lf-zev" id="xoj-A3-a77"/>
@@ -257,6 +310,7 @@
                             <constraint firstItem="2Bf-G2-znx" firstAttribute="leading" secondItem="Yj0-Sf-TCH" secondAttribute="leading" id="zXI-B8-XPX"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="Obj-5E-0Gd"/>
                     <connections>
                         <outlet property="collectionView" destination="s7W-Zk-KQ0" id="QrM-ho-5YY"/>
                         <outlet property="searchBar" destination="fBa-yb-TpV" id="8dd-Ob-88e"/>
@@ -264,7 +318,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="leW-b9-oaP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1613" y="464"/>
+            <point key="canvasLocation" x="938" y="1133"/>
         </scene>
         <!--Browse-->
         <scene sceneID="FZ1-yQ-J55">

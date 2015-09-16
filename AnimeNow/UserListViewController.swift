@@ -70,7 +70,7 @@ extension UserListViewController: UITableViewDataSource {
         
         let profile = dataSource[indexPath.row]
         if let avatarFile = profile.avatarThumb {
-            cell.avatar.setImageWithPFFile(avatarFile, animated: false)
+            cell.avatar.setImageWithPFFile(avatarFile)
         }
         cell.username.text = profile.aozoraUsername
         cell.layoutIfNeeded()

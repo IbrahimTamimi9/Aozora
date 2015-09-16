@@ -44,6 +44,7 @@ public class CustomThreadViewController: ThreadViewController {
     
     override public func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     override public func updateUIWithThread(thread: Thread) {

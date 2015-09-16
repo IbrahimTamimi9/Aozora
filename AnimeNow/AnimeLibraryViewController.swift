@@ -203,10 +203,9 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
     @IBAction func presentSearchPressed(sender: AnyObject) {
         
         if let tabBar = tabBarController {
-            let controller = UIStoryboard(name: "Browse", bundle: nil).instantiateViewControllerWithIdentifier("Search") as! SearchViewController
-            controller.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
-            controller.modalPresentationStyle = .OverCurrentContext
-            tabBar.presentViewController(controller, animated: true, completion: nil)
+            let (navigation, controller) = ANAnimeKit.searchViewController()
+            controller.initWithSearchScope(SearchViewController.SearchScope.MyLibrary)
+            tabBar.presentViewController(navigation, animated: true, completion: nil)
         }
     }
     

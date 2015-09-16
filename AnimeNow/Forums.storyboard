@@ -151,10 +151,31 @@
                                     <outlet property="delegate" destination="R7R-xW-OvQ" id="EFT-ex-M4u"/>
                                 </connections>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nAC-BP-NIi">
+                                <rect key="frame" x="544" y="497" width="44" height="44"/>
+                                <color key="backgroundColor" red="0.18823529779911041" green="0.19607843458652496" blue="0.23529411852359772" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="44" id="4ay-fi-cWm"/>
+                                    <constraint firstAttribute="height" constant="44" id="TMJ-xE-DW1"/>
+                                </constraints>
+                                <state key="normal" image="icon-create">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="22"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="createThread:" destination="R7R-xW-OvQ" eventType="touchUpInside" id="weT-MM-SVo"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.97254902119999997" green="0.97254902119999997" blue="0.97254902119999997" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="iTn-Ub-0hQ" secondAttribute="trailing" id="Bhi-N9-94S"/>
+                            <constraint firstAttribute="trailing" secondItem="nAC-BP-NIi" secondAttribute="trailing" constant="12" id="Eor-Tg-5o6"/>
+                            <constraint firstItem="mki-z3-DzD" firstAttribute="top" secondItem="nAC-BP-NIi" secondAttribute="bottom" constant="15" id="FZc-Vw-WGC"/>
                             <constraint firstItem="iTn-Ub-0hQ" firstAttribute="leading" secondItem="isI-pe-w1O" secondAttribute="leading" id="WW8-Bb-9r8"/>
                             <constraint firstItem="iTn-Ub-0hQ" firstAttribute="top" secondItem="hzq-WK-h4l" secondAttribute="bottom" constant="-64" id="bG2-l2-ScF"/>
                             <constraint firstItem="mki-z3-DzD" firstAttribute="top" secondItem="iTn-Ub-0hQ" secondAttribute="bottom" constant="-49" id="vqs-ho-LRs"/>
@@ -181,14 +202,15 @@
                                 <constraint firstAttribute="centerX" secondItem="YcK-20-N7J" secondAttribute="centerX" id="wpH-Pd-9zu"/>
                             </constraints>
                         </view>
-                        <barButtonItem key="rightBarButtonItem" image="icon-create" id="vAM-gS-rj9" userLabel="Create">
+                        <barButtonItem key="rightBarButtonItem" image="icon-search" id="vAM-gS-rj9" userLabel="Create">
                             <connections>
-                                <action selector="createThread:" destination="R7R-xW-OvQ" id="hJc-Hf-4Sn"/>
+                                <action selector="searchForums:" destination="R7R-xW-OvQ" id="zen-1Y-wWq"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="createThreadButton" destination="nAC-BP-NIi" id="nFx-HK-jiu"/>
                         <outlet property="navigationBarTitle" destination="YcK-20-N7J" id="lZ0-L5-vFy"/>
                         <outlet property="tableView" destination="iTn-Ub-0hQ" id="sTU-Mk-WSz"/>
                     </connections>
@@ -201,5 +223,6 @@
     <resources>
         <image name="icon-create" width="22" height="22"/>
         <image name="icon-forum-filled" width="25" height="25"/>
+        <image name="icon-search" width="22" height="22"/>
     </resources>
 </document>

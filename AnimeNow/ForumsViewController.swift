@@ -29,6 +29,7 @@ class ForumsViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var navigationBarTitle: UILabel!
+    @IBOutlet weak var createThreadButton: UIButton!
     
     var fetchController = FetchController()
     var refreshControl = UIRefreshControl()
@@ -218,6 +219,15 @@ class ForumsViewController: UIViewController {
             presentViewController(comment, animated: true, completion: nil)
         } else {
             presentBasicAlertWithTitle("Login first", message: "Select 'Me' tab to login", style: .Alert)
+        }
+    }
+    
+    @IBAction func searchForums(sender: AnyObject) {
+        
+        if let tabBar = tabBarController {
+            let (navigation, controller) = ANAnimeKit.searchViewController()
+            controller.initWithSearchScope(SearchViewController.SearchScope.Forum)
+            tabBar.presentViewController(navigation, animated: true, completion: nil)
         }
     }
     
