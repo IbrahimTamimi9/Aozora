@@ -512,7 +512,7 @@ extension ThreadViewController: TTTAttributedLabelDelegate {
 }
 
 extension ThreadViewController: CommentViewControllerDelegate {
-    public func commentViewControllerDidFinishedPosting(newPost: PFObject, parentPost: PFObject?) {
+    public func commentViewControllerDidFinishedPosting(newPost: PFObject, parentPost: PFObject?, edited: Bool) {
     }
 }
 

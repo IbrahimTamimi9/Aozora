@@ -331,10 +331,15 @@ extension CustomThreadViewController: TTTAttributedLabelDelegate {
 }
 
 extension CustomThreadViewController: CommentViewControllerDelegate {
-    public override func commentViewControllerDidFinishedPosting(post: PFObject, parentPost: PFObject?) {
-        super.commentViewControllerDidFinishedPosting(post, parentPost: parentPost)
+    public override func commentViewControllerDidFinishedPosting(post: PFObject, parentPost: PFObject?, edited: Bool) {
+        super.commentViewControllerDidFinishedPosting(post, parentPost: parentPost, edited: edited)
         
         if let _ = post as? Postable {
+            if edited {
+                // Don't insert if edited
+                return
+            }
+            
             // Only posts and TimelinePosts
             if let parentPost = parentPost {
                 // Inserting a new reply in-place

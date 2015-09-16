@@ -365,17 +365,22 @@ extension ProfileViewController: FetchControllerQueryDelegate {
 }
 
 extension ProfileViewController: CommentViewControllerDelegate {
-    public override func commentViewControllerDidFinishedPosting(post: PFObject, parentPost: PFObject?) {
-        super.commentViewControllerDidFinishedPosting(post, parentPost: parentPost)
+    public override func commentViewControllerDidFinishedPosting(newPost: PFObject, parentPost: PFObject?, edited: Bool) {
+        super.commentViewControllerDidFinishedPosting(newPost, parentPost: parentPost, edited: edited)
+        
+        if edited {
+            // Don't insert if edited
+            return
+        }
         
         if let parentPost = parentPost {
             // Inserting a new reply in-place
             var parentPost = parentPost as! Postable
-            parentPost.replies.append(post)
+            parentPost.replies.append(newPost)
             tableView.reloadData()
         } else if parentPost == nil {
             // Inserting a new post in the top, if we're in the top of the thread
-            fetchController.dataSource.insert(post, atIndex: 0)
+            fetchController.dataSource.insert(newPost, atIndex: 0)
             tableView.reloadData()
         }
     }

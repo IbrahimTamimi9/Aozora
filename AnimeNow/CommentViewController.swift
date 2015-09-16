@@ -11,7 +11,7 @@ import Parse
 import Bolts
 
 public protocol CommentViewControllerDelegate: class {
-    func commentViewControllerDidFinishedPosting(newPost: PFObject, parentPost: PFObject?)
+    func commentViewControllerDidFinishedPosting(newPost: PFObject, parentPost: PFObject?, edited: Bool)
 }
 
 public enum ThreadType {
@@ -138,7 +138,7 @@ public class CommentViewController: UIViewController {
             self.sendButton.userInteractionEnabled = true
         } else {
             // Success!
-            self.delegate?.commentViewControllerDidFinishedPosting(post, parentPost:parentPost)
+            self.delegate?.commentViewControllerDidFinishedPosting(post, parentPost:parentPost, edited: (editingPost != nil))
             self.dismissViewControllerAnimated(true, completion: nil)
         }
     }

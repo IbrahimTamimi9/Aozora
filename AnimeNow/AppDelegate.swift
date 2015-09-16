@@ -169,7 +169,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             user.active = false
             user.activeEnd = NSDate()
-            user.saveEventually()
+            user.saveInBackground()
         }
     }
 
@@ -183,7 +183,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let user = User.currentUser() {
             user.active = true
             user.activeStart = NSDate()
-            user.saveEventually()
+            user.saveInBackground()
         }
         
         ReminderController.updateScheduledLocalNotifications()

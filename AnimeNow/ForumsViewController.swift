@@ -206,6 +206,9 @@ class ForumsViewController: UIViewController {
     func cachePinnedPosts() {
         let query = Thread.query()!
         query.whereKeyExists("pinType")
+        query.includeKey("tags")
+        query.includeKey("lastPostedBy")
+        query.includeKey("startedBy")
         query.findCachedOrNetwork(PinnedThreadsPin, expirationDays: 1)
     }
     
@@ -325,7 +328,7 @@ extension ForumsViewController: TTTAttributedLabelDelegate {
 }
 
 extension ForumsViewController: CommentViewControllerDelegate {
-    func commentViewControllerDidFinishedPosting(post: PFObject, parentPost: PFObject?) {
+    func commentViewControllerDidFinishedPosting(post: PFObject, parentPost: PFObject?, edited: Bool) {
         prepareForList(selectedList)
     }
 }

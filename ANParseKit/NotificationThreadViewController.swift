@@ -138,8 +138,8 @@ extension NotificationThreadViewController: FetchControllerQueryDelegate {
 }
 
 extension NotificationThreadViewController: CommentViewControllerDelegate {
-    public override func commentViewControllerDidFinishedPosting(post: PFObject, parentPost: PFObject?) {
-        super.commentViewControllerDidFinishedPosting(post, parentPost: parentPost)
+    public override func commentViewControllerDidFinishedPosting(post: PFObject, parentPost: PFObject?, edited: Bool) {
+        super.commentViewControllerDidFinishedPosting(post, parentPost: parentPost, edited: edited)
 
         if let parentPost = parentPost {
             // Inserting a new reply in-place

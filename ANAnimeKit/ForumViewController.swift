@@ -128,7 +128,7 @@ extension ForumViewController: FetchControllerDelegate {
 }
 
 extension ForumViewController: CommentViewControllerDelegate {
-    public func commentViewControllerDidFinishedPosting(post: PFObject, parentPost: PFObject?) {
+    public func commentViewControllerDidFinishedPosting(post: PFObject, parentPost: PFObject?, edited: Bool) {
         fetchAnimeRelatedThreads()
     }
 }
