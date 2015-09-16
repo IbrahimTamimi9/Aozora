@@ -21,6 +21,9 @@ class NotificationsViewController: UIViewController {
         title = "Notifications"
         tableView.estimatedRowHeight = 112.0
         tableView.rowHeight = UITableViewAutomaticDimension
+        
+        let clearAll = UIBarButtonItem(title: "Clear all", style: UIBarButtonItemStyle.Plain, target: self, action: "clearAllPressed:")
+        navigationItem.rightBarButtonItem = clearAll
     }
     
     deinit {
@@ -37,6 +40,22 @@ class NotificationsViewController: UIViewController {
         query.whereKey("subscribers", containedIn: [User.currentUser()!])
         query.orderByDescending("updatedAt")
         fetchController.configureWith(self, query: query, queryDelegate:self, tableView: tableView, limit: 50)
+    }
+    
+    func clearAllPressed(sender: AnyObject) {
+        let unreadNotifications = fetchController.dataSource.filter { (notification: PFObject) -> Bool in
+            
+            let notification = notification as! Notification
+            if !contains(notification.readBy, User.currentUser()!) {
+                notification.addUniqueObject(User.currentUser()!, forKey: "readBy")
+                return true
+            } else {
+                return false
+            }
+        }
+        
+        PFObject.saveAllInBackground(unreadNotifications)
+        tableView.reloadData()
     }
     
     @IBAction func dismissViewController(sender: AnyObject) {
