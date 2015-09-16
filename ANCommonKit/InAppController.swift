@@ -22,7 +22,7 @@ public class InAppController {
         let user = User.currentUser()
         let identifier = ProInAppPurchase
         let pro = NSUserDefaults.standardUserDefaults().boolForKey(identifier) ||
-            (user != nil ? contains(user!.unlockedContent, identifier) : false)
+            (user != nil ? find(user!.unlockedContent, identifier) != nil : false)
         return pro ? 1 : nil
     }
     
@@ -30,7 +30,7 @@ public class InAppController {
         let user = User.currentUser()
         let identifier = ProPlusInAppPurchase
         let proPlus = NSUserDefaults.standardUserDefaults().boolForKey(identifier) ||
-        (user != nil ? contains(user!.unlockedContent, identifier) : false)
+        (user != nil ? find(user!.unlockedContent, identifier) != nil : false)
         return proPlus ? 1 : nil
     }
 }

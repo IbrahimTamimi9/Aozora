@@ -177,35 +177,46 @@ public class ProfileViewController: ThreadViewController {
             navigationItem.leftBarButtonItem = nil
         }
         
+        let proPlusString = "PRO+"
+        let proString = "PRO"
+        
         proBadge.hidden = true
+        if find(user.badges, proPlusString) != nil &&
+            find(user.badges, proString) != nil {
+            proBadge.hidden = false
+            proBadge.text = "PRO++"
+        } else if find(user.badges, proPlusString) != nil {
+            proBadge.hidden = false
+            proBadge.text = proPlusString
+        } else if find(user.badges, proString) != nil {
+            proBadge.hidden = false
+            proBadge.text = proString
+        }
         
         if user == User.currentUser()! {
             followButton.hidden = true
             settingsTrailingSpaceConstraint.constant = 8
-            
-            if InAppController.purchasedProPlus() != nil ||
-                contains(user.badges, "PRO+") {
-                proBadge.hidden = false
-                proBadge.text = "PRO+"
-            } else if InAppController.purchasedPro() != nil ||
-                contains(user.badges, "PRO") {
-                proBadge.hidden = false
-                proBadge.text = "PRO"
-            }
         } else {
             followButton.hidden = false
             settingsButton.hidden = true
             notificationsButton.hidden = true
         }
         
-        if user.badges.count > 0 {
+        var hasABadge = false
+        for badge in user.badges {
+            if badge != proString && badge != proPlusString {
+                tagBadge.text = badge
+                hasABadge = true
+                break
+            }
+        }
+        
+        if hasABadge {
             tagBadge.hidden = false
-            tagBadge.text = user.badges.first
         } else {
             tagBadge.hidden = true
             proBottomLayoutConstraint.constant = 4
         }
-        
     }
     
     func updateFollowingButtons() {
