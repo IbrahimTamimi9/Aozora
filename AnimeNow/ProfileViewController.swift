@@ -266,7 +266,10 @@ public class ProfileViewController: ThreadViewController {
     }
     
     func configureFetchController() {
-        tableView.scrollEnabled = false
+        let offset = tableView.contentOffset
+        fetchController.resetToDefaults()
+        tableView.reloadData()
+        tableView.setContentOffset(offset, animated: false)
         fetchController.configureWith(self, queryDelegate: self, tableView: self.tableView, limit: self.FetchLimit, datasourceUsesSections: true)
     }
     
@@ -441,7 +444,6 @@ extension ProfileViewController: CommentViewControllerDelegate {
 extension ProfileViewController: FetchControllerDelegate {
     public override func didFetchFor(#skip: Int) {
         super.didFetchFor(skip: skip)
-        tableView.scrollEnabled = true
     }
 }
 
