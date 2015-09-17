@@ -421,6 +421,7 @@ extension ProfileViewController: CommentViewControllerDelegate {
         
         if edited {
             // Don't insert if edited
+            tableView.reloadData()
             return
         }
         

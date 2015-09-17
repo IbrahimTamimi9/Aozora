@@ -186,7 +186,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             user.activeStart = NSDate()
             user.saveInBackgroundWithBlock({ (success, error) -> Void in
                 // Checking for invalid sessions
-                if let error = error where error.code == 209 {
+                if let error = error where error.code == 209 || error.code == 208 {
+                    if error.code == 208 {
+                        if PFFacebookUtils.isLinkedWithUser(User.currentUser()!) {
+                            PFFacebookUtils.unlinkUserInBackground(User.currentUser()!)
+                        }
+                    }
                     WorkflowController.logoutUser().continueWithExecutor( BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
                         
                         if let error = task.error {

@@ -337,6 +337,7 @@ extension CustomThreadViewController: CommentViewControllerDelegate {
         if let _ = post as? Postable {
             if edited {
                 // Don't insert if edited
+                tableView.reloadData()
                 return
             }
             
