@@ -184,7 +184,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let user = User.currentUser() {
             user.active = true
             user.activeStart = NSDate()
-            user.saveInBackground()
+            user.saveInBackgroundWithBlock({ (success, error) -> Void in
+                // Checking for invalid sessions
+                if let error = error where error.code == 209 {
+                    WorkflowController.logoutUser().continueWithExecutor( BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
+                        
+                        if let error = task.error {
+                            println("failed loggin out: \(error)")
+                        } else {
+                            println("logout succeeded")
+                        }
+                        WorkflowController.presentOnboardingController(true)
+                        return nil
+                    })
+                }
+            })
         }
         
         ReminderController.updateScheduledLocalNotifications()
