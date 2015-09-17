@@ -163,7 +163,7 @@ public class ProfileViewController: ThreadViewController {
                 
                 
                 if user.details.posts >= 1000 {
-                    self.postsBadge.text = (user.details.posts/1000).description + "k"
+                    self.postsBadge.text = String(format: "%.1fk", Float(user.details.posts-49)/1000.0 )
                 } else {
                     self.postsBadge.text = user.details.posts.description
                 }
