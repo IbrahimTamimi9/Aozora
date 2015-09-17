@@ -83,9 +83,9 @@ class OnboardingViewController: UIViewController {
                     self.presentRootTabBar()
                 }
                 
-            } else {
-                PFUser.logOutInBackgroundWithBlock({ (error) -> Void in
-                    
+            } else if let error = error {
+                println("\(error)")
+                PFUser.logOutInBackgroundWithBlock({ (error) -> Void in  
                     if let error = error {
                         println("Uh oh. \(error.localizedDescription)")
                     }
