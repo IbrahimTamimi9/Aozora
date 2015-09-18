@@ -183,6 +183,14 @@ class ForumsViewController: UIViewController {
         query.findObjectsInBackgroundWithBlock { (result, error) -> Void in
             if let pinnedData = result as? [Thread] {
                 let query = Thread.query()!
+                
+                // Remove episodes without comments from #Release Discussion tag
+                let releaseDiscussionObjectId = "RJsWGXGsBQ"
+                if tag.objectId! == releaseDiscussionObjectId {
+                    query.whereKey("replies", greaterThan: 0)
+                    query.whereKeyExists("episode")
+                }
+                
                 query.whereKey("tags", containedIn: [tag])
                 query.whereKeyDoesNotExist("pinType")
                 query.includeKey("tags")

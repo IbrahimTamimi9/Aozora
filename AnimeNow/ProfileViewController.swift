@@ -220,11 +220,7 @@ public class ProfileViewController: ThreadViewController {
         let proString = "PRO"
         
         proBadge.hidden = true
-        if find(user.badges, proPlusString) != nil &&
-            find(user.badges, proString) != nil {
-            proBadge.hidden = false
-            proBadge.text = "PRO++"
-        } else if find(user.badges, proPlusString) != nil {
+        if find(user.badges, proPlusString) != nil {
             proBadge.hidden = false
             proBadge.text = proPlusString
         } else if find(user.badges, proString) != nil {
