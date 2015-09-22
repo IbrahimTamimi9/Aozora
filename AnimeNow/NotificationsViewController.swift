@@ -49,6 +49,8 @@ class NotificationsViewController: UIViewController {
             if unreadNotifications.count == 0 {
                 delegate?.notificationsViewControllerClearedAllNotifications()
             }
+        } else {
+            tableView.userInteractionEnabled = true
         }
     }
     
@@ -144,6 +146,8 @@ extension NotificationsViewController: UITableViewDelegate {
             tableView.reloadData()
         }
         
+        // Temporal fix to prevent opening the notification twice
+        tableView.userInteractionEnabled = false
         NotificationsController.handleNotification(notification.targetClass, objectId: notification.targetID)
     }
 }
