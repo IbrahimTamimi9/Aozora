@@ -32,10 +32,10 @@ class ParseWorker {
                     return self.animeCast(data.myAnimeListID)
                     }.continueWithBlock {
                         (task: BFTask!) -> AnyObject! in
-                        var cast = AnimeCast()
+                        let cast = AnimeCast()
                         cast.cast = task.result["Staff"] as? [[String:AnyObject]] ?? []
                         data.cast = cast
-                        println("saving \(data.title)")
+                        print("saving \(data.title)")
                         return data.saveInBackground()
                 }
             }
@@ -46,11 +46,11 @@ class ParseWorker {
     
     func animeCast(id: Int) -> BFTask! {
         let completionSource = BFTaskCompletionSource()
-        Alamofire.request(Atarashii.Router.animeCast(id: id)).validate().responseJSON { (req, res, JSON, error) -> Void in
-            if error == nil {
-                completionSource.setResult(JSON)
+        Alamofire.request(Atarashii.Router.animeCast(id: id)).validate().responseJSON { (req, res, result) -> Void in
+            if result.isSuccess {
+                completionSource.setResult(result.value)
             } else {
-                completionSource.setError(error)
+                completionSource.setError(nil)
             }
         }
         return completionSource.task
@@ -85,7 +85,7 @@ class ParseWorker {
                     if let result = task.result as? NSArray where result.count > 0 {
                         
                         let title = (anime["title"] as! String)
-                        println("Results for: \(title), found \(result.count) results")
+                        print("Results for: \(title), found \(result.count) results")
                         let traktID = ((((result.firstObject as! NSDictionary)["show"] as! NSDictionary)["ids"] as! NSDictionary)["trakt"] as! Int)
                         return self.traktRequestWith(route: TraktV2.Router.showSummaryForId(id: traktID))
                         
@@ -103,7 +103,7 @@ class ParseWorker {
                         let date1 = (result["first_aired"] as! String).date
                         let date2 = anime["startDate"] as! NSDate
                         if NSCalendar.currentCalendar().isDate(date1, inSameDayAsDate: date2) {
-                            println("Matched!")
+                            print("Matched!")
                         }
                         return nil;
                     } else {
@@ -117,7 +117,7 @@ class ParseWorker {
             }.continueWithBlock {
                 (task: BFTask!) -> AnyObject! in
                 if (task.exception != nil) {
-                    println(task.exception)
+                    print(task.exception)
                 }
                 return nil
         }
@@ -147,7 +147,7 @@ class ParseWorker {
                             return anime.saveInBackground()
                         } else {
                             let slug: AnyObject? = anime["traktSlug"]
-                            println("Failed for slug \(slug)")
+                            print("Failed for slug \(slug)")
                             return BFTask(result: nil)
                         }
                         
@@ -159,13 +159,13 @@ class ParseWorker {
         }
     }
     
-    func traktRequestWith(#route: TraktV2.Router) -> BFTask {
+    func traktRequestWith(route route: TraktV2.Router) -> BFTask {
         let completionSource = BFTaskCompletionSource()
-        Alamofire.request(route).validate().responseJSON { (req, res, JSON, error) -> Void in
-            if error == nil {
-                completionSource.setResult(JSON)
+        Alamofire.request(route).validate().responseJSON { (req, res, result) -> Void in
+            if result.isSuccess {
+                completionSource.setResult(result.value)
             } else {
-                completionSource.setError(error)
+                completionSource.setError(nil)
             }
         }
         return completionSource.task
@@ -183,7 +183,7 @@ class ParseWorker {
                 sequence = sequence.continueWithBlock {
                     (task: BFTask!) -> AnyObject! in
                     let thetvdbID = identifier["theTvdbID"] as! String
-                    return self.showSummary(thetvdbID.toInt()!)
+                    return self.showSummary(Int(thetvdbID)!)
                     
                     }.continueWithBlock{
                         (task: BFTask!) -> AnyObject! in
@@ -193,11 +193,11 @@ class ParseWorker {
                             let slug = (result["url"] as! String).stringByReplacingOccurrencesOfString("/shows/", withString: "")
                             
                             identifier["traktSlug"] = slug
-                            println("Saved: \(slug)")
+                            print("Saved: \(slug)")
                             return identifier.saveInBackground()
                         }else {
                             let identifier = identifier["theTvdbID"] as! String
-                            println("Failed for: \(identifier)")
+                            print("Failed for: \(identifier)")
                             return BFTask(result: nil);
                         }
                         
@@ -210,10 +210,10 @@ class ParseWorker {
             }.continueWithBlock {
                 (task: BFTask!) -> AnyObject! in
                 if (task.exception != nil) {
-                    println(task.exception)
+                    print(task.exception)
                 }
                 if task.error != nil {
-                    println(task.error)
+                    print(task.error)
                 }
                 return nil
         }
@@ -285,11 +285,11 @@ class ParseWorker {
     
     func showSummary(id: Int) -> BFTask! {
         let completionSource = BFTaskCompletionSource()
-        Alamofire.request(TraktV1.Router.showSummaryForID(tvdbID: id)).validate().responseJSON { (req, res, JSON, error) -> Void in
-            if error == nil {
-                completionSource.setResult(JSON)
+        Alamofire.request(TraktV1.Router.showSummaryForID(tvdbID: id)).validate().responseJSON { (req, res, result) -> Void in
+            if result.isSuccess {
+                completionSource.setResult(result.value)
             } else {
-                completionSource.setError(error)
+                completionSource.setError(nil)
             }
         }
         return completionSource.task
@@ -306,7 +306,7 @@ class ParseWorker {
             for anime in task.result as! [PFObject] {
                 let title: AnyObject? = anime["title"]
                 let malID: AnyObject? = anime["myAnimeListID"]
-                println("\(malID) \(title)")
+                print("\(malID) \(title)")
             }
             
             return nil
@@ -317,7 +317,7 @@ class ParseWorker {
     
     func dateForString(string: String) -> AnyObject! {
         
-        var dateFormatter = NSDateFormatter()
+        let dateFormatter = NSDateFormatter()
         dateFormatter.timeZone = NSTimeZone(name: "UTC")
         dateFormatter.dateFormat = "yyyy-MM-dd"
 
@@ -333,7 +333,7 @@ class ParseWorker {
         // Read JSON and store in string
         let filePath = NSBundle.mainBundle().pathForResource("mal_anilist_ids", ofType: "json")
         let data = NSData(contentsOfFile: filePath!)
-        let result = NSJSONSerialization.JSONObjectWithData(data!, options: nil, error: nil) as! [[String: Int]]
+        let result = (try! NSJSONSerialization.JSONObjectWithData(data!, options: [])) as! [[String: Int]]
         return result
     }
     
@@ -346,17 +346,16 @@ class ParseWorker {
         if accessToken == nil || expirationDate?.compare(NSDate()) == .OrderedAscending {
             Alamofire.request(AniList.Router.requestAccessToken())
                 .validate()
-                .responseJSON { (req, res, JSON, error) in
+                .responseJSON { (req, res, result) in
                     
-                    if error == nil {
-                        let dictionary = (JSON as! NSDictionary)
-                        println(dictionary["access_token"])
+                    if result.isSuccess {
+                        let dictionary = (result.value as! NSDictionary)
+                        print(dictionary["access_token"])
                         NSUserDefaults.standardUserDefaults().setObject(dictionary["access_token"], forKey: "access_token")
                         NSUserDefaults.standardUserDefaults().setObject(NSDate(timeIntervalSinceNow: dictionary["expires_in"] as! Double), forKey: "expiration_date")
                         NSUserDefaults.standardUserDefaults().synchronize()
                         self.request()
                     }else {
-                        println(error)
                     }
             }
         } else {
@@ -373,22 +372,22 @@ class ParseWorker {
     
     func importAnilistIDs() {
         let accessToken = NSUserDefaults.standardUserDefaults().stringForKey("access_token")
-        println("using token: \(accessToken)")
+        print("using token: \(accessToken)")
         
-        let ids = getDataFromFile()
+        //let ids = getDataFromFile()
         
         let query = PFQuery(className: ParseKit.Anime)
         query.selectKeys(["myAnimeListID","hummingBirdID","title"])
         
         AnimeService.findAllObjectsWith(query: query).continueWithBlock { (task: BFTask!) -> AnyObject! in
             
-            var sequence = BFTask(result: nil);
+            let sequence = BFTask(result: nil);
             var result = task.result as! [Anime]
-            result.sort({ $0.myAnimeListID < $1.myAnimeListID })
+            result.sortInPlace({ $0.myAnimeListID < $1.myAnimeListID })
             
             for anime in result {
 
-                    println("\(anime.hummingBirdID ?? 0)")
+                    print("\(anime.hummingBirdID ?? 0)")
 
                 
 //                sequence = sequence.continueWithBlock {

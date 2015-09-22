@@ -17,8 +17,8 @@ public struct TraktV1 {
         
         case showSummaryForID(tvdbID: Int)
         
-        public var URLRequest: NSURLRequest {
-            let (method: Alamofire.Method, path: String, parameters: [String: AnyObject]) = {
+        public var URLRequest: NSMutableURLRequest {
+            let (method, path, parameters): (Alamofire.Method, String, [String: AnyObject]) = {
                 switch self {
                 case .showSummaryForID(let tvdbID):
                     return (.GET, "show/summary.json/\(Router.TraktAPIKey)/\(tvdbID)", [:])

@@ -58,9 +58,9 @@ public class NewThreadViewController: CommentViewController {
         self.sendButton.backgroundColor = UIColor.watching()
         self.sendButton.userInteractionEnabled = false
         
-        var thread = Thread()
+        let thread = Thread()
         thread.edited = false
-        thread.title = threadTitle.text
+        thread.title = threadTitle.text!
         thread.content = textView.text
         thread.replies = 0
         thread.tags = tags
@@ -94,9 +94,9 @@ public class NewThreadViewController: CommentViewController {
         self.sendButton.backgroundColor = UIColor.watching()
         self.sendButton.userInteractionEnabled = false
         
-        if var thread = post as? Thread {
+        if let thread = post as? Thread {
             thread.edited = true
-            thread.title = threadTitle.text
+            thread.title = threadTitle.text!
             thread.content = textView.text
             thread.tags = tags
             thread.saveInBackgroundWithBlock({ (result, error) -> Void in
@@ -107,14 +107,14 @@ public class NewThreadViewController: CommentViewController {
     
     func validThread() -> Bool {
         let content = textView.text
-        if count(content) < 40 {
-            presentBasicAlertWithTitle("Content too Short", message: "Content should be a 40 characters or longer, now \(count(content))")
+        if content.characters.count < 40 {
+            presentBasicAlertWithTitle("Content too Short", message: "Content should be a 40 characters or longer, now \(content.characters.count)")
             return false
         }
         
         let title = threadTitle.text
-        if count(title) < 10 {
-            presentBasicAlertWithTitle("Title too Short", message: "Thread title should be 10 characters or longer, now \(count(content))")
+        if title!.characters.count < 10 {
+            presentBasicAlertWithTitle("Title too Short", message: "Thread title should be 10 characters or longer, now \(content.characters.count)")
             return false
         }
         
@@ -136,7 +136,7 @@ public class NewThreadViewController: CommentViewController {
 }
 
 extension NewThreadViewController: TagsViewControllerDelegate {
-    func tagsViewControllerSelected(#tags: [PFObject]) {
+    func tagsViewControllerSelected(tags tags: [PFObject]) {
         self.tags = tags
     }
 }
@@ -144,7 +144,7 @@ extension NewThreadViewController: TagsViewControllerDelegate {
 extension NewThreadViewController: TTTAttributedLabelDelegate {
     
     public func attributedLabel(label: TTTAttributedLabel!, didSelectLinkWithURL url: NSURL!) {
-        if let host = url.host where host == "tag", let index = url.pathComponents?[1] as? String, let idx = index.toInt() {
+        if let host = url.host where host == "tag", let index = url.pathComponents?[1], let idx = Int(index) {
             tags.removeAtIndex(idx)
         }
     }

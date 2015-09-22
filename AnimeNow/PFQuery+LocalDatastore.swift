@@ -36,7 +36,7 @@ extension PFQuery {
                     
                     NSUserDefaults.completedAction(pinName)
                     PFObject.unpinAllObjectsInBackgroundWithName(pinName).continueWithBlock({ (task: BFTask!) -> AnyObject! in
-                        println("Objects from network, saved with tag \(pinName)")
+                        print("Objects from network, saved with tag \(pinName)")
                         return PFObject.pinAllInBackground(result, withName: pinName)
                     })
                     fetchResult += result

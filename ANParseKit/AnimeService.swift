@@ -127,7 +127,7 @@ public class AnimeService {
         return findAllObjectsWith(query: query)
     }
     
-    public class func findAllObjectsWith(#query: PFQuery, skip: Int? = 0) -> BFTask {
+    public class func findAllObjectsWith(query query: PFQuery, skip: Int? = 0) -> BFTask {
         query.limit = 1000
         query.skip = skip!
         

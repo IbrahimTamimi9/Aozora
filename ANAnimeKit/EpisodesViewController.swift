@@ -48,7 +48,7 @@ class EpisodesViewController: AnimeBaseViewController {
             laidOutSubviews = true
             
             let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
-            var size = CGSize(width: view.bounds.size.width-20, height: 195)
+            let size = CGSize(width: view.bounds.size.width-20, height: 195)
             layout.itemSize = size
             layout.invalidateLayout()
         }
@@ -59,7 +59,7 @@ class EpisodesViewController: AnimeBaseViewController {
         
         loadingView.startAnimating()
         let pin = anime.progress != nil
-        anime.episodeList(pin: pin, tag: Anime.PinName.InLibrary).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
+        anime.episodeList(pin, tag: Anime.PinName.InLibrary).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
         
             self.dataSource = task.result as! [Episode]
             self.collectionView.animateFadeIn()
@@ -141,7 +141,7 @@ extension EpisodesViewController: UICollectionViewDelegate {
 extension EpisodesViewController: EpisodeCellDelegate {
     func episodeCellWatchedPressed(cell: EpisodeCell) {
         if let indexPath = collectionView.indexPathForCell(cell),
-        var progress = anime.progress {
+        let progress = anime.progress {
             
             let nextEpisode = indexPath.row + 1
             if progress.watchedEpisodes == nextEpisode {
@@ -157,7 +157,7 @@ extension EpisodesViewController: EpisodeCellDelegate {
             }
             
             progress.saveEventually()
-            LibrarySyncController.updateAnime(progress: progress)
+            LibrarySyncController.updateAnime(progress)
             
             NSNotificationCenter.defaultCenter().postNotificationName(LibraryUpdatedNotification, object: nil)
             
@@ -216,7 +216,7 @@ extension EpisodesViewController: DropDownListDelegate {
 }
 
 extension EpisodesViewController: RateViewControllerProtocol {
-    func rateControllerDidFinishedWith(#anime: Anime, rating: Float) {
+    func rateControllerDidFinishedWith(anime anime: Anime, rating: Float) {
         RateViewController.updateAnime(anime, withRating: rating*2.0)
     }
 }

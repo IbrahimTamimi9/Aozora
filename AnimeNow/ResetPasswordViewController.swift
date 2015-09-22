@@ -17,17 +17,17 @@ class ResetPasswordViewController: UIViewController {
         
         emailTextField.trimSpaces()
         if emailTextField.validEmail() {
-            PFUser.requestPasswordResetForEmailInBackground(emailTextField.text, block: { (success: Bool, error: NSError?) -> Void in
+            PFUser.requestPasswordResetForEmailInBackground(emailTextField.text!, block: { (success: Bool, error: NSError?) -> Void in
                 if let error = error {
                     
-                    let errorMessage = error.userInfo?["error"] as! String
-                    var alert = UIAlertController(title: "Hmm..", message: errorMessage, preferredStyle: UIAlertControllerStyle.Alert)
+                    let errorMessage = error.userInfo["error"] as! String
+                    let alert = UIAlertController(title: "Hmm..", message: errorMessage, preferredStyle: UIAlertControllerStyle.Alert)
                     alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
                     self.presentViewController(alert, animated: true, completion: nil)
                     
                 } else {
                     
-                    var alert = UIAlertController(title: "Sent!", message: "Please check your email for instructions, domo", preferredStyle: UIAlertControllerStyle.Alert)
+                    let alert = UIAlertController(title: "Sent!", message: "Please check your email for instructions, domo", preferredStyle: UIAlertControllerStyle.Alert)
                     alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
                             self.dismissViewControllerAnimated(true, completion: nil)
                         }))
@@ -35,7 +35,7 @@ class ResetPasswordViewController: UIViewController {
                 }
             })
         } else {
-            var alert = UIAlertController(title: "Woot", message: "Invalid email", preferredStyle: UIAlertControllerStyle.Alert)
+            let alert = UIAlertController(title: "Woot", message: "Invalid email", preferredStyle: UIAlertControllerStyle.Alert)
             alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
             self.presentViewController(alert, animated: true, completion: nil)
         }

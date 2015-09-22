@@ -11,7 +11,7 @@ import Foundation
 extension UIViewController {
     public func presentBasicAlertWithTitle(title: String, message: String? = nil, style: UIAlertControllerStyle = .Alert) {
         
-        var alert = UIAlertController(title: title, message: message, preferredStyle: style)
+        let alert = UIAlertController(title: title, message: message, preferredStyle: style)
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)
     }

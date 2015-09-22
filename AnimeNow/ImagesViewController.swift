@@ -13,7 +13,7 @@ import SDWebImage
 import FLAnimatedImage
 
 protocol ImagesViewControllerDelegate: class {
-    func imagesViewControllerSelected(#imageData: ImageData)
+    func imagesViewControllerSelected(imageData imageData: ImageData)
 }
 
 public class ImagesViewController: UIViewController {
@@ -34,13 +34,13 @@ public class ImagesViewController: UIViewController {
         loadingView = LoaderView(parentView: view)
         malScrapper = MALScrapper(viewController: self)
         
-        var searchBarTextField = searchBar.valueForKey("searchField") as? UITextField
+        let searchBarTextField = searchBar.valueForKey("searchField") as? UITextField
         searchBarTextField?.textColor = UIColor.blackColor()
         
         searchBar.becomeFirstResponder()
         
         let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
-        var size = CGSize(width: view.bounds.size.width/2-3, height: 120)
+        let size = CGSize(width: view.bounds.size.width/2-3, height: 120)
         layout.itemSize = size
     }
     
@@ -75,7 +75,7 @@ public class ImagesViewController: UIViewController {
         dataSource = []
         collectionView.reloadData()
         let animated = segmentedControl.selectedSegmentIndex == 0 ? false : true
-        findImagesWithQuery(searchBar.text, animated: animated)
+        findImagesWithQuery(searchBar.text!, animated: animated)
     }
     
 }
@@ -121,7 +121,7 @@ extension ImagesViewController: UICollectionViewDelegate {
     public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let imageData = dataSource[indexPath.row]
         
-        var imageController = ANParseKit.commentStoryboard().instantiateViewControllerWithIdentifier("Image") as! ImageViewController
+        let imageController = ANParseKit.commentStoryboard().instantiateViewControllerWithIdentifier("Image") as! ImageViewController
         imageController.initWith(imageData: imageData)
         imageController.delegate = self
         imageController.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
@@ -133,7 +133,7 @@ extension ImagesViewController: UISearchBarDelegate {
     
     public func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         let animated = segmentedControl.selectedSegmentIndex == 0 ? false : true
-        findImagesWithQuery(searchBar.text, animated: animated)
+        findImagesWithQuery(searchBar.text!, animated: animated)
         view.endEditing(true)
         searchBar.enableCancelButton()
     }
@@ -146,7 +146,7 @@ extension ImagesViewController: UISearchBarDelegate {
 
 extension ImagesViewController: ImageViewControllerDelegate {
     
-    func imageViewControllerSelected(#imageData: ImageData) {
+    func imageViewControllerSelected(imageData imageData: ImageData) {
         delegate?.imagesViewControllerSelected(imageData: imageData)
         dismissViewControllerAnimated(true, completion: nil)
     }

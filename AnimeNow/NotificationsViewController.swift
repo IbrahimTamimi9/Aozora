@@ -43,7 +43,7 @@ class NotificationsViewController: UIViewController {
         if isMovingFromParentViewController() {
             let unreadNotifications = fetchController.dataSource.filter { (notification: PFObject) -> Bool in
                 let notification = notification as! Notification
-                return !contains(notification.readBy, User.currentUser()!)
+                return !notification.readBy.contains(User.currentUser()!)
             }
             
             if unreadNotifications.count == 0 {
@@ -68,7 +68,7 @@ class NotificationsViewController: UIViewController {
         let unreadNotifications = fetchController.dataSource.filter { (notification: PFObject) -> Bool in
             
             let notification = notification as! Notification
-            if !contains(notification.readBy, User.currentUser()!) {
+            if !notification.readBy.contains(User.currentUser()!) {
                 notification.addUniqueObject(User.currentUser()!, forKey: "readBy")
                 return true
             } else {
@@ -121,7 +121,7 @@ extension NotificationsViewController: UITableViewDataSource {
             cell.titleLabel.text = notification.message
         }
         
-        if contains(notification.readBy, User.currentUser()!) {
+        if notification.readBy.contains(User.currentUser()!) {
             cell.contentView.backgroundColor = UIColor.backgroundWhite()
         } else {
             cell.contentView.backgroundColor = UIColor.backgroundDarker()
@@ -138,7 +138,7 @@ extension NotificationsViewController: UITableViewDelegate {
         // Open
         let notification = fetchController.objectAtIndex(indexPath.row) as! Notification
         
-        if !contains(notification.readBy, User.currentUser()!) {
+        if !notification.readBy.contains(User.currentUser()!) {
             notification.addUniqueObject(User.currentUser()!, forKey: "readBy")
             notification.saveEventually()
             tableView.reloadData()
@@ -149,10 +149,10 @@ extension NotificationsViewController: UITableViewDelegate {
 }
 
 extension NotificationsViewController: FetchControllerQueryDelegate {
-    func queriesForSkip(#skip: Int) -> [PFQuery]? {
+    func queriesForSkip(skip skip: Int) -> [PFQuery]? {
         return nil
     }
-    func processResult(#result: [PFObject]) -> [PFObject] {
+    func processResult(result result: [PFObject]) -> [PFObject] {
         let filtered = result.filter({ (object: PFObject) -> Bool in
             let notification = object as! Notification
             return notification.triggeredBy.count > 1 || (notification.triggeredBy.count == 1 && notification.triggeredBy.last != User.currentUser()!)
@@ -162,7 +162,7 @@ extension NotificationsViewController: FetchControllerQueryDelegate {
 }
 
 extension NotificationsViewController: FetchControllerDelegate {
-    func didFetchFor(#skip: Int) {
+    func didFetchFor(skip skip: Int) {
         
     }
 }

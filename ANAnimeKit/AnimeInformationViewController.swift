@@ -102,10 +102,10 @@ public class AnimeInformationViewController: AnimeBaseViewController {
         let query = Anime.queryWith(objectID: anime.objectId!)
     
         if fromLocalDatastore {
-            println("\(anime.objectId) local")
+            print("\(anime.objectId) local")
             query.fromLocalDatastore()
         } else {
-            println("\(anime.objectId) not local")
+            print("\(anime.objectId) not local")
         }
         
         query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
@@ -115,7 +115,7 @@ public class AnimeInformationViewController: AnimeBaseViewController {
                 if error.code == 120 {
                     self.fetchCurrentAnime(false)
                 }
-                println(error)
+                print(error)
             } else {
                 if let anime = objects?.first as? Anime {
                     self.anime = anime
@@ -162,7 +162,7 @@ public class AnimeInformationViewController: AnimeBaseViewController {
             posterImageView.setImageFrom(urlString: anime.imageUrl)
             fanartImageView.setImageFrom(urlString: anime.fanartURLString())
             
-            if let youtubeID = anime.details.youtubeID where count(youtubeID) > 0 {
+            if let youtubeID = anime.details.youtubeID where youtubeID.characters.count > 0 {
                 trailerButton.hidden = false
                 trailerButton.layer.borderWidth = 1.0;
                 trailerButton.layer.borderColor = UIColor(white: 1.0, alpha: 0.5).CGColor;
@@ -182,7 +182,7 @@ public class AnimeInformationViewController: AnimeBaseViewController {
         
         var imageString = ""
         
-        if let fanartUrl = anime.fanart where count(fanartUrl) != 0 {
+        if let fanartUrl = anime.fanart where fanartUrl.characters.count != 0 {
             imageString = fanartUrl
         } else {
             imageString = anime.imageUrl
@@ -214,7 +214,7 @@ public class AnimeInformationViewController: AnimeBaseViewController {
     
     @IBAction func addToListPressed(sender: AnyObject) {
         
-        var progress = anime.progress
+        let progress = anime.progress
         
         var title: String = ""
         if progress == nil {
@@ -223,7 +223,7 @@ public class AnimeInformationViewController: AnimeBaseViewController {
             title = "Move to list"
         }
         
-        var alert = UIAlertController(title: title, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        let alert = UIAlertController(title: title, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
         
         alert.addAction(UIAlertAction(title: "Watching", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
             self.updateProgressWithList(.Watching)
@@ -245,7 +245,7 @@ public class AnimeInformationViewController: AnimeBaseViewController {
             alert.addAction(UIAlertAction(title: "Remove from Library", style: UIAlertActionStyle.Destructive, handler: { (alertAction: UIAlertAction!) -> Void in
                 
                 self.loadingView.startAnimating()
-                let deleteFromMALTask = LibrarySyncController.deleteAnime(progress: progress)
+                let deleteFromMALTask = LibrarySyncController.deleteAnime(progress)
                 let deleteFromParseTask = progress.deleteInBackground()
                 let unpinFromLocalDatastoreTask = progress.unpinInBackground()
                     
@@ -273,7 +273,7 @@ public class AnimeInformationViewController: AnimeBaseViewController {
         
         if let progress = anime.progress {
             progress.updateList(list)
-            LibrarySyncController.updateAnime(progress: progress)
+            LibrarySyncController.updateAnime(progress)
             progress.saveInBackgroundWithBlock({ (result, error) -> Void in
                 NSNotificationCenter.defaultCenter().postNotificationName(LibraryUpdatedNotification, object: nil)
             })
@@ -282,7 +282,7 @@ public class AnimeInformationViewController: AnimeBaseViewController {
         } else {
             
             // Create!
-            var progress = AnimeProgress()
+            let progress = AnimeProgress()
             progress.anime = anime
             progress.user = User.currentUser()!
             progress.startDate = NSDate()
@@ -295,14 +295,14 @@ public class AnimeInformationViewController: AnimeBaseViewController {
             query.whereKey("anime", equalTo: anime)
             query.whereKey("user", equalTo: User.currentUser()!)
             query.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
-                if let error = error {
+                if let _ = error {
                     // Handle error
                 } else if let result = result as? [AnimeProgress] where result.count == 0 {
                     // Create AnimeProgress, if it's not on Parse
-                    LibrarySyncController.addAnime(progress: progress)
+                    LibrarySyncController.addAnime(progress)
                     self.anime.progress = progress
                     progress.saveInBackgroundWithBlock({ (result, error) -> Void in
-                        if let error = error {
+                        if let _ = error {
                             // Handle error
                         } else if result {
                             progress.pinInBackgroundWithBlock({ (result, error) -> Void in
@@ -324,37 +324,33 @@ public class AnimeInformationViewController: AnimeBaseViewController {
     
     @IBAction func moreOptionsPressed(sender: AnyObject) {
         
-        var progress = anime.progress
- 
-        var alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
         
-        
-        alert.addAction(UIAlertAction(title: "Rate anime", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
+        alert.addAction(UIAlertAction(title: "Rate anime", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction) -> Void in
             
             if let progress = self.anime.progress, let tabBarController = self.tabBarController, let title = self.anime.title {
                 RateViewController.showRateDialogWith(tabBarController, title: "Rate \(title)", initialRating: Float(progress.score)/2.0, anime: self.anime, delegate: self)
             } else {
-                var alert = UIAlertController(title: "Not saved", message: "Add the anime to your library first", preferredStyle: UIAlertControllerStyle.Alert)
+                let alert = UIAlertController(title: "Not saved", message: "Add the anime to your library first", preferredStyle: UIAlertControllerStyle.Alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Cancel, handler:nil))
                 self.presentViewController(alert, animated: true, completion: nil)
             }
             
         }))
         
-        if let nextEpisode = anime.nextEpisode {
+        if let _ = anime.nextEpisode {
             let scheduledReminder = ReminderController.scheduledReminderFor(anime)
             let remindersTitle = scheduledReminder == nil ? "Enable reminders" : "Disable reminders"
             let actionStyle: UIAlertActionStyle = scheduledReminder == nil ? .Default : .Destructive
             alert.addAction(UIAlertAction(title: remindersTitle, style: actionStyle, handler: { (alertAction: UIAlertAction!) -> Void in
-                if let progress = self.anime.progress, let tabBarController = self.tabBarController, let title = self.anime.title {
-                    if let reminder = scheduledReminder {
+                if let _ = self.anime.progress, let _ = self.tabBarController, let _ = self.anime.title {
+                    if let _ = scheduledReminder {
                         ReminderController.disableReminderForAnime(self.anime)
                     } else {
-                        let success = ReminderController.scheduleReminderForAnime(self.anime)
-                        
+                        _ = ReminderController.scheduleReminderForAnime(self.anime)
                     }
                 } else {
-                    var alert = UIAlertController(title: "Not saved", message: "Add the anime to your library first", preferredStyle: UIAlertControllerStyle.Alert)
+                    let alert = UIAlertController(title: "Not saved", message: "Add the anime to your library first", preferredStyle: UIAlertControllerStyle.Alert)
                     alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Cancel, handler:nil))
                     self.presentViewController(alert, animated: true, completion: nil)
                 }
@@ -364,11 +360,11 @@ public class AnimeInformationViewController: AnimeBaseViewController {
         alert.addAction(UIAlertAction(title: "Refresh Images", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
             PFCloud.callFunctionInBackground("updateAnimeInformation", withParameters: ["malID":self.anime.myAnimeListID], block: { (result, error) -> Void in
                 self.presentBasicAlertWithTitle("Refreshing..", message: "Data will be refreshed soon")
-                println("Refreshed!!")
+                print("Refreshed!!")
             })
         }))
         
-        alert.addAction(UIAlertAction(title: "Send on Messenger", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
+        alert.addAction(UIAlertAction(title: "Send on Messenger", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction) -> Void in
             
             let photo = FBSDKSharePhoto()
             photo.image = self.fanartImageView.image
@@ -379,7 +375,7 @@ public class AnimeInformationViewController: AnimeBaseViewController {
             FBSDKMessageDialog.showWithContent(content, delegate: nil)
         }))
         
-        alert.addAction(UIAlertAction(title: "Share on Facebook", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
+        alert.addAction(UIAlertAction(title: "Share on Facebook", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction) -> Void in
             
             let photo = FBSDKSharePhoto()
             photo.image = self.fanartImageView.image
@@ -390,7 +386,7 @@ public class AnimeInformationViewController: AnimeBaseViewController {
             FBSDKShareDialog.showFromViewController(self, withContent: content, delegate: nil)
         }))
         
-        alert.addAction(UIAlertAction(title: "Share", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
+        alert.addAction(UIAlertAction(title: "Share", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction) -> Void in
             
             var textToShare = ""
             
@@ -433,7 +429,7 @@ public class AnimeInformationViewController: AnimeBaseViewController {
     // MARK: - Helper Functions
     
     func hideStatusBar() -> Bool {
-        var offset = HeaderViewHeight - self.scrollView().contentOffset.y - TopBarHeight
+        let offset = HeaderViewHeight - self.scrollView().contentOffset.y - TopBarHeight
         if offset > StatusBarHeight {
             return true
         } else {
@@ -543,10 +539,10 @@ extension AnimeInformationViewController: UITableViewDataSource {
                 cell.detailLabel.text = "\(startDate) - \(endDate)"
             case 4:
                 cell.titleLabel.text = "Producers"
-                cell.detailLabel.text = ", ".join(anime.producers)
+                cell.detailLabel.text = anime.producers.joinWithSeparator(", ")
             case 5:
                 cell.titleLabel.text = "Genres"
-                cell.detailLabel.text = ", ".join(anime.genres)
+                cell.detailLabel.text = anime.genres.joinWithSeparator(", ")
             case 6:
                 cell.titleLabel.text = "Duration"
                 let duration = (anime.duration != 0) ? anime.duration.description : "?"
@@ -556,13 +552,13 @@ extension AnimeInformationViewController: UITableViewDataSource {
                 cell.detailLabel.text = anime.details.classification
             case 8:
                 cell.titleLabel.text = "English Titles"
-                cell.detailLabel.text = anime.details.englishTitles.count != 0 ? "\n".join(anime.details.englishTitles) : "-"
+                cell.detailLabel.text = anime.details.englishTitles.count != 0 ? anime.details.englishTitles.joinWithSeparator("\n") : "-"
             case 9:
                 cell.titleLabel.text = "Japanese Titles"
-                cell.detailLabel.text = anime.details.japaneseTitles.count != 0 ? "\n".join(anime.details.japaneseTitles) : "-"
+                cell.detailLabel.text = anime.details.japaneseTitles.count != 0 ? anime.details.japaneseTitles.joinWithSeparator("\n") : "-"
             case 10:
                 cell.titleLabel.text = "Synonyms"
-                cell.detailLabel.text = anime.details.synonyms.count != 0 ? "\n".join(anime.details.synonyms) : "-"
+                cell.detailLabel.text = anime.details.synonyms.count != 0 ? anime.details.synonyms.joinWithSeparator("\n") : "-"
             default:
                 break
             }
@@ -669,7 +665,6 @@ extension AnimeInformationViewController: UITableViewDelegate {
             let initialUrl = NSURL(string: link.url)
             webController.initWithTitle(link.site.rawValue, initialUrl: initialUrl)
             presentViewController(navController, animated: true, completion: nil)
-        default: break
         }
 
     }
@@ -677,7 +672,7 @@ extension AnimeInformationViewController: UITableViewDelegate {
 
 extension AnimeInformationViewController: RateViewControllerProtocol {
     
-    public func rateControllerDidFinishedWith(#anime: Anime, rating: Float) {
+    public func rateControllerDidFinishedWith(anime anime: Anime, rating: Float) {
         
         RateViewController.updateAnime(anime, withRating: rating*2.0)
         updateInformationWithAnime()

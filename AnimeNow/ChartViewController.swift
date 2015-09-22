@@ -123,7 +123,7 @@ class ChartViewController: UIViewController {
         
         loadingView = LoaderView(parentView: view)
         
-        var tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "changeSeasonalChart")
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "changeSeasonalChart")
         navigationController?.navigationBar.addGestureRecognizer(tapGestureRecognizer)
         
         prepareForList(selectedList)
@@ -184,8 +184,7 @@ class ChartViewController: UIViewController {
         ChartController.fetchAllSeasons()
         .continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
             
-            var seasons: [Int:[SeasonalChart]] = [:]
-            var result = task.result as! [SeasonalChart]
+            let result = task.result as! [SeasonalChart]
             
             self.chartsDataSource = result
             let currentSeasonalChart = result.filter({$0.title == seasonalChart})
@@ -233,19 +232,16 @@ class ChartViewController: UIViewController {
         
         currentSortType = sortType
         
-        let today = NSDate()
-        var index = 0
-        
         dataSource = dataSource.map() { (var animeArray) -> [Anime] in
             switch self.currentSortType {
             case .Rating:
-                animeArray.sort({ $0.rank < $1.rank && $0.rank != 0 })
+                animeArray.sortInPlace({ $0.rank < $1.rank && $0.rank != 0 })
             case .Popularity:
-                animeArray.sort({ $0.popularityRank < $1.popularityRank})
+                animeArray.sortInPlace({ $0.popularityRank < $1.popularityRank})
             case .Title:
-                animeArray.sort({ $0.title < $1.title})
+                animeArray.sortInPlace({ $0.title < $1.title})
             case .NextAiringEpisode:
-                animeArray.sort({ (anime1: Anime, anime2: Anime) in
+                animeArray.sortInPlace({ (anime1: Anime, anime2: Anime) in
                     
                     let startDate1 = anime1.nextEpisodeDate ?? NSDate(timeIntervalSinceNow: 60*60*24*100)
                     let startDate2 = anime2.nextEpisodeDate ?? NSDate(timeIntervalSinceNow: 60*60*24*100)
@@ -258,7 +254,7 @@ class ChartViewController: UIViewController {
         }
         
         // Filter
-        searchBar(searchBar, textDidChange: searchBar.text)
+        searchBar(searchBar, textDidChange: searchBar.text!)
     }
     
     func updateLayoutType(layoutType: LayoutType) {
@@ -408,7 +404,7 @@ extension ChartViewController: UICollectionViewDataSource {
         
         if kind == UICollectionElementKindSectionHeader {
             
-            var headerView = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView", forIndexPath: indexPath) as! BasicCollectionReusableView
+            let headerView = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView", forIndexPath: indexPath) as! BasicCollectionReusableView
     
                 var title = ""
                 switch indexPath.section {
@@ -503,8 +499,8 @@ extension ChartViewController: UISearchBarDelegate {
         
         filteredDataSource = dataSource.map { (var animeTypeArray) -> [Anime] in
             func filterText(anime: Anime) -> Bool {
-                return (anime.title!.rangeOfString(searchBar.text) != nil) ||
-                    (" ".join(anime.genres).rangeOfString(searchBar.text) != nil)
+                return (anime.title!.rangeOfString(searchBar.text!) != nil) ||
+                    (anime.genres.joinWithSeparator(" ").rangeOfString(searchBar.text!) != nil)
                 
             }
             return animeTypeArray.filter(filterText)
@@ -514,7 +510,7 @@ extension ChartViewController: UISearchBarDelegate {
 }
 
 extension ChartViewController: FilterViewControllerDelegate {
-    func finishedWith(#configuration: Configuration, selectedGenres: [String]) {
+    func finishedWith(configuration configuration: Configuration, selectedGenres: [String]) {
         
         currentConfiguration = configuration
         

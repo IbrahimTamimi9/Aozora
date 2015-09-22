@@ -50,7 +50,7 @@ class ForumsViewController: UIViewController {
         
         timer = NSTimer.scheduledTimerWithTimeInterval(60.0, target: self, selector: "reloadTableView", userInfo: nil, repeats: true)
         
-        var tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "changeList")
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "changeList")
         navigationBarTitle.addGestureRecognizer(tapGestureRecognizer)
         
         fetchThreadTags()
@@ -296,7 +296,7 @@ extension ForumsViewController: UITableViewDelegate {
 }
 
 extension ForumsViewController: FetchControllerDelegate {
-    func didFetchFor(#skip: Int) {
+    func didFetchFor(skip skip: Int) {
         refreshControl.endRefreshing()
         loadingView.stopAnimating()
     }
@@ -328,9 +328,9 @@ extension ForumsViewController: TTTAttributedLabelDelegate {
     func attributedLabel(label: TTTAttributedLabel!, didSelectLinkWithURL url: NSURL!) {
         
         if let host = url.host where host == "tag",
-            let index = url.pathComponents?[1] as? String,
-            let idx = index.toInt() {
-                println(idx)
+            let index = url.pathComponents?[1],
+            let idx = Int(index) {
+                print(idx)
         }
     }
 }

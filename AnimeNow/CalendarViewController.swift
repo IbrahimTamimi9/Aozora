@@ -58,7 +58,7 @@ class CalendarViewController: XLButtonBarPagerTabStripViewController {
                 var animeByWeekday: [[Anime]] = [[],[],[],[],[],[],[]]
                 
                 let calendar = NSCalendar.currentCalendar()
-                let unitFlags: NSCalendarUnit = NSCalendarUnit.CalendarUnitWeekday
+                let unitFlags: NSCalendarUnit = .Weekday
                 
                 for anime in result {
                     let startDateTime = anime.nextEpisodeDate ?? NSDate()
@@ -70,7 +70,7 @@ class CalendarViewController: XLButtonBarPagerTabStripViewController {
                 
                 var todayWeekday = calendar.components(unitFlags, fromDate: NSDate()).weekday - 1
                 while (todayWeekday > 0) {
-                    var currentFirstWeekdays = animeByWeekday[0]
+                    let currentFirstWeekdays = animeByWeekday[0]
                     animeByWeekday.removeAtIndex(0)
                     animeByWeekday.append(currentFirstWeekdays)
                     todayWeekday -= 1
@@ -82,14 +82,9 @@ class CalendarViewController: XLButtonBarPagerTabStripViewController {
         })
         
     }
-    
-    @IBAction func dismissViewControllerPressed(sender: AnyObject) {
-        dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-}
 
-extension CalendarViewController: XLPagerTabStripViewControllerDataSource {
+    // MARK: - XLPagerTabStripViewControllerDataSource
+    
     override func childViewControllersForPagerTabStripViewController(pagerTabStripViewController: XLPagerTabStripViewController!) -> [AnyObject]! {
         
         let storyboard = UIStoryboard(name: "Season", bundle: nil)
@@ -97,22 +92,29 @@ extension CalendarViewController: XLPagerTabStripViewControllerDataSource {
         // Set weekday strings
         let calendar = NSCalendar.currentCalendar()
         let today = NSDate()
-        var dateFormatter = NSDateFormatter()
+        let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "eeee, MMM dd"
         for daysAhead in 0..<7 {
-            let date = calendar.dateByAddingUnit(NSCalendarUnit.CalendarUnitDay, value: daysAhead, toDate: today, options: nil)
+            let date = calendar.dateByAddingUnit(NSCalendarUnit.Day, value: daysAhead, toDate: today, options: [])
             let dateString = dateFormatter.stringFromDate(date!)
             weekdayStrings.append(dateString)
             
             // Instatiate view controller
-            var controller = storyboard.instantiateViewControllerWithIdentifier("DayList") as! DayViewController
+            let controller = storyboard.instantiateViewControllerWithIdentifier("DayList") as! DayViewController
             controller.initWithTitle(dateString, section: daysAhead)
             dayViewControllers.append(controller)
         }
         
         return dayViewControllers
     }
+    
+    // MARK: - IBActions
+    
+    @IBAction func dismissViewControllerPressed(sender: AnyObject) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
 }
+
 
 extension CalendarViewController: UINavigationBarDelegate {
     func positionForBar(bar: UIBarPositioning) -> UIBarPosition {

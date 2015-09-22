@@ -67,7 +67,7 @@ public class Anime: PFObject, PFSubclassing {
     public var progress: AnimeProgress?
     
     public func fanartURLString() -> String {
-        if let fanartUrl = fanart where count(fanartUrl) != 0 {
+        if let fanartUrl = fanart where fanartUrl.characters.count != 0 {
             return fanartUrl
         } else {
             return imageUrl.stringByReplacingOccurrencesOfString(".jpg", withString: "l.jpg")
@@ -111,7 +111,7 @@ public class Anime: PFObject, PFSubclassing {
         }.continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
             
             if let result = task.result as? [Episode] where result.count > 0 {
-                println("Found \(result.count) eps from network")
+                print("Found \(result.count) eps from network")
                 self.cachedEpisodeList += result
                 if pin {
                     let query = Episode.query()!
@@ -185,11 +185,11 @@ public class Anime: PFObject, PFSubclassing {
         }
         
         let cal = NSCalendar.currentCalendar()
-        let unit: NSCalendarUnit = .CalendarUnitWeekOfYear
-        let components = cal.components(unit, fromDate: startDate, toDate: now, options: nil)
+        let unit: NSCalendarUnit = .WeekOfYear
+        let components = cal.components(unit, fromDate: startDate, toDate: now, options: [])
         components.weekOfYear = components.weekOfYear+1
         
-        let nextEpisodeDate: NSDate = cal.dateByAddingComponents(components, toDate: startDate, options: nil)!
+        let nextEpisodeDate: NSDate = cal.dateByAddingComponents(components, toDate: startDate, options: [])!
         return (nextEpisodeDate, components.weekOfYear+1)
     }
     
@@ -229,7 +229,7 @@ public class Anime: PFObject, PFSubclassing {
         return query
     }
     
-    public class func queryWith(#objectID: String) -> PFQuery {
+    public class func queryWith(objectID objectID: String) -> PFQuery {
         
         let query = Anime.queryIncludingAddData()
         query.limit = 1
@@ -237,7 +237,7 @@ public class Anime: PFObject, PFSubclassing {
         return query
     }
     
-    public class func queryWith(#malID: Int) -> PFQuery {
+    public class func queryWith(malID malID: Int) -> PFQuery {
         
         let query = Anime.queryIncludingAddData()
         query.limit = 1

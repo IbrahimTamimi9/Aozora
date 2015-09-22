@@ -26,7 +26,7 @@ public class LoaderView: UIView {
         super.init(frame: frame)
     }
     
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
@@ -39,13 +39,13 @@ public class LoaderView: UIView {
         rectShape.path = UIBezierPath(ovalInRect: rectShape.bounds).CGPath
         rectShape.fillColor = UIColor.belizeHole().CGColor
         
-        setTranslatesAutoresizingMaskIntoConstraints(false)
+        translatesAutoresizingMaskIntoConstraints = false
         
         parentView.addSubview(self)
         
         let viewsDictionary = ["view":self]
-        let constraintH = NSLayoutConstraint.constraintsWithVisualFormat("H:[view(\(diameter))]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        let constraintV = NSLayoutConstraint.constraintsWithVisualFormat("V:[view(\(diameter))]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
+        let constraintH = NSLayoutConstraint.constraintsWithVisualFormat("H:[view(\(diameter))]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
+        let constraintV = NSLayoutConstraint.constraintsWithVisualFormat("V:[view(\(diameter))]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
         
         parentView.addConstraints(constraintH)
         parentView.addConstraints(constraintV)

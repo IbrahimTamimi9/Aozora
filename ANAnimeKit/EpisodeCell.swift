@@ -35,7 +35,7 @@ class EpisodeCell: UICollectionViewCell {
     }
     
     @IBAction func shareOnMessengerPressed(sender: AnyObject) {
-        if FBSDKMessengerSharer.messengerPlatformCapabilities() & FBSDKMessengerPlatformCapability.Image != nil {
+        if FBSDKMessengerSharer.messengerPlatformCapabilities().intersect(FBSDKMessengerPlatformCapability.Image) != [] {
             FBSDKMessengerSharer.shareImage(screenshotImageView.image, withOptions: nil)
         }
     }

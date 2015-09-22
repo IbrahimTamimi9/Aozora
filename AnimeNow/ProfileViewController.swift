@@ -92,7 +92,7 @@ public class ProfileViewController: ThreadViewController {
     }
     
     func sizeHeaderToFit() {
-        var header = tableView.tableHeaderView!
+        let header = tableView.tableHeaderView!
 
         if userProfile != User.currentUser() {
             segmentedControlHeight.constant = 0
@@ -104,7 +104,7 @@ public class ProfileViewController: ThreadViewController {
         
         aboutLabel.preferredMaxLayoutWidth = aboutLabel.frame.size.width
         
-        var height = header.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height
+        let height = header.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height
         var frame = header.frame
         
         frame.size.height = height
@@ -124,7 +124,7 @@ public class ProfileViewController: ThreadViewController {
             if let result = result as? [Notification] {
                 let unreadNotifications = result.filter { (notification: PFObject) -> Bool in
                     let notification = notification as! Notification
-                    return !contains(notification.readBy, User.currentUser()!) && (notification.triggeredBy.count > 1 || (notification.triggeredBy.count == 1 && notification.triggeredBy.last != User.currentUser()!))
+                    return !notification.readBy.contains(User.currentUser()!) && (notification.triggeredBy.count > 1 || (notification.triggeredBy.count == 1 && notification.triggeredBy.last != User.currentUser()!))
                 }
                 if unreadNotifications.count == 0 {
                     self.noNewNotifications()
@@ -145,7 +145,7 @@ public class ProfileViewController: ThreadViewController {
     
     func fetchUserDetails(username: String) {
         
-        if let profile = self.userProfile {
+        if let _ = self.userProfile {
             configureFetchController()
         }
         
@@ -182,12 +182,12 @@ public class ProfileViewController: ThreadViewController {
             let relationQuery = User.currentUser()!.following().query()!
             relationQuery.whereKey("aozoraUsername", equalTo: username)
             relationQuery.findObjectsInBackgroundWithBlock { (result, error) -> Void in
-                if let user = result?.last as? User {
+                if let _ = result?.last as? User {
                     // Following this user
                     self.followButton.setTitle("  Following", forState: .Normal)
                     self.followButton.layoutIfNeeded()
                     self.followingUser = true
-                } else if let error = error {
+                } else if let _ = error {
                     // TODO: Show error
                     
                 } else {
@@ -220,10 +220,10 @@ public class ProfileViewController: ThreadViewController {
         let proString = "PRO"
         
         proBadge.hidden = true
-        if find(user.badges, proPlusString) != nil {
+        if user.badges.indexOf(proPlusString) != nil {
             proBadge.hidden = false
             proBadge.text = proPlusString
-        } else if find(user.badges, proString) != nil {
+        } else if user.badges.indexOf(proString) != nil {
             proBadge.hidden = false
             proBadge.text = proString
         }
@@ -325,6 +325,76 @@ public class ProfileViewController: ThreadViewController {
         }
     }
     
+    
+    // MARK: - FetchControllerQueryDelegate
+    
+    public override func queriesForSkip(skip skip: Int) -> [PFQuery]? {
+        
+        let innerQuery = TimelinePost.query()!
+        innerQuery.skip = skip
+        innerQuery.limit = FetchLimit
+        innerQuery.whereKey("replyLevel", equalTo: 0)
+        innerQuery.orderByDescending("createdAt")
+        
+        if segmentedControl.selectedSegmentIndex == 1 {
+            // 'Me' query
+            innerQuery.whereKey("userTimeline", equalTo: userProfile!)
+        } else {
+            innerQuery.whereKey("userTimeline", matchesQuery: userProfile!.following().query()!)
+        }
+        
+        // 'Feed' query
+        let query = innerQuery.copy() as! PFQuery
+        query.includeKey("episode")
+        query.includeKey("postedBy")
+        query.includeKey("userTimeline")
+        
+        let repliesQuery = TimelinePost.query()!
+        repliesQuery.skip = 0
+        repliesQuery.limit = 1000
+        repliesQuery.whereKey("parentPost", matchesKey: "objectId", inQuery: innerQuery)
+        repliesQuery.orderByAscending("createdAt")
+        repliesQuery.includeKey("episode")
+        repliesQuery.includeKey("postedBy")
+        repliesQuery.includeKey("userTimeline")
+        
+        return [query, repliesQuery]
+    }
+
+    
+    // MARK: - CommentViewControllerDelegate
+
+    public override func commentViewControllerDidFinishedPosting(newPost: PFObject, parentPost: PFObject?, edited: Bool) {
+        super.commentViewControllerDidFinishedPosting(newPost, parentPost: parentPost, edited: edited)
+        
+        if edited {
+            // Don't insert if edited
+            tableView.reloadData()
+            return
+        }
+        
+        if let parentPost = parentPost {
+            // Inserting a new reply in-place
+            var parentPost = parentPost as! Postable
+            parentPost.replies.append(newPost)
+            tableView.reloadData()
+        } else if parentPost == nil {
+            // Inserting a new post in the top, if we're in the top of the thread
+            fetchController.dataSource.insert(newPost, atIndex: 0)
+            tableView.reloadData()
+        }
+    }
+    
+    
+    // MARK: - FetchControllerDelegate
+
+    public override func didFetchFor(skip skip: Int) {
+        super.didFetchFor(skip: skip)
+    }
+
+    
+    // MARK: - IBActions
+    
     @IBAction func showFollowingUsers(sender: AnyObject) {
         let userListController = UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("UserList") as! UserListViewController
         let query = userProfile!.following().query()!
@@ -346,15 +416,15 @@ public class ProfileViewController: ThreadViewController {
     
     @IBAction func showSettings(sender: AnyObject) {
         
-        var alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
         
-        alert.addAction(UIAlertAction(title: "Edit Profile", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
+        alert.addAction(UIAlertAction(title: "Edit Profile", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction) -> Void in
             let editProfileController =  UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("EditProfile") as! EditProfileViewController
             editProfileController.delegate = self
             self.presentViewController(editProfileController, animated: true, completion: nil)
         }))
         
-        alert.addAction(UIAlertAction(title: "Settings", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
+        alert.addAction(UIAlertAction(title: "Settings", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction) -> Void in
             let settings = UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController() as! UINavigationController
             self.presentViewController(settings, animated: true, completion: nil)
         }))
@@ -375,71 +445,6 @@ extension ProfileViewController: EditProfileViewControllerProtocol {
     func editProfileViewControllerDidEditedUser(user: User) {
         userProfile = user
         fetchUserDetails(user.aozoraUsername)
-    }
-}
-
-extension ProfileViewController: FetchControllerQueryDelegate {
-    
-    public override func queriesForSkip(#skip: Int) -> [PFQuery]? {
-        
-        let innerQuery = TimelinePost.query()!
-        innerQuery.skip = skip
-        innerQuery.limit = FetchLimit
-        innerQuery.whereKey("replyLevel", equalTo: 0)
-        innerQuery.orderByDescending("createdAt")
-        
-        if segmentedControl.selectedSegmentIndex == 1 {
-            // 'Me' query
-            innerQuery.whereKey("userTimeline", equalTo: userProfile!)
-        } else {
-            innerQuery.whereKey("userTimeline", matchesQuery: userProfile!.following().query()!)
-        }
-
-        // 'Feed' query
-        let query = innerQuery.copy() as! PFQuery
-        query.includeKey("episode")
-        query.includeKey("postedBy")
-        query.includeKey("userTimeline")
-        
-        let repliesQuery = TimelinePost.query()!
-        repliesQuery.skip = 0
-        repliesQuery.limit = 1000
-        repliesQuery.whereKey("parentPost", matchesKey: "objectId", inQuery: innerQuery)
-        repliesQuery.orderByAscending("createdAt")
-        repliesQuery.includeKey("episode")
-        repliesQuery.includeKey("postedBy")
-        repliesQuery.includeKey("userTimeline")
-        
-        return [query, repliesQuery]
-    }
-}
-
-extension ProfileViewController: CommentViewControllerDelegate {
-    public override func commentViewControllerDidFinishedPosting(newPost: PFObject, parentPost: PFObject?, edited: Bool) {
-        super.commentViewControllerDidFinishedPosting(newPost, parentPost: parentPost, edited: edited)
-        
-        if edited {
-            // Don't insert if edited
-            tableView.reloadData()
-            return
-        }
-        
-        if let parentPost = parentPost {
-            // Inserting a new reply in-place
-            var parentPost = parentPost as! Postable
-            parentPost.replies.append(newPost)
-            tableView.reloadData()
-        } else if parentPost == nil {
-            // Inserting a new post in the top, if we're in the top of the thread
-            fetchController.dataSource.insert(newPost, atIndex: 0)
-            tableView.reloadData()
-        }
-    }
-}
-
-extension ProfileViewController: FetchControllerDelegate {
-    public override func didFetchFor(#skip: Int) {
-        super.didFetchFor(skip: skip)
     }
 }
 

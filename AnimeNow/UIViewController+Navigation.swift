@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import ANParseKit
 import ANCommonKit
 import JTSImageViewController
 
@@ -15,7 +14,7 @@ extension UIViewController {
     
     public func presentViewControllerModal(controller: UIViewController) -> ZFModalTransitionAnimator {
         
-        var animator = ZFModalTransitionAnimator(modalViewController: controller)
+        let animator = ZFModalTransitionAnimator(modalViewController: controller)
         animator.dragable = true
         animator.direction = ZFModalTransitonDirection.Bottom
 

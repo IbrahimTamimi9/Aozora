@@ -30,7 +30,7 @@ public class AnimeBaseViewController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let tabBar = tabBarController as? CustomTabBarController {
+        if let _ = tabBarController as? CustomTabBarController {
             
             navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Stop, target: self, action: "dismissViewControllerPressed")
             

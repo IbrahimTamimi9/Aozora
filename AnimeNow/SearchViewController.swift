@@ -216,11 +216,11 @@ extension SearchViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         let object = dataSource[indexPath.row]
-        if let anime = object as? Anime {
+        if let _ = object as? Anime {
             return CGSize(width: view.bounds.size.width, height: 132)
-        } else if let user = object as? User {
+        } else if let _ = object as? User {
             return CGSize(width: view.bounds.size.width, height: 44)
-        } else if let user = object as? Thread {
+        } else if let _ = object as? Thread {
             return CGSize(width: view.bounds.size.width, height: 44)
         }
         return CGSizeZero
@@ -234,14 +234,14 @@ extension SearchViewController: UISearchBarDelegate {
             cancelToken.cancel()
         }
         
-        fetchAnimeWithQuery(searchBar.text, cancellationToken: NSOperation())
+        fetchAnimeWithQuery(searchBar.text!, cancellationToken: NSOperation())
         view.endEditing(true)
         searchBar.enableCancelButton()
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         if searchBar.selectedScopeButtonIndex == SearchScope.MyLibrary.rawValue {
-            fetchAnimeWithQuery(searchBar.text, cancellationToken: NSOperation())
+            fetchAnimeWithQuery(searchBar.text!, cancellationToken: NSOperation())
         }
     }
     

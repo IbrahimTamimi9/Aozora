@@ -35,9 +35,9 @@ public class NotificationThreadViewController: ThreadViewController {
             tableView.tableHeaderView = nil
         }
         
-        if let timelinePost = timelinePost {
+        if let _ = timelinePost {
             viewMoreButton.setTitle("View Timeline  ", forState: .Normal)
-        } else if let threadPost = post {
+        } else if let _ = post {
             viewMoreButton.setTitle("View Thread  ", forState: .Normal)
         }
         
@@ -59,6 +59,75 @@ public class NotificationThreadViewController: ThreadViewController {
         fetchController.configureWith(self, queryDelegate: self, tableView: tableView, limit: FetchLimit, datasourceUsesSections: true)
     }
     
+    // MARK: - FetchControllerQueryDelegate
+    
+    public override func queriesForSkip(skip skip: Int) -> [PFQuery]? {
+        super.queriesForSkip(skip: skip)
+        var innerQuery: PFQuery!
+        var repliesQuery: PFQuery!
+        if let timelinePost = timelinePost as? TimelinePost {
+            innerQuery = TimelinePost.query()!
+            innerQuery.whereKey("objectId", equalTo: timelinePost.objectId!)
+            
+            repliesQuery = TimelinePost.query()!
+        } else if let post = post as? Post {
+            innerQuery = Post.query()!
+            innerQuery.whereKey("objectId", equalTo: post.objectId!)
+            
+            repliesQuery = Post.query()!
+        }
+        
+        let query = innerQuery.copy() as! PFQuery
+        query.includeKey("postedBy")
+        
+        repliesQuery.skip = 0
+        repliesQuery.limit = 1000
+        repliesQuery.whereKey("parentPost", matchesKey: "objectId", inQuery: innerQuery)
+        repliesQuery.orderByAscending("createdAt")
+        repliesQuery.includeKey("postedBy")
+        
+        return [query, repliesQuery]
+    }
+
+    
+    // MARK: - CommentViewControllerDelegate
+
+    public override func commentViewControllerDidFinishedPosting(post: PFObject, parentPost: PFObject?, edited: Bool) {
+        super.commentViewControllerDidFinishedPosting(post, parentPost: parentPost, edited: edited)
+        
+        if edited {
+            // Don't insert if edited
+            tableView.reloadData()
+            return
+        }
+        
+        if let parentPost = parentPost {
+            // Inserting a new reply in-place
+            var parentPost = parentPost as! Postable
+            parentPost.replies.append(post)
+            tableView.reloadData()
+        } else if parentPost == nil {
+            // Inserting a new post in the bottom, if we're in the bottom of the thread
+            if !fetchController.canFetchMoreData {
+                fetchController.dataSource.append(post)
+                tableView.reloadData()
+            }
+        }
+    }
+
+    
+    // MARK: - FetchControllerDelegate
+
+        public override func didFetchFor(skip skip: Int) {
+            super.didFetchFor(skip: skip)
+            let post = fetchController.objectInSection(0)
+            if let post = post as? TimelinePostable {
+                navigationItem.title = "In " + post.userTimeline.aozoraUsername + " timeline"
+            } else if let post = post as? ThreadPostable {
+                navigationItem.title = "In " + post.thread.title
+            }
+        }
+    
     // MARK: - IBAction
     
     public override func replyToThreadPressed(sender: AnyObject) {
@@ -66,7 +135,7 @@ public class NotificationThreadViewController: ThreadViewController {
         
         if let thread = thread where User.currentUserLoggedIn() {
             let comment = ANParseKit.newPostViewController()
-            comment.initWith(thread: thread, threadType: threadType, delegate: self)
+            comment.initWith(thread, threadType: threadType, delegate: self)
             presentViewController(comment, animated: true, completion: nil)
         } else if let thread = thread where thread.locked {
             presentBasicAlertWithTitle("Thread is locked", message: nil)
@@ -89,8 +158,7 @@ public class NotificationThreadViewController: ThreadViewController {
         if let timelinePost = timelinePost {
             openProfile(timelinePost.userTimeline)
             
-        } else if let threadPost = post {
-            
+        } else if let _ = post {
             let threadController = ANAnimeKit.customThreadViewController()
             if let thread = thread, let episode = thread.episode, let anime = thread.anime {
                 threadController.initWithEpisode(episode, anime: anime)
@@ -106,73 +174,6 @@ public class NotificationThreadViewController: ThreadViewController {
     }
 }
 
-extension NotificationThreadViewController: FetchControllerQueryDelegate {
-    
-    public override func queriesForSkip(#skip: Int) -> [PFQuery]? {
-        super.queriesForSkip(skip: skip)
-        var innerQuery: PFQuery!
-        var repliesQuery: PFQuery!
-        if let timelinePost = timelinePost as? TimelinePost {
-            innerQuery = TimelinePost.query()!
-            innerQuery.whereKey("objectId", equalTo: timelinePost.objectId!)
-            
-            repliesQuery = TimelinePost.query()!
-        } else if let post = post as? Post {
-            innerQuery = Post.query()!
-            innerQuery.whereKey("objectId", equalTo: post.objectId!)
-            
-            repliesQuery = Post.query()!
-        }
-        
-        var query = innerQuery.copy() as! PFQuery
-        query.includeKey("postedBy")
-        
-        repliesQuery.skip = 0
-        repliesQuery.limit = 1000
-        repliesQuery.whereKey("parentPost", matchesKey: "objectId", inQuery: innerQuery)
-        repliesQuery.orderByAscending("createdAt")
-        repliesQuery.includeKey("postedBy")
-        
-        return [query, repliesQuery]
-    }
-}
-
-extension NotificationThreadViewController: CommentViewControllerDelegate {
-    public override func commentViewControllerDidFinishedPosting(post: PFObject, parentPost: PFObject?, edited: Bool) {
-        super.commentViewControllerDidFinishedPosting(post, parentPost: parentPost, edited: edited)
-
-        if edited {
-            // Don't insert if edited
-            tableView.reloadData()
-            return
-        }
-        
-        if let parentPost = parentPost {
-            // Inserting a new reply in-place
-            var parentPost = parentPost as! Postable
-            parentPost.replies.append(post)
-            tableView.reloadData()
-        } else if parentPost == nil {
-            // Inserting a new post in the bottom, if we're in the bottom of the thread
-            if !fetchController.canFetchMoreData {
-                fetchController.dataSource.append(post)
-                tableView.reloadData()
-            }
-        }
-    }
-}
-
-extension NotificationThreadViewController: FetchControllerDelegate {
-    public override func didFetchFor(#skip: Int) {
-        super.didFetchFor(skip: skip)
-        let post = fetchController.objectInSection(0)
-        if let post = post as? TimelinePostable {
-            navigationItem.title = "In " + post.userTimeline.aozoraUsername + " timeline"
-        } else if let post = post as? ThreadPostable {
-            navigationItem.title = "In " + post.thread.title
-        }
-    }
-}
 
 extension NotificationThreadViewController: UINavigationBarDelegate {
     public func positionForBar(bar: UIBarPositioning) -> UIBarPosition {

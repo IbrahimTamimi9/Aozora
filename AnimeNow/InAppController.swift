@@ -72,7 +72,7 @@ class InAppTransactionController {
         
         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         
-        var alert = UIAlertController(title: "Payment Transaction Failed", message: error.localizedDescription, preferredStyle: UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title: "Payment Transaction Failed", message: error.localizedDescription, preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
         
         if let window = UIApplication.sharedApplication().delegate?.window {

@@ -13,7 +13,7 @@ extension UISearchBar {
         for view1 in subviews {
             for view2 in view1.subviews {
                 if view2.isKindOfClass(UIButton) {
-                    var button = view2 as! UIButton
+                    let button = view2 as! UIButton
                     button.enabled = true
                     button.userInteractionEnabled = true
                 }

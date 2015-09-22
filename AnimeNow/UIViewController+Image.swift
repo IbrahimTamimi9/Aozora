@@ -23,7 +23,7 @@ extension UIViewController {
         imageInfo.referenceView = imageView
         
         let controller = JTSImageViewController(imageInfo: imageInfo, mode: JTSImageViewControllerMode.Image, backgroundStyle: JTSImageViewControllerBackgroundOptions.Blurred)
-        controller.showFromViewController(self, transition: JTSImageViewControllerTransition._FromOriginalPosition)
+        controller.showFromViewController(self, transition: JTSImageViewControllerTransition.FromOriginalPosition)
     }
     
 }

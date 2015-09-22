@@ -25,12 +25,12 @@ extension TFHppleElement {
         if children.count > nth {
             return children[nth] as? TFHppleElement
         } else {
-            println("Index out of bounds for nthChild, returning nil, object: \(self.raw)")
+            print("Index out of bounds for nthChild, returning nil, object: \(self.raw)")
             return nil;
         }
     }
     
-    public func hppleElementFor(#path: [Int]) -> TFHppleElement? {
+    public func hppleElementFor(path path: [Int]) -> TFHppleElement? {
         var path = path
         var hppleElement = self
         

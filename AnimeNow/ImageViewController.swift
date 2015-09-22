@@ -9,7 +9,7 @@
 import Foundation
 
 protocol ImageViewControllerDelegate: class {
-    func imageViewControllerSelected(#imageData: ImageData)
+    func imageViewControllerSelected(imageData imageData: ImageData)
 }
 
 public class ImageViewController: UIViewController {
@@ -20,7 +20,7 @@ public class ImageViewController: UIViewController {
     weak var delegate: ImageViewControllerDelegate?
     var imageData: ImageData!
     
-    func initWith(#imageData: ImageData) {
+    func initWith(imageData imageData: ImageData) {
         self.imageData = imageData
     }
     
@@ -55,7 +55,7 @@ extension ImageViewController: UIScrollViewDelegate {
         return imageView
     }
     
-    public func scrollViewDidEndZooming(scrollView: UIScrollView, withView view: UIView!, atScale scale: CGFloat) {
+    public func scrollViewDidEndZooming(scrollView: UIScrollView, withView view: UIView?, atScale scale: CGFloat) {
         
     }
 }

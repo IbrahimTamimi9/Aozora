@@ -38,7 +38,7 @@ class InAppPurchaseViewController: UITableViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "setPrices", name: PurchasedProNotification, object: nil)
         
         if let navController = parentViewController as? UINavigationController {
-            if let firstController = navController.viewControllers.first as? UIViewController where !firstController.isKindOfClass(SettingsViewController) {
+            if let firstController = navController.viewControllers.first where !firstController.isKindOfClass(SettingsViewController) {
                 navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Stop, target: self, action: "dismissViewControllerPressed")
             }
         }
@@ -70,7 +70,7 @@ class InAppPurchaseViewController: UITableViewController {
         }) { (error) -> Void in
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             
-            var alert = UIAlertController(title: "Products Request Failed", message: error.localizedDescription, preferredStyle: UIAlertControllerStyle.Alert)
+            let alert = UIAlertController(title: "Products Request Failed", message: error.localizedDescription, preferredStyle: UIAlertControllerStyle.Alert)
             alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
             
             self.presentViewController(alert, animated: true, completion: nil)

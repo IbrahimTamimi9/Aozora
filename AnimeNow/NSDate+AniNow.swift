@@ -27,7 +27,7 @@ extension NSDate {
     
     public func timeAgo() -> String {
         
-        var timeInterval = Int(-timeIntervalSinceDate(NSDate()))
+        let timeInterval = Int(-timeIntervalSinceDate(NSDate()))
         
         if let daysAgo = timeInterval / (60*60*24) as Int? where daysAgo > 0 {
             return "\(daysAgo) " + (daysAgo == 1 ? "day" : "days")

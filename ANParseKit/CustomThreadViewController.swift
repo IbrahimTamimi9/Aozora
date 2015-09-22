@@ -56,7 +56,7 @@ public class CustomThreadViewController: ThreadViewController {
         threadContent.enabledTextCheckingTypes = NSTextCheckingType.Link.rawValue
         threadContent.delegate = self;
         
-        if let episode = episode {
+        if let _ = episode {
             updateUIWithEpisodeThread(thread)
         } else {
             updateUIWithGeneralThread(thread)
@@ -101,11 +101,11 @@ public class CustomThreadViewController: ThreadViewController {
                 imageHeightConstraint.constant = 360
                 postedDate.text = anime.startDate != nil ? "Movie aired on \(anime.startDate!.mediumDate())" : ""
                 anime.details.fetchIfNeededInBackgroundWithBlock({ (details, error) -> Void in
-                    if let error = error {
+                    if let _ = error {
                         
                     } else {
                         if let string = (details as! AnimeDetail).attributedSynopsis() {
-                            println(string.string)
+                            print(string.string)
                             self.threadContent.text = string.string
                         } else {
                             self.threadContent.text = ""
@@ -150,7 +150,7 @@ public class CustomThreadViewController: ThreadViewController {
     }
     
     func sizeHeaderToFit() {
-        var header = tableView.tableHeaderView!
+        let header = tableView.tableHeaderView!
         
         header.setNeedsLayout()
         header.layoutIfNeeded()
@@ -160,7 +160,7 @@ public class CustomThreadViewController: ThreadViewController {
         threadContent.preferredMaxLayoutWidth = threadContent.frame.size.width
         tagsLabel.preferredMaxLayoutWidth = tagsLabel.frame.size.width
         
-        var height = header.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height
+        let height = header.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height
         var frame = header.frame
         
         frame.size.height = height
@@ -186,7 +186,7 @@ public class CustomThreadViewController: ThreadViewController {
         query.includeKey("tags")
         query.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
             
-            if let error = error {
+            if let _ = error {
                 // TODO: Show error
             } else if let result = result, let thread = result.last as? Thread {
                 self.thread = thread
@@ -205,7 +205,7 @@ public class CustomThreadViewController: ThreadViewController {
                     if let _ = error {
                         
                     } else {
-                        println("Created episode thread")
+                        print("Created episode thread")
                         self.fetchThread()
                     }
                 })
@@ -219,80 +219,9 @@ public class CustomThreadViewController: ThreadViewController {
         fetchController.configureWith(self, queryDelegate: self, tableView: tableView, limit: FetchLimit, datasourceUsesSections: true)
     }
     
-    // MARK: - IBAction
+    // MARK: - FetchControllerQueryDelegate
     
-    public override func replyToThreadPressed(sender: AnyObject) {
-        super.replyToThreadPressed(sender)
-        
-        if let thread = thread where User.currentUserLoggedIn() {
-            let comment = ANParseKit.newPostViewController()
-            comment.initWith(thread: thread, threadType: threadType, delegate: self)
-            presentViewController(comment, animated: true, completion: nil)
-        } else if let thread = thread where thread.locked {
-            presentBasicAlertWithTitle("Thread is locked", message: nil)
-        } else {
-            presentBasicAlertWithTitle("Login first", message: "Select 'Me' tab")
-        }
-    }
-    
-    @IBAction func playTrailerPressed(sender: AnyObject) {
-        if let thread = thread, let youtubeID = thread.youtubeID {
-            playTrailer(youtubeID)
-        }
-    }
-    
-    @IBAction func openUserProfile(sender: AnyObject) {
-        if let startedBy = thread?.startedBy {
-            openProfile(startedBy)
-        }
-    }
-    
-    @IBAction func editThread(sender: AnyObject) {
-        if let thread = thread {
-            var alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
-            
-            alert.addAction(UIAlertAction(title: "Edit", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
-                let comment = ANParseKit.newThreadViewController()
-                comment.initWith(thread: thread, threadType: self.threadType, delegate: self, editingPost: thread)
-                self.presentViewController(comment, animated: true, completion: nil)
-            }))
-            
-            alert.addAction(UIAlertAction(title: "Delete", style: UIAlertActionStyle.Destructive, handler: { (alertAction: UIAlertAction!) -> Void in
-                
-                let childPostsQuery = Post.query()!
-                childPostsQuery.whereKey("thread", equalTo: thread)
-                childPostsQuery.includeKey("postedBy")
-                childPostsQuery.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
-                    if let result = result as? [PFObject] {
-                        
-                        PFObject.deleteAllInBackground(result+[thread], block: { (success, error) -> Void in
-                            if let error = error {
-                                // Show some error
-                            } else {
-                                thread.startedBy?.incrementPostCount(-1)
-                                for post in result {
-                                    (post["postedBy"] as? User)?.incrementPostCount(-1)
-                                }
-                                self.navigationController?.popViewControllerAnimated(true)
-                            }
-                        })
-                        
-                    } else {
-                        // TODO: Show error
-                    }
-                })
-            }))
-            
-            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler:nil))
-            
-            self.presentViewController(alert, animated: true, completion: nil)
-        }
-    }
-}
-
-extension CustomThreadViewController: FetchControllerQueryDelegate {
-    
-    public override func queriesForSkip(#skip: Int) -> [PFQuery]? {
+    public override func queriesForSkip(skip skip: Int) -> [PFQuery]? {
         
         let innerQuery = Post.query()!
         innerQuery.skip = skip
@@ -313,24 +242,23 @@ extension CustomThreadViewController: FetchControllerQueryDelegate {
         
         return [query, repliesQuery]
     }
-}
-
-extension CustomThreadViewController: TTTAttributedLabelDelegate {
+    
+    // MARK: - TTTAttributedLabelDelegate
     
     public override func attributedLabel(label: TTTAttributedLabel!, didSelectLinkWithURL url: NSURL!) {
         super.attributedLabel(label, didSelectLinkWithURL: url)
         
         if let host = url.host where host == "tag",
-            let index = url.pathComponents?[1] as? String,
-            let idx = index.toInt() {
+            let index = url.pathComponents?[1],
+            let idx = Int(index) {
                 if let thread = thread, let anime = thread.tags[idx] as? Anime {
                     self.animator = presentAnimeModal(anime)
                 }
         }
     }
-}
+    
+    // MARK: - CommentViewControllerDelegate
 
-extension CustomThreadViewController: CommentViewControllerDelegate {
     public override func commentViewControllerDidFinishedPosting(post: PFObject, parentPost: PFObject?, edited: Bool) {
         super.commentViewControllerDidFinishedPosting(post, parentPost: parentPost, edited: edited)
         
@@ -357,6 +285,77 @@ extension CustomThreadViewController: CommentViewControllerDelegate {
         } else if let thread = post as? Thread {
             updateUIWithThread(thread)
             sizeHeaderToFit()
+        }
+    }
+
+
+    // MARK: - IBAction
+    
+    public override func replyToThreadPressed(sender: AnyObject) {
+        super.replyToThreadPressed(sender)
+        
+        if let thread = thread where User.currentUserLoggedIn() {
+            let comment = ANParseKit.newPostViewController()
+            comment.initWith(thread, threadType: threadType, delegate: self)
+            presentViewController(comment, animated: true, completion: nil)
+        } else if let thread = thread where thread.locked {
+            presentBasicAlertWithTitle("Thread is locked", message: nil)
+        } else {
+            presentBasicAlertWithTitle("Login first", message: "Select 'Me' tab")
+        }
+    }
+    
+    @IBAction func playTrailerPressed(sender: AnyObject) {
+        if let thread = thread, let youtubeID = thread.youtubeID {
+            playTrailer(youtubeID)
+        }
+    }
+    
+    @IBAction func openUserProfile(sender: AnyObject) {
+        if let startedBy = thread?.startedBy {
+            openProfile(startedBy)
+        }
+    }
+    
+    @IBAction func editThread(sender: AnyObject) {
+        if let thread = thread {
+            let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+            
+            alert.addAction(UIAlertAction(title: "Edit", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
+                let comment = ANParseKit.newThreadViewController()
+                comment.initWith(thread, threadType: self.threadType, delegate: self, editingPost: thread)
+                self.presentViewController(comment, animated: true, completion: nil)
+            }))
+            
+            alert.addAction(UIAlertAction(title: "Delete", style: UIAlertActionStyle.Destructive, handler: { (alertAction: UIAlertAction!) -> Void in
+                
+                let childPostsQuery = Post.query()!
+                childPostsQuery.whereKey("thread", equalTo: thread)
+                childPostsQuery.includeKey("postedBy")
+                childPostsQuery.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
+                    if let result = result as? [PFObject] {
+                        
+                        PFObject.deleteAllInBackground(result+[thread], block: { (success, error) -> Void in
+                            if let _ = error {
+                                // Show some error
+                            } else {
+                                thread.startedBy?.incrementPostCount(-1)
+                                for post in result {
+                                    (post["postedBy"] as? User)?.incrementPostCount(-1)
+                                }
+                                self.navigationController?.popViewControllerAnimated(true)
+                            }
+                        })
+                        
+                    } else {
+                        // TODO: Show error
+                    }
+                })
+            }))
+            
+            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler:nil))
+            
+            self.presentViewController(alert, animated: true, completion: nil)
         }
     }
 }

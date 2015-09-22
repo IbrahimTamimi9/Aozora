@@ -13,10 +13,9 @@ import ANCommonKit
 
 extension String {
     public func validEmail(viewController: UIViewController) -> Bool {
-        let email = self.stringByReplacingOccurrencesOfString(" ", withString: "")
         let emailRegex = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
-        let regularExpression = NSRegularExpression(pattern: emailRegex, options: NSRegularExpressionOptions.CaseInsensitive, error: nil)
-        let matches = regularExpression?.numberOfMatchesInString(self, options: nil, range: NSMakeRange(0, count(self)))
+        let regularExpression = try? NSRegularExpression(pattern: emailRegex, options: NSRegularExpressionOptions.CaseInsensitive)
+        let matches = regularExpression?.numberOfMatchesInString(self, options: [], range: NSMakeRange(0, self.characters.count))
         
         let validEmail = (matches == 1)
         if !validEmail {
@@ -27,7 +26,7 @@ extension String {
     
     public func validPassword(viewController: UIViewController) -> Bool {
         
-        let validPassword = count(self) >= 6
+        let validPassword = self.characters.count >= 6
         if !validPassword {
             viewController.presentBasicAlertWithTitle("Invalid password", message: "Length should be at least 6 characters")
         }
@@ -37,10 +36,10 @@ extension String {
     public func validUsername(viewController: UIViewController) -> Bool {
         
         switch self {
-        case let _ where count(self) < 3:
+        case _ where self.characters.count < 3:
             viewController.presentBasicAlertWithTitle("Invalid username", message: "Make it 3 characters or longer")
             return false
-        case let _ where self.rangeOfString(" ") != nil:
+        case _ where self.rangeOfString(" ") != nil:
             viewController.presentBasicAlertWithTitle("Invalid username", message: "It can't have spaces")
             return false
         default:

@@ -11,7 +11,7 @@ import HCSStarRatingView
 import ANParseKit
 
 public protocol RateViewControllerProtocol: class {
-    func rateControllerDidFinishedWith(#anime: Anime, rating: Float)
+    func rateControllerDidFinishedWith(anime anime: Anime, rating: Float)
 }
 
 public class RateViewController: UIViewController {
@@ -44,7 +44,7 @@ public class RateViewController: UIViewController {
             
             progress.score = Int(rating)
             progress.saveEventually()
-            LibrarySyncController.updateAnime(progress: progress)
+            LibrarySyncController.updateAnime(progress)
         }
         
         NSNotificationCenter.defaultCenter().postNotificationName(LibraryUpdatedNotification, object: nil)
@@ -81,7 +81,7 @@ public class RateViewController: UIViewController {
     // MARK: - IBActions
     
     @IBAction func ratingChanged(sender: HCSStarRatingView) {
-        UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: UIViewAnimationOptions.BeginFromCurrentState|UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+        UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: [UIViewAnimationOptions.BeginFromCurrentState, UIViewAnimationOptions.CurveEaseOut], animations: { () -> Void in
             let scale = 1+0.05*sender.value
             self.starRating.transform = CGAffineTransformMakeScale(scale, scale)
             }) { (completed) -> Void in
@@ -91,7 +91,7 @@ public class RateViewController: UIViewController {
     
     @IBAction func ratingEnded(sender: HCSStarRatingView) {
         
-        UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 0.3, initialSpringVelocity: 1.0, options: UIViewAnimationOptions.BeginFromCurrentState|UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+        UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 0.3, initialSpringVelocity: 1.0, options: [UIViewAnimationOptions.BeginFromCurrentState, UIViewAnimationOptions.CurveEaseOut], animations: { () -> Void in
             self.starRating.transform = CGAffineTransformIdentity
             }) { (completed) -> Void in
                 

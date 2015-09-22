@@ -17,7 +17,7 @@ public class CommentCell: PostCell {
         case Video
     }
     
-    public override class func registerNibFor(#tableView: UITableView) {
+    public override class func registerNibFor(tableView tableView: UITableView) {
 
         super.registerNibFor(tableView: tableView)
         let listNib = UINib(nibName: "CommentTextCell", bundle: ANCommonKit.bundle())

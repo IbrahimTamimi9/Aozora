@@ -119,7 +119,7 @@ public class UserProfileManager: NSObject {
         }).continueWithExecutor(BFExecutor.mainThreadExecutor(), withBlock: { (task: BFTask!) -> AnyObject! in
             
             if let error = task.error {
-                let errorMessage = error.userInfo?["error"] as! String
+                let errorMessage = error.userInfo["error"] as! String
                 viewController.presentBasicAlertWithTitle("Error", message: errorMessage)
                 return BFTask(error: NSError(domain: "", code: 0, userInfo: nil))
             } else {
@@ -152,9 +152,8 @@ public class UserProfileManager: NSObject {
             user.email = email
         }
         
-        if let banner = banner {
-            let avatarRegularData = UIImagePNGRepresentation(banner)
-            user.banner = PFFile(name:"banner.png", data:avatarRegularData)
+        if let banner = banner, let avatarRegularData = UIImagePNGRepresentation(banner) {
+            user.banner = PFFile(name:"banner.png", data: avatarRegularData)
         }
         
         if let about = about {
@@ -164,7 +163,7 @@ public class UserProfileManager: NSObject {
         return user.saveInBackground().continueWithExecutor(BFExecutor.mainThreadExecutor(), withBlock: { (task: BFTask!) -> AnyObject! in
             
             if let error = task.error {
-                let errorMessage = error.userInfo?["error"] as! String
+                let errorMessage = error.userInfo["error"] as! String
                 viewController.presentBasicAlertWithTitle("Error", message: errorMessage)
                 return BFTask(error: error)
             } else {
@@ -180,14 +179,14 @@ public class UserProfileManager: NSObject {
         let avatar = avatar ?? UIImage(named: "default-avatar")!
         let thumbAvatar = UIImage.imageWithImage(avatar, newSize: CGSize(width: UserProfileManager.ImageMinimumSideSize, height: UserProfileManager.ImageMinimumSideSize))
         let avatarThumbData = UIImagePNGRepresentation(thumbAvatar)
-        return PFFile(name:"avatarThumb.png", data:avatarThumbData)
+        return PFFile(name:"avatarThumb.png", data: avatarThumbData!)
     }
     
     func avatarRegularImageToPFFile(avatar: UIImage?) -> PFFile {
         let avatar = avatar ?? UIImage(named: "default-avatar")!
         let regularAvatar = UIImage.imageWithImage(avatar, maxSize: CGSize(width: UserProfileManager.ImageMaximumSideSize, height: UserProfileManager.ImageMaximumSideSize))
         let avatarRegularData = UIImagePNGRepresentation(regularAvatar)
-        return PFFile(name:"avatarRegular.png", data:avatarRegularData)
+        return PFFile(name:"avatarRegular.png", data: avatarRegularData!)
     }
     
 }

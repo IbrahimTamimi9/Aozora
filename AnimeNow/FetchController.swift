@@ -11,12 +11,12 @@ import Parse
 import Bolts
 
 public protocol FetchControllerDelegate: class {
-    func didFetchFor(#skip: Int)
+    func didFetchFor(skip skip: Int)
 }
 
 public protocol FetchControllerQueryDelegate: class {
-    func queriesForSkip(#skip: Int) -> [PFQuery]?
-    func processResult(#result: [PFObject]) -> [PFObject]
+    func queriesForSkip(skip skip: Int) -> [PFQuery]?
+    func processResult(result result: [PFObject]) -> [PFObject]
 }
 
 public class FetchController {
@@ -95,7 +95,7 @@ public class FetchController {
         return dataSource[section]
     }
     
-    public func didDisplayItemAt(#index: Int) {
+    public func didDisplayItemAt(index index: Int) {
         
         if isFetching || !canFetchMore {
             return
@@ -104,7 +104,7 @@ public class FetchController {
         if Float(index) > Float(dataSourceCount) - Float(limit) * 0.2 {
             isFetching = true
             page += 1
-            println("Fetching page \(page)")
+            print("Fetching page \(page)")
             fetchWith(skip: page*limit)
         }
     }
@@ -121,7 +121,7 @@ public class FetchController {
             canFetchMore = newDataSourceCount < dataSourceCount + limit ? false : true
             dataSourceCount = newDataSourceCount
             
-            println("Fetched page \(page)")
+            print("Fetched page \(page)")
         }
     }
     
@@ -131,7 +131,7 @@ public class FetchController {
         }
     }
     
-    func fetchWith(#skip: Int) -> BFTask {
+    func fetchWith(skip skip: Int) -> BFTask {
         
         var secondaryQuery: PFQuery? = nil
         if let queries = queryDelegate?.queriesForSkip(skip: skip) where queries.count > 1 {
@@ -145,7 +145,7 @@ public class FetchController {
         
         var allData:[PFObject] = []
         
-        var fetchTask = query!.findObjectsInBackground().continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
+        let fetchTask = query!.findObjectsInBackground().continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
             allData += task.result as! [PFObject]
             return nil
         })
@@ -158,7 +158,7 @@ public class FetchController {
             })
         }
             
-        var allFetchTasks = BFTask(forCompletionOfAllTasks: [fetchTask, fetchTask2]).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
+        let allFetchTasks = BFTask(forCompletionOfAllTasks: [fetchTask, fetchTask2]).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
             
             if let processedResult = self.queryDelegate?.processResult(result: allData) {
                 allData = processedResult
@@ -231,7 +231,7 @@ public class FetchController {
             return nil
         }).continueWithBlock({ (task: BFTask!) -> AnyObject! in
             if let exception = task.exception {
-                println(exception)
+                print(exception)
             }
             return nil
         })

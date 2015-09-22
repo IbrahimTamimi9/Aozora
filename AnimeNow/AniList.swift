@@ -24,8 +24,8 @@ public struct AniList {
         case getAnime(id: Int)
         case searchAnime(query: String)
         
-        public var URLRequest: NSURLRequest {
-            let (method: Alamofire.Method, path: String, parameters: [String: AnyObject]) = {
+        public var URLRequest: NSMutableURLRequest {
+            let (method, path, parameters): (Alamofire.Method, String, [String: AnyObject]) = {
                 let accessToken = NSUserDefaults.standardUserDefaults().stringForKey("access_token") ?? ""
                 switch self {
                 case .requestAccessToken:
@@ -46,10 +46,10 @@ public struct AniList {
                         params["status"] = status.rawValue
                     }
                     if let genres = genres {
-                        params["genres"] = ",".join(genres)
+                        params["genres"] = genres.joinWithSeparator(",")
                     }
                     if let excludedGenres = excludedGenres {
-                        params["genres_exclude"] = ",".join(excludedGenres)
+                        params["genres_exclude"] = excludedGenres.joinWithSeparator(",")
                     }
                     if let page = page where !fullPage {
                         params["page"] = String(page)
@@ -58,7 +58,7 @@ public struct AniList {
                     params["airing_data"] = (airingData) ? "true" : "false"
                     params["full_page"] = (fullPage) ? "true" : "false"
                     if fullPage && status != Status.CurrentlyAiring && season == nil {
-                        println("Warning: status must be currently airing or a season must be provided when requesting fullPage")
+                        print("Warning: status must be currently airing or a season must be provided when requesting fullPage")
                     }
                     
                     return (.GET,"browse/anime",params)
@@ -74,10 +74,10 @@ public struct AniList {
                     return (.GET,"browse/anime",params)
                     
                 case .getAnime(let id):
-                    var params = ["access_token":accessToken]
+                    let params = ["access_token":accessToken]
                     return (.GET,"anime/\(id)/page",params)
                 case .searchAnime(let query):
-                    var params = ["access_token":accessToken]
+                    let params = ["access_token":accessToken]
                     return (.GET,"anime/search/\(query)",params)
                 }
             }()

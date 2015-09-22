@@ -49,7 +49,7 @@ class BrowseViewController: UIViewController {
         (FilterSection.AnimeType, nil, AnimeType.allRawValues()),
         (FilterSection.Year, nil, allYears),
         (FilterSection.Status, nil, AnimeStatus.allRawValues()),
-        (FilterSection.Studio, nil, allStudios.sorted({$0.localizedCaseInsensitiveCompare($1) == NSComparisonResult.OrderedAscending})),
+        (FilterSection.Studio, nil, allStudios.sort({$0.localizedCaseInsensitiveCompare($1) == NSComparisonResult.OrderedAscending})),
         (FilterSection.Classification, nil, AnimeClassification.allRawValues()),
         (FilterSection.Genres, nil, AnimeGenre.allRawValues())
     ]
@@ -64,12 +64,8 @@ class BrowseViewController: UIViewController {
         
         let chartNib = UINib(nibName: "AnimeCell", bundle: nil)
         collectionView.registerNib(chartNib, forCellWithReuseIdentifier: "AnimeCell")
-        let posterNib = UINib(nibName: "AnimeCellPoster", bundle: nil)
-        collectionView.registerNib(chartNib, forCellWithReuseIdentifier: "AnimeCellPoster")
-        let listNib = UINib(nibName: "AnimeCellList", bundle: nil)
-        collectionView.registerNib(chartNib, forCellWithReuseIdentifier: "AnimeCellList")
         
-        var tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "changeSeasonalChart")
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "changeSeasonalChart")
         navigationController?.navigationBar.addGestureRecognizer(tapGestureRecognizer)
         
         let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
@@ -213,7 +209,7 @@ extension BrowseViewController: UICollectionViewDelegate {
 }
 
 extension BrowseViewController: FilterViewControllerDelegate {
-    func finishedWith(#configuration: Configuration, selectedGenres: [String]) {
+    func finishedWith(configuration configuration: Configuration, selectedGenres: [String]) {
         
         currentConfiguration = configuration
         self.selectedGenres = selectedGenres
@@ -242,7 +238,7 @@ extension BrowseViewController: FilterViewControllerDelegate {
                 case .AnimeType:
                     query.whereKey("type", equalTo: value)
                 case .Year:
-                    query.whereKey("year", equalTo: value.toInt()!)
+                    query.whereKey("year", equalTo: Int(value)!)
                 case .Status:
                     query.whereKey("status", equalTo: value)
                 case .Studio:
@@ -267,7 +263,7 @@ extension BrowseViewController: FilterViewControllerDelegate {
 
 extension BrowseViewController: FetchControllerDelegate {
 
-    func didFetchFor(#skip: Int) {
+    func didFetchFor(skip skip: Int) {
         loadingView.stopAnimating()
     }
 }

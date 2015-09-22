@@ -23,9 +23,9 @@ public struct TraktV2 {
         case showSummaryForId(id: Int)
         case searchShowForTitle(title: String, year: Int)
         
-        public var URLRequest: NSURLRequest {
-            let (method: Alamofire.Method, path: String, parameters: [String: AnyObject]) = {
-                let accessToken = NSUserDefaults.standardUserDefaults().stringForKey("access_token") ?? ""
+        public var URLRequest: NSMutableURLRequest {
+            let (method, path, parameters): (Alamofire.Method, String, [String: AnyObject]) = {
+                //let accessToken = NSUserDefaults.standardUserDefaults().stringForKey("access_token") ?? ""
                 switch self {
                 case .requestAccessToken:
                     let params = ["grant_type": "client_credentials", "client_id": Router.ClientID, "client_secret": Router.ClientSecret]

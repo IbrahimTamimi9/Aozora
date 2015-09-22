@@ -12,12 +12,12 @@ extension String {
     
     // Does not include seconds
     public func dateWithISO8601() -> NSDate? {
-        var dateFormatter = NSDateFormatter()
+        let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mmZZZZZ"
         return dateFormatter.dateFromString(self)
     }
     public func dateWithISO8601NoMinutes() -> NSDate? {
-        var dateFormatter = NSDateFormatter()
+        let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HHZZZZZ"
         return dateFormatter.dateFromString(self)
     }

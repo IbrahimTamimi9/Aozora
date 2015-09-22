@@ -97,15 +97,15 @@ public class SeasonalChartService {
     // MARK: - Charts generation
     public class func seasonalChartString(seasonsAhead: Int) -> (iconName: String, title: String) {
 
-        var calendar = NSCalendar.currentCalendar()
+        let calendar = NSCalendar.currentCalendar()
         
-        var seasonDate = calendar.dateByAddingUnit(NSCalendarUnit.CalendarUnitMonth, value: seasonsAhead * 3, toDate: NSDate(), options: nil)
+        let seasonDate = calendar.dateByAddingUnit(NSCalendarUnit.Month, value: seasonsAhead * 3, toDate: NSDate(), options: [])
         
-        var components = calendar.components(NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitYear, fromDate: seasonDate!)
+        let components = calendar.components([NSCalendarUnit.Month, NSCalendarUnit.Year], fromDate: seasonDate!)
         var seasonString = ""
         
         var monthNumber = components.month + 1
-        var yearNumber = components.year
+        let yearNumber = components.year
         if monthNumber > 12 {
             monthNumber -= 12
         }
@@ -126,18 +126,17 @@ public class SeasonalChartService {
         case .Spring: iconName = "icon-spring"
         case .Summer: iconName = "icon-summer"
         case .Fall: iconName = "icon-fall"
-        default: break
         }
         
         return (iconName , seasonString + " \(yearNumber)")
     }
     
     public class func generateAllSeasonalCharts() {
-        var seasons: [SeasonalChartType] = [.Winter, .Summer, .Spring, .Fall]
+        let seasons: [SeasonalChartType] = [.Winter, .Summer, .Spring, .Fall]
         
         for var year = 1990; year < 2016; year++ {
             for seasonEnum in seasons {
-                var season = PFObject(className: ParseKit.SeasonalChart)
+                let season = PFObject(className: ParseKit.SeasonalChart)
                 season["title"] = "\(seasonEnum.rawValue) \(year)"
                 season["startDate"] = startDateForSeason(seasonEnum, year: year)
                 season["endDate"] = endDateForSeason(seasonEnum, year: year)

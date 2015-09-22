@@ -60,7 +60,7 @@ public class AnimeRelation: PFObject, PFSubclassing {
             if let animeID = (data["anime_id"] ?? data["manga_id"]) as? Int {
                 animeIdentifier = animeID
             }
-            if let animeID = (data["anime_id"] ?? data["manga_id"]) as? String, let animeID2 = animeID.toInt() {
+            if let animeID = (data["anime_id"] ?? data["manga_id"]) as? String, let animeID2 = Int(animeID) {
                 animeIdentifier = animeID2
             }
             return Relation(
@@ -89,32 +89,32 @@ public class AnimeRelation: PFObject, PFSubclassing {
         
         for relation in alternativeVersions {
             if let url = relation["url"] as? String, let _ = url.rangeOfString("anime") {
-                var newRelation = Relation.relationWithData(relation, relationType: .AlternativeVersion)
+                let newRelation = Relation.relationWithData(relation, relationType: .AlternativeVersion)
                 allRelations.append(newRelation)
             }
         }
         
         for relation in prequels {
             if let url = relation["url"] as? String, let _ = url.rangeOfString("anime") {
-                var newRelation = Relation.relationWithData(relation, relationType: .Prequel)
+                let newRelation = Relation.relationWithData(relation, relationType: .Prequel)
                 allRelations.append(newRelation)
             }
         }
         for relation in sequels {
             if let url = relation["url"] as? String, let _ = url.rangeOfString("anime") {
-                var newRelation = Relation.relationWithData(relation, relationType: .Sequel)
+                let newRelation = Relation.relationWithData(relation, relationType: .Sequel)
                 allRelations.append(newRelation)
             }
         }
         for relation in sideStories {
             if let url = relation["url"] as? String, let _ = url.rangeOfString("anime") {
-                var newRelation = Relation.relationWithData(relation, relationType: .SideStory)
+                let newRelation = Relation.relationWithData(relation, relationType: .SideStory)
                 allRelations.append(newRelation)
             }
         }
         for relation in spinOffs {
             if let url = relation["url"] as? String, let _ = url.rangeOfString("anime") {
-                var newRelation = Relation.relationWithData(relation, relationType: .SpinOff)
+                let newRelation = Relation.relationWithData(relation, relationType: .SpinOff)
                 allRelations.append(newRelation)
             }
         }

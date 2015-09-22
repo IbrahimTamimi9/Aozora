@@ -9,7 +9,7 @@
 import Foundation
 import Parse
 
-public class User: PFUser, PFSubclassing {
+public class User: PFUser {
     
     override public class func initialize() {
         struct Static {

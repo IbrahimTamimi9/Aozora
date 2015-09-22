@@ -46,7 +46,7 @@ public class PostCell: UITableViewCell {
         case Video
     }
     
-    public class func registerNibFor(#tableView: UITableView) {
+    public class func registerNibFor(tableView tableView: UITableView) {
 
         let listNib = UINib(nibName: "PostTextCell", bundle: ANCommonKit.bundle())
         tableView.registerNib(listNib, forCellReuseIdentifier: "PostTextCell")

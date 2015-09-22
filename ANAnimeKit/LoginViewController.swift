@@ -36,17 +36,19 @@ public class LoginViewController: UIViewController {
         
         loadingView.startAnimating()
 
-        Alamofire.request(Atarashii.Router.verifyCredentials()).authenticate(user: usernameTextField.text, password: passwordTextField.text).validate().responseJSON { (req, res, JSON, error) -> Void in
-            if error == nil {
-                
-                User.currentUser()!.myAnimeListUsername = self.usernameTextField.text.stringByReplacingOccurrencesOfString(" ", withString: "")
+        Alamofire.request(Atarashii.Router.verifyCredentials()).authenticate(user: usernameTextField.text!, password: passwordTextField.text!).validate().responseJSON { (req, res, result) -> Void in
+            
+            if result.isSuccess {
+            
+                User.currentUser()!.myAnimeListUsername = self.usernameTextField.text!.stringByReplacingOccurrencesOfString(" ", withString: "")
                 User.currentUser()!.myAnimeListPassword = self.passwordTextField.text
                 
-                completionSource.setResult(JSON)
+                completionSource.setResult(result.value)
             } else {
-                completionSource.setError(error)
+                completionSource.setError(nil)
             }
         }
+        
         return completionSource.task
     }
     
@@ -64,7 +66,7 @@ public class LoginViewController: UIViewController {
             self.loadingView.stopAnimating()
             
             if let error = task.error {
-                println(error)
+                print(error)
                 UIAlertView(title: "Wrong credentials..", message: nil, delegate: nil, cancelButtonTitle: "Ok..").show()
             } else {
                 UIAlertView(title: "Linked with MyAnimelist!", message: nil, delegate: nil, cancelButtonTitle: "Ok").show()

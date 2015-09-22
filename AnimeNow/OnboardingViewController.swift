@@ -76,18 +76,18 @@ class OnboardingViewController: UIViewController {
             if let user = user {
                 self.loggedInWithFacebook = true
                 if user.isNew || user["aozoraUsername"] == nil {
-                    println("User signed up and logged in through Facebook!")
+                    print("User signed up and logged in through Facebook!")
                     self.performSegueWithIdentifier("showSignUp", sender: user)
                 } else {
-                    println("User logged in through Facebook!")
+                    print("User logged in through Facebook!")
                     self.presentRootTabBar()
                 }
                 
             } else if let error = error {
-                println("\(error)")
+                print("\(error)")
                 PFUser.logOutInBackgroundWithBlock({ (error) -> Void in  
                     if let error = error {
-                        println("Uh oh. \(error.localizedDescription)")
+                        print("Uh oh. \(error.localizedDescription)")
                     }
                 })
             }
@@ -107,12 +107,12 @@ class OnboardingViewController: UIViewController {
             PFAnonymousUtils.logInWithBlock {
                 (user: PFUser?, error: NSError?) -> Void in
                 if error != nil || user == nil {
-                    println("Anonymous login failed.")
-                    var alert = UIAlertController(title: "Woot", message: "Anonymous login failed", preferredStyle: UIAlertControllerStyle.Alert)
+                    print("Anonymous login failed.")
+                    let alert = UIAlertController(title: "Woot", message: "Anonymous login failed", preferredStyle: UIAlertControllerStyle.Alert)
                     alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
                     self.presentViewController(alert, animated: true, completion: nil)
                 } else {
-                    println("Anonymous user logged in.")
+                    print("Anonymous user logged in.")
                     self.presentRootTabBar()
                 }
             }

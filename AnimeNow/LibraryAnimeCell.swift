@@ -33,7 +33,7 @@ class LibraryAnimeCell: AnimeCell {
             progress.watchedEpisodes += 1
             progress.updatedEpisodes(anime.episodes)
             progress.saveEventually()
-            LibrarySyncController.updateAnime(progress: progress)
+            LibrarySyncController.updateAnime(progress)
         }
         
         delegate?.cellPressedWatched(self, anime:anime!)
@@ -47,7 +47,7 @@ class LibraryAnimeCell: AnimeCell {
         episodeImageView.addGestureRecognizer(gestureRecognizer)
     }
     
-    override class func registerNibFor(#collectionView: UICollectionView, style: CellStyle, reuseIdentifier: String) {
+    override class func registerNibFor(collectionView collectionView: UICollectionView, style: CellStyle, reuseIdentifier: String) {
         switch style {
         case .CheckInCompact:
             let chartNib = UINib(nibName: "CheckInCompact", bundle: nil)
@@ -100,7 +100,7 @@ class LibraryAnimeCell: AnimeCell {
         
         episodeImageView.image = nil
         episode = nil
-        anime.episodeList(pin: true, tag: tag).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
+        anime.episodeList(true, tag: tag).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
             
             if newCancelationToken.cancelled {
                 return nil

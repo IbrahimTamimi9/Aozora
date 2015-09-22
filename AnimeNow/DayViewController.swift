@@ -30,7 +30,7 @@ class DayViewController: UIViewController {
     func updateDataSource(dataSource: [Anime]) {
         
         
-        let ids = dataSource.map() { (var anime) -> Int in
+        let ids = dataSource.map() { (anime) -> Int in
             return anime.myAnimeListID
         }
         
@@ -42,7 +42,7 @@ class DayViewController: UIViewController {
                 return LibrarySyncController.matchAnimeWithProgress(result)
                     .continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
                         let filtered = dataSource.filter({ (anime: Anime) -> Bool in
-                            return !contains(result, anime)
+                            return !result.contains(anime)
                         })
                         
                         self.dataSource = [result, filtered]
@@ -76,7 +76,7 @@ class DayViewController: UIViewController {
         dataSource = dataSource.map() { (var animeArray) -> [Anime] in
             
             if index == 0 {
-                animeArray.sort({ (anime1: Anime, anime2: Anime) in
+                animeArray.sortInPlace({ (anime1: Anime, anime2: Anime) in
                     
                     let nextDate1 = anime1.nextEpisodeDate ?? NSDate(timeIntervalSinceNow: 60*60*24*2)
                     let nextDate2 = anime2.nextEpisodeDate ?? NSDate(timeIntervalSinceNow: 60*60*24*2)
@@ -95,7 +95,7 @@ class DayViewController: UIViewController {
                     
                 })
             } else {
-                animeArray.sort({ (anime1: Anime, anime2: Anime) in
+                animeArray.sortInPlace({ (anime1: Anime, anime2: Anime) in
                     
                     let startDate1 = anime1.nextEpisodeDate ?? NSDate(timeIntervalSinceNow: 60*60*24*100)
                     let startDate2 = anime2.nextEpisodeDate ?? NSDate(timeIntervalSinceNow: 60*60*24*100)
@@ -174,7 +174,7 @@ extension DayViewController: UICollectionViewDataSource {
         
         if kind == UICollectionElementKindSectionHeader {
             
-            var headerView = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView", forIndexPath: indexPath) as! BasicCollectionReusableView
+            let headerView = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView", forIndexPath: indexPath) as! BasicCollectionReusableView
             
             if indexPath.section == 0 {
                 headerView.titleLabel.text = "In Library"
@@ -227,7 +227,7 @@ extension DayViewController: UICollectionViewDelegate {
 
 extension DayViewController: LibraryAnimeCellDelegate {
     func cellPressedWatched(cell: LibraryAnimeCell, anime: Anime) {
-        if let progress = anime.progress,
+        if let _ = anime.progress,
             let indexPath = collectionView.indexPathForCell(cell) {
             
             collectionView.reloadItemsAtIndexPaths([indexPath])

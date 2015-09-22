@@ -107,7 +107,7 @@ public class ThreadViewController: UIViewController {
         
         let comment = ANParseKit.newPostViewController()
         if let post = post as? ThreadPostable, let thread = thread {
-            comment.initWith(thread: thread, threadType: threadType, delegate: self, parentPost: post)
+            comment.initWith(thread, threadType: threadType, delegate: self, parentPost: post)
             presentViewController(comment, animated: true, completion: nil)
         } else if let post = post as? TimelinePostable {
             comment.initWithTimelinePost(self, postedIn:post.userTimeline, parentPost: post)
@@ -136,7 +136,7 @@ public class ThreadViewController: UIViewController {
         if let post = post as? PFObject {
             let likedBy = (post as! Postable).likedBy ?? []
             let currentUser = User.currentUser()!
-            if contains(likedBy, currentUser){
+            if likedBy.contains(currentUser) {
                 post.removeObject(currentUser, forKey: "likedBy")
             } else {
                 post.addUniqueObject(currentUser, forKey: "likedBy")
@@ -289,7 +289,7 @@ extension ThreadViewController: UITableViewDataSource {
             })
             
             
-            if let encodedUsername = username.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding),
+            if let encodedUsername = username.stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet()),
                 let url = NSURL(string: "aozoraapp://profile/"+encodedUsername) {
                 let range = (content as NSString).rangeOfString(username)
                 cell.textContent.addLinkToURL(url, withRange: range)
@@ -355,7 +355,7 @@ extension ThreadViewController: UITableViewDataSource {
             cell.likeButton.setTitle(" ", forState: .Normal)
         }
         
-        if let likedBy = post.likedBy where contains(likedBy, User.currentUser()!) {
+        if let likedBy = post.likedBy where likedBy.contains(User.currentUser()!) {
             cell.likeButton.setImage(UIImage(named: "icon-like-red"), forState: .Normal)
         } else {
             cell.likeButton.setImage(UIImage(named: "icon-like-gray"), forState: .Normal)
@@ -400,18 +400,18 @@ extension ThreadViewController: UITableViewDelegate {
         }
     }
     
-    func showSheetFor(#post: Postable, parentPost: Postable? = nil) {
+    func showSheetFor(post post: Postable, parentPost: Postable? = nil) {
         // If user's comment show delete/edit
         if post.postedBy == User.currentUser() {
             
-            var alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+            let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
             
             alert.addAction(UIAlertAction(title: "Edit", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
                 let comment = ANParseKit.newPostViewController()
                 if let post = post as? TimelinePost {
                     comment.initWithTimelinePost(self, postedIn:User.currentUser()!, editingPost: post)
                 } else if let post = post as? Post, let thread = self.thread {
-                    comment.initWith(thread: thread, threadType: self.threadType, delegate: self, editingPost: post)
+                    comment.initWith(thread, threadType: self.threadType, delegate: self, editingPost: post)
                 }
                 self.presentViewController(comment, animated: true, completion: nil)
             }))
@@ -419,13 +419,13 @@ extension ThreadViewController: UITableViewDelegate {
                 if let post = post as? PFObject {
                     if let parentPost = parentPost as? PFObject {
                         // Just delete child post
-                        self.deletePosts(childPosts: [post], parentPost: parentPost, removeParent: false)
+                        self.deletePosts([post], parentPost: parentPost, removeParent: false)
                     } else {
                         // This is parent post, remove child too
                         var className = ""
-                        if let post = post as? Post {
+                        if let _ = post as? Post {
                             className = "Post"
-                        } else if let post = post as? TimelinePost {
+                        } else if let _ = post as? TimelinePost {
                             className = "TimelinePost"
                         }
                         
@@ -433,7 +433,7 @@ extension ThreadViewController: UITableViewDelegate {
                         childPostsQuery.whereKey("parentPost", equalTo: post)
                         childPostsQuery.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
                             if let result = result as? [PFObject] {
-                                self.deletePosts(childPosts: result, parentPost: post, removeParent: true)
+                                self.deletePosts(result, parentPost: post, removeParent: true)
                             } else {
                                 // TODO: Show error
                             }
@@ -456,7 +456,7 @@ extension ThreadViewController: UITableViewDelegate {
         }
         
         PFObject.deleteAllInBackground(allPosts, block: { (success, error) -> Void in
-            if let error = error {
+            if let _ = error {
                 // Show some error
             } else {
                 for post in allPosts {
@@ -467,14 +467,14 @@ extension ThreadViewController: UITableViewDelegate {
                 
                 if removeParent {
                     // Delete parent post, and entire section
-                    if let section = find(self.fetchController.dataSource, parentPost) {
+                    if let section = self.fetchController.dataSource.indexOf(parentPost) {
                         self.fetchController.dataSource.removeAtIndex(section)
                         self.tableView.reloadData()
                     }
                 } else {
                     // Delete child post
                     var parentPost = parentPost as! Postable
-                    if let index = find(parentPost.replies, childPosts.last!) {
+                    if let index = parentPost.replies.indexOf(childPosts.last!) {
                         parentPost.replies.removeAtIndex(index)
                         self.tableView.reloadData()
                     }
@@ -485,7 +485,7 @@ extension ThreadViewController: UITableViewDelegate {
 }
 
 extension ThreadViewController: FetchControllerDelegate {
-    public func didFetchFor(#skip: Int) {
+    public func didFetchFor(skip skip: Int) {
         refreshControl.endRefreshing()
     }
 }
@@ -495,7 +495,7 @@ extension ThreadViewController: TTTAttributedLabelDelegate {
     public func attributedLabel(label: TTTAttributedLabel!, didSelectLinkWithURL url: NSURL!) {
         
         if let host = url.host where host == "profile",
-            let username = url.pathComponents?[1] as? String {
+            let username = url.pathComponents?[1] {
                 
                 if username != User.currentUser()!.aozoraUsername {
                     let (navController, profileController) = ANAnimeKit.profileViewController()
@@ -503,9 +503,9 @@ extension ThreadViewController: TTTAttributedLabelDelegate {
                     presentViewController(navController, animated: true, completion: nil)
                 }
             
-        } else if let scheme = url.scheme where scheme != "aozoraapp" {
+        } else if url.scheme != "aozoraapp" {
             let (navController, webController) = ANCommonKit.webViewController()
-            webController.initWithTitle(url.absoluteString!, initialUrl: url)
+            webController.initWithTitle(url.absoluteString, initialUrl: url)
             presentViewController(navController, animated: true, completion: nil)
         }
     }
@@ -555,14 +555,14 @@ extension ThreadViewController: PostCellDelegate {
 
 extension ThreadViewController: FetchControllerQueryDelegate {
     
-    public func queriesForSkip(#skip: Int) -> [PFQuery]? {
+    public func queriesForSkip(skip skip: Int) -> [PFQuery]? {
         let query = PFQuery()
         return [query]
     }
     
-    public func processResult(#result: [PFObject]) -> [PFObject] {
+    public func processResult(result result: [PFObject]) -> [PFObject] {
         
-        var posts = result.filter({ $0["replyLevel"] as? Int == 0 })
+        let posts = result.filter({ $0["replyLevel"] as? Int == 0 })
         let replies = result.filter({ $0["replyLevel"] as? Int == 1 })
         
         for post in posts {

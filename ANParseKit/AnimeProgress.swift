@@ -7,8 +7,8 @@
 //
 
 import Foundation
-import ANCommonKit
 import Parse
+import ANCommonKit
 
 public enum AozoraList: String {
     case Planning = "Planning"
@@ -137,11 +137,11 @@ public class AnimeProgress: PFObject, PFSubclassing {
         }
         
         let cal = NSCalendar.currentCalendar()
-        let unit: NSCalendarUnit = .CalendarUnitWeekOfYear
+        let unit: NSCalendarUnit = .WeekOfYear
         let components = cal.components(unit, fromDate: startDate)
         components.weekOfYear = watchedEpisodes
         
-        let nextEpisodeDate: NSDate = cal.dateByAddingComponents(components, toDate: startDate, options: nil)!
+        let nextEpisodeDate: NSDate = cal.dateByAddingComponents(components, toDate: startDate, options: [])!
         return (nextEpisodeDate, components.weekOfYear + 1)
     }
 }

@@ -31,7 +31,7 @@ class NotificationsController {
             query.includeKey("userTimeline")
             query.limit = 1
             query.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
-                if let error = error {
+                if let _ = error {
                     
                 } else {
                     let targetTimelinePost = result?.last as! TimelinePost
@@ -53,7 +53,7 @@ class NotificationsController {
             query.includeKey("thread.episode")
             query.limit = 1
             query.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
-                if let error = error {
+                if let _ = error {
                     
                 } else {
                     let targetPost = result?.last as! Post

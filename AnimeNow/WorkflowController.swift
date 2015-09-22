@@ -12,7 +12,7 @@ import ANCommonKit
 
 class WorkflowController {
     
-    class func presentRootTabBar(#animated: Bool) {
+    class func presentRootTabBar(animated animated: Bool) {
         
         let seasons = UIStoryboard(name: "Season", bundle: nil).instantiateInitialViewController() as! UINavigationController
         let library = UIStoryboard(name: "Library", bundle: nil).instantiateInitialViewController() as! UINavigationController
@@ -84,7 +84,7 @@ class WorkflowController {
     class func logoutUser() -> BFTask {
         // Remove cookies
         let storage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
-        for cookie in storage.cookies as! [NSHTTPCookie] {
+        for cookie in storage.cookies! {
             storage.deleteCookie(cookie)
         }
         
@@ -100,7 +100,7 @@ class WorkflowController {
         query2.limit = 10000
         query2.fromLocalDatastore()
         query2.findObjectsInBackgroundWithBlock { (result, error) -> Void in
-            println(result?.count)
+            print(result?.count)
             PFObject.unpinAllInBackground(result)
         }
         

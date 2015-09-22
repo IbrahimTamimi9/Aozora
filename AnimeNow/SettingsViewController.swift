@@ -69,15 +69,15 @@ class SettingsViewController: UITableViewController {
             // Login / Logout
             if User.currentUserLoggedIn() {
                 // Logged In both, logout
-                var alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+                let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
                 alert.addAction(UIAlertAction(title: "Logout Aozora", style: UIAlertActionStyle.Destructive, handler: { (action) -> Void in
                     
                     WorkflowController.logoutUser().continueWithExecutor( BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
                         
                         if let error = task.error {
-                            println("failed loggin out: \(error)")
+                            print("failed loggin out: \(error)")
                         } else {
-                            println("logout succeeded")
+                            print("logout succeeded")
                         }
                         WorkflowController.presentOnboardingController(true)
                         return nil
@@ -95,7 +95,7 @@ class SettingsViewController: UITableViewController {
         case (0,1):
             // Sync with MyAnimeList
             if User.syncingWithMyAnimeList() {
-                var alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+                let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
                 alert.addAction(UIAlertAction(title: "Stop syncing with MyAnimeList", style: UIAlertActionStyle.Destructive, handler: { (action) -> Void in
                     
                     User.logoutMyAnimeList()
@@ -116,7 +116,7 @@ class SettingsViewController: UITableViewController {
             
         case (0,2):
             // Select initial tab
-            var alert = UIAlertController(title: "Select Initial Tab", message: "This tab will load when application starts", preferredStyle: UIAlertControllerStyle.Alert)
+            let alert = UIAlertController(title: "Select Initial Tab", message: "This tab will load when application starts", preferredStyle: UIAlertControllerStyle.Alert)
             alert.addAction(UIAlertAction(title: "Season", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
                 NSUserDefaults.standardUserDefaults().setValue("Season", forKey: DefaultLoadingScreen)
                 NSUserDefaults.standardUserDefaults().synchronize()
@@ -147,7 +147,7 @@ class SettingsViewController: UITableViewController {
             InAppTransactionController.restorePurchases().continueWithBlock({ (task: BFTask!) -> AnyObject! in
                 
                 if let _ = task.result {
-                    var alert = UIAlertController(title: "Restored!", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
+                    let alert = UIAlertController(title: "Restored!", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
                     alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
                     
                     self.presentViewController(alert, animated: true, completion: nil)

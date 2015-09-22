@@ -27,7 +27,7 @@ public class ReminderController {
             
             let infoDictionary = ["objectID": anime.myAnimeListID]
             
-            var localNotification = UILocalNotification()
+            let localNotification = UILocalNotification()
             localNotification.fireDate = notificationDate
             localNotification.timeZone = NSTimeZone.defaultTimeZone()
             localNotification.alertBody = message
@@ -35,9 +35,9 @@ public class ReminderController {
             localNotification.userInfo = infoDictionary as [NSObject : AnyObject]
             
             // This is to prevent it to expire
-            localNotification.repeatInterval = NSCalendarUnit.CalendarUnitYear
+            localNotification.repeatInterval = .Year
             
-            println("Scheduled notification: '" + message + "' for date \(notificationDate)")
+            print("Scheduled notification: '" + message + "' for date \(notificationDate)")
             
             UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
             
@@ -55,49 +55,52 @@ public class ReminderController {
     }
     
     public class func scheduledReminderFor(anime: Anime) -> UILocalNotification? {
-        let scheduledNotifications = UIApplication.sharedApplication().scheduledLocalNotifications as! [UILocalNotification]
-        
-        let matchingNotifications = scheduledNotifications.filter({ (notification: UILocalNotification) -> Bool in
-            let objectID = notification.userInfo as! [String: AnyObject]
-            return objectID["objectID"] as! Int == anime.myAnimeListID
-        })
-        
-        return matchingNotifications.last
+        if let scheduledNotifications = UIApplication.sharedApplication().scheduledLocalNotifications {
+            let matchingNotifications = scheduledNotifications.filter({ (notification: UILocalNotification) -> Bool in
+                let objectID = notification.userInfo as! [String: AnyObject]
+                return objectID["objectID"] as! Int == anime.myAnimeListID
+            })
+            return matchingNotifications.last
+            
+        } else {
+            return nil
+            
+        }
     }
     
     public class func updateScheduledLocalNotifications() {
         // Update titles, fire dates and disable notifications
-        let scheduledNotifications = UIApplication.sharedApplication().scheduledLocalNotifications as! [UILocalNotification]
-        
-        UIApplication.sharedApplication().cancelAllLocalNotifications()
-        
-        var idList: [Int] = []
-        
-        for notification in scheduledNotifications {
-            let objectID = notification.userInfo as! [String: AnyObject]
-            let myAnimelistID = objectID["objectID"] as! Int
+        if let scheduledNotifications = UIApplication.sharedApplication().scheduledLocalNotifications {
+            UIApplication.sharedApplication().cancelAllLocalNotifications()
             
-            idList.append(myAnimelistID)
-        }
-        
-        LibrarySyncController.fetchAnime(idList)
-            .continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
+            var idList: [Int] = []
             
-            if let animeList = task.result as? [Anime] {
+            for notification in scheduledNotifications {
+                let objectID = notification.userInfo as! [String: AnyObject]
+                let myAnimelistID = objectID["objectID"] as! Int
                 
-                return LibrarySyncController.matchAnimeWithProgress(animeList)
-                    .continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
-                        for anime in animeList {
-                            if let progress = anime.progress where progress.myAnimeListList() != .Dropped {
-                                self.scheduleReminderForAnime(anime)
-                            }
-                        }
-                        return nil
-                    })                
+                idList.append(myAnimelistID)
             }
             
-            return nil
-        })
+            LibrarySyncController.fetchAnime(idList)
+                .continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
+                    
+                    if let animeList = task.result as? [Anime] {
+                        
+                        return LibrarySyncController.matchAnimeWithProgress(animeList)
+                            .continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
+                                for anime in animeList {
+                                    if let progress = anime.progress where progress.myAnimeListList() != .Dropped {
+                                        self.scheduleReminderForAnime(anime)
+                                    }
+                                }
+                                return nil
+                            })                
+                    }
+                    
+                    return nil
+                })
+        }
     }
     
 }

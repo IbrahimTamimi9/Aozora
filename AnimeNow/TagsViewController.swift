@@ -13,7 +13,7 @@ import SDWebImage
 import Parse
 
 protocol TagsViewControllerDelegate: class {
-    func tagsViewControllerSelected(#tags: [PFObject])
+    func tagsViewControllerSelected(tags tags: [PFObject])
 }
 
 public let AllThreadTagsPin = "Pin.ThreadTag"
@@ -34,11 +34,11 @@ public class TagsViewController: UIViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         
-        var searchBarTextField = searchBar.valueForKey("searchField") as? UITextField
+        let searchBarTextField = searchBar.valueForKey("searchField") as? UITextField
         searchBarTextField?.textColor = UIColor.blackColor()
         
         let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
-        var size = CGSize(width: view.bounds.size.width, height: 44)
+        let size = CGSize(width: view.bounds.size.width, height: 44)
         layout.itemSize = size
         
         let uiButton = searchBar.valueForKey("cancelButton") as! UIButton
@@ -77,7 +77,7 @@ public class TagsViewController: UIViewController {
     func fetchAnimeTags(text: String) {
         
         let query = Anime.queryIncludingAddData()
-        if count(text) == 0 {
+        if text.characters.count == 0 {
             query.whereKey("status", equalTo: "currently airing")
             query.orderByAscending("popularityRank")
         } else {
@@ -104,7 +104,7 @@ public class TagsViewController: UIViewController {
         if searchingGeneral {
             fetchGeneralTags()
         } else {
-            fetchAnimeTags(searchBar.text)
+            fetchAnimeTags(searchBar.text!)
         }
     }
     
@@ -130,7 +130,7 @@ extension TagsViewController: UICollectionViewDataSource {
             cell.subtitleLabel.text = anime.informationString()
         }
         
-        if contains(selectedDataSource, tag) {
+        if selectedDataSource.contains(tag) {
             cell.backgroundColor = UIColor.backgroundDarker()
         } else {
             cell.backgroundColor = UIColor.backgroundWhite()
@@ -145,7 +145,7 @@ extension TagsViewController: UICollectionViewDelegate {
     public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let tag = dataSource[indexPath.row]
         
-        if let index = find(selectedDataSource, tag) {
+        if let index = selectedDataSource.indexOf(tag) {
             selectedDataSource.removeAtIndex(index)
             
         } else {
@@ -159,7 +159,7 @@ extension TagsViewController: UISearchBarDelegate {
     
     public func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         segmentedControl.selectedSegmentIndex = 1
-        fetchAnimeTags(searchBar.text)
+        fetchAnimeTags(searchBar.text!)
         view.endEditing(true)
         searchBar.enableCancelButton()
     }

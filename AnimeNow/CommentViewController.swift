@@ -131,7 +131,7 @@ public class CommentViewController: UIViewController {
     }
     
     func completeRequest(post: PFObject, parentPost: PFObject?, error: NSError?) {
-        if let error = error {
+        if let _ = error {
             // TODO: Show error
             self.sendButton.setTitle("Send", forState: .Normal)
             self.sendButton.backgroundColor = UIColor.peterRiver()
@@ -175,7 +175,7 @@ public class CommentViewController: UIViewController {
 }
 
 extension CommentViewController: ImagesViewControllerDelegate {
-    func imagesViewControllerSelected(#imageData: ImageData) {
+    func imagesViewControllerSelected(imageData imageData: ImageData) {
         selectedImageData = imageData
         photoCountLabel.hidden = false
         videoButton.enabled = false

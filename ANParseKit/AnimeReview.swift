@@ -42,7 +42,7 @@ public class AnimeReview: PFObject, PFSubclassing {
         }
     }
     
-    public func reviewFor(#index: Int) -> Review {
+    public func reviewFor(index index: Int) -> Review {
         
         let data: AnyObject = reviews[index]
 

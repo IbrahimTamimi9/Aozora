@@ -7,10 +7,10 @@
 //
 
 import Foundation
-import ANCommonKit
 import Parse
 import Bolts
 import Alamofire
+import ANCommonKit
 
 public let LibraryUpdatedNotification = "LibraryUpdatedNotification"
 public let LibraryCreatedNotification = "LibraryCreatedNotification"
@@ -78,7 +78,7 @@ public class LibrarySyncController {
                 
                 if let result = task.result as? [Anime] where result.count != 0 {
                     return PFObject.unpinAllInBackground(result, withName: pinName).continueWithBlock({ (task: BFTask!) -> AnyObject! in
-                        println("Updated \(result.count) anime, saving with tag \(pinName)")
+                        print("Updated \(result.count) anime, saving with tag \(pinName)")
                         NSUserDefaults.completedAction(actionID)
                         return PFObject.pinAllInBackground(result, withName: pinName)
                     })
@@ -127,7 +127,7 @@ public class LibrarySyncController {
                 
                 if let result = task.result as? [Episode] where result.count != 0 {
                     return PFObject.unpinAllInBackground(result, withName: pinName).continueWithBlock({ (task: BFTask!) -> AnyObject! in
-                        println("Updated \(result.count) episode, saving with tag \(pinName)")
+                        print("Updated \(result.count) episode, saving with tag \(pinName)")
                         NSUserDefaults.completedAction(actionID)
                         return PFObject.pinAllInBackground(result, withName: pinName)
                     })
@@ -147,7 +147,7 @@ public class LibrarySyncController {
         return query.findObjectsInBackground()
             .continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
                 
-                if let result = task.result as? [AnimeProgress], let AnimeProgress = result.last {
+                if let result = task.result {
                     return BFTask(result: result)
                 } else {
                     return nil
@@ -183,7 +183,7 @@ public class LibrarySyncController {
                 
                 if let result = task.result as? [AnimeProgress] where result.count != 0 {
                     return PFObject.unpinAllInBackground(result).continueWithBlock({ (task: BFTask!) -> AnyObject! in
-                        println("Got \(result.count) AnimeProgress from Parse")
+                        print("Got \(result.count) AnimeProgress from Parse")
                         NSUserDefaults.completedAction(self.LastSyncDateDefaultsKey)
                         return PFObject.pinAllInBackground(result)
                     })
@@ -200,37 +200,37 @@ public class LibrarySyncController {
         let shouldSyncData = NSUserDefaults.shouldPerformAction(LastSyncDateDefaultsKey, expirationDays: 1)
         
         if shouldSyncData || isRefreshing {
-            println("Fetching all anime library from network..")
+            print("Fetching all anime library from network..")
             
             var myAnimeListLibrary: [MALProgress] = []
             var allProgress: [AnimeProgress] = []
             
-            var task = BFTask(result: nil).continueWithBlock({ (task: BFTask!) -> AnyObject! in
+            let task = BFTask(result: nil).continueWithBlock({ (task: BFTask!) -> AnyObject! in
                 
                 var syncWithAServiceTask = BFTask(result: nil)
                 let syncAnimeProgressTask = self.syncAnimeProgressInformation()
                 
                 // 1. For each source fetch all library
                 if User.syncingWithMyAnimeList() {
-                    println("Syncing with mal, continuing..")
+                    print("Syncing with mal, continuing..")
 
                     syncWithAServiceTask = self.fetchMyAnimeListLibrary().continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
                         // 2. Save library in array
                         if let result = task.result["anime"] as? [[String: AnyObject]] {
-                            println("MAL Library count \(result.count)")
+                            print("MAL Library count \(result.count)")
                             for data in result {
                                 let myAnimeListID = data["id"] as! Int
                                 let status = data["watched_status"] as! String
                                 let episodes = data["watched_episodes"] as! Int
                                 let score = data["score"] as! Int
-                                var malProgress = MALProgress(myAnimeListID: myAnimeListID, status: MALList(rawValue: status)!, episodes: episodes, score: score)
+                                let malProgress = MALProgress(myAnimeListID: myAnimeListID, status: MALList(rawValue: status)!, episodes: episodes, score: score)
                                 myAnimeListLibrary.append(malProgress)
                             }
                         }
                         return nil
                     })
                 } else {
-                    println("Not syncing with mal, continuing..")
+                    print("Not syncing with mal, continuing..")
                 }
                 
                 return BFTask(forCompletionOfAllTasks: [syncWithAServiceTask, syncAnimeProgressTask])
@@ -268,14 +268,14 @@ public class LibrarySyncController {
                 })
                 
                 if malProgressToCreateIDs.count > 0 {
-                    println("Need to create \(malProgressToCreateIDs.count) AnimeProgress on Parse")
+                    print("Need to create \(malProgressToCreateIDs.count) AnimeProgress on Parse")
                     let query = Anime.queryIncludingAddData()
                     query.whereKey("myAnimeListID", containedIn: malProgressToCreateIDs)
                     query.limit = 1000
                     return query.findObjectsInBackground()
                         .continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
                             let animeToCreate = task.result as! [Anime]
-                            println("Creating \(animeToCreate.count) AnimeProgress on Parse")
+                            print("Creating \(animeToCreate.count) AnimeProgress on Parse")
                             var newProgress: [AnimeProgress] = []
                             for anime in animeToCreate {
                                 // This prevents all anime object to be iterated thousands of times..
@@ -284,7 +284,7 @@ public class LibrarySyncController {
                                 if let malProgress = malProgressToCreate.filter({ $0.myAnimeListID == myAnimeListID }).last {
                                     // Creating on PARSE
                                     let malList = MALList(rawValue: malProgress.status)!
-                                    var progress = AnimeProgress()
+                                    let progress = AnimeProgress()
                                     progress.anime = anime
                                     progress.user = User.currentUser()!
                                     progress.startDate = NSDate()
@@ -312,9 +312,9 @@ public class LibrarySyncController {
                 
             }).continueWithBlock({ (task: BFTask!) -> AnyObject! in
                 if let error = task.error {
-                    println(error)
+                    print(error)
                 } else if let exception = task.exception {
-                    println(exception)
+                    print(exception)
                 }
                 
                 return task
@@ -343,11 +343,11 @@ public class LibrarySyncController {
                     // Update episodes
                     if malProgress.episodes > progress.watchedEpisodes {
                         // On Parse
-                        println("updated episodes on parse \(progress.anime.title!)")
+                        print("updated episodes on parse \(progress.anime.title!)")
                         progress.watchedEpisodes = malProgress.episodes
                         progress.saveEventually()
                     } else if malProgress.episodes < progress.watchedEpisodes {
-                        println("updated episodes on mal \(progress.anime.title!)")
+                        print("updated episodes on mal \(progress.anime.title!)")
                         // On MAL
                         malProgress.syncState = .Updated
                         malProgress.episodes = progress.watchedEpisodes
@@ -357,11 +357,11 @@ public class LibrarySyncController {
                     // Update Score
                     if malProgress.score != progress.score {
                         if malProgress.score != 0 {
-                            println("updated score on parse \(progress.anime.title!)")
+                            print("updated score on parse \(progress.anime.title!)")
                             progress.score = malProgress.score
                             progress.saveEventually()
                         } else if progress.score != 0 {
-                            println("updated score on mal \(progress.anime.title!)")
+                            print("updated score on mal \(progress.anime.title!)")
                             malProgress.score = progress.score
                             malProgress.syncState = .Updated
                             updatedMyAnimeListLibrary.insert(malProgress)
@@ -372,7 +372,7 @@ public class LibrarySyncController {
                     let malListMAL = MALList(rawValue: malProgress.status)!
                     let malListParse = progress.myAnimeListList()
                     if malListMAL != malListParse {
-                        println("List is different for: \(progress.anime.title!)")
+                        print("List is different for: \(progress.anime.title!)")
                         var malList: MALList?
                         var aozoraList: AozoraList?
                         if malListMAL == .Completed || malListParse == .Completed {
@@ -408,21 +408,21 @@ public class LibrarySyncController {
                         }
                         
                         if let status = malList {
-                            println("updated list on mal \(progress.anime.title!)")
+                            print("updated list on mal \(progress.anime.title!)")
                             malProgress.status = status.rawValue
                             malProgress.syncState = .Updated
                             updatedMyAnimeListLibrary.insert(malProgress)
                         }
                         
                         if let aozoraList = aozoraList {
-                            println("updated list on parse \(progress.anime.title!)")
+                            print("updated list on parse \(progress.anime.title!)")
                             progress.list = aozoraList.rawValue
                             progress.saveEventually()
                         }
                     }
                     
                 } else {
-                    println("Created \(progress.anime.title!) progress on mal")
+                    print("Created \(progress.anime.title!) progress on mal")
                     // Create on MAL
                     var malProgress = MALProgress(myAnimeListID:
                         progress.anime.myAnimeListID,
@@ -441,10 +441,10 @@ public class LibrarySyncController {
         for malProgress in updatedMyAnimeListLibrary {
             switch malProgress.syncState {
             case .Created:
-                println("Creating on MAL \(malProgress.myAnimeListID)")
+                print("Creating on MAL \(malProgress.myAnimeListID)")
                 self.addAnime(malProgress: malProgress)
             case .Updated:
-                println("Updating on MAL \(malProgress.myAnimeListID)")
+                print("Updating on MAL \(malProgress.myAnimeListID)")
                 self.updateAnime(malProgress: malProgress)
             default:
                 break
@@ -454,7 +454,7 @@ public class LibrarySyncController {
         return BFTask(result: nil)
     }
     
-    class func fetchAozoraLibrary(#onlyWatching: Bool?) -> BFTask {
+    class func fetchAozoraLibrary(onlyWatching onlyWatching: Bool?) -> BFTask {
         
         let query = AnimeProgress.query()!
         query.fromLocalDatastore()
@@ -523,7 +523,7 @@ public class LibrarySyncController {
     // MARK: - General External Library Methods
     
     public class func addAnime(progress: AnimeProgress? = nil, malProgress: MALProgress? = nil) -> BFTask {
-        var source = Source.MyAnimeList
+        let source = Source.MyAnimeList
         switch source {
         case .MyAnimeList:
             let malProgress = malProgress ?? animeProgressToAtarashiiObject(progress!)
@@ -540,7 +540,7 @@ public class LibrarySyncController {
     }
     
     public class func updateAnime(progress: AnimeProgress? = nil, malProgress: MALProgress? = nil) -> BFTask {
-        var source = Source.MyAnimeList
+        let source = Source.MyAnimeList
         switch source {
         case .MyAnimeList:
             let malProgress = malProgress ?? animeProgressToAtarashiiObject(progress!)
@@ -557,7 +557,7 @@ public class LibrarySyncController {
     }
     
     public class func deleteAnime(progress: AnimeProgress? = nil, malProgress: MALProgress? = nil) -> BFTask {
-        var source = Source.MyAnimeList
+        let source = Source.MyAnimeList
         switch source {
         case .MyAnimeList:
             
@@ -584,11 +584,11 @@ public class LibrarySyncController {
             let manager = Alamofire.Manager(configuration: configuration)
             let request = Atarashii.Router.animeList(username: username.lowercaseString)
             manager.request(request.URLRequest).validate().responseJSON {
-                (req, res, JSON, error) -> Void in
-                if error == nil {
-                    completionSource.setResult(JSON)
+                (req, res, result) -> Void in
+                if result.isSuccess {
+                    completionSource.setResult(result.value)
                 } else {
-                    completionSource.setError(error)
+                    completionSource.setError(nil)
                 }
             }
         }
@@ -610,11 +610,11 @@ public class LibrarySyncController {
         Alamofire.request(router)
             .authenticate(user: malUsername, password: malPassword)
             .validate()
-            .responseJSON { (req, res, JSON, error) -> Void in
-                if error == nil {
-                    completionSource.setResult(JSON)
+            .responseJSON { (req, res, result) -> Void in
+                if result.isSuccess {
+                    completionSource.setResult(result.value)
                 } else {
-                    completionSource.setError(error)
+                    completionSource.setError(nil)
                 }
         }
         return completionSource.task

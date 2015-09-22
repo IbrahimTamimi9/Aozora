@@ -36,11 +36,10 @@ public class AnimeDetail: PFObject, PFSubclassing {
     public func attributedSynopsis() -> NSAttributedString? {
         if let synopsis = synopsis, let data = synopsis.dataUsingEncoding(NSUnicodeStringEncoding) {
             let font = UIFont.systemFontOfSize(15)
-            if let attributedString = NSMutableAttributedString(
+            if let attributedString = try? NSMutableAttributedString(
                 data: data,
                 options: [NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType],
-                documentAttributes: nil,
-                error: nil) {
+                documentAttributes: nil) {
                     attributedString.addAttribute(NSFontAttributeName, value: font, range: NSMakeRange(0, attributedString.length))
                     return attributedString
             }

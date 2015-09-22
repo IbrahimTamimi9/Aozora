@@ -44,12 +44,11 @@ public class CustomTabBarController: UITabBarController {
         super.viewDidLoad()
         
         // Forum view controller
-        let (forumNavController, forumController) = ANAnimeKit.animeForumViewController()
+        let (forumNavController, _) = ANAnimeKit.animeForumViewController()
         self.viewControllers?.append(forumNavController)
         
         // Update icons frame
-        let controllers = viewControllers as! [UIViewController]
-        for controller in controllers {
+        for controller in viewControllers! {
             controller.tabBarItem.imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: -4, right: 0)
         }
         

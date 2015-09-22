@@ -53,7 +53,7 @@ enum LayoutType: String {
 typealias Configuration = [(section: FilterSection, value: String?, dataSource: [String])]
 
 protocol FilterViewControllerDelegate: class {
-    func finishedWith(#configuration: Configuration, selectedGenres: [String])
+    func finishedWith(configuration configuration: Configuration, selectedGenres: [String])
 }
 
 class FilterViewController: UIViewController {
@@ -80,10 +80,10 @@ class FilterViewController: UIViewController {
         }
     }
     
-    func initWith(#configuration: Configuration, selectedGenres: [String]? = []) {
+    func initWith(configuration configuration: Configuration, selectedGenres: [String]? = []) {
         sectionsDataSource = configuration
         self.selectedGenres = selectedGenres!
-        for (section, value, _) in sectionsDataSource {
+        for (_, _, _) in sectionsDataSource {
             filteredDataSource.append([])
         }
     }
@@ -126,7 +126,7 @@ extension FilterViewController: UICollectionViewDataSource {
         cell.titleLabel.text = value
         
         if filterSection == FilterSection.Genres {
-            if let index = find(selectedGenres, value) {
+            if let _ = selectedGenres.indexOf(value) {
                 cell.backgroundColor = UIColor.backgroundEvenDarker()
             } else {
                 cell.backgroundColor = UIColor.backgroundDarker()
@@ -146,7 +146,7 @@ extension FilterViewController: UICollectionViewDataSource {
         
         if kind == UICollectionElementKindSectionHeader {
             
-            var headerView = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView", forIndexPath: indexPath) as! BasicCollectionReusableView
+            let headerView = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView", forIndexPath: indexPath) as! BasicCollectionReusableView
             
             let (filterSection, value, _) = sectionsDataSource[indexPath.section]
             
@@ -211,8 +211,8 @@ extension FilterViewController: UICollectionViewDataSource {
 extension FilterViewController: UICollectionViewDelegate {
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
-        var (filterSection, value, _) = sectionsDataSource[indexPath.section]
-        var string = filteredDataSource[indexPath.section][indexPath.row]
+        let (filterSection, _, _) = sectionsDataSource[indexPath.section]
+        let string = filteredDataSource[indexPath.section][indexPath.row]
         
         switch filterSection {
         case .View: fallthrough
@@ -227,7 +227,7 @@ extension FilterViewController: UICollectionViewDelegate {
             expandedSection = nil
             collectionView.reloadData()
         case .Genres:
-            if let index = find(selectedGenres, string) {
+            if let index = selectedGenres.indexOf(string) {
                 selectedGenres.removeAtIndex(index)
             } else {
                 selectedGenres.append(string)
@@ -244,7 +244,7 @@ extension FilterViewController: UICollectionViewDelegate {
 extension FilterViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         
-        let (filterSection, value, _) = sectionsDataSource[indexPath.section]
+        let (filterSection, _, _) = sectionsDataSource[indexPath.section]
         
         switch filterSection {
         case .View: fallthrough
@@ -316,7 +316,7 @@ extension FilterViewController: BasicCollectionReusableViewDelegate {
         case .Classification: fallthrough
         case .Genres:
             // Clear a filter or open drop-down
-            if let value = sectionsDataSource[section].value {
+            if let _ = sectionsDataSource[section].value {
                 if filterSection == .Genres {
                     selectedGenres.removeAll(keepCapacity: false)
                 }

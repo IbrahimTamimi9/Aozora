@@ -70,8 +70,8 @@ public struct Atarashii {
         case animeUpdate(progress: MALProgress)
         case animeDelete(id: Int)
         
-        public var URLRequest: NSURLRequest {
-            let (method: Alamofire.Method, path: String, parameters: [String: AnyObject]) = {
+        public var URLRequest: NSMutableURLRequest {
+            let (method, path, parameters): (Alamofire.Method, String, [String: AnyObject]) = {
                 switch self {
                 case .animeCast(let id):
                     return (.GET,"anime/cast/\(id)",[:])

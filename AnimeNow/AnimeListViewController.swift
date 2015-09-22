@@ -95,7 +95,7 @@ class AnimeListViewController: UIViewController {
             self.refreshControl.endRefreshing()
             
             if let error = task.error {
-                println("\(error)")
+                print("\(error)")
             }
             return nil
         })
@@ -150,27 +150,27 @@ class AnimeListViewController: UIViewController {
     
         switch self.currentSortType {
         case .Rating:
-            animeList.sort({ $0.rank < $1.rank && $0.rank != 0 })
+            animeList.sortInPlace({ $0.rank < $1.rank && $0.rank != 0 })
         case .Popularity:
-            animeList.sort({ $0.popularityRank < $1.popularityRank })
+            animeList.sortInPlace({ $0.popularityRank < $1.popularityRank })
         case .Title:
-            animeList.sort({ $0.title < $1.title })
+            animeList.sortInPlace({ $0.title < $1.title })
         case .NextAiringEpisode:
-            animeList.sort({ (anime1: Anime, anime2: Anime) in
+            animeList.sortInPlace({ (anime1: Anime, anime2: Anime) in
                 
                 let startDate1 = anime1.nextEpisodeDate ?? NSDate(timeIntervalSinceNow: 60*60*24*1000)
                 let startDate2 = anime2.nextEpisodeDate ?? NSDate(timeIntervalSinceNow: 60*60*24*1000)
                 return startDate1.compare(startDate2) == .OrderedAscending
             })
         case .Newest:
-            animeList.sort({ (anime1: Anime, anime2: Anime) in
+            animeList.sortInPlace({ (anime1: Anime, anime2: Anime) in
                 
                 let startDate1 = anime1.startDate ?? NSDate()
                 let startDate2 = anime2.startDate ?? NSDate()
                 return startDate1.compare(startDate2) == .OrderedDescending
             })
         case .Oldest:
-            animeList.sort({ (anime1: Anime, anime2: Anime) in
+            animeList.sortInPlace({ (anime1: Anime, anime2: Anime) in
                 
                 let startDate1 = anime1.startDate ?? NSDate()
                 let startDate2 = anime2.startDate ?? NSDate()
@@ -178,14 +178,14 @@ class AnimeListViewController: UIViewController {
                 
             })
         case .MyRating:
-            animeList.sort({ (anime1: Anime, anime2: Anime) in
+            animeList.sortInPlace({ (anime1: Anime, anime2: Anime) in
                 
                 let score1 = anime1.progress!.score ?? 0
                 let score2 = anime2.progress!.score ?? 0
                 return score1 > score2
             })
         case .NextEpisodeToWatch:
-            animeList.sort({ (anime1: Anime, anime2: Anime) in
+            animeList.sortInPlace({ (anime1: Anime, anime2: Anime) in
                 let nextDate1 = anime1.progress!.nextEpisodeToWatchDate ?? NSDate(timeIntervalSinceNow: 60*60*24*365*100)
                 let nextDate2 = anime2.progress!.nextEpisodeToWatchDate ?? NSDate(timeIntervalSinceNow: 60*60*24*365*100)
                 return nextDate1.compare(nextDate2) == .OrderedAscending
@@ -279,7 +279,7 @@ extension AnimeListViewController: LibraryAnimeCellDelegate {
 }
 
 extension AnimeListViewController: RateViewControllerProtocol {
-    func rateControllerDidFinishedWith(#anime: Anime, rating: Float) {
+    func rateControllerDidFinishedWith(anime anime: Anime, rating: Float) {
         RateViewController.updateAnime(anime, withRating: rating*2.0)
     }
 }

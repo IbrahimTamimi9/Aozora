@@ -45,7 +45,7 @@ class AnimeCell: UICollectionViewCell {
         return Static.instance
     }
     
-    class func registerNibFor(#collectionView: UICollectionView, style: CellStyle, reuseIdentifier: String) {
+    class func registerNibFor(collectionView collectionView: UICollectionView, style: CellStyle, reuseIdentifier: String) {
         switch style {
         case .Chart:
             let chartNib = UINib(nibName: "AnimeCell", bundle: nil)
@@ -69,13 +69,13 @@ class AnimeCell: UICollectionViewCell {
 
         posterImageView?.setImageFrom(urlString: anime.imageUrl, animated: canFadeImages)
         titleLabel?.text = anime.title
-        genresLabel?.text = ", ".join(anime.genres)
+        genresLabel?.text = anime.genres.joinWithSeparator(", ")
         
         updateInformationLabel(anime, informationLabel: informationLabel)
         
         ratingLabel?.text = FontAwesome.Ranking.rawValue + String(format: " %.2f    ", anime.membersScore) + FontAwesome.Members.rawValue + " " + numberFormatter.stringFromNumber(anime.membersCount)!
     
-        if var nextEpisode = anime.nextEpisode {
+        if let nextEpisode = anime.nextEpisode {
             
             if showEtaAsAired {
                 etaLabel?.textColor = UIColor.pumpkin()
@@ -171,7 +171,7 @@ class AnimeCell: UICollectionViewCell {
             information += "?"
         }
         
-        if let source = anime.source where count(source) != 0 {
+        if let source = anime.source where source.characters.count != 0 {
             information += " · " + source
         }
         
@@ -182,8 +182,8 @@ class AnimeCell: UICollectionViewCell {
     func etaForDate(nextDate: NSDate) -> (days: Int, hours: Int, minutes: Int) {
         let now = NSDate()
         let cal = NSCalendar.currentCalendar()
-        let unit: NSCalendarUnit = .CalendarUnitDay | .CalendarUnitHour | .CalendarUnitMinute
-        let components = cal.components(unit, fromDate: now, toDate: nextDate, options: nil)
+        let unit: NSCalendarUnit = [.Day, .Hour, .Minute]
+        let components = cal.components(unit, fromDate: now, toDate: nextDate, options: [])
         
         return (components.day,components.hour, components.minute)
     }

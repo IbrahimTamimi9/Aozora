@@ -122,7 +122,7 @@ extension ForumViewController: UITableViewDelegate {
 }
 
 extension ForumViewController: FetchControllerDelegate {
-    public func didFetchFor(#skip: Int) {
+    public func didFetchFor(skip skip: Int) {
         self.loadingView.stopAnimating()
     }
 }

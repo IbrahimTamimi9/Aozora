@@ -140,19 +140,18 @@ public class MALScrapper {
             .stringByRemovingOccurencesOfString(["%"])
     }
     
-    public func reviewsFor(#anime: Anime) -> BFTask{
+    public func reviewsFor(anime anime: Anime) -> BFTask{
         let completion = BFTaskCompletionSource()
         
         let malSlug = malTitleToSlug(anime.title!)
-        let requestURL = "http://myanimelist.net/anime/\(anime.myAnimeListID)/\(malSlug)/reviews"
-        
-        let encodedRequest = requestURL.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
-        
+        let baseURL = "http://myanimelist.net/anime/"
+        let queryURL = "\(anime.myAnimeListID)/\(malSlug)/reviews"
+        let encodedRequest = baseURL + queryURL.stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet())!
         
         viewController.webScraper.scrape(encodedRequest) { (hpple) -> Void in
             if hpple == nil {
-                println("hpple is nil")
-                completion.setError(NSError())
+                print("hpple is nil")
+                completion.setError(NSError(domain: "aozora", code: 0, userInfo: nil))
                 return
             }
             
@@ -170,11 +169,11 @@ public class MALScrapper {
                 let totalHelpful = result.hppleElementFor(path: [2,2])?.content
                 
                 if let _ = avatarString {
-                    var reviewStruct = Review(
+                    let reviewStruct = Review(
                         avatarUrl: avatarString ?? "",
                         date: date ?? "",
                         helpful: (currentHelpful ?? "") + (totalHelpful ?? ""),
-                        rating: score!.toInt() ?? 0,
+                        rating: Int(score!) ?? 0,
                         review: review ?? "",
                         username: username ?? "")
                     reviews.append(reviewStruct)
@@ -188,14 +187,15 @@ public class MALScrapper {
     }
     
     public func findImagesWithQuery(string: String, animated: Bool) -> BFTask {
-        let requestURL = "https://www.google.com/search?q=\(string)&tbm=isch&safe=active&tbs=isz:m" + (animated ? ",itp:animated" : "")
-        let encodedRequest = requestURL.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
+        let baseURL = "https://www.google.com/search"
+        let queryURL = "?q=\(string)&tbm=isch&safe=active&tbs=isz:m" + (animated ? ",itp:animated" : "")
+        let encodedRequest = baseURL + queryURL.stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet())!
         let completion = BFTaskCompletionSource()
         
         viewController.webScraper.scrape(encodedRequest) { (hpple) -> Void in
             if hpple == nil {
-                println("hpple is nil")
-                completion.setError(NSError())
+                print("hpple is nil")
+                completion.setError(NSError(domain: "aozora", code: 0, userInfo: nil))
                 return
             }
             
@@ -212,8 +212,8 @@ public class MALScrapper {
                         
                         let values = sizeRaw.componentsSeparatedByString(" ")[1]
                         let valuesFiltered = values.componentsSeparatedByString(" × ")
-                        let width = valuesFiltered[0].toInt()!
-                        let height = valuesFiltered[1].toInt()!
+                        let width = Int(valuesFiltered[0])!
+                        let height = Int(valuesFiltered[1])!
                         
                         if width <= 1400 && height <= 1400 {
                             if animated && imageURL.endsWith(".gif") {
@@ -227,7 +227,7 @@ public class MALScrapper {
                 }
             }
             
-            println("found \(images.count) images")
+            print("found \(images.count) images")
             completion.setResult(images)
         }
         
@@ -235,15 +235,15 @@ public class MALScrapper {
     }
     
     // Scrapping topics from desktop version
-    public func topicsFor(#anime: Anime) -> BFTask {
+    public func topicsFor(anime anime: Anime) -> BFTask {
         let requestURL = "http://myanimelist.net/forum/?animeid=\(anime.myAnimeListID)"
         
         let completion = BFTaskCompletionSource()
         
         viewController.webScraper.scrape(requestURL) { (hpple) -> Void in
             if hpple == nil {
-                println("hpple is nil")
-                completion.setError(NSError())
+                print("hpple is nil")
+                completion.setError(NSError(domain: "aozora", code: 0, userInfo: nil))
                 return
             }
             
@@ -283,16 +283,16 @@ public class MALScrapper {
                 replies = replies?.stringByRemovingOccurencesOfString([","])
                 
                 if let _ = topicID {
-                    var lastPost = Post()
+                    let lastPost = Post()
                     lastPost.user = lastReplyFromUser ?? ""
                     lastPost.date = lastReplyDate ?? ""
                     
-                    var topic = Topic(
-                        id: topicID?.toInt() ?? 0,
+                    let topic = Topic(
+                        id: Int(topicID ?? "0")!,
                         title: title ?? "",
                         fromUser: fromUser ?? "",
                         date: date ?? "",
-                        replies: replies?.toInt() ?? 0,
+                        replies: Int(replies ?? "0")!,
                         type: type,
                         lastPost: lastPost)
                     topics.append(topic)
@@ -307,19 +307,19 @@ public class MALScrapper {
     }
     
     // Scrapping topics from mobile version
-    public func topicsFor(#board: Int) -> BFTask {
+    public func topicsFor(board board: Int) -> BFTask {
         let requestURL = "http://myanimelist.net/forum/?board=\(board)"
         
         let completion = BFTaskCompletionSource()
         
         viewController.webScraper.scrape(requestURL) { (hpple) -> Void in
             if hpple == nil {
-                println("hpple is nil")
-                completion.setError(NSError())
+                print("hpple is nil")
+                completion.setError(NSError(domain: "aozoraApp", code: 10, userInfo: nil))
                 return
             }
             
-            var results = hpple.searchWithXPathQuery("//div[@class='forums']/div[@class='box-unit3']") as! [TFHppleElement]
+            let results = hpple.searchWithXPathQuery("//div[@class='forums']/div[@class='box-unit3']") as! [TFHppleElement]
             
             var topics: [Topic] = []
             
@@ -339,25 +339,25 @@ public class MALScrapper {
                 }
                 
                 var replies = result.hppleElementFor(path: [0,0,1])?.text()
-                var lastActivity = result.hppleElementFor(path: [0,0,2])?.text()
+                let lastActivity = result.hppleElementFor(path: [0,0,2])?.text()
                 
-                var lastReplyFromUser = lastActivity?.componentsSeparatedByString(" by ")[1]
-                var lastReplyDate = lastActivity?.componentsSeparatedByString(" by ")[0]
+                let lastReplyFromUser = lastActivity?.componentsSeparatedByString(" by ")[1]
+                let lastReplyDate = lastActivity?.componentsSeparatedByString(" by ")[0]
                 
                 topicID = topicID?.stringByRemovingOccurencesOfString(["http://myanimelist.net/forum/?topicid="])
                 replies = replies?.stringByRemovingOccurencesOfString([","," replies"])
                 
                 if let _ = topicID {
-                    var lastPost = Post()
+                    let lastPost = Post()
                     lastPost.user = lastReplyFromUser ?? ""
                     lastPost.date = lastReplyDate ?? ""
                     
-                    var topic = Topic(
-                        id: topicID?.toInt() ?? 0,
+                    let topic = Topic(
+                        id: Int(topicID ?? "0")!,
                         title: title ?? "",
                         fromUser: "",
                         date: "",
-                        replies: replies?.toInt() ?? 0,
+                        replies: Int(replies ?? "0")!,
                         type: type,
                         lastPost: lastPost)
                     topics.append(topic)
@@ -373,25 +373,25 @@ public class MALScrapper {
     
 
     
-    public func postsFor(#topic: Topic, skip: Int) -> BFTask {
+    public func postsFor(topic topic: Topic, skip: Int) -> BFTask {
         let completion = BFTaskCompletionSource()
         
         let requestURL = "http://myanimelist.net/forum/?topicid=\(topic.id)&show=\(skip)"
         
         viewController.webScraper.scrape(requestURL) { (hpple) -> Void in
             if hpple == nil {
-                println("hpple is nil")
-                completion.setError(NSError())
+                print("hpple is nil")
+                completion.setError(NSError(domain: "aozora", code: 0, userInfo: nil))
                 return
             }
             
-            var results = hpple.searchWithXPathQuery("//div[@class='box-unit4 pt12 pb12 pl12 pr12']") as! [TFHppleElement]
+            let results = hpple.searchWithXPathQuery("//div[@class='box-unit4 pt12 pb12 pl12 pr12']") as! [TFHppleElement]
             
             var posts: [Post] = []
             
             for result in results {
                 
-                var postID = result.objectForKey("id")
+                let postID = result.objectForKey("id")
                 var avatar = result.hppleElementFor(path: [1,0,0])?.objectForKey("style")
                 var username: String?
                 var date: String?
@@ -417,7 +417,7 @@ public class MALScrapper {
                 }
                 
                 if let _ = postID {
-                    var post = Post()
+                    let post = Post()
                     post.user = username ?? ""
                     post.date = date ?? ""
                     post.id = postID
@@ -460,7 +460,7 @@ public class MALScrapper {
         case "div" where content.objectForKey("class") != nil && content.objectForKey("class") == "spoiler":
             var spoilerContent: [Post.Content] = []
             
-            var hiddenElementChildren = (content.children as! [TFHppleElement])[1].children as! [TFHppleElement]
+            let hiddenElementChildren = (content.children as! [TFHppleElement])[1].children as! [TFHppleElement]
             for content in hiddenElementChildren {
                 let lastContent = spoilerContent.last?.level == currentLevel+1 ? spoilerContent.last : nil
                 if let newContent = scrapePostContent(content, lastContent: lastContent, inheritedFormats: inheritedFormats, currentLevel: currentLevel+1, currentLocation: 0) {
@@ -468,7 +468,7 @@ public class MALScrapper {
                 }
             }
             
-            var spoilerButton = Post.SpoilerButton(type: Post.ContentType.SpoilerButton, content: "", formats:[], links: [], level: currentLevel+1)
+            let spoilerButton = Post.SpoilerButton(type: Post.ContentType.SpoilerButton, content: "", formats:[], links: [], level: currentLevel+1)
             spoilerButton.spoilerContent = spoilerContent
             
             return [spoilerButton]
@@ -496,7 +496,7 @@ public class MALScrapper {
         case "text":
             
             if let lastObject = lastContent where lastObject.type == Post.ContentType.Text {
-                let (content, formats, links) = contentsForElement(content, inheritedFormats: inheritedFormats, links: [], currentLocation: count(lastObject.content))
+                let (content, formats, links) = contentsForElement(content, inheritedFormats: inheritedFormats, links: [], currentLocation: lastObject.content.characters.count)
                 lastObject.content += content
                 lastObject.formats += formats
                 lastObject.links += links
@@ -522,8 +522,6 @@ public class MALScrapper {
         var allContent = ""
         var allInheritedFormats = inheritedFormats
         var allLinks = links
-                
-        var newFormats: [(attribute: String, value: AnyObject)] = []
             
         allContent += elementText(element)
 
@@ -550,11 +548,11 @@ public class MALScrapper {
                     allContent += content
                     
                     if child.tagName == "a" {
-                        allLinks.append(url: NSURL(string: child.objectForKey("href"))!, text: content)
+                        allLinks.append((url:NSURL(string: child.objectForKey("href"))!, text: content))
                     }
                     
                 } else {
-                    let (content, formats, links) = contentsForElement(child, inheritedFormats: inheritedFormats, links: links, currentLocation: count(allContent)+currentLocation)
+                    let (content, formats, links) = contentsForElement(child, inheritedFormats: inheritedFormats, links: links, currentLocation: allContent.characters.count+currentLocation)
                     allContent += content
                     allInheritedFormats += formats
                     allLinks += links
@@ -600,7 +598,7 @@ extension String {
         var finalString = self
         
         while allOccurences.count > 0 {
-            var occurence = allOccurences[0]
+            let occurence = allOccurences[0]
             finalString = finalString.stringByReplacingOccurrencesOfString(occurence, withString: "")
             allOccurences.removeAtIndex(0)
         }
@@ -613,7 +611,7 @@ extension String {
         var finalString = self
         
         while allOccurences.count > 0 {
-            var occurence = allOccurences[0]
+            let occurence = allOccurences[0]
             finalString = finalString.stringByReplacingOccurrencesOfString(occurence, withString: withString)
             allOccurences.removeAtIndex(0)
         }

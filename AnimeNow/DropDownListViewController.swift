@@ -32,7 +32,7 @@ public class DropDownListViewController: UIViewController {
     var viewController: UIViewController!
     
     public class func showDropDownListWith(
-        #sender: UIView,
+        sender sender: UIView,
         viewController: UIViewController,
         delegate: DropDownListDelegate?,
         dataSource: [[String]],
@@ -87,7 +87,7 @@ public class DropDownListViewController: UIViewController {
         if showTableView {
             showTableView = false
             
-            UIView.animateWithDuration(0.25, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut | UIViewAnimationOptions.AllowUserInteraction, animations: { () -> Void in
+            UIView.animateWithDuration(0.25, delay: 0.0, options: [UIViewAnimationOptions.CurveEaseOut, UIViewAnimationOptions.AllowUserInteraction], animations: { () -> Void in
                 
                 self.tableTopSpaceConstraint.constant = 0
                 self.view.layoutIfNeeded()
@@ -100,7 +100,7 @@ public class DropDownListViewController: UIViewController {
     
     @IBAction func dismissPressed(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: { () in
-            if let sender = sender as? DropDownListViewController {
+            if let _ = sender as? DropDownListViewController {
                 self.delegate?.dropDownDidDismissed(true)
             } else {
                 self.delegate?.dropDownDidDismissed(false)
@@ -111,7 +111,7 @@ public class DropDownListViewController: UIViewController {
 
 extension DropDownListViewController: UIGestureRecognizerDelegate {
     public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
-        return !touch.view.isDescendantOfView(tableView)
+        return !touch.view!.isDescendantOfView(tableView)
     }
 }
 
@@ -127,8 +127,8 @@ extension DropDownListViewController: UITableViewDataSource {
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cellId = (imageDataSource.count != 0) ? "OptionCell2" : "OptionCell"
-        var cell = tableView.dequeueReusableCellWithIdentifier(cellId) as! BasicTableCell
-        var title = dataSource[indexPath.section][indexPath.row]
+        let cell = tableView.dequeueReusableCellWithIdentifier(cellId) as! BasicTableCell
+        let title = dataSource[indexPath.section][indexPath.row]
         cell.titleLabel.text = title
         if imageDataSource.count != 0 {
             cell.titleimageView.image = UIImage(named: imageDataSource[indexPath.section][indexPath.row])
@@ -142,7 +142,7 @@ extension DropDownListViewController: UITableViewDataSource {
     }
     
     public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        var cell = tableView.dequeueReusableCellWithIdentifier("SectionCell") as! BasicTableCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("SectionCell") as! BasicTableCell
         return cell.contentView
     }
 }

@@ -46,7 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
         
-        var currentUser = PFUser.currentUser()
+        let currentUser = PFUser.currentUser()
         if currentUser != nil {
             WorkflowController.presentRootTabBar(animated: false)
         } else {
@@ -108,7 +108,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func registerForPushNotifications(application: UIApplication) {
         // Push notifications
-        let userNotificationTypes = (UIUserNotificationType.Alert |  UIUserNotificationType.Badge |  UIUserNotificationType.Sound);
+        let userNotificationTypes: UIUserNotificationType = ([UIUserNotificationType.Alert, UIUserNotificationType.Badge, UIUserNotificationType.Sound]);
         
         let settings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
         application.registerUserNotificationSettings(settings)
@@ -195,9 +195,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     WorkflowController.logoutUser().continueWithExecutor( BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
                         
                         if let error = task.error {
-                            println("failed loggin out: \(error)")
+                            print("failed loggin out: \(error)")
                         } else {
-                            println("logout succeeded")
+                            print("logout succeeded")
                         }
                         WorkflowController.presentOnboardingController(true)
                         return nil
@@ -223,9 +223,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
         if error.code == 3010 {
-            println("Push notifications are not supported in the iOS Simulator.")
+            print("Push notifications are not supported in the iOS Simulator.")
         } else {
-            println("application:didFailToRegisterForRemoteNotificationsWithError: %@", error)
+            print("application:didFailToRegisterForRemoteNotificationsWithError: %@", error)
         }
     }
     
@@ -244,7 +244,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     application: UIApplication,
     openURL url: NSURL,
     sourceApplication: String?,
-    annotation: AnyObject?) -> Bool {
+    annotation: AnyObject) -> Bool {
             
         return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
     }
@@ -285,18 +285,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UITextField.appearance().textColor = UIColor.whiteColor()
     }
     
-    func application(application: UIApplication, supportedInterfaceOrientationsForWindow window: UIWindow?) -> Int {
+    func application(application: UIApplication, supportedInterfaceOrientationsForWindow window: UIWindow?) -> UIInterfaceOrientationMask {
         
         let topViewController = UIApplication.topViewController()
         
         if let controller = topViewController as? JTSImageViewController where !controller.isBeingDismissed() {
-            return Int(UIInterfaceOrientationMask.All.rawValue);
+            return UIInterfaceOrientationMask.All;
         } else if let controller = topViewController as? XCDYouTubeVideoPlayerViewController where !controller.isBeingDismissed() {
-            return Int(UIInterfaceOrientationMask.All.rawValue);
+            return UIInterfaceOrientationMask.All;
         } else if let controller = topViewController as? ImageViewController where !controller.isBeingDismissed() {
-            return Int(UIInterfaceOrientationMask.All.rawValue);
+            return UIInterfaceOrientationMask.All;
         } else {
-            return Int(UIInterfaceOrientationMask.Portrait.rawValue);
+            return UIInterfaceOrientationMask.Portrait;
         }
     }
     

@@ -63,7 +63,7 @@ public class NewPostViewController: CommentViewController {
         
         switch threadType {
         case .Timeline:
-            var timelinePost = TimelinePost()
+            let timelinePost = TimelinePost()
             
             timelinePost.content = textView.text
             timelinePost.edited = false
@@ -99,7 +99,7 @@ public class NewPostViewController: CommentViewController {
                 timelinePost.userTimeline = postedIn
             }
             
-            var postSaveTask = timelinePost.saveInBackground()
+            let postSaveTask = timelinePost.saveInBackground()
             
             BFTask(forCompletionOfAllTasks: [parentSaveTask, postSaveTask]).continueWithBlock({ (task: BFTask!) -> AnyObject! in
                 
@@ -127,7 +127,7 @@ public class NewPostViewController: CommentViewController {
             })
             
         default:
-            var post = Post()
+            let post = Post()
             post.content = textView.text
             post.edited = false
             post.hasSpoilers = hasSpoilers
@@ -160,7 +160,7 @@ public class NewPostViewController: CommentViewController {
             post.thread.incrementKey("replies")
             post.thread.lastPostedBy = postedBy
                
-            var postSaveTask = post.saveInBackground()
+            let postSaveTask = post.saveInBackground()
             
             BFTask(forCompletionOfAllTasks: [parentSaveTask, postSaveTask]).continueWithBlock({ (task: BFTask!) -> AnyObject! in
                 
@@ -220,7 +220,7 @@ public class NewPostViewController: CommentViewController {
     func validPost() -> Bool {
         let content = textView.text
         // Validate post
-        if count(content) < 2 {
+        if content.characters.count < 2 {
             presentBasicAlertWithTitle("Too Short", message: "Message should be a 3 characters or longer")
             return false
         }

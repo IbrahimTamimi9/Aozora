@@ -25,13 +25,13 @@ public class CustomTextField: UITextField {
 public extension CustomTextField {
     
     func isEmpty() -> Bool {
-        return (count(text) == 0)
+        return text!.characters.count == 0
     }
     
     func validEmail() -> Bool {
         let emailRegex = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
-        let regularExpression = NSRegularExpression(pattern: emailRegex, options: NSRegularExpressionOptions.CaseInsensitive, error: nil)
-        let matches = regularExpression?.numberOfMatchesInString(text, options: nil, range: NSMakeRange(0, (text as NSString).length))
+        let regularExpression = try? NSRegularExpression(pattern: emailRegex, options: NSRegularExpressionOptions.CaseInsensitive)
+        let matches = regularExpression?.numberOfMatchesInString(text!, options: [], range: NSMakeRange(0, (text! as NSString).length))
         return (matches == 1)
     }
     
@@ -40,11 +40,11 @@ public extension CustomTextField {
     }
     
     func validPassword() -> Bool {
-        return (count(text) >= 6)
+        return text!.characters.count >= 6
     }
     
     func trimSpaces() {
-        text = text.stringByReplacingOccurrencesOfString(" ", withString: "")
+        text = text!.stringByReplacingOccurrencesOfString(" ", withString: "")
     }
     
 }
