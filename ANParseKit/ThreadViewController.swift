@@ -43,6 +43,8 @@ public class ThreadViewController: UIViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "moviePlayerPlaybackDidFinish:", name: MPMoviePlayerPlaybackDidFinishNotification, object: nil)
+        
         tableView.alpha = 0.0
         tableView.estimatedRowHeight = 112.0
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -63,6 +65,7 @@ public class ThreadViewController: UIViewController {
     
     deinit {
         fetchController.tableView = nil
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     public func updateUIWithThread(thread: Thread) {
@@ -481,6 +484,10 @@ extension ThreadViewController: UITableViewDelegate {
                 }
             }
         })
+    }
+    
+    func moviePlayerPlaybackDidFinish(notification: NSNotification) {
+        playerController = nil;
     }
 }
 
