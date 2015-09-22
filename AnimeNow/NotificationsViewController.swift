@@ -27,7 +27,7 @@ class NotificationsViewController: UIViewController {
         tableView.estimatedRowHeight = 112.0
         tableView.rowHeight = UITableViewAutomaticDimension
         
-        let clearAll = UIBarButtonItem(title: "Clear all", style: UIBarButtonItemStyle.Plain, target: self, action: "clearAllPressed:")
+        let clearAll = UIBarButtonItem(title: "Read all", style: UIBarButtonItemStyle.Plain, target: self, action: "clearAllPressed:")
         navigationItem.rightBarButtonItem = clearAll
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "fetchNotifications", name: "newNotification", object: nil)
@@ -60,7 +60,7 @@ class NotificationsViewController: UIViewController {
         query.includeKey("owner")
         query.includeKey("readBy")
         query.whereKey("subscribers", containedIn: [User.currentUser()!])
-        query.orderByDescending("updatedAt")
+        query.orderByDescending("lastUpdatedAt")
         fetchController.configureWith(self, query: query, queryDelegate:self, tableView: tableView, limit: 50)
     }
     
@@ -127,7 +127,7 @@ extension NotificationsViewController: UITableViewDataSource {
             cell.contentView.backgroundColor = UIColor.backgroundDarker()
         }
         
-        cell.subtitleLabel.text = notification.updatedAt!.timeAgo()
+        cell.subtitleLabel.text = (notification.lastUpdatedAt ?? notification.updatedAt!).timeAgo()
         cell.layoutIfNeeded()
         return cell
     }

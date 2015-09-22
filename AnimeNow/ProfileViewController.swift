@@ -119,7 +119,7 @@ public class ProfileViewController: ThreadViewController {
         query.includeKey("readBy")
         query.includeKey("triggeredBy")
         query.whereKey("subscribers", containedIn: [User.currentUser()!])
-        query.orderByDescending("updatedAt")
+        query.orderByDescending("lastUpdatedAt")
         query.findObjectsInBackgroundWithBlock { (result, error) -> Void in
             if let result = result as? [Notification] {
                 let unreadNotifications = result.filter { (notification: PFObject) -> Bool in

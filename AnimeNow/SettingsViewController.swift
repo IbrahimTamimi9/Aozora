@@ -64,6 +64,8 @@ class SettingsViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
         switch (indexPath.section, indexPath.row) {
         case (0,0):
             // Login / Logout

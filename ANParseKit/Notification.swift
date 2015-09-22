@@ -33,5 +33,5 @@ public class Notification: PFObject, PFSubclassing {
     @NSManaged public var owner: User
     @NSManaged public var lastTriggeredBy: User
     @NSManaged public var readBy: [User]
-    
+    @NSManaged public var lastUpdatedAt: NSDate?
 }
