@@ -144,7 +144,7 @@ public class MALScrapper {
         let completion = BFTaskCompletionSource()
         
         let malSlug = malTitleToSlug(anime.title!)
-        let baseURL = "http://myanimelist.net/anime/"
+        let baseURL = "https://myanimelist.net/anime/"
         let queryURL = "\(anime.myAnimeListID)/\(malSlug)/reviews"
         let encodedRequest = baseURL + queryURL.stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet())!
         
@@ -236,7 +236,7 @@ public class MALScrapper {
     
     // Scrapping topics from desktop version
     public func topicsFor(anime anime: Anime) -> BFTask {
-        let requestURL = "http://myanimelist.net/forum/?animeid=\(anime.myAnimeListID)"
+        let requestURL = "https://myanimelist.net/forum/?animeid=\(anime.myAnimeListID)"
         
         let completion = BFTaskCompletionSource()
         
@@ -308,7 +308,7 @@ public class MALScrapper {
     
     // Scrapping topics from mobile version
     public func topicsFor(board board: Int) -> BFTask {
-        let requestURL = "http://myanimelist.net/forum/?board=\(board)"
+        let requestURL = "https://myanimelist.net/forum/?board=\(board)"
         
         let completion = BFTaskCompletionSource()
         
@@ -344,7 +344,7 @@ public class MALScrapper {
                 let lastReplyFromUser = lastActivity?.componentsSeparatedByString(" by ")[1]
                 let lastReplyDate = lastActivity?.componentsSeparatedByString(" by ")[0]
                 
-                topicID = topicID?.stringByRemovingOccurencesOfString(["http://myanimelist.net/forum/?topicid="])
+                topicID = topicID?.stringByRemovingOccurencesOfString(["https://myanimelist.net/forum/?topicid="])
                 replies = replies?.stringByRemovingOccurencesOfString([","," replies"])
                 
                 if let _ = topicID {
@@ -376,7 +376,7 @@ public class MALScrapper {
     public func postsFor(topic topic: Topic, skip: Int) -> BFTask {
         let completion = BFTaskCompletionSource()
         
-        let requestURL = "http://myanimelist.net/forum/?topicid=\(topic.id)&show=\(skip)"
+        let requestURL = "https://myanimelist.net/forum/?topicid=\(topic.id)&show=\(skip)"
         
         viewController.webScraper.scrape(requestURL) { (hpple) -> Void in
             if hpple == nil {

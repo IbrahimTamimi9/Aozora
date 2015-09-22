@@ -13,7 +13,7 @@ public struct TraktV1 {
     
     public enum Router: URLRequestConvertible {
         static let TraktAPIKey = "3d00b19f07b707f960e58fd9fa81caf2"
-        static let BaseURLString = "http://api.trakt.tv"
+        static let BaseURLString = "https://api.trakt.tv"
         
         case showSummaryForID(tvdbID: Int)
         

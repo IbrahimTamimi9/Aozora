@@ -17,9 +17,9 @@ let DefaultLoadingScreen = "Defaults.InitialLoadingScreen";
 class SettingsViewController: UITableViewController {
     
     let FacebookPageDeepLink = "fb://profile/713541968752502";
-    let FacebookPageURL = "http://www.facebook.com/AozoraApp";
+    let FacebookPageURL = "https://www.facebook.com/AozoraApp";
     let TwitterPageDeepLink = "twitter://user?id=3366576341";
-    let TwitterPageURL = "http://www.twitter.com/AozoraApp";
+    let TwitterPageURL = "https://www.twitter.com/AozoraApp";
     
     @IBOutlet weak var loginLabel: UILabel!
     @IBOutlet weak var linkWithMyAnimeListLabel: UILabel!
