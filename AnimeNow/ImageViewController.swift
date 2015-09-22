@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import FLAnimatedImage
 
 protocol ImageViewControllerDelegate: class {
     func imageViewControllerSelected(imageData imageData: ImageData)
@@ -15,18 +16,29 @@ protocol ImageViewControllerDelegate: class {
 public class ImageViewController: UIViewController {
     
     @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var imageView: FLAnimatedImageView!
     
     weak var delegate: ImageViewControllerDelegate?
     var imageData: ImageData!
+    var animatedImage: FLAnimatedImage?
     
     func initWith(imageData imageData: ImageData) {
         self.imageData = imageData
     }
     
+    func initWith(imageData imageData: ImageData, animatedImage: FLAnimatedImage) {
+        initWith(imageData: imageData)
+        self.animatedImage = animatedImage
+    }
+    
     override public func viewDidLoad() {
         super.viewDidLoad()
-        imageView.setImageFrom(urlString: imageData.url, animated: true)
+        
+        if let animatedImage = animatedImage {
+            imageView.animatedImage = animatedImage
+        } else {
+            imageView.setImageFrom(urlString: imageData.url, animated: true)
+        }
         
         UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: UIStatusBarAnimation.Fade)
     }

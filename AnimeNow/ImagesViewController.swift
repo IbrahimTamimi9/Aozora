@@ -74,6 +74,7 @@ public class ImagesViewController: UIViewController {
     @IBAction func segmentedControlValueChanged(sender: AnyObject) {
         dataSource = []
         collectionView.reloadData()
+        view.endEditing(true)
         let animated = segmentedControl.selectedSegmentIndex == 0 ? false : true
         findImagesWithQuery(searchBar.text!, animated: animated)
     }
@@ -89,22 +90,23 @@ extension ImagesViewController: UICollectionViewDataSource {
     public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("imageCell", forIndexPath: indexPath) as! BasicCollectionCell
-        
         let imageData = dataSource[indexPath.row]
-
+        cell.loadingURL = imageData.url
+        cell.animatedImageView.animatedImage = nil
+        cell.animatedImageView.image = nil
         if segmentedControl.selectedSegmentIndex == 1 {
             if let image = imageDatasource[imageData.url] {
                 cell.animatedImageView.animatedImage = image
             } else {
-                cell.animatedImageView.image = nil
-                cell.animatedImageView.animatedImage = nil
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
                     // do some task
                     let image = FLAnimatedImage(GIFData: NSData(contentsOfURL: NSURL(string: imageData.url)!))
                     dispatch_async(dispatch_get_main_queue(), {
                         // update some UI
                         self.imageDatasource[imageData.url] = image
-                        cell.animatedImageView.animatedImage = image
+                        if cell.loadingURL == imageData.url {
+                            cell.animatedImageView.animatedImage = image
+                        }
                     });
                 });
             }
@@ -122,7 +124,13 @@ extension ImagesViewController: UICollectionViewDelegate {
         let imageData = dataSource[indexPath.row]
         
         let imageController = ANParseKit.commentStoryboard().instantiateViewControllerWithIdentifier("Image") as! ImageViewController
-        imageController.initWith(imageData: imageData)
+        
+        if let image = imageDatasource[imageData.url] {
+            imageController.initWith(imageData: imageData, animatedImage: image)
+        } else {
+            imageController.initWith(imageData: imageData)
+        }
+        
         imageController.delegate = self
         imageController.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
         presentViewController(imageController, animated: true, completion: nil)

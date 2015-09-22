@@ -24,6 +24,8 @@ public class BasicCollectionCell: UICollectionViewCell {
     
     @IBOutlet public weak var animatedImageView: FLAnimatedImageView!
     
+    public var loadingURL: String?
+    
     @IBAction public func actionButtonPressed(sender: AnyObject) {
         delegate?.cellSelectedActionButton(self)
     }
