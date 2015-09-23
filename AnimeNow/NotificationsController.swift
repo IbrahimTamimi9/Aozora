@@ -11,7 +11,7 @@ import ANParseKit
 
 class NotificationsController {
     
-    class func handleNotification(objectClass: String, objectId:String) {
+    class func handleNotification(objectClass: String, objectId: String) {
         
         switch objectClass {
         case "_User":

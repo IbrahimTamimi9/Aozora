@@ -68,16 +68,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func handleIncomingNotification(userInfo: [NSObject: AnyObject], completionHandler: ((UIBackgroundFetchResult) -> Void)? ) {
         // Extract the notification data
         if let objectClass = userInfo["targetClass"] as? String,
-            let objectId = userInfo["targetID"] as? String {
+            let objectId = userInfo["targetID"] as? String,
+            let notificationId = userInfo["notificationID"] as? String{
                 
-                NSNotificationCenter.defaultCenter().postNotificationName("newNotification", object: nil)
                 
                 let state = UIApplication.sharedApplication().applicationState;
                 if state == UIApplicationState.Background || state == UIApplicationState.Inactive
                 {
+                    let notification = Notification(withoutDataWithObjectId: notificationId)
+                    notification.addUniqueObject(User.currentUser()!, forKey: "readBy")
+                    notification.saveEventually()
+                    
                     NotificationsController.handleNotification(objectClass, objectId: objectId)
                 } else {
                     // Not from background
+                    NSNotificationCenter.defaultCenter().postNotificationName("newNotification", object: nil)
                 }
                 
                 if let completionHandler = completionHandler {
