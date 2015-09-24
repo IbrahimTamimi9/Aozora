@@ -145,7 +145,7 @@ public class NewPostViewController: CommentViewController {
                     let parameters = [
                         "toUserId": self.postedIn.objectId!,
                         "timelinePostId": parentPost.objectId!,
-                        "toUserUsername": self.postedIn.username!
+                        "toUserUsername": self.postedIn.aozoraUsername
                         ] as [String : AnyObject]
                     PFCloud.callFunctionInBackground("sendNewTimelinePostReplyPushNotification", withParameters: parameters)
                 } else {
