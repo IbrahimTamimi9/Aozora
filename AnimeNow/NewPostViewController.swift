@@ -13,15 +13,26 @@ import Bolts
 public class NewPostViewController: CommentViewController {
     
     @IBOutlet weak var spoilersButton: UIButton!
+    @IBOutlet weak var spoilerContentHeight: NSLayoutConstraint!
+    @IBOutlet weak var spoilerTextView: UITextView!
     
     var hasSpoilers = false {
         didSet {
             if hasSpoilers {
                 spoilersButton.setTitle(" Spoilers", forState: .Normal)
                 spoilersButton.setTitleColor(UIColor.dropped(), forState: .Normal)
+                spoilerContentHeight.constant = 160
+                
             } else {
                 spoilersButton.setTitle("No Spoilers", forState: .Normal)
                 spoilersButton.setTitleColor(UIColor(white: 0.75, alpha: 1.0), forState: .Normal)
+                spoilerContentHeight.constant = 0
+            }
+            
+            
+            UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 0.85, initialSpringVelocity: 1.0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+                self.view.layoutIfNeeded()
+                }) { (finished) -> Void in
             }
         }
     }
@@ -29,11 +40,20 @@ public class NewPostViewController: CommentViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         
+        spoilerContentHeight.constant = 0
         textView.becomeFirstResponder()
         
         if let editingPost = editingPost {
-            hasSpoilers = (editingPost as! Postable).hasSpoilers
-            textView.text = editingPost["content"] as? String
+            
+            let postable = editingPost as! Postable
+            hasSpoilers = postable.hasSpoilers
+            
+            if hasSpoilers {
+                spoilerTextView.text = postable.content
+                textView.text = postable.nonSpoilerContent
+            } else {
+                textView.text = postable.content
+            }
             
             if let youtubeID = (editingPost as! Postable).youtubeID {
                 selectedVideoID = youtubeID
@@ -75,7 +95,14 @@ public class NewPostViewController: CommentViewController {
         case .Timeline:
             let timelinePost = TimelinePost()
             
-            timelinePost.content = textView.text
+            if hasSpoilers {
+                timelinePost.content = spoilerTextView.text
+                timelinePost.nonSpoilerContent = textView.text
+            } else {
+                timelinePost.content = textView.text
+                timelinePost.nonSpoilerContent = nil
+            }
+            
             timelinePost.edited = false
             timelinePost.hasSpoilers = hasSpoilers
             timelinePost.postedBy = postedBy
@@ -138,7 +165,13 @@ public class NewPostViewController: CommentViewController {
             
         default:
             let post = Post()
-            post.content = textView.text
+            if hasSpoilers {
+                post.content = spoilerTextView.text
+                post.nonSpoilerContent = textView.text
+            } else {
+                post.content = textView.text
+                post.nonSpoilerContent = nil
+            }
             post.edited = false
             post.hasSpoilers = hasSpoilers
             post.postedBy = postedBy
@@ -218,7 +251,13 @@ public class NewPostViewController: CommentViewController {
         
         if var post = post as? Postable {
             post.hasSpoilers = hasSpoilers
-            post.content = textView.text
+            if hasSpoilers {
+                post.content = spoilerTextView.text
+                post.nonSpoilerContent = textView.text
+            } else {
+                post.content = textView.text
+                post.nonSpoilerContent = nil
+            }
             post.edited = true
             
             if let selectedImageData = selectedImageData {

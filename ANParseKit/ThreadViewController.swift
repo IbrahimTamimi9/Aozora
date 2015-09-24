@@ -244,11 +244,17 @@ extension ThreadViewController: UITableViewDataSource {
             cell.date.text = postedAgo
         }
         
+        if let nonSpoilerContent = post.nonSpoilerContent {
+            cell.textContent.text = nonSpoilerContent+"\n\n"
+        } else {
+            cell.textContent.text = ""
+        }
+        
         if post.hasSpoilers && post.isSpoilerHidden {
-            cell.textContent.text = "Show Spoilers"
+            cell.textContent.text! += "(Show Spoilers)"
             cell.imageHeightConstraint?.constant = 0
         } else {
-            cell.textContent.text = post.content
+            cell.textContent.text! += post.content
             setImages(post.images, imageView: cell.imageContent, imageHeightConstraint: cell.imageHeightConstraint)
         }
         
@@ -267,10 +273,14 @@ extension ThreadViewController: UITableViewDataSource {
         if let postedBy = post.postedBy, let avatarFile = postedBy.avatarThumb  {
             
             let username = postedBy.aozoraUsername
+            
             var content = username + " "
+            if let nonSpoilerContent = post.nonSpoilerContent {
+                content += nonSpoilerContent+"\n\n"
+            }
             
             if post.hasSpoilers && post.isSpoilerHidden {
-                content += "Show Spoilers"
+                content += "(Show Spoilers)"
                 cell.imageHeightConstraint?.constant = 0
             } else {
                 content += post.content

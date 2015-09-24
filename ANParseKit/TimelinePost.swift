@@ -107,6 +107,15 @@ public class TimelinePost: PFObject, PFSubclassing, TimelinePostable {
         }
     }
     
+    public var nonSpoilerContent: String? {
+        get {
+            return self["nonSpoilerContent"] as? String
+        }
+        set(value) {
+            self["nonSpoilerContent"] = value ?? NSNull()
+        }
+    }
+    
     public var replyLevel: Int {
         get {
             return self["replyLevel"] as? Int ?? 0

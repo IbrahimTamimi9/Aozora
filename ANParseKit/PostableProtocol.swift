@@ -17,6 +17,7 @@ public protocol Postable {
     var postedBy: User? { get set }
     var edited: Bool { get set }
     var content: String { get set }
+    var nonSpoilerContent: String? { get set }
     var replyLevel: Int { get set }
     var hasSpoilers: Bool { get set }
     var isSpoilerHidden: Bool { get set }
