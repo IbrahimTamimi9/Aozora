@@ -129,6 +129,9 @@ class ForumsViewController: UIViewController {
         let query = Thread.query()!
         query.fromLocalDatastore()
         query.whereKey("pinType", equalTo: "global")
+        query.includeKey("tags")
+        query.includeKey("lastPostedBy")
+        query.includeKey("startedBy")
         query.findObjectsInBackgroundWithBlock { (result, error) -> Void in
             if let pinnedData = result as? [Thread] {
                 let query = Thread.query()!
@@ -180,6 +183,9 @@ class ForumsViewController: UIViewController {
         query.fromLocalDatastore()
         query.whereKey("pinType", equalTo: "tag")
         query.whereKey("tags", containedIn: [tag])
+        query.includeKey("tags")
+        query.includeKey("lastPostedBy")
+        query.includeKey("startedBy")
         query.findObjectsInBackgroundWithBlock { (result, error) -> Void in
             if let pinnedData = result as? [Thread] {
                 let query = Thread.query()!
