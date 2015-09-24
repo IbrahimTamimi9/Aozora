@@ -149,13 +149,11 @@ public class NewPostViewController: CommentViewController {
                         ] as [String : AnyObject]
                     PFCloud.callFunctionInBackground("sendNewTimelinePostReplyPushNotification", withParameters: parameters)
                 } else {
-                    if self.postedBy! != self.postedIn {
-                        let parameters = [
-                            "toUserId": self.postedIn.objectId!,
-                            "timelinePostId": timelinePost.objectId!
-                            ] as [String : AnyObject]
-                        PFCloud.callFunctionInBackground("sendNewTimelinePostPushNotification", withParameters: parameters)
-                    }
+                    let parameters = [
+                        "toUserId": self.postedIn.objectId!,
+                        "timelinePostId": timelinePost.objectId!
+                        ] as [String : AnyObject]
+                    PFCloud.callFunctionInBackground("sendNewTimelinePostPushNotification", withParameters: parameters)
                 }
                 
                 self.postedBy?.incrementPostCount(1)
@@ -216,19 +214,17 @@ public class NewPostViewController: CommentViewController {
                         ] as [String : AnyObject]
                     PFCloud.callFunctionInBackground("sendNewPostReplyPushNotification", withParameters: parameters)
                 } else {
-                    if self.postedBy! != self.postedIn {
-                        var parameters = [
-                            "postId": post.objectId!,
-                            "threadName": post.thread.title
-                            ] as [String : AnyObject]
-                        
-                        // Only on user threads, episode threads do not have startedBy
-                        if let startedBy = post.thread.startedBy {
-                            parameters["toUserId"] = startedBy.objectId!
-                        }
-                        
-                        PFCloud.callFunctionInBackground("sendNewPostPushNotification", withParameters: parameters)
+                    var parameters = [
+                        "postId": post.objectId!,
+                        "threadName": post.thread.title
+                        ] as [String : AnyObject]
+                    
+                    // Only on user threads, episode threads do not have startedBy
+                    if let startedBy = post.thread.startedBy {
+                        parameters["toUserId"] = startedBy.objectId!
                     }
+                    
+                    PFCloud.callFunctionInBackground("sendNewPostPushNotification", withParameters: parameters)
                 }
                 
                 self.postedBy?.incrementPostCount(1)
