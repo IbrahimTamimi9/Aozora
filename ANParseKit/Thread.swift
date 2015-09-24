@@ -53,6 +53,7 @@ public class Thread: PFObject, PFSubclassing {
             return imagesInternal
         }
         set(value) {
+            imagesInternal = value
             var imagesRaw: [[String: AnyObject]] = []
             for image in value {
                 imagesRaw.append(image.toDictionary())

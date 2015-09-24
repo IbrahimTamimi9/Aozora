@@ -520,6 +520,10 @@ extension ThreadViewController: TTTAttributedLabelDelegate {
 
 extension ThreadViewController: CommentViewControllerDelegate {
     public func commentViewControllerDidFinishedPosting(newPost: PFObject, parentPost: PFObject?, edited: Bool) {
+        if let thread = newPost as? Thread {
+            self.thread = thread
+            updateUIWithThread(thread)
+        }
     }
 }
 

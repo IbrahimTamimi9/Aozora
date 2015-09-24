@@ -40,7 +40,7 @@ public class TimelinePost: PFObject, PFSubclassing, TimelinePostable {
             return self["youtubeID"] as? String
         }
         set(value) {
-            self["youtubeID"] = value
+            self["youtubeID"] = value ?? NSNull()
         }
     }
     
@@ -139,6 +139,7 @@ public class TimelinePost: PFObject, PFSubclassing, TimelinePostable {
             return imagesInternal
         }
         set(value) {
+            imagesInternal = value
             var imagesRaw: [[String: AnyObject]] = []
             for image in value {
                 imagesRaw.append(image.toDictionary())

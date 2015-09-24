@@ -24,7 +24,7 @@ public protocol Postable {
     var likedBy: [User]? { get set }
     
     var parentPost: PFObject? { get }
-    var images: [ImageData] { get }
+    var images: [ImageData] { get set }
     
     var replies: [PFObject] { get set }
 }

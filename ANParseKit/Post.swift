@@ -41,7 +41,7 @@ public class Post: PFObject, PFSubclassing, ThreadPostable {
             return self["youtubeID"] as? String
         }
         set(value) {
-            self["youtubeID"] = value
+            self["youtubeID"] = value ?? NSNull()
         }
     }
     
@@ -122,6 +122,7 @@ public class Post: PFObject, PFSubclassing, ThreadPostable {
             return imagesInternal
         }
         set(value) {
+            imagesInternal = value
             var imagesRaw: [[String: AnyObject]] = []
             for image in value {
                 imagesRaw.append(image.toDictionary())

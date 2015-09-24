@@ -37,8 +37,16 @@ public class CommentViewController: UIViewController {
     
     public weak var delegate: CommentViewControllerDelegate?
     
-    var selectedImageData: ImageData?
-    var selectedVideoID: String?
+    var selectedImageData: ImageData? {
+        didSet {
+            updateMediaCountLabels()
+        }
+    }
+    var selectedVideoID: String? {
+        didSet {
+            updateMediaCountLabels()
+        }
+    }
     
     var initialStatusBarStyle: UIStatusBarStyle!
     var postedBy = User.currentUser()
@@ -143,6 +151,20 @@ public class CommentViewController: UIViewController {
         }
     }
     
+    func updateMediaCountLabels() {
+        if let _ = selectedVideoID {
+            videoCountLabel.hidden = false
+        } else {
+            videoCountLabel.hidden = true
+        }
+        
+        if let _ = selectedImageData {
+            photoCountLabel.hidden = false
+        } else {
+            photoCountLabel.hidden = true
+        }
+    }
+    
     // MARK: - IBActions
     
     @IBAction func dimissViewControllerPressed(sender: AnyObject) {
@@ -150,18 +172,30 @@ public class CommentViewController: UIViewController {
     }
     
     @IBAction func addImagePressed(sender: AnyObject) {
-        let imagesController = ANParseKit.commentStoryboard().instantiateViewControllerWithIdentifier("Images") as! ImagesViewController
-        imagesController.delegate = self
-        presentViewController(imagesController, animated: true, completion: nil)
+        
+        if let _ = selectedImageData {
+            selectedImageData = nil
+        } else {
+            let imagesController = ANParseKit.commentStoryboard().instantiateViewControllerWithIdentifier("Images") as! ImagesViewController
+            imagesController.delegate = self
+            presentViewController(imagesController, animated: true, completion: nil)
+        }
+        
     }
     
     @IBAction func addVideoPressed(sender: AnyObject) {
-        let navController = ANParseKit.commentStoryboard().instantiateViewControllerWithIdentifier("BrowserSelector") as! UINavigationController
-        let videoController = navController.viewControllers.last as! InAppBrowserSelectorViewController
-        let initialURL = NSURL(string: "https://www.youtube.com")
-        videoController.initWithTitle("Select a video", initialUrl: initialURL)
-        videoController.delegate = self
-        presentViewController(navController, animated: true, completion: nil)
+        
+        if let _ = selectedVideoID {
+            selectedVideoID = nil
+        } else {
+            let navController = ANParseKit.commentStoryboard().instantiateViewControllerWithIdentifier("BrowserSelector") as! UINavigationController
+            let videoController = navController.viewControllers.last as! InAppBrowserSelectorViewController
+            let initialURL = NSURL(string: "https://www.youtube.com")
+            videoController.initWithTitle("Select a video", initialUrl: initialURL)
+            videoController.delegate = self
+            presentViewController(navController, animated: true, completion: nil)
+        }
+        
     }
 
     @IBAction func sendPressed(sender: AnyObject) {
@@ -177,8 +211,7 @@ public class CommentViewController: UIViewController {
 extension CommentViewController: ImagesViewControllerDelegate {
     func imagesViewControllerSelected(imageData imageData: ImageData) {
         selectedImageData = imageData
-        photoCountLabel.hidden = false
-        videoButton.enabled = false
+        selectedVideoID = nil
     }
 }
 
@@ -186,8 +219,7 @@ extension CommentViewController: InAppBrowserSelectorViewControllerDelegate {
     public func inAppBrowserSelectorViewControllerSelectedSite(siteURL: String) {
         if let url = NSURL(string: siteURL), let parameters = BFURL(URL: url).inputQueryParameters, let videoID = parameters["v"] as? String {
             selectedVideoID = videoID
-            videoCountLabel.hidden = false
-            photoButton.enabled = false
+            selectedImageData = nil
         }
     }
 }

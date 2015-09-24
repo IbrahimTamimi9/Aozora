@@ -34,13 +34,23 @@ public class NewPostViewController: CommentViewController {
         if let editingPost = editingPost {
             hasSpoilers = (editingPost as! Postable).hasSpoilers
             textView.text = editingPost["content"] as? String
+            
+            if let youtubeID = (editingPost as! Postable).youtubeID {
+                selectedVideoID = youtubeID
+                videoCountLabel.hidden = false
+                photoCountLabel.hidden = true
+            } else if let imageData = (editingPost as! Postable).images.last{
+                selectedImageData = imageData
+                videoCountLabel.hidden = true
+                photoCountLabel.hidden = false
+            }
+            
             if let parentPost = parentPost as? TimelinePostable {
                 inReply.text = "  Editing Reply to \(parentPost.userTimeline.aozoraUsername)"
             } else {
                 inReply.text = "  Editing Post"
             }
-            photoButton.hidden = true
-            videoButton.hidden = true
+
         } else {
             if let parentPost = parentPost as? TimelinePostable {
                 inReply.text = "  In Reply to \(parentPost.userTimeline.aozoraUsername)"
@@ -210,6 +220,18 @@ public class NewPostViewController: CommentViewController {
             post.hasSpoilers = hasSpoilers
             post.content = textView.text
             post.edited = true
+            
+            if let selectedImageData = selectedImageData {
+                post.images = [selectedImageData]
+            } else {
+                post.images = []
+            }
+            
+            if let youtubeID = selectedVideoID {
+                post.youtubeID = youtubeID
+            } else {
+                post.youtubeID = nil
+            }
         }
         
         post.saveInBackgroundWithBlock ({ (result, error) -> Void in

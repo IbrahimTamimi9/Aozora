@@ -42,8 +42,16 @@ public class NewThreadViewController: CommentViewController {
             textView.text = thread.content
             threadTitle.text = thread.title
             tags = thread.tags
-            photoButton.hidden = true
-            videoButton.hidden = true
+            
+            if let youtubeID = thread.youtubeID {
+                selectedVideoID = youtubeID
+                videoCountLabel.hidden = false
+                photoCountLabel.hidden = true
+            } else if let imageData = thread.images.last{
+                selectedImageData = imageData
+                videoCountLabel.hidden = true
+                photoCountLabel.hidden = false
+            }
         }
     }
     
@@ -99,6 +107,19 @@ public class NewThreadViewController: CommentViewController {
             thread.title = threadTitle.text!
             thread.content = textView.text
             thread.tags = tags
+            
+            if let selectedImageData = selectedImageData {
+                thread.images = [selectedImageData]
+            } else {
+                thread.images = []
+            }
+            
+            if let youtubeID = selectedVideoID {
+                thread.youtubeID = youtubeID
+            } else {
+                thread.youtubeID = nil
+            }
+            
             thread.saveInBackgroundWithBlock({ (result, error) -> Void in
                 self.completeRequest(thread, parentPost:nil, error: error)
             })
