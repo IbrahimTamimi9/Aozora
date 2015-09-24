@@ -20,13 +20,7 @@ public class ThreadViewController: UIViewController {
     
     @IBOutlet public weak var tableView: UITableView!
     
-    public var thread: Thread? {
-        didSet {
-            if isViewLoaded() {
-                updateUIWithThread(thread!)
-            }
-        }
-    }
+    public var thread: Thread?
     public var threadType: ThreadType!
     
     public var fetchController = FetchController()
@@ -405,49 +399,60 @@ extension ThreadViewController: UITableViewDelegate {
     
     func showSheetFor(post post: Postable, parentPost: Postable? = nil) {
         // If user's comment show delete/edit
-        if post.postedBy == User.currentUser() {
+        let administrating = User.currentUser()!.isAdmin() && !post.postedBy!.isAdmin()
+        if post.postedBy == User.currentUser() ||
+            // Current user is admin and posted by non-admin user
+            administrating {
             
-            let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
-            
-            alert.addAction(UIAlertAction(title: "Edit", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
-                let comment = ANParseKit.newPostViewController()
-                if let post = post as? TimelinePost {
-                    comment.initWithTimelinePost(self, postedIn:User.currentUser()!, editingPost: post)
-                } else if let post = post as? Post, let thread = self.thread {
-                    comment.initWith(thread, threadType: self.threadType, delegate: self, editingPost: post)
+                let alert: UIAlertController!
+                
+                if administrating {
+                    alert = UIAlertController(title: "Warning: Editing \(post.postedBy!.aozoraUsername) post", message: "Only edit user posts if they are breaking guidelines", preferredStyle: UIAlertControllerStyle.ActionSheet)
+                } else {
+                    alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
                 }
-                self.presentViewController(comment, animated: true, completion: nil)
-            }))
-            alert.addAction(UIAlertAction(title: "Delete", style: UIAlertActionStyle.Destructive, handler: { (alertAction: UIAlertAction!) -> Void in
-                if let post = post as? PFObject {
-                    if let parentPost = parentPost as? PFObject {
-                        // Just delete child post
-                        self.deletePosts([post], parentPost: parentPost, removeParent: false)
-                    } else {
-                        // This is parent post, remove child too
-                        var className = ""
-                        if let _ = post as? Post {
-                            className = "Post"
-                        } else if let _ = post as? TimelinePost {
-                            className = "TimelinePost"
-                        }
-                        
-                        let childPostsQuery = PFQuery(className: className)
-                        childPostsQuery.whereKey("parentPost", equalTo: post)
-                        childPostsQuery.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
-                            if let result = result as? [PFObject] {
-                                self.deletePosts(result, parentPost: post, removeParent: true)
-                            } else {
-                                // TODO: Show error
-                            }
-                        })
+                
+                
+                alert.addAction(UIAlertAction(title: "Edit", style: administrating ? UIAlertActionStyle.Destructive : UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
+                    let comment = ANParseKit.newPostViewController()
+                    if let post = post as? TimelinePost {
+                        comment.initWithTimelinePost(self, postedIn:User.currentUser()!, editingPost: post)
+                    } else if let post = post as? Post, let thread = self.thread {
+                        comment.initWith(thread, threadType: self.threadType, delegate: self, editingPost: post)
                     }
-                }
-            }))
-            
-            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler:nil))
-            
-            self.presentViewController(alert, animated: true, completion: nil)
+                    self.presentViewController(comment, animated: true, completion: nil)
+                }))
+                
+                alert.addAction(UIAlertAction(title: "Delete", style: UIAlertActionStyle.Destructive, handler: { (alertAction: UIAlertAction!) -> Void in
+                    if let post = post as? PFObject {
+                        if let parentPost = parentPost as? PFObject {
+                            // Just delete child post
+                            self.deletePosts([post], parentPost: parentPost, removeParent: false)
+                        } else {
+                            // This is parent post, remove child too
+                            var className = ""
+                            if let _ = post as? Post {
+                                className = "Post"
+                            } else if let _ = post as? TimelinePost {
+                                className = "TimelinePost"
+                            }
+                            
+                            let childPostsQuery = PFQuery(className: className)
+                            childPostsQuery.whereKey("parentPost", equalTo: post)
+                            childPostsQuery.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
+                                if let result = result as? [PFObject] {
+                                    self.deletePosts(result, parentPost: post, removeParent: true)
+                                } else {
+                                    // TODO: Show error
+                                }
+                            })
+                        }
+                    }
+                }))
+                
+                alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler:nil))
+                
+                self.presentViewController(alert, animated: true, completion: nil)
         }
     }
     
@@ -522,7 +527,6 @@ extension ThreadViewController: CommentViewControllerDelegate {
     public func commentViewControllerDidFinishedPosting(newPost: PFObject, parentPost: PFObject?, edited: Bool) {
         if let thread = newPost as? Thread {
             self.thread = thread
-            updateUIWithThread(thread)
         }
     }
 }

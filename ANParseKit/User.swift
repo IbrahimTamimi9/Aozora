@@ -76,4 +76,8 @@ public class User: PFUser {
         details.saveEventually()
     }
     
+    public func isAdmin() -> Bool {
+        return badges.contains("Admin")
+    }
+    
 }

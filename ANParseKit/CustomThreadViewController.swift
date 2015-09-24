@@ -143,7 +143,8 @@ public class CustomThreadViewController: ThreadViewController {
             }
             postedDate.text = postedAt
             
-            moreButton.hidden = startedBy != User.currentUser()!
+            let administrating = User.currentUser()!.isAdmin() && !startedBy.isAdmin()
+            moreButton.hidden = startedBy != User.currentUser()! && !administrating
         }
         
         setImages(thread.images, imageView: imageContent, imageHeightConstraint: imageHeightConstraint)
@@ -319,9 +320,18 @@ public class CustomThreadViewController: ThreadViewController {
     
     @IBAction func editThread(sender: AnyObject) {
         if let thread = thread {
-            let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
             
-            alert.addAction(UIAlertAction(title: "Edit", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
+            let administrating = User.currentUser()!.isAdmin() && !thread.startedBy!.isAdmin()
+            
+            let alert: UIAlertController!
+            
+            if administrating {
+                alert = UIAlertController(title: "Warning: Editing \(thread.startedBy!.aozoraUsername) thread", message: "Only edit user threads if they are breaking guidelines", preferredStyle: UIAlertControllerStyle.ActionSheet)
+            } else {
+                alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+            }
+            
+            alert.addAction(UIAlertAction(title: "Edit", style: administrating ? UIAlertActionStyle.Destructive : UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
                 let comment = ANParseKit.newThreadViewController()
                 comment.initWith(thread, threadType: self.threadType, delegate: self, editingPost: thread)
                 self.presentViewController(comment, animated: true, completion: nil)
