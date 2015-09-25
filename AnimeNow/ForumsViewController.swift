@@ -19,6 +19,9 @@ class ForumsViewController: UIViewController {
         case Tag
     }
     
+    let recentActivityString = "Recent Activty"
+    let newThreadsString = "New Threads"
+    
     var loadingView: LoaderView!
     var tagsDataSource: [ThreadTag] = []
     var dataSource: [Thread] = [] {
@@ -74,10 +77,10 @@ class ForumsViewController: UIViewController {
         
         switch selectedList {
         case .Recent:
-            navigationBarTitle.text = "Recent Activity"
+            navigationBarTitle.text = recentActivityString
             fetchThreads()
         case .New:
-            navigationBarTitle.text = "New Threads"
+            navigationBarTitle.text = newThreadsString
             fetchThreads()
         case .Tag:
             if let tag = selectedTag {
@@ -102,7 +105,7 @@ class ForumsViewController: UIViewController {
                 tagsTitles.append(" #"+tag.name)
             }
             
-            let dataSource = [["Recent Threads", "New Threads"], tagsTitles]
+            let dataSource = [[recentActivityString, newThreadsString], tagsTitles]
             DropDownListViewController.showDropDownListWith(
                 sender: sender,
                 viewController: viewController,

@@ -191,6 +191,7 @@ public class CustomThreadViewController: ThreadViewController {
                 // TODO: Show error
             } else if let result = result, let thread = result.last as? Thread {
                 self.thread = thread
+                self.updateUIWithThread(thread)
             } else if let episode = self.episode, let anime = self.anime where self.threadType == ThreadType.Episode {
                 
                 // Create episode threads lazily
