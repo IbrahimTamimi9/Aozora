@@ -220,12 +220,24 @@ public class ProfileViewController: ThreadViewController {
         let proString = "PRO"
         
         proBadge.hidden = true
-        if user.badges.indexOf(proPlusString) != nil {
-            proBadge.hidden = false
-            proBadge.text = proPlusString
-        } else if user.badges.indexOf(proString) != nil {
-            proBadge.hidden = false
-            proBadge.text = proString
+        
+        if user == User.currentUser() {
+            // If is current user, only show PRO when unlocked in-apps
+            if let _ = InAppController.purchasedProPlus() {
+                proBadge.hidden = false
+                proBadge.text = proPlusString
+            } else if let _ = InAppController.purchasedPro() {
+                proBadge.hidden = false
+                proBadge.text = proString
+            }
+        } else {
+            if user.badges.indexOf(proPlusString) != nil {
+                proBadge.hidden = false
+                proBadge.text = proPlusString
+            } else if user.badges.indexOf(proString) != nil {
+                proBadge.hidden = false
+                proBadge.text = proString
+            }
         }
         
         if user == User.currentUser()! {
