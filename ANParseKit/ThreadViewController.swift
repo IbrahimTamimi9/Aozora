@@ -253,17 +253,17 @@ extension ThreadViewController: UITableViewDataSource {
         if post.hasSpoilers && post.isSpoilerHidden {
             cell.textContent.text! += "(Show Spoilers)"
             cell.imageHeightConstraint?.constant = 0
+            cell.playButton?.hidden = true
         } else {
             cell.textContent.text! += post.content
             setImages(post.images, imageView: cell.imageContent, imageHeightConstraint: cell.imageHeightConstraint)
+            prepareForVideo(cell.playButton, imageView: cell.imageContent, imageHeightConstraint: cell.imageHeightConstraint, youtubeID: post.youtubeID)
         }
         
         let repliesTitle = repliesButtonTitle(post.replies.count)
         cell.replyButton.setTitle(repliesTitle, forState: .Normal)
         
         updateAttributedTextProperties(cell.textContent)
-        
-        prepareForVideo(cell.playButton, imageView: cell.imageContent, imageHeightConstraint: cell.imageHeightConstraint, youtubeID: post.youtubeID)
         
         updateLikeButton(cell, post: post)
     }
@@ -282,9 +282,11 @@ extension ThreadViewController: UITableViewDataSource {
             if post.hasSpoilers && post.isSpoilerHidden {
                 content += "(Show Spoilers)"
                 cell.imageHeightConstraint?.constant = 0
+                cell.playButton?.hidden = true
             } else {
                 content += post.content
                 setImages(post.images, imageView: cell.imageContent, imageHeightConstraint: cell.imageHeightConstraint)
+                prepareForVideo(cell.playButton, imageView: cell.imageContent, imageHeightConstraint: cell.imageHeightConstraint, youtubeID: post.youtubeID)
             }
             
             cell.avatar.setImageWithPFFile(avatarFile)
@@ -309,8 +311,6 @@ extension ThreadViewController: UITableViewDataSource {
             postedAgo += " · Edited"
             cell.date.text = postedAgo
         }
-        
-        prepareForVideo(cell.playButton, imageView: cell.imageContent, imageHeightConstraint: cell.imageHeightConstraint, youtubeID: post.youtubeID)
         
         updateLikeButton(cell, post: post)
     }
