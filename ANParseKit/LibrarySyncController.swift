@@ -165,15 +165,15 @@ public class LibrarySyncController {
                 query.limit = 1000
                 
                 // TODO: Support more than 1000 anime in library
-                if let animeProgress = task.result as? [AnimeProgress] {
+                if let animeProgress = task.result as? [AnimeProgress] where animeProgress.count > 0 {
                     if let progress = animeProgress.last, let updatedAt = progress.updatedAt {
                         query.whereKey("updatedAt", greaterThan: updatedAt)
                         return query.findObjectsInBackground()
                     } else {
                         // Most likely syncing, do nothing
-                        return BFTask(error: NSError(domain: "Aozora.Error", code: 0, userInfo: nil))
+                        return BFTask(error: NSError(domain: "Aozora.Error.Syncing", code: 0, userInfo: nil))
                     }
-                } else if task.result == nil && task.error == nil {
+                } else if let animeProgress = task.result as? [AnimeProgress] where animeProgress.count == 0 {
                     return query.findObjectsInBackground()
                 } else {
                     return task.error

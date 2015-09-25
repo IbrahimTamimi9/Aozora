@@ -74,7 +74,7 @@ class ForumsViewController: UIViewController {
         
         switch selectedList {
         case .Recent:
-            navigationBarTitle.text = "Recent Threads"
+            navigationBarTitle.text = "Recent Activity"
             fetchThreads()
         case .New:
             navigationBarTitle.text = "New Threads"
