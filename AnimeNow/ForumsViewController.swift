@@ -126,9 +126,6 @@ class ForumsViewController: UIViewController {
     
     func fetchThreads() {
         
-        self.fetchController.resetToDefaults()
-        self.fetchController.tableView?.reloadData()
-        
         let query = Thread.query()!
         query.fromLocalDatastore()
         query.whereKey("pinType", equalTo: "global")
@@ -178,9 +175,6 @@ class ForumsViewController: UIViewController {
     }
     
     func fetchTagThreads(tag: PFObject) {
-
-        self.fetchController.resetToDefaults()
-        self.fetchController.tableView?.reloadData()
         
         let query = Thread.query()!
         query.fromLocalDatastore()

@@ -272,10 +272,8 @@ public class ProfileViewController: ThreadViewController {
     
     func configureFetchController() {
         let offset = tableView.contentOffset
-        fetchController.resetToDefaults()
-        tableView.reloadData()
-        tableView.setContentOffset(offset, animated: false)
         fetchController.configureWith(self, queryDelegate: self, tableView: self.tableView, limit: self.FetchLimit, datasourceUsesSections: true)
+        tableView.setContentOffset(offset, animated: false)
     }
     
     // MARK: - IBAction
