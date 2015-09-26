@@ -421,7 +421,6 @@ extension ThreadViewController: UITableViewDelegate {
                     alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
                 }
                 
-                
                 alert.addAction(UIAlertAction(title: "Edit", style: administrating ? UIAlertActionStyle.Destructive : UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
                     let comment = ANParseKit.newPostViewController()
                     if let post = post as? TimelinePost {
@@ -432,32 +431,34 @@ extension ThreadViewController: UITableViewDelegate {
                     self.presentViewController(comment, animated: true, completion: nil)
                 }))
                 
-                alert.addAction(UIAlertAction(title: "Delete", style: UIAlertActionStyle.Destructive, handler: { (alertAction: UIAlertAction!) -> Void in
-                    if let post = post as? PFObject {
-                        if let parentPost = parentPost as? PFObject {
-                            // Just delete child post
-                            self.deletePosts([post], parentPost: parentPost, removeParent: false)
-                        } else {
-                            // This is parent post, remove child too
-                            var className = ""
-                            if let _ = post as? Post {
-                                className = "Post"
-                            } else if let _ = post as? TimelinePost {
-                                className = "TimelinePost"
-                            }
-                            
-                            let childPostsQuery = PFQuery(className: className)
-                            childPostsQuery.whereKey("parentPost", equalTo: post)
-                            childPostsQuery.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
-                                if let result = result as? [PFObject] {
-                                    self.deletePosts(result, parentPost: post, removeParent: true)
-                                } else {
-                                    // TODO: Show error
+                if !administrating {
+                    alert.addAction(UIAlertAction(title: "Delete", style: UIAlertActionStyle.Destructive, handler: { (alertAction: UIAlertAction!) -> Void in
+                        if let post = post as? PFObject {
+                            if let parentPost = parentPost as? PFObject {
+                                // Just delete child post
+                                self.deletePosts([post], parentPost: parentPost, removeParent: false)
+                            } else {
+                                // This is parent post, remove child too
+                                var className = ""
+                                if let _ = post as? Post {
+                                    className = "Post"
+                                } else if let _ = post as? TimelinePost {
+                                    className = "TimelinePost"
                                 }
-                            })
+                                
+                                let childPostsQuery = PFQuery(className: className)
+                                childPostsQuery.whereKey("parentPost", equalTo: post)
+                                childPostsQuery.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
+                                    if let result = result as? [PFObject] {
+                                        self.deletePosts(result, parentPost: post, removeParent: true)
+                                    } else {
+                                        // TODO: Show error
+                                    }
+                                })
+                            }
                         }
-                    }
-                }))
+                    }))
+                }
                 
                 alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler:nil))
                 
