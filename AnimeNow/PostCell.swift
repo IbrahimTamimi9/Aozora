@@ -65,7 +65,6 @@ public class PostCell: UITableViewCell {
             avatar.addGestureRecognizer(gestureRecognizer)
         }
         
-        
         if let imageContent = imageContent {
             let gestureRecognizer = UITapGestureRecognizer(target: self, action: "pressedOnImage:")
             gestureRecognizer.numberOfTouchesRequired = 1
@@ -87,9 +86,6 @@ public class PostCell: UITableViewCell {
             toUsername.addGestureRecognizer(gestureRecognizer)
         }
         
-        textContent.preferredMaxLayoutWidth = textContent.frame.size.width
-        contentView.setNeedsLayout()
-        contentView.layoutIfNeeded()
     }
     
     // MARK: - IBActions
@@ -112,5 +108,15 @@ public class PostCell: UITableViewCell {
     
     @IBAction func likePressed(sender: AnyObject) {
         delegate?.postCellSelectedLike(self)
+    }
+    
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+        textContent.preferredMaxLayoutWidth = textContent.frame.size.width
+    }
+    
+    public override func prepareForReuse() {
+        super.prepareForReuse()
+        textContent.preferredMaxLayoutWidth = textContent.frame.size.width
     }
 }

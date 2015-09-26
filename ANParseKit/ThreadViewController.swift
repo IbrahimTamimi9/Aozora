@@ -191,7 +191,6 @@ extension ThreadViewController: UITableViewDataSource {
                 cell.imageContent?.setImageFrom(urlString: episode.imageURLString(), animated: false)
                 cell.imageHeightConstraint?.constant = 180
             }
-            cell.layoutIfNeeded()
             return cell
             
         } else if indexPath.row <= post.replies.count {
