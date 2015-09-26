@@ -176,8 +176,7 @@ public class ProfileViewController: ThreadViewController {
             }
         }
         
-        if User.currentUser() != userProfile {
-            
+        if User.currentUser() != userProfile && !User.currentUserIsGuest() {
             let relationQuery = User.currentUser()!.following().query()!
             relationQuery.whereKey("aozoraUsername", equalTo: username)
             relationQuery.findObjectsInBackgroundWithBlock { (result, error) -> Void in
@@ -239,7 +238,11 @@ public class ProfileViewController: ThreadViewController {
             }
         }
         
-        if user == User.currentUser()! {
+        if User.currentUserIsGuest() {
+            followButton.hidden = true
+            notificationsButton.hidden = true
+            settingsButton.hidden = true
+        } else if user == User.currentUser()! {
             followButton.hidden = true
             settingsTrailingSpaceConstraint.constant = 8
         } else {
