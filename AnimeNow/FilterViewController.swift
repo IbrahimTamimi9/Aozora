@@ -71,10 +71,8 @@ class FilterViewController: UIViewController {
     
     var filteringSomething: Bool {
         get {
-            for (section, value, _) in sectionsDataSource {
-                if section != .View && section != .Sort && section != .FilterTitle && value != nil {
-                    return true
-                }
+            for (section, value, _) in sectionsDataSource where section != .View && section != .Sort && section != .FilterTitle && value != nil {
+                return true
             }
             return false
         }

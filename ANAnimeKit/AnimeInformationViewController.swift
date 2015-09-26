@@ -430,11 +430,7 @@ public class AnimeInformationViewController: AnimeBaseViewController {
     
     func hideStatusBar() -> Bool {
         let offset = HeaderViewHeight - self.scrollView().contentOffset.y - TopBarHeight
-        if offset > StatusBarHeight {
-            return true
-        } else {
-            return false
-        }
+        return offset > StatusBarHeight ? true : false
     }
     
     // MARK: - Notifications
@@ -484,11 +480,7 @@ extension AnimeInformationViewController: UIScrollViewDelegate {
 extension AnimeInformationViewController: UITableViewDataSource {
     
     public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        if anime.isDataAvailable() {
-            return AnimeSection.allSections.count;
-        } else {
-            return 0
-        }
+        return anime.isDataAvailable() ? AnimeSection.allSections.count : 0
     }
     
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

@@ -161,7 +161,6 @@ public class ProfileViewController: ThreadViewController {
                     return attributedString
                 })
                 
-                
                 if user.details.posts >= 1000 {
                     self.postsBadge.text = String(format: "%.1fk", Float(user.details.posts-49)/1000.0 )
                 } else {
@@ -250,12 +249,10 @@ public class ProfileViewController: ThreadViewController {
         }
         
         var hasABadge = false
-        for badge in user.badges {
-            if badge != proString && badge != proPlusString {
-                tagBadge.text = badge
-                hasABadge = true
-                break
-            }
+        for badge in user.badges where badge != proString && badge != proPlusString {
+            tagBadge.text = badge
+            hasABadge = true
+            break
         }
         
         if hasABadge {

@@ -70,12 +70,12 @@ class NotificationsViewController: UIViewController {
         let unreadNotifications = fetchController.dataSource.filter { (notification: PFObject) -> Bool in
             
             let notification = notification as! Notification
-            if !notification.readBy.contains(User.currentUser()!) {
-                notification.addUniqueObject(User.currentUser()!, forKey: "readBy")
-                return true
-            } else {
+            guard !notification.readBy.contains(User.currentUser()!) else {
                 return false
             }
+            
+            notification.addUniqueObject(User.currentUser()!, forKey: "readBy")
+            return true
         }
         
         if unreadNotifications.count != 0 {
@@ -103,11 +103,9 @@ extension NotificationsViewController: UITableViewDataSource {
 
         if notification.lastTriggeredBy == User.currentUser() {
             var selectedUser = notification.lastTriggeredBy
-            for user in notification.triggeredBy {
-                if user != User.currentUser() {
-                    selectedUser = user
-                    break
-                }
+            for user in notification.triggeredBy where user != User.currentUser() {
+                selectedUser = user
+                break
             }
             cell.titleimageView.setImageWithPFFile(selectedUser.avatarThumb!)
         } else {

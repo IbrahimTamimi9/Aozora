@@ -56,37 +56,35 @@ public class LibrarySyncController {
         return query.findObjectsInBackground()
             .continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
             
-            if let result = task.result as? [Anime], let anime = result.last {
-                return BFTask(result: anime)
-            } else {
+            guard let result = task.result as? [Anime], let anime = result.last else {
                 return nil
             }
+                
+            return BFTask(result: anime)
             
             }.continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
             
-                if let anime = task.result as? Anime {
-                    
-                    let updatedQuery = Anime.queryIncludingAddData()
-                    updatedQuery.whereKey("updatedAt", greaterThan: anime.updatedAt!)
-                    return updatedQuery.findObjectsInBackground()
-                    
-                } else {
+                guard let anime = task.result as? Anime else {
                     return nil
                 }
                 
+                let updatedQuery = Anime.queryIncludingAddData()
+                updatedQuery.whereKey("updatedAt", greaterThan: anime.updatedAt!)
+                return updatedQuery.findObjectsInBackground()
+
+                
             }.continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
                 
-                if let result = task.result as? [Anime] where result.count != 0 {
-                    return PFObject.unpinAllInBackground(result, withName: pinName).continueWithBlock({ (task: BFTask!) -> AnyObject! in
-                        print("Updated \(result.count) anime, saving with tag \(pinName)")
-                        NSUserDefaults.completedAction(actionID)
-                        return PFObject.pinAllInBackground(result, withName: pinName)
-                    })
-                } else {
+                guard let result = task.result as? [Anime] where result.count != 0 else {
                     NSUserDefaults.completedAction(actionID)
                     return nil
                 }
                 
+                return PFObject.unpinAllInBackground(result, withName: pinName).continueWithBlock({ (task: BFTask!) -> AnyObject! in
+                    print("Updated \(result.count) anime, saving with tag \(pinName)")
+                    NSUserDefaults.completedAction(actionID)
+                    return PFObject.pinAllInBackground(result, withName: pinName)
+                })
             }
     }
     
@@ -107,35 +105,35 @@ public class LibrarySyncController {
         return query.findObjectsInBackground()
             .continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
                 
-                if let result = task.result as? [Episode], let episode = result.last {
-                    return BFTask(result: episode)
-                } else {
+                guard let result = task.result as? [Episode], let episode = result.last else {
                     return nil
                 }
                 
+                return BFTask(result: episode)
+                
             }.continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
                 
-                if let episode = task.result as? Episode {
-                    let updatedQuery = Episode.query()!
-                    updatedQuery.whereKey("updatedAt", greaterThan: episode.updatedAt!)
-                    return updatedQuery.findObjectsInBackground()
-                } else {
+                guard let episode = task.result as? Episode else {
                     return nil
                 }
                 
+                let updatedQuery = Episode.query()!
+                updatedQuery.whereKey("updatedAt", greaterThan: episode.updatedAt!)
+                return updatedQuery.findObjectsInBackground()
+                
             }.continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
                 
-                if let result = task.result as? [Episode] where result.count != 0 {
-                    return PFObject.unpinAllInBackground(result, withName: pinName).continueWithBlock({ (task: BFTask!) -> AnyObject! in
-                        print("Updated \(result.count) episode, saving with tag \(pinName)")
-                        NSUserDefaults.completedAction(actionID)
-                        return PFObject.pinAllInBackground(result, withName: pinName)
-                    })
-                } else {
+                guard let result = task.result as? [Episode] where result.count != 0 else {
                     NSUserDefaults.completedAction(actionID)
                     return nil
-                }         
-        }
+                }
+                
+                return PFObject.unpinAllInBackground(result, withName: pinName).continueWithBlock({ (task: BFTask!) -> AnyObject! in
+                    print("Updated \(result.count) episode, saving with tag \(pinName)")
+                    NSUserDefaults.completedAction(actionID)
+                    return PFObject.pinAllInBackground(result, withName: pinName)
+                })
+            }
     }
     
     public class func syncAnimeProgressInformation() -> BFTask {
@@ -147,11 +145,11 @@ public class LibrarySyncController {
         return query.findObjectsInBackground()
             .continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
                 
-                if let result = task.result {
-                    return BFTask(result: result)
-                } else {
+                guard let result = task.result else {
                     return nil
                 }
+                
+                return BFTask(result: result)
                 
             }.continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
                 
@@ -166,13 +164,12 @@ public class LibrarySyncController {
                 
                 // TODO: Support more than 1000 anime in library
                 if let animeProgress = task.result as? [AnimeProgress] where animeProgress.count > 0 {
-                    if let progress = animeProgress.last, let updatedAt = progress.updatedAt {
-                        query.whereKey("updatedAt", greaterThan: updatedAt)
-                        return query.findObjectsInBackground()
-                    } else {
+                    guard let progress = animeProgress.last, let updatedAt = progress.updatedAt else {
                         // Most likely syncing, do nothing
                         return BFTask(error: NSError(domain: "Aozora.Error.Syncing", code: 0, userInfo: nil))
                     }
+                    query.whereKey("updatedAt", greaterThan: updatedAt)
+                    return query.findObjectsInBackground()
                 } else if let animeProgress = task.result as? [AnimeProgress] where animeProgress.count == 0 {
                     return query.findObjectsInBackground()
                 } else {
@@ -181,16 +178,16 @@ public class LibrarySyncController {
                 
             }.continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
                 
-                if let result = task.result as? [AnimeProgress] where result.count != 0 {
-                    return PFObject.unpinAllInBackground(result).continueWithBlock({ (task: BFTask!) -> AnyObject! in
-                        print("Got \(result.count) AnimeProgress from Parse")
-                        NSUserDefaults.completedAction(self.LastSyncDateDefaultsKey)
-                        return PFObject.pinAllInBackground(result)
-                    })
-                } else {
+                guard let result = task.result as? [AnimeProgress] where result.count != 0 else {
                     NSUserDefaults.completedAction(self.LastSyncDateDefaultsKey)
                     return nil
                 }
+                
+                return PFObject.unpinAllInBackground(result).continueWithBlock({ (task: BFTask!) -> AnyObject! in
+                    print("Got \(result.count) AnimeProgress from Parse")
+                    NSUserDefaults.completedAction(self.LastSyncDateDefaultsKey)
+                    return PFObject.pinAllInBackground(result)
+                })
         }
     }
     
@@ -257,54 +254,52 @@ public class LibrarySyncController {
                 // Create on PARSE
                 var malProgressToCreate: [MALProgress] = []
                 
-                for malProgress in myAnimeListLibrary {
-                    if parseLibrary.filter({$0.myAnimeListID == malProgress.myAnimeListID}).last == nil {
-                        malProgressToCreate.append(malProgress)
-                    }
+                for malProgress in myAnimeListLibrary where parseLibrary.filter({$0.myAnimeListID == malProgress.myAnimeListID}).last == nil {
+                    malProgressToCreate.append(malProgress)
                 }
                 
                 let malProgressToCreateIDs = malProgressToCreate.map({ (malProgress: MALProgress) -> Int in
                     return malProgress.myAnimeListID
                 })
                 
-                if malProgressToCreateIDs.count > 0 {
-                    print("Need to create \(malProgressToCreateIDs.count) AnimeProgress on Parse")
-                    let query = Anime.queryIncludingAddData()
-                    query.whereKey("myAnimeListID", containedIn: malProgressToCreateIDs)
-                    query.limit = 1000
-                    return query.findObjectsInBackground()
-                        .continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
-                            let animeToCreate = task.result as! [Anime]
-                            print("Creating \(animeToCreate.count) AnimeProgress on Parse")
-                            var newProgress: [AnimeProgress] = []
-                            for anime in animeToCreate {
-                                // This prevents all anime object to be iterated thousands of times..
-                                let myAnimeListID = anime.myAnimeListID
-                                
-                                if let malProgress = malProgressToCreate.filter({ $0.myAnimeListID == myAnimeListID }).last {
-                                    // Creating on PARSE
-                                    let malList = MALList(rawValue: malProgress.status)!
-                                    let progress = AnimeProgress()
-                                    progress.anime = anime
-                                    progress.user = User.currentUser()!
-                                    progress.startDate = NSDate()
-                                    progress.updateList(malList)
-                                    progress.watchedEpisodes = malProgress.episodes
-                                    progress.collectedEpisodes = 0
-                                    progress.score = malProgress.score
-                                    newProgress.append(progress)
-                                }
-                            }
-                            
-                            allProgress += newProgress
-                            PFObject.saveAllInBackground(newProgress).continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
-                                return PFObject.pinAllInBackground(newProgress)
-                            })
-                            return nil
-                        })
-                } else {
+                guard malProgressToCreateIDs.count > 0 else {
                     return nil
                 }
+                
+                print("Need to create \(malProgressToCreateIDs.count) AnimeProgress on Parse")
+                let query = Anime.queryIncludingAddData()
+                query.whereKey("myAnimeListID", containedIn: malProgressToCreateIDs)
+                query.limit = 1000
+                return query.findObjectsInBackground()
+                    .continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
+                        let animeToCreate = task.result as! [Anime]
+                        print("Creating \(animeToCreate.count) AnimeProgress on Parse")
+                        var newProgress: [AnimeProgress] = []
+                        for anime in animeToCreate {
+                            // This prevents all anime object to be iterated thousands of times..
+                            let myAnimeListID = anime.myAnimeListID
+                            
+                            if let malProgress = malProgressToCreate.filter({ $0.myAnimeListID == myAnimeListID }).last {
+                                // Creating on PARSE
+                                let malList = MALList(rawValue: malProgress.status)!
+                                let progress = AnimeProgress()
+                                progress.anime = anime
+                                progress.user = User.currentUser()!
+                                progress.startDate = NSDate()
+                                progress.updateList(malList)
+                                progress.watchedEpisodes = malProgress.episodes
+                                progress.collectedEpisodes = 0
+                                progress.score = malProgress.score
+                                newProgress.append(progress)
+                            }
+                        }
+                        
+                        allProgress += newProgress
+                        PFObject.saveAllInBackground(newProgress).continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
+                            return PFObject.pinAllInBackground(newProgress)
+                        })
+                        return nil
+                    })
                 
             }).continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
                 
@@ -503,10 +498,7 @@ public class LibrarySyncController {
         return animeLibraryQuery.findObjectsInBackground().continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
             
             if let animeLibrary = task.result as? [AnimeProgress] {
-                for anime in animeList {
-                    if anime.progress != nil {
-                        continue
-                    }
+                for anime in animeList where anime.progress == nil {
                     for progress in animeLibrary {
                         if progress.anime.objectId == anime.objectId {
                             anime.progress = progress

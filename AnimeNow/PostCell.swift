@@ -57,30 +57,34 @@ public class PostCell: UITableViewCell {
     
     public override func awakeFromNib() {
         super.awakeFromNib()
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: "pressedUserProfile:")
-        gestureRecognizer.numberOfTouchesRequired = 1
-        gestureRecognizer.numberOfTapsRequired = 1
-        avatar.addGestureRecognizer(gestureRecognizer)
+        
+        do {
+            let gestureRecognizer = UITapGestureRecognizer(target: self, action: "pressedUserProfile:")
+            gestureRecognizer.numberOfTouchesRequired = 1
+            gestureRecognizer.numberOfTapsRequired = 1
+            avatar.addGestureRecognizer(gestureRecognizer)
+        }
+        
         
         if let imageContent = imageContent {
-            let gestureRecognizer2 = UITapGestureRecognizer(target: self, action: "pressedOnImage:")
-            gestureRecognizer2.numberOfTouchesRequired = 1
-            gestureRecognizer2.numberOfTapsRequired = 1
-            imageContent.addGestureRecognizer(gestureRecognizer2)
+            let gestureRecognizer = UITapGestureRecognizer(target: self, action: "pressedOnImage:")
+            gestureRecognizer.numberOfTouchesRequired = 1
+            gestureRecognizer.numberOfTapsRequired = 1
+            imageContent.addGestureRecognizer(gestureRecognizer)
         }
         
         if let username = username {
-            let gestureRecognizer3 = UITapGestureRecognizer(target: self, action: "pressedUserProfile:")
-            gestureRecognizer3.numberOfTouchesRequired = 1
-            gestureRecognizer3.numberOfTapsRequired = 1
-            username.addGestureRecognizer(gestureRecognizer3)
+            let gestureRecognizer = UITapGestureRecognizer(target: self, action: "pressedUserProfile:")
+            gestureRecognizer.numberOfTouchesRequired = 1
+            gestureRecognizer.numberOfTapsRequired = 1
+            username.addGestureRecognizer(gestureRecognizer)
         }
         
         if let toUsername = toUsername {
-            let gestureRecognizer4 = UITapGestureRecognizer(target: self, action: "pressedToUserProfile:")
-            gestureRecognizer4.numberOfTouchesRequired = 1
-            gestureRecognizer4.numberOfTapsRequired = 1
-            toUsername.addGestureRecognizer(gestureRecognizer4)
+            let gestureRecognizer = UITapGestureRecognizer(target: self, action: "pressedToUserProfile:")
+            gestureRecognizer.numberOfTouchesRequired = 1
+            gestureRecognizer.numberOfTapsRequired = 1
+            toUsername.addGestureRecognizer(gestureRecognizer)
         }
         
         textContent.preferredMaxLayoutWidth = textContent.frame.size.width

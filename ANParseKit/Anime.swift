@@ -96,15 +96,14 @@ public class Anime: PFObject, PFSubclassing {
         
         return fetchEpisodes(myAnimeListID, fromLocalDatastore: true).continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
             
-            if let episodes = task.result as? [Episode] {
-                if episodes.count == 0 {
-                    return self.fetchEpisodes(self.myAnimeListID)
-                } else {
-                    self.cachedEpisodeList = episodes
-                    return nil
-                }
-                
+            guard let episodes = task.result as? [Episode] else {
+                return nil
+            }
+
+            if episodes.count == 0 {
+                return self.fetchEpisodes(self.myAnimeListID)
             } else {
+                self.cachedEpisodeList = episodes
                 return nil
             }
             
@@ -144,19 +143,13 @@ public class Anime: PFObject, PFSubclassing {
     
     public var nextEpisode: Int? {
         get {
-            if !hasNextEpisodeInformation() {
-                return nil
-            }
-            return nextEpisodeInternal
+            return hasNextEpisodeInformation() ? nextEpisodeInternal : nil
         }
     }
     
     public var nextEpisodeDate: NSDate? {
         get {
-            if !hasNextEpisodeInformation() {
-                return nil
-            }
-            return nextEpisodeDateInternal
+            return hasNextEpisodeInformation() ? nextEpisodeDateInternal : nil
         }
     }
     

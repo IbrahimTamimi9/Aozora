@@ -65,11 +65,11 @@ class ChartViewController: UIViewController {
     
     var currentSortType: SortType {
         get {
-            if let sortType = NSUserDefaults.standardUserDefaults().objectForKey(SortTypeDefault) as? String, let sortTypeEnum = SortType(rawValue: sortType) {
-                return sortTypeEnum
-            } else {
+            guard let sortType = NSUserDefaults.standardUserDefaults().objectForKey(SortTypeDefault) as? String,
+                let sortTypeEnum = SortType(rawValue: sortType) else {
                 return SortType.Popularity
             }
+            return sortTypeEnum
         }
         set ( value ) {
             NSUserDefaults.standardUserDefaults().setObject(value.rawValue, forKey: SortTypeDefault)
@@ -79,11 +79,11 @@ class ChartViewController: UIViewController {
     
     var currentLayoutType: LayoutType {
         get {
-            if let layoutType = NSUserDefaults.standardUserDefaults().objectForKey(LayoutTypeDefault) as? String, let layoutTypeEnum = LayoutType(rawValue: layoutType) {
-                return layoutTypeEnum
-            } else {
+            guard let layoutType = NSUserDefaults.standardUserDefaults().objectForKey(LayoutTypeDefault) as? String,
+                let layoutTypeEnum = LayoutType(rawValue: layoutType) else {
                 return LayoutType.Chart
             }
+            return layoutTypeEnum
         }
         set ( value ) {
             NSUserDefaults.standardUserDefaults().setObject(value.rawValue, forKey: LayoutTypeDefault)
@@ -193,17 +193,17 @@ class ChartViewController: UIViewController {
         
         }.continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
             
-            if let result = task.result as? [SeasonalChart], let season = result.last {
-                return ChartController.fetchSeasonalChartAnime(season)
+            guard let result = task.result as? [SeasonalChart], let season = result.last else {
+                return nil
             }
-            return nil
+            return ChartController.fetchSeasonalChartAnime(season)
         
         }.continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
             
-            if let result = task.result as? [Anime] {
-                return LibrarySyncController.matchAnimeWithProgress(result)
+            guard let result = task.result as? [Anime] else {
+                return nil
             }
-            return nil
+            return LibrarySyncController.matchAnimeWithProgress(result)
             
         }.continueWithExecutor(BFExecutor.mainThreadExecutor(), withBlock: { (task: BFTask!) -> AnyObject! in
         

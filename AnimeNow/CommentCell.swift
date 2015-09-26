@@ -20,11 +20,16 @@ public class CommentCell: PostCell {
     public override class func registerNibFor(tableView tableView: UITableView) {
 
         super.registerNibFor(tableView: tableView)
-        let listNib = UINib(nibName: "CommentTextCell", bundle: ANCommonKit.bundle())
-        tableView.registerNib(listNib, forCellReuseIdentifier: "CommentTextCell")
-
-        let listNib2 = UINib(nibName: "CommentImageCell", bundle: ANCommonKit.bundle())
-        tableView.registerNib(listNib2, forCellReuseIdentifier: "CommentImageCell")
+        
+        do {
+            let listNib = UINib(nibName: "CommentTextCell", bundle: ANCommonKit.bundle())
+            tableView.registerNib(listNib, forCellReuseIdentifier: "CommentTextCell")
+        }
+        
+        do {
+            let listNib = UINib(nibName: "CommentImageCell", bundle: ANCommonKit.bundle())
+            tableView.registerNib(listNib, forCellReuseIdentifier: "CommentImageCell")
+        }
     }
     
 }

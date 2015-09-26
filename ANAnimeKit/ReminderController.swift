@@ -85,20 +85,19 @@ public class ReminderController {
             LibrarySyncController.fetchAnime(idList)
                 .continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
                     
-                    if let animeList = task.result as? [Anime] {
-                        
-                        return LibrarySyncController.matchAnimeWithProgress(animeList)
-                            .continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
-                                for anime in animeList {
-                                    if let progress = anime.progress where progress.myAnimeListList() != .Dropped {
-                                        self.scheduleReminderForAnime(anime)
-                                    }
-                                }
-                                return nil
-                            })                
+                    guard let animeList = task.result as? [Anime] else {
+                        return nil
                     }
                     
-                    return nil
+                    return LibrarySyncController.matchAnimeWithProgress(animeList)
+                        .continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
+                            for anime in animeList {
+                                if let progress = anime.progress where progress.myAnimeListList() != .Dropped {
+                                    self.scheduleReminderForAnime(anime)
+                                }
+                            }
+                            return nil
+                    })
                 })
         }
     }

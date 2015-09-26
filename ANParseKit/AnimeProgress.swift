@@ -95,20 +95,13 @@ public class AnimeProgress: PFObject, PFSubclassing {
     
     public var nextEpisodeToWatch: Int? {
         get {
-            if !hasNextEpisodeToWatchInformation() {
-                return nil
-            }
-            return nextEpisodeToWatchInternal
+            return hasNextEpisodeToWatchInformation() ? nextEpisodeToWatchInternal : nil
         }
     }
     
     public var nextEpisodeToWatchDate: NSDate? {
         get {
-            if !hasNextEpisodeToWatchInformation() {
-                return nil
-            }
-            
-            return nextEpisodeToWatchDateInternal
+            return hasNextEpisodeToWatchInformation() ? nextEpisodeToWatchDateInternal : nil
         }
     }
     

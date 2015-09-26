@@ -151,11 +151,9 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
         for progress in animeList {
             let anime = progress.anime
             anime.progress = progress
-            switch progress.myAnimeListList() {
-            case .Watching:
+            
+            if case .Watching() = progress.myAnimeListList() {
                 list.append(anime)
-            default:
-                break
             }
         }
         

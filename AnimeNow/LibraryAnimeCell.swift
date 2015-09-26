@@ -106,16 +106,16 @@ class LibraryAnimeCell: AnimeCell {
                 return nil
             }
             
-            if let episodes = task.result as? [Episode],
-                let nextEpisode = nextEpisode where episodes.count > nextEpisode {
-                
-                let episode = episodes[nextEpisode]
-                self.episode = episode
-                self.episodeImageView.setImageFrom(urlString: episode.imageURLString())
-                
-            } else {
-                self.episodeImageView.setImageFrom(urlString: anime.fanart ?? anime.imageUrl ?? "")
+            guard let episodes = task.result as? [Episode],
+                let nextEpisode = nextEpisode where episodes.count > nextEpisode else {
+                    self.episodeImageView.setImageFrom(urlString: anime.fanart ?? anime.imageUrl ?? "")
+                    return nil
             }
+            
+            let episode = episodes[nextEpisode]
+            self.episode = episode
+            self.episodeImageView.setImageFrom(urlString: episode.imageURLString())
+            
             return nil
         })
     }

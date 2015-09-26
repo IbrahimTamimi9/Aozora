@@ -22,14 +22,18 @@ extension PFQuery {
         return fromPinWithName(pinName).findObjectsInBackground()
             .continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
             
-                if let result = task.result as? [AnyObject] where result.count == 0 || expired {
+                guard let result = task.result as? [AnyObject] else {
+                    return nil
+                }
+                
+                if result.count == 0 || expired {
                     // Not cached, fetch from network
                     return nonLocalQuery.findObjectsInBackground()
                 } else {
                     fetchResult += task.result as! [AnyObject]
                     return nil
                 }
-            
+                
             }.continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
                 
                 if let result = task.result as? [AnyObject] where result.count != 0 {
