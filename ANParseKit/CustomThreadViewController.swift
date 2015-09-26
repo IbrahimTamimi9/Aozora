@@ -338,6 +338,20 @@ public class CustomThreadViewController: ThreadViewController {
                 self.presentViewController(comment, animated: true, completion: nil)
             }))
             
+            if administrating {
+                let locked = thread.locked
+                alert.addAction(UIAlertAction(title: locked ? "Unlock" : "Lock", style: UIAlertActionStyle.Destructive, handler: { (alertAction: UIAlertAction!) -> Void in
+                    thread.locked = !locked
+                    thread.saveInBackgroundWithBlock({ (success, error) -> Void in
+                        if success {
+                            self.presentBasicAlertWithTitle(thread.locked ? "Locked!" : "Unlocked!")
+                        } else {
+                            self.presentBasicAlertWithTitle("Failed saving")
+                        }
+                    })
+                }))
+            }
+            
             if !administrating {
                 alert.addAction(UIAlertAction(title: "Delete", style: UIAlertActionStyle.Destructive, handler: { (alertAction: UIAlertAction!) -> Void in
                     

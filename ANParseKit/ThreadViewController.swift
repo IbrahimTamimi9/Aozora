@@ -97,15 +97,20 @@ public class ThreadViewController: UIViewController {
     }
     
     public func replyTo(post: Postable) {
-        if !User.currentUserLoggedIn() {
+        guard User.currentUserLoggedIn() else {
             presentBasicAlertWithTitle("Login first", message: "Select 'Me' tab")
             return
         }
         
         let comment = ANParseKit.newPostViewController()
-        if let post = post as? ThreadPostable, let thread = thread {
-            comment.initWith(thread, threadType: threadType, delegate: self, parentPost: post)
-            presentViewController(comment, animated: true, completion: nil)
+        if let post = post as? ThreadPostable, let thread = thread where !thread.locked {
+            if thread.locked {
+                presentBasicAlertWithTitle("Thread is locked")
+            } else {
+                comment.initWith(thread, threadType: threadType, delegate: self, parentPost: post)
+                presentViewController(comment, animated: true, completion: nil)
+            }
+            
         } else if let post = post as? TimelinePostable {
             comment.initWithTimelinePost(self, postedIn:post.userTimeline, parentPost: post)
             presentViewController(comment, animated: true, completion: nil)
