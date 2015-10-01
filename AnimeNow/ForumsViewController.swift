@@ -19,7 +19,7 @@ class ForumsViewController: UIViewController {
         case Tag
     }
     
-    let recentActivityString = "Recent Activty"
+    let recentActivityString = "Recent Activity"
     let newThreadsString = "New Threads"
     
     var loadingView: LoaderView!

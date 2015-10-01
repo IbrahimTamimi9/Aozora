@@ -174,7 +174,7 @@
                                     <constraint firstAttribute="height" constant="35" id="hMN-Db-lNs"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                                <state key="normal" title="  Login with email" image="icon-mail2">
+                                <state key="normal" title="  Login Aozora" image="icon-mail2">
                                     <color key="titleColor" red="0.18823529780000001" green="0.19607843459999999" blue="0.23529411850000001" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>

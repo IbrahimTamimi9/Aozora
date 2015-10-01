@@ -21,6 +21,7 @@ import SDWebImage
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    let maximumCacheSize: UInt = 1024 * 1024 * 250
     var window: UIWindow?
 
     override class func initialize() -> Void {
@@ -128,28 +129,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 //    func addEnglishTitles() {
-//        let query = Anime.query()!
-//        query.includeKey("details")
-//        query.selectKeys(["details"])
-//        
+//        let query = Notification.query()!
+//        query.includeKey("subscribers")
 //        AnimeService.findAllObjectsWith(query: query).continueWithBlock { (task: BFTask!) -> AnyObject! in
 //            
 //            var sequence = BFTask(result: nil);
-//            var result = task.result as! [Anime]
+//            let result = task.result as! NSArray
 //        
-//            for anime in result {
+//            for notification in result {
 //                sequence = sequence.continueWithBlock {
 //                    (task: BFTask!) -> AnyObject! in
-//
-//                    if let englishTitle = anime.details.englishTitles.first {
-//                        anime.titleEnglish = englishTitle
-//                    }
-//                    return anime.saveInBackground()
+//                    print(notification.objectId!)
+//                    print(notification.subscribers)
+//                    return nil
 //                    
 //                }.continueWithBlock {
 //                (task: BFTask!) -> AnyObject! in
 //                    if (task.exception != nil) {
-//                        println(task.exception)
+//                        print(task.exception)
 //                    }
 //                    return nil
 //                }
