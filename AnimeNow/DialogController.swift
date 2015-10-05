@@ -28,7 +28,7 @@ class DialogController: NSObject {
         if eventCount > 8 {
             let alert = UIAlertController(title: "Help this app get Discovered", message: "If you like this app, please recommend it to your friends (private recommendation)", preferredStyle: UIAlertControllerStyle.Alert)
             alert.addAction(UIAlertAction(title: "Sure", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
-                self.showFBAppInvite()
+                self.showFBAppInvite(viewController)
             }))
             alert.addAction(UIAlertAction(title: "No, thanks", style: UIAlertActionStyle.Default, handler: nil))
             viewController.presentViewController(alert, animated: true, completion: nil)
@@ -44,11 +44,11 @@ class DialogController: NSObject {
         
     }
     
-    func showFBAppInvite() {
+    func showFBAppInvite(viewController: UIViewController) {
         let content = FBSDKAppInviteContent()
         content.appLinkURL = NSURL(string: "https://fb.me/1471151336531847")
         content.appInvitePreviewImageURL = NSURL(string: "https://files.parsetfss.com/496f5287-6440-4a0e-a747-4633b4710808/tfss-2143b956-6840-4e86-a0f1-f706c03f61f8-facebook-app-invite")
-        FBSDKAppInviteDialog.showWithContent(content, delegate: self)
+        FBSDKAppInviteDialog.showFromViewController(viewController, withContent: content, delegate: self)
     }
 }
 

@@ -162,7 +162,7 @@ class SettingsViewController: UITableViewController {
             iRate.sharedInstance().openRatingsPageInAppStore()
         case (2,1):
             // Recommend to friends
-            DialogController.sharedInstance.showFBAppInvite()
+            DialogController.sharedInstance.showFBAppInvite(self)
         case (3,0):
             // Open Facebook
             var url: NSURL?

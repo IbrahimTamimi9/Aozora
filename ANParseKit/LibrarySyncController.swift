@@ -515,55 +515,54 @@ public class LibrarySyncController {
     // MARK: - General External Library Methods
     
     public class func addAnime(progress: AnimeProgress? = nil, malProgress: MALProgress? = nil) -> BFTask {
-        let source = Source.MyAnimeList
-        switch source {
-        case .MyAnimeList:
+//        let source = Source.MyAnimeList
+//        switch source {
+//        case .MyAnimeList:
             let malProgress = malProgress ?? animeProgressToAtarashiiObject(progress!)
             return myAnimeListRequestWithRouter(Atarashii.Router.animeAdd(progress: malProgress)).continueWithBlock({ (task: BFTask!) -> AnyObject! in
                 return nil
             })
-        case .Anilist:
-            fallthrough
-        case .Hummingbird:
-            fallthrough
-        default:
-            return BFTask(result: nil)
-        }
+//        case .Anilist:
+//            fallthrough
+//        case .Hummingbird:
+//            fallthrough
+//        default:
+//            return BFTask(result: nil)
+//        }
     }
     
     public class func updateAnime(progress: AnimeProgress? = nil, malProgress: MALProgress? = nil) -> BFTask {
-        let source = Source.MyAnimeList
-        switch source {
-        case .MyAnimeList:
+//        let source = Source.MyAnimeList
+//        switch source {
+//        case .MyAnimeList:
             let malProgress = malProgress ?? animeProgressToAtarashiiObject(progress!)
             return myAnimeListRequestWithRouter(Atarashii.Router.animeUpdate(progress: malProgress)).continueWithBlock({ (task: BFTask!) -> AnyObject! in
                 return nil
             })
-        case .Anilist:
-            fallthrough
-        case .Hummingbird:
-            fallthrough
-        default:
-            return BFTask(result: nil)
-        }
+//        case .Anilist:
+//            fallthrough
+//        case .Hummingbird:
+//            fallthrough
+//        default:
+//            return BFTask(result: nil)
+//        }
     }
     
     public class func deleteAnime(progress: AnimeProgress? = nil, malProgress: MALProgress? = nil) -> BFTask {
-        let source = Source.MyAnimeList
-        switch source {
-        case .MyAnimeList:
-            
+//        let source = Source.MyAnimeList
+//        switch source {
+//        case .MyAnimeList:
             let malID = malProgress?.myAnimeListID ?? progress!.anime.myAnimeListID
             return myAnimeListRequestWithRouter(Atarashii.Router.animeDelete(id: malID)).continueWithBlock({ (task: BFTask!) -> AnyObject! in
                 return nil
             })
-        case .Anilist:
-            fallthrough
-        case .Hummingbird:
-            fallthrough
-        default:
-            return BFTask(result: nil)
-        }
+//        case .Anilist:
+//            fallthrough
+//        case .Hummingbird:
+//            fallthrough
+//        default:
+//            return BFTask(result: nil)
+//        }
     }
     
     // MARK: - MyAnimeList Library Methods
