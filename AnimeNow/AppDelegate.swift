@@ -189,21 +189,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             user.saveInBackgroundWithBlock({ (success, error) -> Void in
                 // Checking for invalid sessions
                 if let error = error where error.code == 209 || error.code == 208 {
-                    if error.code == 208 {
-                        if PFFacebookUtils.isLinkedWithUser(User.currentUser()!) {
-                            PFFacebookUtils.unlinkUserInBackground(User.currentUser()!)
-                        }
+                    if let controller = UIApplication.topViewController() {
+                        controller.presentBasicAlertWithTitle("Error", message: error.localizedDescription)
                     }
-                    WorkflowController.logoutUser().continueWithExecutor( BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
-                        
-                        if let error = task.error {
-                            print("failed loggin out: \(error)")
-                        } else {
-                            print("logout succeeded")
-                        }
-                        WorkflowController.presentOnboardingController(true)
-                        return nil
-                    })
                 }
             })
         }
