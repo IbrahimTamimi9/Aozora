@@ -1492,7 +1492,7 @@
 				TargetAttributes = {
 					DA27D1901AF1BA9D00CC854E = {
 						CreatedOnToolsVersion = 6.3.1;
-						DevelopmentTeam = 3K29TKR48J;
+						DevelopmentTeam = Q9KPP7C7F3;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -2073,8 +2073,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/**",
-					/Users/paul/Documents/FacebookSDK,
-					"/Users/shazaibahmad/Documents/FacebookSDK/**",
 				);
 				INFOPLIST_FILE = AnimeNow/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -2146,8 +2144,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/**",
-					/Users/paul/Documents/FacebookSDK,
-					"/Users/shazaibahmad/Documents/FacebookSDK/**",
 				);
 				INFOPLIST_FILE = AnimeNow/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;

@@ -35,7 +35,7 @@ class EpisodeCell: UICollectionViewCell {
     }
     
     @IBAction func shareOnMessengerPressed(sender: AnyObject) {
-        if FBSDKMessengerSharer.messengerPlatformCapabilities().intersect(FBSDKMessengerPlatformCapability.Image) != [] {
+        if UIApplication.sharedApplication().canOpenURL(NSURL(string: "fb-messenger://")!) {
             FBSDKMessengerSharer.shareImage(screenshotImageView.image, withOptions: nil)
         }
     }
