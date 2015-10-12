@@ -26,6 +26,7 @@ public class ProfileViewController: ThreadViewController {
     @IBOutlet weak var followingButton: UIButton!
     @IBOutlet weak var followersButton: UIButton!
     @IBOutlet weak var aboutLabel: TTTAttributedLabel!
+    @IBOutlet weak var activeAgo: UILabel!
     
     @IBOutlet weak var proBadge: UILabel!
     @IBOutlet weak var postsBadge: UILabel!
@@ -160,6 +161,10 @@ public class ProfileViewController: ThreadViewController {
                 self.aboutLabel.setText(user.details.about, afterInheritingLabelAttributesAndConfiguringWithBlock: { (attributedString) -> NSMutableAttributedString! in
                     return attributedString
                 })
+                
+                let activeEndString = user.activeEnd.timeAgo()
+                let activeEndStringFormatted = activeEndString == "Just now" ? "active now" : "\(activeEndString) ago"
+                self.activeAgo.text = user.active ? "active now" : activeEndStringFormatted
                 
                 if user.details.posts >= 1000 {
                     self.postsBadge.text = String(format: "%.1fk", Float(user.details.posts-49)/1000.0 )

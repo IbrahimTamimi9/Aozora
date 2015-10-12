@@ -184,8 +184,8 @@
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text=" " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DZj-27-6Eb" userLabel="Username">
-                                            <rect key="frame" x="12" y="165" width="6" height="26"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DZj-27-6Eb" userLabel="Username">
+                                            <rect key="frame" x="12" y="165" width="5" height="26"/>
                                             <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="26" id="c4h-pP-6fK"/>
@@ -195,7 +195,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hlo-ra-225">
-                                            <rect key="frame" x="496" y="125" width="96" height="30"/>
+                                            <rect key="frame" x="582" y="125" width="10" height="30"/>
                                             <animations/>
                                             <color key="backgroundColor" red="0.89411765336990356" green="0.89411765336990356" blue="0.89411765336990356" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
@@ -203,7 +203,7 @@
                                             </constraints>
                                             <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="15"/>
                                             <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
-                                            <state key="normal" title="  Following">
+                                            <state key="normal">
                                                 <color key="titleColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
@@ -233,7 +233,7 @@
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i6N-oU-yq0">
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i6N-oU-yq0">
                                             <rect key="frame" x="80" y="109" width="30" height="21"/>
                                             <animations/>
                                             <color key="backgroundColor" red="0.0078431377187371254" green="0.43921568989753723" blue="0.73333334922790527" alpha="1" colorSpace="calibratedRGB"/>
@@ -251,7 +251,7 @@
                                             </userDefinedRuntimeAttributes>
                                         </label>
                                         <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LkT-EB-jxP">
-                                            <rect key="frame" x="408" y="125" width="80" height="30"/>
+                                            <rect key="frame" x="494" y="125" width="80" height="30"/>
                                             <animations/>
                                             <color key="backgroundColor" red="0.89411765340000005" green="0.89411765340000005" blue="0.89411765340000005" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
@@ -295,7 +295,7 @@
                                                 <constraint firstAttribute="width" constant="143" id="m6I-ZF-jk9"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
-                                            <state key="normal" title="219 FOLLOWING">
+                                            <state key="normal" title=" ">
                                                 <color key="titleColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <connections>
@@ -310,7 +310,7 @@
                                                 <constraint firstAttribute="width" constant="143" id="hoc-HB-8Lt"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
-                                            <state key="normal" title="219 FOLLOWERS">
+                                            <state key="normal">
                                                 <color key="titleColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <connections>
@@ -388,6 +388,16 @@
                                                 <action selector="showNotifications:" destination="M5q-uq-HPK" eventType="touchUpInside" id="y7Z-xu-8Ym"/>
                                             </connections>
                                         </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nhK-C7-8dB" userLabel="ActiveAgo">
+                                            <rect key="frame" x="25" y="167.5" width="0.0" height="26"/>
+                                            <animations/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="26" id="jL7-3I-3rm"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
+                                            <color key="textColor" white="0.64776739016736407" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <animations/>
                                     <color key="backgroundColor" red="0.97254902124404907" green="0.97254902124404907" blue="0.97254902124404907" alpha="1" colorSpace="calibratedRGB"/>
@@ -401,7 +411,9 @@
                                         <constraint firstItem="qK8-bI-U4V" firstAttribute="centerY" secondItem="0gu-aB-BQh" secondAttribute="centerY" id="BYz-ov-UXi"/>
                                         <constraint firstItem="DZj-27-6Eb" firstAttribute="top" secondItem="9bT-p7-f1f" secondAttribute="bottom" constant="5" id="BrR-Gf-653"/>
                                         <constraint firstItem="eBe-M2-du6" firstAttribute="leading" secondItem="5yX-hf-St0" secondAttribute="trailing" constant="8" id="ELZ-ax-mzA"/>
+                                        <constraint firstItem="nhK-C7-8dB" firstAttribute="baseline" secondItem="DZj-27-6Eb" secondAttribute="baseline" constant="4" id="EzT-xx-gl3"/>
                                         <constraint firstItem="hlo-ra-225" firstAttribute="leading" secondItem="LkT-EB-jxP" secondAttribute="trailing" constant="8" id="GVx-4L-Izw"/>
+                                        <constraint firstItem="nhK-C7-8dB" firstAttribute="leading" secondItem="DZj-27-6Eb" secondAttribute="trailing" constant="8" id="HIR-ZY-5d9"/>
                                         <constraint firstItem="hlo-ra-225" firstAttribute="centerY" secondItem="LkT-EB-jxP" secondAttribute="centerY" id="Hcd-xJ-XOq"/>
                                         <constraint firstItem="FUt-Aj-Vp8" firstAttribute="leading" secondItem="i6N-oU-yq0" secondAttribute="trailing" constant="5" id="IK6-P7-Zbb"/>
                                         <constraint firstItem="5yX-hf-St0" firstAttribute="centerY" secondItem="eBe-M2-du6" secondAttribute="centerY" id="KSg-9b-atT"/>
@@ -457,6 +469,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="aboutLabel" destination="TgH-QU-GT1" id="fdg-yK-xJA"/>
+                        <outlet property="activeAgo" destination="nhK-C7-8dB" id="8Y5-bJ-X6l"/>
                         <outlet property="followButton" destination="hlo-ra-225" id="a8q-a9-OQM"/>
                         <outlet property="followersButton" destination="eBe-M2-du6" id="i6u-LJ-rcF"/>
                         <outlet property="followingButton" destination="5yX-hf-St0" id="eO3-En-ROy"/>

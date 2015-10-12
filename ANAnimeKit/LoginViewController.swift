@@ -67,7 +67,7 @@ public class LoginViewController: UIViewController {
             
             if let error = task.error {
                 print(error)
-                UIAlertView(title: "Wrong credentials..", message: nil, delegate: nil, cancelButtonTitle: "Ok..").show()
+                UIAlertView(title: "Wrong credentials..", message: "If your password contains a ':' your need to changes your password, sorry!", delegate: nil, cancelButtonTitle: "Ok..").show()
             } else {
                 UIAlertView(title: "Linked with MyAnimelist!", message: nil, delegate: nil, cancelButtonTitle: "Ok").show()
                 self.dismissViewControllerAnimated(true, completion: nil)
