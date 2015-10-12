@@ -28,7 +28,7 @@
         _direction = ZFModalTransitonDirectionBottom;
         _dragable = NO;
         _bounces = YES;
-        _behindViewScale = 0.9f;
+        _behindViewScale = 1.0f;
         _behindViewAlpha = 0.0f;
         _transitionDuration = 0.5f;
         _damping = 0.8;
