@@ -37,9 +37,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
         PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions)
         
-        if let userInfo = launchOptions?[UIApplicationLaunchOptionsRemoteNotificationKey] as? [NSObject : AnyObject] {
-            handleIncomingNotification(userInfo, completionHandler: nil)
-        }
         trackPushOpen(application, didFinishLaunchingWithOptions:launchOptions)
         registerForPushNotifications(application)
         prepareForAds()
@@ -190,7 +187,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 // Checking for invalid sessions
                 if let error = error where error.code == 209 || error.code == 208 {
                     if let controller = UIApplication.topViewController() {
-                        controller.presentBasicAlertWithTitle("Error", message: error.localizedDescription)
+                        controller.presentBasicAlertWithTitle("Error", message: error.description)
                     }
                 }
             })
