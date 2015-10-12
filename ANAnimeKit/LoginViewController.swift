@@ -45,7 +45,7 @@ public class LoginViewController: UIViewController {
                 
                 completionSource.setResult(result.value)
             } else {
-                completionSource.setError(nil)
+                completionSource.setError(NSError(domain: "aozora.malcredentials", code: 1, userInfo: nil))
             }
         }
         

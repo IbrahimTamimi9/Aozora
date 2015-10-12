@@ -89,26 +89,41 @@ class WorkflowController {
         }
         
         // Remove saved data
-        let query3 = AnimeProgress.query()!
-        query3.limit = 10000
-        query3.fromLocalDatastore()
-        query3.findObjectsInBackgroundWithBlock { (result, error) -> Void in
-            PFObject.unpinAllInBackground(result)
+        do {
+            let query = AnimeProgress.query()!
+            query.limit = 10000
+            query.fromLocalDatastore()
+            query.findObjectsInBackgroundWithBlock { (result, error) -> Void in
+                PFObject.unpinAllInBackground(result)
+            }
         }
         
-        let query2 = Episode.query()!
-        query2.limit = 10000
-        query2.fromLocalDatastore()
-        query2.findObjectsInBackgroundWithBlock { (result, error) -> Void in
-            print(result?.count)
-            PFObject.unpinAllInBackground(result)
+        do {
+            let query = Episode.query()!
+            query.limit = 10000
+            query.fromLocalDatastore()
+            query.findObjectsInBackgroundWithBlock { (result, error) -> Void in
+                print(result?.count)
+                PFObject.unpinAllInBackground(result)
+            }
         }
         
-        let query = Anime.query()!
-        query.limit = 10000
-        query.fromLocalDatastore()
-        query.findObjectsInBackgroundWithBlock { (result, error) -> Void in
-            PFObject.unpinAllInBackground(result)
+        do {
+            let query = Anime.query()!
+            query.limit = 10000
+            query.fromLocalDatastore()
+            query.findObjectsInBackgroundWithBlock { (result, error) -> Void in
+                PFObject.unpinAllInBackground(result)
+            }
+        }
+        
+        do {
+            let query = Anime.query()!
+            query.limit = 10000
+            query.fromPinWithName(Anime.PinName.InLibrary.rawValue)
+            query.findObjectsInBackgroundWithBlock { (result, error) -> Void in
+                PFObject.unpinAllInBackground(result, withName: Anime.PinName.InLibrary.rawValue)
+            }
         }
         
         // Logout MAL

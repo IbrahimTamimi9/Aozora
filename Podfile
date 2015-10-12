@@ -15,7 +15,6 @@ pod 'XCDYouTubeKit', { :git => 'https://github.com/0xced/XCDYouTubeKit.git', :co
 pod 'RMStore', '~> 0.7'
 pod 'JTSImageViewController', '~> 1.3'
 pod 'iRate', '~> 1.11.4'
-pod 'RMStore', '~> 0.7'
 pod 'HCSStarRatingView', :git => 'https://github.com/hugocampossousa/HCSStarRatingView.git'
 pod 'RSKImageCropper'
 pod 'FLAnimatedImage', '~> 1.0'

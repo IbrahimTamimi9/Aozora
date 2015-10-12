@@ -124,7 +124,7 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
         return LibrarySyncController.fetchWatchingList(isRefreshing).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
             
             // Fill watching list
-            let animeList = task.result as! [AnimeProgress]
+            let animeList = task.result as! [Anime]
             self.updateWatchingList(animeList)
             self.updateListViewControllers(animeList)
             if !isRefreshing {
@@ -133,7 +133,7 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
             return LibrarySyncController.fetchTheRestOfLists()
             
         }).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
-            if let result = task.result as? [AnimeProgress] where result.count > 0 {
+            if let result = task.result as? [Anime] where result.count > 0 {
                 self.updateListViewControllers(result)
             }
             return nil
@@ -146,13 +146,10 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
         })
     }
     
-    func updateWatchingList(animeList: [AnimeProgress]) {
+    func updateWatchingList(animeList: [Anime]) {
         var list: [Anime] = []
-        for progress in animeList {
-            let anime = progress.anime
-            anime.progress = progress
-            
-            if case .Watching() = progress.myAnimeListList() {
+        for anime in animeList {
+            if case .Watching() = anime.progress!.myAnimeListList() {
                 list.append(anime)
             }
         }
@@ -162,14 +159,12 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
         firstController.updateSortType(firstController.currentSortType)
     }
     
-    func updateListViewControllers(animeList: [AnimeProgress]) {
+    func updateListViewControllers(animeList: [Anime]) {
         
         var lists: [[Anime]] = [[],[],[],[],[]]
         
-        for progress in animeList {
-            let anime = progress.anime
-            anime.progress = progress
-            switch progress.myAnimeListList() {
+        for anime in animeList {
+            switch anime.progress!.myAnimeListList() {
             case .Watching:
                 lists[0].append(anime)
             case .Planning:

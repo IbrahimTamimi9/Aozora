@@ -50,7 +50,7 @@ class ParseWorker {
             if result.isSuccess {
                 completionSource.setResult(result.value)
             } else {
-                completionSource.setError(nil)
+                completionSource.setError(NSError(domain: "aozora.AnimeCast", code: 1, userInfo: nil))
             }
         }
         return completionSource.task
@@ -165,7 +165,7 @@ class ParseWorker {
             if result.isSuccess {
                 completionSource.setResult(result.value)
             } else {
-                completionSource.setError(nil)
+                completionSource.setError(NSError(domain: "aozora.traktRequest", code: 1, userInfo: nil))
             }
         }
         return completionSource.task
@@ -289,7 +289,7 @@ class ParseWorker {
             if result.isSuccess {
                 completionSource.setResult(result.value)
             } else {
-                completionSource.setError(nil)
+                completionSource.setError(NSError(domain: "aozora.ShowSummary", code: 1, userInfo: nil))
             }
         }
         return completionSource.task

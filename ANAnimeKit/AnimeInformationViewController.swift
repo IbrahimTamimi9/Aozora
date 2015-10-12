@@ -248,8 +248,9 @@ public class AnimeInformationViewController: AnimeBaseViewController {
                 let deleteFromMALTask = LibrarySyncController.deleteAnime(progress)
                 let deleteFromParseTask = progress.deleteInBackground()
                 let unpinFromLocalDatastoreTask = progress.unpinInBackground()
+                let animeUnpinTask = self.anime.unpinInBackgroundWithName(Anime.PinName.InLibrary.rawValue)
                     
-                BFTask(forCompletionOfAllTasks: [deleteFromMALTask, deleteFromParseTask, unpinFromLocalDatastoreTask]).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
+                BFTask(forCompletionOfAllTasks: [deleteFromMALTask, deleteFromParseTask, unpinFromLocalDatastoreTask, animeUnpinTask]).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
                 
                     self.loadingView.stopAnimating()
                     self.anime.progress = nil
@@ -301,14 +302,17 @@ public class AnimeInformationViewController: AnimeBaseViewController {
                     // Create AnimeProgress, if it's not on Parse
                     LibrarySyncController.addAnime(progress)
                     self.anime.progress = progress
-                    progress.saveInBackgroundWithBlock({ (result, error) -> Void in
-                        if let _ = error {
-                            // Handle error
-                        } else if result {
-                            progress.pinInBackgroundWithBlock({ (result, error) -> Void in
-                                NSNotificationCenter.defaultCenter().postNotificationName(LibraryUpdatedNotification, object: nil)
-                            })
-                        }
+                    
+                    progress.saveInBackground().continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
+
+                        let pinProgressTask = progress.pinInBackground()
+                        let pinAnimeTask = self.anime.pinInBackgroundWithName(Anime.PinName.InLibrary.rawValue)
+                        
+                        BFTask(forCompletionOfAllTasks: [pinProgressTask, pinAnimeTask]).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
+                            NSNotificationCenter.defaultCenter().postNotificationName(LibraryUpdatedNotification, object: nil)
+                            return nil
+                        })
+                        return nil
                     })
                     self.updateListButtonTitle(progress.list)
                 } else {
