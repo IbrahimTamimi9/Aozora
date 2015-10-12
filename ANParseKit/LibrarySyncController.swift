@@ -187,6 +187,8 @@ public class LibrarySyncController {
                 
                 let animeList = progressList.map({ (progress: AnimeProgress) -> Anime in
                     return progress.anime
+                }).filter({ (anime: Anime?) -> Bool in
+                    return anime != nil
                 })
                 
                 let unpinAnimeTask = PFObject.unpinAllInBackground(animeList, withName: Anime.PinName.InLibrary.rawValue)
@@ -197,7 +199,16 @@ public class LibrarySyncController {
                     let pinProgressTask = PFObject.pinAllInBackground(progressList)
                     return BFTask(forCompletionOfAllTasks: [pinAnimeListTask, pinProgressTask])
                 })
-        }
+                
+            }.continueWithBlock({ (task: BFTask!) -> AnyObject! in
+                if let error = task.error {
+                    print(error)
+                } else if let exception = task.exception {
+                    print(exception)
+                }
+                
+                return task
+            })
     }
     
     // MARK: - Library management

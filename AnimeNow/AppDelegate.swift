@@ -23,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     let maximumCacheSize: UInt = 1024 * 1024 * 250
     var window: UIWindow?
+    var backgroundTask: UIBackgroundTaskIdentifier!
 
     override class func initialize() -> Void {
         iRate.sharedInstance().promptForNewVersionIfUserRated = true
@@ -159,18 +160,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-        if let user = User.currentUser() {
-            // TODO: leave this for a while until everyone who purchased get their badge then remove and keep InAppController one only
-            if InAppController.purchasedProPlus() != nil {
-                user.addUniqueObject("PRO+", forKey: "badges")
-            } else if InAppController.purchasedPro() != nil {
-                user.addUniqueObject("PRO", forKey: "badges")
-            }
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
             
-            user.active = false
-            user.activeEnd = NSDate()
-            user.saveInBackground()
-        }
+            var taskID = application.beginBackgroundTaskWithExpirationHandler { () }
+    
+            if let user = User.currentUser() {
+                // TODO: leave this for a while until everyone who purchased get their badge then remove and keep InAppController one only
+                if InAppController.purchasedProPlus() != nil {
+                    user.addUniqueObject("PRO+", forKey: "badges")
+                } else if InAppController.purchasedPro() != nil {
+                    user.addUniqueObject("PRO", forKey: "badges")
+                }
+                
+                user.active = false
+                user.activeEnd = NSDate()
+                user.saveInBackgroundWithBlock({ (success, error) -> Void in
+                    application.endBackgroundTask(taskID)
+                    taskID = UIBackgroundTaskInvalid
+                })
+            }
+        })
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
