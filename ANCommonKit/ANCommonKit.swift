@@ -38,4 +38,6 @@ public enum FontAwesome: String {
     case Ranking = ""
     case Members = ""
     case Watched = ""
+    case Favorite = ""
+    case Rated = ""
 }

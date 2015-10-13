@@ -110,6 +110,8 @@
 		DA9AE39C1B69382D0053C2EA /* FetchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC13BFF1B3F4A7A0013D479 /* FetchController.swift */; };
 		DA9EB9311B2BA580001ECFA7 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA9EB9301B2BA580001ECFA7 /* WebKit.framework */; };
 		DA9F731D1B2931FF00C2652C /* UIImageView+SDWebImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9F731A1B2930F200C2652C /* UIImageView+SDWebImage.swift */; };
+		DAA26C8E1BCC92B1001CF62D /* PublicListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA26C8D1BCC92B1001CF62D /* PublicListViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		DAA26C901BCC94D8001CF62D /* LibraryAnimeCellList.xib in Resources */ = {isa = PBXBuildFile; fileRef = DAA26C8F1BCC94D8001CF62D /* LibraryAnimeCellList.xib */; settings = {ASSET_TAGS = (); }; };
 		DAA393291B42F21900A8D5D5 /* RootTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA393281B42F21900A8D5D5 /* RootTabBar.swift */; };
 		DAA546D61BA090C0003989DE /* UIApplication+Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA546D51BA090C0003989DE /* UIApplication+Navigation.swift */; };
 		DAA546D81BA09153003989DE /* NotificationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA546D31BA0902E003989DE /* NotificationsController.swift */; };
@@ -444,6 +446,8 @@
 		DA9F731A1B2930F200C2652C /* UIImageView+SDWebImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+SDWebImage.swift"; sourceTree = "<group>"; };
 		DAA253B51B2B877C0092EB0B /* CharactersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharactersViewController.swift; sourceTree = "<group>"; };
 		DAA253B71B2B8AF50092EB0B /* AnimeBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeBaseViewController.swift; sourceTree = "<group>"; };
+		DAA26C8D1BCC92B1001CF62D /* PublicListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicListViewController.swift; sourceTree = "<group>"; };
+		DAA26C8F1BCC94D8001CF62D /* LibraryAnimeCellList.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LibraryAnimeCellList.xib; sourceTree = "<group>"; };
 		DAA2C5571B66919300152FF9 /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		DAA393281B42F21900A8D5D5 /* RootTabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootTabBar.swift; sourceTree = "<group>"; };
 		DAA546D11B9EF26E003989DE /* NotificationThreadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationThreadViewController.swift; sourceTree = "<group>"; };
@@ -1204,9 +1208,9 @@
 			isa = PBXGroup;
 			children = (
 				DAE7A7181B2105FD00788614 /* AnimeCell.swift */,
+				DAC13BF21B3EF17E0013D479 /* AnimeCellList.xib */,
 				DAC13BEE1B3EEF250013D479 /* AnimeCell.xib */,
 				DAC13BF01B3EF15E0013D479 /* AnimeCellPoster.xib */,
-				DAC13BF21B3EF17E0013D479 /* AnimeCellList.xib */,
 				DAC13BF61B3EFC1C0013D479 /* LoadingTableCell.swift */,
 				DAC13BF81B3EFC280013D479 /* LoadingCollectionCell.swift */,
 				DAF357051B4593E200629A3D /* LibraryAnimeCell.swift */,
@@ -1249,8 +1253,10 @@
 			children = (
 				DAF618791B37825700286517 /* Library.storyboard */,
 				DA52B1861B4845D4001CC1A9 /* CheckInCompact.xib */,
+				DAA26C8F1BCC94D8001CF62D /* LibraryAnimeCellList.xib */,
 				DAF618751B377CA700286517 /* AnimeLibraryViewController.swift */,
 				DAF618771B377D6000286517 /* AnimeListViewController.swift */,
+				DAA26C8D1BCC92B1001CF62D /* PublicListViewController.swift */,
 			);
 			name = Library;
 			sourceTree = "<group>";
@@ -1565,6 +1571,7 @@
 				DAD67E061B7292D8000BB325 /* Resources.xcassets in Resources */,
 				DA41679B1B25F76F00847F56 /* FontAwesome.ttf in Resources */,
 				DA4595611B83C3500044013E /* Onboarding.storyboard in Resources */,
+				DAA26C901BCC94D8001CF62D /* LibraryAnimeCellList.xib in Resources */,
 				DAF6187A1B37825700286517 /* Library.storyboard in Resources */,
 				DAC13C1D1B4228120013D479 /* Aller_Rg.ttf in Resources */,
 				DAC13C1C1B4228120013D479 /* Aller_LtIt.ttf in Resources */,
@@ -1755,6 +1762,7 @@
 				DAA546E01BA1A0C4003989DE /* LinkCell.swift in Sources */,
 				DA4595631B83C3500044013E /* SignInViewController.swift in Sources */,
 				DAA546E11BA1A0C4003989DE /* TitleCell.swift in Sources */,
+				DAA26C8E1BCC92B1001CF62D /* PublicListViewController.swift in Sources */,
 				DAA546EE1BA1A102003989DE /* AnimeInformationViewController.swift in Sources */,
 				DA52B1831B4838AE001CC1A9 /* CalendarViewController.swift in Sources */,
 				DA27D1991AF1BA9D00CC854E /* ParseWorker.swift in Sources */,

@@ -139,7 +139,7 @@ class AnimeCell: UICollectionViewCell {
             }
         }
         
-        if let progress = anime.progress {
+        if let progress = anime.progress ?? anime.publicProgress {
             
             inLibraryView?.hidden = false
             switch progress.myAnimeListList() {

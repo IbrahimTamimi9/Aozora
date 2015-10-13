@@ -338,7 +338,7 @@ public class CustomThreadViewController: ThreadViewController {
                 self.presentViewController(comment, animated: true, completion: nil)
             }))
             
-            if administrating {
+            if User.currentUser()!.isAdmin() {
                 let locked = thread.locked
                 alert.addAction(UIAlertAction(title: locked ? "Unlock" : "Lock", style: UIAlertActionStyle.Destructive, handler: { (alertAction: UIAlertAction!) -> Void in
                     thread.locked = !locked

@@ -8,12 +8,13 @@
     <customFonts key="customFonts">
         <mutableArray key="FontAwesome.ttf">
             <string>FontAwesome</string>
+            <string>FontAwesome</string>
         </mutableArray>
     </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AnimeCellList" id="uCf-8e-Hf0" customClass="AnimeCell" customModule="Aozora" customModuleProvider="target">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="LibraryAnimeCellList" id="uCf-8e-Hf0" customClass="LibraryAnimeCell" customModule="Aozora" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="340" height="52"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -41,18 +42,11 @@
                             </mask>
                         </variation>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" 9.12 ·  18342" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p4P-sL-YGG">
-                        <rect key="frame" x="8" y="30" width="103.5" height="13.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TV ·  10/24    9" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p4P-sL-YGG">
+                        <rect key="frame" x="8" y="30" width="108" height="13.5"/>
                         <animations/>
                         <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="13"/>
                         <color key="textColor" red="0.64835526320000003" green="0.64835526320000003" blue="0.64835526320000003" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Episode 6 - 6d 19h" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CSc-8w-b42">
-                        <rect key="frame" x="217" y="28" width="114.5" height="16"/>
-                        <animations/>
-                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                        <color key="textColor" red="0.2666666667" green="0.52549019610000003" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i6K-9U-r4X" userLabel="InLibrary">
@@ -63,6 +57,13 @@
                             <constraint firstAttribute="width" constant="7" id="CfJ-4A-IHn"/>
                         </constraints>
                     </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" 9.12 ·  18342" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CSc-8w-b42">
+                        <rect key="frame" x="228" y="30.5" width="103.5" height="13.5"/>
+                        <animations/>
+                        <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="13"/>
+                        <color key="textColor" red="0.2666666667" green="0.52549019610000003" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <animations/>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -93,10 +94,10 @@
                 </mask>
             </variation>
             <connections>
-                <outlet property="etaLabel" destination="CSc-8w-b42" id="YKP-Ez-rbn"/>
                 <outlet property="inLibraryView" destination="i6K-9U-r4X" id="Z7b-3l-JF3"/>
-                <outlet property="ratingLabel" destination="p4P-sL-YGG" id="T0L-k0-xQX"/>
+                <outlet property="ratingLabel" destination="CSc-8w-b42" id="NHX-qL-URR"/>
                 <outlet property="titleLabel" destination="mAS-Gw-id2" id="n8M-Aj-k22"/>
+                <outlet property="userProgressLabel" destination="p4P-sL-YGG" id="HhA-9T-I6e"/>
             </connections>
         </collectionViewCell>
     </objects>

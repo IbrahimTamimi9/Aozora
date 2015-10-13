@@ -65,6 +65,7 @@ public class Anime: PFObject, PFSubclassing {
     @NSManaged public var studio: [NSDictionary]
     
     public var progress: AnimeProgress?
+    public var publicProgress: AnimeProgress?
     
     public func fanartURLString() -> String {
         if let fanartUrl = fanart where fanartUrl.characters.count != 0 {

@@ -252,7 +252,6 @@ public class ProfileViewController: ThreadViewController {
             settingsTrailingSpaceConstraint.constant = 8
         } else {
             followButton.hidden = false
-            settingsButton.hidden = true
             notificationsButton.hidden = true
         }
         
@@ -433,36 +432,47 @@ public class ProfileViewController: ThreadViewController {
         
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
         
-        alert.addAction(UIAlertAction(title: "Edit Profile", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction) -> Void in
-            let editProfileController =  UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("EditProfile") as! EditProfileViewController
-            editProfileController.delegate = self
-            self.presentViewController(editProfileController, animated: true, completion: nil)
-        }))
-        
-        alert.addAction(UIAlertAction(title: "Settings", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction) -> Void in
-            let settings = UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController() as! UINavigationController
-            self.presentViewController(settings, animated: true, completion: nil)
-        }))
-        
-        alert.addAction(UIAlertAction(title: "Online Users", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction) -> Void in
-            let userListController = UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("UserList") as! UserListViewController
-            let query = User.query()!
-            query.whereKeyExists("aozoraUsername")
-            query.orderByDescending("activeStart")
-            query.limit = 100
-            userListController.initWithQuery(query, title: "Online Users")
-            self.navigationController?.pushViewController(userListController, animated: true)
-        }))
-        
-        alert.addAction(UIAlertAction(title: "New Users", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction) -> Void in
-            let userListController = UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("UserList") as! UserListViewController
-            let query = User.query()!
-            query.orderByDescending("joinDate")
-            query.whereKeyExists("aozoraUsername")
-            query.limit = 100
-            userListController.initWithQuery(query, title: "New Users")
-            self.navigationController?.pushViewController(userListController, animated: true)
-        }))
+        if userProfile == User.currentUser()! {
+            alert.addAction(UIAlertAction(title: "Edit Profile", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction) -> Void in
+                let editProfileController =  UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("EditProfile") as! EditProfileViewController
+                editProfileController.delegate = self
+                self.presentViewController(editProfileController, animated: true, completion: nil)
+            }))
+            
+            alert.addAction(UIAlertAction(title: "Settings", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction) -> Void in
+                let settings = UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController() as! UINavigationController
+                self.presentViewController(settings, animated: true, completion: nil)
+            }))
+            
+            alert.addAction(UIAlertAction(title: "Online Users", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction) -> Void in
+                let userListController = UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("UserList") as! UserListViewController
+                let query = User.query()!
+                query.whereKeyExists("aozoraUsername")
+                query.orderByDescending("activeStart")
+                query.limit = 100
+                userListController.initWithQuery(query, title: "Online Users")
+                self.navigationController?.pushViewController(userListController, animated: true)
+            }))
+            
+            alert.addAction(UIAlertAction(title: "New Users", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction) -> Void in
+                let userListController = UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("UserList") as! UserListViewController
+                let query = User.query()!
+                query.orderByDescending("joinDate")
+                query.whereKeyExists("aozoraUsername")
+                query.limit = 100
+                userListController.initWithQuery(query, title: "New Users")
+                self.navigationController?.pushViewController(userListController, animated: true)
+            }))
+        } else {
+            alert.addAction(UIAlertAction(title: "View Library", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction) -> Void in
+                if let userProfile = self.userProfile {
+                    let navVC = UIStoryboard(name: "Library", bundle: nil).instantiateViewControllerWithIdentifier("PublicLibraryNav") as! UINavigationController
+                    let publicList = navVC.viewControllers.first as! PublicListViewController
+                    publicList.initWithUser(userProfile)
+                    self.presentViewController(navVC, animated: true, completion: nil)
+                }
+            }))
+        }
         
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler:nil))
         self.presentViewController(alert, animated: true, completion: nil)

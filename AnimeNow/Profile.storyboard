@@ -10,7 +10,6 @@
             <string>FontAwesome</string>
             <string>FontAwesome</string>
             <string>FontAwesome</string>
-            <string>FontAwesome</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -317,15 +316,14 @@
                                                 <action selector="showFollowers:" destination="M5q-uq-HPK" eventType="touchUpInside" id="eZa-a2-WcY"/>
                                             </connections>
                                         </button>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qK8-bI-U4V">
-                                            <rect key="frame" x="460" y="125" width="40" height="30"/>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qK8-bI-U4V">
+                                            <rect key="frame" x="452" y="124.5" width="40" height="30"/>
                                             <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="40" id="7vw-qe-F5g"/>
                                                 <constraint firstAttribute="height" constant="30" id="iIs-GX-gsU"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="21"/>
-                                            <state key="normal" title="">
+                                            <state key="normal" image="icon-more-darker">
                                                 <color key="titleColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
@@ -366,7 +364,7 @@
                                             </userDefinedRuntimeAttributes>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0gu-aB-BQh">
-                                            <rect key="frame" x="430" y="125" width="30" height="30"/>
+                                            <rect key="frame" x="422" y="125" width="30" height="30"/>
                                             <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="30" id="G8h-3A-qVj"/>
@@ -435,7 +433,7 @@
                                         <constraint firstAttribute="bottom" secondItem="B3n-Tx-huN" secondAttribute="bottom" constant="8" id="rAJ-K0-QCU"/>
                                         <constraint firstItem="9bT-p7-f1f" firstAttribute="bottom" secondItem="MUA-4J-1Hx" secondAttribute="bottom" constant="4" id="xJV-aH-eSd"/>
                                         <constraint firstItem="MUA-4J-1Hx" firstAttribute="leading" secondItem="9bT-p7-f1f" secondAttribute="trailing" constant="8" id="xZg-ge-i55"/>
-                                        <constraint firstAttribute="trailing" secondItem="qK8-bI-U4V" secondAttribute="trailing" constant="100" id="xdV-1E-4Rr"/>
+                                        <constraint firstAttribute="trailing" secondItem="qK8-bI-U4V" secondAttribute="trailing" constant="108" id="xdV-1E-4Rr"/>
                                     </constraints>
                                 </view>
                                 <connections>
@@ -864,6 +862,7 @@
     </scenes>
     <resources>
         <image name="icon-create" width="22" height="22"/>
+        <image name="icon-more-darker" width="25" height="25"/>
         <image name="icon-profile-filled" width="25" height="25"/>
     </resources>
 </document>

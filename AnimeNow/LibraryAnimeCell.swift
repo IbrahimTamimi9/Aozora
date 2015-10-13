@@ -23,12 +23,12 @@ class LibraryAnimeCell: AnimeCell {
     var currentCancellationToken: NSOperation?
     
     @IBOutlet weak var userProgressLabel: UILabel!
-    @IBOutlet weak var watchedButton: UIButton!
-    @IBOutlet weak var episodeImageView: UIImageView!
+    @IBOutlet weak var watchedButton: UIButton?
+    @IBOutlet weak var episodeImageView: UIImageView?
     
     @IBAction func watchedPressed(sender: AnyObject) {
         
-        if let anime = anime, let progress = anime.progress {
+        if let anime = anime, let progress = anime.progress ?? anime.publicProgress {
             
             progress.watchedEpisodes += 1
             progress.updatedEpisodes(anime.episodes)
@@ -44,7 +44,7 @@ class LibraryAnimeCell: AnimeCell {
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: "pressedEpisodeImageView:")
         gestureRecognizer.numberOfTouchesRequired = 1
         gestureRecognizer.numberOfTapsRequired = 1
-        episodeImageView.addGestureRecognizer(gestureRecognizer)
+        episodeImageView?.addGestureRecognizer(gestureRecognizer)
     }
     
     override class func registerNibFor(collectionView collectionView: UICollectionView, style: CellStyle, reuseIdentifier: String) {
@@ -68,23 +68,24 @@ class LibraryAnimeCell: AnimeCell {
         
         self.anime = anime
         
-        if let progress = anime.progress {
+        if let progress = anime.progress ?? anime.publicProgress {
             
-            watchedButton.hidden = false
+            watchedButton?.hidden = false
             let title = FontAwesome.Watched.rawValue + " Ep\((progress.watchedEpisodes + 1))"
-            watchedButton.setTitle(title, forState: UIControlState.Normal)
+            watchedButton?.setTitle(title, forState: UIControlState.Normal)
             
-            userProgressLabel.text = "\(anime.type) · " + FontAwesome.Watched.rawValue + " \(progress.watchedEpisodes)/\(anime.episodes)   " + FontAwesome.Ranking.rawValue + " \(progress.score)"
+            userProgressLabel.text = "\(anime.type) · " + FontAwesome.Watched.rawValue + " \(progress.watchedEpisodes)/\(anime.episodes)   " + FontAwesome.Rated.rawValue + " \(progress.score)"
             
-            if progress.myAnimeListList() != .Completed {
-                setEpisodeImageView(anime, tag: .InLibrary, nextEpisode: progress.watchedEpisodes)
-            } else {
-                episodeImageView.setImageFrom(urlString: anime.fanart ?? anime.imageUrl ?? "")
+            if let episodeImageView = episodeImageView {
+                if progress.myAnimeListList() != .Completed {
+                    setEpisodeImageView(anime, tag: .InLibrary, nextEpisode: progress.watchedEpisodes)
+                } else {
+                    episodeImageView.setImageFrom(urlString: anime.fanart ?? anime.imageUrl ?? "")
+                }
             }
             
-            
             if progress.myAnimeListList() == .Completed || progress.myAnimeListList() == .Dropped || (progress.watchedEpisodes == anime.episodes && anime.episodes != 0) {
-                watchedButton.hidden = true
+                watchedButton?.hidden = true
             }
         }
     }
@@ -98,7 +99,7 @@ class LibraryAnimeCell: AnimeCell {
         let newCancelationToken = NSOperation()
         currentCancellationToken = newCancelationToken
         
-        episodeImageView.image = nil
+        episodeImageView?.image = nil
         episode = nil
         anime.episodeList(true, tag: tag).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
             
@@ -108,13 +109,13 @@ class LibraryAnimeCell: AnimeCell {
             
             guard let episodes = task.result as? [Episode],
                 let nextEpisode = nextEpisode where episodes.count > nextEpisode else {
-                    self.episodeImageView.setImageFrom(urlString: anime.fanart ?? anime.imageUrl ?? "")
+                    self.episodeImageView?.setImageFrom(urlString: anime.fanart ?? anime.imageUrl ?? "")
                     return nil
             }
             
             let episode = episodes[nextEpisode]
             self.episode = episode
-            self.episodeImageView.setImageFrom(urlString: episode.imageURLString())
+            self.episodeImageView?.setImageFrom(urlString: episode.imageURLString())
             
             return nil
         })
