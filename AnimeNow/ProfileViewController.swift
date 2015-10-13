@@ -444,6 +444,26 @@ public class ProfileViewController: ThreadViewController {
             self.presentViewController(settings, animated: true, completion: nil)
         }))
         
+        alert.addAction(UIAlertAction(title: "Online Users", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction) -> Void in
+            let userListController = UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("UserList") as! UserListViewController
+            let query = User.query()!
+            query.whereKeyExists("aozoraUsername")
+            query.orderByDescending("activeStart")
+            query.limit = 100
+            userListController.initWithQuery(query, title: "Online Users")
+            self.navigationController?.pushViewController(userListController, animated: true)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "New Users", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction) -> Void in
+            let userListController = UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("UserList") as! UserListViewController
+            let query = User.query()!
+            query.orderByDescending("joinDate")
+            query.whereKeyExists("aozoraUsername")
+            query.limit = 100
+            userListController.initWithQuery(query, title: "New Users")
+            self.navigationController?.pushViewController(userListController, animated: true)
+        }))
+        
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler:nil))
         self.presentViewController(alert, animated: true, completion: nil)
     }

@@ -183,15 +183,14 @@ public class LibrarySyncController {
                     return nil
                 }
                 
-                let unpinProgressTask = PFObject.unpinAllInBackground(progressList)
-                
                 let animeList = progressList.map({ (progress: AnimeProgress) -> Anime in
                     return progress.anime
-                }).filter({ (anime: Anime?) -> Bool in
-                    return anime != nil
+                }).filter({ (anime: Anime) -> Bool in
+                    return anime.myAnimeListID != 0
                 })
-                
+
                 let unpinAnimeTask = PFObject.unpinAllInBackground(animeList, withName: Anime.PinName.InLibrary.rawValue)
+                let unpinProgressTask = PFObject.unpinAllInBackground(progressList)
                 
                 return BFTask(forCompletionOfAllTasks: [unpinProgressTask, unpinAnimeTask]).continueWithBlock({ (task: BFTask!) -> AnyObject! in
                     NSUserDefaults.completedAction(self.LastSyncDateDefaultsKey)
@@ -199,8 +198,8 @@ public class LibrarySyncController {
                     let pinProgressTask = PFObject.pinAllInBackground(progressList)
                     return BFTask(forCompletionOfAllTasks: [pinAnimeListTask, pinProgressTask])
                 })
-                
-            }.continueWithBlock({ (task: BFTask!) -> AnyObject! in
+
+            }.continueWithBlock( { (task: BFTask!) -> AnyObject! in
                 if let error = task.error {
                     print(error)
                 } else if let exception = task.exception {
