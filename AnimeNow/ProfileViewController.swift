@@ -249,7 +249,7 @@ public class ProfileViewController: ThreadViewController {
             settingsButton.hidden = true
         } else if user == User.currentUser()! {
             followButton.hidden = true
-            settingsTrailingSpaceConstraint.constant = 8
+            settingsTrailingSpaceConstraint.constant = -10
         } else {
             followButton.hidden = false
             notificationsButton.hidden = true

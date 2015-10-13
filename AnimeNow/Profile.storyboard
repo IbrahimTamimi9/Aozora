@@ -317,7 +317,7 @@
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qK8-bI-U4V">
-                                            <rect key="frame" x="452" y="124.5" width="40" height="30"/>
+                                            <rect key="frame" x="534" y="124.5" width="40" height="30"/>
                                             <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="40" id="7vw-qe-F5g"/>
@@ -364,7 +364,7 @@
                                             </userDefinedRuntimeAttributes>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0gu-aB-BQh">
-                                            <rect key="frame" x="422" y="125" width="30" height="30"/>
+                                            <rect key="frame" x="504" y="125" width="30" height="30"/>
                                             <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="30" id="G8h-3A-qVj"/>
@@ -408,6 +408,7 @@
                                         <constraint firstAttribute="trailing" secondItem="hlo-ra-225" secondAttribute="trailing" constant="8" id="9sP-df-Trt"/>
                                         <constraint firstItem="qK8-bI-U4V" firstAttribute="centerY" secondItem="0gu-aB-BQh" secondAttribute="centerY" id="BYz-ov-UXi"/>
                                         <constraint firstItem="DZj-27-6Eb" firstAttribute="top" secondItem="9bT-p7-f1f" secondAttribute="bottom" constant="5" id="BrR-Gf-653"/>
+                                        <constraint firstItem="hlo-ra-225" firstAttribute="leading" secondItem="qK8-bI-U4V" secondAttribute="trailing" constant="8" id="E7S-sr-0Fi"/>
                                         <constraint firstItem="eBe-M2-du6" firstAttribute="leading" secondItem="5yX-hf-St0" secondAttribute="trailing" constant="8" id="ELZ-ax-mzA"/>
                                         <constraint firstItem="nhK-C7-8dB" firstAttribute="baseline" secondItem="DZj-27-6Eb" secondAttribute="baseline" constant="4" id="EzT-xx-gl3"/>
                                         <constraint firstItem="hlo-ra-225" firstAttribute="leading" secondItem="LkT-EB-jxP" secondAttribute="trailing" constant="8" id="GVx-4L-Izw"/>
@@ -433,7 +434,6 @@
                                         <constraint firstAttribute="bottom" secondItem="B3n-Tx-huN" secondAttribute="bottom" constant="8" id="rAJ-K0-QCU"/>
                                         <constraint firstItem="9bT-p7-f1f" firstAttribute="bottom" secondItem="MUA-4J-1Hx" secondAttribute="bottom" constant="4" id="xJV-aH-eSd"/>
                                         <constraint firstItem="MUA-4J-1Hx" firstAttribute="leading" secondItem="9bT-p7-f1f" secondAttribute="trailing" constant="8" id="xZg-ge-i55"/>
-                                        <constraint firstAttribute="trailing" secondItem="qK8-bI-U4V" secondAttribute="trailing" constant="108" id="xdV-1E-4Rr"/>
                                     </constraints>
                                 </view>
                                 <connections>
@@ -478,7 +478,7 @@
                         <outlet property="segmentedControl" destination="B3n-Tx-huN" id="Lns-tW-ur8"/>
                         <outlet property="segmentedControlHeight" destination="EbO-GG-xXk" id="tqb-PR-Uav"/>
                         <outlet property="settingsButton" destination="qK8-bI-U4V" id="2Td-7e-cr3"/>
-                        <outlet property="settingsTrailingSpaceConstraint" destination="xdV-1E-4Rr" id="TYp-il-Lry"/>
+                        <outlet property="settingsTrailingSpaceConstraint" destination="E7S-sr-0Fi" id="ovy-WK-t7W"/>
                         <outlet property="tableBottomSpaceConstraint" destination="W8c-aA-Ma7" id="pu0-IY-20R"/>
                         <outlet property="tableView" destination="sY9-wc-JPh" id="JcR-C5-OfD"/>
                         <outlet property="tagBadge" destination="MUA-4J-1Hx" id="BxP-Er-d2T"/>
