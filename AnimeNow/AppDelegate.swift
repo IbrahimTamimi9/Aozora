@@ -55,6 +55,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         LibrarySyncController.sharedInstance.syncParseInformation()
         
         SDImageCache.sharedImageCache().maxCacheSize = 1024 * 1024 * 250
+        
+        makeUpdateChanges()
         return true
     }
     
@@ -279,6 +281,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UITabBar.appearance().tintColor = UIColor.peterRiver()
         
         UITextField.appearance().textColor = UIColor.whiteColor()
+    }
+    
+    func makeUpdateChanges() {
+        // Logout if previous version is installed
+        let version120 = "1.2.0-launched"
+        if let _ = User.currentUser() where !NSUserDefaults.standardUserDefaults().boolForKey(version120) {
+            
+            WorkflowController.logoutUser().continueWithExecutor( BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
+                
+                if let error = task.error {
+                    print("failed loggin out: \(error)")
+                } else {
+                    print("logout succeeded")
+                }
+                NSUserDefaults.standardUserDefaults().setBool(true, forKey: version120)
+                NSUserDefaults.standardUserDefaults().synchronize()
+                WorkflowController.presentOnboardingController(true)
+                return nil
+            })
+            
+        }
     }
     
     func application(application: UIApplication, supportedInterfaceOrientationsForWindow window: UIWindow?) -> UIInterfaceOrientationMask {
