@@ -77,7 +77,7 @@ class LibraryAnimeCell: AnimeCell {
             userProgressLabel.text = "\(anime.type) · " + FontAwesome.Watched.rawValue + " \(progress.watchedEpisodes)/\(anime.episodes)   " + FontAwesome.Rated.rawValue + " \(progress.score)"
             
             if let episodeImageView = episodeImageView {
-                if progress.myAnimeListList() != .Completed {
+                if progress.myAnimeListList() == .Watching {
                     setEpisodeImageView(anime, tag: .InLibrary, nextEpisode: progress.watchedEpisodes)
                 } else {
                     episodeImageView.setImageFrom(urlString: anime.fanart ?? anime.imageUrl ?? "")
