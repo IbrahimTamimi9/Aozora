@@ -142,12 +142,13 @@ class ForumsViewController: UIViewController {
                 query2.whereKeyDoesNotExist("episode")
                 
                 let orQuery = PFQuery.orQueryWithSubqueries([query, query2])
-                orQuery.whereKeyDoesNotExist("pinType")
+                orQuery.whereKey("pinType", notEqualTo: "tag")
                 orQuery.includeKey("tags")
                 orQuery.includeKey("startedBy")
                 orQuery.includeKey("lastPostedBy")
                 
-                let appAnnouncements = ThreadTag(withoutDataWithObjectId: "zXotNtfVg1")
+                let introductions = ThreadTag(withoutDataWithObjectId: "loJp4QyahU")
+                let aozoraOfficial = ThreadTag(withoutDataWithObjectId: "zXotNtfVg1")
                 let news = ThreadTag(withoutDataWithObjectId: "H3dDEdJyqu")
                 let anime = ThreadTag(withoutDataWithObjectId: "6Yv0cRDTfc")
                 let manga = ThreadTag(withoutDataWithObjectId: "D9mO8EBXdV")
@@ -157,8 +158,10 @@ class ForumsViewController: UIViewController {
                 let lightNovels = ThreadTag(withoutDataWithObjectId: "KaXJ4jurky")
                 let forumGames = ThreadTag(withoutDataWithObjectId: "M4rpxLDwai")
                 let music = ThreadTag(withoutDataWithObjectId: "TYToNcM2zm")
-                let misc = ThreadTag(withoutDataWithObjectId: "DGXMVEcSrd")
-                orQuery.whereKey("tags", containedIn: [appAnnouncements, news, anime, manga, releaseDiscussion, recommendations, visualNovels, lightNovels, forumGames, music, misc])
+                let offtopic = ThreadTag(withoutDataWithObjectId: "DGXMVEcSrd")
+                let fanClub = ThreadTag(withoutDataWithObjectId: "8Vm8UTKGqY")
+                let fanFiction = ThreadTag(withoutDataWithObjectId: "cHlPtcRMW2")
+                orQuery.whereKey("tags", containedIn: [introductions, aozoraOfficial, news, anime, manga, releaseDiscussion, recommendations, visualNovels, lightNovels, forumGames, music, offtopic, fanClub, fanFiction])
                 
                 switch self.selectedList {
                 case .Recent:
@@ -195,7 +198,6 @@ class ForumsViewController: UIViewController {
                 }
                 
                 query.whereKey("tags", containedIn: [tag])
-                query.whereKeyDoesNotExist("pinType")
                 query.includeKey("tags")
                 query.includeKey("lastPostedBy")
                 query.includeKey("startedBy")
