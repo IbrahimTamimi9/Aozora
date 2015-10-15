@@ -168,7 +168,7 @@ extension PublicListViewController: UICollectionViewDataSource {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("LibraryAnimeCellList", forIndexPath: indexPath) as! AnimeCell
         let anime = filteredDataSource[indexPath.section][indexPath.row]
-        cell.configureWithAnime(anime, canFadeImages: canFadeImages, showEtaAsAired: false)
+        cell.configureWithAnime(anime, canFadeImages: canFadeImages, showEtaAsAired: false, publicAnime: true)
         cell.layoutIfNeeded()
         return cell
     }

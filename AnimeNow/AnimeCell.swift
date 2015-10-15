@@ -62,10 +62,11 @@ class AnimeCell: UICollectionViewCell {
     }
     
     func configureWithAnime(
-    anime: Anime,
-    canFadeImages: Bool = true,
-    showEtaAsAired: Bool = false,
-    showShortEta: Bool = false) {
+        anime: Anime,
+        canFadeImages: Bool = true,
+        showEtaAsAired: Bool = false,
+        showShortEta: Bool = false,
+        publicAnime: Bool = false) {
 
         posterImageView?.setImageFrom(urlString: anime.imageUrl, animated: canFadeImages)
         titleLabel?.text = anime.title
@@ -139,7 +140,7 @@ class AnimeCell: UICollectionViewCell {
             }
         }
         
-        if let progress = anime.progress ?? anime.publicProgress {
+        if let progress = publicAnime ? anime.publicProgress : anime.progress {
             
             inLibraryView?.hidden = false
             switch progress.myAnimeListList() {

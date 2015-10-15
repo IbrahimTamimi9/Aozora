@@ -8,7 +8,6 @@
     <customFonts key="customFonts">
         <mutableArray key="FontAwesome.ttf">
             <string>FontAwesome</string>
-            <string>FontAwesome</string>
         </mutableArray>
     </customFonts>
     <objects>
@@ -43,9 +42,9 @@
                         </variation>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TV ·  10/24    9" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p4P-sL-YGG">
-                        <rect key="frame" x="8" y="30" width="108" height="13.5"/>
+                        <rect key="frame" x="8" y="28" width="124.5" height="15.5"/>
                         <animations/>
-                        <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="13"/>
+                        <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="15"/>
                         <color key="textColor" red="0.64835526320000003" green="0.64835526320000003" blue="0.64835526320000003" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -57,13 +56,6 @@
                             <constraint firstAttribute="width" constant="7" id="CfJ-4A-IHn"/>
                         </constraints>
                     </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" 9.12 ·  18342" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CSc-8w-b42">
-                        <rect key="frame" x="228" y="30.5" width="103.5" height="13.5"/>
-                        <animations/>
-                        <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="13"/>
-                        <color key="textColor" red="0.2666666667" green="0.52549019610000003" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                 </subviews>
                 <animations/>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -71,31 +63,24 @@
             <animations/>
             <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstItem="CSc-8w-b42" firstAttribute="top" secondItem="mAS-Gw-id2" secondAttribute="bottom" id="7gf-HV-p1I"/>
                 <constraint firstItem="mAS-Gw-id2" firstAttribute="top" secondItem="uCf-8e-Hf0" secondAttribute="topMargin" constant="-2" id="CcW-kX-s1s"/>
                 <constraint firstAttribute="trailing" secondItem="i6K-9U-r4X" secondAttribute="trailing" id="LPk-Iy-KGX"/>
                 <constraint firstAttribute="bottom" secondItem="i6K-9U-r4X" secondAttribute="bottom" id="Qq8-r2-aMV"/>
                 <constraint firstItem="i6K-9U-r4X" firstAttribute="top" secondItem="uCf-8e-Hf0" secondAttribute="top" id="SxK-Ow-Pcl"/>
                 <constraint firstAttribute="bottom" secondItem="p4P-sL-YGG" secondAttribute="bottom" constant="8.5" id="YNW-Zl-gqS"/>
-                <constraint firstItem="mAS-Gw-id2" firstAttribute="leading" secondItem="CSc-8w-b42" secondAttribute="leading" id="bo1-cX-8Oz"/>
-                <constraint firstAttribute="trailing" secondItem="CSc-8w-b42" secondAttribute="trailing" constant="8" id="eAv-sc-EqB"/>
                 <constraint firstItem="mAS-Gw-id2" firstAttribute="trailing" secondItem="uCf-8e-Hf0" secondAttribute="trailingMargin" constant="1" id="fgD-PA-cg0"/>
                 <constraint firstItem="p4P-sL-YGG" firstAttribute="leading" secondItem="uCf-8e-Hf0" secondAttribute="leading" constant="8" id="mBj-k6-zA1"/>
-                <constraint firstAttribute="bottom" secondItem="CSc-8w-b42" secondAttribute="bottom" constant="8" id="ono-ok-tlL"/>
                 <constraint firstItem="mAS-Gw-id2" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="uCf-8e-Hf0" secondAttribute="trailingMargin" id="pmj-lf-6LR"/>
                 <constraint firstItem="mAS-Gw-id2" firstAttribute="leading" secondItem="uCf-8e-Hf0" secondAttribute="leadingMargin" id="vhZ-eq-QHm"/>
             </constraints>
             <size key="customSize" width="340" height="52"/>
             <variation key="default">
                 <mask key="constraints">
-                    <exclude reference="bo1-cX-8Oz"/>
                     <exclude reference="pmj-lf-6LR"/>
-                    <exclude reference="7gf-HV-p1I"/>
                 </mask>
             </variation>
             <connections>
                 <outlet property="inLibraryView" destination="i6K-9U-r4X" id="Z7b-3l-JF3"/>
-                <outlet property="ratingLabel" destination="CSc-8w-b42" id="NHX-qL-URR"/>
                 <outlet property="titleLabel" destination="mAS-Gw-id2" id="n8M-Aj-k22"/>
                 <outlet property="userProgressLabel" destination="p4P-sL-YGG" id="HhA-9T-I6e"/>
             </connections>

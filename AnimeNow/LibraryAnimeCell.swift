@@ -59,16 +59,17 @@ class LibraryAnimeCell: AnimeCell {
     }
     
     override func configureWithAnime(
-    anime: Anime,
-    canFadeImages: Bool = true,
-    showEtaAsAired: Bool = false,
-    showShortEta: Bool = false) {
+        anime: Anime,
+        canFadeImages: Bool = true,
+        showEtaAsAired: Bool = false,
+        showShortEta: Bool = false,
+        publicAnime: Bool = false) {
         
-        super.configureWithAnime(anime, canFadeImages: canFadeImages, showEtaAsAired: showEtaAsAired, showShortEta: showShortEta)
+            super.configureWithAnime(anime, canFadeImages: canFadeImages, showEtaAsAired: showEtaAsAired, showShortEta: showShortEta, publicAnime: publicAnime)
         
         self.anime = anime
         
-        if let progress = anime.progress ?? anime.publicProgress {
+            if let progress = publicAnime ? anime.publicProgress : anime.progress {
             
             watchedButton?.hidden = false
             let title = FontAwesome.Watched.rawValue + " Ep\((progress.watchedEpisodes + 1))"
