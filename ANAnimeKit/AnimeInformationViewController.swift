@@ -118,7 +118,30 @@ public class AnimeInformationViewController: AnimeBaseViewController {
                 print(error)
             } else {
                 if let anime = objects?.first as? Anime {
-                    self.anime = anime
+                    if anime.details.isDataAvailable() {
+                        self.anime = anime
+                    } else {
+                        // Pin if needed
+                        let updatedQuery = Anime.query()!
+                        updatedQuery.includeKey("details")
+                        updatedQuery.includeKey("cast")
+                        updatedQuery.includeKey("characters")
+                        updatedQuery.includeKey("relations")
+                        updatedQuery.whereKey("objectId", equalTo: anime.objectId!)
+                        updatedQuery.limit = 1
+                        updatedQuery.findObjectsInBackground().continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
+                            
+                            let pinName = Anime.PinName.InLibrary.rawValue
+                            let fullAnime = (task.result as! [Anime]).last!
+                            return anime.unpinInBackgroundWithName(pinName).continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
+                                return fullAnime.pinInBackgroundWithName(pinName)
+                            }).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
+                                self.anime = fullAnime
+                                return nil
+                            })
+                        })
+                    }
+                    
                 } else {
                     self.fetchCurrentAnime(false)
                 }

@@ -67,6 +67,14 @@ public class Anime: PFObject, PFSubclassing {
     public var progress: AnimeProgress?
     public var publicProgress: AnimeProgress?
     
+    public func fanartThumbURLString() -> String {
+        if let fanartUrl = fanart where fanartUrl.characters.count != 0 {
+            return fanartUrl.stringByReplacingOccurrencesOfString("/original/", withString: "/thumb/")
+        } else {
+            return fanartURLString()
+        }
+    }
+    
     public func fanartURLString() -> String {
         if let fanartUrl = fanart where fanartUrl.characters.count != 0 {
             return fanartUrl
@@ -214,18 +222,10 @@ public class Anime: PFObject, PFSubclassing {
     }
     
     // Fetching
-    public class func queryIncludingAddData() -> PFQuery {
-        let query = Anime.query()!
-        query.includeKey("details")
-        query.includeKey("cast")
-        query.includeKey("characters")
-        query.includeKey("relations")
-        return query
-    }
     
     public class func queryWith(objectID objectID: String) -> PFQuery {
         
-        let query = Anime.queryIncludingAddData()
+        let query = Anime.query()!
         query.limit = 1
         query.whereKey("objectId", equalTo: objectID)
         return query
@@ -233,7 +233,7 @@ public class Anime: PFObject, PFSubclassing {
     
     public class func queryWith(malID malID: Int) -> PFQuery {
         
-        let query = Anime.queryIncludingAddData()
+        let query = Anime.query()!
         query.limit = 1
         query.whereKey("myAnimeListID", equalTo: malID)
         return query

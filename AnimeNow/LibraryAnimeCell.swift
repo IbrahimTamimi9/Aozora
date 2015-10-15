@@ -80,7 +80,7 @@ class LibraryAnimeCell: AnimeCell {
                 if progress.myAnimeListList() == .Watching {
                     setEpisodeImageView(anime, tag: .InLibrary, nextEpisode: progress.watchedEpisodes)
                 } else {
-                    episodeImageView.setImageFrom(urlString: anime.fanart ?? anime.imageUrl ?? "")
+                    episodeImageView.setImageFrom(urlString: anime.fanartThumbURLString() ?? "")
                 }
             }
             

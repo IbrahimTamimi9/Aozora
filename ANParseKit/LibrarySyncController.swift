@@ -49,7 +49,7 @@ public class LibrarySyncController {
         
         let pinName = Anime.PinName.InLibrary.rawValue
         
-        let query = Anime.queryIncludingAddData()
+        let query = Anime.query()!
         query.limit = 1
         query.fromPinWithName(pinName)
         query.orderByDescending("updatedAt")
@@ -68,7 +68,7 @@ public class LibrarySyncController {
                     return nil
                 }
                 
-                let updatedQuery = Anime.queryIncludingAddData()
+                let updatedQuery = Anime.query()!
                 updatedQuery.whereKey("updatedAt", greaterThan: anime.updatedAt!)
                 return updatedQuery.findObjectsInBackground()
 
@@ -155,10 +155,6 @@ public class LibrarySyncController {
                 
                 let query = AnimeProgress.query()!
                 query.includeKey("anime")
-                query.includeKey("anime.cast")
-                query.includeKey("anime.details")
-                query.includeKey("anime.characters")
-                query.includeKey("anime.relations")
                 query.whereKey("user", equalTo: User.currentUser()!)
                 query.limit = 1000
                 
@@ -281,7 +277,7 @@ public class LibrarySyncController {
                 }
                 
                 print("Need to create \(malProgressToCreateIDs.count) AnimeProgress on Parse")
-                let query = Anime.queryIncludingAddData()
+                let query = Anime.query()!
                 query.whereKey("myAnimeListID", containedIn: malProgressToCreateIDs)
                 query.limit = 1000
                 return query.findObjectsInBackground()
@@ -484,15 +480,9 @@ public class LibrarySyncController {
     
     // MARK: - Class Methods
     
-    public class func fetchAnime(myAnimeListIDs: [Int], withPinName: String? = nil, fromLocalDatastore: Bool = false, includeAllData: Bool = false) -> BFTask {
+    public class func fetchAnime(myAnimeListIDs: [Int], withPinName: String? = nil, fromLocalDatastore: Bool = false) -> BFTask {
         
-        let query: PFQuery
-        if includeAllData {
-            query = Anime.queryIncludingAddData()
-        } else {
-            query = Anime.query()!
-        }
-        
+        let query = Anime.query()!
         query.limit = 1000
         
         if fromLocalDatastore {
