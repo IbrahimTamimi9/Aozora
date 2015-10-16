@@ -265,9 +265,11 @@ extension ForumsViewController: UITableViewDataSource {
         let title = thread.title
         
         if let _ = thread.episode {
-            cell.typeLabel.text = " "
+            cell.typeLabel.text = " "
         } else if let _ = thread.pinType {
             cell.typeLabel.text = " "
+        } else if thread.locked {
+            cell.typeLabel.text = " "
         } else {
             cell.typeLabel.text = ""
         }
