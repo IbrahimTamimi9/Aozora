@@ -159,9 +159,8 @@ class ForumsViewController: UIViewController {
                 let forumGames = ThreadTag(withoutDataWithObjectId: "M4rpxLDwai")
                 let music = ThreadTag(withoutDataWithObjectId: "TYToNcM2zm")
                 let offtopic = ThreadTag(withoutDataWithObjectId: "DGXMVEcSrd")
-                let fanClub = ThreadTag(withoutDataWithObjectId: "8Vm8UTKGqY")
                 let fanFiction = ThreadTag(withoutDataWithObjectId: "cHlPtcRMW2")
-                orQuery.whereKey("tags", containedIn: [introductions, aozoraOfficial, news, anime, manga, releaseDiscussion, recommendations, visualNovels, lightNovels, forumGames, music, offtopic, fanClub, fanFiction])
+                orQuery.whereKey("tags", containedIn: [introductions, aozoraOfficial, news, anime, manga, releaseDiscussion, recommendations, visualNovels, lightNovels, forumGames, music, offtopic, fanFiction])
                 
                 switch self.selectedList {
                 case .Recent:
@@ -269,7 +268,7 @@ extension ForumsViewController: UITableViewDataSource {
         } else if let _ = thread.pinType {
             cell.typeLabel.text = " "
         } else if thread.locked {
-            cell.typeLabel.text = " "
+            cell.typeLabel.text = " "
         } else {
             cell.typeLabel.text = ""
         }
