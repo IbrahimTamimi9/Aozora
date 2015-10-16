@@ -67,7 +67,12 @@ public class LoginViewController: UIViewController {
             
             if let error = task.error {
                 print(error)
-                UIAlertView(title: "Wrong credentials..", message: "If your password contains a ':' your need to changes your password, sorry!", delegate: nil, cancelButtonTitle: "Ok..").show()
+                if let result = self.passwordTextField.text?.containsString(":") where result == true {
+                    UIAlertView(title: "Unsupported password", message: "Your password contains a ':' which is not supported currently, sorry, please change it at myanimelist.net", delegate: nil, cancelButtonTitle: "Ok").show()
+                } else {
+                    UIAlertView(title: "Wrong credentials", message: "Try again", delegate: nil, cancelButtonTitle: "Ok").show()
+                }
+                
             } else {
                 UIAlertView(title: "Linked with MyAnimelist!", message: nil, delegate: nil, cancelButtonTitle: "Ok").show()
                 self.dismissViewControllerAnimated(true, completion: nil)

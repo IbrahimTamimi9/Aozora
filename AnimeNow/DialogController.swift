@@ -48,16 +48,16 @@ class DialogController: NSObject {
         let content = FBSDKAppInviteContent()
         content.appLinkURL = NSURL(string: "https://fb.me/1471151336531847")
         content.appInvitePreviewImageURL = NSURL(string: "https://files.parsetfss.com/496f5287-6440-4a0e-a747-4633b4710808/tfss-2143b956-6840-4e86-a0f1-f706c03f61f8-facebook-app-invite")
-        FBSDKAppInviteDialog.showFromViewController(viewController, withContent: content, delegate: self)
+        FBSDKAppInviteDialog.showFromViewController(viewController, withContent: content, delegate: nil)
     }
 }
 
-extension DialogController: FBSDKAppInviteDialogDelegate {
-    func appInviteDialog(appInviteDialog: FBSDKAppInviteDialog!, didCompleteWithResults results: [NSObject : AnyObject]!) {
-        print(results)
-    }
-    
-    func appInviteDialog(appInviteDialog: FBSDKAppInviteDialog!, didFailWithError error: NSError!) {
-        print(error)
-    }
-}
+//extension DialogController: FBSDKAppInviteDialogDelegate {
+//    func appInviteDialog(appInviteDialog: FBSDKAppInviteDialog!, didCompleteWithResults results: [NSObject : AnyObject]) {
+//        print(results)
+//    }
+//    
+//    func appInviteDialog(appInviteDialog: FBSDKAppInviteDialog!, didFailWithError error: NSError) {
+//        print(error)
+//    }
+//}
