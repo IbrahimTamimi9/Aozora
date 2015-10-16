@@ -103,7 +103,7 @@ public class AnimeInformationViewController: AnimeBaseViewController {
     
         if fromLocalDatastore {
             print("\(anime.objectId) local")
-            query.fromLocalDatastore()
+            query.fromPinWithName(Anime.PinName.InLibrary.rawValue)
         } else {
             print("\(anime.objectId) not local")
         }

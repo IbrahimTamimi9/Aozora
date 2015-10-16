@@ -480,14 +480,10 @@ public class LibrarySyncController {
     
     // MARK: - Class Methods
     
-    public class func fetchAnime(myAnimeListIDs: [Int], withPinName: String? = nil, fromLocalDatastore: Bool = false) -> BFTask {
+    public class func fetchAnime(myAnimeListIDs: [Int], withPinName: String? = nil) -> BFTask {
         
         let query = Anime.query()!
         query.limit = 1000
-        
-        if fromLocalDatastore {
-            query.fromLocalDatastore()
-        }
         
         if let pinName = withPinName {
             query.fromPinWithName(pinName)
