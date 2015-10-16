@@ -127,7 +127,7 @@ class ForumsViewController: UIViewController {
     func fetchThreads() {
         
         let query = Thread.query()!
-        query.fromLocalDatastore()
+        query.fromPinWithName(PinnedThreadsPin)
         query.whereKey("pinType", equalTo: "global")
         query.includeKey("tags")
         query.includeKey("lastPostedBy")
@@ -142,7 +142,7 @@ class ForumsViewController: UIViewController {
                 query2.whereKeyDoesNotExist("episode")
                 
                 let orQuery = PFQuery.orQueryWithSubqueries([query, query2])
-                orQuery.whereKey("pinType", notEqualTo: "tag")
+                orQuery.whereKeyDoesNotExist("pinType")
                 orQuery.includeKey("tags")
                 orQuery.includeKey("startedBy")
                 orQuery.includeKey("lastPostedBy")
@@ -180,7 +180,7 @@ class ForumsViewController: UIViewController {
     func fetchTagThreads(tag: PFObject) {
         
         let query = Thread.query()!
-        query.fromLocalDatastore()
+        query.fromPinWithName(PinnedThreadsPin)
         query.whereKey("pinType", equalTo: "tag")
         query.whereKey("tags", containedIn: [tag])
         query.includeKey("tags")
@@ -198,6 +198,7 @@ class ForumsViewController: UIViewController {
                 }
                 
                 query.whereKey("tags", containedIn: [tag])
+                query.whereKeyDoesNotExist("pinType")
                 query.includeKey("tags")
                 query.includeKey("lastPostedBy")
                 query.includeKey("startedBy")
@@ -222,7 +223,7 @@ class ForumsViewController: UIViewController {
         query.includeKey("tags")
         query.includeKey("lastPostedBy")
         query.includeKey("startedBy")
-        query.findCachedOrNetwork(PinnedThreadsPin, expirationDays: 1)
+        query.findCachedOrNetwork(PinnedThreadsPin, expirationDays: 0.2)
     }
     
     // MARK: - IBActions

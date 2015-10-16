@@ -12,7 +12,7 @@ import Parse
 import Bolts
 
 extension PFQuery {
-    public func findCachedOrNetwork(pinName: String, expirationDays: Int = 1) -> BFTask {
+    public func findCachedOrNetwork(pinName: String, expirationDays: Double = 1) -> BFTask {
         
         let expired = NSUserDefaults.shouldPerformAction(pinName, expirationDays: Double(expirationDays))
         
