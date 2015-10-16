@@ -78,11 +78,24 @@ public class ThreadViewController: UIViewController {
     // MARK: - Internal functions
     
     public func openProfile(user: User) {
-        if user != User.currentUser() {
-            let (navController, profileController) = ANAnimeKit.profileViewController()
-            profileController.initWithUser(user)
-            presentViewController(navController, animated: true, completion: nil)
+        if let profileController = self as? ProfileViewController {
+            if profileController.userProfile != user && user != User.currentUser() {
+                openProfileNow(user)
+            }
+        } else if user != User.currentUser() {
+            openProfileNow(user)
         }
+    }
+    
+    func openProfileNow(user: User? = nil, username: String? = nil) {
+        let (navController, profileController) = ANAnimeKit.profileViewController()
+        if let user = user  {
+            profileController.initWithUser(user)
+        } else if let username = username {
+            profileController.initWithUsername(username)
+        }
+        
+        presentViewController(navController, animated: true, completion: nil)
     }
     
     public func showImage(imageURLString: String, imageView: UIImageView) {
@@ -524,11 +537,13 @@ extension ThreadViewController: TTTAttributedLabelDelegate {
         
         if let host = url.host where host == "profile",
             let username = url.pathComponents?[1] {
-                
-                if username != User.currentUser()!.aozoraUsername {
-                    let (navController, profileController) = ANAnimeKit.profileViewController()
-                    profileController.initWithUsername(username)
-                    presentViewController(navController, animated: true, completion: nil)
+                let isNotCurrentUser = username != User.currentUser()!.aozoraUsername
+                if let profileController = self as? ProfileViewController {
+                    if profileController.userProfile?.aozoraUsername != username && isNotCurrentUser {
+                        openProfileNow(username: username)
+                    }
+                } else if isNotCurrentUser {
+                    openProfileNow(username: username)
                 }
             
         } else if url.scheme != "aozoraapp" {

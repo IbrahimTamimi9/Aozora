@@ -38,7 +38,7 @@ public class ProfileViewController: ThreadViewController {
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var segmentedControlHeight: NSLayoutConstraint!
     
-    var userProfile: User?
+    public var userProfile: User?
     var username: String?
     var followingUser: Bool?
     
