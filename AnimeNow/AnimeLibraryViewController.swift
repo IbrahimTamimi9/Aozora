@@ -143,17 +143,22 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
         var lists: [[Anime]] = [[],[],[],[],[]]
         
         for anime in animeList {
-            switch anime.progress!.myAnimeListList() {
-            case .Watching:
-                lists[0].append(anime)
-            case .Planning:
-                lists[1].append(anime)
-            case .OnHold:
-                lists[2].append(anime)
-            case .Completed:
-                lists[3].append(anime)
-            case .Dropped:
-                lists[4].append(anime)
+            if let progress = anime.progress {
+                switch progress.myAnimeListList() {
+                case .Watching:
+                    lists[0].append(anime)
+                case .Planning:
+                    lists[1].append(anime)
+                case .OnHold:
+                    lists[2].append(anime)
+                case .Completed:
+                    lists[3].append(anime)
+                case .Dropped:
+                    lists[4].append(anime)
+                }
+            } else {
+                print(anime.title!)
+                anime.unpinInBackgroundWithName(Anime.PinName.InLibrary.rawValue)
             }
         }
         
