@@ -110,7 +110,6 @@ public class AnimeInformationViewController: AnimeBaseViewController {
         
         query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
             
-            self.loadingView.stopAnimating()
             if let error = error {
                 if error.code == 120 {
                     self.fetchCurrentAnime(false)
@@ -193,6 +192,7 @@ public class AnimeInformationViewController: AnimeBaseViewController {
                 trailerButton.hidden = true
             }
             
+            loadingView.stopAnimating()
             tableView.dataSource = self
             tableView.delegate = self
             tableView.reloadData()

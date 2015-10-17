@@ -249,12 +249,14 @@ public class LibrarySyncController {
                 
             }).continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
                 
-                return self.fetchAozoraLibrary(onlyWatching: nil)
+                return self.fetchAozoraLibrary()
                 
             }).continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
                 
                 // 3. Merge all existing libraries
                 let parseLibrary = task.result as! [Anime]
+                
+                print("current anime library count \(parseLibrary.count)")
                 allAnime += parseLibrary
                 
                 BFTask(result: nil).continueWithBlock({ (task: BFTask!) -> AnyObject! in
@@ -301,11 +303,17 @@ public class LibrarySyncController {
                                 progress.collectedEpisodes = 0
                                 progress.score = malProgress.score
                                 newProgress.append(progress)
+                                
+                                anime.progress = progress
                             }
                         }
                         
+                        allAnime += animeToCreate
+                        
                         PFObject.saveAllInBackground(newProgress).continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
-                            return PFObject.pinAllInBackground(newProgress)
+                            let pinAllProgressTask = PFObject.pinAllInBackground(newProgress)
+                            let pinAllAnimeTask = PFObject.pinAllInBackground(animeToCreate, withName: Anime.PinName.InLibrary.rawValue)
+                            return BFTask(forCompletionOfAllTasks: [pinAllProgressTask, pinAllAnimeTask])
                         })
                         return nil
                     })
@@ -326,13 +334,8 @@ public class LibrarySyncController {
             
             return task
         } else {
-            return fetchAozoraLibrary(onlyWatching: true)
+            return fetchAozoraLibrary()
         }
-    }
-    
-    public class func fetchTheRestOfLists() -> BFTask {
-
-        return fetchAozoraLibrary(onlyWatching: false)
     }
     
     class func mergeLibraries(myAnimeListLibrary: [MALProgress], parseLibrary: [Anime]) -> BFTask {
@@ -460,21 +463,16 @@ public class LibrarySyncController {
         return BFTask(result: nil)
     }
     
-    class func fetchAozoraLibrary(onlyWatching onlyWatching: Bool?) -> BFTask {
+    class func fetchAozoraLibrary() -> BFTask {
         
         let animeQuery = Anime.query()!
         animeQuery.fromPinWithName(Anime.PinName.InLibrary.rawValue)
         animeQuery.limit = 1000
-        if let onlyWatching = onlyWatching {
-            if onlyWatching {
-                animeQuery.whereKey("list", equalTo: "Watching")
-            } else {
-                animeQuery.whereKey("list", notEqualTo: "Watching")
-            }
-        }
         
         return animeQuery.findObjectsInBackground().continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
-            return matchAnimeWithProgress(task.result as! [Anime])
+            let list = task.result as! [Anime]
+            print("found a list of \(list.count)")
+            return matchAnimeWithProgress(list)
         })
     }
     
@@ -499,18 +497,17 @@ public class LibrarySyncController {
         animeLibraryQuery.fromLocalDatastore()
         animeLibraryQuery.whereKey("anime", containedIn: animeList)
         return animeLibraryQuery.findObjectsInBackground().continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
-            
             if let animeLibrary = task.result as? [AnimeProgress] {
                 for anime in animeList where anime.progress == nil {
                     for progress in animeLibrary {
                         if progress.anime.objectId == anime.objectId {
                             anime.progress = progress
+
                             break
                         }
                     }
                 }
             }
-            
             return BFTask(result: animeList)
         }
     }

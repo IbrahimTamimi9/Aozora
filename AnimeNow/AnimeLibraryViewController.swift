@@ -122,17 +122,6 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
         
         currentlySyncing = true
         return LibrarySyncController.fetchWatchingList(isRefreshing).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
-            
-            // Fill watching list
-            let animeList = task.result as! [Anime]
-            self.updateWatchingList(animeList)
-            self.updateListViewControllers(animeList)
-            if !isRefreshing {
-                self.loadingView.stopAnimating()
-            }
-            return LibrarySyncController.fetchTheRestOfLists()
-            
-        }).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
             if let result = task.result as? [Anime] where result.count > 0 {
                 self.updateListViewControllers(result)
             }
@@ -141,22 +130,12 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
             if let error = task.error {
                 print(error)
             }
+            if !isRefreshing {
+                self.loadingView.stopAnimating()
+            }
             self.currentlySyncing = false
             return nil
         })
-    }
-    
-    func updateWatchingList(animeList: [Anime]) {
-        var list: [Anime] = []
-        for anime in animeList {
-            if case .Watching() = anime.progress!.myAnimeListList() {
-                list.append(anime)
-            }
-        }
-        
-        let firstController = self.listControllers[0]
-        firstController.animeList = list
-        firstController.updateSortType(firstController.currentSortType)
     }
     
     func updateListViewControllers(animeList: [Anime]) {
@@ -184,8 +163,6 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
                 let controller = self.listControllers[index]
                 controller.animeList = aList
                 controller.updateSortType(controller.currentSortType)
-            } else if index != 0 {
-                self.listControllers[index].animeList = []
             }
         }
         
