@@ -29,6 +29,7 @@ public class PostCell: UITableViewCell {
     @IBOutlet weak public var imageContent: UIImageView?
     @IBOutlet weak public var imageHeightConstraint: NSLayoutConstraint?
     @IBOutlet weak public var textContent: TTTAttributedLabel!
+    @IBOutlet weak public var onlineIndicator: UIImageView!
     
     @IBOutlet weak public var replyButton: UIButton!
     @IBOutlet weak public var likeButton: UIButton!

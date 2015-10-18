@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
@@ -23,6 +23,7 @@
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Text.." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IIt-M3-Ebc" customClass="TTTAttributedLabel">
                         <rect key="frame" x="8" y="60" width="304" height="27"/>
+                        <animations/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" red="0.18823529779911041" green="0.19607843458652496" blue="0.23529411852359772" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -32,6 +33,7 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hrB-sN-Lx3" userLabel="Separator Top">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
+                                <animations/>
                                 <color key="backgroundColor" red="0.89411765336990356" green="0.89411765336990356" blue="0.89411765336990356" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="kZk-gF-tjr"/>
@@ -39,6 +41,7 @@
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2 days ago" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oSa-7l-kjl">
                                 <rect key="frame" x="60" y="33" width="66.5" height="16"/>
+                                <animations/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="31" id="3OC-q2-rtd"/>
                                     <constraint firstAttribute="width" constant="40" id="XDw-pH-7oa"/>
@@ -55,24 +58,28 @@
                             </label>
                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Darkcirius" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y4P-VU-g43">
                                 <rect key="frame" x="60" y="13" width="79.5" height="20.5"/>
+                                <animations/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <color key="textColor" red="0.0078431372550000003" green="0.43921568630000002" blue="0.73333333329999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8dw-ly-VoN" userLabel="ToIcon">
                                 <rect key="frame" x="148" y="14.5" width="6.5" height="17.5"/>
+                                <animations/>
                                 <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="17"/>
                                 <color key="textColor" red="0.0078431372550000003" green="0.43921568630000002" blue="0.73333333329999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Darkcirius" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rPv-d8-Ius" userLabel="ToUser">
                                 <rect key="frame" x="162" y="13.5" width="79.5" height="20.5"/>
+                                <animations/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <color key="textColor" red="0.0078431372550000003" green="0.43921568630000002" blue="0.73333333329999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="l7o-JT-JFL">
                                 <rect key="frame" x="8" y="8" width="44" height="44"/>
+                                <animations/>
                                 <color key="backgroundColor" red="0.97254902124404907" green="0.97254902124404907" blue="0.97254902124404907" alpha="1" colorSpace="calibratedRGB"/>
                                 <gestureRecognizers/>
                                 <constraints>
@@ -85,11 +92,22 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-online" translatesAutoresizingMaskIntoConstraints="NO" id="hdf-iz-NAS" userLabel="OnlineIndicator">
+                                <rect key="frame" x="40" y="40" width="12" height="12"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="12" id="iQ2-6l-OOf"/>
+                                    <constraint firstAttribute="height" constant="12" id="wYA-eu-EKe"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
+                        <animations/>
                         <color key="backgroundColor" red="0.97254902124404907" green="0.97254902124404907" blue="0.97254902124404907" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="l7o-JT-JFL" firstAttribute="top" secondItem="Azh-0z-DNT" secondAttribute="top" constant="8" id="0Oh-Z7-vUp"/>
                             <constraint firstItem="Y4P-VU-g43" firstAttribute="leading" secondItem="l7o-JT-JFL" secondAttribute="trailing" constant="8" id="1OM-aO-lkM"/>
+                            <constraint firstItem="hdf-iz-NAS" firstAttribute="bottom" secondItem="l7o-JT-JFL" secondAttribute="bottom" id="4cK-K5-XWy"/>
+                            <constraint firstItem="hdf-iz-NAS" firstAttribute="trailing" secondItem="l7o-JT-JFL" secondAttribute="trailing" id="8i5-BE-HRh"/>
                             <constraint firstAttribute="height" constant="60" id="Dbl-8j-nBC"/>
                             <constraint firstItem="8dw-ly-VoN" firstAttribute="leading" secondItem="Y4P-VU-g43" secondAttribute="trailing" constant="8.5" id="M23-cn-9dh"/>
                             <constraint firstItem="hrB-sN-Lx3" firstAttribute="top" secondItem="Azh-0z-DNT" secondAttribute="top" id="MZT-hX-QFv"/>
@@ -106,6 +124,7 @@
                     </view>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sCC-Vy-34T">
                         <rect key="frame" x="54" y="89.5" width="50" height="38"/>
+                        <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="bdA-UG-bHh"/>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="jfq-QY-Fl1"/>
@@ -128,6 +147,7 @@
                     </button>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DFr-ZH-YGC" userLabel="Separator Btm">
                         <rect key="frame" x="0.0" y="127" width="320" height="1"/>
+                        <animations/>
                         <color key="backgroundColor" red="0.89411765340000005" green="0.89411765340000005" blue="0.89411765340000005" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="1" id="yqt-0t-n4w"/>
@@ -135,6 +155,7 @@
                     </view>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xlj-4S-LYc">
                         <rect key="frame" x="4" y="89" width="50" height="38"/>
+                        <animations/>
                         <constraints>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="GzI-Xl-gbJ"/>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="30" id="XMM-OH-b3b"/>
@@ -160,6 +181,7 @@
                         </connections>
                     </button>
                 </subviews>
+                <animations/>
                 <color key="backgroundColor" red="0.97254902124404907" green="0.97254902124404907" blue="0.97254902124404907" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>
                     <constraint firstItem="Azh-0z-DNT" firstAttribute="top" secondItem="CE8-oB-25Y" secondAttribute="topMargin" constant="-8" id="1Xu-JE-PAO"/>
@@ -178,11 +200,13 @@
                     <constraint firstAttribute="bottom" secondItem="sCC-Vy-34T" secondAttribute="bottom" id="vRT-Xf-geo"/>
                 </constraints>
             </tableViewCellContentView>
+            <animations/>
             <gestureRecognizers/>
             <connections>
                 <outlet property="avatar" destination="l7o-JT-JFL" id="ZOO-ol-Nl5"/>
                 <outlet property="date" destination="oSa-7l-kjl" id="1PT-wA-ypB"/>
                 <outlet property="likeButton" destination="xlj-4S-LYc" id="7B5-E5-JAT"/>
+                <outlet property="onlineIndicator" destination="hdf-iz-NAS" id="VZw-pN-IoF"/>
                 <outlet property="replyButton" destination="sCC-Vy-34T" id="z2A-Dq-kXf"/>
                 <outlet property="textContent" destination="IIt-M3-Ebc" id="6ub-ie-VQM"/>
                 <outlet property="toIcon" destination="8dw-ly-VoN" id="1sD-xm-lmh"/>
@@ -192,4 +216,7 @@
             <point key="canvasLocation" x="458" y="457"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="icon-online" width="12" height="12"/>
+    </resources>
 </document>

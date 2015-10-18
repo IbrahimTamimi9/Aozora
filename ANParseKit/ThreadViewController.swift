@@ -245,6 +245,7 @@ extension ThreadViewController: UITableViewDataSource {
         if let postedBy = post.postedBy, let avatarFile = postedBy.avatarThumb {
             cell.avatar.setImageWithPFFile(avatarFile)
             cell.username?.text = postedBy.aozoraUsername
+            cell.onlineIndicator.hidden = !postedBy.active
         }
         
         if let timelinePostable = post as? TimelinePostable where timelinePostable.userTimeline != post.postedBy {
@@ -290,8 +291,9 @@ extension ThreadViewController: UITableViewDataSource {
         
         if let postedBy = post.postedBy, let avatarFile = postedBy.avatarThumb  {
             
-            let username = postedBy.aozoraUsername
+            cell.onlineIndicator.hidden = !postedBy.active
             
+            let username = postedBy.aozoraUsername
             var content = username + " "
             if let nonSpoilerContent = post.nonSpoilerContent {
                 content += nonSpoilerContent+"\n\n"

@@ -24,6 +24,7 @@ public class CustomThreadViewController: ThreadViewController {
     @IBOutlet weak var commentsButton: UIButton!
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var moreButton: UIButton!
+    @IBOutlet weak var onlineIndicator: UIImageView!
     
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     
@@ -88,7 +89,7 @@ public class CustomThreadViewController: ThreadViewController {
         
         moreButton.hidden = true
         if let episode = thread.episode, let anime = thread.anime, let animeTitle = anime.title {
-            
+            onlineIndicator.hidden = true
             if anime.type != "Movie" {
                 threadTitle.text = episode.title ?? ""
                 threadContent.text = episode.overview ?? ""
@@ -137,6 +138,7 @@ public class CustomThreadViewController: ThreadViewController {
         if let startedBy = thread.startedBy {
             avatar.setImageWithPFFile(startedBy.avatarThumb!)
             username.text = startedBy.aozoraUsername
+            onlineIndicator.hidden = !startedBy.active
             var postedAt = thread.createdAt!.timeAgo()
             if thread.edited {
                 postedAt += " · Edited"
