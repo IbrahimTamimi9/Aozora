@@ -14,8 +14,8 @@ import ANCommonKit
 
 class PublicListViewController: UIViewController {
     
-    let FirstHeaderCellHeight: CGFloat = 88.0
-    let HeaderCellHeight: CGFloat = 44.0
+    let FirstHeaderCellHeight: CGFloat = 108.0
+    let HeaderCellHeight: CGFloat = 64.0
     
     var canFadeImages = true
     var showTableView = true
@@ -44,6 +44,7 @@ class PublicListViewController: UIViewController {
     
     var loadingView: LoaderView!
     var userProfile: User!
+    var sectionSubtitles: [String] = ["","","","","",""]
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -97,32 +98,54 @@ class PublicListViewController: UIViewController {
             .continueWithExecutor(BFExecutor.mainThreadExecutor(), withBlock: { (task: BFTask!) -> AnyObject! in
         
             if var result = task.result as? [AnimeProgress] {
-                
-                result.sortInPlace({ (anime1: AnimeProgress, anime2: AnimeProgress) -> Bool in
-                    if anime1.list == anime2.list {
-                        return anime1.anime.title! < anime2.anime.title
+
+                result.sortInPlace({ (progress1: AnimeProgress, progress2: AnimeProgress) -> Bool in
+                    if progress1.anime.type == progress2.anime.type {
+                        return progress1.anime.title! < progress2.anime.title
                     } else {
-                        return anime1.list > anime2.list
+                        return progress1.anime.type > progress2.anime.type
                     }
                 })
                 
-                var animeList: [Anime] = []
-                for animeProgress in result {
+                func assignPublicProgressAndReturnAnime(animeProgress: AnimeProgress) -> Anime {
                     let anime = animeProgress.anime
                     anime.publicProgress = animeProgress
-                    animeList.append(anime)
+                    return anime
                 }
                 
-                let tvAnime = animeList.filter({$0.type == "TV"})
-                let tv = tvAnime.filter({$0.duration == 0 || $0.duration > 15})
-                let tvShort = tvAnime.filter({$0.duration > 0 && $0.duration <= 15})
-                let movieAnime = animeList.filter({$0.type == "Movie"})
-                let ovaAnime = animeList.filter({$0.type == "OVA"})
-                let onaAnime = animeList.filter({$0.type == "ONA"})
-                let specialAnime = animeList.filter({$0.type == "Special"})
+                let watching = result.filter({$0.list == "Watching"}).map(assignPublicProgressAndReturnAnime)
+                let planning = result.filter({$0.list == "Planning"}).map(assignPublicProgressAndReturnAnime)
+                let onHold = result.filter({$0.list == "On-Hold"}).map(assignPublicProgressAndReturnAnime)
+                let completed = result.filter({$0.list == "Completed"}).map(assignPublicProgressAndReturnAnime)
+                let dropped = result.filter({$0.list == "Dropped"}).map(assignPublicProgressAndReturnAnime)
                 
-                self.dataSource = [tv, tvShort, movieAnime, ovaAnime, onaAnime, specialAnime]
-
+                self.dataSource = [[],watching, planning, onHold, completed, dropped]
+                
+                var tvTotalCount = 0
+                var moviesTotalCount = 0
+                var restTotalCount = 0
+                // Set stats
+                for var i = 1 ; i < self.dataSource.count ; i++ {
+                    let animeList = self.dataSource[i]
+                    var tvCount = 0
+                    var moviesCount = 0
+                    var restCount = 0
+                    for anime in animeList {
+                        switch anime.type {
+                        case "TV":
+                            tvCount += 1
+                        case "Movie":
+                            moviesCount += 1
+                        default:
+                            restCount += 1
+                        }
+                    }
+                    tvTotalCount += tvCount
+                    moviesTotalCount += moviesCount
+                    restTotalCount += restCount
+                    self.sectionSubtitles[i] = "\(tvCount) TV · \(moviesCount) Movie · \(restCount) OVA/ONA/Specials"
+                }
+                self.sectionSubtitles[0] = "\(tvTotalCount) TV · \(moviesTotalCount) Movie · \(restTotalCount) OVA/ONA/Specials"
             }
             
             self.loadingView.stopAnimating()
@@ -183,16 +206,17 @@ extension PublicListViewController: UICollectionViewDataSource {
     
                 var title = ""
                 switch indexPath.section {
-                case 0: title = "TV"
-                case 1: title = "TV Short"
-                case 2: title = "Movie"
-                case 3: title = "OVA"
-                case 4: title = "ONA"
-                case 5: title = "Special"
+                case 0: title = "All Lists"
+                case 1: title = "Watching"
+                case 2: title = "Planning"
+                case 3: title = "On-Hold"
+                case 4: title = "Completed"
+                case 5: title = "Dropped"
                 default: break
                 }
                 
                 headerView.titleLabel.text = title
+                headerView.subtitleLabel.text = sectionSubtitles[indexPath.section]
             
             
             reusableView = headerView;

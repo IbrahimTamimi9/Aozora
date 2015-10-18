@@ -432,6 +432,15 @@ public class ProfileViewController: ThreadViewController {
         
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
         
+        alert.addAction(UIAlertAction(title: "View Library", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction) -> Void in
+            if let userProfile = self.userProfile {
+                let navVC = UIStoryboard(name: "Library", bundle: nil).instantiateViewControllerWithIdentifier("PublicLibraryNav") as! UINavigationController
+                let publicList = navVC.viewControllers.first as! PublicListViewController
+                publicList.initWithUser(userProfile)
+                self.presentViewController(navVC, animated: true, completion: nil)
+            }
+        }))
+        
         if userProfile == User.currentUser()! {
             alert.addAction(UIAlertAction(title: "Edit Profile", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction) -> Void in
                 let editProfileController =  UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("EditProfile") as! EditProfileViewController
@@ -462,15 +471,6 @@ public class ProfileViewController: ThreadViewController {
                 query.limit = 100
                 userListController.initWithQuery(query, title: "New Users")
                 self.navigationController?.pushViewController(userListController, animated: true)
-            }))
-        } else {
-            alert.addAction(UIAlertAction(title: "View Library", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction) -> Void in
-                if let userProfile = self.userProfile {
-                    let navVC = UIStoryboard(name: "Library", bundle: nil).instantiateViewControllerWithIdentifier("PublicLibraryNav") as! UINavigationController
-                    let publicList = navVC.viewControllers.first as! PublicListViewController
-                    publicList.initWithUser(userProfile)
-                    self.presentViewController(navVC, animated: true, completion: nil)
-                }
             }))
         }
         
