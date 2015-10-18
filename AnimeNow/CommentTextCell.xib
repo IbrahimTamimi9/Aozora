@@ -31,11 +31,11 @@
                         </userDefinedRuntimeAttributes>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-online" translatesAutoresizingMaskIntoConstraints="NO" id="LsI-8q-6wZ" userLabel="OnlineIndicator">
-                        <rect key="frame" x="31" y="31" width="12" height="12"/>
+                        <rect key="frame" x="33" y="33" width="10" height="10"/>
                         <animations/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="12" id="Iry-bM-fnJ"/>
-                            <constraint firstAttribute="width" constant="12" id="WAK-FN-78V"/>
+                            <constraint firstAttribute="height" constant="10" id="Iry-bM-fnJ"/>
+                            <constraint firstAttribute="width" constant="10" id="WAK-FN-78V"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="4d ago" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dBO-Hh-gNw">

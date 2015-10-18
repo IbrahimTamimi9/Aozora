@@ -28,6 +28,8 @@ public protocol Postable {
     var images: [ImageData] { get set }
     
     var replies: [PFObject] { get set }
+    
+    var showAllReplies: Bool { get set }
 }
 
 public protocol TimelinePostable: Postable {

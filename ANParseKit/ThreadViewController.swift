@@ -45,6 +45,7 @@ public class ThreadViewController: UIViewController {
         
         CommentCell.registerNibFor(tableView: tableView)
         WriteACommentCell.registerNibFor(tableView: tableView)
+        ShowMoreCell.registerNibFor(tableView: tableView)
         
         loadingView = LoaderView(parentView: view)
         addRefreshControl(refreshControl, action:"fetchPosts", forTableView: tableView)
@@ -181,7 +182,12 @@ extension ThreadViewController: UITableViewDataSource {
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let post = fetchController.objectInSection(section) as! Postable
         if post.replies.count > 0 {
-            return 1 + (post.replies.count ?? 0) + 1
+            if post.replies.count <= 3 || post.showAllReplies {
+                return 1 + (post.replies.count ?? 0) + 1
+            } else {
+                // 1 post, 1 show more, 3 replies, 1 reply to post
+                return 1 + 1 + 3 + 1
+            }
         } else {
             return 1
         }
@@ -212,7 +218,8 @@ extension ThreadViewController: UITableViewDataSource {
             cell.layoutIfNeeded()
             return cell
             
-        } else if indexPath.row <= post.replies.count {
+        } else if (post.replies.count <= 3 || post.showAllReplies) && indexPath.row - 1 < post.replies.count {
+            
             let comment = post.replies[indexPath.row - 1] as! Postable
             
             var reuseIdentifier = ""
@@ -230,6 +237,30 @@ extension ThreadViewController: UITableViewDataSource {
             cell.layoutIfNeeded()
             return cell
             
+        } else if post.replies.count > 3 && indexPath.row < 5 {
+            // Show all
+            if indexPath.row == 1 {
+                let cell = tableView.dequeueReusableCellWithIdentifier("ShowMoreCell") as! ShowMoreCell
+                cell.layoutIfNeeded()
+                return cell
+            } else {
+                let comment = post.replies[post.replies.count - 5 + indexPath.row] as! Postable
+                
+                var reuseIdentifier = ""
+                if comment.images.count != 0 || comment.youtubeID != nil {
+                    // Comment image cell
+                    reuseIdentifier = "CommentImageCell"
+                } else {
+                    // Text comment update
+                    reuseIdentifier = "CommentTextCell"
+                }
+                
+                let cell = tableView.dequeueReusableCellWithIdentifier(reuseIdentifier) as! CommentCell
+                cell.delegate = self
+                updateCommentCell(cell, with: comment)
+                cell.layoutIfNeeded()
+                return cell
+            }
         } else {
             
             // Write a comment cell
@@ -411,22 +442,33 @@ extension ThreadViewController: UITableViewDelegate {
                 showSheetFor(post: post)
             }
             
-        } else if indexPath.row <= post.replies.count {
-            if var comment = post.replies[indexPath.row - 1] as? Postable {
-                if comment.hasSpoilers && comment.isSpoilerHidden == true {
-                    comment.isSpoilerHidden = false
-                    tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
-                } else {
-                    showSheetFor(post: comment, parentPost: post)
+        } else if (post.replies.count <= 3 && indexPath.row - 1 < post.replies.count) || post.showAllReplies {
+            if let comment = post.replies[indexPath.row - 1] as? Postable {
+                pressedOnAComment(post, comment: comment, indexPath: indexPath)
+            }
+        } else if post.replies.count > 3 && indexPath.row < 5 {
+            // Show all
+            if indexPath.row == 1 {
+                post.showAllReplies = true
+                tableView.reloadData()
+            } else {
+                if let comment = post.replies[post.replies.count - 5 + indexPath.row] as? Postable {
+                    pressedOnAComment(post, comment: comment, indexPath: indexPath)
                 }
-
             }
         } else {
             // Write a comment cell
             replyTo(post)
         }
     }
-    
+    func pressedOnAComment(post: Postable, var comment: Postable, indexPath: NSIndexPath) {
+        if comment.hasSpoilers && comment.isSpoilerHidden == true {
+            comment.isSpoilerHidden = false
+            tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+        } else {
+            showSheetFor(post: comment, parentPost: post)
+        }
+    }
     func showSheetFor(post post: Postable, parentPost: Postable? = nil) {
         // If user's comment show delete/edit
         let administrating = User.currentUser()!.isAdmin() && !post.postedBy!.isAdmin()

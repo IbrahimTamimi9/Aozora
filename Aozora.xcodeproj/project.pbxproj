@@ -45,6 +45,8 @@
 		DA4595631B83C3500044013E /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA2C5571B66919300152FF9 /* SignInViewController.swift */; };
 		DA4595641B83C3500044013E /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC13C1F1B423ED90013D479 /* SignUpViewController.swift */; };
 		DA4595651B83C3500044013E /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC13C291B424DEF0013D479 /* ResetPasswordViewController.swift */; };
+		DA472DFB1BD409EF00E09AB0 /* ShowMoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA472DF91BD409EF00E09AB0 /* ShowMoreCell.swift */; settings = {ASSET_TAGS = (); }; };
+		DA472DFC1BD409EF00E09AB0 /* ShowMoreCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA472DFA1BD409EF00E09AB0 /* ShowMoreCell.xib */; settings = {ASSET_TAGS = (); }; };
 		DA48EA271B288DED00D8610F /* SeasonalChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA76A1991B2375E1006CB489 /* SeasonalChart.swift */; };
 		DA4AF8BA1B276E060020252E /* ANCommonKit.h in Headers */ = {isa = PBXBuildFile; fileRef = DA4AF8B91B276E060020252E /* ANCommonKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA4AF8C01B276E060020252E /* ANCommonKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA4AF8B51B276E060020252E /* ANCommonKit.framework */; };
@@ -371,6 +373,8 @@
 		DA4167E41B275CF500847F56 /* LinkCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkCell.swift; sourceTree = "<group>"; };
 		DA4167E61B275D3800847F56 /* TitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleCell.swift; sourceTree = "<group>"; };
 		DA4167E81B275F9400847F56 /* ANAnimeKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ANAnimeKit.swift; path = ../ANAnimeKit/ANAnimeKit.swift; sourceTree = "<group>"; };
+		DA472DF91BD409EF00E09AB0 /* ShowMoreCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowMoreCell.swift; sourceTree = "<group>"; };
+		DA472DFA1BD409EF00E09AB0 /* ShowMoreCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShowMoreCell.xib; sourceTree = "<group>"; };
 		DA4AF8B51B276E060020252E /* ANCommonKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ANCommonKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA4AF8B81B276E060020252E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA4AF8B91B276E060020252E /* ANCommonKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ANCommonKit.h; sourceTree = "<group>"; };
@@ -1048,6 +1052,7 @@
 				DAD390A11B6C303D000A84DE /* CommentTextCell.xib */,
 				DA897F8A1B6D203D00A9510C /* CommentImageCell.xib */,
 				DA897F881B6D1FCC00A9510C /* WriteACommentCell.xib */,
+				DA472DFA1BD409EF00E09AB0 /* ShowMoreCell.xib */,
 			);
 			name = Views;
 			path = ../AnimeNow;
@@ -1059,6 +1064,7 @@
 				DAC077BB1B6894670067DA90 /* PostCell.swift */,
 				DAC077A61B6890830067DA90 /* CommentCell.swift */,
 				DAD390A51B6C322A000A84DE /* WriteACommentCell.swift */,
+				DA472DF91BD409EF00E09AB0 /* ShowMoreCell.swift */,
 			);
 			name = Subclasses;
 			path = ../AnimeNow;
@@ -1604,6 +1610,7 @@
 				DAD3909E1B6C2F35000A84DE /* PostImageCell.xib in Resources */,
 				DA897F8B1B6D203D00A9510C /* CommentImageCell.xib in Resources */,
 				DAC077B31B6891140067DA90 /* PostTextCell.xib in Resources */,
+				DA472DFC1BD409EF00E09AB0 /* ShowMoreCell.xib in Resources */,
 				DA897F891B6D1FCC00A9510C /* WriteACommentCell.xib in Resources */,
 				DAFD60B71B278459007275C1 /* Action.storyboard in Resources */,
 			);
@@ -1839,6 +1846,7 @@
 				DAD390A61B6C322A000A84DE /* WriteACommentCell.swift in Sources */,
 				DAFD60B81B27845F007275C1 /* CustomLabel.swift in Sources */,
 				DA5A3BF81B35EE2200C07D71 /* CustomTextField.swift in Sources */,
+				DA472DFB1BD409EF00E09AB0 /* ShowMoreCell.swift in Sources */,
 				DAFD60B51B278452007275C1 /* ActionListViewController.swift in Sources */,
 				DAFD60BB1B27845F007275C1 /* LoaderView.swift in Sources */,
 				DAC027CF1B2A1C3F0085C91A /* ZFModalTransitionAnimator.m in Sources */,

@@ -79,11 +79,11 @@
                                 </userDefinedRuntimeAttributes>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-online" translatesAutoresizingMaskIntoConstraints="NO" id="3gW-LX-HkK" userLabel="OnlineIndicator">
-                                <rect key="frame" x="40" y="40" width="12" height="12"/>
+                                <rect key="frame" x="42" y="42" width="10" height="10"/>
                                 <animations/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="12" id="jiW-FR-Svb"/>
-                                    <constraint firstAttribute="width" constant="12" id="zu9-Xo-D1R"/>
+                                    <constraint firstAttribute="height" constant="10" id="jiW-FR-Svb"/>
+                                    <constraint firstAttribute="width" constant="10" id="zu9-Xo-D1R"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zJt-XM-phf" userLabel="ToIcon">

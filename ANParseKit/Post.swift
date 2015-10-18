@@ -178,4 +178,14 @@ public class Post: PFObject, PFSubclassing, ThreadPostable {
         }
     }
     
+    var showAllRepliesInternal = false
+    public var showAllReplies: Bool {
+        get {
+            return showAllRepliesInternal
+        }
+        set(value) {
+            showAllRepliesInternal = value
+        }
+    }
+    
 }
