@@ -92,7 +92,7 @@
                                             </connections>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2 days ago" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fxk-ZV-cyf">
-                                            <rect key="frame" x="60" y="213" width="66.5" height="16"/>
+                                            <rect key="frame" x="60" y="213" width="66" height="16"/>
                                             <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="31" id="7DF-rr-15U"/>
