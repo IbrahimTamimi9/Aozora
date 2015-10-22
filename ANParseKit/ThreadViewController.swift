@@ -442,7 +442,7 @@ extension ThreadViewController: UITableViewDelegate {
                 showSheetFor(post: post)
             }
             
-        } else if (post.replies.count <= 3 && indexPath.row - 1 < post.replies.count) || post.showAllReplies {
+        } else if (post.replies.count <= 3 || post.showAllReplies) && indexPath.row - 1 < post.replies.count {
             if let comment = post.replies[indexPath.row - 1] as? Postable {
                 pressedOnAComment(post, comment: comment, indexPath: indexPath)
             }

@@ -57,7 +57,7 @@ public class ImageViewController: UIViewController {
     
     @IBAction func selectPressed(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: { () -> Void in
-            delegate?.imageViewControllerSelected(imageData: imageData)
+            self.delegate?.imageViewControllerSelected(imageData: self.imageData)
         })
     }
 }
