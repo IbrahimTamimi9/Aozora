@@ -81,6 +81,7 @@ public class TagsViewController: UIViewController {
     func fetchAnimeTags(text: String) {
         
         let query = Anime.query()!
+        query.includeKey("details")
         if text.characters.count == 0 {
             query.whereKey("status", equalTo: "currently airing")
             query.orderByAscending("popularityRank")

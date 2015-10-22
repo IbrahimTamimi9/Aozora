@@ -342,7 +342,7 @@ public class LibrarySyncController {
         
         var updatedMyAnimeListLibrary = Set<MALProgress>()
         
-        for anime in parseLibrary {
+        for anime in parseLibrary where anime.progress != nil {
             let progress = anime.progress!
             // This prevents all anime object to be iterated thousands of times..
             let myAnimeListID = anime.myAnimeListID
