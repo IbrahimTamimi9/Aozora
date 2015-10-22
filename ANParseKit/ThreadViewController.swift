@@ -135,8 +135,11 @@ public class ThreadViewController: UIViewController {
         if let indexPath = tableView.indexPathForCell(cell), let post = fetchController.objectAtIndex(indexPath.section) as? Postable {
             if indexPath.row == 0 {
                 return post
-            } else if indexPath.row <= post.replies.count {
+            // TODO organize this code better it has dup lines everywhere D:
+            } else if (post.replies.count <= 3 || post.showAllReplies) && indexPath.row - 1 < post.replies.count {
                 return post.replies[indexPath.row - 1] as? Postable
+            } else if post.replies.count > 3 && indexPath.row < 5 {
+                return post.replies[post.replies.count - 5 + indexPath.row] as? Postable
             }
         }
         
@@ -609,6 +612,7 @@ extension ThreadViewController: CommentViewControllerDelegate {
 extension ThreadViewController: PostCellDelegate {
     public func postCellSelectedImage(postCell: PostCell) {
         if let post = postForCell(postCell), let imageView = postCell.imageContent {
+            print(post)
             if let imageData = post.images.first {
                 showImage(imageData.url, imageView: imageView)
             } else if let videoID = post.youtubeID {
