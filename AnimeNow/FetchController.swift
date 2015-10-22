@@ -203,30 +203,9 @@ public class FetchController {
                         self.isFirstFetch = false
                         tableView.animateFadeIn()
                     }
-                    
                 } else {
                     
-                    if self.datasourceUsesSections {
-                        // Insert sections
-                        let startIndex = self.dataSource.count - allData.count
-                        var range = NSRange()
-                        range.location = startIndex
-                        range.length = allData.count
-                        
-                        tableView.beginUpdates()
-                        tableView.insertSections(NSIndexSet(indexesInRange: range), withRowAnimation: UITableViewRowAnimation.Automatic)
-                        tableView.endUpdates()
-                    } else {
-                        // Insert rows
-                        var indexPaths: [NSIndexPath] = []
-                        let startIndex = self.dataSource.count - allData.count
-                        for index in startIndex..<self.dataSource.count {
-                            indexPaths.append(NSIndexPath(forRow: index, inSection: 0))
-                        }
-                        tableView.beginUpdates()
-                        tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
-                        tableView.endUpdates()
-                    }
+                    tableView.reloadData()
                 }
             }
             
