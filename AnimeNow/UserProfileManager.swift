@@ -65,9 +65,9 @@ public class UserProfileManager: NSObject {
         user: User) -> BFTask {
             
             guard let password = password where
-                !password.validPassword(viewController) ||
-                    !email.validEmail(viewController) ||
-                    !username.validUsername(viewController) else {
+                password.validPassword(viewController) &&
+                    email.validEmail(viewController) &&
+                    username.validUsername(viewController) else {
                 return BFTask(error: NSError(domain: "", code: 0, userInfo: nil))
             }
         
