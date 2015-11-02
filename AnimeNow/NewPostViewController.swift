@@ -226,7 +226,14 @@ public class NewPostViewController: CommentViewController {
                     
                     PFCloud.callFunctionInBackground("sendNewPostPushNotification", withParameters: parameters)
                 }
-                
+            
+                for (var i = 0; i < post.thread.tags.count; i++){
+                    if (post.thread.tags[i]["name"] as? String == "Forum Games"){
+                        print("This is a game")
+                        self.postedBy?.incrementPostCount(-1)
+                        break
+                    }
+                }
                 self.postedBy?.incrementPostCount(1)
                 self.completeRequest(post, parentPost: self.parentPost as? PFObject, error: task.error)
                 return nil

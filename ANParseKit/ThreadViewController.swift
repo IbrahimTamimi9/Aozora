@@ -543,8 +543,22 @@ extension ThreadViewController: UITableViewDelegate {
             if let _ = error {
                 // Show some error
             } else {
-                for post in allPosts {
-                    (post["postedBy"] as? User)?.incrementPostCount(-1)
+                let posts = Post()
+                
+                var game = false
+                for (var i = 0; i < self.thread?.tags.count; i++){
+                    if (self.thread?.tags[i]["name"] as? String == "Forum Games"){
+                        print("This is a game")
+                        game = true
+                        break
+                    }
+                }
+                
+                if game != true {
+                    for post in allPosts {
+                        (post["postedBy"] as? User)?.incrementPostCount(-1)
+                        print(self.thread?.tags[0]["name"] as? String)
+                    }
                 }
                 self.thread?.incrementKey("replies", byAmount: -allPosts.count)
                 self.thread?.saveEventually()
