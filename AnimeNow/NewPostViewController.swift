@@ -138,8 +138,8 @@ public class NewPostViewController: CommentViewController {
             
             let postSaveTask = timelinePost.saveInBackground()
             
-            BFTask(forCompletionOfAllTasks: [parentSaveTask, postSaveTask]).continueWithBlock({ (task: BFTask!) -> AnyObject! in
-                
+            BFTask(forCompletionOfAllTasks: [parentSaveTask, postSaveTask])
+                .continueWithExecutor(BFExecutor.mainThreadExecutor(), withBlock: { (task: BFTask!) -> AnyObject! in
                 // Send timeline post notification
                 if let parentPost = self.parentPost as? TimelinePost {
                     let parameters = [
@@ -203,7 +203,8 @@ public class NewPostViewController: CommentViewController {
                
             let postSaveTask = post.saveInBackground()
             
-            BFTask(forCompletionOfAllTasks: [parentSaveTask, postSaveTask]).continueWithBlock({ (task: BFTask!) -> AnyObject! in
+            BFTask(forCompletionOfAllTasks: [parentSaveTask, postSaveTask])
+                .continueWithExecutor(BFExecutor.mainThreadExecutor(), withBlock: { (task: BFTask!) -> AnyObject! in
                 
                 // Send post notification
                 if let parentPost = self.parentPost as? Post {

@@ -281,7 +281,7 @@ public class CustomThreadViewController: ThreadViewController {
             } else if parentPost == nil {
                 // Inserting a new post in the bottom, if we're in the bottom of the thread
                 if !fetchController.canFetchMoreData {
-                    fetchController.dataSource.append(post)
+                    fetchController.dataSource.insert(post, atIndex: 0)
                     tableView.reloadData()
                 }
             }
