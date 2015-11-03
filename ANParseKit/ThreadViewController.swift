@@ -543,21 +543,30 @@ extension ThreadViewController: UITableViewDelegate {
             if let _ = error {
                 // Show some error
             } else {
-                // Decrement post counts only if thread does not contain #ForumGame tag
-                var game = false
-                let forumGameId = "M4rpxLDwai"
-                for tag in self.thread!.tags where
-                    (tag as! ThreadTag).objectId! == forumGameId {
-                    game = true
-                    break
-                }
                 
-                if !game {
+                func decrementPostCount() {
                     for post in allPosts {
                         (post["postedBy"] as? User)?.incrementPostCount(-1)
-                        print(self.thread?.tags[0]["name"] as? String)
                     }
                 }
+                
+                if let thread = self.thread {
+                    // Decrement post counts only if thread does not contain #ForumGame tag
+                    var game = false
+                    let forumGameId = "M4rpxLDwai"
+                    for tag in thread.tags where
+                        (tag as! ThreadTag).objectId! == forumGameId {
+                            game = true
+                            break
+                    }
+                    
+                    if !game {
+                        decrementPostCount()
+                    }
+                } else {
+                    decrementPostCount()
+                }
+                
                 self.thread?.incrementKey("replies", byAmount: -allPosts.count)
                 self.thread?.saveEventually()
                 
