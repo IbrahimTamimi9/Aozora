@@ -56,6 +56,7 @@
 		DA52B1831B4838AE001CC1A9 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA52B1821B4838AE001CC1A9 /* CalendarViewController.swift */; };
 		DA52B1851B483F2A001CC1A9 /* DayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA52B1841B483F2A001CC1A9 /* DayViewController.swift */; };
 		DA52B1871B4845D4001CC1A9 /* CheckInCompact.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA52B1861B4845D4001CC1A9 /* CheckInCompact.xib */; };
+		DA54E30B1BE9487800FE0AE9 /* PFQuery+Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA54E30A1BE9487800FE0AE9 /* PFQuery+Query.swift */; };
 		DA58C2DE1B38A3990082B626 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC610BD1B312B0200B60631 /* UserCell.swift */; };
 		DA58C2E21B38A7760082B626 /* String+NSDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58C2E11B38A7760082B626 /* String+NSDate.swift */; };
 		DA58C2E51B39C0080082B626 /* Browse.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA58C2E41B39C0080082B626 /* Browse.storyboard */; };
@@ -384,6 +385,7 @@
 		DA52B1821B4838AE001CC1A9 /* CalendarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		DA52B1841B483F2A001CC1A9 /* DayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayViewController.swift; sourceTree = "<group>"; };
 		DA52B1861B4845D4001CC1A9 /* CheckInCompact.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CheckInCompact.xib; sourceTree = "<group>"; };
+		DA54E30A1BE9487800FE0AE9 /* PFQuery+Query.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PFQuery+Query.swift"; sourceTree = "<group>"; };
 		DA58C2D81B386BB90082B626 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		DA58C2DA1B386BC80082B626 /* UserListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserListViewController.swift; sourceTree = "<group>"; };
 		DA58C2E11B38A7760082B626 /* String+NSDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+NSDate.swift"; sourceTree = "<group>"; };
@@ -1192,6 +1194,7 @@
 				DAE43C311B2BC1A900C3092D /* TFHppleElement+Convenience.swift */,
 				DA8B6E061B6C4DBF00D240FC /* UIImageView+PFFile.swift */,
 				DA03F15B1B8B818E00402AC4 /* TTTAttributedLabel+Tags.swift */,
+				DA54E30A1BE9487800FE0AE9 /* PFQuery+Query.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -1911,6 +1914,7 @@
 				DA35B99A1B74165000C0AAC7 /* InAppBrowserSelectorViewController.swift in Sources */,
 				DA13806C1B6DBB4C00C53560 /* Post.swift in Sources */,
 				DAFED2531BA717DE009697E4 /* InAppController.swift in Sources */,
+				DA54E30B1BE9487800FE0AE9 /* PFQuery+Query.swift in Sources */,
 				DA75C89A1BB1A76F00C27A68 /* LibrarySyncController.swift in Sources */,
 				DA6E13111B10F2E500B278B0 /* MALScrapper.swift in Sources */,
 				DA03F15C1B8B818E00402AC4 /* TTTAttributedLabel+Tags.swift in Sources */,
