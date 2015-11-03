@@ -155,7 +155,7 @@ public class FetchController {
         
         var fetchTask2 = BFTask(result: nil)
         if let secondaryQuery = secondaryQuery {
-            fetchTask2 = secondaryQuery.findAllObjectsWith().continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
+            fetchTask2 = secondaryQuery.findAllObjectsInBackground().continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
                 let result = task.result as! [PFObject]
                 print(result.count)
                 allData += result

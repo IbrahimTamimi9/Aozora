@@ -45,7 +45,7 @@ class UserListViewController: UIViewController {
     func fetchUserFriends() {
         
         loadingView.startAnimating()
-        
+        query.limit = 1000
         query.findObjectsInBackgroundWithBlock { (result, error) -> Void in
             if let result = result as? [User] {
                 self.dataSource = result

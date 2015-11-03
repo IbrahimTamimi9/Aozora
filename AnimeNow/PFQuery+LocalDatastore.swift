@@ -19,7 +19,7 @@ extension PFQuery {
         var fetchResult: [AnyObject] = []
         let nonLocalQuery = self.copy() as! PFQuery
         
-        return fromPinWithName(pinName).findObjectsInBackground()
+        return fromPinWithName(pinName).findAllObjectsInBackground()
             .continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
             
                 guard let result = task.result as? [AnyObject] else {

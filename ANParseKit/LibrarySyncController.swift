@@ -70,7 +70,7 @@ public class LibrarySyncController {
                 
                 let updatedQuery = Anime.query()!
                 updatedQuery.whereKey("updatedAt", greaterThan: anime.updatedAt!)
-                return updatedQuery.findObjectsInBackground()
+                return updatedQuery.findAllObjectsInBackground()
 
                 
             }.continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
@@ -119,7 +119,7 @@ public class LibrarySyncController {
                 
                 let updatedQuery = Episode.query()!
                 updatedQuery.whereKey("updatedAt", greaterThan: episode.updatedAt!)
-                return updatedQuery.findObjectsInBackground()
+                return updatedQuery.findAllObjectsInBackground()
                 
             }.continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
                 
@@ -156,18 +156,15 @@ public class LibrarySyncController {
                 let query = AnimeProgress.query()!
                 query.includeKey("anime")
                 query.whereKey("user", equalTo: User.currentUser()!)
-                query.limit = 1000
-                
-                // TODO: Support more than 1000 anime in library
                 if let animeProgress = task.result as? [AnimeProgress] where animeProgress.count > 0 {
                     guard let progress = animeProgress.last, let updatedAt = progress.updatedAt else {
                         // Most likely syncing, do nothing
                         return BFTask(error: NSError(domain: "Aozora.Error.Syncing", code: 0, userInfo: nil))
                     }
                     query.whereKey("updatedAt", greaterThan: updatedAt)
-                    return query.findObjectsInBackground()
+                    return query.findAllObjectsInBackground()
                 } else if let animeProgress = task.result as? [AnimeProgress] where animeProgress.count == 0 {
-                    return query.findObjectsInBackground()
+                    return query.findAllObjectsInBackground()
                 } else {
                     return task.error
                 }
@@ -281,8 +278,7 @@ public class LibrarySyncController {
                 print("Need to create \(malProgressToCreateIDs.count) AnimeProgress on Parse")
                 let query = Anime.query()!
                 query.whereKey("myAnimeListID", containedIn: malProgressToCreateIDs)
-                query.limit = 1000
-                return query.findObjectsInBackground()
+                return query.findAllObjectsInBackground()
                     .continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
                         let animeToCreate = task.result as! [Anime]
                         print("Creating \(animeToCreate.count) AnimeProgress on Parse")
@@ -467,9 +463,8 @@ public class LibrarySyncController {
         
         let animeQuery = Anime.query()!
         animeQuery.fromPinWithName(Anime.PinName.InLibrary.rawValue)
-        animeQuery.limit = 1000
         
-        return animeQuery.findObjectsInBackground().continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
+        return animeQuery.findAllObjectsInBackground().continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
             let list = task.result as! [Anime]
             print("found a list of \(list.count)")
             return matchAnimeWithProgress(list)
@@ -481,14 +476,13 @@ public class LibrarySyncController {
     public class func fetchAnime(myAnimeListIDs: [Int], withPinName: String? = nil) -> BFTask {
         
         let query = Anime.query()!
-        query.limit = 1000
         
         if let pinName = withPinName {
             query.fromPinWithName(pinName)
         }
         
         query.whereKey("myAnimeListID", containedIn: myAnimeListIDs)
-        return query.findObjectsInBackground()
+        return query.findAllObjectsInBackground()
     }
     
     public class func matchAnimeWithProgress(animeList: [Anime]) -> BFTask {

@@ -239,7 +239,6 @@ public class CustomThreadViewController: ThreadViewController {
         
         let repliesQuery = Post.query()!
         repliesQuery.skip = 0
-        repliesQuery.limit = 1000
         repliesQuery.whereKey("parentPost", matchesKey: "objectId", inQuery: innerQuery)
         repliesQuery.orderByAscending("createdAt")
         repliesQuery.includeKey("postedBy")

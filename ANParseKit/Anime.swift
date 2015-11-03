@@ -139,13 +139,12 @@ public class Anime: PFObject, PFSubclassing {
     
     func fetchEpisodes(myAnimeListID: Int, fromLocalDatastore: Bool = false) -> BFTask {
         let episodesQuery = Episode.query()!
-        episodesQuery.limit = 1000
         if fromLocalDatastore {
             episodesQuery.fromLocalDatastore()
         }
         episodesQuery.orderByAscending("number")
         episodesQuery.whereKey("anime", equalTo: self)
-        return episodesQuery.findObjectsInBackground()
+        return episodesQuery.findAllObjectsInBackground()
     }
     
     // ETA

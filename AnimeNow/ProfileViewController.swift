@@ -365,7 +365,6 @@ public class ProfileViewController: ThreadViewController {
         
         let repliesQuery = TimelinePost.query()!
         repliesQuery.skip = 0
-        repliesQuery.limit = 1000
         repliesQuery.whereKey("parentPost", matchesKey: "objectId", inQuery: innerQuery)
         repliesQuery.orderByAscending("createdAt")
         repliesQuery.includeKey("episode")
@@ -413,7 +412,6 @@ public class ProfileViewController: ThreadViewController {
         let userListController = UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("UserList") as! UserListViewController
         let query = userProfile!.following().query()!
         query.orderByAscending("aozoraUsername")
-        query.limit = 1000
         userListController.initWithQuery(query, title: "Following")
         navigationController?.pushViewController(userListController, animated: true)
     }
@@ -423,7 +421,6 @@ public class ProfileViewController: ThreadViewController {
         let query = User.query()!
         query.whereKey("following", equalTo: userProfile!)
         query.orderByAscending("aozoraUsername")
-        query.limit = 1000
         userListController.initWithQuery(query, title: "Followers")
         navigationController?.pushViewController(userListController, animated: true)
     }

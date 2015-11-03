@@ -12,7 +12,7 @@ import Bolts
 
 extension PFQuery {
     
-    func findAllObjectsWith(skip: Int? = 0) -> BFTask {
+    public func findAllObjectsInBackground(with skip: Int? = 0) -> BFTask {
 
         limit = 1000
         self.skip = skip!
@@ -22,7 +22,7 @@ extension PFQuery {
                 
                 let result = task.result as! [PFObject]
                 if result.count == self.limit {
-                    return self.findAllObjectsWith(self.skip + self.limit)
+                    return self.findAllObjectsInBackground(with: self.skip + self.limit)
                         .continueWithBlock({ (previousTask: BFTask!) -> AnyObject! in
                             let newResults = previousTask.result as! [PFObject]
                             return BFTask(result: result+newResults)

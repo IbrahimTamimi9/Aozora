@@ -21,8 +21,7 @@ public class SeasonalChartService {
     
     public class func findAllSeasonalCharts() -> BFTask {
         let query = PFQuery(className: ParseKit.SeasonalChart)
-        query.limit = 1000
-        return query.findObjectsInBackground()
+        return query.findAllObjectsInBackground()
     }
     
     public class func currentSeasonalChart() -> BFTask {

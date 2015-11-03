@@ -81,7 +81,6 @@ public class NotificationThreadViewController: ThreadViewController {
         query.includeKey("postedBy")
         
         repliesQuery.skip = 0
-        repliesQuery.limit = 1000
         repliesQuery.whereKey("parentPost", matchesKey: "objectId", inQuery: innerQuery)
         repliesQuery.orderByAscending("createdAt")
         repliesQuery.includeKey("postedBy")

@@ -13,7 +13,6 @@ class ChartController {
     
     class func fetchSeasonalChartAnime(seasonalChart: SeasonalChart) -> BFTask {
         let query = Anime.query()!
-        query.limit = 1000
         query.whereKey("startDate", greaterThanOrEqualTo: seasonalChart.startDate)
         query.whereKey("startDate", lessThanOrEqualTo: seasonalChart.endDate)
         query.whereKey("genres", notContainedIn: ["Hentai"])
@@ -23,14 +22,13 @@ class ChartController {
             // Cached
             return query.findCachedOrNetwork("LocalDatastore.Anime", expirationDays: 1)
         } else {
-            return query.findObjectsInBackground()
+            return query.findAllObjectsInBackground()
         }
     }
     
     class func fetchAllSeasons() -> BFTask {
         
         let query = SeasonalChart.query()!
-        query.limit = 1000
         query.orderByDescending("startDate")
         
         return query.findCachedOrNetwork("LocalDatastore.AllSeasons", expirationDays: 1)
