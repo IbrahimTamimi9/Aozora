@@ -543,18 +543,16 @@ extension ThreadViewController: UITableViewDelegate {
             if let _ = error {
                 // Show some error
             } else {
-                let posts = Post()
-                
+                // Decrement post counts only if thread does not contain #ForumGame tag
                 var game = false
-                for (var i = 0; i < self.thread?.tags.count; i++){
-                    if (self.thread?.tags[i]["name"] as? String == "Forum Games"){
-                        print("This is a game")
-                        game = true
-                        break
-                    }
+                let forumGameId = "M4rpxLDwai"
+                for tag in self.thread!.tags where
+                    (tag as! ThreadTag).objectId! == forumGameId {
+                    game = true
+                    break
                 }
                 
-                if game != true {
+                if !game {
                     for post in allPosts {
                         (post["postedBy"] as? User)?.incrementPostCount(-1)
                         print(self.thread?.tags[0]["name"] as? String)
