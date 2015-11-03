@@ -232,7 +232,7 @@ public class CustomThreadViewController: ThreadViewController {
         innerQuery.limit = FetchLimit
         innerQuery.whereKey("thread", equalTo: thread!)
         innerQuery.whereKey("replyLevel", equalTo: 0)
-        innerQuery.orderByAscending("createdAt")
+        innerQuery.orderByDescending("updatedAt")
         
         let query = innerQuery.copy() as! PFQuery
         query.includeKey("postedBy")
