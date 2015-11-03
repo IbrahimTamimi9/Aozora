@@ -366,9 +366,12 @@ public class CustomThreadViewController: ThreadViewController {
                                 // Show some error
                             } else {
                                 thread.startedBy?.incrementPostCount(-1)
-                                for post in result {
-                                    (post["postedBy"] as? User)?.incrementPostCount(-1)
+                                if !thread.isForumGame {
+                                    for post in result {
+                                        (post["postedBy"] as? User)?.incrementPostCount(-1)
+                                    }
                                 }
+                                
                                 self.navigationController?.popViewControllerAnimated(true)
                             }
                         })

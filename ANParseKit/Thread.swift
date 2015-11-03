@@ -61,4 +61,15 @@ public class Thread: PFObject, PFSubclassing {
             self["images"] = imagesRaw
         }
     }
+    
+    public var isForumGame: Bool {
+        get {
+            let forumGameId = "M4rpxLDwai"
+            for tag in self.tags where
+                (tag as! ThreadTag).objectId! == forumGameId {
+                    return true
+            }
+            return false
+        }
+    }
 }
