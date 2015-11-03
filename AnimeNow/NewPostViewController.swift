@@ -226,8 +226,17 @@ public class NewPostViewController: CommentViewController {
                     
                     PFCloud.callFunctionInBackground("sendNewPostPushNotification", withParameters: parameters)
                 }
-                
-                self.postedBy?.incrementPostCount(1)
+                // Incrementing post counts only if thread does not contain #ForumGame tag
+                var game = false
+                let forumGameId = "M4rpxLDwai"
+                for tag in self.thread!.tags where
+                    (tag as! ThreadTag).objectId! == forumGameId {
+                        game = true
+                        break
+                }
+                if !game {
+                    self.postedBy?.incrementPostCount(1)
+                }
                 self.completeRequest(post, parentPost: self.parentPost as? PFObject, error: task.error)
                 return nil
             })
