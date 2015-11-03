@@ -157,7 +157,6 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
                     lists[4].append(anime)
                 }
             } else {
-                print(anime.title!)
                 anime.unpinInBackgroundWithName(Anime.PinName.InLibrary.rawValue)
             }
         }
@@ -193,14 +192,14 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
         var lists: [AnimeListViewController] = []
         
         for index in 0...4 {
-            let controller = storyboard.instantiateViewControllerWithIdentifier("AnimeList") as! AnimeListViewController
-            
-            let animeList = allAnimeLists[index]
-            
-            controller.initWithList(animeList, configuration: configurations[index])
-            controller.delegate = self
-            
-            lists.append(controller)
+            if let controller = storyboard.instantiateViewControllerWithIdentifier("AnimeList") as? AnimeListViewController {
+                let animeList = allAnimeLists[index]
+                
+                controller.initWithList(animeList, configuration: configurations[index])
+                controller.delegate = self
+                
+                lists.append(controller)
+            }
         }
         
         listControllers = lists
@@ -251,8 +250,8 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
     
     @IBAction func showFilterPressed(sender: AnyObject) {
         
-        if let tabBar = tabBarController {
-            let controller = UIStoryboard(name: "Browse", bundle: nil).instantiateViewControllerWithIdentifier("Filter") as! FilterViewController
+        if let tabBar = tabBarController,
+            let controller = UIStoryboard(name: "Browse", bundle: nil).instantiateViewControllerWithIdentifier("Filter") as? FilterViewController {
             
             controller.delegate = self
             controller.initWith(configuration: currentConfiguration)
