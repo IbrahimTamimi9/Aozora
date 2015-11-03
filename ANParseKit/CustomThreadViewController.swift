@@ -353,33 +353,32 @@ public class CustomThreadViewController: ThreadViewController {
                 }))
             }
             
-            if !administrating {
-                alert.addAction(UIAlertAction(title: "Delete", style: UIAlertActionStyle.Destructive, handler: { (alertAction: UIAlertAction!) -> Void in
-                    
-                    let childPostsQuery = Post.query()!
-                    childPostsQuery.whereKey("thread", equalTo: thread)
-                    childPostsQuery.includeKey("postedBy")
-                    childPostsQuery.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
-                        if let result = result as? [PFObject] {
-                            
-                            PFObject.deleteAllInBackground(result+[thread], block: { (success, error) -> Void in
-                                if let _ = error {
-                                    // Show some error
-                                } else {
-                                    thread.startedBy?.incrementPostCount(-1)
-                                    for post in result {
-                                        (post["postedBy"] as? User)?.incrementPostCount(-1)
-                                    }
-                                    self.navigationController?.popViewControllerAnimated(true)
+            alert.addAction(UIAlertAction(title: "Delete", style: UIAlertActionStyle.Destructive, handler: { (alertAction: UIAlertAction!) -> Void in
+                
+                let childPostsQuery = Post.query()!
+                childPostsQuery.whereKey("thread", equalTo: thread)
+                childPostsQuery.includeKey("postedBy")
+                childPostsQuery.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
+                    if let result = result as? [PFObject] {
+                        
+                        PFObject.deleteAllInBackground(result+[thread], block: { (success, error) -> Void in
+                            if let _ = error {
+                                // Show some error
+                            } else {
+                                thread.startedBy?.incrementPostCount(-1)
+                                for post in result {
+                                    (post["postedBy"] as? User)?.incrementPostCount(-1)
                                 }
-                            })
-                            
-                        } else {
-                            // TODO: Show error
-                        }
-                    })
-                }))
-            }
+                                self.navigationController?.popViewControllerAnimated(true)
+                            }
+                        })
+                        
+                    } else {
+                        // TODO: Show error
+                    }
+                })
+            }))
+        
             
             alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler:nil))
             

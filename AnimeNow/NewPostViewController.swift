@@ -285,10 +285,10 @@ public class NewPostViewController: CommentViewController {
     }
     
     func validPost() -> Bool {
-        let content = textView.text
+        let content = max(textView.text.characters.count, spoilerTextView.text.characters.count)
         // Validate post
-        if content.characters.count < 2 {
-            presentBasicAlertWithTitle("Too Short", message: "Message should be a 3 characters or longer")
+        if content < 2 {
+            presentBasicAlertWithTitle("Too Short", message: "Message/spoiler should be 3 characters or longer")
             return false
         }
         return true
