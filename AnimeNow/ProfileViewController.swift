@@ -454,7 +454,7 @@ public class ProfileViewController: ThreadViewController {
                 let userListController = UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("UserList") as! UserListViewController
                 let query = User.query()!
                 query.whereKeyExists("aozoraUsername")
-                query.orderByDescending("activeStart")
+                query.whereKey("active", equalTo: true)
                 query.limit = 100
                 userListController.initWithQuery(query, title: "Online Users")
                 self.navigationController?.pushViewController(userListController, animated: true)
