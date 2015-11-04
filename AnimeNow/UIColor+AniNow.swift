@@ -46,6 +46,10 @@ extension UIColor {
     public class func peterRiver() -> UIColor! {
         return UIColor(red: 52/255.0, green: 152/255.0, blue: 219/255.0, alpha: 1.0)
     }
+    
+    public class func aozoraPurple() -> UIColor! {
+        return UIColor(red: 105/255.0, green: 38/255.0, blue: 200/255.0, alpha: 1.0)
+    }
 
     // Greenish
     public class func nephritis() -> UIColor! {

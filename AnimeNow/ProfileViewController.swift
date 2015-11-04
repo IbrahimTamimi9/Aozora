@@ -94,7 +94,7 @@ public class ProfileViewController: ThreadViewController {
     
     func sizeHeaderToFit() {
         let header = tableView.tableHeaderView!
-
+        
         if userProfile != User.currentUser() {
             segmentedControlHeight.constant = 0
             segmentedControl.hidden = true
@@ -135,7 +135,7 @@ public class ProfileViewController: ThreadViewController {
             }
         }
     }
-
+    
     // MARK: - Fetching
     
     override public func fetchPosts() {
@@ -154,7 +154,7 @@ public class ProfileViewController: ThreadViewController {
         query.whereKey("aozoraUsername", equalTo: username)
         query.includeKey("details")
         query.findObjectsInBackgroundWithBlock { (result, error) -> Void in
-
+            
             if let user = result?.last as? User {
                 self.userProfile = user
                 self.updateViewWithUser(user)
@@ -241,6 +241,11 @@ public class ProfileViewController: ThreadViewController {
                 proBadge.hidden = false
                 proBadge.text = proString
             }
+        }
+        
+        
+        if (user.isAdmin()){
+            self.tagBadge.backgroundColor = UIColor.aozoraPurple()
         }
         
         if User.currentUserIsGuest() {
@@ -373,10 +378,10 @@ public class ProfileViewController: ThreadViewController {
         
         return [query, repliesQuery]
     }
-
+    
     
     // MARK: - CommentViewControllerDelegate
-
+    
     public override func commentViewControllerDidFinishedPosting(newPost: PFObject, parentPost: PFObject?, edited: Bool) {
         super.commentViewControllerDidFinishedPosting(newPost, parentPost: parentPost, edited: edited)
         
@@ -400,11 +405,11 @@ public class ProfileViewController: ThreadViewController {
     
     
     // MARK: - FetchControllerDelegate
-
+    
     public override func didFetchFor(skip skip: Int) {
         super.didFetchFor(skip: skip)
     }
-
+    
     
     // MARK: - IBActions
     
