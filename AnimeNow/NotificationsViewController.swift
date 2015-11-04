@@ -154,7 +154,7 @@ extension NotificationsViewController: FetchControllerQueryDelegate {
     func queriesForSkip(skip skip: Int) -> [PFQuery]? {
         return nil
     }
-    func processResult(result result: [PFObject]) -> [PFObject] {
+    func processResult(result result: [PFObject], dataSource: [PFObject]) -> [PFObject] {
         let filtered = result.filter({ (object: PFObject) -> Bool in
             let notification = object as! Notification
             return notification.triggeredBy.count > 1 || (notification.triggeredBy.count == 1 && notification.triggeredBy.last != User.currentUser()!)

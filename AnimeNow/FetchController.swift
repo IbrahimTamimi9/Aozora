@@ -16,7 +16,7 @@ public protocol FetchControllerDelegate: class {
 
 public protocol FetchControllerQueryDelegate: class {
     func queriesForSkip(skip skip: Int) -> [PFQuery]?
-    func processResult(result result: [PFObject]) -> [PFObject]
+    func processResult(result result: [PFObject], dataSource: [PFObject]) -> [PFObject]
 }
 
 public class FetchController {
@@ -165,7 +165,7 @@ public class FetchController {
             
         let allFetchTasks = BFTask(forCompletionOfAllTasks: [fetchTask, fetchTask2]).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
             
-            if let processedResult = self.queryDelegate?.processResult(result: allData) {
+            if let processedResult = self.queryDelegate?.processResult(result: allData, dataSource: self.dataSource) {
                 allData = processedResult
             }
             

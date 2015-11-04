@@ -664,17 +664,35 @@ extension ThreadViewController: FetchControllerQueryDelegate {
         return [query]
     }
     
-    public func processResult(result result: [PFObject]) -> [PFObject] {
+    public func processResult(result result: [PFObject], dataSource: [PFObject]) -> [PFObject] {
         
         let posts = result.filter({ $0["replyLevel"] as? Int == 0 })
         let replies = result.filter({ $0["replyLevel"] as? Int == 1 })
         
+        // If page 0 was loaded and there are new posts, page 1 could return repeated results,
+        // For this, we need to remove duplicates
+        var searchIn: [PFObject] = []
+        if dataSource.count > result.count {
+            let b = dataSource.count
+            let a = b-result.count
+            searchIn = Array(dataSource[a..<b])
+        } else {
+            searchIn = dataSource
+        }
+        var uniquePosts: [PFObject] = []
         for post in posts {
+            let exists = searchIn.filter({$0.objectId! == post.objectId!})
+            if exists.count == 0 {
+                uniquePosts.append(post)
+            }
+        }
+        
+        for post in uniquePosts {
             let postReplies = replies.filter({ $0["parentPost"] as? PFObject == post }) as [PFObject]
             var postable = post as! Postable
             postable.replies = postReplies
         }
 
-        return posts
+        return uniquePosts
     }
 }
