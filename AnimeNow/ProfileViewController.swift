@@ -244,8 +244,8 @@ public class ProfileViewController: ThreadViewController {
         }
         
         
-        if (user.isAdmin()){
-            self.tagBadge.backgroundColor = UIColor.coralsalmon()
+        if user.isAdmin() {
+            tagBadge.backgroundColor = UIColor.aozoraPurple()
         }
         
         if User.currentUserIsGuest() {
