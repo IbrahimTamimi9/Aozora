@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (2.0.2)
+  - CRToast (0.0.9)
   - FLAnimatedImage (1.0.8)
   - FontAwesome+iOS (0.1.4)
   - HCSStarRatingView (1.2)
@@ -19,6 +20,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (~> 2.0)
+  - CRToast (~> 0.0.7)
   - FLAnimatedImage (~> 1.0)
   - FontAwesome+iOS
   - HCSStarRatingView (from `https://github.com/hugocampossousa/HCSStarRatingView.git`)
@@ -49,6 +51,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: 8edbab00802a752bb5240cc2abe70e7e881488ad
+  CRToast: 5a78c22b921c5ed3487488af605bc403a9c92fed
   FLAnimatedImage: f9422f796135aff80d8c00b2afc48015bb746e24
   FontAwesome+iOS: 9070b682a9255ca0fdc34bcfb129ad0ba2b73b87
   HCSStarRatingView: 398beb411f6197f3445bac8eb90962c3166597cb
@@ -62,4 +65,4 @@ SPEC CHECKSUMS:
   XCDYouTubeKit: 254eb5252b4e8cb962fb924d545604ddfd0346f4
   XLPagerTabStrip: 222995115ef0d3a7134073b02d38023592835c17
 
-COCOAPODS: 0.38.2
+COCOAPODS: 0.39.0

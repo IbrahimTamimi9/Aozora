@@ -117,15 +117,15 @@ public class NotificationThreadViewController: ThreadViewController {
     
     // MARK: - FetchControllerDelegate
 
-        public override func didFetchFor(skip skip: Int) {
-            super.didFetchFor(skip: skip)
-            let post = fetchController.objectInSection(0)
-            if let post = post as? TimelinePostable {
-                navigationItem.title = "In " + post.userTimeline.aozoraUsername + " timeline"
-            } else if let post = post as? ThreadPostable {
-                navigationItem.title = "In " + post.thread.title
-            }
+    public override func didFetchFor(skip skip: Int) {
+        super.didFetchFor(skip: skip)
+        let post = fetchController.objectInSection(0)
+        if let post = post as? TimelinePostable {
+            navigationItem.title = "In " + post.userTimeline.aozoraUsername + " timeline"
+        } else if let post = post as? ThreadPostable {
+            navigationItem.title = "In " + post.thread.title
         }
+    }
     
     // MARK: - IBAction
     

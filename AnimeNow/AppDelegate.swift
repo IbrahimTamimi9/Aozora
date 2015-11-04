@@ -70,20 +70,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Extract the notification data
         if let objectClass = userInfo["targetClass"] as? String,
             let objectId = userInfo["targetID"] as? String,
-            let notificationId = userInfo["notificationID"] as? String{
-                
+            let notificationId = userInfo["notificationID"] as? String,
+            let alert = userInfo["aps"]!["alert"] as? String {
                 
                 let state = UIApplication.sharedApplication().applicationState;
                 if state == UIApplicationState.Background || state == UIApplicationState.Inactive
                 {
-                    let notification = Notification(withoutDataWithObjectId: notificationId)
-                    notification.addUniqueObject(User.currentUser()!, forKey: "readBy")
-                    notification.saveEventually()
-                    
-                    NotificationsController.handleNotification(objectClass, objectId: objectId)
+                    NotificationsController.handleNotification(notificationId, objectClass: objectClass, objectId: objectId)
                 } else {
                     // Not from background
-                    NSNotificationCenter.defaultCenter().postNotificationName("newNotification", object: nil)
+                    NotificationsController.showToast(notificationId, objectClass: objectClass, objectId: objectId, message: alert)
                 }
                 
                 if let completionHandler = completionHandler {

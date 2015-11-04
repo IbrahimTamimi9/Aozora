@@ -146,7 +146,7 @@ extension NotificationsViewController: UITableViewDelegate {
         
         // Temporal fix to prevent opening the notification twice
         tableView.userInteractionEnabled = false
-        NotificationsController.handleNotification(notification.targetClass, objectId: notification.targetID)
+        NotificationsController.handleNotification(notification.objectId!, objectClass: notification.targetClass, objectId: notification.targetID)
     }
 }
 

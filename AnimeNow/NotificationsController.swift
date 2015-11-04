@@ -8,10 +8,15 @@
 
 import Foundation
 import ANParseKit
+import CRToast
 
 class NotificationsController {
     
-    class func handleNotification(objectClass: String, objectId: String) {
+    class func handleNotification(notificationId: String, objectClass: String, objectId: String) {
+        
+        let notification = Notification(withoutDataWithObjectId: notificationId)
+        notification.addUniqueObject(User.currentUser()!, forKey: "readBy")
+        notification.saveEventually()
         
         switch objectClass {
         case "_User":
@@ -71,4 +76,33 @@ class NotificationsController {
         }
         
     }
+    
+    class func showToast(notificationId: String, objectClass: String, objectId: String, message: String) {
+        var tapped = false
+        
+        let responder = CRToastInteractionResponder(interactionType: CRToastInteractionType.TapOnce, automaticallyDismiss: true) { (interaction: CRToastInteractionType) -> Void in
+            handleNotification(notificationId, objectClass: objectClass, objectId: objectId)
+            tapped = true
+        }
+        
+        // Create toast
+        let options = [
+            kCRToastInteractionRespondersKey: [responder],
+            //kCRToastNotificationTypeKey: CRToastType.NavigationBar.rawValue,
+            kCRToastTimeIntervalKey: 2.0,
+            kCRToastTextKey : message,
+            kCRToastBackgroundColorKey : UIColor.peterRiver(),
+            kCRToastAnimationInTypeKey : CRToastAnimationType.Spring.rawValue,
+            kCRToastAnimationOutTypeKey : CRToastAnimationType.Spring.rawValue,
+            kCRToastAnimationInDirectionKey : CRToastAnimationDirection.Top.rawValue,
+            kCRToastAnimationOutDirectionKey : CRToastAnimationDirection.Top.rawValue
+            ] as [String: AnyObject]
+        
+        CRToastManager.showNotificationWithOptions(options) { () -> Void in
+            if !tapped {
+                NSNotificationCenter.defaultCenter().postNotificationName("newNotification", object: nil)
+            }
+        }
+    }
+    
 }
