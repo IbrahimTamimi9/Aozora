@@ -284,6 +284,9 @@ public class NewPostViewController: CommentViewController {
             presentBasicAlertWithTitle("Too Short", message: "Message/spoiler should be 3 characters or longer")
             return false
         }
+        if (!muted()) {
+            return false
+        }
         return true
     }
   

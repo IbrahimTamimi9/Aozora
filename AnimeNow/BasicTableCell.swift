@@ -17,4 +17,5 @@ public class BasicTableCell: UITableViewCell {
     
     @IBOutlet public weak var detailLabel: UILabel!
     @IBOutlet public weak var detailSubtitleLabel: UILabel!
+    @IBOutlet public weak var textField: UITextField!
 }

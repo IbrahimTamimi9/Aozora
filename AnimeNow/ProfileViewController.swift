@@ -432,7 +432,7 @@ public class ProfileViewController: ThreadViewController {
     
     @IBAction func showSettings(sender: AnyObject) {
         
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        var alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
         
         alert.addAction(UIAlertAction(title: "View Library", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction) -> Void in
             if let userProfile = self.userProfile {
@@ -442,6 +442,68 @@ public class ProfileViewController: ThreadViewController {
                 self.presentViewController(navVC, animated: true, completion: nil)
             }
         }))
+        
+        if User.currentUser()!.isAdmin() && !(userProfile!.isAdmin()) {
+            var duration: Int?
+            
+            if userProfile!.details.muted == "" {
+                alert.addAction(UIAlertAction(title: "Mute", style: UIAlertActionStyle.Destructive, handler: {
+                    (alertAction: UIAlertAction) -> Void in
+                    
+                        var alertController:UIAlertController?
+                        alertController = UIAlertController(title: "Mute",
+                            message: "Enter duration to mute",
+                            preferredStyle: .Alert)
+                        
+                        alertController!.addTextFieldWithConfigurationHandler(
+                            {(textField: UITextField!) in
+                                textField.placeholder = "Enter duration in minutes"
+                                textField.textColor = UIColor.blackColor()
+                                textField.keyboardType = UIKeyboardType.NumberPad
+                        })
+                        
+                        let action = UIAlertAction(title: "Submit",
+                            style: UIAlertActionStyle.Default,
+                            handler: {[weak self]
+                                (paramAction:UIAlertAction!) in
+                                if let textField = alertController?.textFields{
+                                    let durationTextField = textField as [UITextField]
+                                    duration = Int(durationTextField[0].text!)
+                                    
+                                    if(duration != nil){
+                                        let date = NSDate()
+                                        let date_new = date.dateByAddingTimeInterval(Double(duration!) * 60.0)
+                                        self!.userProfile!.details.muted = String(date_new)
+                                        self!.userProfile!.saveInBackground()
+                                        self!.presentBasicAlertWithTitle("Muted user", message: "You have muted " + self!.userProfile!.username!)
+                                    }
+                                    else{
+                                        self!.presentBasicAlertWithTitle("Woops", message: "Your mute duration is too long.\n" + self!.userProfile!.username! + " will be dead by the time they are unmuted.")
+                                    }
+                                }
+                            })
+                        
+                        let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .Cancel) { action -> Void in
+                        }
+                        
+                        alertController?.addAction(action)
+                        alertController?.addAction(cancelAction)
+
+                        self.presentViewController(alertController!, animated: true, completion: nil)
+                        alert.view.tintColor = UIColor.redColor()
+                }))
+            }
+            if userProfile!.details.muted != "" {
+                alert.addAction(UIAlertAction(title: "Unmute", style: UIAlertActionStyle.Destructive, handler: { (alertAction: UIAlertAction) -> Void in
+                    self.userProfile!.details.muted = ""
+                    self.userProfile!.saveInBackground()
+                    
+                    self.presentBasicAlertWithTitle("Unmuted user", message: "You have unmuted " + self.userProfile!.username!)
+                    
+                    
+                }))
+            }
+        }
         
         if userProfile == User.currentUser()! {
             alert.addAction(UIAlertAction(title: "Edit Profile", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction) -> Void in

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		297ADC741BED777900ED7AB0 /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 297ADC731BED777900ED7AB0 /* Profile.storyboard */; };
 		51750AC81B96323951AB9040 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D27C7A8ED4F7C96DF08F5850 /* Pods.framework */; };
 		5D86412D23C2DF6FF9D63C06 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D27C7A8ED4F7C96DF08F5850 /* Pods.framework */; };
 		6923F76C724843F5AED124BD /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D27C7A8ED4F7C96DF08F5850 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -144,7 +145,6 @@
 		DAA546F41BA1A41D003989DE /* NotificationThreadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA546D11B9EF26E003989DE /* NotificationThreadViewController.swift */; };
 		DAA546F51BA1A726003989DE /* UIViewController+Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7F45861B8F069C006F9321 /* UIViewController+Navigation.swift */; };
 		DAA546F61BA1A73C003989DE /* ANAnimeKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4167E81B275F9400847F56 /* ANAnimeKit.swift */; };
-		DAA546F81BA1AC48003989DE /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAF6189F1B378FF700286517 /* Profile.storyboard */; };
 		DAA546F91BA1AC48003989DE /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58C2D81B386BB90082B626 /* ProfileViewController.swift */; };
 		DAA546FA1BA1AC48003989DE /* UserListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58C2DA1B386BC80082B626 /* UserListViewController.swift */; };
 		DAA546FB1BA1AC48003989DE /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0B26051B75066B00A770AE /* EditProfileViewController.swift */; };
@@ -312,6 +312,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		297ADC731BED777900ED7AB0 /* Profile.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
 		3ABB693D5DECE103E9514C77 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		CC7A7DA6842DABB2A3D90AB9 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		D27C7A8ED4F7C96DF08F5850 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -531,7 +532,6 @@
 		DAF6187B1B3784E300286517 /* ForumsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForumsViewController.swift; sourceTree = "<group>"; };
 		DAF6187F1B37861000286517 /* Forum.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Forum.storyboard; sourceTree = "<group>"; };
 		DAF6189D1B378FEF00286517 /* Forums.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Forums.storyboard; sourceTree = "<group>"; };
-		DAF6189F1B378FF700286517 /* Profile.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
 		DAFBB0941B20EFF700495ED9 /* ChartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartViewController.swift; sourceTree = "<group>"; };
 		DAFD60B21B277B8D007275C1 /* ZFModalTransitionAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZFModalTransitionAnimator.h; path = ../AnimeNow/ZFModalTransitionAnimator.h; sourceTree = "<group>"; };
 		DAFD60B31B277B8D007275C1 /* ZFModalTransitionAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZFModalTransitionAnimator.m; path = ../AnimeNow/ZFModalTransitionAnimator.m; sourceTree = "<group>"; };
@@ -1202,8 +1202,8 @@
 		DAE7A7141B2105C400788614 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				297ADC731BED777900ED7AB0 /* Profile.storyboard */,
 				DAA546D31BA0902E003989DE /* NotificationsController.swift */,
-				DAF6189F1B378FF700286517 /* Profile.storyboard */,
 				DA58C2D81B386BB90082B626 /* ProfileViewController.swift */,
 				DA58C2DA1B386BC80082B626 /* UserListViewController.swift */,
 				DA0B26051B75066B00A770AE /* EditProfileViewController.swift */,
@@ -1565,6 +1565,7 @@
 				DAA546E51BA1A0E8003989DE /* Anime.storyboard in Resources */,
 				DAC13C1E1B4228120013D479 /* AllerDisplay.ttf in Resources */,
 				DAF6189E1B378FEF00286517 /* Forums.storyboard in Resources */,
+				297ADC741BED777900ED7AB0 /* Profile.storyboard in Resources */,
 				DAC13C1B1B4228120013D479 /* Aller_Lt.ttf in Resources */,
 				DA07A3481B4C2B730028B81B /* InApp.storyboard in Resources */,
 				DA52B1871B4845D4001CC1A9 /* CheckInCompact.xib in Resources */,
@@ -1574,7 +1575,6 @@
 				DAC13C031B40569F0013D479 /* Settings.storyboard in Resources */,
 				DAC13C1A1B4228120013D479 /* Aller_It.ttf in Resources */,
 				DA27D19C1AF1BA9D00CC854E /* Season.storyboard in Resources */,
-				DAA546F81BA1AC48003989DE /* Profile.storyboard in Resources */,
 				DAC13BF11B3EF15E0013D479 /* AnimeCellPoster.xib in Resources */,
 				DAC13C181B4228120013D479 /* Aller_Bd.ttf in Resources */,
 				DAD67E061B7292D8000BB325 /* Resources.xcassets in Resources */,
