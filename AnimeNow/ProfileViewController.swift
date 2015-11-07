@@ -478,7 +478,7 @@ public class ProfileViewController: ThreadViewController {
                                         self!.presentBasicAlertWithTitle("Muted user", message: "You have muted " + self!.userProfile!.username!)
                                     }
                                     else{
-                                        self!.presentBasicAlertWithTitle("Woops", message: "Your mute duration is too long.\n" + self!.userProfile!.username! + " will be dead by the time they are unmuted.")
+                                        self!.presentBasicAlertWithTitle("Woops", message: "Your mute duration is too long or you have entered characters.")
                                     }
                                 }
                             })
