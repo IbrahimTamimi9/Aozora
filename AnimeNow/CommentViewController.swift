@@ -181,8 +181,8 @@ public class CommentViewController: UIViewController {
                 return true
             }
             else{
-                var hours = time_left / 60
-                var minutes = time_left % 60
+                let hours = time_left / 60
+                let minutes = time_left % 60
                 
                 presentBasicAlertWithTitle("Account muted", message: "Time left: \(hours) hour(s), \(minutes) minute(s).\nContact admins for more information.")
                 return false
