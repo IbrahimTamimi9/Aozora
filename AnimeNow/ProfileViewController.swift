@@ -471,9 +471,8 @@ public class ProfileViewController: ThreadViewController {
                                     duration = Int(durationTextField[0].text!)
                                     
                                     if(duration != nil){
-                                        let date = NSDate()
-                                        let date_new = date.dateByAddingTimeInterval(Double(duration!) * 60.0)
-                                        self!.userProfile!.details.muted = String(date_new)
+                                        let date = NSDate().dateByAddingTimeInterval(Double(duration!) * 60.0)
+                                        self!.userProfile!.details.muted = String(date)
                                         self!.userProfile!.saveInBackground()
                                         self!.presentBasicAlertWithTitle("Muted user", message: "You have muted " + self!.userProfile!.username!)
                                     }
