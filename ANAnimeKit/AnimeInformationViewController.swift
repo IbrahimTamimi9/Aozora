@@ -84,7 +84,7 @@ public class AnimeInformationViewController: AnimeBaseViewController {
         loadingView = LoaderView(parentView: view)
         
         ranksView.hidden = true
-        fetchCurrentAnime(anime.progress != nil)
+        fetchCurrentAnime()
         
         // Video notifications
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "moviePlayerPlaybackDidFinish:", name: MPMoviePlayerPlaybackDidFinishNotification, object: nil)
@@ -96,53 +96,19 @@ public class AnimeInformationViewController: AnimeBaseViewController {
         self.scrollViewDidScroll(tableView)
     }
     
-    func fetchCurrentAnime(fromLocalDatastore: Bool) {
+    func fetchCurrentAnime() {
         loadingView.startAnimating()
         
         let query = Anime.queryWith(objectID: anime.objectId!)
-    
-        if fromLocalDatastore {
-            print("\(anime.objectId) local")
-            query.fromPinWithName(Anime.PinName.InLibrary.rawValue)
-        } else {
-            print("\(anime.objectId) not local")
-        }
-        
+        query.includeKey("details")
+        query.includeKey("relations")
         query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
             
-            if let error = error {
-                if error.code == 120 {
-                    self.fetchCurrentAnime(false)
-                }
-                print(error)
+            if let _ = error {
+                
             } else {
                 if let anime = objects?.first as? Anime {
-                    if anime.details.dataAvailable {
-                        self.anime = anime
-                    } else {
-                        // Pin if needed
-                        let updatedQuery = Anime.query()!
-                        updatedQuery.includeKey("details")
-                        updatedQuery.includeKey("cast")
-                        updatedQuery.includeKey("characters")
-                        updatedQuery.includeKey("relations")
-                        updatedQuery.whereKey("objectId", equalTo: anime.objectId!)
-                        updatedQuery.limit = 1
-                        updatedQuery.findObjectsInBackground().continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
-                            
-                            let pinName = Anime.PinName.InLibrary.rawValue
-                            let fullAnime = (task.result as! [Anime]).last!
-                            return anime.unpinInBackgroundWithName(pinName).continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
-                                return fullAnime.pinInBackgroundWithName(pinName)
-                            }).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
-                                self.anime = fullAnime
-                                return nil
-                            })
-                        })
-                    }
-                    
-                } else {
-                    self.fetchCurrentAnime(false)
+                    self.anime = anime
                 }
             }
         }

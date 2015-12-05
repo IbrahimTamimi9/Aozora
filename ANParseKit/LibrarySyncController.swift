@@ -473,22 +473,22 @@ public class LibrarySyncController {
     
     // MARK: - Class Methods
     
-    public class func fetchAnime(myAnimeListIDs: [Int], withPinName: String? = nil) -> BFTask {
+    public class func fetchAnime(myAnimeListIDs: [Int]) -> BFTask {
         
         let query = Anime.query()!
-        
-        if let pinName = withPinName {
-            query.fromPinWithName(pinName)
-        }
-        
         query.whereKey("myAnimeListID", containedIn: myAnimeListIDs)
         return query.findAllObjectsInBackground()
     }
     
     public class func matchAnimeWithProgress(animeList: [Anime]) -> BFTask {
+        
+        guard let user = User.currentUser() else {
+            return BFTask(result: [])
+        }
+        
         // Match all anime with it's progress..
         let animeLibraryQuery = AnimeProgress.query()!
-        animeLibraryQuery.fromLocalDatastore()
+        animeLibraryQuery.whereKey("user", equalTo: user)
         animeLibraryQuery.whereKey("anime", containedIn: animeList)
         return animeLibraryQuery.findObjectsInBackground().continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
             if let animeLibrary = task.result as? [AnimeProgress] {
@@ -496,7 +496,6 @@ public class LibrarySyncController {
                     for progress in animeLibrary {
                         if progress.anime.objectId == anime.objectId {
                             anime.progress = progress
-
                             break
                         }
                     }
@@ -505,6 +504,30 @@ public class LibrarySyncController {
             return BFTask(result: animeList)
         }
     }
+    
+//    public class func matchProgressWithAnime(progressList: [AnimeProgress]) -> BFTask {
+//        guard let user = User.currentUser() else {
+//            return BFTask(result: [])
+//        }
+//        
+//        // Match all anime with it's progress..
+//        let animeLibraryQuery = Anime.query()!
+//        animeLibraryQuery.whereKey("user", equalTo: user)
+//        animeLibraryQuery.whereKey("anime", containedIn: animeList)
+//        return animeLibraryQuery.findObjectsInBackground().continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
+//            if let animeLibrary = task.result as? [AnimeProgress] {
+//                for anime in animeList where anime.progress == nil {
+//                    for progress in animeLibrary {
+//                        if progress.anime.objectId == anime.objectId {
+//                            anime.progress = progress
+//                            break
+//                        }
+//                    }
+//                }
+//            }
+//            return BFTask(result: animeList)
+//        }
+//    }
     
     // MARK: - General External Library Methods
     

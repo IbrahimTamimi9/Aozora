@@ -31,7 +31,6 @@
 		DA27D1A11AF1BA9D00CC854E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA27D19F1AF1BA9D00CC854E /* LaunchScreen.xib */; };
 		DA27D1AD1AF1BA9D00CC854E /* AnimeNowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA27D1AC1AF1BA9D00CC854E /* AnimeNowTests.swift */; };
 		DA2D1EF01B531B0C009A5CCD /* NSUserDefaults+Dates.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2D1EEE1B5318E1009A5CCD /* NSUserDefaults+Dates.swift */; };
-		DA2D1EF11B531B21009A5CCD /* PFQuery+LocalDatastore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2D1EEC1B530903009A5CCD /* PFQuery+LocalDatastore.swift */; };
 		DA2D1EF51B53F475009A5CCD /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA2D1EF31B53F475009A5CCD /* Fabric.framework */; };
 		DA2D1EF61B53F475009A5CCD /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA2D1EF41B53F475009A5CCD /* Crashlytics.framework */; };
 		DA35B9951B7402F000C0AAC7 /* UISearchBar+Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA35B9941B7402F000C0AAC7 /* UISearchBar+Appearance.swift */; };
@@ -343,7 +342,6 @@
 		DA2853BC1B22B7130070B675 /* LoaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoaderView.swift; sourceTree = "<group>"; };
 		DA2853BE1B22C1710070B675 /* HighlightButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HighlightButton.swift; sourceTree = "<group>"; };
 		DA2853C11B22C5D30070B675 /* UIColor+AniNow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIColor+AniNow.swift"; path = "../AnimeNow/UIColor+AniNow.swift"; sourceTree = "<group>"; };
-		DA2D1EEC1B530903009A5CCD /* PFQuery+LocalDatastore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "PFQuery+LocalDatastore.swift"; path = "../AnimeNow/PFQuery+LocalDatastore.swift"; sourceTree = "<group>"; };
 		DA2D1EEE1B5318E1009A5CCD /* NSUserDefaults+Dates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSUserDefaults+Dates.swift"; path = "../AnimeNow/NSUserDefaults+Dates.swift"; sourceTree = "<group>"; };
 		DA2D1EF31B53F475009A5CCD /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		DA2D1EF41B53F475009A5CCD /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
@@ -1167,7 +1165,6 @@
 			isa = PBXGroup;
 			children = (
 				DA0B26071B75109000A770AE /* String+Validations.swift */,
-				DA2D1EEC1B530903009A5CCD /* PFQuery+LocalDatastore.swift */,
 				DAE43C311B2BC1A900C3092D /* TFHppleElement+Convenience.swift */,
 				DA8B6E061B6C4DBF00D240FC /* UIImageView+PFFile.swift */,
 				DA03F15B1B8B818E00402AC4 /* TTTAttributedLabel+Tags.swift */,
@@ -1871,7 +1868,6 @@
 				DAFE19B01B29F264002F3A76 /* AnimeCast.swift in Sources */,
 				DACCF35F1B111016006A13EB /* AnimeService.swift in Sources */,
 				DA6E12E61B10D96F00B278B0 /* WSWebScraper.m in Sources */,
-				DA2D1EF11B531B21009A5CCD /* PFQuery+LocalDatastore.swift in Sources */,
 				DA9AE39C1B69382D0053C2EA /* FetchController.swift in Sources */,
 				DA03F1561B8B188F00402AC4 /* NewThreadViewController.swift in Sources */,
 				DA8B6E071B6C4DBF00D240FC /* UIImageView+PFFile.swift in Sources */,

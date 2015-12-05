@@ -68,7 +68,7 @@ public class TagsViewController: UIViewController {
         }
         
         query.orderByAscending("order")
-        query.findCachedOrNetwork(AllThreadTagsPin, expirationDays: 1).continueWithExecutor(BFExecutor.mainThreadExecutor(),
+        query.findObjectsInBackground().continueWithExecutor(BFExecutor.mainThreadExecutor(),
             withSuccessBlock: { (task: BFTask!) -> AnyObject! in
                 
                 self.dataSource = task.result as! [ThreadTag]

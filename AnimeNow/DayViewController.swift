@@ -29,33 +29,12 @@ class DayViewController: UIViewController {
 
     func updateDataSource(dataSource: [Anime]) {
         
-        
-        let ids = dataSource.map() { (anime) -> Int in
-            return anime.myAnimeListID
+        self.dataSource = [[], dataSource]
+        self.sort()
+        if self.isViewLoaded() {
+            self.collectionView.reloadData()
+            self.collectionView.animateFadeIn()
         }
-        
-        // Find existing on library
-        LibrarySyncController.fetchAnime(ids, withPinName: Anime.PinName.InLibrary.rawValue).continueWithExecutor( BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
-            
-            if let result = task.result as? [Anime] {
-                
-                return LibrarySyncController.matchAnimeWithProgress(result)
-                    .continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
-                        let filtered = dataSource.filter({ (anime: Anime) -> Bool in
-                            return !result.contains(anime)
-                        })
-                        
-                        self.dataSource = [result, filtered]
-                        self.sort()
-                        if self.isViewLoaded() {
-                            self.collectionView.reloadData()
-                            self.collectionView.animateFadeIn()
-                        }
-                        return nil
-                    })
-            }
-            return nil
-        })
     }
     
     override func viewDidLoad() {
@@ -70,43 +49,12 @@ class DayViewController: UIViewController {
     
     func sort() {
         
-        let today = NSDate()
-        var index = 0
-        
-        dataSource = dataSource.map() { (var animeArray) -> [Anime] in
+        dataSource = animeArray.sortInPlace({ (anime1: Anime, anime2: Anime) in
             
-            if index == 0 {
-                animeArray.sortInPlace({ (anime1: Anime, anime2: Anime) in
-                    
-                    let nextDate1 = anime1.nextEpisodeDate ?? NSDate(timeIntervalSinceNow: 60*60*24*2)
-                    let nextDate2 = anime2.nextEpisodeDate ?? NSDate(timeIntervalSinceNow: 60*60*24*2)
-                    
-                    let anime1IsToday = nextDate1.timeIntervalSinceDate(today) < 60*60*24
-                    let anime2IsToday = nextDate2.timeIntervalSinceDate(today) < 60*60*24
-                    if anime1IsToday && anime2IsToday {
-                        return nextDate1.compare(nextDate2) == .OrderedAscending
-                    } else if !anime1IsToday && !anime2IsToday {
-                        return nextDate1.compare(nextDate2) == .OrderedDescending
-                    } else if anime1IsToday && !anime2IsToday {
-                        return false
-                    } else {
-                        return true
-                    }
-                    
-                })
-            } else {
-                animeArray.sortInPlace({ (anime1: Anime, anime2: Anime) in
-                    
-                    let startDate1 = anime1.nextEpisodeDate ?? NSDate(timeIntervalSinceNow: 60*60*24*100)
-                    let startDate2 = anime2.nextEpisodeDate ?? NSDate(timeIntervalSinceNow: 60*60*24*100)
-                    return startDate1.compare(startDate2) == .OrderedAscending
-                })
-            }
-            
-            index += 1
-            
-            return animeArray
-        }
+            let startDate1 = anime1.nextEpisodeDate ?? NSDate(timeIntervalSinceNow: 60*60*24*100)
+            let startDate2 = anime2.nextEpisodeDate ?? NSDate(timeIntervalSinceNow: 60*60*24*100)
+            return startDate1.compare(startDate2) == .OrderedAscending
+        })
     }
     
     func updateLayout() {
@@ -176,45 +124,25 @@ extension DayViewController: UICollectionViewDataSource {
             
             let headerView = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView", forIndexPath: indexPath) as! BasicCollectionReusableView
             
-            if indexPath.section == 0 {
-                headerView.titleLabel.text = "In Library"
-            } else {
-                headerView.titleLabel.text = "All"
-            }
-            
-            reusableView = headerView;
+            headerView.titleLabel.text = "All"
+            reusableView = headerView
         }
         
         return reusableView
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        
-        if dataSource[section].count == 0 {
-            return CGSizeZero
-        } else {
-            return CGSize(width: view.bounds.size.width, height: 44.0)
-        }
+        return CGSize(width: view.bounds.size.width, height: 44.0)
     }
     
 }
 
 extension DayViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        if indexPath.section == 0 {
+        let totalSize: CGFloat = view.bounds.size.width - (2 * (4 + 1))
+        let width = totalSize / 4
+        return CGSize(width: width, height: width/100*176)
 
-            let totalSize: CGFloat = view.bounds.size.width - (2 * (2 + 1))
-            let width = totalSize / 2
-            return CGSize(width: width, height: width/164*164)
-            
-        } else {
-            
-            let totalSize: CGFloat = view.bounds.size.width - (2 * (4 + 1))
-            let width = totalSize / 4
-            return CGSize(width: width, height: width/100*176)
-            
-        }
-        
     }
 }
 extension DayViewController: UICollectionViewDelegate {

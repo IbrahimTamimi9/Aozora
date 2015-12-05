@@ -57,6 +57,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SDImageCache.sharedImageCache().maxCacheSize = 1024 * 1024 * 250
         
         makeUpdateChanges()
+        
+        NSUserDefaults.standardUserDefaults().setValue(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
+
         return true
     }
     

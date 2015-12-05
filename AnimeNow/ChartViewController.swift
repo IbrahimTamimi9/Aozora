@@ -180,12 +180,12 @@ class ChartViewController: UIViewController {
     
     func fetchSeasonalChart(seasonalChart: String) {
         
+        let startDate = NSDate()
         
         ChartController.fetchAllSeasons()
         .continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
             
             let result = task.result as! [SeasonalChart]
-            
             self.chartsDataSource = result
             let currentSeasonalChart = result.filter({$0.title == seasonalChart})
             
@@ -207,6 +207,7 @@ class ChartViewController: UIViewController {
             
         }.continueWithExecutor(BFExecutor.mainThreadExecutor(), withBlock: { (task: BFTask!) -> AnyObject! in
         
+            print("Load seasons = \(NSDate().timeIntervalSinceDate(startDate))s")
             if let result = task.result as? [Anime] {
                 let tvAnime = result.filter({$0.type == "TV"})
                 let tv = tvAnime.filter({$0.duration == 0 || $0.duration > 15})

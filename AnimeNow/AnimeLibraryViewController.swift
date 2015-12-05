@@ -121,7 +121,13 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
         }
         
         currentlySyncing = true
+        
+        let startDate = NSDate()
+        
         return LibrarySyncController.fetchWatchingList(isRefreshing).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
+            
+            print("Load library = \(NSDate().timeIntervalSinceDate(startDate))s")
+            
             if let result = task.result as? [Anime] where result.count > 0 {
                 self.updateListViewControllers(result)
             }
