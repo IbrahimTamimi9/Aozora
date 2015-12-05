@@ -176,12 +176,9 @@
 		DAC13C1D1B4228120013D479 /* Aller_Rg.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DAC13C141B4223450013D479 /* Aller_Rg.ttf */; };
 		DAC13C1E1B4228120013D479 /* AllerDisplay.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DAC13C151B4223450013D479 /* AllerDisplay.ttf */; };
 		DAC3F3E11B5E989E001D6072 /* Resources.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAC3F3E01B5E989E001D6072 /* Resources.xcassets */; };
-		DAC55CB41B91EF540086D0DB /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC55CB11B91EF540086D0DB /* Bolts.framework */; };
-		DAC55CB51B91EF540086D0DB /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC55CB11B91EF540086D0DB /* Bolts.framework */; };
-		DAC55CB61B91EF540086D0DB /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC55CB21B91EF540086D0DB /* Parse.framework */; };
-		DAC55CB71B91EF540086D0DB /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC55CB21B91EF540086D0DB /* Parse.framework */; };
-		DAC55CB81B91EF540086D0DB /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC55CB31B91EF540086D0DB /* ParseFacebookUtilsV4.framework */; };
-		DAC55CB91B91EF540086D0DB /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC55CB31B91EF540086D0DB /* ParseFacebookUtilsV4.framework */; };
+		DAC53A151C1373DE00572938 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC53A0F1C1373C800572938 /* Bolts.framework */; };
+		DAC53A161C1373DE00572938 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC53A101C1373C800572938 /* Parse.framework */; };
+		DAC53A171C1373DE00572938 /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC53A111C1373C800572938 /* ParseFacebookUtilsV4.framework */; };
 		DAC7D8FC1B5015FA00898FF6 /* InAppPurchaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA07A3491B4C2B860028B81B /* InAppPurchaseViewController.swift */; };
 		DAC7D8FF1B5018DE00898FF6 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC7D8FE1B5018DE00898FF6 /* iAd.framework */; };
 		DAC7D9031B50201C00898FF6 /* InAppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3B61D81B4F59E700A3F7BA /* InAppController.swift */; };
@@ -196,13 +193,9 @@
 		DAD67DFD1B726724000BB325 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD67DFC1B726724000BB325 /* User.swift */; };
 		DAD67E041B7292D6000BB325 /* Resources.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAC3F3E01B5E989E001D6072 /* Resources.xcassets */; };
 		DAD67E061B7292D8000BB325 /* Resources.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAC3F3E01B5E989E001D6072 /* Resources.xcassets */; };
-		DAD681D31BB593B3003B5251 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAD681CF1BB593B3003B5251 /* FBSDKCoreKit.framework */; };
 		DAD681D41BB593B3003B5251 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAD681CF1BB593B3003B5251 /* FBSDKCoreKit.framework */; };
-		DAD681D51BB593B3003B5251 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAD681D01BB593B3003B5251 /* FBSDKLoginKit.framework */; };
 		DAD681D61BB593B3003B5251 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAD681D01BB593B3003B5251 /* FBSDKLoginKit.framework */; };
-		DAD681D71BB593B3003B5251 /* FBSDKMessengerShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAD681D11BB593B3003B5251 /* FBSDKMessengerShareKit.framework */; };
 		DAD681D81BB593B3003B5251 /* FBSDKMessengerShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAD681D11BB593B3003B5251 /* FBSDKMessengerShareKit.framework */; };
-		DAD681D91BB593B3003B5251 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAD681D21BB593B3003B5251 /* FBSDKShareKit.framework */; };
 		DAD681DA1BB593B3003B5251 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAD681D21BB593B3003B5251 /* FBSDKShareKit.framework */; };
 		DAE43C321B2BC1A900C3092D /* TFHppleElement+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE43C311B2BC1A900C3092D /* TFHppleElement+Convenience.swift */; };
 		DAE43C341B2BC3B700C3092D /* AnimeDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE43C331B2BC3B700C3092D /* AnimeDetail.swift */; };
@@ -349,7 +342,7 @@
 		DA27D1B61AF1BFA300CC854E /* AniList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AniList.swift; sourceTree = "<group>"; };
 		DA2853BC1B22B7130070B675 /* LoaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoaderView.swift; sourceTree = "<group>"; };
 		DA2853BE1B22C1710070B675 /* HighlightButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HighlightButton.swift; sourceTree = "<group>"; };
-		DA2853C11B22C5D30070B675 /* UIColor+AniNow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+AniNow.swift"; sourceTree = "<group>"; };
+		DA2853C11B22C5D30070B675 /* UIColor+AniNow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIColor+AniNow.swift"; path = "../AnimeNow/UIColor+AniNow.swift"; sourceTree = "<group>"; };
 		DA2D1EEC1B530903009A5CCD /* PFQuery+LocalDatastore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "PFQuery+LocalDatastore.swift"; path = "../AnimeNow/PFQuery+LocalDatastore.swift"; sourceTree = "<group>"; };
 		DA2D1EEE1B5318E1009A5CCD /* NSUserDefaults+Dates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSUserDefaults+Dates.swift"; path = "../AnimeNow/NSUserDefaults+Dates.swift"; sourceTree = "<group>"; };
 		DA2D1EF31B53F475009A5CCD /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
@@ -388,7 +381,7 @@
 		DA54E30A1BE9487800FE0AE9 /* PFQuery+Query.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PFQuery+Query.swift"; sourceTree = "<group>"; };
 		DA58C2D81B386BB90082B626 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		DA58C2DA1B386BC80082B626 /* UserListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserListViewController.swift; sourceTree = "<group>"; };
-		DA58C2E11B38A7760082B626 /* String+NSDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+NSDate.swift"; sourceTree = "<group>"; };
+		DA58C2E11B38A7760082B626 /* String+NSDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+NSDate.swift"; path = "../AnimeNow/String+NSDate.swift"; sourceTree = "<group>"; };
 		DA58C2E41B39C0080082B626 /* Browse.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Browse.storyboard; sourceTree = "<group>"; };
 		DA58C2E61B39C01B0082B626 /* BrowseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseViewController.swift; sourceTree = "<group>"; };
 		DA58C2E81B3B0B680082B626 /* EpisodeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodeCell.swift; sourceTree = "<group>"; };
@@ -449,7 +442,7 @@
 		DA8DD6421B3CAEC500B05FBF /* FilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		DA9AE39A1B6930F60053C2EA /* TimelinePost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelinePost.swift; sourceTree = "<group>"; };
 		DA9EB9301B2BA580001ECFA7 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
-		DA9F731A1B2930F200C2652C /* UIImageView+SDWebImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+SDWebImage.swift"; sourceTree = "<group>"; };
+		DA9F731A1B2930F200C2652C /* UIImageView+SDWebImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIImageView+SDWebImage.swift"; path = "../AnimeNow/UIImageView+SDWebImage.swift"; sourceTree = "<group>"; };
 		DAA253B51B2B877C0092EB0B /* CharactersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharactersViewController.swift; sourceTree = "<group>"; };
 		DAA253B71B2B8AF50092EB0B /* AnimeBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeBaseViewController.swift; sourceTree = "<group>"; };
 		DAA26C8D1BCC92B1001CF62D /* PublicListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicListViewController.swift; sourceTree = "<group>"; };
@@ -493,9 +486,9 @@
 		DAC13C251B42495A0013D479 /* WorkflowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkflowController.swift; sourceTree = "<group>"; };
 		DAC13C291B424DEF0013D479 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
 		DAC3F3E01B5E989E001D6072 /* Resources.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Resources.xcassets; sourceTree = "<group>"; };
-		DAC55CB11B91EF540086D0DB /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
-		DAC55CB21B91EF540086D0DB /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
-		DAC55CB31B91EF540086D0DB /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
+		DAC53A0F1C1373C800572938 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
+		DAC53A101C1373C800572938 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		DAC53A111C1373C800572938 /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
 		DAC610BD1B312B0200B60631 /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserCell.swift; path = ../ANAnimeKit/UserCell.swift; sourceTree = "<group>"; };
 		DAC7D8FE1B5018DE00898FF6 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		DAC7D9011B50201300898FF6 /* InAppController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InAppController.swift; path = ../ANCommonKit/InAppController.swift; sourceTree = "<group>"; };
@@ -505,7 +498,7 @@
 		DACD6AAB1B62E54F00DDA55C /* RateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateViewController.swift; sourceTree = "<group>"; };
 		DACD6AAD1B62F4C700DDA55C /* Rate.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Rate.storyboard; sourceTree = "<group>"; };
 		DACD6AB71B6315AA00DDA55C /* ReminderController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderController.swift; sourceTree = "<group>"; };
-		DACE77C11B294D7B00037486 /* NSDate+AniNow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDate+AniNow.swift"; sourceTree = "<group>"; };
+		DACE77C11B294D7B00037486 /* NSDate+AniNow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSDate+AniNow.swift"; path = "../AnimeNow/NSDate+AniNow.swift"; sourceTree = "<group>"; };
 		DACE77C31B29517F00037486 /* AnimeRelation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeRelation.swift; sourceTree = "<group>"; };
 		DAD3909D1B6C2F35000A84DE /* PostImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostImageCell.xib; sourceTree = "<group>"; };
 		DAD390A11B6C303D000A84DE /* CommentTextCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentTextCell.xib; sourceTree = "<group>"; };
@@ -520,7 +513,7 @@
 		DAE43C311B2BC1A900C3092D /* TFHppleElement+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TFHppleElement+Convenience.swift"; sourceTree = "<group>"; };
 		DAE43C331B2BC3B700C3092D /* AnimeDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeDetail.swift; sourceTree = "<group>"; };
 		DAE43C371B2D5BC800C3092D /* Atarashii.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Atarashii.swift; sourceTree = "<group>"; };
-		DAE43C391B2F971800C3092D /* UIView+Animation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Animation.swift"; sourceTree = "<group>"; };
+		DAE43C391B2F971800C3092D /* UIView+Animation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIView+Animation.swift"; path = "../AnimeNow/UIView+Animation.swift"; sourceTree = "<group>"; };
 		DAE64EEB1B73CCE4005A984A /* ImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
 		DAE7A7181B2105FD00788614 /* AnimeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeCell.swift; sourceTree = "<group>"; };
 		DAF357051B4593E200629A3D /* LibraryAnimeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryAnimeCell.swift; sourceTree = "<group>"; };
@@ -552,15 +545,8 @@
 				DA2D1EF61B53F475009A5CCD /* Crashlytics.framework in Frameworks */,
 				DA2D1EF51B53F475009A5CCD /* Fabric.framework in Frameworks */,
 				DA4AF8CC1B276E060020252E /* ANCommonKit.framework in Frameworks */,
-				DAD681D91BB593B3003B5251 /* FBSDKShareKit.framework in Frameworks */,
-				DAD681D71BB593B3003B5251 /* FBSDKMessengerShareKit.framework in Frameworks */,
 				DA6E12C51B10D94200B278B0 /* ANParseKit.framework in Frameworks */,
-				DAD681D31BB593B3003B5251 /* FBSDKCoreKit.framework in Frameworks */,
 				6923F76C724843F5AED124BD /* Pods.framework in Frameworks */,
-				DAC55CB41B91EF540086D0DB /* Bolts.framework in Frameworks */,
-				DAD681D51BB593B3003B5251 /* FBSDKLoginKit.framework in Frameworks */,
-				DAC55CB61B91EF540086D0DB /* Parse.framework in Frameworks */,
-				DAC55CB81B91EF540086D0DB /* ParseFacebookUtilsV4.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -592,9 +578,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DAF618701B377C3000286517 /* Accounts.framework in Frameworks */,
-				DAC55CB51B91EF540086D0DB /* Bolts.framework in Frameworks */,
 				DAD681D61BB593B3003B5251 /* FBSDKLoginKit.framework in Frameworks */,
-				DAC55CB91B91EF540086D0DB /* ParseFacebookUtilsV4.framework in Frameworks */,
 				DAF6186F1B377C2100286517 /* Social.framework in Frameworks */,
 				DA9EB9311B2BA580001ECFA7 /* WebKit.framework in Frameworks */,
 				DAD681DA1BB593B3003B5251 /* FBSDKShareKit.framework in Frameworks */,
@@ -603,12 +587,14 @@
 				DA6E13271B10FA8900B278B0 /* CoreGraphics.framework in Frameworks */,
 				DAD681D41BB593B3003B5251 /* FBSDKCoreKit.framework in Frameworks */,
 				DA6E13261B10FA8400B278B0 /* CoreLocation.framework in Frameworks */,
+				DAC53A171C1373DE00572938 /* ParseFacebookUtilsV4.framework in Frameworks */,
+				DAC53A161C1373DE00572938 /* Parse.framework in Frameworks */,
 				DA6E13241B10FA7B00B278B0 /* QuartzCore.framework in Frameworks */,
 				DA6E13231B10FA7700B278B0 /* Security.framework in Frameworks */,
 				DAD681D81BB593B3003B5251 /* FBSDKMessengerShareKit.framework in Frameworks */,
 				DA6E13221B10FA7300B278B0 /* StoreKit.framework in Frameworks */,
-				DAC55CB71B91EF540086D0DB /* Parse.framework in Frameworks */,
 				DA6E13211B10FA6E00B278B0 /* SystemConfiguration.framework in Frameworks */,
+				DAC53A151C1373DE00572938 /* Bolts.framework in Frameworks */,
 				DA6E13201B10F9F500B278B0 /* libsqlite3.dylib in Frameworks */,
 				DA6E131F1B10F9EE00B278B0 /* libz.dylib in Frameworks */,
 				DA6E131E1B10F9E900B278B0 /* libxml2.dylib in Frameworks */,
@@ -758,19 +744,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		DA2853C01B22C5B40070B675 /* Categories */ = {
-			isa = PBXGroup;
-			children = (
-				DA9F731A1B2930F200C2652C /* UIImageView+SDWebImage.swift */,
-				DA2853C11B22C5D30070B675 /* UIColor+AniNow.swift */,
-				DACE77C11B294D7B00037486 /* NSDate+AniNow.swift */,
-				DAE43C391B2F971800C3092D /* UIView+Animation.swift */,
-				DA58C2E11B38A7760082B626 /* String+NSDate.swift */,
-			);
-			name = Categories;
-			path = ../AnimeNow;
-			sourceTree = "<group>";
-		};
 		DA38A98A1B223B11002FCBB4 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -843,7 +816,6 @@
 				DA7C84C71B43797F0036D119 /* Extensions */,
 				DAC077AE1B6890F50067DA90 /* Posts */,
 				DAFBB0931B20EFC600495ED9 /* API */,
-				DA2853C01B22C5B40070B675 /* Categories */,
 				DA38A98D1B223EFC002FCBB4 /* Views */,
 				DAF6187D1B3785D600286517 /* Browser */,
 				DA38A98A1B223B11002FCBB4 /* ViewControllers */,
@@ -915,7 +887,7 @@
 				DACCF35C1B110AA2006A13EB /* ANParseKit.swift */,
 				DAC7D9011B50201300898FF6 /* InAppController.swift */,
 				DAE43C301B2BC16F00C3092D /* Extensions */,
-				DACE77C51B29518300037486 /* Parse classes */,
+				DACE77C51B29518300037486 /* Models */,
 				DA5A3BED1B346F2100C07D71 /* MALScrapper */,
 				DA5A3BF21B35EB4000C07D71 /* Login */,
 				DAD67DFE1B72759F000BB325 /* Comment */,
@@ -997,6 +969,11 @@
 				DAC13BFD1B3F36AB0013D479 /* UIViewController+Image.swift */,
 				DA35B9941B7402F000C0AAC7 /* UISearchBar+Appearance.swift */,
 				DAA546D51BA090C0003989DE /* UIApplication+Navigation.swift */,
+				DA9F731A1B2930F200C2652C /* UIImageView+SDWebImage.swift */,
+				DA2853C11B22C5D30070B675 /* UIColor+AniNow.swift */,
+				DACE77C11B294D7B00037486 /* NSDate+AniNow.swift */,
+				DAE43C391B2F971800C3092D /* UIView+Animation.swift */,
+				DA58C2E11B38A7760082B626 /* String+NSDate.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -1146,7 +1123,7 @@
 			path = ../ANAnimeKit;
 			sourceTree = "<group>";
 		};
-		DACE77C51B29518300037486 /* Parse classes */ = {
+		DACE77C51B29518300037486 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				DA76A1991B2375E1006CB489 /* SeasonalChart.swift */,
@@ -1166,7 +1143,7 @@
 				DA03F1591B8B47FA00402AC4 /* ThreadTag.swift */,
 				DA1340AA1B9E11A10073C6EF /* Notification.swift */,
 			);
-			name = "Parse classes";
+			name = Models;
 			sourceTree = "<group>";
 		};
 		DAD67DFE1B72759F000BB325 /* Comment */ = {
@@ -1315,10 +1292,6 @@
 			isa = PBXGroup;
 			children = (
 				DAFED2511BA716C4009697E4 /* libcommonCrypto.dylib */,
-				DAD681CF1BB593B3003B5251 /* FBSDKCoreKit.framework */,
-				DAD681D01BB593B3003B5251 /* FBSDKLoginKit.framework */,
-				DAD681D11BB593B3003B5251 /* FBSDKMessengerShareKit.framework */,
-				DAD681D21BB593B3003B5251 /* FBSDKShareKit.framework */,
 				DA897F951B6D461800A9510C /* MobileCoreServices.framework */,
 				DA2D1EF31B53F475009A5CCD /* Fabric.framework */,
 				DA2D1EF41B53F475009A5CCD /* Crashlytics.framework */,
@@ -1338,9 +1311,13 @@
 				DA6E12EF1B10DCBC00B278B0 /* AudioToolbox.framework */,
 				DA6E12E91B10DA2F00B278B0 /* libxml2.dylib */,
 				DA6E12E71B10DA2700B278B0 /* libz.dylib */,
-				DAC55CB11B91EF540086D0DB /* Bolts.framework */,
-				DAC55CB21B91EF540086D0DB /* Parse.framework */,
-				DAC55CB31B91EF540086D0DB /* ParseFacebookUtilsV4.framework */,
+				DAC53A0F1C1373C800572938 /* Bolts.framework */,
+				DAC53A101C1373C800572938 /* Parse.framework */,
+				DAC53A111C1373C800572938 /* ParseFacebookUtilsV4.framework */,
+				DAD681CF1BB593B3003B5251 /* FBSDKCoreKit.framework */,
+				DAD681D01BB593B3003B5251 /* FBSDKLoginKit.framework */,
+				DAD681D11BB593B3003B5251 /* FBSDKMessengerShareKit.framework */,
+				DAD681D21BB593B3003B5251 /* FBSDKShareKit.framework */,
 				D27C7A8ED4F7C96DF08F5850 /* Pods.framework */,
 			);
 			name = Frameworks;
@@ -2093,6 +2070,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/**",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = AnimeNow/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -2164,6 +2142,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/**",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = AnimeNow/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;

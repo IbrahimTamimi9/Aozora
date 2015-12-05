@@ -75,7 +75,7 @@ public class ProfileViewController: ThreadViewController {
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        if let profile = userProfile where profile.details.isDataAvailable() {
+        if let profile = userProfile where profile.details.dataAvailable {
             updateFollowingButtons()
         }
     }
@@ -182,7 +182,7 @@ public class ProfileViewController: ThreadViewController {
         }
         
         if User.currentUser() != userProfile && !User.currentUserIsGuest() {
-            let relationQuery = User.currentUser()!.following().query()!
+            let relationQuery = User.currentUser()!.following().query()
             relationQuery.whereKey("aozoraUsername", equalTo: username)
             relationQuery.findObjectsInBackgroundWithBlock { (result, error) -> Void in
                 if let _ = result?.last as? User {
@@ -359,7 +359,7 @@ public class ProfileViewController: ThreadViewController {
             // 'Me' query
             innerQuery.whereKey("userTimeline", equalTo: userProfile!)
         } else {
-            innerQuery.whereKey("userTimeline", matchesQuery: userProfile!.following().query()!)
+            innerQuery.whereKey("userTimeline", matchesQuery: userProfile!.following().query())
         }
         
         // 'Feed' query
@@ -415,7 +415,7 @@ public class ProfileViewController: ThreadViewController {
     
     @IBAction func showFollowingUsers(sender: AnyObject) {
         let userListController = UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("UserList") as! UserListViewController
-        let query = userProfile!.following().query()!
+        let query = userProfile!.following().query()
         query.orderByAscending("aozoraUsername")
         userListController.initWithQuery(query, title: "Following")
         navigationController?.pushViewController(userListController, animated: true)

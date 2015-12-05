@@ -225,7 +225,7 @@ public class LibrarySyncController {
 
                     syncWithAServiceTask = self.fetchMyAnimeListLibrary().continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
                         // 2. Save library in array
-                        if let result = task.result["anime"] as? [[String: AnyObject]] {
+                        if let result = task.result?["anime"] as? [[String: AnyObject]] {
                             print("MAL Library count \(result.count)")
                             for data in result {
                                 let myAnimeListID = data["id"] as! Int

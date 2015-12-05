@@ -16,7 +16,7 @@ extension PFQuery {
         
         let expired = NSUserDefaults.shouldPerformAction(pinName, expirationDays: Double(expirationDays))
         
-        var fetchResult: [AnyObject] = []
+        var fetchResult: [PFObject] = []
         let nonLocalQuery = self.copy() as! PFQuery
         
         return fromPinWithName(pinName).findAllObjectsInBackground()
@@ -30,13 +30,13 @@ extension PFQuery {
                     // Not cached, fetch from network
                     return nonLocalQuery.findObjectsInBackground()
                 } else {
-                    fetchResult += task.result as! [AnyObject]
+                    fetchResult += task.result as! [PFObject]
                     return nil
                 }
                 
             }.continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
                 
-                if let result = task.result as? [AnyObject] where result.count != 0 {
+                if let result = task.result as? [PFObject] where result.count != 0 {
                     
                     NSUserDefaults.completedAction(pinName)
                     PFObject.unpinAllObjectsInBackgroundWithName(pinName).continueWithBlock({ (task: BFTask!) -> AnyObject! in

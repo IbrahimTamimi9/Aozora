@@ -117,7 +117,7 @@ public class AnimeInformationViewController: AnimeBaseViewController {
                 print(error)
             } else {
                 if let anime = objects?.first as? Anime {
-                    if anime.details.isDataAvailable() {
+                    if anime.details.dataAvailable {
                         self.anime = anime
                     } else {
                         // Pin if needed
@@ -149,7 +149,7 @@ public class AnimeInformationViewController: AnimeBaseViewController {
     }
     
     func updateInformationWithAnime() {
-        if anime.details.isDataAvailable() && isViewLoaded() {
+        if anime.details.dataAvailable && isViewLoaded() {
             
             self.ranksView.hidden = false
             
@@ -507,7 +507,7 @@ extension AnimeInformationViewController: UIScrollViewDelegate {
 extension AnimeInformationViewController: UITableViewDataSource {
     
     public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return anime.isDataAvailable() ? AnimeSection.allSections.count : 0
+        return anime.dataAvailable ? AnimeSection.allSections.count : 0
     }
     
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

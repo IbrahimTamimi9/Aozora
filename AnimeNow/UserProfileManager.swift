@@ -177,14 +177,14 @@ public class UserProfileManager: NSObject {
         let avatar = avatar ?? UIImage(named: "default-avatar")!
         let thumbAvatar = UIImage.imageWithImage(avatar, newSize: CGSize(width: UserProfileManager.ImageMinimumSideSize, height: UserProfileManager.ImageMinimumSideSize))
         let avatarThumbData = UIImagePNGRepresentation(thumbAvatar)
-        return PFFile(name:"avatarThumb.png", data: avatarThumbData!)
+        return PFFile(name:"avatarThumb.png", data: avatarThumbData!)!
     }
     
     func avatarRegularImageToPFFile(avatar: UIImage?) -> PFFile {
         let avatar = avatar ?? UIImage(named: "default-avatar")!
         let regularAvatar = UIImage.imageWithImage(avatar, maxSize: CGSize(width: UserProfileManager.ImageMaximumSideSize, height: UserProfileManager.ImageMaximumSideSize))
         let avatarRegularData = UIImagePNGRepresentation(regularAvatar)
-        return PFFile(name:"avatarRegular.png", data: avatarRegularData!)
+        return PFFile(name:"avatarRegular.png", data: avatarRegularData!)!
     }
     
 }

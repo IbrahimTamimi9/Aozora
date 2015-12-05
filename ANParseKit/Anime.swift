@@ -125,7 +125,7 @@ public class Anime: PFObject, PFSubclassing {
                     let query = Episode.query()!
                     query.fromPinWithName(tag.rawValue)
                     query.findObjectsInBackground().continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
-                        return PFObject.unpinAll(task.result as! [Episode])
+                        return PFObject.unpinAllInBackground(task.result as? [Episode])
                     }).continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
                         return PFObject.pinAllInBackground(result)
                     })

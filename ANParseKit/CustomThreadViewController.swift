@@ -359,7 +359,7 @@ public class CustomThreadViewController: ThreadViewController {
                 childPostsQuery.whereKey("thread", equalTo: thread)
                 childPostsQuery.includeKey("postedBy")
                 childPostsQuery.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
-                    if let result = result as? [PFObject] {
+                    if let result = result {
                         
                         PFObject.deleteAllInBackground(result+[thread], block: { (success, error) -> Void in
                             if let _ = error {

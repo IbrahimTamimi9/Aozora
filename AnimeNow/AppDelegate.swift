@@ -124,32 +124,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
-//    func addEnglishTitles() {
-//        let query = Notification.query()!
-//        query.includeKey("subscribers")
-//        AnimeService.findAllObjectsWith(query: query).continueWithBlock { (task: BFTask!) -> AnyObject! in
-//            
-//            var sequence = BFTask(result: nil);
-//            let result = task.result as! NSArray
-//        
-//            for notification in result {
-//                sequence = sequence.continueWithBlock {
-//                    (task: BFTask!) -> AnyObject! in
-//                    print(notification.objectId!)
-//                    print(notification.subscribers)
-//                    return nil
-//                    
-//                }.continueWithBlock {
-//                (task: BFTask!) -> AnyObject! in
-//                    if (task.exception != nil) {
-//                        print(task.exception)
-//                    }
-//                    return nil
-//                }
-//            }
-//            return sequence
-//        }
-//    }
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
@@ -163,13 +137,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             var taskID = application.beginBackgroundTaskWithExpirationHandler { () }
     
             if let user = User.currentUser() {
-                // TODO: leave this for a while until everyone who purchased get their badge then remove and keep InAppController one only
-                if InAppController.purchasedProPlus() != nil {
-                    user.addUniqueObject("PRO+", forKey: "badges")
-                } else if InAppController.purchasedPro() != nil {
-                    user.addUniqueObject("PRO", forKey: "badges")
-                }
-                
                 user.active = false
                 user.activeEnd = NSDate()
                 user.saveInBackgroundWithBlock({ (success, error) -> Void in

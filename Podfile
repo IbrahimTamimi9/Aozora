@@ -19,3 +19,5 @@ pod 'HCSStarRatingView', :git => 'https://github.com/hugocampossousa/HCSStarRati
 pod 'RSKImageCropper'
 pod 'FLAnimatedImage', '~> 1.0'
 pod 'CRToast', '~> 0.0.7'
+pod 'RealmSwift'
+pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'

@@ -514,7 +514,7 @@ extension ThreadViewController: UITableViewDelegate {
                             let childPostsQuery = PFQuery(className: className)
                             childPostsQuery.whereKey("parentPost", equalTo: post)
                             childPostsQuery.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
-                                if let result = result as? [PFObject] {
+                                if let result = result {
                                     self.deletePosts(result, parentPost: post, removeParent: true)
                                 } else {
                                     // TODO: Show error
