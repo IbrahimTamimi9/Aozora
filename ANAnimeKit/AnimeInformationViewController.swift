@@ -236,10 +236,8 @@ public class AnimeInformationViewController: AnimeBaseViewController {
                 self.loadingView.startAnimating()
                 let deleteFromMALTask = LibrarySyncController.deleteAnime(progress)
                 let deleteFromParseTask = progress.deleteInBackground()
-                let unpinFromLocalDatastoreTask = progress.unpinInBackground()
-                let animeUnpinTask = self.anime.unpinInBackgroundWithName(Anime.PinName.InLibrary.rawValue)
                     
-                BFTask(forCompletionOfAllTasks: [deleteFromMALTask, deleteFromParseTask, unpinFromLocalDatastoreTask, animeUnpinTask]).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
+                BFTask(forCompletionOfAllTasks: [deleteFromMALTask, deleteFromParseTask]).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
                 
                     self.loadingView.stopAnimating()
                     self.anime.progress = nil

@@ -104,7 +104,7 @@ class SearchViewController: UIViewController {
             orQuery.limit = 40
             orQuery.orderByAscending("popularityRank")
             if searchBar.selectedScopeButtonIndex == SearchScope.MyLibrary.rawValue {
-                orQuery.fromPinWithName(Anime.PinName.InLibrary.rawValue)
+                // TODO: Fix this
             }
             query = orQuery
             

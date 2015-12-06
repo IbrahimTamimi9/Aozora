@@ -88,65 +88,6 @@ class WorkflowController {
             storage.deleteCookie(cookie)
         }
         
-        // Remove saved data
-        do {
-            let query = AnimeProgress.query()!
-            query.limit = 10000
-            query.fromLocalDatastore()
-            query.findObjectsInBackgroundWithBlock { (result, error) -> Void in
-                PFObject.unpinAllInBackground(result)
-            }
-        }
-        
-        do {
-            let query = Episode.query()!
-            query.limit = 10000
-            query.fromLocalDatastore()
-            query.findObjectsInBackgroundWithBlock { (result, error) -> Void in
-                print(result?.count)
-                PFObject.unpinAllInBackground(result)
-            }
-        }
-        
-        do {
-            let query = Anime.query()!
-            query.limit = 10000
-            query.fromLocalDatastore()
-            query.findObjectsInBackgroundWithBlock { (result, error) -> Void in
-                PFObject.unpinAllInBackground(result)
-            }
-        }
-        
-        do {
-            let pinName = Anime.PinName.InLibrary.rawValue
-            let query = Anime.query()!
-            query.limit = 10000
-            query.fromPinWithName(pinName)
-            query.findObjectsInBackgroundWithBlock { (result, error) -> Void in
-                PFObject.unpinAllInBackground(result, withName: pinName)
-            }
-        }
-        
-        do {
-            let pinName = AllThreadTagsPin
-            let query = ThreadTag.query()!
-            query.limit = 10000
-            query.fromPinWithName(pinName)
-            query.findObjectsInBackgroundWithBlock { (result, error) -> Void in
-                PFObject.unpinAllInBackground(result, withName: pinName)
-            }
-        }
-        
-        do {
-            let pinName = PinnedThreadsPin
-            let query = Thread.query()!
-            query.limit = 10000
-            query.fromPinWithName(pinName)
-            query.findObjectsInBackgroundWithBlock { (result, error) -> Void in
-                PFObject.unpinAllInBackground(result, withName: pinName)
-            }
-        }
-        
         // Logout MAL
         User.logoutMyAnimeList()
         

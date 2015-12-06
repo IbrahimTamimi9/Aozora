@@ -98,8 +98,7 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
      
         loadingView = LoaderView(parentView: view)
         
-        fetchAnimeList(false)
-        
+        updateDataSource()
     }
     
     deinit {
@@ -264,7 +263,6 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
             controller.modalTransitionStyle = UIModalTransitionStyle.CoverVertical
             tabBar.presentViewController(controller, animated: true, completion: nil)
         }
-        
     }
 }
 

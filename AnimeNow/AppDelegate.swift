@@ -52,8 +52,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             WorkflowController.presentOnboardingController(true)
         }
         
-        LibrarySyncController.sharedInstance.syncParseInformation()
-        
         SDImageCache.sharedImageCache().maxCacheSize = 1024 * 1024 * 250
         
         makeUpdateChanges()
@@ -232,8 +230,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AnimeProgress.registerSubclass()
         ThreadTag.registerSubclass()
         Notification.registerSubclass()
-        
-        Parse.enableLocalDatastore()
         
         Parse.setApplicationId("X95vv1iNbXWqoEClbK5XzGvjuydWKQk2Ti2n8OPn",
             clientKey: "vvsbzUBBgnPKCoYQlltREy5S0gSIgMfBp34aDrkc")

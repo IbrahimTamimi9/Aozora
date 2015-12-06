@@ -21,188 +21,11 @@ public class LibrarySyncController {
     
     public static let sharedInstance = LibrarySyncController()
     
-    public let AnimeSync = "LibrarySync.AnimeSync"
-    public let EpisodeSync = "LibrarySync.EpisodeSync"
-    
     public enum Source {
         case MyAnimeList
         case Anilist
         case Hummingbird
     }
-    
-    // MARK: - Sync with Parse
-    
-    public func syncParseInformation() -> BFTask {
-        let syncAnime = syncAnimeInformation()
-        let syncEpisodes = syncEpisodeInformation()
-        
-        return BFTask(forCompletionOfAllTasks: [syncAnime, syncEpisodes])
-    }
-    
-    public func syncAnimeInformation() -> BFTask {
-        let actionID = AnimeSync
-        let shouldSyncAnime = NSUserDefaults.shouldPerformAction(actionID, expirationDays: 1)
-        
-        if !shouldSyncAnime {
-            return BFTask(result: nil)
-        }
-        
-        let pinName = Anime.PinName.InLibrary.rawValue
-        
-        let query = Anime.query()!
-        query.limit = 1
-        query.fromPinWithName(pinName)
-        query.orderByDescending("updatedAt")
-        return query.findObjectsInBackground()
-            .continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
-            
-            guard let result = task.result as? [Anime], let anime = result.last else {
-                return nil
-            }
-                
-            return BFTask(result: anime)
-            
-            }.continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
-            
-                guard let anime = task.result as? Anime else {
-                    return nil
-                }
-                
-                let updatedQuery = Anime.query()!
-                updatedQuery.whereKey("updatedAt", greaterThan: anime.updatedAt!)
-                return updatedQuery.findAllObjectsInBackground()
-
-                
-            }.continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
-                
-                guard let result = task.result as? [Anime] where result.count != 0 else {
-                    NSUserDefaults.completedAction(actionID)
-                    return nil
-                }
-                
-                return PFObject.unpinAllInBackground(result, withName: pinName).continueWithBlock({ (task: BFTask!) -> AnyObject! in
-                    print("Updated \(result.count) anime, saving with tag \(pinName)")
-                    NSUserDefaults.completedAction(actionID)
-                    return PFObject.pinAllInBackground(result, withName: pinName)
-                })
-            }
-    }
-    
-    public func syncEpisodeInformation() -> BFTask {
-        let actionID = EpisodeSync
-        let shouldSyncEpisode = NSUserDefaults.shouldPerformAction(actionID, expirationDays: 1)
-        
-        if !shouldSyncEpisode {
-            return BFTask(result: nil)
-        }
-        
-        let pinName = Anime.PinName.InLibrary.rawValue
-        
-        let query = Episode.query()!
-        query.limit = 1
-        query.fromLocalDatastore()
-        query.orderByDescending("updatedAt")
-        return query.findObjectsInBackground()
-            .continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
-                
-                guard let result = task.result as? [Episode], let episode = result.last else {
-                    return nil
-                }
-                
-                return BFTask(result: episode)
-                
-            }.continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
-                
-                guard let episode = task.result as? Episode else {
-                    return nil
-                }
-                
-                let updatedQuery = Episode.query()!
-                updatedQuery.whereKey("updatedAt", greaterThan: episode.updatedAt!)
-                return updatedQuery.findAllObjectsInBackground()
-                
-            }.continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
-                
-                guard let result = task.result as? [Episode] where result.count != 0 else {
-                    NSUserDefaults.completedAction(actionID)
-                    return nil
-                }
-                
-                return PFObject.unpinAllInBackground(result, withName: pinName).continueWithBlock({ (task: BFTask!) -> AnyObject! in
-                    print("Updated \(result.count) episode, saving with tag \(pinName)")
-                    NSUserDefaults.completedAction(actionID)
-                    return PFObject.pinAllInBackground(result, withName: pinName)
-                })
-            }
-    }
-    
-    public class func syncAnimeProgressInformation() -> BFTask {
-        
-        let query = AnimeProgress.query()!
-        query.limit = 1
-        query.fromLocalDatastore()
-        query.orderByDescending("updatedAt")
-        return query.findObjectsInBackground()
-            .continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
-                
-                guard let result = task.result else {
-                    return nil
-                }
-                
-                return BFTask(result: result)
-                
-            }.continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
-                
-                let query = AnimeProgress.query()!
-                query.includeKey("anime")
-                query.whereKey("user", equalTo: User.currentUser()!)
-                if let animeProgress = task.result as? [AnimeProgress] where animeProgress.count > 0 {
-                    guard let progress = animeProgress.last, let updatedAt = progress.updatedAt else {
-                        // Most likely syncing, do nothing
-                        return BFTask(error: NSError(domain: "Aozora.Error.Syncing", code: 0, userInfo: nil))
-                    }
-                    query.whereKey("updatedAt", greaterThan: updatedAt)
-                    return query.findAllObjectsInBackground()
-                } else if let animeProgress = task.result as? [AnimeProgress] where animeProgress.count == 0 {
-                    return query.findAllObjectsInBackground()
-                } else {
-                    return task.error
-                }
-                
-            }.continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
-                
-                guard let progressList = task.result as? [AnimeProgress] where progressList.count != 0 else {
-                    NSUserDefaults.completedAction(self.LastSyncDateDefaultsKey)
-                    return nil
-                }
-                
-                let animeList = progressList.map({ (progress: AnimeProgress) -> Anime in
-                    return progress.anime
-                }).filter({ (anime: Anime) -> Bool in
-                    return anime.myAnimeListID != 0
-                })
-
-                let unpinAnimeTask = PFObject.unpinAllInBackground(animeList, withName: Anime.PinName.InLibrary.rawValue)
-                let unpinProgressTask = PFObject.unpinAllInBackground(progressList)
-                
-                return BFTask(forCompletionOfAllTasks: [unpinProgressTask, unpinAnimeTask]).continueWithBlock({ (task: BFTask!) -> AnyObject! in
-                    NSUserDefaults.completedAction(self.LastSyncDateDefaultsKey)
-                    let pinAnimeListTask = PFObject.pinAllInBackground(animeList, withName: Anime.PinName.InLibrary.rawValue)
-                    let pinProgressTask = PFObject.pinAllInBackground(progressList)
-                    return BFTask(forCompletionOfAllTasks: [pinAnimeListTask, pinProgressTask])
-                })
-
-            }.continueWithBlock( { (task: BFTask!) -> AnyObject! in
-                if let error = task.error {
-                    print(error)
-                } else if let exception = task.exception {
-                    print(exception)
-                }
-                
-                return task
-            })
-    }
-    
     // MARK: - Library management
     
     public class func fetchWatchingList(isRefreshing: Bool) -> BFTask {
@@ -212,12 +35,12 @@ public class LibrarySyncController {
             print("Fetching all anime library from network..")
             
             var myAnimeListLibrary: [MALProgress] = []
+            let parseLibrary: [Anime] = []
             var allAnime: [Anime] = []
             
             let task = BFTask(result: nil).continueWithBlock({ (task: BFTask!) -> AnyObject! in
                 
                 var syncWithAServiceTask = BFTask(result: nil)
-                let syncAnimeProgressTask = self.syncAnimeProgressInformation()
                 
                 // 1. For each source fetch all library
                 if User.syncingWithMyAnimeList() {
@@ -242,16 +65,14 @@ public class LibrarySyncController {
                     print("Not syncing with mal, continuing..")
                 }
                 
-                return BFTask(forCompletionOfAllTasks: [syncWithAServiceTask, syncAnimeProgressTask])
+                let fetchAozoraLibrary = self.fetchAozoraLibrary()
                 
-            }).continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
-                
-                return self.fetchAozoraLibrary()
+                return BFTask(forCompletionOfAllTasks: [syncWithAServiceTask, fetchAozoraLibrary])
                 
             }).continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
                 
                 // 3. Merge all existing libraries
-                let parseLibrary = task.result as! [Anime]
+                
                 
                 print("current anime library count \(parseLibrary.count)")
                 allAnime += parseLibrary
@@ -461,13 +282,15 @@ public class LibrarySyncController {
     
     class func fetchAozoraLibrary() -> BFTask {
         
-        let animeQuery = Anime.query()!
-        animeQuery.fromPinWithName(Anime.PinName.InLibrary.rawValue)
+        let progressQuery = AnimeProgress.query()!
+        progressQuery.whereKey("user", equalTo: User.currentUser()!)
+        progressQuery.includeKey("anime")
         
-        return animeQuery.findAllObjectsInBackground().continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
-            let list = task.result as! [Anime]
+        return progressQuery.findAllObjectsInBackground().continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
+            let list = task.result as! [AnimeProgress]
             print("found a list of \(list.count)")
-            return matchAnimeWithProgress(list)
+
+            return matchProgressWithAnime(list)
         })
     }
     
@@ -505,29 +328,17 @@ public class LibrarySyncController {
         }
     }
     
-//    public class func matchProgressWithAnime(progressList: [AnimeProgress]) -> BFTask {
-//        guard let user = User.currentUser() else {
-//            return BFTask(result: [])
-//        }
-//        
-//        // Match all anime with it's progress..
-//        let animeLibraryQuery = Anime.query()!
-//        animeLibraryQuery.whereKey("user", equalTo: user)
-//        animeLibraryQuery.whereKey("anime", containedIn: animeList)
-//        return animeLibraryQuery.findObjectsInBackground().continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
-//            if let animeLibrary = task.result as? [AnimeProgress] {
-//                for anime in animeList where anime.progress == nil {
-//                    for progress in animeLibrary {
-//                        if progress.anime.objectId == anime.objectId {
-//                            anime.progress = progress
-//                            break
-//                        }
-//                    }
-//                }
-//            }
-//            return BFTask(result: animeList)
-//        }
-//    }
+    public class func matchProgressWithAnime(progressList: [AnimeProgress]) -> BFTask {
+        
+        var animeList: [Anime] = []
+        // Referece progress in anime objects..
+        for progress in progressList {
+            progress.anime.progress = progress
+            animeList.append(progress.anime)
+        }
+
+        return BFTask(result: animeList)
+    }
     
     // MARK: - General External Library Methods
     
