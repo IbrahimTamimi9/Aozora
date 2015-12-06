@@ -42,7 +42,7 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
     var listControllers: [AnimeListViewController] = []
     
     var loadingView: LoaderView!
-    var currentlySyncing = false
+    var libraryController = LibraryController.sharedInstance
     
     var currentConfiguration: Configuration {
         get {
@@ -93,25 +93,27 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
         self.isProgressiveIndicator = true
         self.buttonBarView.selectedBar.backgroundColor = UIColor.watching()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateDataSource", name: LibraryUpdatedNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateLibrary", name: LibraryUpdatedNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "controllerRequestRefresh", name: LibraryCreatedNotification, object: nil)
      
         loadingView = LoaderView(parentView: view)
         
-        updateDataSource()
+        if let library = libraryController.library {
+            updateListViewControllers(library)
+        }
     }
     
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
-    func updateDataSource() {
+    func updateLibrary() {
         fetchAnimeList(false)
     }
     
     func fetchAnimeList(isRefreshing: Bool) -> BFTask {
         
-        if currentlySyncing {
+        if libraryController.currentlySyncing {
             return BFTask(result: nil)
         }
         
@@ -119,26 +121,8 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
             loadingView.startAnimating()
         }
         
-        currentlySyncing = true
-        
-        let startDate = NSDate()
-        
-        return LibrarySyncController.fetchWatchingList(isRefreshing).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
-            
-            print("Load library = \(NSDate().timeIntervalSinceDate(startDate))s")
-            
-            if let result = task.result as? [Anime] where result.count > 0 {
-                self.updateListViewControllers(result)
-            }
-            return nil
-        }).continueWithBlock({ (task: BFTask!) -> AnyObject! in
-            if let error = task.error {
-                print(error)
-            }
-            if !isRefreshing {
-                self.loadingView.stopAnimating()
-            }
-            self.currentlySyncing = false
+        return libraryController.fetchAnimeList(true).continueWithExecutor(BFExecutor.mainThreadExecutor(), withBlock: { (task: BFTask!) -> AnyObject? in
+            self.loadingView.stopAnimating()
             return nil
         })
     }
@@ -161,8 +145,6 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
                 case .Dropped:
                     lists[4].append(anime)
                 }
-            } else {
-                anime.unpinInBackgroundWithName(Anime.PinName.InLibrary.rawValue)
             }
         }
         
@@ -174,8 +156,9 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
                 controller.updateSortType(controller.currentSortType)
             }
         }
-        
     }
+    
+    
     
     // MARK: - XLPagerTabStripViewControllerDataSource
     

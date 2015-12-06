@@ -17,8 +17,6 @@ public let LibraryCreatedNotification = "LibraryCreatedNotification"
 
 public class LibrarySyncController {
     
-    public static let LastSyncDateDefaultsKey = "LibrarySync.LastSyncDate"
-    
     public static let sharedInstance = LibrarySyncController()
     
     public enum Source {
@@ -26,136 +24,144 @@ public class LibrarySyncController {
         case Anilist
         case Hummingbird
     }
+    
     // MARK: - Library management
     
-    public class func fetchWatchingList(isRefreshing: Bool) -> BFTask {
-        let shouldSyncData = NSUserDefaults.shouldPerformAction(LastSyncDateDefaultsKey, expirationDays: 1)
+    /// Fetches what's on Parse
+    public class func fetchAozoraLibrary() -> BFTask {
         
-        if shouldSyncData || isRefreshing {
-            print("Fetching all anime library from network..")
+        let progressQuery = AnimeProgress.query()!
+        progressQuery.whereKey("user", equalTo: User.currentUser()!)
+        progressQuery.includeKey("anime")
+        
+        return progressQuery.findAllObjectsInBackground().continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
             
-            var myAnimeListLibrary: [MALProgress] = []
-            let parseLibrary: [Anime] = []
-            var allAnime: [Anime] = []
+            let list = task.result as! [AnimeProgress]
             
-            let task = BFTask(result: nil).continueWithBlock({ (task: BFTask!) -> AnyObject! in
-                
-                var syncWithAServiceTask = BFTask(result: nil)
-                
-                // 1. For each source fetch all library
-                if User.syncingWithMyAnimeList() {
-                    print("Syncing with mal, continuing..")
-
-                    syncWithAServiceTask = self.fetchMyAnimeListLibrary().continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
-                        // 2. Save library in array
-                        if let result = task.result?["anime"] as? [[String: AnyObject]] {
-                            print("MAL Library count \(result.count)")
-                            for data in result {
-                                let myAnimeListID = data["id"] as! Int
-                                let status = data["watched_status"] as! String
-                                let episodes = data["watched_episodes"] as! Int
-                                let score = data["score"] as! Int
-                                let malProgress = MALProgress(myAnimeListID: myAnimeListID, status: MALList(rawValue: status)!, episodes: episodes, score: score)
-                                myAnimeListLibrary.append(malProgress)
-                            }
-                        }
-                        return nil
-                    })
-                } else {
-                    print("Not syncing with mal, continuing..")
-                }
-                
-                let fetchAozoraLibrary = self.fetchAozoraLibrary()
-                
-                return BFTask(forCompletionOfAllTasks: [syncWithAServiceTask, fetchAozoraLibrary])
-                
-            }).continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
-                
-                // 3. Merge all existing libraries
-                
-                
-                print("current anime library count \(parseLibrary.count)")
-                allAnime += parseLibrary
-                
-                BFTask(result: nil).continueWithBlock({ (task: BFTask!) -> AnyObject! in
-                    return self.mergeLibraries(myAnimeListLibrary, parseLibrary: parseLibrary)
-                })
-                
-                // Create on PARSE
-                var malProgressToCreate: [MALProgress] = []
-                
-                for malProgress in myAnimeListLibrary where parseLibrary.filter({$0.myAnimeListID == malProgress.myAnimeListID}).last == nil {
-                    malProgressToCreate.append(malProgress)
-                }
-                
-                let malProgressToCreateIDs = malProgressToCreate.map({ (malProgress: MALProgress) -> Int in
-                    return malProgress.myAnimeListID
-                })
-                
-                guard malProgressToCreateIDs.count > 0 else {
-                    return nil
-                }
-                
-                print("Need to create \(malProgressToCreateIDs.count) AnimeProgress on Parse")
-                let query = Anime.query()!
-                query.whereKey("myAnimeListID", containedIn: malProgressToCreateIDs)
-                return query.findAllObjectsInBackground()
-                    .continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
-                        let animeToCreate = task.result as! [Anime]
-                        print("Creating \(animeToCreate.count) AnimeProgress on Parse")
-                        var newProgress: [AnimeProgress] = []
-                        for anime in animeToCreate {
-                            // This prevents all anime object to be iterated thousands of times..
-                            let myAnimeListID = anime.myAnimeListID
-                            
-                            if let malProgress = malProgressToCreate.filter({ $0.myAnimeListID == myAnimeListID }).last {
-                                // Creating on PARSE
-                                let malList = MALList(rawValue: malProgress.status)!
-                                let progress = AnimeProgress()
-                                progress.anime = anime
-                                progress.user = User.currentUser()!
-                                progress.startDate = NSDate()
-                                progress.updateList(malList)
-                                progress.watchedEpisodes = malProgress.episodes
-                                progress.collectedEpisodes = 0
-                                progress.score = malProgress.score
-                                newProgress.append(progress)
-                                
-                                anime.progress = progress
-                            }
-                        }
-                        
-                        allAnime += animeToCreate
-                        
-                        PFObject.saveAllInBackground(newProgress).continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
-                            let pinAllProgressTask = PFObject.pinAllInBackground(newProgress)
-                            let pinAllAnimeTask = PFObject.pinAllInBackground(animeToCreate, withName: Anime.PinName.InLibrary.rawValue)
-                            return BFTask(forCompletionOfAllTasks: [pinAllProgressTask, pinAllAnimeTask])
-                        })
-                        return nil
-                    })
-                
-            }).continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
-                
-                return BFTask(result: allAnime)
-                
-            }).continueWithBlock({ (task: BFTask!) -> AnyObject! in
-                if let error = task.error {
-                    print(error)
-                } else if let exception = task.exception {
-                    print(exception)
-                }
-                
-                return task
-            })
+            // Referece progress in anime objects..
+            for progress in list {
+                progress.anime.progress = progress
+            }
             
-            return task
-        } else {
-            return fetchAozoraLibrary()
-        }
+            let animeList = list.map({ return $0.anime })
+            print("Found a list of \(animeList.count)")
+            
+            return BFTask(result: animeList)
+        })
     }
     
-    class func mergeLibraries(myAnimeListLibrary: [MALProgress], parseLibrary: [Anime]) -> BFTask {
+    /// Syncs with linked services
+    public class func refreshAozoraLibrary() -> BFTask {
+        
+        print("Fetching all anime library from network..")
+        
+        var allAnime: [Anime] = []
+        var myAnimeListLibrary: [MALProgress] = []
+        
+        let task = BFTask(result: nil).continueWithBlock({ (task: BFTask!) -> AnyObject! in
+            
+            var syncWithAServiceTask = BFTask(result: nil)
+            
+            // 1. For each source fetch all library
+            if User.syncingWithMyAnimeList() {
+                print("Syncing with mal, continuing..")
+
+                syncWithAServiceTask = self.fetchMyAnimeListLibrary().continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
+                    // 2. Save library in array
+                    if let result = task.result?["anime"] as? [[String: AnyObject]] {
+                        print("MAL Library count \(result.count)")
+                        for data in result {
+                            let myAnimeListID = data["id"] as! Int
+                            let status = data["watched_status"] as! String
+                            let episodes = data["watched_episodes"] as! Int
+                            let score = data["score"] as! Int
+                            let malProgress = MALProgress(myAnimeListID: myAnimeListID, status: MALList(rawValue: status)!, episodes: episodes, score: score)
+                            myAnimeListLibrary.append(malProgress)
+                        }
+                    }
+                    return nil
+                })
+            } else {
+                print("Not syncing with mal, continuing..")
+            }
+            
+            let fetchAozoraLibrary = self.fetchAozoraLibrary()
+            
+            return BFTask(forCompletionOfAllTasksWithResults: [syncWithAServiceTask, fetchAozoraLibrary])
+            
+        }).continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
+            
+            // 3. Merge all existing libraries
+            let parseLibrary = (task.result as! [AnyObject])[1] as! [Anime]
+            print("current anime library count \(parseLibrary.count)")
+            allAnime += parseLibrary
+            
+            self.mergeLibraries(myAnimeListLibrary, parseLibrary: parseLibrary)
+            
+            // Create on PARSE
+            var malProgressToCreate: [MALProgress] = []
+            
+            for malProgress in myAnimeListLibrary where parseLibrary.filter({$0.myAnimeListID == malProgress.myAnimeListID}).last == nil {
+                malProgressToCreate.append(malProgress)
+            }
+            
+            let malProgressToCreateIDs = malProgressToCreate.map({ (malProgress: MALProgress) -> Int in
+                return malProgress.myAnimeListID
+            })
+            
+            guard malProgressToCreateIDs.count > 0 else {
+                return BFTask(result: allAnime)
+            }
+            
+            print("Need to create \(malProgressToCreateIDs.count) AnimeProgress on Parse")
+            let query = Anime.query()!
+            query.whereKey("myAnimeListID", containedIn: malProgressToCreateIDs)
+            return query.findAllObjectsInBackground()
+                .continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
+                    let animeToCreate = task.result as! [Anime]
+                    print("Creating \(animeToCreate.count) AnimeProgress on Parse")
+                    var newProgress: [AnimeProgress] = []
+                    for anime in animeToCreate {
+                        // This prevents all anime object to be iterated thousands of times..
+                        let myAnimeListID = anime.myAnimeListID
+                        
+                        if let malProgress = malProgressToCreate.filter({ $0.myAnimeListID == myAnimeListID }).last {
+                            // Creating on PARSE
+                            let malList = MALList(rawValue: malProgress.status)!
+                            let progress = AnimeProgress()
+                            progress.anime = anime
+                            progress.user = User.currentUser()!
+                            progress.startDate = NSDate()
+                            progress.updateList(malList)
+                            progress.watchedEpisodes = malProgress.episodes
+                            progress.collectedEpisodes = 0
+                            progress.score = malProgress.score
+                            newProgress.append(progress)
+                            
+                            anime.progress = progress
+                        }
+                    }
+                    
+                    allAnime += animeToCreate
+                    
+                    PFObject.saveAllInBackground(newProgress)
+                    return BFTask(result: allAnime)
+                })
+            
+        }).continueWithBlock({ (task: BFTask!) -> AnyObject! in
+            if let error = task.error {
+                print(error)
+            } else if let exception = task.exception {
+                print(exception)
+            }
+            
+            return task
+        })
+        
+        return task
+    }
+    
+    class func mergeLibraries(myAnimeListLibrary: [MALProgress], parseLibrary: [Anime]) {
         
         var updatedMyAnimeListLibrary = Set<MALProgress>()
         
@@ -277,31 +283,9 @@ public class LibrarySyncController {
             }
         }
         
-        return BFTask(result: nil)
-    }
-    
-    class func fetchAozoraLibrary() -> BFTask {
-        
-        let progressQuery = AnimeProgress.query()!
-        progressQuery.whereKey("user", equalTo: User.currentUser()!)
-        progressQuery.includeKey("anime")
-        
-        return progressQuery.findAllObjectsInBackground().continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
-            let list = task.result as! [AnimeProgress]
-            print("found a list of \(list.count)")
-
-            return matchProgressWithAnime(list)
-        })
     }
     
     // MARK: - Class Methods
-    
-    public class func fetchAnime(myAnimeListIDs: [Int]) -> BFTask {
-        
-        let query = Anime.query()!
-        query.whereKey("myAnimeListID", containedIn: myAnimeListIDs)
-        return query.findAllObjectsInBackground()
-    }
     
     public class func matchAnimeWithProgress(animeList: [Anime]) -> BFTask {
         
@@ -327,19 +311,7 @@ public class LibrarySyncController {
             return BFTask(result: animeList)
         }
     }
-    
-    public class func matchProgressWithAnime(progressList: [AnimeProgress]) -> BFTask {
-        
-        var animeList: [Anime] = []
-        // Referece progress in anime objects..
-        for progress in progressList {
-            progress.anime.progress = progress
-            animeList.append(progress.anime)
-        }
 
-        return BFTask(result: animeList)
-    }
-    
     // MARK: - General External Library Methods
     
     public class func addAnime(progress: AnimeProgress? = nil, malProgress: MALProgress? = nil) -> BFTask {
@@ -444,8 +416,4 @@ public class LibrarySyncController {
             score: progress.score)
         
     }
-    
-    // MARK: - Anilist Library Methods
-    
-    // TODO
 }

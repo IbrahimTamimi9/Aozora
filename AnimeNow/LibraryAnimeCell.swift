@@ -79,7 +79,7 @@ class LibraryAnimeCell: AnimeCell {
             
             if let episodeImageView = episodeImageView {
                 if progress.myAnimeListList() == .Watching {
-                    setEpisodeImageView(anime, tag: .InLibrary, nextEpisode: progress.watchedEpisodes)
+                    setEpisodeImageView(anime, nextEpisode: progress.watchedEpisodes)
                 } else {
                     episodeImageView.setImageFrom(urlString: anime.fanartThumbURLString() ?? "")
                 }
@@ -91,7 +91,7 @@ class LibraryAnimeCell: AnimeCell {
         }
     }
     
-    func setEpisodeImageView(anime: Anime, tag: Anime.PinName, nextEpisode: Int?) {
+    func setEpisodeImageView(anime: Anime, nextEpisode: Int?) {
         
         if let cancelToken = currentCancellationToken {
             cancelToken.cancel()

@@ -211,6 +211,7 @@
 		DAF6187C1B3784E300286517 /* ForumsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF6187B1B3784E300286517 /* ForumsViewController.swift */; };
 		DAF6189E1B378FEF00286517 /* Forums.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAF6189D1B378FEF00286517 /* Forums.storyboard */; };
 		DAFBB0951B20EFF700495ED9 /* ChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFBB0941B20EFF700495ED9 /* ChartViewController.swift */; };
+		DAFCF8F71C14F91200591C28 /* LibraryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFCF8F51C14DD9000591C28 /* LibraryController.swift */; };
 		DAFD60B51B278452007275C1 /* ActionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA38A9881B223AF1002FCBB4 /* ActionListViewController.swift */; };
 		DAFD60B61B278452007275C1 /* DropDownListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA76A1961B235BF4006CB489 /* DropDownListViewController.swift */; };
 		DAFD60B71B278459007275C1 /* Action.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA38A98B1B223B39002FCBB4 /* Action.storyboard */; };
@@ -524,6 +525,7 @@
 		DAF6189D1B378FEF00286517 /* Forums.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Forums.storyboard; sourceTree = "<group>"; };
 		DAF6189F1B378FF700286517 /* Profile.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
 		DAFBB0941B20EFF700495ED9 /* ChartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartViewController.swift; sourceTree = "<group>"; };
+		DAFCF8F51C14DD9000591C28 /* LibraryController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LibraryController.swift; path = ../AnimeNow/LibraryController.swift; sourceTree = "<group>"; };
 		DAFD60B21B277B8D007275C1 /* ZFModalTransitionAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZFModalTransitionAnimator.h; path = ../AnimeNow/ZFModalTransitionAnimator.h; sourceTree = "<group>"; };
 		DAFD60B31B277B8D007275C1 /* ZFModalTransitionAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZFModalTransitionAnimator.m; path = ../AnimeNow/ZFModalTransitionAnimator.m; sourceTree = "<group>"; };
 		DAFD60C01B27847E007275C1 /* ANCommonKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ANCommonKit.swift; sourceTree = "<group>"; };
@@ -623,6 +625,7 @@
 		DA0347251B4ADD8D0025CE24 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				DAFCF8F51C14DD9000591C28 /* LibraryController.swift */,
 				DA75C8991BB1A76F00C27A68 /* LibrarySyncController.swift */,
 				DAC13BFF1B3F4A7A0013D479 /* FetchController.swift */,
 			);
@@ -886,11 +889,11 @@
 				DAC7D9011B50201300898FF6 /* InAppController.swift */,
 				DAE43C301B2BC16F00C3092D /* Extensions */,
 				DACE77C51B29518300037486 /* Models */,
+				DA0347251B4ADD8D0025CE24 /* Controllers */,
 				DA5A3BED1B346F2100C07D71 /* MALScrapper */,
 				DA5A3BF21B35EB4000C07D71 /* Login */,
 				DAD67DFE1B72759F000BB325 /* Comment */,
 				DAF6186E1B377BBF00286517 /* Services */,
-				DA0347251B4ADD8D0025CE24 /* Controllers */,
 				DA6E12CE1B10D96F00B278B0 /* Vendor */,
 				DA6E12B01B10D94200B278B0 /* Supporting Files */,
 			);
@@ -1872,6 +1875,7 @@
 				DA03F1561B8B188F00402AC4 /* NewThreadViewController.swift in Sources */,
 				DA8B6E071B6C4DBF00D240FC /* UIImageView+PFFile.swift in Sources */,
 				DAC027CC1B2A16B80085C91A /* AnimeReview.swift in Sources */,
+				DAFCF8F71C14F91200591C28 /* LibraryController.swift in Sources */,
 				DAE64EEC1B73CCE4005A984A /* ImageViewController.swift in Sources */,
 				DA6E13131B10F56B00B278B0 /* SeasonalChartService.swift in Sources */,
 				DACCF35D1B110AA2006A13EB /* ANParseKit.swift in Sources */,

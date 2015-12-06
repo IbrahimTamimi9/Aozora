@@ -291,14 +291,9 @@ public class AnimeInformationViewController: AnimeBaseViewController {
                     self.anime.progress = progress
                     
                     progress.saveInBackground().continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
-
-                        let pinProgressTask = progress.pinInBackground()
-                        let pinAnimeTask = self.anime.pinInBackgroundWithName(Anime.PinName.InLibrary.rawValue)
                         
-                        BFTask(forCompletionOfAllTasks: [pinProgressTask, pinAnimeTask]).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
-                            NSNotificationCenter.defaultCenter().postNotificationName(LibraryUpdatedNotification, object: nil)
-                            return nil
-                        })
+                        NSNotificationCenter.defaultCenter().postNotificationName(LibraryUpdatedNotification, object: nil)
+                        
                         return nil
                     })
                     self.updateListButtonTitle(progress.list)

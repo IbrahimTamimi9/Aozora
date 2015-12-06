@@ -92,7 +92,7 @@ class WorkflowController {
         User.logoutMyAnimeList()
         
         // Remove defaults
-        NSUserDefaults.standardUserDefaults().removeObjectForKey(LibrarySyncController.LastSyncDateDefaultsKey)
+        NSUserDefaults.standardUserDefaults().removeObjectForKey(LibraryController.LastSyncDateDefaultsKey)
         NSUserDefaults.standardUserDefaults().removeObjectForKey(RootTabBar.ShowedMyAnimeListLoginDefault)
         NSUserDefaults.standardUserDefaults().synchronize()
         

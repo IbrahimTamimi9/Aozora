@@ -17,6 +17,8 @@ public class RootTabBar: UITabBarController {
     
     override public func viewDidLoad() {
         super.viewDidLoad()
+        // Load library
+        LibraryController.sharedInstance.fetchAnimeList(false)
         
         delegate = self
     }

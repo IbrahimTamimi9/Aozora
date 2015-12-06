@@ -93,10 +93,6 @@ public class Anime: PFObject, PFSubclassing {
     // Episodes
     var cachedEpisodeList: [Episode] = []
     
-    public enum PinName: String {
-        case InLibrary = "Object.InLibrary"
-    }
-    
     public func episodeList() -> BFTask {
     
         if cachedEpisodeList.count != 0 || (episodes == 0 && traktID == 0) {
