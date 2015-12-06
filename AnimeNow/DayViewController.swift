@@ -17,7 +17,7 @@ class DayViewController: UIViewController {
     
     var animator: ZFModalTransitionAnimator!
     var dayString: String = ""
-    var dataSource: [[Anime]] = []
+    var dataSource: [Anime] = []
     var section: Int = 0
     
     @IBOutlet weak var collectionView: UICollectionView!
@@ -29,7 +29,7 @@ class DayViewController: UIViewController {
 
     func updateDataSource(dataSource: [Anime]) {
         
-        self.dataSource = [[], dataSource]
+        self.dataSource = dataSource
         self.sort()
         if self.isViewLoaded() {
             self.collectionView.reloadData()
@@ -48,8 +48,8 @@ class DayViewController: UIViewController {
     // MARK: - Utility Functions
     
     func sort() {
-        
-        dataSource = animeArray.sortInPlace({ (anime1: Anime, anime2: Anime) in
+    
+        dataSource.sortInPlace({ (anime1: Anime, anime2: Anime) in
             
             let startDate1 = anime1.nextEpisodeDate ?? NSDate(timeIntervalSinceNow: 60*60*24*100)
             let startDate2 = anime2.nextEpisodeDate ?? NSDate(timeIntervalSinceNow: 60*60*24*100)
@@ -82,11 +82,8 @@ class DayViewController: UIViewController {
 
 extension DayViewController: UICollectionViewDataSource {
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return dataSource.count
-    }
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dataSource[section].count
+        return dataSource.count
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -99,7 +96,7 @@ extension DayViewController: UICollectionViewDataSource {
         }
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! AnimeCell
         
-        let anime = dataSource[indexPath.section][indexPath.row]
+        let anime = dataSource[indexPath.row]
 
         let nextDate = anime.nextEpisodeDate ?? NSDate(timeIntervalSinceNow: 60*60*24*100)
         let showEtaAsAired = nextDate.timeIntervalSinceNow > 60*60*24 && section == 0
@@ -148,7 +145,7 @@ extension DayViewController: UICollectionViewDelegateFlowLayout {
 extension DayViewController: UICollectionViewDelegate {
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
-        let anime = dataSource[indexPath.section][indexPath.row]
+        let anime = dataSource[indexPath.row]
         self.animator = presentAnimeModal(anime)
     }
 }

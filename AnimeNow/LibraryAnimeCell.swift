@@ -102,7 +102,7 @@ class LibraryAnimeCell: AnimeCell {
         
         episodeImageView?.image = nil
         episode = nil
-        anime.episodeList(true, tag: tag).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
+        anime.episodeList().continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
             
             if newCancelationToken.cancelled {
                 return nil

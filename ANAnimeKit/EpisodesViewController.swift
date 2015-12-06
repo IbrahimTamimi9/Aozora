@@ -58,8 +58,8 @@ class EpisodesViewController: AnimeBaseViewController {
     func fetchEpisodes() {
         
         loadingView.startAnimating()
-        let pin = anime.progress != nil
-        anime.episodeList(pin, tag: Anime.PinName.InLibrary).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
+
+        anime.episodeList().continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
         
             self.dataSource = task.result as! [Episode]
             self.collectionView.animateFadeIn()
