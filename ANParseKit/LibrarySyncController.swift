@@ -30,8 +30,12 @@ public class LibrarySyncController {
     /// Fetches what's on Parse
     public class func fetchAozoraLibrary() -> BFTask {
         
+        guard let user = User.currentUser() else {
+            return BFTask(result: nil)
+        }
+        
         let progressQuery = AnimeProgress.query()!
-        progressQuery.whereKey("user", equalTo: User.currentUser()!)
+        progressQuery.whereKey("user", equalTo: user)
         progressQuery.includeKey("anime")
         
         return progressQuery.findAllObjectsInBackground().continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in

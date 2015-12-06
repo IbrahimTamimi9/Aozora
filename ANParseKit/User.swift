@@ -34,6 +34,8 @@ public class User: PFUser {
     @NSManaged public var activeEnd: NSDate
     @NSManaged public var active: Bool
     
+    static let MyAnimeListPasswordKey = "MyAnimeList.Password"
+    
     public func following() -> PFRelation {
         return self.relationForKey("following")
     }
@@ -54,21 +56,24 @@ public class User: PFUser {
     
     public var myAnimeListPassword: String? {
         get {
-        return NSUserDefaults.standardUserDefaults().objectForKey("MyAnimeList.Password") as! String?
+        return NSUserDefaults.standardUserDefaults().objectForKey(User.MyAnimeListPasswordKey) as! String?
         }
         set(object) {
-            NSUserDefaults.standardUserDefaults().setObject(object, forKey: "MyAnimeList.Password")
+            NSUserDefaults.standardUserDefaults().setObject(object, forKey: User.MyAnimeListPasswordKey)
             NSUserDefaults.standardUserDefaults().synchronize()
         }
     }
     
     public class func logoutMyAnimeList() {
-        NSUserDefaults.standardUserDefaults().removeObjectForKey("MyAnimeList.Password")
+        NSUserDefaults.standardUserDefaults().removeObjectForKey(User.MyAnimeListPasswordKey)
         NSUserDefaults.standardUserDefaults().synchronize()
     }
     
     public class func syncingWithMyAnimeList() -> Bool {
-        return User.currentUser()!.myAnimeListPassword != nil
+        guard let user = User.currentUser() else {
+            return false
+        }
+        return user.myAnimeListPassword != nil
     }
     
     public func incrementPostCount(byAmount: Int) {

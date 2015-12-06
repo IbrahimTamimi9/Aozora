@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         Fabric.with([Crashlytics()])
         initializeParse()
-        PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
+        //PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
         PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions)
         
         trackPushOpen(application, didFinishLaunchingWithOptions:launchOptions)
@@ -104,7 +104,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let oldPushHandlerOnly = !self.respondsToSelector(Selector("application:didReceiveRemoteNotification:fetchCompletionHandler:"))
             let noPushPayload: AnyObject? = launchOptions?[UIApplicationLaunchOptionsRemoteNotificationKey]
             if oldPushHandlerOnly || noPushPayload != nil {
-                PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
+                //PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
             }
         }
     }
@@ -198,7 +198,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if application.applicationState == .Inactive  {
             // The application was just brought from the background to the foreground,
             // so we consider the app as having been "opened by a push notification."
-            PFAnalytics.trackAppOpenedWithRemoteNotificationPayload(userInfo)
+            //PFAnalytics.trackAppOpenedWithRemoteNotificationPayload(userInfo)
         }
     }
     
