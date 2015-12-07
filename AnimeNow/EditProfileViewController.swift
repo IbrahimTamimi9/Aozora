@@ -45,7 +45,11 @@ public class EditProfileViewController: UIViewController {
         }
         
         emailTextField.text = user.email
-        aboutTextView.text = user.details.about
+        user.details.fetchIfNeededInBackgroundWithBlock({ (details, error) -> Void  in
+            if let details = details as? UserDetails {
+                self.aboutTextView.text = details.about
+            }
+        })
     }
     
     // MARK: - IBAction

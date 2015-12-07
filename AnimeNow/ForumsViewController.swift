@@ -130,8 +130,6 @@ class ForumsViewController: UIViewController {
         startDate = NSDate()
         
         let pinnedQuery = Thread.query()!
-        pinnedQuery.maxCacheAge = 60*60
-        pinnedQuery.cachePolicy = PFCachePolicy.CacheElseNetwork
         pinnedQuery.whereKey("pinType", equalTo: "global")
         pinnedQuery.includeKey("tags")
         pinnedQuery.includeKey("lastPostedBy")

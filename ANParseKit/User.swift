@@ -41,7 +41,7 @@ public class User: PFUser {
     }
 
     public override class func currentUser() -> User? {
-        return PFUser.currentUser() as? User
+        return !currentUserIsGuest() ? PFUser.currentUser() as? User : nil
     }
     
     public class func currentUserLoggedIn() -> Bool {

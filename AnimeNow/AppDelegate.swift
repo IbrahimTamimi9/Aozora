@@ -37,6 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         initializeParse()
         //PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
         PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions)
+        PFUser.enableAutomaticUser()
         
         trackPushOpen(application, didFinishLaunchingWithOptions:launchOptions)
         registerForPushNotifications(application)

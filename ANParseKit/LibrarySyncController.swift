@@ -62,6 +62,9 @@ public class LibrarySyncController {
     public class func refreshAozoraLibrary() -> BFTask {
         
         print("Fetching all anime library from network..")
+        guard let _ = User.currentUser() else {
+            return BFTask(result: nil)
+        }
         
         var allAnime: [Anime] = []
         var myAnimeListLibrary: [MALProgress] = []
