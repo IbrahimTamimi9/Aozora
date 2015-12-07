@@ -129,12 +129,14 @@ class ForumsViewController: UIViewController {
         
         startDate = NSDate()
         
-        let query = Thread.query()!
-        query.whereKey("pinType", equalTo: "global")
-        query.includeKey("tags")
-        query.includeKey("lastPostedBy")
-        query.includeKey("startedBy")
-        query.findObjectsInBackgroundWithBlock { (result, error) -> Void in
+        let pinnedQuery = Thread.query()!
+        pinnedQuery.maxCacheAge = 60*60
+        pinnedQuery.cachePolicy = PFCachePolicy.CacheElseNetwork
+        pinnedQuery.whereKey("pinType", equalTo: "global")
+        pinnedQuery.includeKey("tags")
+        pinnedQuery.includeKey("lastPostedBy")
+        pinnedQuery.includeKey("startedBy")
+        pinnedQuery.findObjectsInBackgroundWithBlock { (result, error) -> Void in
             if let pinnedData = result as? [Thread] {
                 let query = Thread.query()!
                 query.whereKey("replies", greaterThan: 0)
@@ -210,6 +212,8 @@ class ForumsViewController: UIViewController {
     
     func fetchThreadTags() {
         let query = ThreadTag.query()!
+        query.maxCacheAge = 60*60
+        query.cachePolicy = PFCachePolicy.CacheElseNetwork
         query.orderByAscending("order")
         query.findObjectsInBackground().continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
             self.tagsDataSource = task.result as! [ThreadTag]

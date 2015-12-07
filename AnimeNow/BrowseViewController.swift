@@ -111,6 +111,8 @@ class BrowseViewController: UIViewController {
         
         // Fetch
         var query = Anime.query()!
+        query.maxCacheAge = 60*60
+        query.cachePolicy = PFCachePolicy.CacheElseNetwork
         switch currentBrowseType {
         case .TopAnime:
             query

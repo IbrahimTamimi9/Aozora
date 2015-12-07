@@ -14,6 +14,8 @@ class ChartController {
     class func fetchSeasonalChartAnime(seasonalChart: SeasonalChart) -> BFTask {
         
         let query = Anime.query()!
+        query.maxCacheAge = 60*60
+        query.cachePolicy = PFCachePolicy.CacheElseNetwork
         query.whereKey("startDate", greaterThanOrEqualTo: seasonalChart.startDate)
         query.whereKey("startDate", lessThanOrEqualTo: seasonalChart.endDate)
         return query.findAllObjectsInBackground()
@@ -22,6 +24,8 @@ class ChartController {
     class func fetchAllSeasons() -> BFTask {
         
         let query = SeasonalChart.query()!
+        query.maxCacheAge = 60*60
+        query.cachePolicy = PFCachePolicy.CacheElseNetwork
         query.orderByDescending("startDate")
         return query.findAllObjectsInBackground()
     }

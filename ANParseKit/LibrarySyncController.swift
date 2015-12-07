@@ -28,13 +28,17 @@ public class LibrarySyncController {
     // MARK: - Library management
     
     /// Fetches what's on Parse
-    public class func fetchAozoraLibrary() -> BFTask {
+    public class func fetchAozoraLibrary(useCache: Bool = true) -> BFTask {
         
         guard let user = User.currentUser() else {
             return BFTask(result: nil)
         }
         
         let progressQuery = AnimeProgress.query()!
+        if useCache {
+            progressQuery.maxCacheAge = 60*60
+            progressQuery.cachePolicy = PFCachePolicy.CacheElseNetwork
+        }
         progressQuery.whereKey("user", equalTo: user)
         progressQuery.includeKey("anime")
         
@@ -89,7 +93,7 @@ public class LibrarySyncController {
                 print("Not syncing with mal, continuing..")
             }
             
-            let fetchAozoraLibrary = self.fetchAozoraLibrary()
+            let fetchAozoraLibrary = self.fetchAozoraLibrary(false)
             
             return BFTask(forCompletionOfAllTasksWithResults: [syncWithAServiceTask, fetchAozoraLibrary])
             

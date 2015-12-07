@@ -178,25 +178,34 @@ class ChartViewController: UIViewController {
         }
     }
     
+    func fetchAllSeasons() -> BFTask {
+        return ChartController.fetchAllSeasons()
+    }
+    
     func fetchSeasonalChart(seasonalChart: String) {
         
         let startDate = NSDate()
+        var seasonsTask: BFTask!
         
-        ChartController.fetchAllSeasons()
-        .continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
-            
-            let result = task.result as! [SeasonalChart]
-            self.chartsDataSource = result
-            let currentSeasonalChart = result.filter({$0.title == seasonalChart})
-            
-            return BFTask(result: currentSeasonalChart)
+        if chartsDataSource.isEmpty {
+            seasonsTask = fetchAllSeasons().continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
+                
+                let result = task.result as! [SeasonalChart]
+                self.chartsDataSource = result
+                let selectedSeasonalChart = result.filter({$0.title == seasonalChart})
+                return BFTask(result: selectedSeasonalChart)
+            }
+        } else {
+            let selectedSeasonalChart = chartsDataSource.filter({$0.title == seasonalChart})
+            seasonsTask = BFTask(result: selectedSeasonalChart)
+        }
         
-        }.continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
+        seasonsTask.continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
             
-            guard let result = task.result as? [SeasonalChart], let season = result.last else {
+            guard let result = task.result as? [SeasonalChart], let selectedSeason = result.last else {
                 return nil
             }
-            return ChartController.fetchSeasonalChartAnime(season)
+            return ChartController.fetchSeasonalChartAnime(selectedSeason)
         
         }.continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
             
