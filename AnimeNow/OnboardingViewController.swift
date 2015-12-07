@@ -50,7 +50,7 @@ class OnboardingViewController: UIViewController {
     }
     
     func initializeUserDataIfNeeded() {
-        if let currentUser = PFUser.currentUser() where currentUser["joinDate"] == nil {
+        if let currentUser = User.currentUser() where currentUser["joinDate"] == nil {
             currentUser["joinDate"] = NSDate()
             currentUser.saveEventually()
         }
@@ -61,7 +61,7 @@ class OnboardingViewController: UIViewController {
         
         let installation = PFInstallation.currentInstallation()
         
-        if let user = PFUser.currentUser() {
+        if let user = User.currentUser() {
             installation.setObject(user, forKey: "user")
             installation.saveEventually()
         }

@@ -95,7 +95,7 @@ public class ProfileViewController: ThreadViewController {
     func sizeHeaderToFit() {
         let header = tableView.tableHeaderView!
         
-        if userProfile != User.currentUser() {
+        if let userProfile = userProfile where userProfile.isCurrentUser() {
             segmentedControlHeight.constant = 0
             segmentedControl.hidden = true
         }
@@ -181,7 +181,7 @@ public class ProfileViewController: ThreadViewController {
             }
         }
         
-        if User.currentUser() != userProfile && !User.currentUserIsGuest() {
+        if let userProfile = userProfile where !userProfile.isCurrentUser() && !User.currentUserIsGuest() {
             let relationQuery = User.currentUser()!.following().query()
             relationQuery.whereKey("aozoraUsername", equalTo: username)
             relationQuery.findObjectsInBackgroundWithBlock { (result, error) -> Void in
@@ -224,7 +224,7 @@ public class ProfileViewController: ThreadViewController {
         
         proBadge.hidden = true
         
-        if user == User.currentUser() {
+        if user.isCurrentUser() {
             // If is current user, only show PRO when unlocked in-apps
             if let _ = InAppController.purchasedProPlus() {
                 proBadge.hidden = false
@@ -252,7 +252,7 @@ public class ProfileViewController: ThreadViewController {
             followButton.hidden = true
             notificationsButton.hidden = true
             settingsButton.hidden = true
-        } else if user == User.currentUser()! {
+        } else if user.isCurrentUser() {
             followButton.hidden = true
             settingsTrailingSpaceConstraint.constant = -10
         } else {
@@ -300,7 +300,7 @@ public class ProfileViewController: ThreadViewController {
     @IBAction func followOrUnfollow(sender: AnyObject) {
         
         if let thisProfileUser = userProfile {
-            if let followingUser = followingUser, let currentUser = User.currentUser() where userProfile != currentUser {
+            if let followingUser = followingUser, let currentUser = User.currentUser() where !thisProfileUser.isCurrentUser() {
                 
                 if !followingUser {
                     // Follow
@@ -443,7 +443,7 @@ public class ProfileViewController: ThreadViewController {
             }
         }))
         
-        if userProfile == User.currentUser()! {
+        if let userProfile = userProfile where userProfile.isCurrentUser() {
             alert.addAction(UIAlertAction(title: "Edit Profile", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction) -> Void in
                 let editProfileController =  UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("EditProfile") as! EditProfileViewController
                 editProfileController.delegate = self

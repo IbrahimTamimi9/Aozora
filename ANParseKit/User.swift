@@ -85,4 +85,11 @@ public class User: PFUser {
         return badges.contains("Admin")
     }
     
+    public func isCurrentUser() -> Bool {
+        guard let id1 = self.objectId, let currentUser = User.currentUser(), let id2 = currentUser.objectId else {
+            return false
+        }
+        return id1 == id2
+    }
+    
 }

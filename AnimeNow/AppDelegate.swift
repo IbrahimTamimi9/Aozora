@@ -45,8 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
         
-        let currentUser = PFUser.currentUser()
-        if currentUser != nil {
+        if let _ = User.currentUser() {
             WorkflowController.presentRootTabBar(animated: false)
         } else {
             WorkflowController.presentOnboardingController(true)
@@ -137,14 +136,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             var taskID = application.beginBackgroundTaskWithExpirationHandler { () }
     
-            if let user = User.currentUser() {
-                user.active = false
-                user.activeEnd = NSDate()
-                user.saveInBackgroundWithBlock({ (success, error) -> Void in
-                    application.endBackgroundTask(taskID)
-                    taskID = UIBackgroundTaskInvalid
-                })
+            guard let user = User.currentUser() else {
+                return
             }
+            
+            user.active = false
+            user.activeEnd = NSDate()
+            user.saveInBackgroundWithBlock({ (success, error) -> Void in
+                application.endBackgroundTask(taskID)
+                taskID = UIBackgroundTaskInvalid
+            })
         })
     }
 
@@ -248,24 +249,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func makeUpdateChanges() {
         // Logout if previous version is installed
         let version120 = "1.2.0-launched"
-        if let _ = User.currentUser() {
-            if (!NSUserDefaults.standardUserDefaults().boolForKey(version120)) {
-                WorkflowController.logoutUser().continueWithExecutor( BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
-                    
-                    if let error = task.error {
-                        print("failed loggin out: \(error)")
-                    } else {
-                        print("logout succeeded")
-                    }
-                    NSUserDefaults.standardUserDefaults().setBool(true, forKey: version120)
-                    NSUserDefaults.standardUserDefaults().synchronize()
-                    WorkflowController.presentOnboardingController(true)
-                    return nil
-                })
-            }
-        } else {
+        
+        if User.currentUser() == nil {
             NSUserDefaults.standardUserDefaults().setBool(true, forKey: version120)
             NSUserDefaults.standardUserDefaults().synchronize()
+            return
+        }
+        
+        if (!NSUserDefaults.standardUserDefaults().boolForKey(version120)) {
+            WorkflowController.logoutUser().continueWithExecutor( BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
+                
+                if let error = task.error {
+                    print("failed loggin out: \(error)")
+                } else {
+                    print("logout succeeded")
+                }
+                NSUserDefaults.standardUserDefaults().setBool(true, forKey: version120)
+                NSUserDefaults.standardUserDefaults().synchronize()
+                WorkflowController.presentOnboardingController(true)
+                return nil
+            })
         }
     }
     

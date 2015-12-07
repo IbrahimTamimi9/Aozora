@@ -80,10 +80,10 @@ public class ThreadViewController: UIViewController {
     
     public func openProfile(user: User) {
         if let profileController = self as? ProfileViewController {
-            if profileController.userProfile != user && user != User.currentUser() {
+            if profileController.userProfile != user && !user.isCurrentUser() {
                 openProfileNow(user)
             }
-        } else if user != User.currentUser() {
+        } else if !user.isCurrentUser() {
             openProfileNow(user)
         }
     }
@@ -475,7 +475,7 @@ extension ThreadViewController: UITableViewDelegate {
     func showSheetFor(post post: Postable, parentPost: Postable? = nil) {
         // If user's comment show delete/edit
         let administrating = User.currentUser()!.isAdmin() && !post.postedBy!.isAdmin()
-        if post.postedBy == User.currentUser() ||
+        if let postedBy = post.postedBy where postedBy.isCurrentUser() ||
             // Current user is admin and posted by non-admin user
             administrating {
             
