@@ -108,6 +108,7 @@ public class AnimeInformationViewController: AnimeBaseViewController {
                 
             } else {
                 if let anime = objects?.first as? Anime {
+                    anime.progress = self.anime.progress
                     self.anime = anime
                 }
             }

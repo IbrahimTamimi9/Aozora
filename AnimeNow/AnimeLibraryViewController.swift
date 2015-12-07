@@ -121,7 +121,12 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
             loadingView.startAnimating()
         }
         
-        return libraryController.fetchAnimeList(true).continueWithExecutor(BFExecutor.mainThreadExecutor(), withBlock: { (task: BFTask!) -> AnyObject? in
+        return libraryController.fetchAnimeList(isRefreshing).continueWithExecutor(BFExecutor.mainThreadExecutor(), withBlock: { (task: BFTask!) -> AnyObject? in
+            
+            if let library = task.result as? [Anime] {
+                self.updateListViewControllers(library)
+            }
+            
             self.loadingView.stopAnimating()
             return nil
         })
