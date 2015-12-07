@@ -487,6 +487,7 @@ public class ProfileViewController: ThreadViewController {
     }
 }
 
+// MARK: - EditProfileViewControllerProtocol
 extension ProfileViewController: EditProfileViewControllerProtocol {
     
     func editProfileViewControllerDidEditedUser(user: User) {
@@ -495,6 +496,7 @@ extension ProfileViewController: EditProfileViewControllerProtocol {
     }
 }
 
+// MARK: - NotificationsViewControllerDelegate
 extension ProfileViewController: NotificationsViewControllerDelegate {
     func notificationsViewControllerClearedAllNotifications() {
         noNewNotifications()
