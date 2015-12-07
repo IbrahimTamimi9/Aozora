@@ -291,28 +291,18 @@ public class LibrarySyncController {
     
     // MARK: - Class Methods
     
-    public class func matchAnimeWithProgress(animeList: [Anime]) -> BFTask {
-        
-        guard let user = User.currentUser() else {
-            return BFTask(result: [])
-        }
+    public class func matchAnimeWithProgress(animeList: [Anime]) {
         
         // Match all anime with it's progress..
-        let animeLibraryQuery = AnimeProgress.query()!
-        animeLibraryQuery.whereKey("user", equalTo: user)
-        animeLibraryQuery.whereKey("anime", containedIn: animeList)
-        return animeLibraryQuery.findObjectsInBackground().continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
-            if let animeLibrary = task.result as? [AnimeProgress] {
-                for anime in animeList where anime.progress == nil {
-                    for progress in animeLibrary {
-                        if progress.anime.objectId == anime.objectId {
-                            anime.progress = progress
-                            break
-                        }
+        if let animeLibrary = LibraryController.sharedInstance.progress {
+            for anime in animeList where anime.progress == nil {
+                for progress in animeLibrary {
+                    if progress.anime.objectId == anime.objectId {
+                        anime.progress = progress
+                        break
                     }
                 }
             }
-            return BFTask(result: animeList)
         }
     }
 

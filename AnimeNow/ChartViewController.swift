@@ -203,7 +203,8 @@ class ChartViewController: UIViewController {
             guard let result = task.result as? [Anime] else {
                 return nil
             }
-            return LibrarySyncController.matchAnimeWithProgress(result)
+            LibrarySyncController.matchAnimeWithProgress(result)
+            return BFTask(result: result)
             
         }.continueWithExecutor(BFExecutor.mainThreadExecutor(), withBlock: { (task: BFTask!) -> AnyObject! in
         

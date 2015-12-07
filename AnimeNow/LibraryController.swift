@@ -16,6 +16,7 @@ public class LibraryController {
     public static let sharedInstance = LibraryController()
     
     public var library: [Anime]?
+    public var progress: [AnimeProgress]?
     public var currentlySyncing = false
     
     public func fetchAnimeList(isRefreshing: Bool) -> BFTask {
@@ -36,6 +37,9 @@ public class LibraryController {
             
             if let result = task.result as? [Anime] {
                 self.library = result
+                self.progress = result
+                    .filter({return $0.progress != nil})
+                    .map({return $0.progress!})
             }
             self.currentlySyncing = false
             
