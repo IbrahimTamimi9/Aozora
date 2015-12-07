@@ -93,3 +93,14 @@ public class User: PFUser {
     }
     
 }
+
+extension PFObject {
+    // This ensures 2 PFObjects are compared correctly by their objectId instead their pointer
+    override public func isEqual(object: AnyObject?) -> Bool {
+        if let user = object as? User {
+            return user.objectId == self.objectId
+        } else {
+            return false
+        }
+    }
+}
