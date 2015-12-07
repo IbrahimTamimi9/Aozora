@@ -79,6 +79,7 @@ public class NotificationThreadViewController: ThreadViewController {
         
         let query = innerQuery.copy() as! PFQuery
         query.includeKey("postedBy")
+        query.includeKey("userTimeline")
         
         repliesQuery.skip = 0
         repliesQuery.whereKey("parentPost", matchesKey: "objectId", inQuery: innerQuery)

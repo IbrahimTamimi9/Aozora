@@ -95,7 +95,7 @@ public class ProfileViewController: ThreadViewController {
     func sizeHeaderToFit() {
         let header = tableView.tableHeaderView!
         
-        if let userProfile = userProfile where userProfile.isCurrentUser() {
+        if let userProfile = userProfile where !userProfile.isCurrentUser() {
             segmentedControlHeight.constant = 0
             segmentedControl.hidden = true
         }

@@ -138,15 +138,10 @@ extension NotificationsViewController: UITableViewDelegate {
         // Open
         let notification = fetchController.objectAtIndex(indexPath.row) as! Notification
         
-        if !notification.readBy.contains(User.currentUser()!) {
-            notification.addUniqueObject(User.currentUser()!, forKey: "readBy")
-            notification.saveEventually()
-            tableView.reloadData()
-        }
-        
         // Temporal fix to prevent opening the notification twice
         tableView.userInteractionEnabled = false
         NotificationsController.handleNotification(notification.objectId!, objectClass: notification.targetClass, objectId: notification.targetID)
+        tableView.reloadData()
     }
 }
 
