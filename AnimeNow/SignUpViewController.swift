@@ -61,7 +61,7 @@ class SignUpViewController: UIViewController {
         userProfileManager.createUser(self,
             username: usernameTextField.text!,
             password: loggedInWithFacebook ? nil : passwordTextField.text,
-            email: emailTextField.text!,
+            email: emailTextField.text!.lowercaseString,
             avatar: profilePicture.image,
             user: user ?? User())
             .continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
