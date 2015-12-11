@@ -145,8 +145,8 @@ public class CustomThreadViewController: ThreadViewController {
             }
             postedDate.text = postedAt
             
-            let administrating = User.currentUser()!.isAdmin() && !startedBy.isAdmin()
-            moreButton.hidden = startedBy != User.currentUser()! && !administrating
+            let administrating = User.currentUser()?.isAdmin() ?? false && !startedBy.isAdmin()
+            moreButton.hidden = startedBy != User.currentUser() ?? false && !administrating
         }
         
         setImages(thread.images, imageView: imageContent, imageHeightConstraint: imageHeightConstraint)
