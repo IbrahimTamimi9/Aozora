@@ -185,18 +185,10 @@ public class FetchController {
                         self.isFirstFetch = false
                         collectionView.animateFadeIn()
                     }
-                    
-                } else if let result = task.result as? [PFObject] {
+                } else {
                     // Insert rows
-                    collectionView.performBatchUpdates({ () -> Void in
-                        let endIndex = self.dataSource.count
-                        let startIndex = endIndex - result.count
-                        var indexPathsToInsert: [NSIndexPath] = []
-                        for index in startIndex..<endIndex {
-                            indexPathsToInsert.append(NSIndexPath(forRow: index, inSection: 0))
-                        }
-                        collectionView.insertItemsAtIndexPaths(indexPathsToInsert)
-                        }, completion: nil)
+                    // Implement a better way of adding new rows
+                    collectionView.reloadData()
                 }
             } else if let tableView = self.tableView {
                 if skip == 0 {
@@ -206,11 +198,9 @@ public class FetchController {
                         tableView.animateFadeIn()
                     }
                 } else {
-                    
                     tableView.reloadData()
                 }
             }
-            
             
             return nil
         }).continueWithBlock({ (task: BFTask!) -> AnyObject! in
