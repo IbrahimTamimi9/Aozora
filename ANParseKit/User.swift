@@ -85,7 +85,8 @@ public class User: PFUser {
         return badges.contains("Admin")
     }
     
-    public func isCurrentUser() -> Bool {
+    // Don't ever name the function isCurrentUser it will conflict with Parse framework
+    public func isTheCurrentUser() -> Bool {
         guard let id1 = self.objectId, let currentUser = User.currentUser(), let id2 = currentUser.objectId else {
             return false
         }

@@ -31,7 +31,7 @@ public class NotificationThreadViewController: ThreadViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         
-        if let timelinePost = timelinePost where timelinePost.userTimeline.isCurrentUser() {
+        if let timelinePost = timelinePost where timelinePost.userTimeline.isTheCurrentUser() {
             tableView.tableHeaderView = nil
         }
         
