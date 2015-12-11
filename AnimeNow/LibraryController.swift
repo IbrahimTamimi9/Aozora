@@ -9,6 +9,10 @@
 import Foundation
 import Bolts
 
+public protocol LibraryControllerDelegate: class {
+    func libraryControllerFinishedFetchingLibrary(library: [Anime])
+}
+
 public class LibraryController {
     
     public static let LastSyncDateDefaultsKey = "LibrarySync.LastSyncDate"
@@ -18,6 +22,7 @@ public class LibraryController {
     public var library: [Anime]?
     public var progress: [AnimeProgress]?
     public var currentlySyncing = false
+    public weak var delegate: LibraryControllerDelegate?
     
     public func fetchAnimeList(isRefreshing: Bool) -> BFTask {
         
@@ -40,6 +45,7 @@ public class LibraryController {
                 self.progress = result
                     .filter({return $0.progress != nil})
                     .map({return $0.progress!})
+                self.delegate?.libraryControllerFinishedFetchingLibrary(result)
             }
             self.currentlySyncing = false
             

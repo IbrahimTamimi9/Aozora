@@ -37,7 +37,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         initializeParse()
         //PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
         PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions)
-        PFUser.enableAutomaticUser()
         
         trackPushOpen(application, didFinishLaunchingWithOptions:launchOptions)
         registerForPushNotifications(application)
@@ -232,6 +231,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AnimeProgress.registerSubclass()
         ThreadTag.registerSubclass()
         Notification.registerSubclass()
+        
+        Parse.enableLocalDatastore()
         
         Parse.setApplicationId("X95vv1iNbXWqoEClbK5XzGvjuydWKQk2Ti2n8OPn",
             clientKey: "vvsbzUBBgnPKCoYQlltREy5S0gSIgMfBp34aDrkc")

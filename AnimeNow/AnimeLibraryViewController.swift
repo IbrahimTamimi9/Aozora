@@ -98,6 +98,7 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
      
         loadingView = LoaderView(parentView: view)
         
+        libraryController.delegate = self
         if let library = libraryController.library {
             updateListViewControllers(library)
         }
@@ -278,5 +279,11 @@ extension AnimeLibraryViewController: FilterViewControllerDelegate {
 extension AnimeLibraryViewController: AnimeListControllerDelegate {
     func controllerRequestRefresh() -> BFTask {
         return fetchAnimeList(true)
+    }
+}
+
+extension AnimeLibraryViewController: LibraryControllerDelegate {
+    func libraryControllerFinishedFetchingLibrary(library: [Anime]) {
+        updateListViewControllers(library)
     }
 }

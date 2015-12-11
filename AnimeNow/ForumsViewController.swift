@@ -210,8 +210,6 @@ class ForumsViewController: UIViewController {
     
     func fetchThreadTags() {
         let query = ThreadTag.query()!
-        query.maxCacheAge = 60*60
-        query.cachePolicy = PFCachePolicy.CacheElseNetwork
         query.orderByAscending("order")
         query.findObjectsInBackground().continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
             self.tagsDataSource = task.result as! [ThreadTag]
