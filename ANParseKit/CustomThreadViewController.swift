@@ -153,7 +153,9 @@ public class CustomThreadViewController: ThreadViewController {
     }
     
     func sizeHeaderToFit() {
-        let header = tableView.tableHeaderView!
+        guard let header = tableView.tableHeaderView else {
+            return
+        }
         
         header.setNeedsLayout()
         header.layoutIfNeeded()

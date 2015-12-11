@@ -349,7 +349,7 @@ class ChartViewController: UIViewController {
     
     @IBAction func showCalendarPressed(sender: AnyObject) {
         
-        if let _ = InAppController.purchasedAnyPro() {
+        if let _ = InAppController.hasAnyPro() {
             
             let controller = UIStoryboard(name: "Season", bundle: nil).instantiateViewControllerWithIdentifier("Calendar") as! CalendarViewController
             presentViewController(controller, animated: true, completion: nil)
@@ -473,7 +473,7 @@ extension ChartViewController: UICollectionViewDelegate {
 extension ChartViewController: DropDownListDelegate {
     func selectedAction(trigger: UIView, action: String, indexPath: NSIndexPath) {
         
-        if let _ = InAppController.purchasedAnyPro() {
+        if let _ = InAppController.hasAnyPro() {
             
             if trigger.isEqual(navigationController?.navigationBar) {
                 switch (indexPath.row, indexPath.section) {
@@ -492,7 +492,7 @@ extension ChartViewController: DropDownListDelegate {
     }
     
     func dropDownDidDismissed(selectedAction: Bool) {
-        if selectedAction && InAppController.purchasedAnyPro() == nil {
+        if selectedAction && InAppController.hasAnyPro() == nil {
             InAppPurchaseViewController.showInAppPurchaseWith(self)
         }
         

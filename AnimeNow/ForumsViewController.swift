@@ -286,7 +286,7 @@ extension ForumsViewController: UITableViewDelegate {
             threadController.initWithThread(thread)
         }
         
-        if InAppController.purchasedAnyPro() == nil {
+        if InAppController.hasAnyPro() == nil {
             threadController.interstitialPresentationPolicy = .Automatic
         }
         

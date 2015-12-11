@@ -52,7 +52,7 @@ class InAppPurchaseViewController: UITableViewController {
     }
     
     func updateViewForPurchaseState() {
-        if let _ = InAppController.purchasedAnyPro() {
+        if let _ = InAppController.hasAnyPro() {
             descriptionLabel.text = "Thanks for supporting Aozora! You're an exclusive Pro member that is helping us create an even better app"
         } else {
             descriptionLabel.text = "Browse all seasonal charts, unlock calendar view, discover more anime, remove all ads forever, and more importantly helps us take Aozora to the next level"

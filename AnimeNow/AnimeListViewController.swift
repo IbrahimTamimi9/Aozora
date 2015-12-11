@@ -270,7 +270,7 @@ extension AnimeListViewController: LibraryAnimeCellDelegate {
         let threadController = ANAnimeKit.customThreadViewController()
         threadController.initWithEpisode(episode, anime: anime)
         
-        if InAppController.purchasedAnyPro() == nil {
+        if InAppController.hasAnyPro() == nil {
             threadController.interstitialPresentationPolicy = .Automatic
         }
         

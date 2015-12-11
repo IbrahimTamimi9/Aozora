@@ -83,7 +83,7 @@ public class UserProfileManager: NSObject {
             // Fill user fields
             if user.username == nil {
                 createdWithFacebook = false
-                user.username = username
+                user.username = username.lowercaseString
                 user.password = password
             } else {
                 createdWithFacebook = true

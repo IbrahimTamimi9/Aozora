@@ -34,6 +34,8 @@ public class User: PFUser {
     @NSManaged public var activeEnd: NSDate
     @NSManaged public var active: Bool
     
+    @NSManaged public var trialExpiration: NSDate?
+    
     static let MyAnimeListPasswordKey = "MyAnimeList.Password"
     
     public func following() -> PFRelation {
@@ -91,6 +93,11 @@ public class User: PFUser {
             return false
         }
         return id1 == id2
+    }
+    
+    // Trial
+    public func hasTrial() -> Bool {
+        return trialExpiration?.compare(NSDate()) == .OrderedDescending
     }
     
 }

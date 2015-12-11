@@ -95,7 +95,7 @@ class FilterViewController: UIViewController {
     }
     @IBAction func applyFilterPressed(sender: AnyObject) {
         
-        if let _ = InAppController.purchasedAnyPro() {
+        if let _ = InAppController.hasAnyPro() {
             delegate?.finishedWith(configuration: sectionsDataSource, selectedGenres: selectedGenres)
             dismissViewControllerAnimated(true, completion: nil)
         } else {

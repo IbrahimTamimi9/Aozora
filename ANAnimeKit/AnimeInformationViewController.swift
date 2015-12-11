@@ -344,7 +344,8 @@ public class AnimeInformationViewController: AnimeBaseViewController {
         }
         
         alert.addAction(UIAlertAction(title: "Refresh Images", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
-            PFCloud.callFunctionInBackground("updateAnimeInformation", withParameters: ["malID":self.anime.myAnimeListID], block: { (result, error) -> Void in
+            let params = ["malID": self.anime.myAnimeListID]
+            PFCloud.callFunctionInBackground("updateAnimeInformation", withParameters: params, block: { (result, error) -> Void in
                 self.presentBasicAlertWithTitle("Refreshing..", message: "Data will be refreshed soon")
                 print("Refreshed!!")
             })

@@ -208,7 +208,7 @@ extension SearchViewController: UICollectionViewDelegate {
                 threadController.initWithThread(thread)
             }
             
-            if InAppController.purchasedAnyPro() == nil {
+            if InAppController.hasAnyPro() == nil {
                 threadController.interstitialPresentationPolicy = .Automatic
             }
             navigationController?.pushViewController(threadController, animated: true)

@@ -40,7 +40,7 @@ class OnboardingViewController: UIViewController {
     
     func presentRootTabBar() {
         
-        initializeUserDataIfNeeded()
+        fillInitialUserDataIfNeeded()
         
         if isInWindowRoot {
             WorkflowController.presentRootTabBar(animated: true)
@@ -49,16 +49,16 @@ class OnboardingViewController: UIViewController {
         }
     }
     
-    func initializeUserDataIfNeeded() {
+    func fillInitialUserDataIfNeeded() {
         if let currentUser = User.currentUser() where currentUser["joinDate"] == nil {
-            currentUser["joinDate"] = NSDate()
-            currentUser.saveEventually()
+            
+            let params = ["user": currentUser.objectId!]
+            PFCloud.callFunctionInBackground("fillInitialUserData", withParameters: params, block: { (result, error) -> Void in
+                currentUser.fetchInBackground()
+            })
         }
-        linkInstalationWithUser()
-    }
-    
-    func linkInstalationWithUser() {
         
+        // Link instalation with user
         let installation = PFInstallation.currentInstallation()
         
         if let user = User.currentUser() {
