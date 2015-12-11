@@ -46,6 +46,7 @@ public class LibraryController {
                     .filter({return $0.progress != nil})
                     .map({return $0.progress!})
                 self.delegate?.libraryControllerFinishedFetchingLibrary(result)
+                NSUserDefaults.completedAction(LibraryController.LastSyncDateDefaultsKey)
             }
             self.currentlySyncing = false
             

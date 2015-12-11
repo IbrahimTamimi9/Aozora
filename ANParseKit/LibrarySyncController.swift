@@ -35,10 +35,6 @@ public class LibrarySyncController {
         }
         
         let progressQuery = AnimeProgress.query()!
-        if useCache {
-            progressQuery.maxCacheAge = 60*60
-            progressQuery.cachePolicy = PFCachePolicy.CacheElseNetwork
-        }
         progressQuery.whereKey("user", equalTo: user)
         progressQuery.includeKey("anime")
         
@@ -112,7 +108,8 @@ public class LibrarySyncController {
             // Create on PARSE
             var malProgressToCreate: [MALProgress] = []
             
-            for malProgress in myAnimeListLibrary where parseLibrary.filter({$0.myAnimeListID == malProgress.myAnimeListID}).last == nil {
+            let parseLibraryIDs = parseLibrary.map({$0.myAnimeListID})
+            for malProgress in myAnimeListLibrary where parseLibraryIDs.filter({$0 == malProgress.myAnimeListID}).last == nil {
                 malProgressToCreate.append(malProgress)
             }
             

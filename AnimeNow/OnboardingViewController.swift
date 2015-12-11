@@ -71,6 +71,7 @@ class OnboardingViewController: UIViewController {
     
     @IBAction func signUpWithFacebookPressed(sender: AnyObject) {
         let permissions = ["public_profile", "email", "user_friends"]
+        PFFacebookUtils.facebookLoginManager().logOut()
         PFFacebookUtils.logInInBackgroundWithReadPermissions(permissions) {
             (user: PFUser?, error: NSError?) -> Void in
             if let user = user {
@@ -85,11 +86,6 @@ class OnboardingViewController: UIViewController {
                 
             } else if let error = error {
                 print("\(error)")
-                PFUser.logOutInBackgroundWithBlock({ (error) -> Void in  
-                    if let error = error {
-                        print("Uh oh. \(error.localizedDescription)")
-                    }
-                })
             }
         }
     }
