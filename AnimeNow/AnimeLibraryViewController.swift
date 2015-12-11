@@ -99,6 +99,7 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
         loadingView = LoaderView(parentView: view)
         
         libraryController.delegate = self
+        loadingView.startAnimating()
         if let library = libraryController.library {
             updateListViewControllers(library)
         }
@@ -128,7 +129,6 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
                 self.updateListViewControllers(library)
             }
             
-            self.loadingView.stopAnimating()
             return nil
         })
     }
@@ -162,6 +162,8 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
                 controller.updateSortType(controller.currentSortType)
             }
         }
+        
+        loadingView.stopAnimating()
     }
     
     
