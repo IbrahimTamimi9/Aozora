@@ -88,12 +88,8 @@ extension DayViewController: UICollectionViewDataSource {
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
-        let reuseIdentifier: String
-        if indexPath.section == 0 {
-            reuseIdentifier = "CheckInCompact"
-        } else {
-            reuseIdentifier = "AnimeCellPoster"
-        }
+        let reuseIdentifier = "AnimeCellPoster"
+
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! AnimeCell
         
         let anime = dataSource[indexPath.row]
@@ -113,23 +109,9 @@ extension DayViewController: UICollectionViewDataSource {
         return cell
     }
     
-    func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
-        
-        var reusableView: UICollectionReusableView!
-        
-        if kind == UICollectionElementKindSectionHeader {
-            
-            let headerView = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView", forIndexPath: indexPath) as! BasicCollectionReusableView
-            
-            headerView.titleLabel.text = "All"
-            reusableView = headerView
-        }
-        
-        return reusableView
-    }
-    
+
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.bounds.size.width, height: 44.0)
+        return CGSize(width: view.bounds.size.width, height: 0.0)
     }
     
 }

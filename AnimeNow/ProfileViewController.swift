@@ -40,7 +40,6 @@ public class ProfileViewController: ThreadViewController {
     
     public var userProfile: User?
     var username: String?
-    var followingUser: Bool?
     
     public func initWithUser(user: User) {
         self.userProfile = user
@@ -188,17 +187,16 @@ public class ProfileViewController: ThreadViewController {
                 if let _ = result?.last as? User {
                     // Following this user
                     self.followButton.setTitle("  Following", forState: .Normal)
-                    self.followButton.layoutIfNeeded()
-                    self.followingUser = true
+                    userProfile.followingThisUser = true
                 } else if let _ = error {
                     // TODO: Show error
                     
                 } else {
                     // NOT following this user
                     self.followButton.setTitle("  Follow", forState: .Normal)
-                    self.followButton.layoutIfNeeded()
-                    self.followingUser = false
+                    userProfile.followingThisUser = false
                 }
+                self.followButton.layoutIfNeeded()
             }
         }
         
@@ -299,37 +297,22 @@ public class ProfileViewController: ThreadViewController {
     
     @IBAction func followOrUnfollow(sender: AnyObject) {
         
-        if let thisProfileUser = userProfile {
-            if let followingUser = followingUser, let currentUser = User.currentUser() where !thisProfileUser.isTheCurrentUser() {
+            if let thisProfileUser = userProfile,
+                let followingUser = thisProfileUser.followingThisUser,
+                let currentUser = User.currentUser() where !thisProfileUser.isTheCurrentUser() {
+                
+                currentUser.followUser(thisProfileUser, follow: !followingUser)
                 
                 if !followingUser {
                     // Follow
                     self.followButton.setTitle("  Following", forState: .Normal)
-                    let followingRelation = currentUser.following()
-                    followingRelation.addObject(thisProfileUser)
-                    thisProfileUser.details.incrementKey("followersCount", byAmount: 1)
-                    currentUser.details.incrementKey("followingCount", byAmount: 1)
-                    thisProfileUser.details.saveEventually()
-                    thisProfileUser.saveEventually()
-                    currentUser.saveEventually()
-                    PFCloud.callFunctionInBackground("sendFollowingPushNotificationV2", withParameters: ["toUser":thisProfileUser.objectId!])
                     updateFollowingButtons()
                 } else {
                     // Unfollow
                     self.followButton.setTitle("  Follow", forState: .Normal)
-                    let followingRelation = currentUser.following()
-                    followingRelation.removeObject(thisProfileUser)
-                    thisProfileUser.details.incrementKey("followersCount", byAmount: -1)
-                    currentUser.details.incrementKey("followingCount", byAmount: -1)
-                    thisProfileUser.details.saveEventually()
-                    thisProfileUser.saveEventually()
-                    currentUser.saveEventually()
                     updateFollowingButtons()
                 }
-                
-                self.followingUser = !followingUser
             }
-        }
     }
     
     public override func replyToThreadPressed(sender: AnyObject) {

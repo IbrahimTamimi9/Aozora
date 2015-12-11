@@ -36,6 +36,8 @@ public class User: PFUser {
     
     @NSManaged public var trialExpiration: NSDate?
     
+    public var followingThisUser: Bool?
+    
     static let MyAnimeListPasswordKey = "MyAnimeList.Password"
     
     public func following() -> PFRelation {
@@ -100,6 +102,28 @@ public class User: PFUser {
         return trialExpiration?.compare(NSDate()) == .OrderedDescending
     }
     
+    public func followUser(user: User, follow: Bool) {
+        
+        var incrementer = 0
+        if follow {
+            let followingRelation = following()
+            followingRelation.addObject(user)
+            incrementer = 1
+            PFCloud.callFunctionInBackground("sendFollowingPushNotificationV2", withParameters: ["toUser":user.objectId!])
+        } else {
+            let followingRelation = following()
+            followingRelation.removeObject(user)
+            incrementer = -1
+        }
+        
+        user.followingThisUser = follow
+        user.details.incrementKey("followersCount", byAmount: incrementer)
+        user.details.saveEventually()
+        user.saveEventually()
+        
+        details.incrementKey("followingCount", byAmount: incrementer)
+        saveEventually()
+    }
 }
 
 extension PFObject {
