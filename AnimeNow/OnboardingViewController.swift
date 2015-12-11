@@ -104,6 +104,7 @@ class OnboardingViewController: UIViewController {
         if User.currentUserIsGuest() {
             presentRootTabBar()
         } else {
+            PFUser.logOut()
             PFAnonymousUtils.logInWithBlock {
                 (user: PFUser?, error: NSError?) -> Void in
                 if error != nil || user == nil {
