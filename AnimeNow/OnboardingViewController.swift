@@ -63,7 +63,7 @@ class OnboardingViewController: UIViewController {
         
         if let user = User.currentUser() {
             installation.setObject(user, forKey: "user")
-            installation.saveEventually()
+            installation.saveInBackground()
         }
     }
     

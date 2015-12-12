@@ -37,8 +37,8 @@ public class InAppBrowserSelectorViewController: UIViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         var frame = view.bounds
-        frame.origin.y = 64
-        frame.size.height = frame.size.height - 64
+        frame.origin.y = 0
+        frame.size.height = frame.size.height
         webView = WKWebView(frame: frame)
         webView.navigationDelegate = self
         view.addSubview(webView)

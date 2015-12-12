@@ -58,7 +58,7 @@ class InAppTransactionController {
             } else if productIdentifier == ProInAppPurchase {
                 User.currentUser()!.addUniqueObject("PRO", forKey: "badges")
             }
-            User.currentUser()!.saveEventually()
+            User.currentUser()!.saveInBackground()
             NSUserDefaults.standardUserDefaults().setBool(true, forKey: productIdentifier)
         }
         NSUserDefaults.standardUserDefaults().synchronize()

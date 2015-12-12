@@ -156,7 +156,7 @@ extension EpisodesViewController: EpisodeCellDelegate {
                 RateViewController.showRateDialogWith(self.tabBarController!, title: "You've finished\n\(anime.title!)!\ngive it a rating", initialRating: Float(progress.score)/2.0, anime: anime, delegate: self)
             }
             
-            progress.saveEventually()
+            progress.saveInBackground()
             LibrarySyncController.updateAnime(progress)
             
             NSNotificationCenter.defaultCenter().postNotificationName(LibraryUpdatedNotification, object: nil)

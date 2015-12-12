@@ -82,7 +82,7 @@ public class User: PFUser {
     
     public func incrementPostCount(byAmount: Int) {
         details.incrementKey("posts", byAmount: byAmount)
-        details.saveEventually()
+        details.saveInBackground()
     }
     
     public func isAdmin() -> Bool {
@@ -118,11 +118,10 @@ public class User: PFUser {
         
         user.followingThisUser = follow
         user.details.incrementKey("followersCount", byAmount: incrementer)
-        user.details.saveEventually()
-        user.saveEventually()
+        user.saveInBackground()
         
         details.incrementKey("followingCount", byAmount: incrementer)
-        saveEventually()
+        saveInBackground()
     }
 }
 

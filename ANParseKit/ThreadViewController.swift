@@ -160,7 +160,7 @@ public class ThreadViewController: UIViewController {
             } else {
                 post.addUniqueObject(currentUser, forKey: "likedBy")
             }
-            post.saveEventually()
+            post.saveInBackground()
         }
     }
     
@@ -562,7 +562,7 @@ extension ThreadViewController: UITableViewDelegate {
                 }
                 
                 self.thread?.incrementKey("replies", byAmount: -allPosts.count)
-                self.thread?.saveEventually()
+                self.thread?.saveInBackground()
                 
                 if removeParent {
                     // Delete parent post, and entire section
