@@ -129,7 +129,7 @@ extension TagsViewController: UICollectionViewDataSource {
         
         if let tag = tag as? ThreadTag {
             cell.titleLabel.text = "#"+tag.name
-            cell.subtitleLabel.text = tag.detail
+            cell.subtitleLabel.text = tag.detail ?? " "
         } else if let anime = tag as? Anime {
             cell.titleLabel.text = "#"+anime.title!
             cell.subtitleLabel.text = anime.informationString()
@@ -141,6 +141,8 @@ extension TagsViewController: UICollectionViewDataSource {
             cell.backgroundColor = UIColor.backgroundWhite()
         }
         
+        cell.layoutIfNeeded()
+
         return cell
     }
 }
@@ -152,7 +154,6 @@ extension TagsViewController: UICollectionViewDelegate {
         
         if let index = selectedDataSource.indexOf(tag) {
             selectedDataSource.removeAtIndex(index)
-            
         } else {
             selectedDataSource.append(tag)
         }
