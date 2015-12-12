@@ -42,7 +42,7 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
     var listControllers: [AnimeListViewController] = []
     
     var loadingView: LoaderView!
-    var currentlySyncing = false
+    var libraryController = LibraryController.sharedInstance
     
     var currentConfiguration: Configuration {
         get {
@@ -93,26 +93,29 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
         self.isProgressiveIndicator = true
         self.buttonBarView.selectedBar.backgroundColor = UIColor.watching()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateDataSource", name: LibraryUpdatedNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateLibrary", name: LibraryUpdatedNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "controllerRequestRefresh", name: LibraryCreatedNotification, object: nil)
      
         loadingView = LoaderView(parentView: view)
         
-        fetchAnimeList(false)
-        
+        libraryController.delegate = self
+        loadingView.startAnimating()
+        if let library = libraryController.library {
+            updateListViewControllers(library)
+        }
     }
     
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
-    func updateDataSource() {
+    func updateLibrary() {
         fetchAnimeList(false)
     }
     
     func fetchAnimeList(isRefreshing: Bool) -> BFTask {
         
-        if currentlySyncing {
+        if libraryController.currentlySyncing {
             return BFTask(result: nil)
         }
         
@@ -120,20 +123,12 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
             loadingView.startAnimating()
         }
         
-        currentlySyncing = true
-        return LibrarySyncController.fetchWatchingList(isRefreshing).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
-            if let result = task.result as? [Anime] where result.count > 0 {
-                self.updateListViewControllers(result)
+        return libraryController.fetchAnimeList(isRefreshing).continueWithExecutor(BFExecutor.mainThreadExecutor(), withBlock: { (task: BFTask!) -> AnyObject? in
+            
+            if let library = task.result as? [Anime] {
+                self.updateListViewControllers(library)
             }
-            return nil
-        }).continueWithBlock({ (task: BFTask!) -> AnyObject! in
-            if let error = task.error {
-                print(error)
-            }
-            if !isRefreshing {
-                self.loadingView.stopAnimating()
-            }
-            self.currentlySyncing = false
+            
             return nil
         })
     }
@@ -156,8 +151,6 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
                 case .Dropped:
                     lists[4].append(anime)
                 }
-            } else {
-                anime.unpinInBackgroundWithName(Anime.PinName.InLibrary.rawValue)
             }
         }
         
@@ -170,7 +163,10 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
             }
         }
         
+        loadingView.stopAnimating()
     }
+    
+    
     
     // MARK: - XLPagerTabStripViewControllerDataSource
     
@@ -258,7 +254,6 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
             controller.modalTransitionStyle = UIModalTransitionStyle.CoverVertical
             tabBar.presentViewController(controller, animated: true, completion: nil)
         }
-        
     }
 }
 
@@ -286,5 +281,11 @@ extension AnimeLibraryViewController: FilterViewControllerDelegate {
 extension AnimeLibraryViewController: AnimeListControllerDelegate {
     func controllerRequestRefresh() -> BFTask {
         return fetchAnimeList(true)
+    }
+}
+
+extension AnimeLibraryViewController: LibraryControllerDelegate {
+    func libraryControllerFinishedFetchingLibrary(library: [Anime]) {
+        updateListViewControllers(library)
     }
 }

@@ -76,7 +76,7 @@ public class ProfileViewController: ThreadViewController {
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        if let profile = userProfile where profile.details.isDataAvailable() {
+        if let profile = userProfile where profile.details.dataAvailable {
             updateFollowingButtons()
         }
     }
@@ -96,7 +96,7 @@ public class ProfileViewController: ThreadViewController {
     func sizeHeaderToFit() {
         let header = tableView.tableHeaderView!
         
-        if userProfile != User.currentUser() {
+        if let userProfile = userProfile where !userProfile.isTheCurrentUser() {
             segmentedControlHeight.constant = 0
             segmentedControl.hidden = true
         }
@@ -182,24 +182,23 @@ public class ProfileViewController: ThreadViewController {
             }
         }
         
-        if User.currentUser() != userProfile && !User.currentUserIsGuest() {
-            let relationQuery = User.currentUser()!.following().query()!
+        if let userProfile = userProfile where !userProfile.isTheCurrentUser() && !User.currentUserIsGuest() {
+            let relationQuery = User.currentUser()!.following().query()
             relationQuery.whereKey("aozoraUsername", equalTo: username)
             relationQuery.findObjectsInBackgroundWithBlock { (result, error) -> Void in
                 if let _ = result?.last as? User {
                     // Following this user
                     self.followButton.setTitle("  Following", forState: .Normal)
-                    self.followButton.layoutIfNeeded()
-                    self.followingUser = true
+                    userProfile.followingThisUser = true
                 } else if let _ = error {
                     // TODO: Show error
                     
                 } else {
                     // NOT following this user
                     self.followButton.setTitle("  Follow", forState: .Normal)
-                    self.followButton.layoutIfNeeded()
-                    self.followingUser = false
+                    userProfile.followingThisUser = false
                 }
+                self.followButton.layoutIfNeeded()
             }
         }
         
@@ -225,7 +224,7 @@ public class ProfileViewController: ThreadViewController {
         
         proBadge.hidden = true
         
-        if user == User.currentUser() {
+        if user.isTheCurrentUser() {
             // If is current user, only show PRO when unlocked in-apps
             if let _ = InAppController.purchasedProPlus() {
                 proBadge.hidden = false
@@ -253,7 +252,7 @@ public class ProfileViewController: ThreadViewController {
             followButton.hidden = true
             notificationsButton.hidden = true
             settingsButton.hidden = true
-        } else if user == User.currentUser()! {
+        } else if user.isTheCurrentUser() {
             followButton.hidden = true
             settingsTrailingSpaceConstraint.constant = -10
         } else {
@@ -300,37 +299,22 @@ public class ProfileViewController: ThreadViewController {
     
     @IBAction func followOrUnfollow(sender: AnyObject) {
         
-        if let thisProfileUser = userProfile {
-            if let followingUser = followingUser, let currentUser = User.currentUser() where userProfile != currentUser {
+            if let thisProfileUser = userProfile,
+                let followingUser = thisProfileUser.followingThisUser,
+                let currentUser = User.currentUser() where !thisProfileUser.isTheCurrentUser() {
+                
+                currentUser.followUser(thisProfileUser, follow: !followingUser)
                 
                 if !followingUser {
                     // Follow
                     self.followButton.setTitle("  Following", forState: .Normal)
-                    let followingRelation = currentUser.following()
-                    followingRelation.addObject(thisProfileUser)
-                    thisProfileUser.details.incrementKey("followersCount", byAmount: 1)
-                    currentUser.details.incrementKey("followingCount", byAmount: 1)
-                    thisProfileUser.details.saveEventually()
-                    thisProfileUser.saveEventually()
-                    currentUser.saveEventually()
-                    PFCloud.callFunctionInBackground("sendFollowingPushNotificationV2", withParameters: ["toUser":thisProfileUser.objectId!])
                     updateFollowingButtons()
                 } else {
                     // Unfollow
                     self.followButton.setTitle("  Follow", forState: .Normal)
-                    let followingRelation = currentUser.following()
-                    followingRelation.removeObject(thisProfileUser)
-                    thisProfileUser.details.incrementKey("followersCount", byAmount: -1)
-                    currentUser.details.incrementKey("followingCount", byAmount: -1)
-                    thisProfileUser.details.saveEventually()
-                    thisProfileUser.saveEventually()
-                    currentUser.saveEventually()
                     updateFollowingButtons()
                 }
-                
-                self.followingUser = !followingUser
             }
-        }
     }
     
     public override func replyToThreadPressed(sender: AnyObject) {
@@ -360,7 +344,7 @@ public class ProfileViewController: ThreadViewController {
             // 'Me' query
             innerQuery.whereKey("userTimeline", equalTo: userProfile!)
         } else {
-            innerQuery.whereKey("userTimeline", matchesQuery: userProfile!.following().query()!)
+            innerQuery.whereKey("userTimeline", matchesQuery: userProfile!.following().query())
         }
         
         // 'Feed' query
@@ -472,9 +456,9 @@ public class ProfileViewController: ThreadViewController {
     // MARK: - IBActions
     @IBAction func showFollowingUsers(sender: AnyObject) {
         let userListController = UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("UserList") as! UserListViewController
-        let query = userProfile!.following().query()!
+        let query = userProfile!.following().query()
         query.orderByAscending("aozoraUsername")
-        userListController.initWithQuery(query, title: "Following")
+        userListController.initWithQuery(query, title: "Following", user: userProfile!)
         navigationController?.pushViewController(userListController, animated: true)
     }
     
@@ -483,7 +467,7 @@ public class ProfileViewController: ThreadViewController {
         let query = User.query()!
         query.whereKey("following", equalTo: userProfile!)
         query.orderByAscending("aozoraUsername")
-        userListController.initWithQuery(query, title: "Followers")
+        userListController.initWithQuery(query, title: "Followers", user: userProfile!)
         navigationController?.pushViewController(userListController, animated: true)
     }
     
@@ -511,7 +495,7 @@ public class ProfileViewController: ThreadViewController {
             }
         }
         
-        if userProfile == User.currentUser()! {
+        if let userProfile = userProfile where userProfile.isTheCurrentUser() {
             alert.addAction(UIAlertAction(title: "Edit Profile", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction) -> Void in
                 let editProfileController =  UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("EditProfile") as! EditProfileViewController
                 editProfileController.delegate = self
@@ -555,6 +539,7 @@ public class ProfileViewController: ThreadViewController {
     }
 }
 
+// MARK: - EditProfileViewControllerProtocol
 extension ProfileViewController: EditProfileViewControllerProtocol {
     
     func editProfileViewControllerDidEditedUser(user: User) {
@@ -563,6 +548,7 @@ extension ProfileViewController: EditProfileViewControllerProtocol {
     }
 }
 
+// MARK: - NotificationsViewControllerDelegate
 extension ProfileViewController: NotificationsViewControllerDelegate {
     func notificationsViewControllerClearedAllNotifications() {
         noNewNotifications()

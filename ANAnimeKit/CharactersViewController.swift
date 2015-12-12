@@ -33,22 +33,33 @@ public class CharactersViewController: AnimeBaseViewController {
         super.viewDidLoad()
         tableView.estimatedRowHeight = 150.0
         tableView.rowHeight = UITableViewAutomaticDimension
+        
+        fetchCharactersAndStaff()
     }
     
+    func fetchCharactersAndStaff() {
+        let characters = anime.characters.fetchIfNeededInBackground()
+        let cast = anime.cast.fetchIfNeededInBackground()
+        
+        BFTask(forCompletionOfAllTasksWithResults: [characters, cast]).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task) -> AnyObject? in
+            self.tableView.reloadData()
+            return nil
+        })
+    }
 }
 
 
 extension CharactersViewController: UITableViewDataSource {
     public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return CharacterSection.allSections.count
+        return anime.characters.dataAvailable ? CharacterSection.allSections.count : 0
     }
     
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         var numberOfRows = 0
         switch CharacterSection(rawValue: section)! {
-        case .Character: numberOfRows = anime.characters.characters.count
-        case .Cast: numberOfRows = anime.cast.cast.count
+        case .Character: numberOfRows = anime.characters.dataAvailable ? anime.characters.characters.count : 0
+        case .Cast: numberOfRows = anime.cast.dataAvailable ? anime.cast.cast.count : 0
         }
         
         return numberOfRows
@@ -59,7 +70,9 @@ extension CharactersViewController: UITableViewDataSource {
         switch CharacterSection(rawValue: indexPath.section)! {
         case .Character:
             let cell = tableView.dequeueReusableCellWithIdentifier("CharacterCell") as! CharacterCell
+            
             let character = anime.characters.characterAtIndex(indexPath.row)
+            
             cell.characterImageView.setImageFrom(urlString: character.image, animated:true)
             cell.characterName.text = character.name
             cell.characterRole.text = character.role
@@ -77,7 +90,9 @@ extension CharactersViewController: UITableViewDataSource {
             return cell
         case .Cast:
             let cell = tableView.dequeueReusableCellWithIdentifier("CastCell") as! CharacterCell
+            
             let cast = anime.cast.castAtIndex(indexPath.row)
+            
             cell.personImageView.setImageFrom(urlString: cast.image)
             cell.personName.text = cast.name
             cell.personJob.text = cast.job

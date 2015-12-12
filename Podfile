@@ -1,5 +1,6 @@
 source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
+
 inhibit_all_warnings!
 use_frameworks!
 
@@ -11,11 +12,13 @@ pod 'FontAwesome+iOS'
 pod 'Shimmer'
 pod 'TTTAttributedLabel', '~> 1.13.4'
 pod 'XLPagerTabStrip', '~> 1.1.1'
-pod 'XCDYouTubeKit', { :git => 'https://github.com/0xced/XCDYouTubeKit.git', :commit => '5e45d727b148012ae889491b6ee78e3cf9b5b22a' }
+pod 'XCDYouTubeKit', '~> 2.4.1'
 pod 'RMStore', '~> 0.7'
 pod 'JTSImageViewController', '~> 1.3'
 pod 'iRate', '~> 1.11.4'
-pod 'HCSStarRatingView', :git => 'https://github.com/hugocampossousa/HCSStarRatingView.git'
+pod 'HCSStarRatingView'
 pod 'RSKImageCropper'
 pod 'FLAnimatedImage', '~> 1.0'
 pod 'CRToast', '~> 0.0.7'
+#pod 'RealmSwift'
+#pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'

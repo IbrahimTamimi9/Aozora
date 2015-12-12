@@ -58,8 +58,8 @@ class EpisodesViewController: AnimeBaseViewController {
     func fetchEpisodes() {
         
         loadingView.startAnimating()
-        let pin = anime.progress != nil
-        anime.episodeList(pin, tag: Anime.PinName.InLibrary).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
+
+        anime.episodeList().continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
         
             self.dataSource = task.result as! [Episode]
             self.collectionView.animateFadeIn()
@@ -126,7 +126,7 @@ extension EpisodesViewController: UICollectionViewDelegate {
         let episode = dataSource[indexPath.row]
         let threadController = ANAnimeKit.customThreadViewController()
         threadController.initWithEpisode(episode, anime: anime)
-        if InAppController.purchasedAnyPro() == nil {
+        if InAppController.hasAnyPro() == nil {
             threadController.interstitialPresentationPolicy = .Automatic
         }
         
@@ -156,7 +156,7 @@ extension EpisodesViewController: EpisodeCellDelegate {
                 RateViewController.showRateDialogWith(self.tabBarController!, title: "You've finished\n\(anime.title!)!\ngive it a rating", initialRating: Float(progress.score)/2.0, anime: anime, delegate: self)
             }
             
-            progress.saveEventually()
+            progress.saveInBackground()
             LibrarySyncController.updateAnime(progress)
             
             NSNotificationCenter.defaultCenter().postNotificationName(LibraryUpdatedNotification, object: nil)

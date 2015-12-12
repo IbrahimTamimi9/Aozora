@@ -57,7 +57,6 @@ class ForumsViewController: UIViewController {
         navigationBarTitle.addGestureRecognizer(tapGestureRecognizer)
         
         fetchThreadTags()
-        cachePinnedPosts()
         prepareForList(selectedList)
     }
     
@@ -124,15 +123,18 @@ class ForumsViewController: UIViewController {
         prepareForList(selectedList)
     }
     
+    var startDate: NSDate?
+    
     func fetchThreads() {
         
-        let query = Thread.query()!
-        query.fromPinWithName(PinnedThreadsPin)
-        query.whereKey("pinType", equalTo: "global")
-        query.includeKey("tags")
-        query.includeKey("lastPostedBy")
-        query.includeKey("startedBy")
-        query.findObjectsInBackgroundWithBlock { (result, error) -> Void in
+        startDate = NSDate()
+        
+        let pinnedQuery = Thread.query()!
+        pinnedQuery.whereKey("pinType", equalTo: "global")
+        pinnedQuery.includeKey("tags")
+        pinnedQuery.includeKey("lastPostedBy")
+        pinnedQuery.includeKey("startedBy")
+        pinnedQuery.findObjectsInBackgroundWithBlock { (result, error) -> Void in
             if let pinnedData = result as? [Thread] {
                 let query = Thread.query()!
                 query.whereKey("replies", greaterThan: 0)
@@ -179,7 +181,6 @@ class ForumsViewController: UIViewController {
     func fetchTagThreads(tag: PFObject) {
         
         let query = Thread.query()!
-        query.fromPinWithName(PinnedThreadsPin)
         query.whereKey("pinType", equalTo: "tag")
         query.whereKey("tags", containedIn: [tag])
         query.includeKey("tags")
@@ -210,19 +211,10 @@ class ForumsViewController: UIViewController {
     func fetchThreadTags() {
         let query = ThreadTag.query()!
         query.orderByAscending("order")
-        query.findCachedOrNetwork(AllThreadTagsPin, expirationDays: 1).continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
+        query.findObjectsInBackground().continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
             self.tagsDataSource = task.result as! [ThreadTag]
             return nil
         }
-    }
-    
-    func cachePinnedPosts() {
-        let query = Thread.query()!
-        query.whereKeyExists("pinType")
-        query.includeKey("tags")
-        query.includeKey("lastPostedBy")
-        query.includeKey("startedBy")
-        query.findCachedOrNetwork(PinnedThreadsPin, expirationDays: 0.2)
     }
     
     // MARK: - IBActions
@@ -294,7 +286,7 @@ extension ForumsViewController: UITableViewDelegate {
             threadController.initWithThread(thread)
         }
         
-        if InAppController.purchasedAnyPro() == nil {
+        if InAppController.hasAnyPro() == nil {
             threadController.interstitialPresentationPolicy = .Automatic
         }
         
@@ -304,6 +296,12 @@ extension ForumsViewController: UITableViewDelegate {
 
 extension ForumsViewController: FetchControllerDelegate {
     func didFetchFor(skip skip: Int) {
+        
+        if let startDate = startDate {
+            print("Load forums = \(NSDate().timeIntervalSinceDate(startDate))s")
+            self.startDate = nil
+        }
+        
         refreshControl.endRefreshing()
         loadingView.stopAnimating()
     }

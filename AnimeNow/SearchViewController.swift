@@ -78,10 +78,30 @@ class SearchViewController: UIViewController {
     
         currentCancellationToken = cancellationToken
         
-        if searchBar.selectedScopeButtonIndex != SearchScope.MyLibrary.rawValue {
-            loadingView.startAnimating()
-            collectionView.animateFadeOut()
+        if searchBar.selectedScopeButtonIndex == SearchScope.MyLibrary.rawValue {
+            
+            guard let library = LibraryController.sharedInstance.library else {
+                return
+            }
+            self.dataSource = library.filter({ anime in
+                
+                if anime.progress == nil {
+                    return false
+                }
+                if let title = anime.title where title.lowercaseString.rangeOfString(text.lowercaseString) != nil {
+                    return true
+                }
+                if let titleEnglish = anime.titleEnglish where titleEnglish.lowercaseString.rangeOfString(text.lowercaseString) != nil {
+                    return true
+                }
+                return false
+            })            
+            return
         }
+        
+        
+        loadingView.startAnimating()
+        collectionView.animateFadeOut()
         
         var query: PFQuery!
         
@@ -92,8 +112,7 @@ class SearchViewController: UIViewController {
             query.whereKey("aozoraUsername", matchesRegex: text, modifiers: "i")
             query.orderByAscending("aozoraUsername")
             
-        case SearchScope.AllAnime.rawValue: fallthrough
-        case SearchScope.MyLibrary.rawValue:
+        case SearchScope.AllAnime.rawValue:
             let query1 = Anime.query()!
             query1.whereKey("title", matchesRegex: text, modifiers: "i")
             
@@ -103,9 +122,7 @@ class SearchViewController: UIViewController {
             let orQuery = PFQuery.orQueryWithSubqueries([query1, query2])
             orQuery.limit = 40
             orQuery.orderByAscending("popularityRank")
-            if searchBar.selectedScopeButtonIndex == SearchScope.MyLibrary.rawValue {
-                orQuery.fromPinWithName(Anime.PinName.InLibrary.rawValue)
-            }
+            
             query = orQuery
             
         case SearchScope.Forum.rawValue:
@@ -123,18 +140,9 @@ class SearchViewController: UIViewController {
         query.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
             if !cancellationToken.cancelled && result != nil {
                 if let anime = result as? [Anime] {
-                    
                     LibrarySyncController.matchAnimeWithProgress(anime)
-                        .continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
-                            if self.searchBar.selectedScopeButtonIndex == SearchScope.MyLibrary.rawValue {
-                                let animeWithProgress = anime.filter({ $0.progress != nil })
-                                self.dataSource = animeWithProgress
-                            } else {
-                                self.dataSource = anime
-                            }
-                            
-                            return nil
-                        })
+                    self.dataSource = anime
+            
                 } else if let users = result as? [User] {
                     self.dataSource = users
                 } else if let threads = result as? [Thread] {
@@ -142,14 +150,10 @@ class SearchViewController: UIViewController {
                 }
             }
             
-            if self.searchBar.selectedScopeButtonIndex != SearchScope.MyLibrary.rawValue {
-                self.loadingView.stopAnimating()
-                self.collectionView.animateFadeIn()
-            }
+            self.loadingView.stopAnimating()
+            self.collectionView.animateFadeIn()
         })
-    
     }
-    
 }
 
 extension SearchViewController: UICollectionViewDataSource {
@@ -204,7 +208,7 @@ extension SearchViewController: UICollectionViewDelegate {
                 threadController.initWithThread(thread)
             }
             
-            if InAppController.purchasedAnyPro() == nil {
+            if InAppController.hasAnyPro() == nil {
                 threadController.interstitialPresentationPolicy = .Automatic
             }
             navigationController?.pushViewController(threadController, animated: true)

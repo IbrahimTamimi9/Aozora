@@ -43,7 +43,7 @@ public class RateViewController: UIViewController {
         if let progress = anime.progress {
             
             progress.score = Int(rating)
-            progress.saveEventually()
+            progress.saveInBackground()
             LibrarySyncController.updateAnime(progress)
         }
         

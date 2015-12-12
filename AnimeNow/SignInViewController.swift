@@ -47,14 +47,35 @@ class SignInViewController: UIViewController {
         
         usernameTextField.trimSpaces()
         
+        guard let username = usernameTextField.text, password = passwordTextField.text else {
+            presentBasicAlertWithTitle("Username or password field is empty")
+            return
+        }
+        
+        User.logInWithUsernameInBackground(username.lowercaseString, password:password) {
+            (user: PFUser?, error: NSError?) -> Void in
+            if let _ = error {
+                // The login failed. Check error to see why.
+                self.loginWithUsername(username, password: password)
+            } else {
+                self.view.endEditing(true)
+                self.dismissViewControllerAnimated(true, completion: { () -> Void in
+                    self.delegate?.signInViewControllerLoggedIn()
+                })
+            }
+        }
+    }
+    
+    func loginWithUsername(username: String, password: String) {
         User.logInWithUsernameInBackground(usernameTextField.text!, password:passwordTextField.text!) {
             (user: PFUser?, error: NSError?) -> Void in
             
             if let error = error {
-                // The login failed. Check error to see why.
                 let errorMessage = error.userInfo["error"] as! String
-                let alert = UIAlertController(title: "Hmm", message: errorMessage+". Tip: Make sure you're using capital letters correctly", preferredStyle: UIAlertControllerStyle.Alert)
+                let alert = UIAlertController(title: "Hmm", message: errorMessage+". If you signed in with Facebook, login in with Facebook is required.", preferredStyle: UIAlertControllerStyle.Alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
+                
+                
                 self.presentViewController(alert, animated: true, completion: nil)
             } else {
                 self.view.endEditing(true)

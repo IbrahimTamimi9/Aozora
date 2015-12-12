@@ -32,7 +32,7 @@ public class AnimeRelation: PFObject, PFSubclassing {
     
     public var totalRelations: Int {
         get {
-            return self.isDataAvailable() ? allRelationsCount() : 0
+            return dataAvailable ? allRelationsCount() : 0
         }
     }
     

@@ -17,7 +17,7 @@ class ResetPasswordViewController: UIViewController {
         
         emailTextField.trimSpaces()
         if emailTextField.validEmail() {
-            PFUser.requestPasswordResetForEmailInBackground(emailTextField.text!, block: { (success: Bool, error: NSError?) -> Void in
+            PFUser.requestPasswordResetForEmailInBackground(emailTextField.text!.lowercaseString, block: { (success: Bool, error: NSError?) -> Void in
                 if let error = error {
                     
                     let errorMessage = error.userInfo["error"] as! String

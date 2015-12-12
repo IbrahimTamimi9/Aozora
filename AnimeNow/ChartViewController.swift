@@ -178,35 +178,46 @@ class ChartViewController: UIViewController {
         }
     }
     
+    func fetchAllSeasons() -> BFTask {
+        return ChartController.fetchAllSeasons()
+    }
+    
     func fetchSeasonalChart(seasonalChart: String) {
         
+        let startDate = NSDate()
+        var seasonsTask: BFTask!
         
-        ChartController.fetchAllSeasons()
-        .continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
-            
-            let result = task.result as! [SeasonalChart]
-            
-            self.chartsDataSource = result
-            let currentSeasonalChart = result.filter({$0.title == seasonalChart})
-            
-            return BFTask(result: currentSeasonalChart)
+        if chartsDataSource.isEmpty {
+            seasonsTask = fetchAllSeasons().continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
+                
+                let result = task.result as! [SeasonalChart]
+                self.chartsDataSource = result
+                let selectedSeasonalChart = result.filter({$0.title == seasonalChart})
+                return BFTask(result: selectedSeasonalChart)
+            }
+        } else {
+            let selectedSeasonalChart = chartsDataSource.filter({$0.title == seasonalChart})
+            seasonsTask = BFTask(result: selectedSeasonalChart)
+        }
         
-        }.continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
+        seasonsTask.continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
             
-            guard let result = task.result as? [SeasonalChart], let season = result.last else {
+            guard let result = task.result as? [SeasonalChart], let selectedSeason = result.last else {
                 return nil
             }
-            return ChartController.fetchSeasonalChartAnime(season)
+            return ChartController.fetchSeasonalChartAnime(selectedSeason)
         
         }.continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
             
             guard let result = task.result as? [Anime] else {
                 return nil
             }
-            return LibrarySyncController.matchAnimeWithProgress(result)
+            LibrarySyncController.matchAnimeWithProgress(result)
+            return BFTask(result: result)
             
         }.continueWithExecutor(BFExecutor.mainThreadExecutor(), withBlock: { (task: BFTask!) -> AnyObject! in
         
+            print("Load seasons = \(NSDate().timeIntervalSinceDate(startDate))s")
             if let result = task.result as? [Anime] {
                 let tvAnime = result.filter({$0.type == "TV"})
                 let tv = tvAnime.filter({$0.duration == 0 || $0.duration > 15})
@@ -338,7 +349,7 @@ class ChartViewController: UIViewController {
     
     @IBAction func showCalendarPressed(sender: AnyObject) {
         
-        if let _ = InAppController.purchasedAnyPro() {
+        if let _ = InAppController.hasAnyPro() {
             
             let controller = UIStoryboard(name: "Season", bundle: nil).instantiateViewControllerWithIdentifier("Calendar") as! CalendarViewController
             presentViewController(controller, animated: true, completion: nil)
@@ -462,7 +473,7 @@ extension ChartViewController: UICollectionViewDelegate {
 extension ChartViewController: DropDownListDelegate {
     func selectedAction(trigger: UIView, action: String, indexPath: NSIndexPath) {
         
-        if let _ = InAppController.purchasedAnyPro() {
+        if let _ = InAppController.hasAnyPro() {
             
             if trigger.isEqual(navigationController?.navigationBar) {
                 switch (indexPath.row, indexPath.section) {
@@ -481,7 +492,7 @@ extension ChartViewController: DropDownListDelegate {
     }
     
     func dropDownDidDismissed(selectedAction: Bool) {
-        if selectedAction && InAppController.purchasedAnyPro() == nil {
+        if selectedAction && InAppController.hasAnyPro() == nil {
             InAppPurchaseViewController.showInAppPurchaseWith(self)
         }
         

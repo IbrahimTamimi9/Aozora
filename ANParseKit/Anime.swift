@@ -93,43 +93,26 @@ public class Anime: PFObject, PFSubclassing {
     // Episodes
     var cachedEpisodeList: [Episode] = []
     
-    public enum PinName: String {
-        case InLibrary = "Object.InLibrary"
-    }
+    public func episodeList() -> BFTask {
     
-    public func episodeList(pin: Bool = false, tag: PinName) -> BFTask {
-    
-        if cachedEpisodeList.count != 0 || (episodes == 0 && pin && traktID == 0) {
+        if cachedEpisodeList.count != 0 || (episodes == 0 && traktID == 0) {
             return BFTask(result: cachedEpisodeList)
         }
         
-        return fetchEpisodes(myAnimeListID, fromLocalDatastore: true).continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
+        return fetchEpisodes(myAnimeListID).continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
             
             guard let episodes = task.result as? [Episode] else {
                 return nil
             }
 
-            if episodes.count == 0 {
-                return self.fetchEpisodes(self.myAnimeListID)
-            } else {
-                self.cachedEpisodeList = episodes
-                return nil
-            }
+            self.cachedEpisodeList = episodes
+            return nil
             
         }.continueWithSuccessBlock { (task: BFTask!) -> AnyObject! in
             
             if let result = task.result as? [Episode] where result.count > 0 {
                 print("Found \(result.count) eps from network")
                 self.cachedEpisodeList += result
-                if pin {
-                    let query = Episode.query()!
-                    query.fromPinWithName(tag.rawValue)
-                    query.findObjectsInBackground().continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
-                        return PFObject.unpinAll(task.result as! [Episode])
-                    }).continueWithSuccessBlock({ (task: BFTask!) -> AnyObject! in
-                        return PFObject.pinAllInBackground(result)
-                    })
-                }
             }
         
             return BFTask(result: self.cachedEpisodeList)
@@ -137,11 +120,8 @@ public class Anime: PFObject, PFSubclassing {
 
     }
     
-    func fetchEpisodes(myAnimeListID: Int, fromLocalDatastore: Bool = false) -> BFTask {
+    func fetchEpisodes(myAnimeListID: Int) -> BFTask {
         let episodesQuery = Episode.query()!
-        if fromLocalDatastore {
-            episodesQuery.fromLocalDatastore()
-        }
         episodesQuery.orderByAscending("number")
         episodesQuery.whereKey("anime", equalTo: self)
         return episodesQuery.findAllObjectsInBackground()

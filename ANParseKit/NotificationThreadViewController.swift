@@ -31,17 +31,18 @@ public class NotificationThreadViewController: ThreadViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         
-        if let timelinePost = timelinePost where timelinePost.userTimeline == User.currentUser() {
+        if let timelinePost = timelinePost where timelinePost.userTimeline.isTheCurrentUser() {
             tableView.tableHeaderView = nil
         }
         
         if let _ = timelinePost {
             viewMoreButton.setTitle("View Timeline  ", forState: .Normal)
+            // Fetch posts, if not a thread
+            fetchPosts()
         } else if let _ = post {
+            // Other class will call fetchPosts...
             viewMoreButton.setTitle("View Thread  ", forState: .Normal)
         }
-        
-        fetchPosts()
     }
     
     override public func updateUIWithThread(thread: Thread) {
@@ -79,6 +80,7 @@ public class NotificationThreadViewController: ThreadViewController {
         
         let query = innerQuery.copy() as! PFQuery
         query.includeKey("postedBy")
+        query.includeKey("userTimeline")
         
         repliesQuery.skip = 0
         repliesQuery.whereKey("parentPost", matchesKey: "objectId", inQuery: innerQuery)
@@ -165,7 +167,7 @@ public class NotificationThreadViewController: ThreadViewController {
                 threadController.initWithThread(thread!)
             }
             
-            if InAppController.purchasedAnyPro() == nil {
+            if InAppController.hasAnyPro() == nil {
                 threadController.interstitialPresentationPolicy = .Automatic
             }
             navigationController?.pushViewController(threadController, animated: true)

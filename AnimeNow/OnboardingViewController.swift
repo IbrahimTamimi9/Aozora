@@ -40,7 +40,7 @@ class OnboardingViewController: UIViewController {
     
     func presentRootTabBar() {
         
-        initializeUserDataIfNeeded()
+        fillInitialUserDataIfNeeded()
         
         if isInWindowRoot {
             WorkflowController.presentRootTabBar(animated: true)
@@ -49,21 +49,21 @@ class OnboardingViewController: UIViewController {
         }
     }
     
-    func initializeUserDataIfNeeded() {
-        if let currentUser = PFUser.currentUser() where currentUser["joinDate"] == nil {
-            currentUser["joinDate"] = NSDate()
-            currentUser.saveEventually()
+    func fillInitialUserDataIfNeeded() {
+        if let currentUser = User.currentUser() where currentUser["joinDate"] == nil {
+            
+            let params = ["user": currentUser.objectId!]
+            PFCloud.callFunctionInBackground("fillInitialUserData", withParameters: params, block: { (result, error) -> Void in
+                currentUser.fetchInBackground()
+            })
         }
-        linkInstalationWithUser()
-    }
-    
-    func linkInstalationWithUser() {
         
+        // Link instalation with user
         let installation = PFInstallation.currentInstallation()
         
-        if let user = PFUser.currentUser() {
+        if let user = User.currentUser() {
             installation.setObject(user, forKey: "user")
-            installation.saveEventually()
+            installation.saveInBackground()
         }
     }
     
@@ -71,6 +71,7 @@ class OnboardingViewController: UIViewController {
     
     @IBAction func signUpWithFacebookPressed(sender: AnyObject) {
         let permissions = ["public_profile", "email", "user_friends"]
+        PFFacebookUtils.facebookLoginManager().logOut()
         PFFacebookUtils.logInInBackgroundWithReadPermissions(permissions) {
             (user: PFUser?, error: NSError?) -> Void in
             if let user = user {
@@ -85,11 +86,6 @@ class OnboardingViewController: UIViewController {
                 
             } else if let error = error {
                 print("\(error)")
-                PFUser.logOutInBackgroundWithBlock({ (error) -> Void in  
-                    if let error = error {
-                        print("Uh oh. \(error.localizedDescription)")
-                    }
-                })
             }
         }
     }
@@ -104,6 +100,7 @@ class OnboardingViewController: UIViewController {
         if User.currentUserIsGuest() {
             presentRootTabBar()
         } else {
+            PFUser.logOut()
             PFAnonymousUtils.logInWithBlock {
                 (user: PFUser?, error: NSError?) -> Void in
                 if error != nil || user == nil {

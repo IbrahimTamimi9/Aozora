@@ -145,15 +145,17 @@ public class CustomThreadViewController: ThreadViewController {
             }
             postedDate.text = postedAt
             
-            let administrating = User.currentUser()!.isAdmin() && !startedBy.isAdmin()
-            moreButton.hidden = startedBy != User.currentUser()! && !administrating
+            let administrating = User.currentUser()?.isAdmin() ?? false && !startedBy.isAdmin()
+            moreButton.hidden = startedBy != User.currentUser() ?? false && !administrating
         }
         
         setImages(thread.images, imageView: imageContent, imageHeightConstraint: imageHeightConstraint)
     }
     
     func sizeHeaderToFit() {
-        let header = tableView.tableHeaderView!
+        guard let header = tableView.tableHeaderView else {
+            return
+        }
         
         header.setNeedsLayout()
         header.layoutIfNeeded()
@@ -359,7 +361,7 @@ public class CustomThreadViewController: ThreadViewController {
                 childPostsQuery.whereKey("thread", equalTo: thread)
                 childPostsQuery.includeKey("postedBy")
                 childPostsQuery.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
-                    if let result = result as? [PFObject] {
+                    if let result = result {
                         
                         PFObject.deleteAllInBackground(result+[thread], block: { (success, error) -> Void in
                             if let _ = error {

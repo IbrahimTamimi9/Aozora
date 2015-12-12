@@ -194,7 +194,15 @@ class SettingsViewController: UITableViewController {
         case 0:
             return nil
         case 1:
-            return "Going pro unlocks lots of awesome features and help us keep improving the app"
+            var message = ""
+            if let user = User.currentUser() where
+                    user.hasTrial() &&
+                    InAppController.purchasedPro() == nil &&
+                    InAppController.purchasedProPlus() == nil {
+                message = "** You're on a 15 day PRO trial **\n"
+            }
+            message += "Going PRO unlocks all features and help us keep improving the app"
+            return message
         case 2:
             return "If you're looking for support drop us a message on Facebook or Twitter"
         case 3:

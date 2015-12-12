@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         Fabric.with([Crashlytics()])
         initializeParse()
-        PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
+        //PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
         PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions)
         
         trackPushOpen(application, didFinishLaunchingWithOptions:launchOptions)
@@ -45,18 +45,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
         
-        let currentUser = PFUser.currentUser()
-        if currentUser != nil {
+        if let _ = User.currentUser() {
             WorkflowController.presentRootTabBar(animated: false)
         } else {
             WorkflowController.presentOnboardingController(true)
         }
         
-        LibrarySyncController.sharedInstance.syncParseInformation()
-        
         SDImageCache.sharedImageCache().maxCacheSize = 1024 * 1024 * 250
         
         makeUpdateChanges()
+        
+        NSUserDefaults.standardUserDefaults().setValue(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
+
         return true
     }
     
@@ -103,7 +103,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let oldPushHandlerOnly = !self.respondsToSelector(Selector("application:didReceiveRemoteNotification:fetchCompletionHandler:"))
             let noPushPayload: AnyObject? = launchOptions?[UIApplicationLaunchOptionsRemoteNotificationKey]
             if oldPushHandlerOnly || noPushPayload != nil {
-                PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
+                //PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
             }
         }
     }
@@ -119,37 +119,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func prepareForAds() {
         // Ads
-        if InAppController.purchasedAnyPro() == nil {
+        if InAppController.hasAnyPro() == nil {
             UIViewController.prepareInterstitialAds()
         }
     }
 
-//    func addEnglishTitles() {
-//        let query = Notification.query()!
-//        query.includeKey("subscribers")
-//        AnimeService.findAllObjectsWith(query: query).continueWithBlock { (task: BFTask!) -> AnyObject! in
-//            
-//            var sequence = BFTask(result: nil);
-//            let result = task.result as! NSArray
-//        
-//            for notification in result {
-//                sequence = sequence.continueWithBlock {
-//                    (task: BFTask!) -> AnyObject! in
-//                    print(notification.objectId!)
-//                    print(notification.subscribers)
-//                    return nil
-//                    
-//                }.continueWithBlock {
-//                (task: BFTask!) -> AnyObject! in
-//                    if (task.exception != nil) {
-//                        print(task.exception)
-//                    }
-//                    return nil
-//                }
-//            }
-//            return sequence
-//        }
-//    }
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
@@ -162,21 +136,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             var taskID = application.beginBackgroundTaskWithExpirationHandler { () }
     
-            if let user = User.currentUser() {
-                // TODO: leave this for a while until everyone who purchased get their badge then remove and keep InAppController one only
-                if InAppController.purchasedProPlus() != nil {
-                    user.addUniqueObject("PRO+", forKey: "badges")
-                } else if InAppController.purchasedPro() != nil {
-                    user.addUniqueObject("PRO", forKey: "badges")
-                }
-                
-                user.active = false
-                user.activeEnd = NSDate()
-                user.saveInBackgroundWithBlock({ (success, error) -> Void in
-                    application.endBackgroundTask(taskID)
-                    taskID = UIBackgroundTaskInvalid
-                })
+            guard let user = User.currentUser() else {
+                return
             }
+            
+            user.active = false
+            user.activeEnd = NSDate()
+            user.saveInBackgroundWithBlock({ (success, error) -> Void in
+                application.endBackgroundTask(taskID)
+                taskID = UIBackgroundTaskInvalid
+            })
         })
     }
 
@@ -230,7 +199,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if application.applicationState == .Inactive  {
             // The application was just brought from the background to the foreground,
             // so we consider the app as having been "opened by a push notification."
-            PFAnalytics.trackAppOpenedWithRemoteNotificationPayload(userInfo)
+            //PFAnalytics.trackAppOpenedWithRemoteNotificationPayload(userInfo)
         }
     }
     
@@ -282,24 +251,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func makeUpdateChanges() {
         // Logout if previous version is installed
         let version120 = "1.2.0-launched"
-        if let _ = User.currentUser() {
-            if (!NSUserDefaults.standardUserDefaults().boolForKey(version120)) {
-                WorkflowController.logoutUser().continueWithExecutor( BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
-                    
-                    if let error = task.error {
-                        print("failed loggin out: \(error)")
-                    } else {
-                        print("logout succeeded")
-                    }
-                    NSUserDefaults.standardUserDefaults().setBool(true, forKey: version120)
-                    NSUserDefaults.standardUserDefaults().synchronize()
-                    WorkflowController.presentOnboardingController(true)
-                    return nil
-                })
-            }
-        } else {
+        
+        if User.currentUser() == nil {
             NSUserDefaults.standardUserDefaults().setBool(true, forKey: version120)
             NSUserDefaults.standardUserDefaults().synchronize()
+            return
+        }
+        
+        if (!NSUserDefaults.standardUserDefaults().boolForKey(version120)) {
+            WorkflowController.logoutUser().continueWithExecutor( BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
+                
+                if let error = task.error {
+                    print("failed loggin out: \(error)")
+                } else {
+                    print("logout succeeded")
+                }
+                NSUserDefaults.standardUserDefaults().setBool(true, forKey: version120)
+                NSUserDefaults.standardUserDefaults().synchronize()
+                WorkflowController.presentOnboardingController(true)
+                return nil
+            })
         }
     }
     

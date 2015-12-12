@@ -33,7 +33,7 @@ class ParseWorker {
                     }.continueWithBlock {
                         (task: BFTask!) -> AnyObject! in
                         let cast = AnimeCast()
-                        cast.cast = task.result["Staff"] as? [[String:AnyObject]] ?? []
+                        cast.cast = task.result?["Staff"] as? [[String:AnyObject]] ?? []
                         data.cast = cast
                         print("saving \(data.title)")
                         return data.saveInBackground()

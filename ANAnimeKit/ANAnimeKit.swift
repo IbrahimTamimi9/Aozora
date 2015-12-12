@@ -7,6 +7,18 @@
 //
 import ANParseKit
 
+func != (left: PFObject, right: PFObject) -> Bool {
+    return !(left == right)
+}
+
+func == (left: PFObject, right: PFObject) -> Bool {
+    guard let id1 = left.objectId, let id2 = right.objectId else {
+        return false
+    }
+    
+    return id1 == id2
+}
+
 public class ANAnimeKit {
     
     public class func defaultStoryboard() -> UIStoryboard {

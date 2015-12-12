@@ -80,10 +80,10 @@ public class ThreadViewController: UIViewController {
     
     public func openProfile(user: User) {
         if let profileController = self as? ProfileViewController {
-            if profileController.userProfile != user && user != User.currentUser() {
+            if profileController.userProfile != user && !user.isTheCurrentUser() {
                 openProfileNow(user)
             }
-        } else if user != User.currentUser() {
+        } else if !user.isTheCurrentUser() {
             openProfileNow(user)
         }
     }
@@ -160,7 +160,7 @@ public class ThreadViewController: UIViewController {
             } else {
                 post.addUniqueObject(currentUser, forKey: "likedBy")
             }
-            post.saveEventually()
+            post.saveInBackground()
         }
     }
     
@@ -282,7 +282,7 @@ extension ThreadViewController: UITableViewDataSource {
             cell.onlineIndicator.hidden = !postedBy.active
         }
         
-        if let timelinePostable = post as? TimelinePostable where timelinePostable.userTimeline != post.postedBy {
+        if let timelinePostable = post as? TimelinePostable, postedBy = post.postedBy where timelinePostable.userTimeline != postedBy {
             cell.toUsername?.text = timelinePostable.userTimeline.aozoraUsername
             cell.toIcon?.text = ""
         } else {
@@ -474,15 +474,20 @@ extension ThreadViewController: UITableViewDelegate {
     }
     func showSheetFor(post post: Postable, parentPost: Postable? = nil) {
         // If user's comment show delete/edit
-        let administrating = User.currentUser()!.isAdmin() && !post.postedBy!.isAdmin()
-        if post.postedBy == User.currentUser() ||
+        
+        guard let currentUser = User.currentUser(), let postedBy = post.postedBy else {
+            return
+        }
+        
+        let administrating = currentUser.isAdmin() && !postedBy.isAdmin()
+        if let postedBy = post.postedBy where postedBy.isTheCurrentUser() ||
             // Current user is admin and posted by non-admin user
             administrating {
             
                 let alert: UIAlertController!
                 
                 if administrating {
-                    alert = UIAlertController(title: "Warning: Editing \(post.postedBy!.aozoraUsername) post", message: "Only edit user posts if they are breaking guidelines", preferredStyle: UIAlertControllerStyle.ActionSheet)
+                    alert = UIAlertController(title: "Warning: Editing \(postedBy.aozoraUsername) post", message: "Only edit user posts if they are breaking guidelines", preferredStyle: UIAlertControllerStyle.ActionSheet)
                 } else {
                     alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
                 }
@@ -490,7 +495,7 @@ extension ThreadViewController: UITableViewDelegate {
                 alert.addAction(UIAlertAction(title: "Edit", style: administrating ? UIAlertActionStyle.Destructive : UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
                     let comment = ANParseKit.newPostViewController()
                     if let post = post as? TimelinePost {
-                        comment.initWithTimelinePost(self, postedIn:User.currentUser()!, editingPost: post)
+                        comment.initWithTimelinePost(self, postedIn: currentUser, editingPost: post)
                     } else if let post = post as? Post, let thread = self.thread {
                         comment.initWith(thread, threadType: self.threadType, delegate: self, editingPost: post)
                     }
@@ -514,7 +519,7 @@ extension ThreadViewController: UITableViewDelegate {
                             let childPostsQuery = PFQuery(className: className)
                             childPostsQuery.whereKey("parentPost", equalTo: post)
                             childPostsQuery.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
-                                if let result = result as? [PFObject] {
+                                if let result = result {
                                     self.deletePosts(result, parentPost: post, removeParent: true)
                                 } else {
                                     // TODO: Show error
@@ -557,7 +562,7 @@ extension ThreadViewController: UITableViewDelegate {
                 }
                 
                 self.thread?.incrementKey("replies", byAmount: -allPosts.count)
-                self.thread?.saveEventually()
+                self.thread?.saveInBackground()
                 
                 if removeParent {
                     // Delete parent post, and entire section
@@ -688,7 +693,7 @@ extension ThreadViewController: FetchControllerQueryDelegate {
         }
         
         for post in uniquePosts {
-            let postReplies = replies.filter({ $0["parentPost"] as? PFObject == post }) as [PFObject]
+            let postReplies = replies.filter({ ($0["parentPost"] as! PFObject) == post }) as [PFObject]
             var postable = post as! Postable
             postable.replies = postReplies
         }

@@ -101,9 +101,9 @@ extension NotificationsViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCellWithIdentifier("NotificationCell") as! BasicTableCell
         
 
-        if notification.lastTriggeredBy == User.currentUser() {
+        if notification.lastTriggeredBy.isTheCurrentUser() {
             var selectedUser = notification.lastTriggeredBy
-            for user in notification.triggeredBy where user != User.currentUser() {
+            for user in notification.triggeredBy where !user.isTheCurrentUser() {
                 selectedUser = user
                 break
             }
@@ -113,9 +113,9 @@ extension NotificationsViewController: UITableViewDataSource {
         }
         
 
-        if notification.owner == User.currentUser() {
+        if notification.owner.isTheCurrentUser() {
             cell.titleLabel.text = notification.messageOwner
-        } else if notification.lastTriggeredBy == User.currentUser() {
+        } else if notification.lastTriggeredBy.isTheCurrentUser() {
             cell.titleLabel.text = notification.previousMessage ?? notification.message
         } else {
             cell.titleLabel.text = notification.message
@@ -139,8 +139,8 @@ extension NotificationsViewController: UITableViewDelegate {
         let notification = fetchController.objectAtIndex(indexPath.row) as! Notification
         
         if !notification.readBy.contains(User.currentUser()!) {
+            // The actual save of this change happens on `handleNotification`
             notification.addUniqueObject(User.currentUser()!, forKey: "readBy")
-            notification.saveEventually()
             tableView.reloadData()
         }
         
@@ -157,7 +157,7 @@ extension NotificationsViewController: FetchControllerQueryDelegate {
     func processResult(result result: [PFObject], dataSource: [PFObject]) -> [PFObject] {
         let filtered = result.filter({ (object: PFObject) -> Bool in
             let notification = object as! Notification
-            return notification.triggeredBy.count > 1 || (notification.triggeredBy.count == 1 && notification.triggeredBy.last != User.currentUser()!)
+            return notification.triggeredBy.count > 1 || (notification.triggeredBy.count == 1 && !notification.triggeredBy.last!.isTheCurrentUser())
         })
         return filtered
     }

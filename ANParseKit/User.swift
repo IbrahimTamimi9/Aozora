@@ -34,12 +34,18 @@ public class User: PFUser {
     @NSManaged public var activeEnd: NSDate
     @NSManaged public var active: Bool
     
+    @NSManaged public var trialExpiration: NSDate?
+    
+    public var followingThisUser: Bool?
+    
+    static let MyAnimeListPasswordKey = "MyAnimeList.Password"
+    
     public func following() -> PFRelation {
         return self.relationForKey("following")
     }
 
     public override class func currentUser() -> User? {
-        return PFUser.currentUser() as? User
+        return !currentUserIsGuest() ? PFUser.currentUser() as? User : nil
     }
     
     public class func currentUserLoggedIn() -> Bool {
@@ -54,30 +60,78 @@ public class User: PFUser {
     
     public var myAnimeListPassword: String? {
         get {
-        return NSUserDefaults.standardUserDefaults().objectForKey("MyAnimeList.Password") as! String?
+        return NSUserDefaults.standardUserDefaults().objectForKey(User.MyAnimeListPasswordKey) as! String?
         }
         set(object) {
-            NSUserDefaults.standardUserDefaults().setObject(object, forKey: "MyAnimeList.Password")
+            NSUserDefaults.standardUserDefaults().setObject(object, forKey: User.MyAnimeListPasswordKey)
             NSUserDefaults.standardUserDefaults().synchronize()
         }
     }
     
     public class func logoutMyAnimeList() {
-        NSUserDefaults.standardUserDefaults().removeObjectForKey("MyAnimeList.Password")
+        NSUserDefaults.standardUserDefaults().removeObjectForKey(User.MyAnimeListPasswordKey)
         NSUserDefaults.standardUserDefaults().synchronize()
     }
     
     public class func syncingWithMyAnimeList() -> Bool {
-        return User.currentUser()!.myAnimeListPassword != nil
+        guard let user = User.currentUser() else {
+            return false
+        }
+        return user.myAnimeListPassword != nil
     }
     
     public func incrementPostCount(byAmount: Int) {
         details.incrementKey("posts", byAmount: byAmount)
-        details.saveEventually()
+        details.saveInBackground()
     }
     
     public func isAdmin() -> Bool {
         return badges.contains("Admin")
     }
     
+    // Don't ever name the function isCurrentUser it will conflict with Parse framework
+    public func isTheCurrentUser() -> Bool {
+        guard let id1 = self.objectId, let currentUser = User.currentUser(), let id2 = currentUser.objectId else {
+            return false
+        }
+        return id1 == id2
+    }
+    
+    // Trial
+    public func hasTrial() -> Bool {
+        return trialExpiration?.compare(NSDate()) == .OrderedDescending
+    }
+    
+    public func followUser(user: User, follow: Bool) {
+        
+        var incrementer = 0
+        if follow {
+            let followingRelation = following()
+            followingRelation.addObject(user)
+            incrementer = 1
+            PFCloud.callFunctionInBackground("sendFollowingPushNotificationV2", withParameters: ["toUser":user.objectId!])
+        } else {
+            let followingRelation = following()
+            followingRelation.removeObject(user)
+            incrementer = -1
+        }
+        
+        user.followingThisUser = follow
+        user.details.incrementKey("followersCount", byAmount: incrementer)
+        user.saveInBackground()
+        
+        details.incrementKey("followingCount", byAmount: incrementer)
+        saveInBackground()
+    }
+}
+
+extension PFObject {
+    // This ensures 2 PFObjects are compared correctly by their objectId instead their pointer
+    override public func isEqual(object: AnyObject?) -> Bool {
+        if let user = object as? User {
+            return user.objectId == self.objectId
+        } else {
+            return false
+        }
+    }
 }

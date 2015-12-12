@@ -17,14 +17,15 @@ class UserListViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    var user: User = User.currentUser()!
     var loadingView: LoaderView!
     
     var dataSource: [User] = []
+    var user: User?
     var query: PFQuery!
     var titleToSet = ""
     
-    func initWithQuery(query: PFQuery, title: String) {
+    func initWithQuery(query: PFQuery, title: String, user: User? = nil) {
+        self.user = user
         self.query = query
         titleToSet = title
     }
@@ -32,7 +33,7 @@ class UserListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = titleToSet
+        title = titleToSet
         
         tableView.estimatedRowHeight = 44.0
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -42,19 +43,41 @@ class UserListViewController: UIViewController {
         fetchUserFriends()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+    }
+    
     func fetchUserFriends() {
         
         loadingView.startAnimating()
         query.limit = 1000
-        query.findObjectsInBackgroundWithBlock { (result, error) -> Void in
-            if let result = result as? [User] {
-                self.dataSource = result
+        query.findObjectsInBackground().continueWithSuccessBlock { (task: BFTask!) -> AnyObject? in
+            let result = task.result as! [User]
+            
+            self.dataSource = result
+            
+            let userIDs = result.map( {$0.objectId!} )
+            
+            // Find all relations
+            let relationQuery = User.currentUser()!.following().query()
+            relationQuery.whereKey("objectId", containedIn: userIDs)
+            return relationQuery.findAllObjectsInBackground()
+            
+        }.continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock:  { (task: BFTask!) -> AnyObject? in
+            
+            if let result = task.result as? [User] {
+                for user in result {
+                    user.followingThisUser = true
+                }
             }
             
             self.loadingView.stopAnimating()
             self.tableView.reloadData()
             self.tableView.animateFadeIn()
-        }
+            
+            return nil
+        })
     }
 }
 
@@ -73,12 +96,20 @@ extension UserListViewController: UITableViewDataSource {
             cell.avatar.setImageWithPFFile(avatarFile)
         }
         cell.username.text = profile.aozoraUsername
+        cell.delegate = self
+        
+        let isCurrentUserList = user?.isTheCurrentUser() ?? false
+        if profile.isTheCurrentUser() || !isCurrentUserList {
+            cell.followButton.hidden = true
+        } else {
+            cell.followButton.hidden = false
+            cell.configureFollowButtonWithState(profile.followingThisUser ?? false)
+        }
+        
         cell.layoutIfNeeded()
         
         return cell
-        
     }
-
 }
 
 extension UserListViewController: UITableViewDelegate {
@@ -88,5 +119,16 @@ extension UserListViewController: UITableViewDelegate {
         let (navController, profileController) = ANAnimeKit.profileViewController()
         profileController.initWithUser(profile)
         presentViewController(navController, animated: true, completion: nil)
+    }
+}
+
+extension UserListViewController: UserCellDelegate {
+    func userCellPressedFollow(userCell: UserCell) {
+        if let currentUser = User.currentUser(), let indexPath = tableView.indexPathForCell(userCell) {
+            let user = dataSource[indexPath.row]
+            let follow = !(user.followingThisUser ?? false)
+            currentUser.followUser(user, follow: follow)
+            tableView.reloadData()
+        }
     }
 }

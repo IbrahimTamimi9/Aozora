@@ -13,24 +13,31 @@ public let ProPlusInAppPurchase = "com.anytap.Aozora.ProPlus"
 
 public class InAppController {
     
-    public class func purchasedAnyPro() -> Int? {
+    public class func hasAnyPro() -> Int? {
+        guard let user = User.currentUser() else {
+            return nil
+        }
         return (purchasedPro() != nil ||
-                purchasedProPlus() != nil) ? 1 : nil
+                purchasedProPlus() != nil || user.hasTrial()) ? 1 : nil
     }
     
     public class func purchasedPro() -> Int? {
-        let user = User.currentUser()
+        guard let user = User.currentUser() else {
+            return nil
+        }
         let identifier = ProInAppPurchase
         let pro = NSUserDefaults.standardUserDefaults().boolForKey(identifier) ||
-            (user != nil ? user!.unlockedContent.indexOf(identifier) != nil : false)
+            user.unlockedContent.indexOf(identifier) != nil
         return pro ? 1 : nil
     }
     
     public class func purchasedProPlus() -> Int? {
-        let user = User.currentUser()
+        guard let user = User.currentUser() else {
+            return nil
+        }
         let identifier = ProPlusInAppPurchase
         let proPlus = NSUserDefaults.standardUserDefaults().boolForKey(identifier) ||
-        (user != nil ? user!.unlockedContent.indexOf(identifier) != nil : false)
+        user.unlockedContent.indexOf(identifier) != nil
         return proPlus ? 1 : nil
     }
 }

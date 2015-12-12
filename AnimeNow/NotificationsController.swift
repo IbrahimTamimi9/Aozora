@@ -16,7 +16,7 @@ class NotificationsController {
         
         let notification = Notification(withoutDataWithObjectId: notificationId)
         notification.addUniqueObject(User.currentUser()!, forKey: "readBy")
-        notification.saveEventually()
+        notification.saveInBackground()
         
         switch objectClass {
         case "_User":
