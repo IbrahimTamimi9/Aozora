@@ -20,7 +20,7 @@ extension UIViewController {
         
         let animator = ZFModalTransitionAnimator(modalViewController: tabBarController)
         animator.dragable = true
-        animator.direction = ZFModalTransitonDirection.Bottom
+        animator.direction = .Bottom
         
         tabBarController.animator = animator
         tabBarController.transitioningDelegate = animator;

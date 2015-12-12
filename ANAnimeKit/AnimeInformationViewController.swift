@@ -620,18 +620,7 @@ extension AnimeInformationViewController: UITableViewDelegate {
             let query = Anime.queryWith(malID: relation.animeID)
             query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
                 if let anime = objects?.first as? Anime {
-                    let tabBarController = ANAnimeKit.rootTabBarController()
-                    tabBarController.initWithAnime(anime)
-                    
-                    self.subAnimator = ZFModalTransitionAnimator(modalViewController: tabBarController)
-                    self.subAnimator.dragable = true
-                    self.subAnimator.direction = ZFModalTransitonDirection.Bottom
-                    
-                    tabBarController.animator = self.subAnimator
-                    tabBarController.transitioningDelegate = self.subAnimator;
-                    tabBarController.modalPresentationStyle = UIModalPresentationStyle.Custom;
-                    
-                    self.presentViewController(tabBarController, animated: true, completion: nil)
+                    self.subAnimator = self.presentAnimeModal(anime)
                 }
             }
 

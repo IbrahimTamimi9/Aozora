@@ -16,10 +16,10 @@ extension UIViewController {
         
         let animator = ZFModalTransitionAnimator(modalViewController: controller)
         animator.dragable = true
-        animator.direction = ZFModalTransitonDirection.Bottom
+        animator.direction = .Bottom
 
-        controller.transitioningDelegate = animator;
-        controller.modalPresentationStyle = UIModalPresentationStyle.Custom;
+        controller.transitioningDelegate = animator
+        controller.modalPresentationStyle = .Custom
         
         presentViewController(controller, animated: true, completion: nil)
         
