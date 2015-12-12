@@ -17,14 +17,15 @@ class UserListViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    var user: User = User.currentUser()!
     var loadingView: LoaderView!
     
     var dataSource: [User] = []
+    var user: User?
     var query: PFQuery!
     var titleToSet = ""
     
-    func initWithQuery(query: PFQuery, title: String) {
+    func initWithQuery(query: PFQuery, title: String, user: User? = nil) {
+        self.user = user
         self.query = query
         titleToSet = title
     }
@@ -96,7 +97,15 @@ extension UserListViewController: UITableViewDataSource {
         }
         cell.username.text = profile.aozoraUsername
         cell.delegate = self
-        cell.configureFollowButtonWithState(profile.followingThisUser ?? false)
+        
+        let isCurrentUserList = user?.isTheCurrentUser() ?? false
+        if profile.isTheCurrentUser() || !isCurrentUserList {
+            cell.followButton.hidden = true
+        } else {
+            cell.followButton.hidden = false
+            cell.configureFollowButtonWithState(profile.followingThisUser ?? false)
+        }
+        
         cell.layoutIfNeeded()
         
         return cell

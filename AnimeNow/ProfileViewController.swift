@@ -400,7 +400,7 @@ public class ProfileViewController: ThreadViewController {
         let userListController = UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("UserList") as! UserListViewController
         let query = userProfile!.following().query()
         query.orderByAscending("aozoraUsername")
-        userListController.initWithQuery(query, title: "Following")
+        userListController.initWithQuery(query, title: "Following", user: userProfile!)
         navigationController?.pushViewController(userListController, animated: true)
     }
     
@@ -409,7 +409,7 @@ public class ProfileViewController: ThreadViewController {
         let query = User.query()!
         query.whereKey("following", equalTo: userProfile!)
         query.orderByAscending("aozoraUsername")
-        userListController.initWithQuery(query, title: "Followers")
+        userListController.initWithQuery(query, title: "Followers", user: userProfile!)
         navigationController?.pushViewController(userListController, animated: true)
     }
     
