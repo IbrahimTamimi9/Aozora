@@ -129,7 +129,7 @@ public class NewThreadViewController: CommentViewController {
     func validThread() -> Bool {
         let content = textView.text
         
-        if (!muted()) {
+        if !muted() {
             return false
         }
     

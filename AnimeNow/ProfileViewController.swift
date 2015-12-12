@@ -41,6 +41,7 @@ public class ProfileViewController: ThreadViewController {
     public var userProfile: User?
     var username: String?
     var followingUser: Bool?
+    var muteDuration: Int?
     
     public func initWithUser(user: User) {
         self.userProfile = user
@@ -410,9 +411,65 @@ public class ProfileViewController: ThreadViewController {
         super.didFetchFor(skip: skip)
     }
     
+    func muteUser(alert: UIAlertController){
+        alert.addAction(UIAlertAction(title: "Mute", style: UIAlertActionStyle.Destructive, handler: {
+            (alertAction: UIAlertAction) -> Void in
+            
+            var alertController:UIAlertController?
+            alertController = UIAlertController(title: "Mute", message: "Enter duration to mute", preferredStyle: .Alert)
+            
+            alertController!.addTextFieldWithConfigurationHandler(
+                {(textField: UITextField!) in
+                    textField.placeholder = "Enter duration in minutes"
+                    textField.textColor = UIColor.blackColor()
+                    textField.keyboardType = UIKeyboardType.NumberPad
+                })
+            
+            let action = UIAlertAction(title: "Submit",
+                style: UIAlertActionStyle.Default,
+                handler: {[weak self]
+                    (paramAction:UIAlertAction!) in if let textField = alertController?.textFields{
+                        let durationTextField = textField as [UITextField]
+                        self!.muteDuration = Int(durationTextField[0].text!)
+                        
+                        if (self!.muteDuration) != nil {
+                            let date = NSDate().dateByAddingTimeInterval(Double(self!.muteDuration!) * 60.0)
+                            self!.userProfile!.details.muted = date
+                            self!.userProfile!.saveInBackground()
+                            self!.presentBasicAlertWithTitle("Muted user", message: "You have muted " + self!.userProfile!.username!)
+                        }
+                        else{
+                            self!.presentBasicAlertWithTitle("Woops", message: "Your mute duration is too long or you have entered characters.")
+                        }
+                    }
+                })
+            
+            let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .Cancel) {
+                action -> Void in
+            }
+            
+            alertController?.addAction(action)
+            alertController?.addAction(cancelAction)
+            
+            self.presentViewController(alertController!, animated: true, completion: nil)
+            alert.view.tintColor = UIColor.redColor()
+            
+        }))
+        
+    }
+    
+    func unmuteUser(alert: UIAlertController){
+        alert.addAction(UIAlertAction(title: "Unmute", style: UIAlertActionStyle.Destructive, handler: { (alertAction: UIAlertAction) -> Void in
+            self.userProfile!.details.muted = nil
+            self.userProfile!.saveInBackground()
+            
+            self.presentBasicAlertWithTitle("Unmuted user", message: "You have unmuted " + self.userProfile!.username!)
+            
+            
+        }))
+    }
     
     // MARK: - IBActions
-    
     @IBAction func showFollowingUsers(sender: AnyObject) {
         let userListController = UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("UserList") as! UserListViewController
         let query = userProfile!.following().query()!
@@ -432,7 +489,7 @@ public class ProfileViewController: ThreadViewController {
     
     @IBAction func showSettings(sender: AnyObject) {
         
-        var alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
         
         alert.addAction(UIAlertAction(title: "View Library", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction) -> Void in
             if let userProfile = self.userProfile {
@@ -442,65 +499,15 @@ public class ProfileViewController: ThreadViewController {
                 self.presentViewController(navVC, animated: true, completion: nil)
             }
         }))
+    
+        if User.currentUser()!.isAdmin() && !(userProfile!.isAdmin()){
         
-        if User.currentUser()!.isAdmin() && !(userProfile!.isAdmin()) {
-            var duration: Int?
-            
-            if userProfile!.details.muted == "" {
-                alert.addAction(UIAlertAction(title: "Mute", style: UIAlertActionStyle.Destructive, handler: {
-                    (alertAction: UIAlertAction) -> Void in
-                    
-                        var alertController:UIAlertController?
-                        alertController = UIAlertController(title: "Mute",
-                            message: "Enter duration to mute",
-                            preferredStyle: .Alert)
-                        
-                        alertController!.addTextFieldWithConfigurationHandler(
-                            {(textField: UITextField!) in
-                                textField.placeholder = "Enter duration in minutes"
-                                textField.textColor = UIColor.blackColor()
-                                textField.keyboardType = UIKeyboardType.NumberPad
-                        })
-                        
-                        let action = UIAlertAction(title: "Submit",
-                            style: UIAlertActionStyle.Default,
-                            handler: {[weak self]
-                                (paramAction:UIAlertAction!) in
-                                if let textField = alertController?.textFields{
-                                    let durationTextField = textField as [UITextField]
-                                    duration = Int(durationTextField[0].text!)
-                                    
-                                    if(duration != nil){
-                                        let date = NSDate().dateByAddingTimeInterval(Double(duration!) * 60.0)
-                                        self!.userProfile!.details.muted = String(date)
-                                        self!.userProfile!.saveInBackground()
-                                        self!.presentBasicAlertWithTitle("Muted user", message: "You have muted " + self!.userProfile!.username!)
-                                    }
-                                    else{
-                                        self!.presentBasicAlertWithTitle("Woops", message: "Your mute duration is too long or you have entered characters.")
-                                    }
-                                }
-                            })
-                        
-                        let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .Cancel) { action -> Void in
-                        }
-                        
-                        alertController?.addAction(action)
-                        alertController?.addAction(cancelAction)
-
-                        self.presentViewController(alertController!, animated: true, completion: nil)
-                        alert.view.tintColor = UIColor.redColor()
-                }))
+            if userProfile!.details.muted == nil {
+                muteUser(alert)
             }
-            if userProfile!.details.muted != "" {
-                alert.addAction(UIAlertAction(title: "Unmute", style: UIAlertActionStyle.Destructive, handler: { (alertAction: UIAlertAction) -> Void in
-                    self.userProfile!.details.muted = ""
-                    self.userProfile!.saveInBackground()
-                    
-                    self.presentBasicAlertWithTitle("Unmuted user", message: "You have unmuted " + self.userProfile!.username!)
-                    
-                    
-                }))
+            
+            if userProfile!.details.muted != nil {
+                unmuteUser(alert)
             }
         }
         

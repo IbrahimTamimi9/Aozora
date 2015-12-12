@@ -167,16 +167,13 @@ public class CommentViewController: UIViewController {
     
     func muted() -> Bool {
         let mute_date = User.self.currentUser()?.details.muted
-        if mute_date != "" {
-            let dateFormatter = NSDateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ssZZZ"
-            let mute_dateformat = dateFormatter.dateFromString(mute_date!)
+        if mute_date != nil {
             
             let date_now = NSDate()
-            let time_left = Int(mute_dateformat!.timeIntervalSinceDate(date_now) / 60.0)
+            let time_left = Int(mute_date!.timeIntervalSinceDate(date_now) / 60.0)
             
             if (time_left < 1){
-                User.self.currentUser()?.details.muted = ""
+                User.self.currentUser()?.details.muted = nil
                 User.self.currentUser()?.saveInBackground()
                 return true
             }

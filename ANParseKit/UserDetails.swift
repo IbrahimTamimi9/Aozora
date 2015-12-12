@@ -35,7 +35,7 @@ public class UserDetails: PFObject, PFSubclassing {
     @NSManaged public var watchedTime: Double
     @NSManaged public var avatarRegular: PFFile?
     @NSManaged public var banner: PFFile?
-    @NSManaged public var muted: String
+    @NSManaged public var muted: NSDate?
     
     @NSManaged public var followingCount: Int
     @NSManaged public var followersCount: Int

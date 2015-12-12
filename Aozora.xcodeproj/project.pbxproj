@@ -1507,7 +1507,7 @@
 				TargetAttributes = {
 					DA27D1901AF1BA9D00CC854E = {
 						CreatedOnToolsVersion = 6.3.1;
-						DevelopmentTeam = Q9KPP7C7F3;
+						DevelopmentTeam = NWFK758PSC;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -2142,9 +2142,10 @@
 					"\"XLPagerTabStrip\"",
 					"-framework",
 					"\"iRate\"",
+					"$(inherited)",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D DEBUG \"-D\" \"COCOAPODS\"";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.anytap.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.shazaibahmad.Aozora;
 				PRODUCT_NAME = Aozora;
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = NO;
@@ -2157,8 +2158,8 @@
 			baseConfigurationReference = CC7A7DA6842DABB2A3D90AB9 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jose Chavarria Arrascue (Q9KPP7C7F3)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2213,11 +2214,12 @@
 					"\"XLPagerTabStrip\"",
 					"-framework",
 					"\"iRate\"",
+					"$(inherited)",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\"";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.anytap.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.shazaibahmad.Aozora;
 				PRODUCT_NAME = Aozora;
-				PROVISIONING_PROFILE = "6f9786ae-6c3c-49a4-9acc-dfeb540ab82d";
+				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "AnimeNow/AnimeNow-Bridging-Header.h";
 			};
