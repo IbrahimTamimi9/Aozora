@@ -37,7 +37,10 @@ public class NotificationThreadViewController: ThreadViewController {
         
         if let _ = timelinePost {
             viewMoreButton.setTitle("View Timeline  ", forState: .Normal)
+            // Fetch posts, if not a thread
+            fetchPosts()
         } else if let _ = post {
+            // Other class will call fetchPosts...
             viewMoreButton.setTitle("View Thread  ", forState: .Normal)
         }
     }
