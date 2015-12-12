@@ -154,52 +154,54 @@ public class ProfileViewController: ThreadViewController {
         query.includeKey("details")
         query.findObjectsInBackgroundWithBlock { (result, error) -> Void in
             
-            if let user = result?.last as? User {
-                self.userProfile = user
-                self.updateViewWithUser(user)
-                self.aboutLabel.setText(user.details.about, afterInheritingLabelAttributesAndConfiguringWithBlock: { (attributedString) -> NSMutableAttributedString! in
-                    return attributedString
-                })
-                
-                let activeEndString = user.activeEnd.timeAgo()
-                let activeEndStringFormatted = activeEndString == "Just now" ? "active now" : "\(activeEndString) ago"
-                self.activeAgo.text = user.active ? "active now" : activeEndStringFormatted
-                
-                if user.details.posts >= 1000 {
-                    self.postsBadge.text = String(format: "%.1fk", Float(user.details.posts-49)/1000.0 )
-                } else {
-                    self.postsBadge.text = user.details.posts.description
-                }
-                
-                self.updateFollowingButtons()
-                self.sizeHeaderToFit()
-                // Start fetching if didn't had User class
-                if let _ = self.username {
-                    self.configureFetchController()
+            guard let user = result?.last as? User else {
+                return
+            }
+
+            self.userProfile = user
+            self.updateViewWithUser(user)
+            self.aboutLabel.setText(user.details.about, afterInheritingLabelAttributesAndConfiguringWithBlock: { (attributedString) -> NSMutableAttributedString! in
+                return attributedString
+            })
+
+            let activeEndString = user.activeEnd.timeAgo()
+            let activeEndStringFormatted = activeEndString == "Just now" ? "active now" : "\(activeEndString) ago"
+            self.activeAgo.text = user.active ? "active now" : activeEndStringFormatted
+
+            if user.details.posts >= 1000 {
+                self.postsBadge.text = String(format: "%.1fk", Float(user.details.posts-49)/1000.0 )
+            } else {
+                self.postsBadge.text = user.details.posts.description
+            }
+
+            self.updateFollowingButtons()
+            self.sizeHeaderToFit()
+            // Start fetching if didn't had User class
+            if let _ = self.username {
+                self.configureFetchController()
+            }
+
+
+            if !user.isTheCurrentUser() && !User.currentUserIsGuest() {
+                let relationQuery = User.currentUser()!.following().query()
+                relationQuery.whereKey("aozoraUsername", equalTo: username)
+                relationQuery.findObjectsInBackgroundWithBlock { (result, error) -> Void in
+                    if let _ = result?.last as? User {
+                        // Following this user
+                        self.followButton.setTitle("  Following", forState: .Normal)
+                        user.followingThisUser = true
+                    } else if let _ = error {
+                        // TODO: Show error
+
+                    } else {
+                        // NOT following this user
+                        self.followButton.setTitle("  Follow", forState: .Normal)
+                        user.followingThisUser = false
+                    }
+                    self.followButton.layoutIfNeeded()
                 }
             }
         }
-        
-        if let userProfile = userProfile where !userProfile.isTheCurrentUser() && !User.currentUserIsGuest() {
-            let relationQuery = User.currentUser()!.following().query()
-            relationQuery.whereKey("aozoraUsername", equalTo: username)
-            relationQuery.findObjectsInBackgroundWithBlock { (result, error) -> Void in
-                if let _ = result?.last as? User {
-                    // Following this user
-                    self.followButton.setTitle("  Following", forState: .Normal)
-                    userProfile.followingThisUser = true
-                } else if let _ = error {
-                    // TODO: Show error
-                    
-                } else {
-                    // NOT following this user
-                    self.followButton.setTitle("  Follow", forState: .Normal)
-                    userProfile.followingThisUser = false
-                }
-                self.followButton.layoutIfNeeded()
-            }
-        }
-        
     }
     
     func updateViewWithUser(user: User) {
