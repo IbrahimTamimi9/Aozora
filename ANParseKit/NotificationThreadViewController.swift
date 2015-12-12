@@ -40,8 +40,6 @@ public class NotificationThreadViewController: ThreadViewController {
         } else if let _ = post {
             viewMoreButton.setTitle("View Thread  ", forState: .Normal)
         }
-        
-        fetchPosts()
     }
     
     override public func updateUIWithThread(thread: Thread) {
