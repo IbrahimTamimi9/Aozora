@@ -180,12 +180,13 @@ public class LibrarySyncController {
             // Check if user is syncing with MyAnimeList
             if User.syncingWithMyAnimeList() {
                 if var malProgress = myAnimeListLibrary.filter({$0.myAnimeListID == myAnimeListID}).last {
+                    var shouldSave = false
                     // Update episodes
                     if malProgress.episodes > progress.watchedEpisodes {
                         // On Parse
                         print("updated episodes on parse \(progress.anime.title!)")
                         progress.watchedEpisodes = malProgress.episodes
-                        progress.saveEventually()
+                        shouldSave = true
                     } else if malProgress.episodes < progress.watchedEpisodes {
                         print("updated episodes on mal \(progress.anime.title!)")
                         // On MAL
@@ -199,7 +200,7 @@ public class LibrarySyncController {
                         if malProgress.score != 0 {
                             print("updated score on parse \(progress.anime.title!)")
                             progress.score = malProgress.score
-                            progress.saveEventually()
+                            shouldSave = true
                         } else if progress.score != 0 {
                             print("updated score on mal \(progress.anime.title!)")
                             malProgress.score = progress.score
@@ -257,8 +258,12 @@ public class LibrarySyncController {
                         if let aozoraList = aozoraList {
                             print("updated list on parse \(progress.anime.title!)")
                             progress.list = aozoraList.rawValue
-                            progress.saveEventually()
+                            shouldSave = true
                         }
+                    }
+                    
+                    if shouldSave {
+                        progress.saveInBackground()
                     }
                     
                 } else {
