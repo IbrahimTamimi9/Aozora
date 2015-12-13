@@ -43,6 +43,7 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
     
     var loadingView: LoaderView!
     var libraryController = LibraryController.sharedInstance
+    var animator: ZFModalTransitionAnimator!
     
     var currentConfiguration: Configuration {
         get {
@@ -251,8 +252,7 @@ class AnimeLibraryViewController: XLButtonBarPagerTabStripViewController {
             
             controller.delegate = self
             controller.initWith(configuration: currentConfiguration)
-            controller.modalTransitionStyle = UIModalTransitionStyle.CoverVertical
-            tabBar.presentViewController(controller, animated: true, completion: nil)
+            animator = tabBar.presentViewControllerModal(controller)
         }
     }
 }

@@ -178,8 +178,7 @@ class BrowseViewController: UIViewController {
             
             controller.delegate = self
             controller.initWith(configuration: currentConfiguration, selectedGenres: selectedGenres)
-            controller.modalTransitionStyle = UIModalTransitionStyle.CoverVertical
-            tabBar.presentViewController(controller, animated: true, completion: nil)
+            animator = tabBar.presentViewControllerModal(controller)
         }   
     }
 }

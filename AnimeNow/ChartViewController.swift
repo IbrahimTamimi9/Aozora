@@ -320,9 +320,7 @@ class ChartViewController: UIViewController {
             
             controller.delegate = self
             controller.initWith(configuration: currentConfiguration)
-            controller.modalTransitionStyle = UIModalTransitionStyle.CoverVertical
-            controller.modalPresentationStyle = .OverCurrentContext
-            tabBar.presentViewController(controller, animated: true, completion: nil)
+            animator = tabBar.presentViewControllerModal(controller)
         }
         
     }

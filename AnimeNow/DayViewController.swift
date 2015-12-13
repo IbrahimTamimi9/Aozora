@@ -128,7 +128,7 @@ extension DayViewController: UICollectionViewDelegate {
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
         let anime = dataSource[indexPath.row]
-        self.animator = presentAnimeModal(anime)
+        animator = presentAnimeModal(anime)
     }
 }
 
@@ -162,5 +162,3 @@ extension DayViewController: XLPagerTabStripChildItem {
         return UIColor.whiteColor()
     }
 }
-
-

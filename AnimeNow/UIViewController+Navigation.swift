@@ -10,6 +10,23 @@ import Foundation
 import ANCommonKit
 import JTSImageViewController
 
+public protocol ModalTransitionScrollable {
+    var transitionScrollView: UIScrollView? { get }
+}
+
+public protocol ModalTransitionAnimatable: ModalTransitionScrollable {
+    var animator: ZFModalTransitionAnimator! { get set }
+}
+
+extension ModalTransitionAnimatable {
+    public func updateTransitionScrollView() {
+        if let transitionScrollView = transitionScrollView {
+            animator.gesture.enabled = true
+            animator.setContentScrollView(transitionScrollView)
+        }
+    }
+}
+
 extension UIViewController {
     
     public func presentViewControllerModal(controller: UIViewController) -> ZFModalTransitionAnimator {
@@ -21,7 +38,12 @@ extension UIViewController {
         controller.transitioningDelegate = animator
         controller.modalPresentationStyle = .Custom
         
-        presentViewController(controller, animated: true, completion: nil)
+        presentViewController(controller, animated: true) { _ in
+            if var controller = controller as? ModalTransitionAnimatable {
+                controller.animator = animator
+                controller.updateTransitionScrollView()
+            }
+        }
         
         return animator
     }
