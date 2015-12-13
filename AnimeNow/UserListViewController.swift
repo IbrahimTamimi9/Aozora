@@ -9,8 +9,8 @@
 import UIKit
 import Alamofire
 import Bolts
-import ANCommonKit
 import Parse
+import ANCommonKit
 import ANParseKit
 
 class UserListViewController: UIViewController {
@@ -23,6 +23,7 @@ class UserListViewController: UIViewController {
     var user: User?
     var query: PFQuery!
     var titleToSet = ""
+    var animator: ZFModalTransitionAnimator!
     
     func initWithQuery(query: PFQuery, title: String, user: User? = nil) {
         self.user = user
@@ -118,7 +119,7 @@ extension UserListViewController: UITableViewDelegate {
         let profile = dataSource[indexPath.row]
         let (navController, profileController) = ANAnimeKit.profileViewController()
         profileController.initWithUser(profile)
-        presentViewController(navController, animated: true, completion: nil)
+        animator = presentViewControllerModal(navController)
     }
 }
 

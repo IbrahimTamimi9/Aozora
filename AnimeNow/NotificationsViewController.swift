@@ -17,9 +17,12 @@ protocol NotificationsViewControllerDelegate: class {
 class NotificationsViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
+    
     var fetchController = FetchController()
+    var animator: ZFModalTransitionAnimator!
+    
     weak var delegate: NotificationsViewControllerDelegate?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchNotifications()
@@ -146,7 +149,15 @@ extension NotificationsViewController: UITableViewDelegate {
         
         // Temporal fix to prevent opening the notification twice
         tableView.userInteractionEnabled = false
-        NotificationsController.handleNotification(notification.objectId!, objectClass: notification.targetClass, objectId: notification.targetID)
+        NotificationsController
+            .handleNotification(notification.objectId!, objectClass: notification.targetClass, objectId: notification.targetID, returnAnimator: true)
+            .continueWithBlock { (task: BFTask!) -> AnyObject? in
+            
+            if let animator = task.result as? ZFModalTransitionAnimator {
+                self.animator = animator
+            }
+            return nil
+        }
     }
 }
 
@@ -174,3 +185,4 @@ extension NotificationsViewController: UINavigationBarDelegate {
         return UIBarPosition.TopAttached
     }
 }
+

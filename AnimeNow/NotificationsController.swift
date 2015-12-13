@@ -9,10 +9,11 @@
 import Foundation
 import ANParseKit
 import CRToast
+import ANCommonKit
 
 class NotificationsController {
     
-    class func handleNotification(notificationId: String, objectClass: String, objectId: String) {
+    class func handleNotification(notificationId: String, objectClass: String, objectId: String, returnAnimator: Bool = false) -> BFTask {
         
         let notification = Notification(withoutDataWithObjectId: notificationId)
         notification.addUniqueObject(User.currentUser()!, forKey: "readBy")
@@ -21,33 +22,33 @@ class NotificationsController {
         switch objectClass {
         case "_User":
             let targetUser = User.objectWithoutDataWithObjectId(objectId)
-            targetUser.fetchInBackgroundWithBlock({ (user, error) -> Void in
-                if let user = user as? User {
-                    let (navController, profileController) = ANAnimeKit.profileViewController()
-                    profileController.initWithUser(user)
-                    if let topVC = UIApplication.topViewController() {
-                        topVC.presentViewController(navController, animated: true, completion: nil)
-                    }
+            return targetUser.fetchInBackground()
+                .continueWithExecutor(BFExecutor.mainThreadExecutor(), withBlock: { (task: BFTask!) -> AnyObject? in
+                if let user = task.result as? User,
+                    let animator = showUserProfile(user, returnAnimator: returnAnimator) {
+                        return BFTask(result: animator)
+                } else {
+                    return BFTask(result: nil)
                 }
             })
+            
+            
         case "TimelinePost":
             let query = TimelinePost.query()!
             query.whereKey("objectId", equalTo: objectId)
             query.includeKey("userTimeline")
             query.limit = 1
-            query.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
-                if let _ = error {
-                    
+            return query.findObjectsInBackground()
+                .continueWithExecutor(BFExecutor.mainThreadExecutor(), withBlock: { (task: BFTask!) -> AnyObject? in
+                if let result = task.result as? [PFObject],
+                    let targetTimelinePost = result.last as? TimelinePost,
+                    let animator = self.showNotificationThread(targetTimelinePost, returnAnimator: returnAnimator) {
+                        
+                        return BFTask(result: animator)
                 } else {
-                    let targetTimelinePost = result?.last as! TimelinePost
-                    let (navVC, profileController) = ANAnimeKit.notificationThreadViewController()
-                    profileController.initWithPost(targetTimelinePost)
-                    if let topVC = UIApplication.topViewController() {
-                        topVC.presentViewController(navVC, animated: true, completion: nil)
-                    }
+                    return BFTask(result: nil)
                 }
             })
-            
             
         case "Post":
             let query = Post.query()!
@@ -57,24 +58,57 @@ class NotificationsController {
             query.includeKey("thread.anime")
             query.includeKey("thread.episode")
             query.limit = 1
-            query.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
-                if let _ = error {
-                    
+            return query.findObjectsInBackground()
+                .continueWithExecutor(BFExecutor.mainThreadExecutor(), withBlock: { (task: BFTask!) -> AnyObject? in
+                if let result = task.result as? [PFObject],
+                    let targetPost = result.last as? Post,
+                    let animator = self.showNotificationThread(targetPost, returnAnimator: returnAnimator) {
+                        
+                        return BFTask(result: animator)
                 } else {
-                    let targetPost = result?.last as! Post
-                    let (navVC, profileController) = ANAnimeKit.notificationThreadViewController()
-                    profileController.initWithPost(targetPost)
-                    if let topVC = UIApplication.topViewController() {
-                        topVC.presentViewController(navVC, animated: true, completion: nil)
-                    }
+                    return BFTask(result: nil)
                 }
             })
             
-            
         default:
-            break
+            return BFTask(result: nil)
+        }
+    }
+    
+    class func showUserProfile(user: User, returnAnimator: Bool) -> ZFModalTransitionAnimator? {
+        
+        let (navVC, profileController) = ANAnimeKit.profileViewController()
+        profileController.initWithUser(user)
+        
+        guard let topVC = UIApplication.topViewController() else {
+            return nil
         }
         
+        if returnAnimator {
+            return topVC.presentViewControllerModal(navVC)
+        } else {
+            topVC.presentViewController(navVC, animated: true, completion: nil)
+        }
+        
+        return nil
+    }
+    
+    class func showNotificationThread(post: Postable, returnAnimator: Bool) -> ZFModalTransitionAnimator? {
+        
+        let (navVC, profileController) = ANAnimeKit.notificationThreadViewController()
+        profileController.initWithPost(post)
+        
+        guard let topVC = UIApplication.topViewController() else {
+            return nil
+        }
+        
+        if returnAnimator {
+            return topVC.presentViewControllerModal(navVC)
+        } else {
+            topVC.presentViewController(navVC, animated: true, completion: nil)
+        }
+        
+        return nil
     }
     
     class func showToast(notificationId: String, objectClass: String, objectId: String, message: String) {

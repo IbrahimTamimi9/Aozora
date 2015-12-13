@@ -2139,6 +2139,7 @@
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "AnimeNow/AnimeNow-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -2211,6 +2212,7 @@
 				PROVISIONING_PROFILE = "6f9786ae-6c3c-49a4-9acc-dfeb540ab82d";
 				SKIP_INSTALL = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "AnimeNow/AnimeNow-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
