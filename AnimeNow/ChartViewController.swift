@@ -103,7 +103,7 @@ class ChartViewController: UIViewController {
         
         DialogController.sharedInstance.canShowFBAppInvite(self)
         
-        AnimeCell.registerNibFor(collectionView: collectionView, style: .Chart, reuseIdentifier: "AnimeCell")
+        AnimeCell.registerNibFor(collectionView: collectionView)
         
         // Layout and sort
         orders = [currentSortType, .None]
@@ -400,7 +400,7 @@ extension ChartViewController: UICollectionViewDataSource {
             return cell
         }
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("AnimeCell", forIndexPath: indexPath) as! AnimeCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(AnimeCell.id, forIndexPath: indexPath) as! AnimeCell
         let anime = filteredDataSource[indexPath.section][indexPath.row]
         cell.configureWithAnime(anime, canFadeImages: canFadeImages, showEtaAsAired: false)
         cell.layoutIfNeeded()

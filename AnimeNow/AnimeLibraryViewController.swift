@@ -22,12 +22,10 @@ enum AnimeList: String {
 enum LibraryLayout: String {
     case CheckIn = "Check-In"
     case Compact = "Compact"
-    case CheckInCompact = "Check-In Compact"
     
     static func allRawValues() -> [String] {
         return [
             LibraryLayout.CheckIn.rawValue,
-            LibraryLayout.CheckInCompact.rawValue,
             LibraryLayout.Compact.rawValue
         ]
     }

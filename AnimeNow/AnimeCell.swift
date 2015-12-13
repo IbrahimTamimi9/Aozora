@@ -12,13 +12,7 @@ import ANParseKit
 
 class AnimeCell: UICollectionViewCell {
     
-    enum CellStyle {
-        case Chart
-        case Poster
-        case List
-        case CheckInCompact
-    }
-    
+    static let id = "AnimeCell"
     @IBOutlet weak var posterImageView: UIImageView?
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var etaLabel: UILabel?
@@ -45,20 +39,9 @@ class AnimeCell: UICollectionViewCell {
         return Static.instance
     }
     
-    class func registerNibFor(collectionView collectionView: UICollectionView, style: CellStyle, reuseIdentifier: String) {
-        switch style {
-        case .Chart:
-            let chartNib = UINib(nibName: "AnimeCell", bundle: nil)
-            collectionView.registerNib(chartNib, forCellWithReuseIdentifier: reuseIdentifier)
-        case .Poster:
-            let posterNib = UINib(nibName: "AnimeCellPoster", bundle: nil)
-            collectionView.registerNib(posterNib, forCellWithReuseIdentifier: reuseIdentifier)
-        case .List:
-            let listNib = UINib(nibName: "AnimeCellList", bundle: nil)
-            collectionView.registerNib(listNib, forCellWithReuseIdentifier: reuseIdentifier)
-        default: break
-        }
-        
+    class func registerNibFor(collectionView collectionView: UICollectionView) {
+        let chartNib = UINib(nibName: AnimeCell.id, bundle: nil)
+        collectionView.registerNib(chartNib, forCellWithReuseIdentifier: AnimeCell.id)
     }
     
     func configureWithAnime(

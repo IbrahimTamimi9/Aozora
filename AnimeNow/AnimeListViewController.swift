@@ -40,7 +40,7 @@ class AnimeListViewController: UIViewController {
                     case .View:
                         let layoutType = LibraryLayout(rawValue: value)!
                         if isViewLoaded() {
-                            updateLayout(layoutType)
+                            updateLayout(layoutType, withSize: view.bounds.size)
                         } else {
                             currentLayout = layoutType
                         }
@@ -73,10 +73,8 @@ class AnimeListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
-        LibraryAnimeCell.registerNibFor(collectionView: collectionView, style: .CheckInCompact, reuseIdentifier: "CheckInCompact")
         
-        updateLayout(currentLayout)
+        updateLayout(currentLayout, withSize: view.bounds.size)
         updateSortType(currentSortType)
         addRefreshControl(refreshControl, action: "refreshLibrary", forCollectionView: collectionView)
     }
@@ -87,6 +85,11 @@ class AnimeListViewController: UIViewController {
         collectionView.animateFadeIn()
     }
     
+    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+        
+        updateLayout(currentLayout, withSize: size)
+    }
     
     func refreshLibrary() {
         
@@ -104,7 +107,7 @@ class AnimeListViewController: UIViewController {
     
     // MARK: - Sort and Layout
     
-    func updateLayout(layout: LibraryLayout) {
+    func updateLayout(layout: LibraryLayout, withSize viewSize: CGSize) {
         
         currentLayout = layout
         
@@ -121,27 +124,18 @@ class AnimeListViewController: UIViewController {
             layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
             layout.minimumLineSpacing = 1
             layout.minimumInteritemSpacing = 1
-        case .CheckInCompact:
-            let margin: CGFloat = 4
-            let columns: CGFloat = 2
-            let totalSize: CGFloat = view.bounds.size.width - (margin * (columns + 1))
-            let width = totalSize / columns
-            size = CGSize(width: width, height: width/164*164)
-            
-            layout.sectionInset = UIEdgeInsets(top: margin, left: margin, bottom: margin, right: margin)
-            layout.minimumLineSpacing = margin
-            layout.minimumInteritemSpacing = margin
         case .Compact:
             let margin: CGFloat = 4
             let columns: CGFloat = 5
-            let totalSize: CGFloat = view.bounds.size.width - (margin * (columns + 1))
-            let width = totalSize / columns
+            let totalWidth: CGFloat = view.bounds.size.width - (margin * (columns + 1))
+            let width = totalWidth / columns
             size = CGSize(width: width, height: width/83*116)
             
             layout.sectionInset = UIEdgeInsets(top: margin, left: margin, bottom: margin, right: margin)
             layout.minimumLineSpacing = margin
             layout.minimumInteritemSpacing = margin
         }
+        
         layout.itemSize = size!
         
         collectionView.collectionViewLayout.invalidateLayout()
@@ -219,13 +213,6 @@ extension AnimeListViewController: UICollectionViewDataSource {
             
         case .CheckIn:
             identifier = "CheckIn"
-            fallthrough
-            
-        case .CheckInCompact:
-            if identifier == nil {
-                identifier = "CheckInCompact"
-            }
-            
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier(identifier!, forIndexPath: indexPath) as! LibraryAnimeCell
             
             let anime = animeList[indexPath.row]

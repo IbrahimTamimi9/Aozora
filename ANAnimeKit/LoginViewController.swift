@@ -36,7 +36,10 @@ public class LoginViewController: UIViewController {
         
         loadingView.startAnimating()
 
-        Alamofire.request(Atarashii.Router.verifyCredentials()).authenticate(user: usernameTextField.text!, password: passwordTextField.text!).validate().responseJSON { (req, res, result) -> Void in
+        Alamofire.request(Atarashii.Router.verifyCredentials())
+            .authenticate(user: usernameTextField.text!, password: passwordTextField.text!)
+            .validate()
+            .responseJSON { (req, res, result) -> Void in
             
             if result.isSuccess {
             

@@ -40,8 +40,7 @@ class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let chartNib = UINib(nibName: "AnimeCell", bundle: nil)
-        collectionView.registerNib(chartNib, forCellWithReuseIdentifier: "AnimeCell")
+        AnimeCell.registerNibFor(collectionView: collectionView)
         
         guard let collectionView = collectionView,
             let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
@@ -168,7 +167,7 @@ extension SearchViewController: UICollectionViewDataSource {
         
         let object = dataSource[indexPath.row]
         if let anime = object as? Anime {
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("AnimeCell", forIndexPath: indexPath) as! AnimeCell
+            let cell = collectionView.dequeueReusableCellWithReuseIdentifier(AnimeCell.id, forIndexPath: indexPath) as! AnimeCell
             cell.configureWithAnime(anime)
             return cell
             

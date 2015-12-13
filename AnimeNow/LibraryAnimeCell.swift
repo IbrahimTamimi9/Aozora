@@ -47,17 +47,6 @@ class LibraryAnimeCell: AnimeCell {
         episodeImageView?.addGestureRecognizer(gestureRecognizer)
     }
     
-    override class func registerNibFor(collectionView collectionView: UICollectionView, style: CellStyle, reuseIdentifier: String) {
-        switch style {
-        case .CheckInCompact:
-            let chartNib = UINib(nibName: "CheckInCompact", bundle: nil)
-            collectionView.registerNib(chartNib, forCellWithReuseIdentifier: reuseIdentifier)
-        default:
-            super.registerNibFor(collectionView: collectionView, style: style, reuseIdentifier: reuseIdentifier)
-        }
-        
-    }
-    
     override func configureWithAnime(
         anime: Anime,
         canFadeImages: Bool = true,
