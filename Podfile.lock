@@ -34,21 +34,6 @@ DEPENDENCIES:
   - XCDYouTubeKit (~> 2.4.1)
   - XLPagerTabStrip (~> 1.1.1)
 
-EXTERNAL SOURCES:
-  HCSStarRatingView:
-    :git: https://github.com/hugocampossousa/HCSStarRatingView.git
-  XCDYouTubeKit:
-    :commit: 5e45d727b148012ae889491b6ee78e3cf9b5b22a
-    :git: https://github.com/0xced/XCDYouTubeKit.git
-
-CHECKOUT OPTIONS:
-  HCSStarRatingView:
-    :commit: bc445e67c94fdcabf09f4b26a8d47b40f0c19fbd
-    :git: https://github.com/hugocampossousa/HCSStarRatingView.git
-  XCDYouTubeKit:
-    :commit: 5e45d727b148012ae889491b6ee78e3cf9b5b22a
-    :git: https://github.com/0xced/XCDYouTubeKit.git
-
 SPEC CHECKSUMS:
   Alamofire: 8edbab00802a752bb5240cc2abe70e7e881488ad
   CRToast: 5a78c22b921c5ed3487488af605bc403a9c92fed
