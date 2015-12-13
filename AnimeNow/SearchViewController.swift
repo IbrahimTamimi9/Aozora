@@ -260,3 +260,9 @@ extension SearchViewController: UINavigationBarDelegate {
         return UIBarPosition.TopAttached
     }
 }
+
+extension SearchViewController: ModalTransitionScrollable {
+    var transitionScrollView: UIScrollView? {
+        return collectionView
+    }
+}

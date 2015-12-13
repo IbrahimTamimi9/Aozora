@@ -39,6 +39,7 @@ class ForumsViewController: UIViewController {
     var selectedList: SelectedList = .Recent
     var selectedTag: PFObject?
     var timer: NSTimer!
+    var animator: ZFModalTransitionAnimator!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -224,7 +225,7 @@ class ForumsViewController: UIViewController {
         if User.currentUserLoggedIn() {
             let comment = ANParseKit.newThreadViewController()
             comment.initWith(threadType: ThreadType.Custom, delegate: self)
-            presentViewController(comment, animated: true, completion: nil)
+            animator = presentViewControllerModal(comment)
         } else {
             presentBasicAlertWithTitle("Login first", message: "Select 'Me' tab to login", style: .Alert)
         }

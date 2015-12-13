@@ -30,7 +30,6 @@ public class CustomThreadViewController: ThreadViewController {
     
     var episode: Episode?
     var anime: Anime?
-    var animator: ZFModalTransitionAnimator!
     
     public override func initWithThread(thread: Thread) {
         self.thread = thread
@@ -302,7 +301,7 @@ public class CustomThreadViewController: ThreadViewController {
         if let thread = thread where User.currentUserLoggedIn() {
             let comment = ANParseKit.newPostViewController()
             comment.initWith(thread, threadType: threadType, delegate: self)
-            presentViewController(comment, animated: true, completion: nil)
+            animator = presentViewControllerModal(comment)
         } else if let thread = thread where thread.locked {
             presentBasicAlertWithTitle("Thread is locked", message: nil)
         } else {
@@ -338,7 +337,7 @@ public class CustomThreadViewController: ThreadViewController {
             alert.addAction(UIAlertAction(title: "Edit", style: administrating ? UIAlertActionStyle.Destructive : UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
                 let comment = ANParseKit.newThreadViewController()
                 comment.initWith(thread, threadType: self.threadType, delegate: self, editingPost: thread)
-                self.presentViewController(comment, animated: true, completion: nil)
+                self.animator = self.presentViewControllerModal(comment)
             }))
             
             if User.currentUser()!.isAdmin() {

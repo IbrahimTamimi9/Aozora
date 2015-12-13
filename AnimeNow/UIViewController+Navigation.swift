@@ -14,14 +14,22 @@ public protocol ModalTransitionScrollable {
     var transitionScrollView: UIScrollView? { get }
 }
 
-public protocol ModalTransitionAnimatable: ModalTransitionScrollable {
+extension ModalTransitionScrollable {
+    public func updateTransitionScrollView(animator: ZFModalTransitionAnimator) {
+        if let transitionScrollView = transitionScrollView {
+            animator.setContentScrollView(transitionScrollView)
+        }
+    }
+}
+
+// Allows to update the ScrollView
+public protocol ModalTransitionMultiScrollable: ModalTransitionScrollable {
     var animator: ZFModalTransitionAnimator! { get set }
 }
 
-extension ModalTransitionAnimatable {
+extension ModalTransitionMultiScrollable {
     public func updateTransitionScrollView() {
         if let transitionScrollView = transitionScrollView {
-            animator.gesture.enabled = true
             animator.setContentScrollView(transitionScrollView)
         }
     }
@@ -39,9 +47,18 @@ extension UIViewController {
         controller.modalPresentationStyle = .Custom
         
         presentViewController(controller, animated: true) { _ in
-            if var controller = controller as? ModalTransitionAnimatable {
-                controller.animator = animator
-                controller.updateTransitionScrollView()
+            var animatedController = controller
+            if let navController = animatedController as? UINavigationController,
+                let viewController = navController.viewControllers.last {
+                animatedController = viewController
+            }
+            
+            if let controller = animatedController as? ModalTransitionScrollable {
+                controller.updateTransitionScrollView(animator)
+                
+                if var controller = controller as? ModalTransitionMultiScrollable {
+                    controller.animator = animator
+                }
             }
         }
         

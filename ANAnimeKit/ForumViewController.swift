@@ -31,6 +31,7 @@ public class ForumViewController: AnimeBaseViewController {
     
     var loadingView: LoaderView!
     var fetchController = FetchController()
+    var animator: ZFModalTransitionAnimator!
     
     @IBOutlet weak public var navigationBar: UINavigationItem!
     
@@ -63,7 +64,7 @@ public class ForumViewController: AnimeBaseViewController {
         if User.currentUserLoggedIn() {
             let comment = ANParseKit.newThreadViewController()
             comment.initWith(threadType: .Custom, delegate: self, anime: anime)
-            presentViewController(comment, animated: true, completion: nil)
+            animator = presentViewControllerModal(comment)
         } else {
             presentBasicAlertWithTitle("Login first", message: "Select 'Me' tab to login", style: .Alert)
         }

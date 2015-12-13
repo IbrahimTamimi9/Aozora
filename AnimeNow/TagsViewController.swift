@@ -175,3 +175,9 @@ extension TagsViewController: UISearchBarDelegate {
     }
     
 }
+
+extension TagsViewController: ModalTransitionScrollable {
+    public var transitionScrollView: UIScrollView? {
+        return collectionView
+    }
+}

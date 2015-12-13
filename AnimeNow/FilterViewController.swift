@@ -69,8 +69,6 @@ class FilterViewController: UIViewController {
     var filteredDataSource: [[String]] = []
     var sectionsDataSource: Configuration = []
     
-    var animator: ZFModalTransitionAnimator!
-    
     var filteringSomething: Bool {
         get {
             for (section, value, _) in sectionsDataSource where section != .View && section != .Sort && section != .FilterTitle && value != nil {
@@ -337,7 +335,7 @@ extension FilterViewController: UINavigationBarDelegate {
     }
 }
 
-extension FilterViewController: ModalTransitionAnimatable {    
+extension FilterViewController: ModalTransitionScrollable {
     var transitionScrollView: UIScrollView? {
         return collectionView
     }

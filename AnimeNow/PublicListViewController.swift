@@ -263,3 +263,9 @@ extension PublicListViewController: UISearchBarDelegate {
         
     }
 }
+
+extension PublicListViewController: ModalTransitionScrollable {
+    var transitionScrollView: UIScrollView? {
+        return collectionView
+    }
+}

@@ -9,6 +9,7 @@
 import Foundation
 import Parse
 import Bolts
+import ANCommonKit
 
 public protocol CommentViewControllerDelegate: class {
     func commentViewControllerDidFinishedPosting(newPost: PFObject, parentPost: PFObject?, edited: Bool)
@@ -36,6 +37,8 @@ public class CommentViewController: UIViewController {
     @IBOutlet weak var threadTitle: UITextField!
     
     public weak var delegate: CommentViewControllerDelegate?
+    
+    var animator: ZFModalTransitionAnimator!
     
     var selectedImageData: ImageData? {
         didSet {
@@ -178,7 +181,7 @@ public class CommentViewController: UIViewController {
         } else {
             let imagesController = ANParseKit.commentStoryboard().instantiateViewControllerWithIdentifier("Images") as! ImagesViewController
             imagesController.delegate = self
-            presentViewController(imagesController, animated: true, completion: nil)
+            animator = presentViewControllerModal(imagesController)
         }
         
     }

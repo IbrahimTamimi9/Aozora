@@ -160,3 +160,9 @@ extension ImagesViewController: ImageViewControllerDelegate {
     }
     
 }
+
+extension ImagesViewController: ModalTransitionScrollable {
+    public var transitionScrollView: UIScrollView? {
+        return collectionView
+    }
+}

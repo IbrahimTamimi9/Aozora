@@ -152,7 +152,7 @@ public class NewThreadViewController: CommentViewController {
         let tagsController = ANParseKit.commentStoryboard().instantiateViewControllerWithIdentifier("Tags") as! TagsViewController
         tagsController.selectedDataSource = tags
         tagsController.delegate = self
-        presentViewController(tagsController, animated: true, completion: nil)
+        animator = presentViewControllerModal(tagsController)
     }
 }
 
@@ -168,5 +168,11 @@ extension NewThreadViewController: TTTAttributedLabelDelegate {
         if let host = url.host where host == "tag", let index = url.pathComponents?[1], let idx = Int(index) {
             tags.removeAtIndex(idx)
         }
+    }
+}
+
+extension NewThreadViewController: ModalTransitionScrollable {
+    public var transitionScrollView: UIScrollView? {
+        return textView
     }
 }

@@ -323,7 +323,7 @@ public class ProfileViewController: ThreadViewController {
         if let profile = userProfile where User.currentUserLoggedIn() {
             let comment = ANParseKit.newPostViewController()
             comment.initWithTimelinePost(self, postedIn: profile)
-            presentViewController(comment, animated: true, completion: nil)
+            animator = presentViewControllerModal(comment)
         } else {
             presentBasicAlertWithTitle("Login first", message: "Select 'Me' tab")
         }
@@ -424,7 +424,7 @@ public class ProfileViewController: ThreadViewController {
                 let navVC = UIStoryboard(name: "Library", bundle: nil).instantiateViewControllerWithIdentifier("PublicLibraryNav") as! UINavigationController
                 let publicList = navVC.viewControllers.first as! PublicListViewController
                 publicList.initWithUser(userProfile)
-                self.presentViewController(navVC, animated: true, completion: nil)
+                self.animator = self.presentViewControllerModal(navVC)
             }
         }))
         
@@ -432,12 +432,12 @@ public class ProfileViewController: ThreadViewController {
             alert.addAction(UIAlertAction(title: "Edit Profile", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction) -> Void in
                 let editProfileController =  UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("EditProfile") as! EditProfileViewController
                 editProfileController.delegate = self
-                self.presentViewController(editProfileController, animated: true, completion: nil)
+                self.animator = self.presentViewControllerModal(editProfileController)
             }))
             
             alert.addAction(UIAlertAction(title: "Settings", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction) -> Void in
                 let settings = UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController() as! UINavigationController
-                self.presentViewController(settings, animated: true, completion: nil)
+                self.animator = self.presentViewControllerModal(settings)
             }))
             
             alert.addAction(UIAlertAction(title: "Online Users", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction) -> Void in

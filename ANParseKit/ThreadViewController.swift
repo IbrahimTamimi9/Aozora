@@ -27,6 +27,7 @@ public class ThreadViewController: UIViewController {
     public var refreshControl = UIRefreshControl()
     public var loadingView: LoaderView!
     
+    var animator: ZFModalTransitionAnimator!
     var playerController: XCDYouTubeVideoPlayerViewController?
     
     public func initWithThread(thread: Thread) {
@@ -96,7 +97,7 @@ public class ThreadViewController: UIViewController {
             profileController.initWithUsername(username)
         }
         
-        presentViewController(navController, animated: true, completion: nil)
+        animator = presentViewControllerModal(navController)
     }
     
     public func showImage(imageURLString: String, imageView: UIImageView) {
@@ -122,12 +123,12 @@ public class ThreadViewController: UIViewController {
                 presentBasicAlertWithTitle("Thread is locked")
             } else {
                 comment.initWith(thread, threadType: threadType, delegate: self, parentPost: post)
-                presentViewController(comment, animated: true, completion: nil)
+                animator = presentViewControllerModal(comment)
             }
             
         } else if let post = post as? TimelinePostable {
             comment.initWithTimelinePost(self, postedIn:post.userTimeline, parentPost: post)
-            presentViewController(comment, animated: true, completion: nil)
+            animator = presentViewControllerModal(comment)
         }
     }
     
@@ -499,7 +500,7 @@ extension ThreadViewController: UITableViewDelegate {
                     } else if let post = post as? Post, let thread = self.thread {
                         comment.initWith(thread, threadType: self.threadType, delegate: self, editingPost: post)
                     }
-                    self.presentViewController(comment, animated: true, completion: nil)
+                    self.animator = self.presentViewControllerModal(comment)
                 }))
 
                 alert.addAction(UIAlertAction(title: "Delete", style: UIAlertActionStyle.Destructive, handler: { (alertAction: UIAlertAction!) -> Void in
@@ -699,5 +700,11 @@ extension ThreadViewController: FetchControllerQueryDelegate {
         }
 
         return uniquePosts
+    }
+}
+
+extension ThreadViewController: ModalTransitionScrollable {
+    public var transitionScrollView: UIScrollView? {
+        return tableView
     }
 }

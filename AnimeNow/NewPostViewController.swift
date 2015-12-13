@@ -294,3 +294,9 @@ public class NewPostViewController: CommentViewController {
         hasSpoilers = !hasSpoilers
     }
 }
+
+extension NewPostViewController: ModalTransitionScrollable {
+    public var transitionScrollView: UIScrollView? {
+        return textView
+    }
+}

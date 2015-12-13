@@ -102,3 +102,9 @@ extension EditProfileViewController: UserProfileManagerDelegate {
         bannerImageView.image = banner
     }
 }
+
+extension EditProfileViewController: ModalTransitionScrollable {
+    public var transitionScrollView: UIScrollView? {
+        return nil
+    }
+}

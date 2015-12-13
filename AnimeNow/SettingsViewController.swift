@@ -214,3 +214,9 @@ class SettingsViewController: UITableViewController {
         }
     }
 }
+
+extension SettingsViewController: ModalTransitionScrollable {
+    var transitionScrollView: UIScrollView? {
+        return tableView
+    }
+}
