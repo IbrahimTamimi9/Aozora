@@ -39,20 +39,52 @@ class EpisodesViewController: AnimeBaseViewController {
         loadingView = LoaderView(parentView: view)
         
         fetchEpisodes()
+        
     }
+    
+    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+        
+        updateLayoutWithSize(size)
+    }
+    
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
         if !laidOutSubviews {
             laidOutSubviews = true
-            
-            let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
-            let size = CGSize(width: view.bounds.size.width-20, height: 195)
-            layout.itemSize = size
-            layout.invalidateLayout()
+            updateLayoutWithSize(view.bounds.size)
         }
         
+    }
+    
+    func updateLayoutWithSize(viewSize: CGSize) {
+        
+        let height: CGFloat = 195
+        
+        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        
+        var size: CGSize?
+        var inset: CGFloat = 0
+        var lineSpacing: CGFloat = 0
+        
+        if UIDevice.isPad() {
+            inset = 4
+            lineSpacing = 4
+            let columns: CGFloat = UIDevice.isLandscape() ? 3 : 2
+            size = CGSize(width: viewSize.width / columns - (columns - 1) * lineSpacing, height: height)
+        } else {
+            inset = 10
+            lineSpacing = 10
+            size = CGSize(width: viewSize.width - inset * 2, height: height)
+        }
+        layout.sectionInset = UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
+        layout.minimumLineSpacing = CGFloat(lineSpacing)
+        layout.minimumInteritemSpacing = CGFloat(lineSpacing)
+        
+        layout.itemSize = size!
+        layout.invalidateLayout()
     }
     
     func fetchEpisodes() {

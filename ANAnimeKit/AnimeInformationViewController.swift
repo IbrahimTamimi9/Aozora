@@ -36,7 +36,7 @@ extension AnimeInformationViewController: StatusBarVisibilityProtocol {
 public class AnimeInformationViewController: AnimeBaseViewController {
     
     let HeaderCellHeight: CGFloat = 39
-    let HeaderViewHeight: CGFloat = 274
+    var HeaderViewHeight: CGFloat = 0
     let TopBarHeight: CGFloat = 44
     let StatusBarHeight: CGFloat = 22
     
@@ -75,11 +75,20 @@ public class AnimeInformationViewController: AnimeBaseViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         
+        HeaderViewHeight = UIDevice.isPad() ? 400 : 274
+        
         shimeringView.contentView = animeTitle
         shimeringView.shimmering = true
         
         tableView.estimatedRowHeight = 44.0
         tableView.rowHeight = UITableViewAutomaticDimension
+        if UIDevice.isPad() {
+            let header = tableView.tableHeaderView!
+            var frame = header.frame
+            frame.size.height = 500 - 44 - 30
+            tableView.tableHeaderView?.frame = frame
+            view.insertSubview(tableView, belowSubview: fanartImageView)
+        }
         
         loadingView = LoaderView(parentView: view)
         
@@ -214,6 +223,8 @@ public class AnimeInformationViewController: AnimeBaseViewController {
         }
         
         let alert = UIAlertController(title: title, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        alert.popoverPresentationController?.sourceView = listButton.superview
+        alert.popoverPresentationController?.sourceRect = listButton.frame
         
         alert.addAction(UIAlertAction(title: "Watching", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
             self.updateProgressWithList(.Watching)
@@ -311,6 +322,8 @@ public class AnimeInformationViewController: AnimeBaseViewController {
     @IBAction func moreOptionsPressed(sender: AnyObject) {
         
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        alert.popoverPresentationController?.sourceView = sender.superview
+        alert.popoverPresentationController?.sourceRect = sender.frame
         
         alert.addAction(UIAlertAction(title: "Rate anime", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction) -> Void in
             
