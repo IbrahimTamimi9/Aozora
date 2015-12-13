@@ -289,7 +289,11 @@ class ChartViewController: UIViewController {
         let lineSpacing: CGFloat = 1
         let columns: CGFloat = UIDevice.isLandscape() ? 3 : 2
         
-        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        guard let collectionView = collectionView,
+            let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
+                return
+        }
+        
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         layout.minimumLineSpacing = CGFloat(lineSpacing)
         

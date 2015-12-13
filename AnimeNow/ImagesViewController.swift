@@ -39,7 +39,10 @@ public class ImagesViewController: UIViewController {
         
         searchBar.becomeFirstResponder()
         
-        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        guard let collectionView = collectionView,
+            let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
+                return
+        }
         let size = CGSize(width: view.bounds.size.width/2-3, height: 120)
         layout.itemSize = size
     }

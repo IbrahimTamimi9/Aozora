@@ -156,7 +156,10 @@ class PublicListViewController: UIViewController {
     // MARK: - Utility Functions
     func updateLayout() {
         
-        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        guard let collectionView = collectionView,
+            let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
+                return
+        }
         
         let size = CGSize(width: view.bounds.size.width, height: 52)
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)

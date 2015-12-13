@@ -43,7 +43,10 @@ class SearchViewController: UIViewController {
         let chartNib = UINib(nibName: "AnimeCell", bundle: nil)
         collectionView.registerNib(chartNib, forCellWithReuseIdentifier: "AnimeCell")
         
-        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        guard let collectionView = collectionView,
+            let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
+                return
+        }
         layout.itemSize = CGSize(width: view.bounds.size.width, height: 132)
         
         loadingView = LoaderView(parentView: view)

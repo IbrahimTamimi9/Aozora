@@ -37,7 +37,10 @@ public class TagsViewController: UIViewController {
         let searchBarTextField = searchBar.valueForKey("searchField") as? UITextField
         searchBarTextField?.textColor = UIColor.blackColor()
         
-        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        guard let collectionView = collectionView,
+            let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
+                return
+        }
         let size = CGSize(width: view.bounds.size.width, height: 44)
         layout.itemSize = size
         

@@ -62,18 +62,15 @@ class BrowseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let chartNib = UINib(nibName: "AnimeCell", bundle: nil)
-        collectionView.registerNib(chartNib, forCellWithReuseIdentifier: "AnimeCell")
+        AnimeCell.registerNibFor(collectionView: collectionView, style: .Chart, reuseIdentifier: "AnimeCell")
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "changeSeasonalChart")
         navigationController?.navigationBar.addGestureRecognizer(tapGestureRecognizer)
         
-        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
-        layout.itemSize = CGSize(width: view.bounds.size.width, height: 132)
-        
         loadingView = LoaderView(parentView: view)
         
         fetchListType(currentBrowseType)
+        updateLayout(withSize: view.bounds.size)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateETACells", name: LibraryUpdatedNotification, object: nil)
     }
@@ -89,6 +86,38 @@ class BrowseViewController: UIViewController {
     
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+        
+        updateLayout(withSize: size)
+    }
+    
+    func updateLayout(withSize viewSize: CGSize) {
+        
+        // TODO: Factor this duplicate code (in chartViewControler.swift)
+        var size: CGSize
+        
+        let lineSpacing: CGFloat = 1
+        let columns: CGFloat = UIDevice.isLandscape() ? 3 : 2
+        
+        guard let collectionView = collectionView,
+            let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
+                return
+        }
+        
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        layout.minimumLineSpacing = CGFloat(lineSpacing)
+
+        let height: CGFloat = 132
+        if UIDevice.isPad() {
+            size = CGSize(width: viewSize.width / columns - columns * lineSpacing, height: height)
+        } else {
+            size = CGSize(width: viewSize.width, height: height)
+        }
+    
+        layout.itemSize = size
     }
     
     func updateETACells() {

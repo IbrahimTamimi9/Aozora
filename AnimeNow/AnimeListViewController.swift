@@ -110,7 +110,11 @@ class AnimeListViewController: UIViewController {
         
         var size: CGSize?
         
-        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        guard let collectionView = collectionView,
+            let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
+                return
+        }
+        
         switch currentLayout {
         case .CheckIn:
             size = CGSize(width: view.bounds.size.width, height: 132)

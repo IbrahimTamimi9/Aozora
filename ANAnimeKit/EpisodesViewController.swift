@@ -63,7 +63,10 @@ class EpisodesViewController: AnimeBaseViewController {
         
         let height: CGFloat = 195
         
-        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        guard let collectionView = collectionView,
+            let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
+                return
+        }
         
         var size: CGSize?
         var inset: CGFloat = 0
@@ -73,7 +76,8 @@ class EpisodesViewController: AnimeBaseViewController {
             inset = 4
             lineSpacing = 4
             let columns: CGFloat = UIDevice.isLandscape() ? 3 : 2
-            size = CGSize(width: viewSize.width / columns - (columns - 1) * lineSpacing, height: height)
+            let fixUp: CGFloat = UIDevice.isLandscape() ? 0 : 2
+            size = CGSize(width: viewSize.width / columns - ((columns - 1) * lineSpacing) - fixUp, height: height)
         } else {
             inset = 10
             lineSpacing = 10
