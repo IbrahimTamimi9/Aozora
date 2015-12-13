@@ -104,8 +104,6 @@ class ChartViewController: UIViewController {
         DialogController.sharedInstance.canShowFBAppInvite(self)
         
         AnimeCell.registerNibFor(collectionView: collectionView, style: .Chart, reuseIdentifier: "AnimeCell")
-        AnimeCell.registerNibFor(collectionView: collectionView, style: .Poster, reuseIdentifier: "AnimeCellPoster")
-        AnimeCell.registerNibFor(collectionView: collectionView, style: .List, reuseIdentifier: "AnimeCellList")
         
         // Layout and sort
         orders = [currentSortType, .None]
@@ -113,7 +111,7 @@ class ChartViewController: UIViewController {
         
         // Update configuration
         currentConfiguration = [
-            (FilterSection.View, currentLayoutType.rawValue, LayoutType.allRawValues()),
+            (FilterSection.View, currentLayoutType.rawValue, [LayoutType.Chart.rawValue]),
             (FilterSection.Sort, currentSortType.rawValue, [SortType.Rating.rawValue, SortType.Popularity.rawValue, SortType.Title.rawValue, SortType.NextAiringEpisode.rawValue])
         ]
         
@@ -145,6 +143,16 @@ class ChartViewController: UIViewController {
 
     }
     
+    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+        
+        if selectedList == .AllSeasons {
+            updateLayoutType(.SeasonalChart, withSize: size)
+        } else {
+            updateLayoutType(currentLayoutType, withSize: size)
+        }
+    }
+    
     // MARK: - UI Functions
     
     func updateETACells() {
@@ -172,9 +180,9 @@ class ChartViewController: UIViewController {
         navigationBarTitle.text! += " " + FontAwesome.AngleDown.rawValue
         
         if selectedList == SelectedList.AllSeasons {
-            updateLayoutType(LayoutType.SeasonalChart)
+            updateLayoutType(.SeasonalChart, withSize: view.bounds.size)
         } else {
-            updateLayoutType(currentLayoutType)
+            updateLayoutType(currentLayoutType, withSize: view.bounds.size)
         }
     }
     
@@ -237,6 +245,8 @@ class ChartViewController: UIViewController {
         })
     }
     
+    
+    
     // MARK: - Utility Functions
     
     func updateSortType(sortType: SortType) {
@@ -268,39 +278,37 @@ class ChartViewController: UIViewController {
         searchBar(searchBar, textDidChange: searchBar.text!)
     }
     
-    func updateLayoutType(layoutType: LayoutType) {
+    func updateLayoutType(layoutType: LayoutType, withSize viewSize: CGSize) {
         
         if selectedList != SelectedList.AllSeasons {
             currentLayoutType = layoutType
         }
         
         var size: CGSize
+        
+        let lineSpacing: CGFloat = 1
+        let columns: CGFloat = UIDevice.isLandscape() ? 3 : 2
+        
         let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        layout.minimumLineSpacing = CGFloat(lineSpacing)
         
         switch layoutType {
         case .Chart:
-            size = CGSize(width: view.bounds.size.width, height: 132)
-            layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-            layout.minimumLineSpacing = 1
-        case .Poster:
+            let height: CGFloat = 132
+            if UIDevice.isPad() {
+                size = CGSize(width: viewSize.width / columns - columns * lineSpacing, height: height)
+            } else {
+                size = CGSize(width: viewSize.width, height: height)
+            }
             
-            let margin: CGFloat = 2
-            let columns: CGFloat = 4
-            let totalSize: CGFloat = view.bounds.size.width - (margin * (columns + 1))
-            let width = totalSize / columns
-            size = CGSize(width: width, height: width/100*176)
-            layout.sectionInset = UIEdgeInsets(top: margin, left: margin, bottom: margin, right: margin)
-            layout.minimumLineSpacing = margin
-            layout.minimumInteritemSpacing = margin
-            
-        case .List:
-            size = CGSize(width: view.bounds.size.width, height: 52)
-            layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-            layout.minimumLineSpacing = 1
         case .SeasonalChart:
-            size = CGSize(width: view.bounds.size.width, height: 36)
-            layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-            layout.minimumLineSpacing = 1
+            let height: CGFloat = 36
+            if UIDevice.isPad() {
+                size = CGSize(width: viewSize.width / columns - columns * lineSpacing, height: height)
+            } else {
+                size = CGSize(width: viewSize.width, height: height)
+            }
         }
         
         layout.itemSize = size
@@ -379,7 +387,7 @@ extension ChartViewController: UICollectionViewDataSource {
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
-        if selectedList == SelectedList.AllSeasons {
+        guard selectedList != SelectedList.AllSeasons else {
             let reuseIdentifier = "SeasonCell";
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! BasicCollectionCell
             let seasonalChart = chartsDataSource[indexPath.row]
@@ -388,19 +396,7 @@ extension ChartViewController: UICollectionViewDataSource {
             return cell
         }
         
-        var reuseIdentifier: String = ""
-        
-        switch currentLayoutType {
-        case .Chart:
-            reuseIdentifier = "AnimeCell"
-        case .List:
-            reuseIdentifier = "AnimeCellList"
-        case .Poster:
-            reuseIdentifier = "AnimeCellPoster"
-        case .SeasonalChart: break
-        }
-        
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! AnimeCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("AnimeCell", forIndexPath: indexPath) as! AnimeCell
         let anime = filteredDataSource[indexPath.section][indexPath.row]
         cell.configureWithAnime(anime, canFadeImages: canFadeImages, showEtaAsAired: false)
         cell.layoutIfNeeded()
@@ -529,7 +525,7 @@ extension ChartViewController: FilterViewControllerDelegate {
                 case .Sort:
                     updateSortType(SortType(rawValue: value)!)
                 case .View:
-                    updateLayoutType(LayoutType(rawValue: value)!)
+                    updateLayoutType(LayoutType(rawValue: value)!, withSize: view.bounds.size)
                 default: break
                 }
             }

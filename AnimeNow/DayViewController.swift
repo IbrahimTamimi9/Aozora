@@ -40,10 +40,11 @@ class DayViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        LibraryAnimeCell.registerNibFor(collectionView: collectionView, style: .CheckInCompact, reuseIdentifier: "CheckInCompact")
-        AnimeCell.registerNibFor(collectionView: collectionView, style: .Poster, reuseIdentifier: "AnimeCellPoster")
-        updateLayout()
+        AnimeCell.registerNibFor(collectionView: collectionView, style: .Chart, reuseIdentifier: "AnimeCell")
+        updateLayout(withSize: view.bounds.size)
     }
+    
+    
     
     // MARK: - Utility Functions
     
@@ -57,24 +58,27 @@ class DayViewController: UIViewController {
         })
     }
     
-    func updateLayout() {
+    func updateLayout(withSize viewSize: CGSize) {
+        // TODO: Factor this duplicated code
         
-        var size: CGSize?
+        let lineSpacing: CGFloat = 1
+        let columns: CGFloat = UIDevice.isLandscape() ? 3 : 2
         
-        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        guard let collectionView = collectionView, let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
+            return
+        }
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        layout.minimumLineSpacing = CGFloat(lineSpacing)
         
-        let margin: CGFloat = 2
-        let columns: CGFloat = 2
-        let totalSize: CGFloat = view.bounds.size.width - (margin * (columns + 1))
-        let width = totalSize / columns
-        size = CGSize(width: width, height: width/164*164)
-        
-        layout.sectionInset = UIEdgeInsets(top: margin, left: margin, bottom: margin, right: margin)
-        layout.minimumLineSpacing = margin
-        layout.minimumInteritemSpacing = margin
+        let height: CGFloat = 132
+        var size: CGSize!
+        if UIDevice.isPad() {
+            size = CGSize(width: viewSize.width / columns - columns * lineSpacing, height: height)
+        } else {
+            size = CGSize(width: viewSize.width, height: height)
+        }
         
         layout.itemSize = size!
-
     }
     
 }
@@ -88,23 +92,14 @@ extension DayViewController: UICollectionViewDataSource {
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
-        let reuseIdentifier = "AnimeCellPoster"
-
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! AnimeCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("AnimeCell", forIndexPath: indexPath) as! AnimeCell
         
         let anime = dataSource[indexPath.row]
 
         let nextDate = anime.nextEpisodeDate ?? NSDate(timeIntervalSinceNow: 60*60*24*100)
         let showEtaAsAired = nextDate.timeIntervalSinceNow > 60*60*24 && section == 0
         
-        cell.configureWithAnime(anime, canFadeImages: true, showEtaAsAired: showEtaAsAired, showShortEta: true)
-        
-        if let libraryCell = cell as? LibraryAnimeCell {
-            libraryCell.delegate = self
-        } else {
-            
-        }
-        
+        cell.configureWithAnime(anime, canFadeImages: true, showEtaAsAired: showEtaAsAired)
         cell.layoutIfNeeded()
         return cell
     }
@@ -116,14 +111,6 @@ extension DayViewController: UICollectionViewDataSource {
     
 }
 
-extension DayViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        let totalSize: CGFloat = view.bounds.size.width - (2 * (4 + 1))
-        let width = totalSize / 4
-        return CGSize(width: width, height: width/100*176)
-
-    }
-}
 extension DayViewController: UICollectionViewDelegate {
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         

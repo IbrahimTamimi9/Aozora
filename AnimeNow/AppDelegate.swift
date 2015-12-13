@@ -279,16 +279,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let topViewController = UIApplication.topViewController()
         
         if let controller = topViewController as? JTSImageViewController where !controller.isBeingDismissed() {
-            return UIInterfaceOrientationMask.All;
+            return UIInterfaceOrientationMask.All
         } else if let controller = topViewController as? XCDYouTubeVideoPlayerViewController where !controller.isBeingDismissed() {
-            return UIInterfaceOrientationMask.All;
+            return UIInterfaceOrientationMask.All
         } else if let controller = topViewController as? ImageViewController where !controller.isBeingDismissed() {
-            return UIInterfaceOrientationMask.All;
+            return UIInterfaceOrientationMask.All
         } else {
-            return UIInterfaceOrientationMask.Portrait;
+            if UIDevice.isPad() {
+                return UIInterfaceOrientationMask.All
+            } else {
+                return UIInterfaceOrientationMask.Portrait
+            }
         }
     }
-    
 }
-
-

@@ -37,17 +37,7 @@ enum SortType: String {
 
 enum LayoutType: String {
     case Chart = "Chart"
-    case List = "List"
-    case Poster = "Poster"
     case SeasonalChart = "SeasonalChart"
-    
-    static func allRawValues() -> [String] {
-        return [
-            LayoutType.Chart.rawValue,
-            LayoutType.List.rawValue,
-            LayoutType.Poster.rawValue
-        ]
-    }
 }
 
 typealias Configuration = [(section: FilterSection, value: String?, dataSource: [String])]

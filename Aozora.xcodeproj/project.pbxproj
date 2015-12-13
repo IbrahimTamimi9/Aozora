@@ -97,6 +97,7 @@
 		DA6E13271B10FA8900B278B0 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E12F31B10DCC600B278B0 /* CoreGraphics.framework */; };
 		DA6E13281B10FA8E00B278B0 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E12F11B10DCC100B278B0 /* CFNetwork.framework */; };
 		DA6E13291B10FA9400B278B0 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E12EF1B10DCBC00B278B0 /* AudioToolbox.framework */; };
+		DA6FB2641C1D3B3E000A7A6B /* UIDevice+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6FB2631C1D3B3E000A7A6B /* UIDevice+Utils.swift */; };
 		DA75C8981BB1A6EF00C27A68 /* AnimeProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA75C8971BB1A6EF00C27A68 /* AnimeProgress.swift */; };
 		DA75C89A1BB1A76F00C27A68 /* LibrarySyncController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA75C8991BB1A76F00C27A68 /* LibrarySyncController.swift */; };
 		DA7C84CA1B4379AD0036D119 /* UIViewController+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC13BFD1B3F36AB0013D479 /* UIViewController+Image.swift */; };
@@ -428,6 +429,7 @@
 		DA6E131C1B10F9C800B278B0 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		DA6E83B11B1672A500970D27 /* TraktV1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TraktV1.swift; sourceTree = "<group>"; };
 		DA6E83B31B167F1E00970D27 /* TraktV2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TraktV2.swift; sourceTree = "<group>"; };
+		DA6FB2631C1D3B3E000A7A6B /* UIDevice+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+Utils.swift"; sourceTree = "<group>"; };
 		DA75C8971BB1A6EF00C27A68 /* AnimeProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeProgress.swift; sourceTree = "<group>"; };
 		DA75C8991BB1A76F00C27A68 /* LibrarySyncController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibrarySyncController.swift; sourceTree = "<group>"; };
 		DA76A1961B235BF4006CB489 /* DropDownListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropDownListViewController.swift; sourceTree = "<group>"; };
@@ -985,6 +987,7 @@
 				DACE77C11B294D7B00037486 /* NSDate+AniNow.swift */,
 				DAE43C391B2F971800C3092D /* UIView+Animation.swift */,
 				DA58C2E11B38A7760082B626 /* String+NSDate.swift */,
+				DA6FB2631C1D3B3E000A7A6B /* UIDevice+Utils.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -1830,6 +1833,7 @@
 				DAFD60B91B27845F007275C1 /* BasicTableCell.swift in Sources */,
 				DA13806E1B6DC08300C53560 /* UIViewController+Aozora.swift in Sources */,
 				DAFD60BC1B27845F007275C1 /* HighlightButton.swift in Sources */,
+				DA6FB2641C1D3B3E000A7A6B /* UIDevice+Utils.swift in Sources */,
 				DAFD60BA1B27845F007275C1 /* BasicView.swift in Sources */,
 				DAC077BC1B6894670067DA90 /* PostCell.swift in Sources */,
 				DA5A3BFA1B35F19A00C07D71 /* TraktV1.swift in Sources */,
