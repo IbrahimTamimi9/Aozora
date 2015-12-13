@@ -167,22 +167,7 @@ class PublicListViewController: UIViewController {
                 return
         }
         
-        var size: CGSize
-        
-        let lineSpacing: CGFloat = 1
-        let columns: CGFloat = UIDevice.isLandscape() ? 3 : 2
-        
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        layout.minimumLineSpacing = CGFloat(lineSpacing)
-        
-        let height: CGFloat = 132
-        if UIDevice.isPad() {
-            size = CGSize(width: viewSize.width / columns - columns * lineSpacing, height: height)
-        } else {
-            size = CGSize(width: viewSize.width, height: height)
-        }
-        
-        layout.itemSize = size
+        AnimeCell.updateLayoutItemSizeWithLayout(layout, viewSize: viewSize)
         
         canFadeImages = false
         collectionView.collectionViewLayout.invalidateLayout()

@@ -284,38 +284,29 @@ class ChartViewController: UIViewController {
             currentLayoutType = layoutType
         }
         
-        var size: CGSize
-        
-        let lineSpacing: CGFloat = 1
-        let columns: CGFloat = UIDevice.isLandscape() ? 3 : 2
-        
         guard let collectionView = collectionView,
             let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
                 return
         }
         
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        layout.minimumLineSpacing = CGFloat(lineSpacing)
-        
         switch layoutType {
         case .Chart:
-            let height: CGFloat = 132
-            if UIDevice.isPad() {
-                size = CGSize(width: viewSize.width / columns - columns * lineSpacing, height: height)
-            } else {
-                size = CGSize(width: viewSize.width, height: height)
-            }
-            
+            AnimeCell.updateLayoutItemSizeWithLayout(layout, viewSize: viewSize)
         case .SeasonalChart:
-            let height: CGFloat = 36
+            let lineSpacing: CGFloat = 1
+            let columns: CGFloat = UIDevice.isLandscape() ? 3 : 2
+            let cellHeight: CGFloat = 36
+            var cellWidth: CGFloat = 0
+            layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            layout.minimumLineSpacing = CGFloat(lineSpacing)
+            
             if UIDevice.isPad() {
-                size = CGSize(width: viewSize.width / columns - columns * lineSpacing, height: height)
+                cellWidth = viewSize.width / columns - columns * lineSpacing
             } else {
-                size = CGSize(width: viewSize.width, height: height)
+                cellWidth = viewSize.width
             }
+            layout.itemSize = CGSize(width: cellWidth, height: cellHeight)
         }
-        
-        layout.itemSize = size
         
         canFadeImages = false
         collectionView.collectionViewLayout.invalidateLayout()
