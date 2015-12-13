@@ -50,6 +50,7 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="78" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="iTn-Ub-0hQ">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="605"/>
                                 <color key="backgroundColor" red="0.97254902119999997" green="0.97254902119999997" blue="0.97254902119999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <inset key="scrollIndicatorInsets" minX="0.0" minY="0.0" maxX="-50" maxY="0.0"/>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="bpw-gp-1cI">
                                     <rect key="frame" x="0.0" y="164" width="600" height="20"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -60,7 +61,7 @@
                                         <rect key="frame" x="0.0" y="86" width="600" height="78"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KXh-Gz-R9W" id="N5c-aX-4ac">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="78"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="77.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="What Song is this in FMA Brotherhoos Soundtrack? " lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2kG-0g-6h2">
@@ -71,6 +72,9 @@
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                                     <color key="textColor" red="0.0078431372550000003" green="0.43921568630000002" blue="0.73333333329999995" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
+                                                    <variation key="heightClass=regular-widthClass=regular" misplaced="YES">
+                                                        <rect key="frame" x="21.5" y="12" width="770.5" height="20"/>
+                                                    </variation>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="#News  #Anime" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z0X-AH-kMe" customClass="TTTAttributedLabel">
                                                     <rect key="frame" x="8" y="32" width="584" height="19"/>
@@ -90,8 +94,11 @@
                                                             <exclude reference="rht-0v-vPN"/>
                                                         </mask>
                                                     </variation>
+                                                    <variation key="heightClass=regular-widthClass=regular" misplaced="YES">
+                                                        <rect key="frame" x="8" y="32" width="784" height="19"/>
+                                                    </variation>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" misplaced="YES" text=" " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gB2-v6-eC0">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text=" " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gB2-v6-eC0">
                                                     <rect key="frame" x="8" y="14" width="14" height="15"/>
                                                     <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="14"/>
                                                     <color key="textColor" red="0.0078431377190000002" green="0.43921568989999998" blue="0.73333334920000004" alpha="1" colorSpace="calibratedRGB"/>
@@ -114,6 +121,9 @@
                                                             <exclude reference="vgY-xX-aXp"/>
                                                             <exclude reference="xOk-Pr-hpH"/>
                                                         </mask>
+                                                    </variation>
+                                                    <variation key="heightClass=regular-widthClass=regular" misplaced="YES">
+                                                        <rect key="frame" x="8" y="51" width="784" height="19"/>
                                                     </variation>
                                                 </label>
                                             </subviews>
@@ -173,12 +183,16 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.97254902119999997" green="0.97254902119999997" blue="0.97254902119999997" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.89411765336990356" green="0.89411765336990356" blue="0.89411765336990356" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="iTn-Ub-0hQ" secondAttribute="trailing" id="Bhi-N9-94S"/>
+                            <constraint firstAttribute="trailing" secondItem="iTn-Ub-0hQ" secondAttribute="trailing" id="Bhi-N9-94S">
+                                <variation key="heightClass=regular-widthClass=regular" constant="50"/>
+                            </constraint>
                             <constraint firstAttribute="trailing" secondItem="nAC-BP-NIi" secondAttribute="trailing" constant="12" id="Eor-Tg-5o6"/>
                             <constraint firstItem="mki-z3-DzD" firstAttribute="top" secondItem="nAC-BP-NIi" secondAttribute="bottom" constant="15" id="FZc-Vw-WGC"/>
-                            <constraint firstItem="iTn-Ub-0hQ" firstAttribute="leading" secondItem="isI-pe-w1O" secondAttribute="leading" id="WW8-Bb-9r8"/>
+                            <constraint firstItem="iTn-Ub-0hQ" firstAttribute="leading" secondItem="isI-pe-w1O" secondAttribute="leading" id="WW8-Bb-9r8">
+                                <variation key="heightClass=regular-widthClass=regular" constant="50"/>
+                            </constraint>
                             <constraint firstItem="iTn-Ub-0hQ" firstAttribute="top" secondItem="hzq-WK-h4l" secondAttribute="bottom" constant="-64" id="bG2-l2-ScF"/>
                             <constraint firstItem="mki-z3-DzD" firstAttribute="top" secondItem="iTn-Ub-0hQ" secondAttribute="bottom" constant="-49" id="vqs-ho-LRs"/>
                         </constraints>
@@ -188,7 +202,7 @@
                         <nil key="title"/>
                         <barButtonItem key="leftBarButtonItem" title=" " id="6Wh-Ee-VCJ"/>
                         <view key="titleView" contentMode="scaleToFill" id="Oyo-wg-7xl">
-                            <rect key="frame" x="180" y="6" width="240" height="33"/>
+                            <rect key="frame" x="180" y="5.5" width="240" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Forum" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YcK-20-N7J">

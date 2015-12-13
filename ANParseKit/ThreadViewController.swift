@@ -431,7 +431,7 @@ extension ThreadViewController: UITableViewDelegate {
     }
     
     public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 4.0
+        return UIDevice.isPad() ? 6.0 : 4.0
     }
     
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -443,7 +443,7 @@ extension ThreadViewController: UITableViewDelegate {
                 post.isSpoilerHidden = false
                 tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
             } else {
-                showSheetFor(post: post)
+                showSheetFor(post: post, indexPath: indexPath)
             }
             
         } else if (post.replies.count <= 3 || post.showAllReplies) && indexPath.row - 1 < post.replies.count {
@@ -470,13 +470,13 @@ extension ThreadViewController: UITableViewDelegate {
             comment.isSpoilerHidden = false
             tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
         } else {
-            showSheetFor(post: comment, parentPost: post)
+            showSheetFor(post: comment, parentPost: post, indexPath: indexPath)
         }
     }
-    func showSheetFor(post post: Postable, parentPost: Postable? = nil) {
+    func showSheetFor(post post: Postable, parentPost: Postable? = nil, indexPath: NSIndexPath) {
         // If user's comment show delete/edit
         
-        guard let currentUser = User.currentUser(), let postedBy = post.postedBy else {
+        guard let currentUser = User.currentUser(), let postedBy = post.postedBy, let cell = tableView.cellForRowAtIndexPath(indexPath) else {
             return
         }
         
@@ -489,8 +489,12 @@ extension ThreadViewController: UITableViewDelegate {
                 
                 if administrating {
                     alert = UIAlertController(title: "Warning: Editing \(postedBy.aozoraUsername) post", message: "Only edit user posts if they are breaking guidelines", preferredStyle: UIAlertControllerStyle.ActionSheet)
+                    alert.popoverPresentationController?.sourceView = cell.superview
+                    alert.popoverPresentationController?.sourceRect = cell.frame
                 } else {
                     alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+                    alert.popoverPresentationController?.sourceView = cell.superview
+                    alert.popoverPresentationController?.sourceRect = cell.frame
                 }
                 
                 alert.addAction(UIAlertAction(title: "Edit", style: administrating ? UIAlertActionStyle.Destructive : UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in

@@ -66,12 +66,19 @@ class SettingsViewController: UITableViewController {
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
+        guard let cell = tableView.cellForRowAtIndexPath(indexPath) else {
+            return
+        }
+        
         switch (indexPath.section, indexPath.row) {
         case (0,0):
             // Login / Logout
             if User.currentUserLoggedIn() {
                 // Logged In both, logout
                 let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+                alert.popoverPresentationController?.sourceView = cell.superview
+                alert.popoverPresentationController?.sourceRect = cell.frame
+                
                 alert.addAction(UIAlertAction(title: "Logout Aozora", style: UIAlertActionStyle.Destructive, handler: { (action) -> Void in
                     
                     WorkflowController.logoutUser().continueWithExecutor( BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
@@ -98,6 +105,9 @@ class SettingsViewController: UITableViewController {
             // Sync with MyAnimeList
             if User.syncingWithMyAnimeList() {
                 let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+                alert.popoverPresentationController?.sourceView = cell.superview
+                alert.popoverPresentationController?.sourceRect = cell.frame
+                
                 alert.addAction(UIAlertAction(title: "Stop syncing with MyAnimeList", style: UIAlertActionStyle.Destructive, handler: { (action) -> Void in
                     
                     User.logoutMyAnimeList()

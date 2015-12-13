@@ -253,23 +253,21 @@
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
-                                                    <exclude reference="KzF-No-pES"/>
                                                     <exclude reference="t6x-GR-GKj"/>
-                                                    <exclude reference="w7X-3w-xdr"/>
                                                     <exclude reference="077-DW-f19"/>
                                                     <exclude reference="F74-iX-QTw"/>
                                                     <exclude reference="Op2-6y-3k8"/>
+                                                    <exclude reference="w7X-3w-xdr"/>
                                                     <exclude reference="dgw-fk-726"/>
                                                     <exclude reference="ghT-g1-03h"/>
                                                     <exclude reference="nlz-13-vTd"/>
                                                     <exclude reference="rfS-hJ-VtB"/>
                                                     <exclude reference="sri-H7-yix"/>
+                                                    <exclude reference="KzF-No-pES"/>
                                                 </mask>
                                             </variation>
                                             <variation key="heightClass=regular-widthClass=regular">
                                                 <mask key="constraints">
-                                                    <exclude reference="3Vh-c7-nEC"/>
-                                                    <include reference="KzF-No-pES"/>
                                                     <exclude reference="8yq-li-qma"/>
                                                     <include reference="077-DW-f19"/>
                                                     <include reference="F74-iX-QTw"/>
@@ -283,6 +281,8 @@
                                                     <include reference="rfS-hJ-VtB"/>
                                                     <include reference="sri-H7-yix"/>
                                                     <exclude reference="uNk-Na-U2a"/>
+                                                    <exclude reference="3Vh-c7-nEC"/>
+                                                    <include reference="KzF-No-pES"/>
                                                     <exclude reference="2zn-9C-439"/>
                                                 </mask>
                                             </variation>
@@ -296,13 +296,13 @@
                                     </constraints>
                                 </view>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="wKP-cR-R83">
-                                    <rect key="frame" x="0.0" y="593" width="600" height="20"/>
+                                    <rect key="frame" x="0.0" y="592.5" width="600" height="20"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <color key="backgroundColor" red="0.97254902124404907" green="0.97254902124404907" blue="0.97254902124404907" alpha="1" colorSpace="calibratedRGB"/>
                                 </view>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TitleCell" rowHeight="39" id="I7Y-GW-dmX" customClass="TitleCell" customModule="Aozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="384" width="600" height="39"/>
+                                        <rect key="frame" x="0.0" y="383.5" width="600" height="39"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="I7Y-GW-dmX" id="vVD-zJ-c7f">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="39"/>
@@ -342,7 +342,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SynopsisCell" rowHeight="81" id="bug-JV-dlv" customClass="SynopsisCell" customModule="Aozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="423" width="600" height="81"/>
+                                        <rect key="frame" x="0.0" y="422.5" width="600" height="81"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bug-JV-dlv" id="CAQ-bn-51z">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="81"/>
@@ -384,7 +384,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="InformationCell" rowHeight="44" id="3Oe-EE-bCp" customClass="InformationCell" customModule="Aozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="504" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="503.5" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3Oe-EE-bCp" id="YC9-NX-FIf">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
@@ -429,7 +429,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="LinkCell" rowHeight="44" id="dOU-XM-jZJ" customClass="LinkCell" customModule="Aozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="548" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="547.5" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dOU-XM-jZJ" id="EDI-hv-pna">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
@@ -695,13 +695,13 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="595"/>
                                 <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="uzE-z2-ehP">
-                                    <rect key="frame" x="0.0" y="298" width="600" height="20"/>
+                                    <rect key="frame" x="0.0" y="297.5" width="600" height="20"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <color key="backgroundColor" red="0.97254902119999997" green="0.97254902119999997" blue="0.97254902119999997" alpha="1" colorSpace="calibratedRGB"/>
                                 </view>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TitleCell" rowHeight="39" id="oNP-tZ-mWd" customClass="TitleCell" customModule="Aozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="114" width="600" height="39"/>
+                                        <rect key="frame" x="0.0" y="113.5" width="600" height="39"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oNP-tZ-mWd" id="dsw-iP-vy8">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="39"/>
@@ -751,7 +751,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CharacterCell" rowHeight="72" id="hMb-L0-Zjh" userLabel="CharacterCell" customClass="CharacterCell" customModule="Aozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="153" width="600" height="72"/>
+                                        <rect key="frame" x="0.0" y="152.5" width="600" height="72"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hMb-L0-Zjh" id="ZVH-jf-c9b">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="72"/>
@@ -868,7 +868,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CastCell" rowHeight="72" id="CJ4-G0-uGh" userLabel="CastCell" customClass="CharacterCell" customModule="Aozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="225" width="600" height="72"/>
+                                        <rect key="frame" x="0.0" y="224.5" width="600" height="72"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CJ4-G0-uGh" id="cfl-Zy-rTH">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="72"/>
@@ -1011,16 +1011,16 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="EpisodeCell" id="4OR-ez-C2Q" customClass="EpisodeCell" customModule="Aozora" customModuleProvider="target">
-                                        <rect key="frame" x="10" y="64" width="580" height="195"/>
+                                        <rect key="frame" x="110" y="74" width="380" height="195"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="380" height="195"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c0o-3r-wrP">
+                                                <view clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c0o-3r-wrP">
                                                     <rect key="frame" x="0.0" y="0.0" width="580" height="150"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="ELO-is-Vzr">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ELO-is-Vzr">
                                                             <rect key="frame" x="0.0" y="0.0" width="580" height="150"/>
                                                         </imageView>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text=" " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s3k-s9-euq" userLabel="TTVBadgeLabel">
@@ -1041,7 +1041,7 @@
                                                                 </mask>
                                                             </variation>
                                                         </label>
-                                                        <imageView userInteractionEnabled="NO" alpha="0.80000001192092896" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="text-shadow" translatesAutoresizingMaskIntoConstraints="NO" id="9Jh-Vj-a1G">
+                                                        <imageView userInteractionEnabled="NO" alpha="0.80000001192092896" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="text-shadow" translatesAutoresizingMaskIntoConstraints="NO" id="9Jh-Vj-a1G">
                                                             <rect key="frame" x="0.0" y="105" width="580" height="45"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="41" id="G81-GG-qCJ"/>
@@ -1052,7 +1052,7 @@
                                                                 </mask>
                                                             </variation>
                                                         </imageView>
-                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="An Unforseen" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yvd-pt-ULo">
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" misplaced="YES" text="An Unforseen" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yvd-pt-ULo">
                                                             <rect key="frame" x="8" y="122" width="564" height="24"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="20" id="mhr-QW-gpc"/>
@@ -1090,7 +1090,7 @@
                                                         </mask>
                                                     </variation>
                                                 </view>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C9i-HC-OAc" userLabel="ViewEdit">
+                                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="C9i-HC-OAc" userLabel="ViewEdit">
                                                     <rect key="frame" x="0.0" y="150" width="580" height="44"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lk7-Ky-pui">
@@ -1125,7 +1125,7 @@
                                                                 <constraint firstAttribute="height" constant="44" id="zBZ-sX-dw5"/>
                                                             </constraints>
                                                         </view>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WyI-6c-vvN">
+                                                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WyI-6c-vvN">
                                                             <rect key="frame" x="534" y="0.0" width="44" height="44"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="44" id="7b0-bR-w9B"/>
@@ -1149,7 +1149,7 @@
                                                                 <rect key="frame" x="354" y="13" width="132" height="17"/>
                                                             </variation>
                                                         </label>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zy3-d9-9PN">
+                                                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zy3-d9-9PN">
                                                             <rect key="frame" x="490" y="0.0" width="44" height="44"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="44" id="gZA-qG-OZ3"/>

@@ -398,12 +398,28 @@ public class ProfileViewController: ThreadViewController {
     
     // MARK: - IBActions
     
+    func presentSmallViewController(viewController: UIViewController, sender: AnyObject) {
+        viewController.modalPresentationStyle = .Popover
+        viewController.preferredContentSize = CGSizeMake(320, 500)
+        
+        let popoverMenuViewController = viewController.popoverPresentationController
+        popoverMenuViewController?.permittedArrowDirections = .Any
+        popoverMenuViewController?.sourceView = sender.superview
+        popoverMenuViewController?.sourceRect = sender.frame
+        
+        if UIDevice.isPad() {
+            navigationController?.presentViewController(viewController, animated: true, completion: nil)
+        } else {
+            navigationController?.pushViewController(viewController, animated: true)
+        }
+    }
+    
     @IBAction func showFollowingUsers(sender: AnyObject) {
         let userListController = UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("UserList") as! UserListViewController
         let query = userProfile!.following().query()
         query.orderByAscending("aozoraUsername")
         userListController.initWithQuery(query, title: "Following", user: userProfile!)
-        navigationController?.pushViewController(userListController, animated: true)
+        presentSmallViewController(userListController, sender: sender)
     }
     
     @IBAction func showFollowers(sender: AnyObject) {
@@ -412,12 +428,14 @@ public class ProfileViewController: ThreadViewController {
         query.whereKey("following", equalTo: userProfile!)
         query.orderByAscending("aozoraUsername")
         userListController.initWithQuery(query, title: "Followers", user: userProfile!)
-        navigationController?.pushViewController(userListController, animated: true)
+        presentSmallViewController(userListController, sender: sender)
     }
     
     @IBAction func showSettings(sender: AnyObject) {
         
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        alert.popoverPresentationController?.sourceView = sender.superview
+        alert.popoverPresentationController?.sourceRect = sender.frame
         
         alert.addAction(UIAlertAction(title: "View Library", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction) -> Void in
             if let userProfile = self.userProfile {
@@ -432,12 +450,20 @@ public class ProfileViewController: ThreadViewController {
             alert.addAction(UIAlertAction(title: "Edit Profile", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction) -> Void in
                 let editProfileController =  UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("EditProfile") as! EditProfileViewController
                 editProfileController.delegate = self
-                self.animator = self.presentViewControllerModal(editProfileController)
+                if UIDevice.isPad() {
+                    self.presentSmallViewController(editProfileController, sender: sender)
+                } else {
+                    self.animator = self.presentViewControllerModal(editProfileController)
+                }
             }))
             
             alert.addAction(UIAlertAction(title: "Settings", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction) -> Void in
                 let settings = UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController() as! UINavigationController
-                self.animator = self.presentViewControllerModal(settings)
+                if UIDevice.isPad() {
+                    self.presentSmallViewController(settings, sender: sender)
+                } else {
+                    self.animator = self.presentViewControllerModal(settings)
+                }
             }))
             
             alert.addAction(UIAlertAction(title: "Online Users", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction) -> Void in
@@ -447,7 +473,8 @@ public class ProfileViewController: ThreadViewController {
                 query.whereKey("active", equalTo: true)
                 query.limit = 100
                 userListController.initWithQuery(query, title: "Online Users")
-                self.navigationController?.pushViewController(userListController, animated: true)
+                
+                self.presentSmallViewController(userListController, sender: sender)
             }))
             
             alert.addAction(UIAlertAction(title: "New Users", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction) -> Void in
@@ -457,7 +484,7 @@ public class ProfileViewController: ThreadViewController {
                 query.whereKeyExists("aozoraUsername")
                 query.limit = 100
                 userListController.initWithQuery(query, title: "New Users")
-                self.navigationController?.pushViewController(userListController, animated: true)
+                self.presentSmallViewController(userListController, sender: sender)
             }))
         }
         
@@ -468,7 +495,7 @@ public class ProfileViewController: ThreadViewController {
     @IBAction func showNotifications(sender: AnyObject) {
         let notificationsVC = UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("Notifications") as! NotificationsViewController
         notificationsVC.delegate = self
-        navigationController?.pushViewController(notificationsVC, animated: true)
+        presentSmallViewController(notificationsVC, sender: sender)
     }
 }
 

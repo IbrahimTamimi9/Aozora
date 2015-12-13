@@ -371,8 +371,8 @@
 		DA4167E41B275CF500847F56 /* LinkCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkCell.swift; sourceTree = "<group>"; };
 		DA4167E61B275D3800847F56 /* TitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleCell.swift; sourceTree = "<group>"; };
 		DA4167E81B275F9400847F56 /* ANAnimeKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ANAnimeKit.swift; path = ../ANAnimeKit/ANAnimeKit.swift; sourceTree = "<group>"; };
-		DA472DF91BD409EF00E09AB0 /* ShowMoreCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowMoreCell.swift; sourceTree = "<group>"; };
-		DA472DFA1BD409EF00E09AB0 /* ShowMoreCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShowMoreCell.xib; sourceTree = "<group>"; };
+		DA472DF91BD409EF00E09AB0 /* ShowMoreCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShowMoreCell.swift; path = ../AnimeNow/ShowMoreCell.swift; sourceTree = "<group>"; };
+		DA472DFA1BD409EF00E09AB0 /* ShowMoreCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ShowMoreCell.xib; path = ../AnimeNow/ShowMoreCell.xib; sourceTree = "<group>"; };
 		DA4AF8B51B276E060020252E /* ANCommonKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ANCommonKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA4AF8B81B276E060020252E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA4AF8B91B276E060020252E /* ANCommonKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ANCommonKit.h; sourceTree = "<group>"; };
@@ -439,8 +439,8 @@
 		DA7F45861B8F069C006F9321 /* UIViewController+Navigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIViewController+Navigation.swift"; path = "../ANAnimeKit/UIViewController+Navigation.swift"; sourceTree = "<group>"; };
 		DA823D8A1B326940005C7AFD /* InAppBrowser.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = InAppBrowser.storyboard; path = ../AnimeNow/InAppBrowser.storyboard; sourceTree = "<group>"; };
 		DA823D8B1B326940005C7AFD /* InAppBrowserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InAppBrowserViewController.swift; path = ../AnimeNow/InAppBrowserViewController.swift; sourceTree = "<group>"; };
-		DA897F881B6D1FCC00A9510C /* WriteACommentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WriteACommentCell.xib; sourceTree = "<group>"; };
-		DA897F8A1B6D203D00A9510C /* CommentImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentImageCell.xib; sourceTree = "<group>"; };
+		DA897F881B6D1FCC00A9510C /* WriteACommentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WriteACommentCell.xib; path = ../AnimeNow/WriteACommentCell.xib; sourceTree = "<group>"; };
+		DA897F8A1B6D203D00A9510C /* CommentImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CommentImageCell.xib; path = ../AnimeNow/CommentImageCell.xib; sourceTree = "<group>"; };
 		DA897F951B6D461800A9510C /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		DA8B6E061B6C4DBF00D240FC /* UIImageView+PFFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+PFFile.swift"; sourceTree = "<group>"; };
 		DA8DD6401B3C95F300B05FBF /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -465,9 +465,9 @@
 		DAC077961B68670C0067DA90 /* UIImage+Resize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIImage+Resize.swift"; path = "../AnimeNow/UIImage+Resize.swift"; sourceTree = "<group>"; };
 		DAC077981B68698F0067DA90 /* default-avatar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "default-avatar@2x.png"; sourceTree = "<group>"; };
 		DAC0779A1B686A870067DA90 /* UserDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDetails.swift; sourceTree = "<group>"; };
-		DAC0779D1B688DFD0067DA90 /* PostTextCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostTextCell.xib; sourceTree = "<group>"; };
-		DAC077A61B6890830067DA90 /* CommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
-		DAC077BB1B6894670067DA90 /* PostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
+		DAC0779D1B688DFD0067DA90 /* PostTextCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PostTextCell.xib; path = ../AnimeNow/PostTextCell.xib; sourceTree = "<group>"; };
+		DAC077A61B6890830067DA90 /* CommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommentCell.swift; path = ../AnimeNow/CommentCell.swift; sourceTree = "<group>"; };
+		DAC077BB1B6894670067DA90 /* PostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostCell.swift; path = ../AnimeNow/PostCell.swift; sourceTree = "<group>"; };
 		DAC13BEE1B3EEF250013D479 /* AnimeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnimeCell.xib; sourceTree = "<group>"; };
 		DAC13BF01B3EF15E0013D479 /* AnimeCellPoster.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnimeCellPoster.xib; sourceTree = "<group>"; };
 		DAC13BF21B3EF17E0013D479 /* AnimeCellList.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnimeCellList.xib; sourceTree = "<group>"; };
@@ -505,9 +505,9 @@
 		DACD6AB71B6315AA00DDA55C /* ReminderController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderController.swift; sourceTree = "<group>"; };
 		DACE77C11B294D7B00037486 /* NSDate+AniNow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSDate+AniNow.swift"; path = "../AnimeNow/NSDate+AniNow.swift"; sourceTree = "<group>"; };
 		DACE77C31B29517F00037486 /* AnimeRelation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeRelation.swift; sourceTree = "<group>"; };
-		DAD3909D1B6C2F35000A84DE /* PostImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostImageCell.xib; sourceTree = "<group>"; };
-		DAD390A11B6C303D000A84DE /* CommentTextCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentTextCell.xib; sourceTree = "<group>"; };
-		DAD390A51B6C322A000A84DE /* WriteACommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WriteACommentCell.swift; sourceTree = "<group>"; };
+		DAD3909D1B6C2F35000A84DE /* PostImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PostImageCell.xib; path = ../AnimeNow/PostImageCell.xib; sourceTree = "<group>"; };
+		DAD390A11B6C303D000A84DE /* CommentTextCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CommentTextCell.xib; path = ../AnimeNow/CommentTextCell.xib; sourceTree = "<group>"; };
+		DAD390A51B6C322A000A84DE /* WriteACommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WriteACommentCell.swift; path = ../AnimeNow/WriteACommentCell.swift; sourceTree = "<group>"; };
 		DAD67DFC1B726724000BB325 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		DAD67DFF1B7275F0000BB325 /* Comment.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Comment.storyboard; sourceTree = "<group>"; };
 		DAD67E011B72760B000BB325 /* CommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
@@ -1028,7 +1028,7 @@
 			name = Animators;
 			sourceTree = "<group>";
 		};
-		DAC0779C1B688DCA0067DA90 /* Views */ = {
+		DAC077AE1B6890F50067DA90 /* Posts */ = {
 			isa = PBXGroup;
 			children = (
 				DAC0779D1B688DFD0067DA90 /* PostTextCell.xib */,
@@ -1037,28 +1037,10 @@
 				DA897F8A1B6D203D00A9510C /* CommentImageCell.xib */,
 				DA897F881B6D1FCC00A9510C /* WriteACommentCell.xib */,
 				DA472DFA1BD409EF00E09AB0 /* ShowMoreCell.xib */,
-			);
-			name = Views;
-			path = ../AnimeNow;
-			sourceTree = "<group>";
-		};
-		DAC077A51B6890620067DA90 /* Subclasses */ = {
-			isa = PBXGroup;
-			children = (
 				DAC077BB1B6894670067DA90 /* PostCell.swift */,
 				DAC077A61B6890830067DA90 /* CommentCell.swift */,
 				DAD390A51B6C322A000A84DE /* WriteACommentCell.swift */,
 				DA472DF91BD409EF00E09AB0 /* ShowMoreCell.swift */,
-			);
-			name = Subclasses;
-			path = ../AnimeNow;
-			sourceTree = "<group>";
-		};
-		DAC077AE1B6890F50067DA90 /* Posts */ = {
-			isa = PBXGroup;
-			children = (
-				DAC0779C1B688DCA0067DA90 /* Views */,
-				DAC077A51B6890620067DA90 /* Subclasses */,
 			);
 			name = Posts;
 			sourceTree = "<group>";

@@ -333,6 +333,8 @@ public class CustomThreadViewController: ThreadViewController {
             } else {
                 alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
             }
+            alert.popoverPresentationController?.sourceView = sender.superview
+            alert.popoverPresentationController?.sourceRect = sender.frame
             
             alert.addAction(UIAlertAction(title: "Edit", style: administrating ? UIAlertActionStyle.Destructive : UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
                 let comment = ANParseKit.newThreadViewController()
