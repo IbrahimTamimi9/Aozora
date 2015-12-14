@@ -165,31 +165,6 @@ public class CommentViewController: UIViewController {
         }
     }
     
-    func muted() -> Bool {
-        let mute_date = User.self.currentUser()?.details.muted
-        if mute_date != nil {
-            
-            let date_now = NSDate()
-            let time_left = Int(mute_date!.timeIntervalSinceDate(date_now) / 60.0)
-            
-            if (time_left < 1){
-                User.self.currentUser()?.details.muted = nil
-                User.self.currentUser()?.saveInBackground()
-                return true
-            }
-            else{
-                let hours = time_left / 60
-                let minutes = time_left % 60
-                
-                presentBasicAlertWithTitle("Account muted", message: "Time left: \(hours) hour(s), \(minutes) minute(s).\nContact admins for more information.")
-                return false
-            }
-        }
-        else{
-            return true
-        }
-    }
-    
     // MARK: - IBActions
     
     @IBAction func dimissViewControllerPressed(sender: AnyObject) {

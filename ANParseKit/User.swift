@@ -123,6 +123,22 @@ public class User: PFUser {
         details.incrementKey("followingCount", byAmount: incrementer)
         saveInBackground()
     }
+    
+    // Muting
+    public class func muted(viewController: UIViewController) -> Bool {
+        guard let currentUser = User.currentUser(), let muteDate = currentUser.details.mutedUntil else {
+            return false
+        }
+        
+        if muteDate.compare(NSDate()) == NSComparisonResult.OrderedAscending  {
+            currentUser.details.mutedUntil = nil
+            currentUser.saveInBackground()
+            return false
+        }
+        
+        viewController.presentBasicAlertWithTitle("Account muted", message: "Until \(muteDate.mediumDateTime()).\nContact admins for more information.")
+        return true
+    }
 }
 
 extension PFObject {

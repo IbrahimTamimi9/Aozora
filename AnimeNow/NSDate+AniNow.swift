@@ -21,8 +21,24 @@ extension NSDate {
         return Static.instance
     }
     
+    var mediumDateTimeFormatter: NSDateFormatter {
+        struct Static {
+            static let instance : NSDateFormatter = {
+                let formatter = NSDateFormatter()
+                formatter.dateStyle = NSDateFormatterStyle.MediumStyle
+                formatter.timeStyle = NSDateFormatterStyle.MediumStyle
+                return formatter
+            }()
+        }
+        return Static.instance
+    }
+    
     public func mediumDate() -> String {
         return mediumFormatter.stringFromDate(self)
+    }
+    
+    public func mediumDateTime() -> String {
+        return mediumDateTimeFormatter.stringFromDate(self)
     }
     
     public func timeAgo() -> String {
