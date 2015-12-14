@@ -65,9 +65,10 @@ public class Thread: PFObject, PFSubclassing {
     public var isForumGame: Bool {
         get {
             let forumGameId = "M4rpxLDwai"
-            for tag in self.tags where
-                (tag as! ThreadTag).objectId! == forumGameId {
+            for tag in self.tags {
+                if let tag = tag as? ThreadTag where tag.objectId! == forumGameId {
                     return true
+                }
             }
             return false
         }
