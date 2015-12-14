@@ -113,7 +113,6 @@
 		DA9EB9311B2BA580001ECFA7 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA9EB9301B2BA580001ECFA7 /* WebKit.framework */; };
 		DA9F731D1B2931FF00C2652C /* UIImageView+SDWebImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9F731A1B2930F200C2652C /* UIImageView+SDWebImage.swift */; };
 		DAA26C8E1BCC92B1001CF62D /* PublicListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA26C8D1BCC92B1001CF62D /* PublicListViewController.swift */; };
-		DAA26C901BCC94D8001CF62D /* LibraryAnimeCellList.xib in Resources */ = {isa = PBXBuildFile; fileRef = DAA26C8F1BCC94D8001CF62D /* LibraryAnimeCellList.xib */; };
 		DAA393291B42F21900A8D5D5 /* RootTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA393281B42F21900A8D5D5 /* RootTabBar.swift */; };
 		DAA546D61BA090C0003989DE /* UIApplication+Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA546D51BA090C0003989DE /* UIApplication+Navigation.swift */; };
 		DAA546D81BA09153003989DE /* NotificationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA546D31BA0902E003989DE /* NotificationsController.swift */; };
@@ -447,7 +446,6 @@
 		DAA253B51B2B877C0092EB0B /* CharactersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CharactersViewController.swift; path = ../ANAnimeKit/CharactersViewController.swift; sourceTree = "<group>"; };
 		DAA253B71B2B8AF50092EB0B /* AnimeBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeBaseViewController.swift; sourceTree = "<group>"; };
 		DAA26C8D1BCC92B1001CF62D /* PublicListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicListViewController.swift; sourceTree = "<group>"; };
-		DAA26C8F1BCC94D8001CF62D /* LibraryAnimeCellList.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LibraryAnimeCellList.xib; sourceTree = "<group>"; };
 		DAA2C5571B66919300152FF9 /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		DAA393281B42F21900A8D5D5 /* RootTabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootTabBar.swift; sourceTree = "<group>"; };
 		DAA546D11B9EF26E003989DE /* NotificationThreadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationThreadViewController.swift; sourceTree = "<group>"; };
@@ -779,14 +777,6 @@
 			path = ../AnimeNow;
 			sourceTree = "<group>";
 		};
-		DA4167CD1B273B1700847F56 /* ViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = ViewControllers;
-			path = ../ANAnimeKit;
-			sourceTree = "<group>";
-		};
 		DA4167DD1B275CA700847F56 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -1004,7 +994,6 @@
 				DACD6AB61B63157C00DDA55C /* Controllers */,
 				DA4167DD1B275CA700847F56 /* Views */,
 				DAF6189C1B378C2A00286517 /* DismissableTabBar */,
-				DA4167CD1B273B1700847F56 /* ViewControllers */,
 				DA0B260F1B75666C00A770AE /* Thread */,
 				DA1380641B6DBA7D00C53560 /* Episodes */,
 				DACD6AAA1B62E53900DDA55C /* Rate */,
@@ -1216,7 +1205,6 @@
 			isa = PBXGroup;
 			children = (
 				DAF618791B37825700286517 /* Library.storyboard */,
-				DAA26C8F1BCC94D8001CF62D /* LibraryAnimeCellList.xib */,
 				DAF618751B377CA700286517 /* AnimeLibraryViewController.swift */,
 				DAF618771B377D6000286517 /* AnimeListViewController.swift */,
 				DAA26C8D1BCC92B1001CF62D /* PublicListViewController.swift */,
@@ -1533,7 +1521,6 @@
 				DAD67E061B7292D8000BB325 /* Resources.xcassets in Resources */,
 				DA41679B1B25F76F00847F56 /* FontAwesome.ttf in Resources */,
 				DA4595611B83C3500044013E /* Onboarding.storyboard in Resources */,
-				DAA26C901BCC94D8001CF62D /* LibraryAnimeCellList.xib in Resources */,
 				DAF6187A1B37825700286517 /* Library.storyboard in Resources */,
 				DAC13C1D1B4228120013D479 /* Aller_Rg.ttf in Resources */,
 				DAC13C1C1B4228120013D479 /* Aller_LtIt.ttf in Resources */,

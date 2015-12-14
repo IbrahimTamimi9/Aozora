@@ -48,7 +48,7 @@ class AnimeCell: UICollectionViewCell {
         anime: Anime,
         canFadeImages: Bool = true,
         showEtaAsAired: Bool = false,
-        showShortEta: Bool = false,
+        showLibraryEta: Bool = false,
         publicAnime: Bool = false) {
 
         posterImageView?.setImageFrom(urlString: anime.imageUrl, animated: canFadeImages)
@@ -62,12 +62,12 @@ class AnimeCell: UICollectionViewCell {
         if let nextEpisode = anime.nextEpisode {
             
             if showEtaAsAired {
-                etaLabel?.textColor = UIColor.pumpkin()
-                etaTimeLabel?.textColor = UIColor.pumpkin()
-                if showShortEta {
-                    etaLabel?.text = "Ep\(nextEpisode-1) Aired"
+                etaLabel?.textColor = .pumpkin()
+                etaTimeLabel?.textColor = .pumpkin()
+                if showLibraryEta {
+                    etaLabel?.text = " Ep\(nextEpisode-1) Aired "
                 } else {
-                    etaLabel?.text = "Episode \(nextEpisode-1) - Aired"
+                    etaLabel?.text = "Ep \(nextEpisode-1) - Aired"
                 }
                 
                 etaTimeLabel?.text = "Ep\(nextEpisode-1) Aired"
@@ -75,29 +75,43 @@ class AnimeCell: UICollectionViewCell {
                 
                 let (days, hours, minutes) = etaForDate(anime.nextEpisodeDate!)
                 let etaTime: String
-                let shortEtaTime: String
                 if days != 0 {
                     etaTime = "\(days)d \(hours)h \(minutes)m"
-                    shortEtaTime = "\(days)d"
-                    etaLabel?.textColor = UIColor.belizeHole()
-                    etaTimeLabel?.textColor = UIColor.belizeHole()
+                    if showLibraryEta {
+                        etaLabel?.textColor = .whiteColor()
+                        etaLabel?.backgroundColor = .belizeHole()
+                    } else {
+                        etaLabel?.textColor = .belizeHole()
+                        etaLabel?.backgroundColor = .clearColor()
+                    }
+                    etaTimeLabel?.textColor = .belizeHole()
                 } else if hours != 0 {
                     etaTime = "\(hours)h \(minutes)m"
-                    shortEtaTime = "\(hours)h"
-                    etaLabel?.textColor = UIColor.nephritis()
-                    etaTimeLabel?.textColor = UIColor.nephritis()
+                    if showLibraryEta {
+                        etaLabel?.textColor = .whiteColor()
+                        etaLabel?.backgroundColor = .nephritis()
+                    } else {
+                        etaLabel?.textColor = .nephritis()
+                        etaLabel?.backgroundColor = .clearColor()
+                    }
+                    etaTimeLabel?.textColor = .nephritis()
                     
                 } else {
                     etaTime = "\(minutes)m"
-                    shortEtaTime = etaTime
-                    etaLabel?.textColor = UIColor.pumpkin()
-                    etaTimeLabel?.textColor = UIColor.pumpkin()
+                    if showLibraryEta {
+                        etaLabel?.textColor = .whiteColor()
+                        etaLabel?.backgroundColor = .belizeHole()
+                    } else {
+                        etaLabel?.textColor = .belizeHole()
+                        etaLabel?.backgroundColor = .clearColor()
+                    }
+                    etaTimeLabel?.textColor = .pumpkin()
                 }
                 
-                if showShortEta {
-                    etaLabel?.text = "Ep\(nextEpisode) - " + shortEtaTime
+                if showLibraryEta {
+                    etaLabel?.text = " Ep \(nextEpisode) - " + etaTime + " "
                 } else {
-                    etaLabel?.text = "Episode \(nextEpisode) - " + etaTime
+                    etaLabel?.text = "Ep \(nextEpisode) - " + etaTime
                 }
                 
                 

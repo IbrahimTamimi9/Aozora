@@ -51,10 +51,10 @@ class LibraryAnimeCell: AnimeCell {
         anime: Anime,
         canFadeImages: Bool = true,
         showEtaAsAired: Bool = false,
-        showShortEta: Bool = false,
+        showLibraryEta: Bool = false,
         publicAnime: Bool = false) {
         
-            super.configureWithAnime(anime, canFadeImages: canFadeImages, showEtaAsAired: showEtaAsAired, showShortEta: showShortEta, publicAnime: publicAnime)
+            super.configureWithAnime(anime, canFadeImages: canFadeImages, showEtaAsAired: showEtaAsAired, showLibraryEta: showLibraryEta, publicAnime: publicAnime)
         
         self.anime = anime
         

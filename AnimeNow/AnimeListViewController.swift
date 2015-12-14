@@ -118,7 +118,23 @@ class AnimeListViewController: UIViewController {
         
         switch currentLayout {
         case .CheckIn:
-            AnimeCell.updateLayoutItemSizeWithLayout(layout, viewSize: viewSize)
+            let insets: CGFloat = UIDevice.isPad() ? 15 : 8
+
+            let columns: CGFloat = UIDevice.isLandscape() ? 3 : 2
+            let cellHeight: CGFloat = 152
+            var cellWidth: CGFloat = 0
+            
+            layout.sectionInset = UIEdgeInsets(top: insets, left: insets, bottom: insets, right: insets)
+            layout.minimumLineSpacing = CGFloat(insets)
+            layout.minimumInteritemSpacing = CGFloat(insets)
+            
+            if UIDevice.isPad() {
+                cellWidth = (viewSize.width - (columns+1) * insets) / columns
+            } else {
+                cellWidth = viewSize.width - (insets*2)
+            }
+            
+            layout.itemSize = CGSize(width: cellWidth, height: cellHeight)
         case .Compact:
             let margin: CGFloat = 4
             let columns: CGFloat = UIDevice.isPad() ? (UIDevice.isLandscape() ? 14 : 10) : 5
@@ -208,7 +224,7 @@ extension AnimeListViewController: UICollectionViewDataSource {
             
             let anime = animeList[indexPath.row]
             cell.delegate = self
-            cell.configureWithAnime(anime, showShortEta: true)
+            cell.configureWithAnime(anime, showLibraryEta: true)
             cell.layoutIfNeeded()
             return cell
         
