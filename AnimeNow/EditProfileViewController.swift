@@ -105,6 +105,6 @@ extension EditProfileViewController: UserProfileManagerDelegate {
 
 extension EditProfileViewController: ModalTransitionScrollable {
     public var transitionScrollView: UIScrollView? {
-        return nil
+        return aboutTextView
     }
 }
