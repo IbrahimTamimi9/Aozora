@@ -218,7 +218,7 @@ extension UserProfileManager: UIImagePickerControllerDelegate, UINavigationContr
 
 extension UserProfileManager: RSKImageCropViewControllerDelegate {
     
-    public func imageCropViewController(controller: RSKImageCropViewController!, didCropImage croppedImage: UIImage!, usingCropRect cropRect: CGRect) {
+    public func imageCropViewController(controller: RSKImageCropViewController, didCropImage croppedImage: UIImage, usingCropRect cropRect: CGRect) {
         controller.dismissViewControllerAnimated(true, completion: nil)
         
         if selectingAvatar {
@@ -228,26 +228,26 @@ extension UserProfileManager: RSKImageCropViewControllerDelegate {
         }
     }
     
-    public func imageCropViewControllerDidCancelCrop(controller: RSKImageCropViewController!) {
+    public func imageCropViewControllerDidCancelCrop(controller: RSKImageCropViewController) {
         controller.dismissViewControllerAnimated(true, completion: nil)
     }
 }
 
 extension UserProfileManager: RSKImageCropViewControllerDataSource {
     
-    public func imageCropViewControllerCustomMaskRect(controller: RSKImageCropViewController!) -> CGRect {
+    public func imageCropViewControllerCustomMaskRect(controller: RSKImageCropViewController) -> CGRect {
         let imageHeight: CGFloat = 120
         let yPosition = (viewController.view.bounds.size.height - imageHeight) / 2
         return CGRect(x: 0, y: yPosition, width: viewController.view.bounds.size.width, height: imageHeight)
     }
 
-    public func imageCropViewControllerCustomMaskPath(controller: RSKImageCropViewController!) -> UIBezierPath! {
+    public func imageCropViewControllerCustomMaskPath(controller: RSKImageCropViewController) -> UIBezierPath {
         let imageHeight: CGFloat = 120
         let yPosition = (viewController.view.bounds.size.height - imageHeight) / 2
         return UIBezierPath(rect: CGRect(x: 0, y: yPosition, width: viewController.view.bounds.size.width, height: imageHeight))
     }
     
-    public func imageCropViewControllerCustomMovementRect(controller: RSKImageCropViewController!) -> CGRect {
+    public func imageCropViewControllerCustomMovementRect(controller: RSKImageCropViewController) -> CGRect {
         return controller.maskRect
     }
 }
