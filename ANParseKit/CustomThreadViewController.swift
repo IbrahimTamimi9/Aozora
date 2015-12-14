@@ -327,14 +327,14 @@ public class CustomThreadViewController: ThreadViewController {
             let alert: UIAlertController!
             
             if administrating {
-                alert = UIAlertController(title: "Warning: Editing \(thread.startedBy!.aozoraUsername) thread", message: "Only edit user threads if they are breaking guidelines", preferredStyle: UIAlertControllerStyle.ActionSheet)
+                alert = UIAlertController(title: "NOTE: Editing \(thread.startedBy!.aozoraUsername) thread", message: "Only edit user threads if they are breaking guidelines", preferredStyle: UIAlertControllerStyle.ActionSheet)
             } else {
                 alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
             }
             alert.popoverPresentationController?.sourceView = sender.superview
             alert.popoverPresentationController?.sourceRect = sender.frame
             
-            alert.addAction(UIAlertAction(title: "Edit", style: administrating ? UIAlertActionStyle.Destructive : UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
+            alert.addAction(UIAlertAction(title: "Edit", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
                 let comment = ANParseKit.newThreadViewController()
                 comment.initWith(thread, threadType: self.threadType, delegate: self, editingPost: thread)
                 self.animator = self.presentViewControllerModal(comment)
@@ -342,7 +342,7 @@ public class CustomThreadViewController: ThreadViewController {
             
             if User.currentUser()!.isAdmin() {
                 let locked = thread.locked
-                alert.addAction(UIAlertAction(title: locked ? "Unlock" : "Lock", style: UIAlertActionStyle.Destructive, handler: { (alertAction: UIAlertAction!) -> Void in
+                alert.addAction(UIAlertAction(title: locked ? "Unlock" : "Lock", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
                     thread.locked = !locked
                     thread.saveInBackgroundWithBlock({ (success, error) -> Void in
                         if success {
@@ -352,6 +352,52 @@ public class CustomThreadViewController: ThreadViewController {
                         }
                     })
                 }))
+                
+                let pinned = thread.pinType != nil
+                
+                // TODO: Refactor all this
+                if pinned {
+                    alert.addAction(UIAlertAction(title: "Unpin", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
+                        thread.pinType = nil
+                        thread.saveInBackgroundWithBlock({ (success, error) -> Void in
+                            var alertTitle = ""
+                            if success {
+                                alertTitle = "Unpinned!"
+                            } else {
+                                alertTitle = "Failed unpinning"
+                            }
+                            self.presentBasicAlertWithTitle(alertTitle)
+                        })
+                    }))
+                } else {
+                    alert.addAction(UIAlertAction(title: "Pin Global", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
+                        thread.pinType = "global"
+                        thread.saveInBackgroundWithBlock({ (success, error) -> Void in
+                            var alertTitle = ""
+                            if success {
+                                alertTitle = "Pinned Globally!"
+                            } else {
+                                alertTitle = "Failed pinning"
+                            }
+                            
+                            self.presentBasicAlertWithTitle(alertTitle)
+                        })
+                    }))
+                    alert.addAction(UIAlertAction(title: "Pin Tag", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction!) -> Void in
+                        thread.pinType = "tag"
+                        thread.saveInBackgroundWithBlock({ (success, error) -> Void in
+                            var alertTitle = ""
+                            if success {
+                                alertTitle = "Pinned on Tag!"
+                            } else {
+                                alertTitle = "Failed pinning"
+                            }
+                            
+                            self.presentBasicAlertWithTitle(alertTitle)
+                        })
+                    }))
+                }
+                
             }
             
             alert.addAction(UIAlertAction(title: "Delete", style: UIAlertActionStyle.Destructive, handler: { (alertAction: UIAlertAction!) -> Void in
