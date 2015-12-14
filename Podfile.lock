@@ -1,18 +1,18 @@
 PODS:
   - Alamofire (2.0.2)
   - CRToast (0.0.9)
-  - FLAnimatedImage (1.0.8)
+  - FLAnimatedImage (1.0.10)
   - FontAwesome+iOS (0.1.4)
   - HCSStarRatingView (1.4.3)
   - iRate (1.11.4)
-  - JTSImageViewController (1.4)
+  - JTSImageViewController (1.5.1)
   - RMStore (0.7.1):
     - RMStore/Core (= 0.7.1)
   - RMStore/Core (0.7.1)
-  - RSKImageCropper (1.2.1)
-  - SDWebImage (3.7.2):
-    - SDWebImage/Core (= 3.7.2)
-  - SDWebImage/Core (3.7.2)
+  - RSKImageCropper (1.4.1)
+  - SDWebImage (3.7.3):
+    - SDWebImage/Core (= 3.7.3)
+  - SDWebImage/Core (3.7.3)
   - Shimmer (1.0.2)
   - TTTAttributedLabel (1.13.4)
   - XCDYouTubeKit (2.4.1)
@@ -37,14 +37,14 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   Alamofire: 8edbab00802a752bb5240cc2abe70e7e881488ad
   CRToast: 5a78c22b921c5ed3487488af605bc403a9c92fed
-  FLAnimatedImage: f9422f796135aff80d8c00b2afc48015bb746e24
+  FLAnimatedImage: e16a1e1cef08e4c509b47e4acbe3923f65c16135
   FontAwesome+iOS: 9070b682a9255ca0fdc34bcfb129ad0ba2b73b87
   HCSStarRatingView: bada6ae98258c3019531e0218030e2d5ad10765a
   iRate: 599ed07c854e0695f3c605d1b2a64c67d912acb7
-  JTSImageViewController: 6a367b144e257db02cdfacdba78d684377d3777b
+  JTSImageViewController: 1f8ce1cc93dab0d0af8e53badeea7528560cfec9
   RMStore: 64ba13a9c040e3b7572765d169f77175cd3243e5
-  RSKImageCropper: e912419809d3a4eac47864d6fbc22f84c14879d5
-  SDWebImage: 71b7cdc1d1721d6a82ed62889030225f2c249e29
+  RSKImageCropper: 98ae426eb4eb11b733ff87f8e2542a480f4fa8e6
+  SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
   Shimmer: c5374be1c2b0c9e292fb05b339a513cf291cac86
   TTTAttributedLabel: 0a2ac7b2dd726d32a070dafb01446026b11e624f
   XCDYouTubeKit: 5a984314fc2b16418ccb954954afadc77b5e6f06

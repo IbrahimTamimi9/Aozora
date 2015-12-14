@@ -128,8 +128,13 @@ public class NewThreadViewController: CommentViewController {
     
     func validThread() -> Bool {
         let content = textView.text
-        if content.characters.count < 40 {
-            presentBasicAlertWithTitle("Content too Short", message: "Content should be a 40 characters or longer, now \(content.characters.count)")
+        
+        if User.muted(self) {
+            return false
+        }
+    
+        if content.characters.count < 20 {
+            presentBasicAlertWithTitle("Content too Short", message: "Content should be a 20 characters or longer, now \(content.characters.count)")
             return false
         }
         
@@ -143,6 +148,7 @@ public class NewThreadViewController: CommentViewController {
             presentBasicAlertWithTitle("Add a tag", message: "You need to add at least one tag")
             return false
         }
+        
         return true
     }
     
