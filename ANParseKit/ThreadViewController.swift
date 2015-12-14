@@ -417,7 +417,7 @@ extension ThreadViewController: UITableViewDataSource {
             cell.likeButton.setTitle(" ", forState: .Normal)
         }
         
-        if let likedBy = post.likedBy where likedBy.contains(User.currentUser()!) {
+        if let likedBy = post.likedBy, let currentUser = User.currentUser() where likedBy.contains(currentUser) {
             cell.likeButton.setImage(UIImage(named: "icon-like-red"), forState: .Normal)
         } else {
             cell.likeButton.setImage(UIImage(named: "icon-like-gray"), forState: .Normal)
