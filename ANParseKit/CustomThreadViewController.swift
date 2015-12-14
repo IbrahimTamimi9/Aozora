@@ -280,11 +280,9 @@ public class CustomThreadViewController: ThreadViewController {
                 parentPost.replies.append(post)
                 tableView.reloadData()
             } else if parentPost == nil {
-                // Inserting a new post in the bottom, if we're in the bottom of the thread
-                if !fetchController.canFetchMoreData {
-                    fetchController.dataSource.insert(post, atIndex: 0)
-                    tableView.reloadData()
-                }
+                // Inserting a new post in the top
+                fetchController.dataSource.insert(post, atIndex: 0)
+                tableView.reloadData()
             }
         } else if let thread = post as? Thread {
             updateUIWithThread(thread)
