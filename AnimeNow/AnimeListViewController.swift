@@ -111,8 +111,6 @@ class AnimeListViewController: UIViewController {
         
         currentLayout = layout
         
-        var size: CGSize?
-        
         guard let collectionView = collectionView,
             let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
                 return
@@ -120,24 +118,19 @@ class AnimeListViewController: UIViewController {
         
         switch currentLayout {
         case .CheckIn:
-            size = CGSize(width: view.bounds.size.width, height: 132)
-            layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-            layout.minimumLineSpacing = 1
-            layout.minimumInteritemSpacing = 1
+            AnimeCell.updateLayoutItemSizeWithLayout(layout, viewSize: viewSize)
         case .Compact:
             let margin: CGFloat = 4
-            let columns: CGFloat = 5
-            let totalWidth: CGFloat = view.bounds.size.width - (margin * (columns + 1))
+            let columns: CGFloat = UIDevice.isPad() ? (UIDevice.isLandscape() ? 14 : 10) : 5
+            let totalWidth: CGFloat = viewSize.width - (margin * (columns + 1))
             let width = totalWidth / columns
-            size = CGSize(width: width, height: width/83*116)
             
             layout.sectionInset = UIEdgeInsets(top: margin, left: margin, bottom: margin, right: margin)
             layout.minimumLineSpacing = margin
             layout.minimumInteritemSpacing = margin
+            layout.itemSize = CGSize(width: width, height: width/83*116)
         }
-        
-        layout.itemSize = size!
-        
+
         collectionView.collectionViewLayout.invalidateLayout()
         collectionView.reloadData()
     }
@@ -208,12 +201,10 @@ extension AnimeListViewController: UICollectionViewDataSource {
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        var identifier: String?
+        
         switch currentLayout {
-            
         case .CheckIn:
-            identifier = "CheckIn"
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier(identifier!, forIndexPath: indexPath) as! LibraryAnimeCell
+            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CheckIn", forIndexPath: indexPath) as! LibraryAnimeCell
             
             let anime = animeList[indexPath.row]
             cell.delegate = self
@@ -222,8 +213,7 @@ extension AnimeListViewController: UICollectionViewDataSource {
             return cell
         
         case .Compact:
-            identifier = "Compact"
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier(identifier!, forIndexPath: indexPath) as! BasicCollectionCell
+            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Compact", forIndexPath: indexPath) as! BasicCollectionCell
             
             let anime = animeList[indexPath.row]
             cell.titleimageView.setImageFrom(urlString: anime.imageUrl, animated: false)
