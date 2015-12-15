@@ -452,7 +452,33 @@
                     <view key="view" contentMode="scaleToFill" id="LZe-fS-IRb">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="esE-Vu-pAI">
+                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                                <items>
+                                    <barButtonItem systemItem="pageCurl" id="NN4-kX-BKi"/>
+                                    <barButtonItem image="arrow-back" id="v4F-hh-ntO">
+                                        <connections>
+                                            <action selector="navigateBack:" destination="Gat-uZ-AaC" id="laU-QI-7y4"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem width="31" style="plain" systemItem="fixedSpace" id="gT2-KQ-Lgz"/>
+                                    <barButtonItem image="arrow-forward" id="kYY-ya-dkI">
+                                        <connections>
+                                            <action selector="navigateForward:" destination="Gat-uZ-AaC" id="fIz-LZ-7y5"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="438-c0-ieV"/>
+                                    <barButtonItem image="icon-safari" id="Gyg-Gt-8T3"/>
+                                </items>
+                            </toolbar>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="esE-Vu-pAI" firstAttribute="leading" secondItem="LZe-fS-IRb" secondAttribute="leading" id="NPC-Hh-hTX"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="esE-Vu-pAI" secondAttribute="bottom" id="Pum-rz-HiB"/>
+                            <constraint firstAttribute="trailing" secondItem="esE-Vu-pAI" secondAttribute="trailing" id="i80-Ff-bd4"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="7cn-y0-RX9">
                         <barButtonItem key="leftBarButtonItem" title="Cancel" id="0B7-be-oep">
@@ -850,8 +876,11 @@
         </scene>
     </scenes>
     <resources>
+        <image name="arrow-back" width="22" height="22"/>
+        <image name="arrow-forward" width="22" height="22"/>
         <image name="icon-close-blue" width="23" height="23"/>
         <image name="icon-photo-gray" width="22" height="22"/>
+        <image name="icon-safari" width="22" height="22"/>
         <image name="icon-video-gray" width="22" height="22"/>
     </resources>
 </document>

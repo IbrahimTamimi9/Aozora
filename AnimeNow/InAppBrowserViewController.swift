@@ -32,10 +32,10 @@ public class InAppBrowserViewController: UIViewController {
         super.viewDidLoad()
         var frame = view.bounds
         frame.origin.y = 0
-        frame.size.height = frame.size.height
+        frame.size.height = frame.size.height - 44
         webView = WKWebView(frame: frame)
         webView.navigationDelegate = self
-        view.addSubview(webView)
+        view.insertSubview(webView, atIndex: 0)
         
         navigationController?.navigationBar.barTintColor = UIColor.darkBlue()
         navigationController?.navigationBar.tintColor = UIColor.whiteColor()
@@ -65,6 +65,18 @@ public class InAppBrowserViewController: UIViewController {
     @IBAction func openInSafari(sender: AnyObject) {
         if let url = initialUrl {
             UIApplication.sharedApplication().openURL(url)
+        }
+    }
+    
+    @IBAction func navigateBack(sender: AnyObject) {
+        if webView.canGoBack {
+            webView.goBack()
+        }
+    }
+    
+    @IBAction func navigateForward(sender: AnyObject) {
+        if webView.canGoForward {
+            webView.goForward()
         }
     }
     

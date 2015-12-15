@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -32,14 +33,39 @@
                     <view key="view" contentMode="scaleToFill" id="SwB-wQ-k19">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gdX-ma-ar5">
+                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                                <items>
+                                    <barButtonItem systemItem="pageCurl" id="ReM-vg-qsM"/>
+                                    <barButtonItem image="arrow-back" id="SUo-bH-JIS">
+                                        <connections>
+                                            <action selector="navigateBack:" destination="Nc5-67-Let" id="rCO-Ku-7Ar"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem width="31" style="plain" systemItem="fixedSpace" id="N0C-Eu-LPk"/>
+                                    <barButtonItem image="arrow-forward" id="Kul-ec-Sy0">
+                                        <connections>
+                                            <action selector="navigateForward:" destination="Nc5-67-Let" id="Rqe-D6-E8F"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="RTB-ho-x1p"/>
+                                    <barButtonItem image="icon-safari" id="TaG-F5-9dP">
+                                        <connections>
+                                            <action selector="openInSafari:" destination="Nc5-67-Let" id="QPO-Ic-iCv"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="bottomMargin" secondItem="gdX-ma-ar5" secondAttribute="bottom" id="dN6-PQ-R2V"/>
+                            <constraint firstAttribute="trailing" secondItem="gdX-ma-ar5" secondAttribute="trailing" id="iMA-mB-l7D"/>
+                            <constraint firstItem="gdX-ma-ar5" firstAttribute="leading" secondItem="SwB-wQ-k19" secondAttribute="leading" id="owX-cd-rFW"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="IjM-8O-GYv">
-                        <barButtonItem key="leftBarButtonItem" image="icon-safari" id="TaG-F5-9dP">
-                            <connections>
-                                <action selector="openInSafari:" destination="Nc5-67-Let" id="QPO-Ic-iCv"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Done" id="ekH-uF-j4I">
                             <connections>
                                 <action selector="dismissModal" destination="Nc5-67-Let" id="jFS-Lv-LnX"/>
@@ -53,6 +79,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="arrow-back" width="22" height="22"/>
+        <image name="arrow-forward" width="22" height="22"/>
         <image name="icon-safari" width="22" height="22"/>
     </resources>
 </document>
