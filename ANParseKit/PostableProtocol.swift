@@ -26,6 +26,7 @@ public protocol Postable {
     
     var parentPost: PFObject? { get }
     var images: [ImageData] { get set }
+    var link: LinkData? { get set }
     
     var replies: [PFObject] { get set }
     

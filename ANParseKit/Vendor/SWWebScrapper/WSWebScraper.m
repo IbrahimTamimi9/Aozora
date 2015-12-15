@@ -77,7 +77,7 @@
         
         if(self.catchFlag && self.webView.estimatedProgress > 0.9) {
             self.catchFlag = NO;
-            [self.webView evaluateJavaScript:@"document.body.innerHTML" completionHandler:^(NSString *body, NSError *error) {
+            [self.webView evaluateJavaScript:@"document.documentElement.innerHTML" completionHandler:^(NSString *body, NSError *error) {
                 
                 NSString *newHTML = [[[body stringByReplacingOccurrencesOfString:@"\n" withString:@""] stringByReplacingOccurrencesOfString:@"  " withString:@""] stringByReplacingOccurrencesOfString:@"\t" withString:@""];
                 newHTML = [newHTML stringByReplacingOccurrencesOfString:@"> <" withString:@"><"];

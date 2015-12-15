@@ -24,7 +24,7 @@ public class ImagesViewController: UIViewController {
     
     weak var delegate: ImagesViewControllerDelegate?
     var dataSource: [ImageData] = []
-    var malScrapper: MALScrapper!
+    var imageScrapper: ImageScrapper!
     var loadingView: LoaderView!
 
     var imageDatasource: [String: FLAnimatedImage] = [:]
@@ -32,7 +32,7 @@ public class ImagesViewController: UIViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         loadingView = LoaderView(parentView: view)
-        malScrapper = MALScrapper(viewController: self)
+        imageScrapper = ImageScrapper(viewController: self)
         
         let searchBarTextField = searchBar.valueForKey("searchField") as? UITextField
         searchBarTextField?.textColor = UIColor.blackColor()
@@ -62,7 +62,7 @@ public class ImagesViewController: UIViewController {
         collectionView.reloadData()
         loadingView.startAnimating()
         
-        malScrapper.findImagesWithQuery(query, animated: animated).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
+        imageScrapper.findImagesWithQuery(query, animated: animated).continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task: BFTask!) -> AnyObject! in
             
             let result = task.result as! [ImageData]
             self.dataSource = result

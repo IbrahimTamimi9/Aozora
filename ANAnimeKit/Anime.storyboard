@@ -428,7 +428,7 @@
                                             <outlet property="titleLabel" destination="b8m-DJ-Cam" id="ISG-FD-qSM"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="LinkCell" rowHeight="44" id="dOU-XM-jZJ" customClass="LinkCell" customModule="Aozora" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="LinkCell" rowHeight="44" id="dOU-XM-jZJ" customClass="SimpleLinkCell" customModule="Aozora" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="547.5" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dOU-XM-jZJ" id="EDI-hv-pna">

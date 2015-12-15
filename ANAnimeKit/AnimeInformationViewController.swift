@@ -558,7 +558,7 @@ extension AnimeInformationViewController: UITableViewDataSource {
             return cell
         
         case .ExternalLinks:
-            let cell = tableView.dequeueReusableCellWithIdentifier("LinkCell") as! LinkCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("SimpleLinkCell") as! SimpleLinkCell
             
             let link = anime.linkAtIndex(indexPath.row)
             cell.linkLabel.text = link.site.rawValue

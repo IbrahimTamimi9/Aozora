@@ -45,6 +45,7 @@ public class ThreadViewController: UIViewController {
         tableView.rowHeight = UITableViewAutomaticDimension
         
         CommentCell.registerNibFor(tableView: tableView)
+        LinkCell.registerNibFor(tableView: tableView)
         WriteACommentCell.registerNibFor(tableView: tableView)
         ShowMoreCell.registerNibFor(tableView: tableView)
         

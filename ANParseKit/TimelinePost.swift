@@ -187,5 +187,22 @@ public class TimelinePost: PFObject, PFSubclassing, TimelinePostable {
         }
     }
     
-    
+    var linkInternal: LinkData?
+    public var link: LinkData? {
+        get {
+            if linkInternal == nil {
+                linkInternal = LinkData()
+                if let link = self["link"] as? [String: AnyObject] {
+                    LinkData.mapDataWithDictionary(link)
+                }
+            }
+            return linkInternal
+        }
+        set(value) {
+            linkInternal = value
+            if let value = value {
+                self["link"] = value.toDictionary()
+            }
+        }
+    }
 }

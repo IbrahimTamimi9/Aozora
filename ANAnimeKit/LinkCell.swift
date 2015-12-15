@@ -8,8 +8,9 @@
 
 import UIKit
 
-class LinkCell: UITableViewCell {
+class SimpleLinkCell: UITableViewCell {
 
     @IBOutlet weak var linkLabel: UILabel!
+    @IBOutlet weak var titleLabel: UILabel!
 
 }

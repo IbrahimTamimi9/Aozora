@@ -83,7 +83,7 @@
 		DA6E12E41B10D96F00B278B0 /* UIViewController+WebScraper.m in Sources */ = {isa = PBXBuildFile; fileRef = DA6E12D91B10D96F00B278B0 /* UIViewController+WebScraper.m */; };
 		DA6E12E51B10D96F00B278B0 /* WSWebScraper.h in Headers */ = {isa = PBXBuildFile; fileRef = DA6E12DA1B10D96F00B278B0 /* WSWebScraper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA6E12E61B10D96F00B278B0 /* WSWebScraper.m in Sources */ = {isa = PBXBuildFile; fileRef = DA6E12DB1B10D96F00B278B0 /* WSWebScraper.m */; };
-		DA6E13111B10F2E500B278B0 /* MALScrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6E13101B10F2E500B278B0 /* MALScrapper.swift */; };
+		DA6E13111B10F2E500B278B0 /* ImageScrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6E13101B10F2E500B278B0 /* ImageScrapper.swift */; };
 		DA6E13131B10F56B00B278B0 /* SeasonalChartService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6E13121B10F56B00B278B0 /* SeasonalChartService.swift */; };
 		DA6E131E1B10F9E900B278B0 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E12E91B10DA2F00B278B0 /* libxml2.dylib */; };
 		DA6E131F1B10F9EE00B278B0 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E12E71B10DA2700B278B0 /* libz.dylib */; };
@@ -96,10 +96,14 @@
 		DA6E13271B10FA8900B278B0 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E12F31B10DCC600B278B0 /* CoreGraphics.framework */; };
 		DA6E13281B10FA8E00B278B0 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E12F11B10DCC100B278B0 /* CFNetwork.framework */; };
 		DA6E13291B10FA9400B278B0 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA6E12EF1B10DCBC00B278B0 /* AudioToolbox.framework */; };
+		DA6F15F21C20129F00EE4C4B /* LinkCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA6F15F11C20129F00EE4C4B /* LinkCell.xib */; };
+		DA6F15F41C20131700EE4C4B /* LinkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6F15F31C20131700EE4C4B /* LinkCell.swift */; };
 		DA6FB2641C1D3B3E000A7A6B /* UIDevice+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6FB2631C1D3B3E000A7A6B /* UIDevice+Utils.swift */; };
 		DA75C8981BB1A6EF00C27A68 /* AnimeProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA75C8971BB1A6EF00C27A68 /* AnimeProgress.swift */; };
 		DA75C89A1BB1A76F00C27A68 /* LibrarySyncController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA75C8991BB1A76F00C27A68 /* LibrarySyncController.swift */; };
 		DA7C84CA1B4379AD0036D119 /* UIViewController+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC13BFD1B3F36AB0013D479 /* UIViewController+Image.swift */; };
+		DA7EDDC91C1FED4E0097D818 /* String+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7EDDC81C1FED4E0097D818 /* String+Utils.swift */; };
+		DA7EDDCB1C1FEDCA0097D818 /* LinkScrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7EDDCA1C1FEDCA0097D818 /* LinkScrapper.swift */; };
 		DA7F45881B8F06C5006F9321 /* UIViewController+Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7C84C81B4379AA0036D119 /* UIViewController+Navigation.swift */; };
 		DA823D8C1B326940005C7AFD /* InAppBrowser.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA823D8A1B326940005C7AFD /* InAppBrowser.storyboard */; };
 		DA823D8D1B326940005C7AFD /* InAppBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA823D8B1B326940005C7AFD /* InAppBrowserViewController.swift */; };
@@ -135,7 +139,6 @@
 		DAA546ED1BA1A0FE003989DE /* CustomThreadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA03F1491B897E4300402AC4 /* CustomThreadViewController.swift */; };
 		DAA546EE1BA1A102003989DE /* AnimeInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4167D11B273B7100847F56 /* AnimeInformationViewController.swift */; };
 		DAA546EF1BA1A102003989DE /* CharactersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA253B51B2B877C0092EB0B /* CharactersViewController.swift */; };
-		DAA546F01BA1A102003989DE /* DiscussionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC027C91B2A15C20085C91A /* DiscussionViewController.swift */; };
 		DAA546F11BA1A106003989DE /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4167D51B273FA300847F56 /* CustomTabBar.swift */; };
 		DAA546F21BA1A106003989DE /* AnimeBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA253B71B2B8AF50092EB0B /* AnimeBaseViewController.swift */; };
 		DAA546F31BA1A106003989DE /* ReminderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACD6AB71B6315AA00DDA55C /* ReminderController.swift */; };
@@ -419,11 +422,13 @@
 		DA6E13011B10DCEE00B278B0 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		DA6E13031B10DDB500B278B0 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		DA6E13051B10DDB900B278B0 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
-		DA6E13101B10F2E500B278B0 /* MALScrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MALScrapper.swift; sourceTree = "<group>"; };
+		DA6E13101B10F2E500B278B0 /* ImageScrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageScrapper.swift; sourceTree = "<group>"; };
 		DA6E13121B10F56B00B278B0 /* SeasonalChartService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeasonalChartService.swift; sourceTree = "<group>"; };
 		DA6E131C1B10F9C800B278B0 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		DA6E83B11B1672A500970D27 /* TraktV1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TraktV1.swift; sourceTree = "<group>"; };
 		DA6E83B31B167F1E00970D27 /* TraktV2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TraktV2.swift; sourceTree = "<group>"; };
+		DA6F15F11C20129F00EE4C4B /* LinkCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LinkCell.xib; sourceTree = "<group>"; };
+		DA6F15F31C20131700EE4C4B /* LinkCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkCell.swift; sourceTree = "<group>"; };
 		DA6FB2631C1D3B3E000A7A6B /* UIDevice+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+Utils.swift"; sourceTree = "<group>"; };
 		DA75C8971BB1A6EF00C27A68 /* AnimeProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeProgress.swift; sourceTree = "<group>"; };
 		DA75C8991BB1A76F00C27A68 /* LibrarySyncController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibrarySyncController.swift; sourceTree = "<group>"; };
@@ -431,6 +436,8 @@
 		DA76A1991B2375E1006CB489 /* SeasonalChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeasonalChart.swift; sourceTree = "<group>"; };
 		DA76A19C1B23AADF006CB489 /* BasicCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicCollectionReusableView.swift; sourceTree = "<group>"; };
 		DA7C84C81B4379AA0036D119 /* UIViewController+Navigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIViewController+Navigation.swift"; path = "../AnimeNow/UIViewController+Navigation.swift"; sourceTree = "<group>"; };
+		DA7EDDC81C1FED4E0097D818 /* String+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Utils.swift"; sourceTree = "<group>"; };
+		DA7EDDCA1C1FEDCA0097D818 /* LinkScrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkScrapper.swift; sourceTree = "<group>"; };
 		DA7F45861B8F069C006F9321 /* UIViewController+Navigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIViewController+Navigation.swift"; path = "../ANAnimeKit/UIViewController+Navigation.swift"; sourceTree = "<group>"; };
 		DA823D8A1B326940005C7AFD /* InAppBrowser.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = InAppBrowser.storyboard; path = ../AnimeNow/InAppBrowser.storyboard; sourceTree = "<group>"; };
 		DA823D8B1B326940005C7AFD /* InAppBrowserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InAppBrowserViewController.swift; path = ../AnimeNow/InAppBrowserViewController.swift; sourceTree = "<group>"; };
@@ -454,7 +461,6 @@
 		DAAD79921B30D087009D70ED /* ForumViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ForumViewController.swift; path = ../ANAnimeKit/ForumViewController.swift; sourceTree = "<group>"; };
 		DAAD79941B30D918009D70ED /* TopicCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicCell.swift; sourceTree = "<group>"; };
 		DAB83FC61B52FE200006AF96 /* ChartController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartController.swift; sourceTree = "<group>"; };
-		DAC027C91B2A15C20085C91A /* DiscussionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiscussionViewController.swift; path = ../ANAnimeKit/DiscussionViewController.swift; sourceTree = "<group>"; };
 		DAC027CB1B2A16B80085C91A /* AnimeReview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeReview.swift; sourceTree = "<group>"; };
 		DAC077961B68670C0067DA90 /* UIImage+Resize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIImage+Resize.swift"; path = "../AnimeNow/UIImage+Resize.swift"; sourceTree = "<group>"; };
 		DAC077981B68698F0067DA90 /* default-avatar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "default-avatar@2x.png"; sourceTree = "<group>"; };
@@ -847,12 +853,13 @@
 			name = Browse;
 			sourceTree = "<group>";
 		};
-		DA5A3BED1B346F2100C07D71 /* MALScrapper */ = {
+		DA5A3BED1B346F2100C07D71 /* Scrappers */ = {
 			isa = PBXGroup;
 			children = (
-				DA6E13101B10F2E500B278B0 /* MALScrapper.swift */,
+				DA6E13101B10F2E500B278B0 /* ImageScrapper.swift */,
+				DA7EDDCA1C1FEDCA0097D818 /* LinkScrapper.swift */,
 			);
-			name = MALScrapper;
+			name = Scrappers;
 			sourceTree = "<group>";
 		};
 		DA5A3BF21B35EB4000C07D71 /* Login */ = {
@@ -874,7 +881,7 @@
 				DAE43C301B2BC16F00C3092D /* Extensions */,
 				DACE77C51B29518300037486 /* Models */,
 				DA0347251B4ADD8D0025CE24 /* Controllers */,
-				DA5A3BED1B346F2100C07D71 /* MALScrapper */,
+				DA5A3BED1B346F2100C07D71 /* Scrappers */,
 				DA5A3BF21B35EB4000C07D71 /* Login */,
 				DAD67DFE1B72759F000BB325 /* Comment */,
 				DAF6186E1B377BBF00286517 /* Services */,
@@ -990,7 +997,6 @@
 				DA4167D31B273B9400847F56 /* Anime.storyboard */,
 				DA4167D11B273B7100847F56 /* AnimeInformationViewController.swift */,
 				DAA253B51B2B877C0092EB0B /* CharactersViewController.swift */,
-				DAC027C91B2A15C20085C91A /* DiscussionViewController.swift */,
 				DACD6AB61B63157C00DDA55C /* Controllers */,
 				DA4167DD1B275CA700847F56 /* Views */,
 				DAF6189C1B378C2A00286517 /* DismissableTabBar */,
@@ -1024,6 +1030,8 @@
 				DAC077A61B6890830067DA90 /* CommentCell.swift */,
 				DAD390A51B6C322A000A84DE /* WriteACommentCell.swift */,
 				DA472DF91BD409EF00E09AB0 /* ShowMoreCell.swift */,
+				DA6F15F11C20129F00EE4C4B /* LinkCell.xib */,
+				DA6F15F31C20131700EE4C4B /* LinkCell.swift */,
 			);
 			name = Posts;
 			sourceTree = "<group>";
@@ -1141,6 +1149,7 @@
 				DA8B6E061B6C4DBF00D240FC /* UIImageView+PFFile.swift */,
 				DA03F15B1B8B818E00402AC4 /* TTTAttributedLabel+Tags.swift */,
 				DA54E30A1BE9487800FE0AE9 /* PFQuery+Query.swift */,
+				DA7EDDC81C1FED4E0097D818 /* String+Utils.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -1552,6 +1561,7 @@
 				DAD390A21B6C303D000A84DE /* CommentTextCell.xib in Resources */,
 				DAD3909E1B6C2F35000A84DE /* PostImageCell.xib in Resources */,
 				DA897F8B1B6D203D00A9510C /* CommentImageCell.xib in Resources */,
+				DA6F15F21C20129F00EE4C4B /* LinkCell.xib in Resources */,
 				DAC077B31B6891140067DA90 /* PostTextCell.xib in Resources */,
 				DA472DFC1BD409EF00E09AB0 /* ShowMoreCell.xib in Resources */,
 				DA897F891B6D1FCC00A9510C /* WriteACommentCell.xib in Resources */,
@@ -1731,7 +1741,6 @@
 				DAA546ED1BA1A0FE003989DE /* CustomThreadViewController.swift in Sources */,
 				DA58C2E71B39C01B0082B626 /* BrowseViewController.swift in Sources */,
 				DAB83FC71B52FE200006AF96 /* ChartController.swift in Sources */,
-				DAA546F01BA1A102003989DE /* DiscussionViewController.swift in Sources */,
 				DAA546F91BA1AC48003989DE /* ProfileViewController.swift in Sources */,
 				DA4595651B83C3500044013E /* ResetPasswordViewController.swift in Sources */,
 				DAA546F21BA1A106003989DE /* AnimeBaseViewController.swift in Sources */,
@@ -1767,6 +1776,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DAFD60BD1B27845F007275C1 /* BasicCollectionReusableView.swift in Sources */,
+				DA6F15F41C20131700EE4C4B /* LinkCell.swift in Sources */,
 				DA2D1EF01B531B0C009A5CCD /* NSUserDefaults+Dates.swift in Sources */,
 				DAA546D61BA090C0003989DE /* UIApplication+Navigation.swift in Sources */,
 				DAFD60B61B278452007275C1 /* DropDownListViewController.swift in Sources */,
@@ -1821,6 +1831,7 @@
 				DAE43C321B2BC1A900C3092D /* TFHppleElement+Convenience.swift in Sources */,
 				DA4594101B819A960044013E /* LoginViewController.swift in Sources */,
 				DA13806A1B6DBB4100C53560 /* Thread.swift in Sources */,
+				DA7EDDC91C1FED4E0097D818 /* String+Utils.swift in Sources */,
 				DAFE19B21B29F4EC002F3A76 /* Anime.swift in Sources */,
 				DA1340AB1B9E11A10073C6EF /* Notification.swift in Sources */,
 				DA6E12E01B10D96F00B278B0 /* TFHppleElement.m in Sources */,
@@ -1832,6 +1843,7 @@
 				DA03F15A1B8B47FA00402AC4 /* ThreadTag.swift in Sources */,
 				DAFE19AE1B29E4CD002F3A76 /* AnimeCharacter.swift in Sources */,
 				DA58C2ED1B3B111A0082B626 /* Episode.swift in Sources */,
+				DA7EDDCB1C1FEDCA0097D818 /* LinkScrapper.swift in Sources */,
 				DAFE19B01B29F264002F3A76 /* AnimeCast.swift in Sources */,
 				DACCF35F1B111016006A13EB /* AnimeService.swift in Sources */,
 				DA6E12E61B10D96F00B278B0 /* WSWebScraper.m in Sources */,
@@ -1857,7 +1869,7 @@
 				DAFED2531BA717DE009697E4 /* InAppController.swift in Sources */,
 				DA54E30B1BE9487800FE0AE9 /* PFQuery+Query.swift in Sources */,
 				DA75C89A1BB1A76F00C27A68 /* LibrarySyncController.swift in Sources */,
-				DA6E13111B10F2E500B278B0 /* MALScrapper.swift in Sources */,
+				DA6E13111B10F2E500B278B0 /* ImageScrapper.swift in Sources */,
 				DA03F15C1B8B818E00402AC4 /* TTTAttributedLabel+Tags.swift in Sources */,
 				DA6E12DE1B10D96F00B278B0 /* TFHpple.m in Sources */,
 			);
