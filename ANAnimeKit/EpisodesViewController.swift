@@ -76,16 +76,16 @@ class EpisodesViewController: AnimeBaseViewController {
             inset = 4
             lineSpacing = 4
             let columns: CGFloat = UIDevice.isLandscape() ? 3 : 2
-            let fixUp: CGFloat = UIDevice.isLandscape() ? 0 : 2
-            size = CGSize(width: viewSize.width / columns - ((columns - 1) * lineSpacing) - fixUp, height: height)
+            let totalWidth: CGFloat = viewSize.width - (inset * (columns + 1))
+            size = CGSize(width: totalWidth / columns, height: height)
         } else {
             inset = 10
             lineSpacing = 10
             size = CGSize(width: viewSize.width - inset * 2, height: height)
         }
         layout.sectionInset = UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
-        layout.minimumLineSpacing = CGFloat(lineSpacing)
-        layout.minimumInteritemSpacing = CGFloat(lineSpacing)
+        layout.minimumLineSpacing = lineSpacing
+        layout.minimumInteritemSpacing = lineSpacing
         
         layout.itemSize = size!
         layout.invalidateLayout()

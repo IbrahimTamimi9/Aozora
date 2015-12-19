@@ -30,6 +30,16 @@ public class ThreadViewController: UIViewController {
     var animator: ZFModalTransitionAnimator!
     var playerController: XCDYouTubeVideoPlayerViewController?
     
+    var baseWidth: CGFloat {
+        get {
+            if UIDevice.isPad() {
+                return 600
+            } else {
+                return view.bounds.size.width
+            }
+        }
+    }
+    
     public func initWithThread(thread: Thread) {
         self.thread = thread
         self.threadType = .Custom
@@ -221,7 +231,7 @@ extension ThreadViewController: UITableViewDataSource {
             updatePostCell(cell, with: post)
             if let episode = post.episode {
                 cell.imageContent?.setImageFrom(urlString: episode.imageURLString(), animated: false)
-                cell.imageHeightConstraint?.constant = (view.bounds.size.width-59.0) * CGFloat(180)/CGFloat(340)
+                cell.imageHeightConstraint?.constant = baseWidth * CGFloat(180)/CGFloat(340)
             }
             
             if let linkCell = cell as? LinkCell, let linkData = post.link, let linkUrl = linkData.url {
@@ -231,7 +241,7 @@ extension ThreadViewController: UITableViewDataSource {
                 linkCell.linkUrlLabel.text = NSURL(string: linkUrl)?.host?.uppercaseString
                 if let imageURL = linkData.imageUrls.first {
                     linkCell.imageContent?.setImageFrom(urlString: imageURL, animated: false)
-                    linkCell.imageHeightConstraint?.constant = (view.bounds.size.width-16) * CGFloat(158)/CGFloat(305)
+                    linkCell.imageHeightConstraint?.constant = (baseWidth - 16) * CGFloat(158)/CGFloat(305)
                 } else {
                     linkCell.imageContent?.image = nil
                     linkCell.imageHeightConstraint?.constant = 0
@@ -391,7 +401,7 @@ extension ThreadViewController: UITableViewDataSource {
     
     public func setImages(images: [ImageData], imageView: UIImageView?, imageHeightConstraint: NSLayoutConstraint?) {
         if let image = images.first {
-            imageHeightConstraint?.constant = (view.bounds.size.width-59.0) * CGFloat(image.height)/CGFloat(image.width)
+            imageHeightConstraint?.constant = baseWidth * CGFloat(image.height)/CGFloat(image.width)
             imageView?.setImageFrom(urlString: image.url, animated: false)
         } else {
             imageHeightConstraint?.constant = 0
@@ -406,12 +416,14 @@ extension ThreadViewController: UITableViewDataSource {
         }
     }
     
+    
+    
     public func prepareForVideo(playButton: UIButton?, imageView: UIImageView?, imageHeightConstraint: NSLayoutConstraint?, youtubeID: String?) {
         if let playButton = playButton {
             if let youtubeID = youtubeID {
                 let urlString = "https://i.ytimg.com/vi/\(youtubeID)/maxresdefault.jpg"
                 imageView?.setImageFrom(urlString: urlString, animated: false)
-                imageHeightConstraint?.constant = (view.bounds.size.width-59.0) * CGFloat(180)/CGFloat(340)
+                imageHeightConstraint?.constant = baseWidth * CGFloat(180)/CGFloat(340)
                 
                 playButton.hidden = false
                 playButton.layer.borderWidth = 1.0;

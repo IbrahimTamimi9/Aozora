@@ -43,7 +43,8 @@ public class ImagesViewController: UIViewController {
             let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
                 return
         }
-        let size = CGSize(width: view.bounds.size.width/2-3, height: 120)
+        let height: CGFloat = UIDevice.isPad() ? 260 : 120
+        let size = CGSize(width: view.bounds.size.width/2-3, height: height)
         layout.itemSize = size
     }
     

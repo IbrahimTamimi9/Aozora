@@ -27,7 +27,12 @@ public class InAppBrowserViewController: UIViewController {
     
     public func initWithInitialUrl(initialUrl: NSURL?, overrideTitle: String? = nil) {
         self.initialUrl = initialUrl
-        self.title = "Loading..."
+        if let overrideTitle = overrideTitle {
+            self.overrideTitle = overrideTitle
+            self.title = overrideTitle
+        } else {
+            self.title = "Loading..."
+        }
     }
 
     override public func viewDidLoad() {
@@ -65,6 +70,10 @@ public class InAppBrowserViewController: UIViewController {
     
     public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         guard let change = change else {
+            return
+        }
+        
+        if overrideTitle != nil {
             return
         }
         

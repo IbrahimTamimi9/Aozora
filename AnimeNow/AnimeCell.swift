@@ -191,18 +191,24 @@ class AnimeCell: UICollectionViewCell {
 // MARK: - Layout
 extension AnimeCell {
     class func updateLayoutItemSizeWithLayout(layout: UICollectionViewFlowLayout, viewSize: CGSize) {
-        let lineSpacing: CGFloat = 1
+        let margin: CGFloat = 4
         let columns: CGFloat = UIDevice.isLandscape() ? 3 : 2
         let cellHeight: CGFloat = 132
         var cellWidth: CGFloat = 0
         
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        layout.minimumLineSpacing = CGFloat(lineSpacing)
+        layout.sectionInset = UIEdgeInsets(top: margin, left: margin, bottom: margin, right: margin)
+        layout.minimumLineSpacing = margin
+        
         
         if UIDevice.isPad() {
-            cellWidth = viewSize.width / columns - columns * lineSpacing
+            let totalWidth: CGFloat = viewSize.width - (margin * (columns + 1))
+            cellWidth = totalWidth / columns
+            layout.minimumInteritemSpacing = margin
+            layout.minimumLineSpacing = margin
         } else {
             cellWidth = viewSize.width
+            layout.minimumInteritemSpacing = 1
+            layout.minimumLineSpacing = 1
         }
         
         layout.itemSize = CGSize(width: cellWidth, height: cellHeight)
