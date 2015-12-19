@@ -58,11 +58,12 @@ public class NewPostViewController: CommentViewController {
             if let youtubeID = (editingPost as! Postable).youtubeID {
                 selectedVideoID = youtubeID
                 videoCountLabel.hidden = false
-                photoCountLabel.hidden = true
             } else if let imageData = (editingPost as! Postable).images.last{
                 selectedImageData = imageData
-                videoCountLabel.hidden = true
                 photoCountLabel.hidden = false
+            } else if let linkData = (editingPost as! Postable).link {
+                selectedLinkData = linkData
+                linkCountLabel.hidden = false
             }
             
             if let parentPost = parentPost as? TimelinePostable {
@@ -87,33 +88,20 @@ public class NewPostViewController: CommentViewController {
             return
         }
         
+        if fetchingData {
+            presentBasicAlertWithTitle("Fetching link data...", message: nil)
+            return
+        }
+        
         self.sendButton.setTitle("Sending...", forState: .Normal)
         self.sendButton.backgroundColor = UIColor.watching()
         self.sendButton.userInteractionEnabled = false
         
         switch threadType {
         case .Timeline:
-            let timelinePost = TimelinePost()
-            
-            if hasSpoilers {
-                timelinePost.content = spoilerTextView.text
-                timelinePost.nonSpoilerContent = textView.text
-            } else {
-                timelinePost.content = textView.text
-                timelinePost.nonSpoilerContent = nil
-            }
-            
-            timelinePost.edited = false
-            timelinePost.hasSpoilers = hasSpoilers
-            timelinePost.postedBy = postedBy
-            if let selectedImageData = selectedImageData {
-                timelinePost.images = [selectedImageData]
-            }
-            
-            if let youtubeID = selectedVideoID {
-                timelinePost.youtubeID = youtubeID
-            }
-            
+            var timelinePost = TimelinePost()
+            timelinePost = updatePostable(timelinePost, edited: false) as! TimelinePost
+
             var parentSaveTask = BFTask(result: nil)
             
             if let parentPost = parentPost as? TimelinePost {
@@ -162,27 +150,12 @@ public class NewPostViewController: CommentViewController {
             })
             
         default:
-            let post = Post()
-            if hasSpoilers {
-                post.content = spoilerTextView.text
-                post.nonSpoilerContent = textView.text
-            } else {
-                post.content = textView.text
-                post.nonSpoilerContent = nil
-            }
-            post.edited = false
-            post.hasSpoilers = hasSpoilers
-            post.postedBy = postedBy
-            if let selectedImageData = selectedImageData {
-                post.images = [selectedImageData]
-            }
-            
-            if let youtubeID = selectedVideoID {
-                post.youtubeID = youtubeID
-            }
+            var post = Post()
+            post = updatePostable(post, edited: false) as! Post
             
             // Add subscribers to parent post or current post if there is no parent
             var parentSaveTask = BFTask(result: nil)
+            
             if let parentPost = parentPost as? Post {
                 parentPost.addUniqueObject(postedBy!, forKey: "subscribers")
                 parentSaveTask = parentPost.saveInBackground()
@@ -237,6 +210,45 @@ public class NewPostViewController: CommentViewController {
         }
     }
     
+    func updatePostable(var post: Postable, let edited: Bool) -> Postable {
+        if hasSpoilers {
+            post.content = spoilerTextView.text
+            post.nonSpoilerContent = textView.text
+        } else {
+            post.content = textView.text
+            post.nonSpoilerContent = nil
+        }
+        
+        if !edited {
+            post.postedBy = postedBy
+            post.edited = false
+        } else {
+            post.edited = true
+        }
+        
+        post.hasSpoilers = hasSpoilers
+        
+        if let selectedImageData = selectedImageData {
+            post.images = [selectedImageData]
+        } else {
+            post.images = []
+        }
+        
+        if let youtubeID = selectedVideoID {
+            post.youtubeID = youtubeID
+        } else {
+            post.youtubeID = nil
+        }
+        
+        if let linkData = selectedLinkData {
+            post.link = linkData
+        } else {
+            post.link = nil
+        }
+        
+        return post
+    }
+    
     override func performUpdate(post: PFObject) {
         super.performUpdate(post)
         
@@ -249,27 +261,7 @@ public class NewPostViewController: CommentViewController {
         self.sendButton.userInteractionEnabled = false
         
         if var post = post as? Postable {
-            post.hasSpoilers = hasSpoilers
-            if hasSpoilers {
-                post.content = spoilerTextView.text
-                post.nonSpoilerContent = textView.text
-            } else {
-                post.content = textView.text
-                post.nonSpoilerContent = nil
-            }
-            post.edited = true
-            
-            if let selectedImageData = selectedImageData {
-                post.images = [selectedImageData]
-            } else {
-                post.images = []
-            }
-            
-            if let youtubeID = selectedVideoID {
-                post.youtubeID = youtubeID
-            } else {
-                post.youtubeID = nil
-            }
+            post = updatePostable(post, edited: true)
         }
         
         post.saveInBackgroundWithBlock ({ (result, error) -> Void in
@@ -293,7 +285,6 @@ public class NewPostViewController: CommentViewController {
     // MARK: - IBActions
     
     @IBAction func spoilersButtonPressed(sender: AnyObject) {
-        
         hasSpoilers = !hasSpoilers
     }
 }
@@ -303,3 +294,5 @@ extension NewPostViewController: ModalTransitionScrollable {
         return textView
     }
 }
+
+

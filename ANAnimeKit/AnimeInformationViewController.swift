@@ -643,7 +643,7 @@ extension AnimeInformationViewController: UITableViewDelegate {
             
             let (navController, webController) = ANCommonKit.webViewController()
             let initialUrl = NSURL(string: link.url)
-            webController.initWithTitle(link.site.rawValue, initialUrl: initialUrl)
+            webController.initWithInitialUrl(initialUrl)
             presentViewController(navController, animated: true, completion: nil)
         }
 

@@ -11,9 +11,9 @@ import WebKit
 public class InAppBrowserViewController: UIViewController {
 
     var initialStatusBarStyle: UIStatusBarStyle!
-    var webView: WKWebView!
+    public var webView: WKWebView!
     
-    var initialUrl: NSURL? {
+    public var initialUrl: NSURL? {
         didSet {
             if let initialUrl = initialUrl {
                 lastRequest = NSURLRequest(URL: initialUrl)
@@ -23,9 +23,11 @@ public class InAppBrowserViewController: UIViewController {
     
     var lastRequest : NSURLRequest?
     
-    public func initWithTitle(title: String, initialUrl: NSURL?) {
+    public var overrideTitle: String?
+    
+    public func initWithInitialUrl(initialUrl: NSURL?, overrideTitle: String? = nil) {
         self.initialUrl = initialUrl
-        self.title = title
+        self.title = "Loading..."
     }
 
     override public func viewDidLoad() {
@@ -41,6 +43,7 @@ public class InAppBrowserViewController: UIViewController {
         navigationController?.navigationBar.tintColor = UIColor.whiteColor()
 
         if let request = lastRequest {
+            webView.addObserver(self, forKeyPath: "title", options: .New, context: nil)
             webView.loadRequest(request)
         }
     }
@@ -57,6 +60,22 @@ public class InAppBrowserViewController: UIViewController {
         
         UIApplication.sharedApplication().setStatusBarStyle(initialStatusBarStyle, animated: true)
     }
+    
+    // MARK: - KVO
+    
+    public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+        guard let change = change else {
+            return
+        }
+        
+        if keyPath == "title" {
+            if let title = change["new"] as? String {
+                self.title = title
+            }
+        }
+    }
+    
+    // MARK: - IBActions
 
     @IBAction func dismissModal() {
         dismissViewControllerAnimated(true, completion: nil)
@@ -81,6 +100,7 @@ public class InAppBrowserViewController: UIViewController {
     }
     
     deinit {
+        webView.removeObserver(self, forKeyPath: "title")
         webView = nil
     }
 

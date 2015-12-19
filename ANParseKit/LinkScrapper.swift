@@ -34,7 +34,7 @@ public class LinkData {
         if let description = dictionary["description"] as? String {
             linkData.description = description
         }
-        if let imageUrls = dictionary["imageUrls"] as? [String] {
+        if let imageUrls = dictionary["images"] as? [String] {
             linkData.imageUrls = imageUrls
         }
         if let updatedTime = dictionary["updatedTime"] as? String {
@@ -52,7 +52,7 @@ public class LinkData {
             "type": type ?? "",
             "title": title ?? "",
             "description": description ?? "",
-            "imageUrls": imageUrls,
+            "images": imageUrls,
             "updatedTime": updatedTime ?? "",
             "siteName": siteName ?? ""
         ]
@@ -67,14 +67,11 @@ public class LinkScrapper {
         self.viewController = viewController
     }
     
-    public func findInformationForLink(stringUrl: String) -> BFTask {
+    public func findInformationForLink(url: NSURL) -> BFTask {
 
-        guard let encodedRequest = stringUrl.stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet()), let urlRequest = NSURL(string: encodedRequest) else {
-            return BFTask(result: nil)
-        }
         let completion = BFTaskCompletionSource()
         
-        viewController.webScraper.scrape(urlRequest.absoluteString) { (hpple) -> Void in
+        viewController.webScraper.scrape(url.absoluteString) { (hpple) -> Void in
             if hpple == nil {
                 print("hpple is nil")
                 completion.setError(NSError(domain: "aozora.findInformationForLink", code: 0, userInfo: nil))
@@ -85,6 +82,7 @@ public class LinkScrapper {
             let data = LinkData()
             
             for result in results {
+                print(result.raw)
                 if let name = result.objectForKey("name") {
                     switch name {
                     case "title":
@@ -117,6 +115,41 @@ public class LinkScrapper {
                     data.type = result.objectForKey("content")
                 default:
                     continue
+                }
+            }
+            
+            if data.title == nil {
+                let results = hpple.searchWithXPathQuery("//title") as! [TFHppleElement]
+                
+                for result in results {
+                    if let title = result.nthChild(0)?.content {
+                        data.title = title
+                    }
+                }
+            }
+            
+            if data.url == nil {
+                data.url = url.absoluteString
+            }
+            
+            if data.imageUrls.count == 0 {
+                let results = hpple.searchWithXPathQuery("//img") as! [TFHppleElement]
+                
+                for result in results {
+                    if let widthString = result.objectForKey("width"),
+                    let widthInt = Int(widthString),
+                    var imageUrl = result.objectForKey("src") where widthInt >= 200 {
+                        if imageUrl.hasPrefix("//") {
+                            imageUrl = "http:" + imageUrl
+                        }
+                        if imageUrl.hasPrefix("/") {
+                            imageUrl = url.host! + imageUrl
+                        }
+                        
+                        if let theURL = NSURL(string: imageUrl) {
+                            data.imageUrls.append(theURL.absoluteString)
+                        }
+                    }
                 }
             }
             

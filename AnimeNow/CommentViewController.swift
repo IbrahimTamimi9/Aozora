@@ -29,9 +29,11 @@ public class CommentViewController: UIViewController {
     @IBOutlet weak var inReply: UILabel!
     @IBOutlet weak var photoButton: UIButton!
     @IBOutlet weak var videoButton: UIButton!
+    @IBOutlet weak var linkButton: UIButton!
     @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var photoCountLabel: UILabel!
     @IBOutlet weak var videoCountLabel: UILabel!
+    @IBOutlet weak var linkCountLabel: UILabel!
     @IBOutlet weak var spoilersSwitch: UISwitch!
     
     @IBOutlet weak var threadTitle: UITextField!
@@ -45,7 +47,15 @@ public class CommentViewController: UIViewController {
             updateMediaCountLabels()
         }
     }
+    
     var selectedVideoID: String? {
+        didSet {
+            updateMediaCountLabels()
+        }
+    }
+    
+    var selectedLinkData: LinkData?
+    var selectedLinkUrl: NSURL? {
         didSet {
             updateMediaCountLabels()
         }
@@ -59,6 +69,8 @@ public class CommentViewController: UIViewController {
     var threadType: ThreadType = .Timeline
     var editingPost: PFObject?
     var anime: Anime?
+    
+    var fetchingData = false
     
     public func initWithTimelinePost(delegate: CommentViewControllerDelegate?, postedIn: User, editingPost: PFObject? = nil, parentPost: Postable? = nil) {
         self.postedIn = postedIn
@@ -86,6 +98,7 @@ public class CommentViewController: UIViewController {
         
         photoCountLabel.hidden = true
         videoCountLabel.hidden = true
+        linkCountLabel.hidden = true
     }
     
     public override func viewWillAppear(animated: Bool) {
@@ -166,6 +179,12 @@ public class CommentViewController: UIViewController {
         } else {
             photoCountLabel.hidden = true
         }
+        
+        if let _ = selectedLinkUrl {
+            linkCountLabel.hidden = false
+        } else {
+            linkCountLabel.hidden = true
+        }
     }
     
     // MARK: - IBActions
@@ -194,13 +213,21 @@ public class CommentViewController: UIViewController {
             let navController = ANParseKit.commentStoryboard().instantiateViewControllerWithIdentifier("BrowserSelector") as! UINavigationController
             let videoController = navController.viewControllers.last as! InAppBrowserSelectorViewController
             let initialURL = NSURL(string: "https://www.youtube.com")
-            videoController.initWithTitle("Select a video", initialUrl: initialURL)
+            videoController.initWithInitialUrl(initialURL, overrideTitle: "Select a video")
             videoController.delegate = self
             presentViewController(navController, animated: true, completion: nil)
         }
         
     }
 
+    @IBAction func addLinkPressed(sender: AnyObject) {
+        if let _ = selectedLinkUrl {
+            selectedLinkUrl = nil
+        } else {
+            presentBasicAlertWithTitle("Paste any link in text area", message: nil)
+        }
+    }
+    
     @IBAction func sendPressed(sender: AnyObject) {
         if let editingPost = editingPost {
             performUpdate(editingPost)
@@ -208,13 +235,13 @@ public class CommentViewController: UIViewController {
             performPost()
         }
     }
-    
 }
 
 extension CommentViewController: ImagesViewControllerDelegate {
     func imagesViewControllerSelected(imageData imageData: ImageData) {
         selectedImageData = imageData
         selectedVideoID = nil
+        selectedLinkUrl = nil
     }
 }
 
@@ -223,6 +250,72 @@ extension CommentViewController: InAppBrowserSelectorViewControllerDelegate {
         if let url = NSURL(string: siteURL), let parameters = BFURL(URL: url).inputQueryParameters, let videoID = parameters["v"] as? String {
             selectedVideoID = videoID
             selectedImageData = nil
+            selectedLinkUrl = nil
         }
+    }
+}
+
+extension CommentViewController: UITextViewDelegate {
+    public func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        
+        // Grab pasted urls
+        if selectedLinkUrl == nil && text.characters.count > 1 {
+            let types: NSTextCheckingType = .Link
+            
+            let detector = try? NSDataDetector(types: types.rawValue)
+            
+            guard let detect = detector else {
+                return true
+            }
+            
+            let matches = detect.matchesInString(text, options: .ReportCompletion, range: NSMakeRange(0, text.characters.count))
+            
+            for match in matches {
+                if let url = match.URL {
+                    
+                    // Pin youtube videos separately
+                    if let host = url.host where host.containsString("youtube.com") || host.containsString("youtu.be") {
+                        if host.containsString("youtube.com") {
+                            inAppBrowserSelectorViewControllerSelectedSite(url.absoluteString)
+                        }
+                        
+                        if host.containsString("youtu.be") {
+                            let videoID = url.pathComponents![1]
+                            inAppBrowserSelectorViewControllerSelectedSite("http://www.youtube.com/watch?v=\(videoID)")
+                        }
+                        return false
+                    }
+                    
+                    selectedLinkUrl = url
+                    scrapeInformationWithURL(url)
+                    // If only added 1 link and it's the same as the added text, don't add it
+                    if matches.count == 1 && match.range.length == text.characters.count {
+                        return false
+                    }
+                }
+                break
+            }
+        }
+        return true
+    }
+    
+    func scrapeInformationWithURL(url: NSURL) {
+        linkCountLabel.text = ""
+        fetchingData = true
+        
+        let scapper = LinkScrapper(viewController: self)
+        scapper.findInformationForLink(url).continueWithExecutor(BFExecutor.mainThreadExecutor(), withBlock: { (task: BFTask!) -> AnyObject? in
+            
+            self.fetchingData = false
+            if let linkData = task.result as? LinkData {
+                self.selectedLinkData = linkData
+                self.linkCountLabel.text = "1"
+            } else {
+                self.selectedLinkUrl = nil
+            }
+            
+            return nil
+        })
+        
     }
 }

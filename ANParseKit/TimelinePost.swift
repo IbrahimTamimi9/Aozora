@@ -191,9 +191,8 @@ public class TimelinePost: PFObject, PFSubclassing, TimelinePostable {
     public var link: LinkData? {
         get {
             if linkInternal == nil {
-                linkInternal = LinkData()
                 if let link = self["link"] as? [String: AnyObject] {
-                    LinkData.mapDataWithDictionary(link)
+                    linkInternal = LinkData.mapDataWithDictionary(link)
                 }
             }
             return linkInternal

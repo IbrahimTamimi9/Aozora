@@ -208,6 +208,9 @@ extension ThreadViewController: UITableViewDataSource {
             if post.images.count != 0 || post.youtubeID != nil || post.episode != nil {
                 // Post image or video cell
                 reuseIdentifier = "PostImageCell"
+            } else if post.link != nil {
+                // Post link cell
+                reuseIdentifier = "LinkCell"
             } else {
                 // Text post update
                 reuseIdentifier = "PostTextCell"
@@ -218,8 +221,23 @@ extension ThreadViewController: UITableViewDataSource {
             updatePostCell(cell, with: post)
             if let episode = post.episode {
                 cell.imageContent?.setImageFrom(urlString: episode.imageURLString(), animated: false)
-                cell.imageHeightConstraint?.constant = 180
+                cell.imageHeightConstraint?.constant = (view.bounds.size.width-59.0) * CGFloat(180)/CGFloat(340)
             }
+            
+            if let linkCell = cell as? LinkCell, let linkData = post.link, let linkUrl = linkData.url {
+                linkCell.linkDelegate = self
+                linkCell.linkTitleLabel.text = linkData.title
+                linkCell.linkContentLabel.text = linkData.description
+                linkCell.linkUrlLabel.text = NSURL(string: linkUrl)?.host?.uppercaseString
+                if let imageURL = linkData.imageUrls.first {
+                    linkCell.imageContent?.setImageFrom(urlString: imageURL, animated: false)
+                    linkCell.imageHeightConstraint?.constant = (view.bounds.size.width-16) * CGFloat(158)/CGFloat(305)
+                } else {
+                    linkCell.imageContent?.image = nil
+                    linkCell.imageHeightConstraint?.constant = 0
+                }
+            }
+            
             cell.layoutIfNeeded()
             return cell
             
@@ -391,10 +409,9 @@ extension ThreadViewController: UITableViewDataSource {
     public func prepareForVideo(playButton: UIButton?, imageView: UIImageView?, imageHeightConstraint: NSLayoutConstraint?, youtubeID: String?) {
         if let playButton = playButton {
             if let youtubeID = youtubeID {
-                
-                let urlString = "https://i.ytimg.com/vi/\(youtubeID)/mqdefault.jpg"
+                let urlString = "https://i.ytimg.com/vi/\(youtubeID)/maxresdefault.jpg"
                 imageView?.setImageFrom(urlString: urlString, animated: false)
-                imageHeightConstraint?.constant = 180
+                imageHeightConstraint?.constant = (view.bounds.size.width-59.0) * CGFloat(180)/CGFloat(340)
                 
                 playButton.hidden = false
                 playButton.layer.borderWidth = 1.0;
@@ -616,7 +633,7 @@ extension ThreadViewController: TTTAttributedLabelDelegate {
             
         } else if url.scheme != "aozoraapp" {
             let (navController, webController) = ANCommonKit.webViewController()
-            webController.initWithTitle(url.absoluteString, initialUrl: url)
+            webController.initWithInitialUrl(url)
             presentViewController(navController, animated: true, completion: nil)
         }
     }
@@ -665,6 +682,22 @@ extension ThreadViewController: PostCellDelegate {
             like(post)
             updateLikeButton(postCell, post: post)
         }
+    }
+}
+
+extension ThreadViewController: LinkCellDelegate {
+    public func postCellSelectedLink(linkCell: LinkCell) {
+        guard let indexPath = tableView.indexPathForCell(linkCell),
+            let postable = fetchController.objectAtIndex(indexPath.section) as? Postable,
+            let linkData = postable.link,
+            let url = linkData.url else {
+            return
+        }
+        
+        let (navController, webController) = ANCommonKit.webViewController()
+        let initialUrl = NSURL(string: url)
+        webController.initWithInitialUrl(initialUrl)
+        presentViewController(navController, animated: true, completion: nil)
     }
 }
 
