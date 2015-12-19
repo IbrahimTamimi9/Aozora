@@ -29,11 +29,11 @@ public class CommentViewController: UIViewController {
     @IBOutlet weak var inReply: UILabel!
     @IBOutlet weak var photoButton: UIButton!
     @IBOutlet weak var videoButton: UIButton!
-    @IBOutlet weak var linkButton: UIButton!
+    @IBOutlet weak var linkButton: UIButton?
     @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var photoCountLabel: UILabel!
     @IBOutlet weak var videoCountLabel: UILabel!
-    @IBOutlet weak var linkCountLabel: UILabel!
+    @IBOutlet weak var linkCountLabel: UILabel?
     @IBOutlet weak var spoilersSwitch: UISwitch!
     
     @IBOutlet weak var threadTitle: UITextField!
@@ -98,7 +98,7 @@ public class CommentViewController: UIViewController {
         
         photoCountLabel.hidden = true
         videoCountLabel.hidden = true
-        linkCountLabel.hidden = true
+        linkCountLabel?.hidden = true
     }
     
     public override func viewWillAppear(animated: Bool) {
@@ -181,9 +181,9 @@ public class CommentViewController: UIViewController {
         }
         
         if let _ = selectedLinkUrl {
-            linkCountLabel.hidden = false
+            linkCountLabel?.hidden = false
         } else {
-            linkCountLabel.hidden = true
+            linkCountLabel?.hidden = true
         }
     }
     
@@ -300,7 +300,7 @@ extension CommentViewController: UITextViewDelegate {
     }
     
     func scrapeInformationWithURL(url: NSURL) {
-        linkCountLabel.text = ""
+        linkCountLabel?.text = ""
         fetchingData = true
         
         let scapper = LinkScrapper(viewController: self)
@@ -309,7 +309,7 @@ extension CommentViewController: UITextViewDelegate {
             self.fetchingData = false
             if let linkData = task.result as? LinkData {
                 self.selectedLinkData = linkData
-                self.linkCountLabel.text = "1"
+                self.linkCountLabel?.text = "1"
             } else {
                 self.selectedLinkUrl = nil
             }

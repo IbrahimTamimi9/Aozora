@@ -63,7 +63,7 @@ public class NewPostViewController: CommentViewController {
                 photoCountLabel.hidden = false
             } else if let linkData = (editingPost as! Postable).link {
                 selectedLinkData = linkData
-                linkCountLabel.hidden = false
+                linkCountLabel?.hidden = false
             }
             
             if let parentPost = parentPost as? TimelinePostable {
