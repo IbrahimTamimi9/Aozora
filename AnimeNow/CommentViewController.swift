@@ -10,6 +10,7 @@ import Foundation
 import Parse
 import Bolts
 import ANCommonKit
+import SDWebImage
 
 public protocol CommentViewControllerDelegate: class {
     func commentViewControllerDidFinishedPosting(newPost: PFObject, parentPost: PFObject?, edited: Bool)
@@ -287,8 +288,25 @@ extension CommentViewController: UITextViewDelegate {
                         return false
                     }
                     
+                    // Append image if it's an image
+                    if let lastPathComponent = url.lastPathComponent where
+                        lastPathComponent.endsWithInsensitiveCase(".png") ||
+                        lastPathComponent.endsWithInsensitiveCase(".jpeg") ||
+                        lastPathComponent.endsWithInsensitiveCase(".gif") ||
+                        lastPathComponent.endsWithInsensitiveCase(".jpg") {
+                            scrapeImageWithURL(url)
+                            return false
+                    }
+                    
+                    if let host = url.host, let imageId = url.lastPathComponent,
+                        let imageURL = NSURL(string: "http://i.imgur.com/\(imageId).jpg")
+                        where host.containsString("imgur.com") {
+                        scrapeImageWithURL(imageURL)
+                        return false
+                    }
+                    
                     selectedLinkUrl = url
-                    scrapeInformationWithURL(url)
+                    scrapeLinkWithURL(url)
                     // If only added 1 link and it's the same as the added text, don't add it
                     if matches.count == 1 && match.range.length == text.characters.count {
                         return false
@@ -300,7 +318,7 @@ extension CommentViewController: UITextViewDelegate {
         return true
     }
     
-    func scrapeInformationWithURL(url: NSURL) {
+    func scrapeLinkWithURL(url: NSURL) {
         linkCountLabel?.text = ""
         fetchingData = true
         
@@ -317,6 +335,25 @@ extension CommentViewController: UITextViewDelegate {
             
             return nil
         })
+    }
+    
+    func scrapeImageWithURL(url: NSURL) {
+        photoCountLabel.text = ""
+        fetchingData = true
         
+        let manager = SDWebImageManager.sharedManager()
+        manager.downloadImageWithURL(url, options: [], progress: nil) { (image, error, cacheType, finished, imageUrl) -> Void in
+            
+            self.fetchingData = false
+            
+            if let error = error {
+                print(error)
+                self.photoCountLabel?.text = nil
+            } else {
+                self.photoCountLabel?.text = "1"
+                let imageData = ImageData(url: url.absoluteString, width: Int(image.size.width), height: Int(image.size.height))
+                self.imagesViewControllerSelected(imageData: imageData)
+            }
+        }
     }
 }

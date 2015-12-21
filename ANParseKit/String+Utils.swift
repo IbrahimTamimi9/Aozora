@@ -15,4 +15,11 @@ extension String {
         }
         return false
     }
+    
+    func endsWithInsensitiveCase(str: String) -> Bool {
+        if let range = self.rangeOfString(str, options:[NSStringCompareOptions.BackwardsSearch,NSStringCompareOptions.CaseInsensitiveSearch]) {
+            return range.endIndex == self.endIndex
+        }
+        return false
+    }
 }
