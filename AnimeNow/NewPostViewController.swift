@@ -12,6 +12,8 @@ import Bolts
 
 public class NewPostViewController: CommentViewController {
     
+    let EditingContentCacheKey = "NewPost.TextContent"
+    
     @IBOutlet weak var spoilersButton: UIButton!
     @IBOutlet weak var spoilerContentHeight: NSLayoutConstraint!
     @IBOutlet weak var spoilerTextView: UITextView!
@@ -39,6 +41,11 @@ public class NewPostViewController: CommentViewController {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if let content = NSUserDefaults.standardUserDefaults().objectForKey(EditingContentCacheKey) as? String {
+            NSUserDefaults.standardUserDefaults().removeObjectForKey(EditingContentCacheKey)
+            textView.text = content
+        }
         
         spoilerContentHeight.constant = 0
         textView.becomeFirstResponder()
@@ -78,6 +85,14 @@ public class NewPostViewController: CommentViewController {
             } else {
                 inReply.text = "  New Post"
             }
+        }
+    }
+    
+    public override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        if !dataPersisted {
+            NSUserDefaults.standardUserDefaults().setObject(textView.text, forKey: EditingContentCacheKey)
+            NSUserDefaults.standardUserDefaults().synchronize()
         }
     }
 
@@ -269,6 +284,12 @@ public class NewPostViewController: CommentViewController {
         })
     }
     
+    override func completeRequest(post: PFObject, parentPost: PFObject?, error: NSError?) {
+        super.completeRequest(post, parentPost: parentPost, error: error)
+        NSUserDefaults.standardUserDefaults().removeObjectForKey(EditingContentCacheKey)
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
     func validPost() -> Bool {
         let content = max(textView.text.characters.count, spoilerTextView.text.characters.count)
         // Validate post
@@ -281,6 +302,7 @@ public class NewPostViewController: CommentViewController {
         }
         return true
     }
+    
   
     // MARK: - IBActions
     

@@ -36,11 +36,10 @@ public class CommentViewController: UIViewController {
     @IBOutlet weak var linkCountLabel: UILabel?
     @IBOutlet weak var spoilersSwitch: UISwitch!
     
-    @IBOutlet weak var threadTitle: UITextField!
-    
     public weak var delegate: CommentViewControllerDelegate?
     
     var animator: ZFModalTransitionAnimator!
+    var dataPersisted = false
     
     var selectedImageData: ImageData? {
         didSet {
@@ -112,12 +111,13 @@ public class CommentViewController: UIViewController {
     
     public override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        
+
         if isBeingDismissed() {
             UIApplication.sharedApplication().setStatusBarStyle(initialStatusBarStyle, animated: true)
             view.endEditing(true)
         }
     }
+    
     
     // MARK: - NSNotificationCenter
     
@@ -162,6 +162,7 @@ public class CommentViewController: UIViewController {
             self.sendButton.userInteractionEnabled = true
         } else {
             // Success!
+            dataPersisted = true
             self.delegate?.commentViewControllerDidFinishedPosting(post, parentPost:parentPost, edited: (editingPost != nil))
             self.dismissViewControllerAnimated(true, completion: nil)
         }

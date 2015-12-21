@@ -13,6 +13,10 @@ import TTTAttributedLabel
 
 public class NewThreadViewController: CommentViewController {
     
+    let EditingTitleCacheKey = "NewThread.TitleContent"
+    let EditingContentCacheKey = "NewThread.TextContent"
+    
+    @IBOutlet weak var threadTitle: UITextField!
     @IBOutlet weak var tagLabel: TTTAttributedLabel!
 
     var tags: [PFObject] = [] {
@@ -24,6 +28,18 @@ public class NewThreadViewController: CommentViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
 
+        if let title = NSUserDefaults.standardUserDefaults().objectForKey(EditingTitleCacheKey) as? String {
+            NSUserDefaults.standardUserDefaults().removeObjectForKey(EditingTitleCacheKey)
+            NSUserDefaults.standardUserDefaults().synchronize()
+            threadTitle.text = title
+        }
+        
+        if let content = NSUserDefaults.standardUserDefaults().objectForKey(EditingContentCacheKey) as? String {
+            NSUserDefaults.standardUserDefaults().removeObjectForKey(EditingContentCacheKey)
+            NSUserDefaults.standardUserDefaults().synchronize()
+            textView.text = content
+        }
+        
         threadTitle.becomeFirstResponder()
         threadTitle.textColor = UIColor.blackColor()
         tagLabel.attributedText = nil
@@ -52,6 +68,15 @@ public class NewThreadViewController: CommentViewController {
                 videoCountLabel.hidden = true
                 photoCountLabel.hidden = false
             }
+        }
+    }
+    
+    public override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        if !dataPersisted {
+            NSUserDefaults.standardUserDefaults().setObject(threadTitle.text, forKey: EditingTitleCacheKey)
+            NSUserDefaults.standardUserDefaults().setObject(textView.text, forKey: EditingContentCacheKey)
+            NSUserDefaults.standardUserDefaults().synchronize()
         }
     }
     
@@ -125,6 +150,13 @@ public class NewThreadViewController: CommentViewController {
                 self.completeRequest(thread, parentPost:nil, error: error)
             })
         }
+    }
+    
+    override func completeRequest(post: PFObject, parentPost: PFObject?, error: NSError?) {
+        super.completeRequest(post, parentPost: parentPost, error: error)
+        NSUserDefaults.standardUserDefaults().removeObjectForKey(EditingTitleCacheKey)
+        NSUserDefaults.standardUserDefaults().removeObjectForKey(EditingContentCacheKey)
+        NSUserDefaults.standardUserDefaults().synchronize()
     }
     
     func validThread() -> Bool {
