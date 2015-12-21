@@ -104,7 +104,7 @@ public class NotificationThreadViewController: ThreadViewController {
         
         if let parentPost = parentPost {
             // Inserting a new reply in-place
-            var parentPost = parentPost as! Postable
+            var parentPost = parentPost as! Commentable
             parentPost.replies.append(post)
             tableView.reloadData()
         } else if parentPost == nil {

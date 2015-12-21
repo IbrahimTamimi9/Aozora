@@ -9,7 +9,7 @@
 import Foundation
 import Parse
 
-public class Thread: PFObject, PFSubclassing {
+public class Thread: PFObject, PFSubclassing, Postable {
     override public class func initialize() {
         struct Static {
             static var onceToken : dispatch_once_t = 0;
@@ -23,44 +23,20 @@ public class Thread: PFObject, PFSubclassing {
         return "Thread"
     }
     
+    
     @NSManaged public var title: String
-    @NSManaged public var episode: Episode?
     @NSManaged public var anime: Anime?
+    @NSManaged public var episode: Episode?
     @NSManaged public var startedBy: User?
-    @NSManaged public var lastPostedBy: User?
-    @NSManaged public var subscribers: [User]
-    @NSManaged public var replies: Int
-    @NSManaged public var tags: [PFObject]
     
-    @NSManaged public var content: String?
-    @NSManaged public var hasSpoilers: Bool
-    @NSManaged public var locked: Bool
-    @NSManaged public var edited: Bool
     @NSManaged public var pinType: String?
-    @NSManaged public var youtubeID: String?
+    @NSManaged public var locked: Bool
+    @NSManaged public var tags: [PFObject]
+    @NSManaged public var subscribers: [User]
+    @NSManaged public var lastPostedBy: User?
     
-    var imagesInternal: [ImageData]!
-    public var images: [ImageData] {
-        get {
-            if imagesInternal == nil {
-                imagesInternal = []
-                if let images = self["images"] as? [[String: AnyObject]] {
-                    for image in images {
-                        imagesInternal.append(ImageData.imageDataWithDictionary(image))
-                    }
-                }
-            }
-            return imagesInternal
-        }
-        set(value) {
-            imagesInternal = value
-            var imagesRaw: [[String: AnyObject]] = []
-            for image in value {
-                imagesRaw.append(image.toDictionary())
-            }
-            self["images"] = imagesRaw
-        }
-    }
+    public var imagesDataInternal: [ImageData]?
+    public var linkDataInternal: LinkData?
     
     public var isForumGame: Bool {
         get {

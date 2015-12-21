@@ -296,13 +296,13 @@
                                     </constraints>
                                 </view>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="wKP-cR-R83">
-                                    <rect key="frame" x="0.0" y="593" width="600" height="20"/>
+                                    <rect key="frame" x="0.0" y="592.5" width="600" height="20"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <color key="backgroundColor" red="0.97254902124404907" green="0.97254902124404907" blue="0.97254902124404907" alpha="1" colorSpace="calibratedRGB"/>
                                 </view>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TitleCell" rowHeight="39" id="I7Y-GW-dmX" customClass="TitleCell" customModule="Aozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="384" width="600" height="39"/>
+                                        <rect key="frame" x="0.0" y="383.5" width="600" height="39"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="I7Y-GW-dmX" id="vVD-zJ-c7f">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="39"/>
@@ -342,7 +342,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SynopsisCell" rowHeight="81" id="bug-JV-dlv" customClass="SynopsisCell" customModule="Aozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="423" width="600" height="81"/>
+                                        <rect key="frame" x="0.0" y="422.5" width="600" height="81"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bug-JV-dlv" id="CAQ-bn-51z">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="81"/>
@@ -384,7 +384,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="InformationCell" rowHeight="44" id="3Oe-EE-bCp" customClass="InformationCell" customModule="Aozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="504" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="503.5" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3Oe-EE-bCp" id="YC9-NX-FIf">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
@@ -429,7 +429,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SimpleLinkCell" rowHeight="44" id="dOU-XM-jZJ" customClass="SimpleLinkCell" customModule="Aozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="548" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="547.5" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dOU-XM-jZJ" id="EDI-hv-pna">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
@@ -700,13 +700,13 @@
                                     </constraint>
                                 </constraints>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="uzE-z2-ehP">
-                                    <rect key="frame" x="0.0" y="298" width="600" height="20"/>
+                                    <rect key="frame" x="0.0" y="297.5" width="600" height="20"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <color key="backgroundColor" red="0.97254902119999997" green="0.97254902119999997" blue="0.97254902119999997" alpha="1" colorSpace="calibratedRGB"/>
                                 </view>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TitleCell" rowHeight="39" id="oNP-tZ-mWd" customClass="TitleCell" customModule="Aozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="114" width="600" height="39"/>
+                                        <rect key="frame" x="0.0" y="113.5" width="600" height="39"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oNP-tZ-mWd" id="dsw-iP-vy8">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="39"/>
@@ -759,7 +759,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CharacterCell" rowHeight="72" id="hMb-L0-Zjh" userLabel="CharacterCell" customClass="CharacterCell" customModule="Aozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="153" width="600" height="72"/>
+                                        <rect key="frame" x="0.0" y="152.5" width="600" height="72"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hMb-L0-Zjh" id="ZVH-jf-c9b">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="72"/>
@@ -876,7 +876,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CastCell" rowHeight="72" id="CJ4-G0-uGh" userLabel="CastCell" customClass="CharacterCell" customModule="Aozora" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="225" width="600" height="72"/>
+                                        <rect key="frame" x="0.0" y="224.5" width="600" height="72"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CJ4-G0-uGh" id="cfl-Zy-rTH">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="72"/>
@@ -963,23 +963,12 @@
                             <constraint firstItem="D4j-wz-hXc" firstAttribute="top" secondItem="WWu-Jg-4mu" secondAttribute="bottom" constant="-64" id="26X-ht-MMg"/>
                             <constraint firstItem="D4j-wz-hXc" firstAttribute="leading" secondItem="9fZ-EQ-cfX" secondAttribute="leading" id="3xV-mp-9P7"/>
                             <constraint firstItem="HjL-4o-xg9" firstAttribute="top" secondItem="D4j-wz-hXc" secondAttribute="bottom" constant="-44" id="TfS-Bl-90I"/>
-                            <constraint firstItem="HjL-4o-xg9" firstAttribute="top" secondItem="D4j-wz-hXc" secondAttribute="bottom" constant="-49" id="Vkb-yB-KJh"/>
                             <constraint firstAttribute="trailing" secondItem="D4j-wz-hXc" secondAttribute="trailing" id="dyo-ZF-2We"/>
-                            <constraint firstItem="D4j-wz-hXc" firstAttribute="centerX" secondItem="9fZ-EQ-cfX" secondAttribute="centerX" id="pDj-wh-3ZP"/>
-                            <constraint firstItem="D4j-wz-hXc" firstAttribute="top" secondItem="WWu-Jg-4mu" secondAttribute="top" id="zkB-wx-rXs"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="pDj-wh-3ZP"/>
-                                <exclude reference="zkB-wx-rXs"/>
-                                <exclude reference="Vkb-yB-KJh"/>
-                            </mask>
-                        </variation>
                         <variation key="heightClass=regular-widthClass=regular">
                             <mask key="constraints">
                                 <exclude reference="3xV-mp-9P7"/>
                                 <exclude reference="dyo-ZF-2We"/>
-                                <include reference="pDj-wh-3ZP"/>
                             </mask>
                         </variation>
                     </view>

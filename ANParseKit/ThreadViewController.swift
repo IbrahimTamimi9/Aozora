@@ -122,7 +122,7 @@ public class ThreadViewController: UIViewController {
         presentMoviePlayerViewControllerAnimated(playerController)
     }
     
-    public func replyTo(post: Postable) {
+    public func replyTo(post: Commentable) {
         guard User.currentUserLoggedIn() else {
             presentBasicAlertWithTitle("Login first", message: "Select 'Me' tab")
             return
@@ -143,29 +143,46 @@ public class ThreadViewController: UIViewController {
         }
     }
     
-    public func postForCell(cell: UITableViewCell) -> Postable? {
-        if let indexPath = tableView.indexPathForCell(cell), let post = fetchController.objectAtIndex(indexPath.section) as? Postable {
+    func shouldShowAllRepliesForPost(post: Commentable, forIndexPath indexPath: NSIndexPath? = nil) -> Bool {
+        var indexPathIsSafe = true
+        if let indexPath = indexPath {
+            indexPathIsSafe = indexPath.row - 1 < post.replies.count
+        }
+        return (post.replies.count <= 3 || post.showAllReplies) && indexPathIsSafe
+    }
+    
+    func shouldShowContractedRepliesForPost(post: Commentable, forIndexPath indexPath: NSIndexPath) -> Bool {
+        return post.replies.count > 3 && indexPath.row < 5
+    }
+    
+    func indexForContactedReplyForPost(post: Commentable, forIndexPath indexPath: NSIndexPath) -> Int {
+        return post.replies.count - 5 + indexPath.row
+    }
+    
+    public func postForCell(cell: UITableViewCell) -> Commentable? {
+        if let indexPath = tableView.indexPathForCell(cell), let post = fetchController.objectAtIndex(indexPath.section) as? Commentable {
             if indexPath.row == 0 {
                 return post
             // TODO organize this code better it has dup lines everywhere D:
-            } else if (post.replies.count <= 3 || post.showAllReplies) && indexPath.row - 1 < post.replies.count {
-                return post.replies[indexPath.row - 1] as? Postable
-            } else if post.replies.count > 3 && indexPath.row < 5 {
-                return post.replies[post.replies.count - 5 + indexPath.row] as? Postable
+            } else if shouldShowAllRepliesForPost(post, forIndexPath: indexPath) {
+                return post.replies[indexPath.row - 1] as? Commentable
+            } else if shouldShowContractedRepliesForPost(post, forIndexPath: indexPath) {
+                let index = indexForContactedReplyForPost(post, forIndexPath: indexPath)
+                return post.replies[index] as? Commentable
             }
         }
         
         return nil
     }
     
-    public func like(post: Postable) {
+    public func like(post: Commentable) {
         if !User.currentUserLoggedIn() {
             presentBasicAlertWithTitle("Login first", message: "Select 'Me' tab")
             return
         }
         
         if let post = post as? PFObject {
-            let likedBy = (post as! Postable).likedBy ?? []
+            let likedBy = (post as! Commentable).likedBy ?? []
             let currentUser = User.currentUser()!
             if likedBy.contains(currentUser) {
                 post.removeObject(currentUser, forKey: "likedBy")
@@ -195,9 +212,9 @@ extension ThreadViewController: UITableViewDataSource {
     }
     
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let post = fetchController.objectInSection(section) as! Postable
+        let post = fetchController.objectInSection(section) as! Commentable
         if post.replies.count > 0 {
-            if post.replies.count <= 3 || post.showAllReplies {
+            if shouldShowAllRepliesForPost(post) {
                 return 1 + (post.replies.count ?? 0) + 1
             } else {
                 // 1 post, 1 show more, 3 replies, 1 reply to post
@@ -210,15 +227,15 @@ extension ThreadViewController: UITableViewDataSource {
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let post = fetchController.objectAtIndex(indexPath.section) as! Postable
+        var post = fetchController.objectAtIndex(indexPath.section) as! Commentable
         
         if indexPath.row == 0 {
             
             var reuseIdentifier = ""
-            if post.images.count != 0 || post.youtubeID != nil || post.episode != nil {
+            if post.imagesData?.count != 0 || post.youtubeID != nil {
                 // Post image or video cell
                 reuseIdentifier = "PostImageCell"
-            } else if post.link != nil {
+            } else if post.linkData != nil {
                 // Post link cell
                 reuseIdentifier = "LinkCell"
             } else {
@@ -228,71 +245,24 @@ extension ThreadViewController: UITableViewDataSource {
             
             let cell = tableView.dequeueReusableCellWithIdentifier(reuseIdentifier) as! PostCell
             cell.delegate = self
-            updatePostCell(cell, with: post)
-            if let episode = post.episode {
-                cell.imageContent?.setImageFrom(urlString: episode.imageURLString(), animated: false)
-                cell.imageHeightConstraint?.constant = baseWidth * CGFloat(180)/CGFloat(340)
-            }
-            
-            if let linkCell = cell as? LinkCell, let linkData = post.link, let linkUrl = linkData.url {
-                linkCell.linkDelegate = self
-                linkCell.linkTitleLabel.text = linkData.title
-                linkCell.linkContentLabel.text = linkData.description
-                linkCell.linkUrlLabel.text = NSURL(string: linkUrl)?.host?.uppercaseString
-                if let imageURL = linkData.imageUrls.first {
-                    linkCell.imageContent?.setImageFrom(urlString: imageURL, animated: false)
-                    linkCell.imageHeightConstraint?.constant = (baseWidth - 16) * CGFloat(158)/CGFloat(305)
-                } else {
-                    linkCell.imageContent?.image = nil
-                    linkCell.imageHeightConstraint?.constant = 0
-                }
-            }
-            
+            updateCell(cell, withPost: post)
             cell.layoutIfNeeded()
             return cell
             
-        } else if (post.replies.count <= 3 || post.showAllReplies) && indexPath.row - 1 < post.replies.count {
+        } else if shouldShowAllRepliesForPost(post, forIndexPath: indexPath) {
             
-            let comment = post.replies[indexPath.row - 1] as! Postable
+            let replyIndex = indexPath.row - 1
+            return reuseCommentCellFor(post, replyIndex: replyIndex)
             
-            var reuseIdentifier = ""
-            if comment.images.count != 0 || comment.youtubeID != nil {
-                // Comment image cell
-                reuseIdentifier = "CommentImageCell"
-            } else {
-                // Text comment update
-                reuseIdentifier = "CommentTextCell"
-            }
-            
-            let cell = tableView.dequeueReusableCellWithIdentifier(reuseIdentifier) as! CommentCell
-            cell.delegate = self
-            updateCommentCell(cell, with: comment)
-            cell.layoutIfNeeded()
-            return cell
-            
-        } else if post.replies.count > 3 && indexPath.row < 5 {
+        } else if shouldShowContractedRepliesForPost(post, forIndexPath: indexPath) {
             // Show all
             if indexPath.row == 1 {
                 let cell = tableView.dequeueReusableCellWithIdentifier("ShowMoreCell") as! ShowMoreCell
                 cell.layoutIfNeeded()
                 return cell
             } else {
-                let comment = post.replies[post.replies.count - 5 + indexPath.row] as! Postable
-                
-                var reuseIdentifier = ""
-                if comment.images.count != 0 || comment.youtubeID != nil {
-                    // Comment image cell
-                    reuseIdentifier = "CommentImageCell"
-                } else {
-                    // Text comment update
-                    reuseIdentifier = "CommentTextCell"
-                }
-                
-                let cell = tableView.dequeueReusableCellWithIdentifier(reuseIdentifier) as! CommentCell
-                cell.delegate = self
-                updateCommentCell(cell, with: comment)
-                cell.layoutIfNeeded()
-                return cell
+                let replyIndex = indexForContactedReplyForPost(post, forIndexPath: indexPath)
+                return reuseCommentCellFor(post, replyIndex: replyIndex)
             }
         } else {
             
@@ -300,18 +270,106 @@ extension ThreadViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCellWithIdentifier("WriteACommentCell") as! WriteACommentCell
             cell.layoutIfNeeded()
             return cell
-            
         }
-        
     }
     
-    func updatePostCell(cell: PostCell, with post: Postable) {
+    func reuseCommentCellFor(comment: Commentable, replyIndex: Int) -> CommentCell {
+        var comment = comment.replies[replyIndex] as! Commentable
+        
+        var reuseIdentifier = ""
+        if comment.imagesData?.count != 0 || comment.youtubeID != nil {
+            // Comment image cell
+            reuseIdentifier = "CommentImageCell"
+        } else {
+            // Text comment update
+            reuseIdentifier = "CommentTextCell"
+        }
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier(reuseIdentifier) as! CommentCell
+        cell.delegate = self
+        updateCell(cell, withPost: comment)
+        cell.layoutIfNeeded()
+        return cell
+    }
+    
+    func updateCell(cell: PostCell, var withPost post: Commentable) {
+        // Updates to both styles
+        
+        // Text content
+        var textContent = ""
+        if let content = post.content {
+            textContent = content+"\n\n"
+        }
+        
+        // Setting images and youtube
+        if post.hasSpoilers && post.isSpoilerHidden {
+            textContent += "(Show Spoilers)"
+            cell.imageHeightConstraint?.constant = 0
+            cell.playButton?.hidden = true
+        } else {
+            if let spoilerContent = post.spoilerContent {
+                textContent += spoilerContent
+            }
+            setImages(post.imagesData, imageView: cell.imageContent, imageHeightConstraint: cell.imageHeightConstraint)
+            prepareForVideo(cell.playButton, imageView: cell.imageContent, imageHeightConstraint: cell.imageHeightConstraint, youtubeID: post.youtubeID)
+        }
+        
+        // Poster information
         if let postedBy = post.postedBy, let avatarFile = postedBy.avatarThumb {
             cell.avatar.setImageWithPFFile(avatarFile)
             cell.username?.text = postedBy.aozoraUsername
             cell.onlineIndicator.hidden = !postedBy.active
         }
         
+        // Edited date
+        cell.date.text = post.createdDate?.timeAgo()
+        if var postedAgo = cell.date.text where post.edited {
+            postedAgo += " · Edited"
+            cell.date.text = postedAgo
+        }
+        
+        // Like button
+        updateLikeButton(cell, post: post)
+        
+        let postedByUsername = post.postedBy?.aozoraUsername ?? ""
+        // Updates to each style
+        if let _ = cell as? CommentCell {
+            textContent = postedByUsername + " " + textContent
+        } else {
+            updatePostCell(cell, withPost: post)
+        }
+        
+        // Adding links to text content
+        updateAttributedTextProperties(cell.textContent)
+        cell.textContent.setText(textContent, afterInheritingLabelAttributesAndConfiguringWithBlock: { (attributedString) -> NSMutableAttributedString! in
+            return attributedString
+        })
+        
+        if let encodedUsername = postedByUsername.stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet()),
+            let url = NSURL(string: "aozoraapp://profile/"+encodedUsername) {
+                let range = (textContent as NSString).rangeOfString(postedByUsername)
+                cell.textContent.addLinkToURL(url, withRange: range)
+        }
+    }
+    
+    func updatePostCell(cell: PostCell, var withPost post: Commentable) {
+        
+        // Only embed links on post cells for now
+        if let linkCell = cell as? LinkCell, let linkData = post.linkData, let linkUrl = linkData.url {
+            linkCell.linkDelegate = self
+            linkCell.linkTitleLabel.text = linkData.title
+            linkCell.linkContentLabel.text = linkData.description
+            linkCell.linkUrlLabel.text = NSURL(string: linkUrl)?.host?.uppercaseString
+            if let imageURL = linkData.imageUrls.first {
+                linkCell.imageContent?.setImageFrom(urlString: imageURL, animated: false)
+                linkCell.imageHeightConstraint?.constant = (baseWidth - 16) * CGFloat(158)/CGFloat(305)
+            } else {
+                linkCell.imageContent?.image = nil
+                linkCell.imageHeightConstraint?.constant = 0
+            }
+        }
+
+        // From and to information
         if let timelinePostable = post as? TimelinePostable, postedBy = post.postedBy where timelinePostable.userTimeline != postedBy {
             cell.toUsername?.text = timelinePostable.userTimeline.aozoraUsername
             cell.toIcon?.text = ""
@@ -320,87 +378,13 @@ extension ThreadViewController: UITableViewDataSource {
             cell.toIcon?.text = ""
         }
         
-        cell.date.text = post.createdDate?.timeAgo()
-        
-        if var postedAgo = cell.date.text where post.edited {
-            postedAgo += " · Edited"
-            cell.date.text = postedAgo
-        }
-        
-        if let nonSpoilerContent = post.nonSpoilerContent {
-            cell.textContent.text = nonSpoilerContent+"\n\n"
-        } else {
-            cell.textContent.text = ""
-        }
-        
-        if post.hasSpoilers && post.isSpoilerHidden {
-            cell.textContent.text! += "(Show Spoilers)"
-            cell.imageHeightConstraint?.constant = 0
-            cell.playButton?.hidden = true
-        } else {
-            cell.textContent.text! += post.content
-            setImages(post.images, imageView: cell.imageContent, imageHeightConstraint: cell.imageHeightConstraint)
-            prepareForVideo(cell.playButton, imageView: cell.imageContent, imageHeightConstraint: cell.imageHeightConstraint, youtubeID: post.youtubeID)
-        }
-        
+        // Reply button
         let repliesTitle = repliesButtonTitle(post.replies.count)
         cell.replyButton.setTitle(repliesTitle, forState: .Normal)
-        
-        updateAttributedTextProperties(cell.textContent)
-        
-        updateLikeButton(cell, post: post)
     }
     
-    func updateCommentCell(cell: CommentCell, with post: Postable) {
-        
-        if let postedBy = post.postedBy, let avatarFile = postedBy.avatarThumb  {
-            
-            cell.onlineIndicator.hidden = !postedBy.active
-            
-            let username = postedBy.aozoraUsername
-            var content = username + " "
-            if let nonSpoilerContent = post.nonSpoilerContent {
-                content += nonSpoilerContent+"\n\n"
-            }
-            
-            if post.hasSpoilers && post.isSpoilerHidden {
-                content += "(Show Spoilers)"
-                cell.imageHeightConstraint?.constant = 0
-                cell.playButton?.hidden = true
-            } else {
-                content += post.content
-                setImages(post.images, imageView: cell.imageContent, imageHeightConstraint: cell.imageHeightConstraint)
-                prepareForVideo(cell.playButton, imageView: cell.imageContent, imageHeightConstraint: cell.imageHeightConstraint, youtubeID: post.youtubeID)
-            }
-            
-            cell.avatar.setImageWithPFFile(avatarFile)
-            
-            updateAttributedTextProperties(cell.textContent)
-            cell.textContent.setText(content, afterInheritingLabelAttributesAndConfiguringWithBlock: { (attributedString) -> NSMutableAttributedString! in
-                
-                return attributedString
-            })
-            
-            
-            if let encodedUsername = username.stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet()),
-                let url = NSURL(string: "aozoraapp://profile/"+encodedUsername) {
-                let range = (content as NSString).rangeOfString(username)
-                cell.textContent.addLinkToURL(url, withRange: range)
-            }
-        }
-        
-        cell.date.text = post.createdDate?.timeAgo()
-        
-        if var postedAgo = cell.date.text where post.edited {
-            postedAgo += " · Edited"
-            cell.date.text = postedAgo
-        }
-        
-        updateLikeButton(cell, post: post)
-    }
-    
-    public func setImages(images: [ImageData], imageView: UIImageView?, imageHeightConstraint: NSLayoutConstraint?) {
-        if let image = images.first {
+    public func setImages(images: [ImageData]?, imageView: UIImageView?, imageHeightConstraint: NSLayoutConstraint?) {
+        if let image = images?.first {
             imageHeightConstraint?.constant = baseWidth * CGFloat(image.height)/CGFloat(image.width)
             imageView?.setImageFrom(urlString: image.url, animated: false)
         } else {
@@ -415,8 +399,6 @@ extension ThreadViewController: UITableViewDataSource {
             return " "
         }
     }
-    
-    
     
     public func prepareForVideo(playButton: UIButton?, imageView: UIImageView?, imageHeightConstraint: NSLayoutConstraint?, youtubeID: String?) {
         if let playButton = playButton {
@@ -440,7 +422,7 @@ extension ThreadViewController: UITableViewDataSource {
         textContent.delegate = self;
     }
     
-    func updateLikeButton(cell: PostCell, post: Postable) {
+    func updateLikeButton(cell: PostCell, post: Commentable) {
         if let likedBy = post.likedBy where likedBy.count > 0 {
             cell.likeButton.setTitle(" \(likedBy.count)", forState: .Normal)
         } else {
@@ -466,7 +448,7 @@ extension ThreadViewController: UITableViewDelegate {
     
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        var post = fetchController.objectAtIndex(indexPath.section) as! Postable
+        var post = fetchController.objectAtIndex(indexPath.section) as! Commentable
         
         if indexPath.row == 0 {
             if post.hasSpoilers && post.isSpoilerHidden == true {
@@ -476,17 +458,18 @@ extension ThreadViewController: UITableViewDelegate {
                 showSheetFor(post: post, indexPath: indexPath)
             }
             
-        } else if (post.replies.count <= 3 || post.showAllReplies) && indexPath.row - 1 < post.replies.count {
-            if let comment = post.replies[indexPath.row - 1] as? Postable {
+        } else if shouldShowAllRepliesForPost(post, forIndexPath: indexPath) {
+            if let comment = post.replies[indexPath.row - 1] as? Commentable {
                 pressedOnAComment(post, comment: comment, indexPath: indexPath)
             }
-        } else if post.replies.count > 3 && indexPath.row < 5 {
+        } else if shouldShowContractedRepliesForPost(post, forIndexPath: indexPath) {
             // Show all
             if indexPath.row == 1 {
                 post.showAllReplies = true
                 tableView.reloadData()
             } else {
-                if let comment = post.replies[post.replies.count - 5 + indexPath.row] as? Postable {
+                let index = indexForContactedReplyForPost(post, forIndexPath: indexPath)
+                if let comment = post.replies[index] as? Commentable {
                     pressedOnAComment(post, comment: comment, indexPath: indexPath)
                 }
             }
@@ -495,7 +478,7 @@ extension ThreadViewController: UITableViewDelegate {
             replyTo(post)
         }
     }
-    func pressedOnAComment(post: Postable, var comment: Postable, indexPath: NSIndexPath) {
+    func pressedOnAComment(post: Commentable, var comment: Commentable, indexPath: NSIndexPath) {
         if comment.hasSpoilers && comment.isSpoilerHidden == true {
             comment.isSpoilerHidden = false
             tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
@@ -503,7 +486,7 @@ extension ThreadViewController: UITableViewDelegate {
             showSheetFor(post: comment, parentPost: post, indexPath: indexPath)
         }
     }
-    func showSheetFor(post post: Postable, parentPost: Postable? = nil, indexPath: NSIndexPath) {
+    func showSheetFor(post post: Commentable, parentPost: Commentable? = nil, indexPath: NSIndexPath) {
         // If user's comment show delete/edit
         
         guard let currentUser = User.currentUser(), let postedBy = post.postedBy, let cell = tableView.cellForRowAtIndexPath(indexPath) else {
@@ -596,7 +579,7 @@ extension ThreadViewController: UITableViewDelegate {
                     decrementPostCount()
                 }
                 
-                self.thread?.incrementKey("replies", byAmount: -allPosts.count)
+                self.thread?.incrementReplyCount(byAmount: -allPosts.count)
                 self.thread?.saveInBackground()
                 
                 if removeParent {
@@ -607,7 +590,7 @@ extension ThreadViewController: UITableViewDelegate {
                     }
                 } else {
                     // Delete child post
-                    var parentPost = parentPost as! Postable
+                    var parentPost = parentPost as! Commentable
                     if let index = parentPost.replies.indexOf(childPosts.last!) {
                         parentPost.replies.removeAtIndex(index)
                         self.tableView.reloadData()
@@ -661,9 +644,9 @@ extension ThreadViewController: CommentViewControllerDelegate {
 
 extension ThreadViewController: PostCellDelegate {
     public func postCellSelectedImage(postCell: PostCell) {
-        if let post = postForCell(postCell), let imageView = postCell.imageContent {
+        if var post = postForCell(postCell), let imageView = postCell.imageContent {
             print(post)
-            if let imageData = post.images.first {
+            if let imageData = post.imagesData?.first {
                 showImage(imageData.url, imageView: imageView)
             } else if let videoID = post.youtubeID {
                 playTrailer(videoID)
@@ -700,8 +683,8 @@ extension ThreadViewController: PostCellDelegate {
 extension ThreadViewController: LinkCellDelegate {
     public func postCellSelectedLink(linkCell: LinkCell) {
         guard let indexPath = tableView.indexPathForCell(linkCell),
-            let postable = fetchController.objectAtIndex(indexPath.section) as? Postable,
-            let linkData = postable.link,
+            var postable = fetchController.objectAtIndex(indexPath.section) as? Commentable,
+            let linkData = postable.linkData,
             let url = linkData.url else {
             return
         }
@@ -745,7 +728,7 @@ extension ThreadViewController: FetchControllerQueryDelegate {
         
         for post in uniquePosts {
             let postReplies = replies.filter({ ($0["parentPost"] as! PFObject) == post }) as [PFObject]
-            var postable = post as! Postable
+            var postable = post as! Commentable
             postable.replies = postReplies
         }
 

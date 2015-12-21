@@ -66,7 +66,7 @@ public class CustomThreadViewController: ThreadViewController {
             commentsButton.setTitle("Locked", forState: .Normal)
             navigationItem.rightBarButtonItem?.enabled = false
         } else {
-            let repliesTitle = repliesButtonTitle(thread.replies)
+            let repliesTitle = repliesButtonTitle(thread.replyCount)
             commentsButton.setTitle(repliesTitle, forState: .Normal)
         }
         
@@ -122,7 +122,7 @@ public class CustomThreadViewController: ThreadViewController {
         }
     }
     
-    func updateUIWithGeneralThread(thread: Thread) {
+    func updateUIWithGeneralThread(var thread: Thread) {
         
         title = thread.title
         threadTitle.text = thread.title
@@ -148,7 +148,7 @@ public class CustomThreadViewController: ThreadViewController {
             moreButton.hidden = startedBy != User.currentUser() ?? false && !administrating
         }
         
-        setImages(thread.images, imageView: imageContent, imageHeightConstraint: imageHeightConstraint)
+        setImages(thread.imagesData, imageView: imageContent, imageHeightConstraint: imageHeightConstraint)
     }
     
     func sizeHeaderToFit() {
@@ -276,7 +276,7 @@ public class CustomThreadViewController: ThreadViewController {
             // Only posts and TimelinePosts
             if let parentPost = parentPost {
                 // Inserting a new reply in-place
-                var parentPost = parentPost as! Postable
+                var parentPost = parentPost as! Commentable
                 parentPost.replies.append(post)
                 tableView.reloadData()
             } else if parentPost == nil {

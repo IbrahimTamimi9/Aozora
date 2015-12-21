@@ -196,16 +196,16 @@ extension AnimeCell {
         let cellHeight: CGFloat = 132
         var cellWidth: CGFloat = 0
         
-        layout.sectionInset = UIEdgeInsets(top: margin, left: margin, bottom: margin, right: margin)
         layout.minimumLineSpacing = margin
         
-        
         if UIDevice.isPad() {
+            layout.sectionInset = UIEdgeInsets(top: margin, left: margin, bottom: margin, right: margin)
             let totalWidth: CGFloat = viewSize.width - (margin * (columns + 1))
             cellWidth = totalWidth / columns
             layout.minimumInteritemSpacing = margin
             layout.minimumLineSpacing = margin
         } else {
+            layout.sectionInset = UIEdgeInsetsZero
             cellWidth = viewSize.width
             layout.minimumInteritemSpacing = 1
             layout.minimumLineSpacing = 1

@@ -45,23 +45,23 @@ public class NewPostViewController: CommentViewController {
         
         if let editingPost = editingPost {
             
-            let postable = editingPost as! Postable
+            var postable = editingPost as! Commentable
             hasSpoilers = postable.hasSpoilers
             
             if hasSpoilers {
-                spoilerTextView.text = postable.content
-                textView.text = postable.nonSpoilerContent
+                spoilerTextView.text = postable.spoilerContent
+                textView.text = postable.content
             } else {
                 textView.text = postable.content
             }
             
-            if let youtubeID = (editingPost as! Postable).youtubeID {
+            if let youtubeID = postable.youtubeID {
                 selectedVideoID = youtubeID
                 videoCountLabel.hidden = false
-            } else if let imageData = (editingPost as! Postable).images.last{
+            } else if let imageData = postable.imagesData?.last {
                 selectedImageData = imageData
                 photoCountLabel.hidden = false
-            } else if let linkData = (editingPost as! Postable).link {
+            } else if let linkData = postable.linkData {
                 selectedLinkData = linkData
                 linkCountLabel?.hidden = false
             }
@@ -171,7 +171,7 @@ public class NewPostViewController: CommentViewController {
                 post.replyLevel = 0
                 post.thread = thread!
             }
-            post.thread.incrementKey("replies")
+            post.thread.incrementReplyCount()
             post.thread.lastPostedBy = postedBy
                
             let postSaveTask = post.saveInBackground()
@@ -210,13 +210,13 @@ public class NewPostViewController: CommentViewController {
         }
     }
     
-    func updatePostable(var post: Postable, let edited: Bool) -> Postable {
+    func updatePostable(var post: Commentable, let edited: Bool) -> Commentable {
         if hasSpoilers {
-            post.content = spoilerTextView.text
-            post.nonSpoilerContent = textView.text
+            post.content = textView.text
+            post.spoilerContent = spoilerTextView.text
         } else {
             post.content = textView.text
-            post.nonSpoilerContent = nil
+            post.spoilerContent = nil
         }
         
         if !edited {
@@ -229,9 +229,9 @@ public class NewPostViewController: CommentViewController {
         post.hasSpoilers = hasSpoilers
         
         if let selectedImageData = selectedImageData {
-            post.images = [selectedImageData]
+            post.imagesData = [selectedImageData]
         } else {
-            post.images = []
+            post.imagesData = []
         }
         
         if let youtubeID = selectedVideoID {
@@ -241,9 +241,9 @@ public class NewPostViewController: CommentViewController {
         }
         
         if let linkData = selectedLinkData {
-            post.link = linkData
+            post.linkData = linkData
         } else {
-            post.link = nil
+            post.linkData = nil
         }
         
         return post
@@ -260,7 +260,7 @@ public class NewPostViewController: CommentViewController {
         self.sendButton.backgroundColor = UIColor.watching()
         self.sendButton.userInteractionEnabled = false
         
-        if var post = post as? Postable {
+        if var post = post as? Commentable {
             post = updatePostable(post, edited: true)
         }
         
@@ -272,7 +272,7 @@ public class NewPostViewController: CommentViewController {
     func validPost() -> Bool {
         let content = max(textView.text.characters.count, spoilerTextView.text.characters.count)
         // Validate post
-        if content < 2 {
+        if content < 2 && selectedImageData == nil && selectedVideoID == nil && selectedLinkData == nil {
             presentBasicAlertWithTitle("Too Short", message: "Message/spoiler should be 3 characters or longer")
             return false
         }

@@ -93,7 +93,7 @@ extension ForumViewController: UITableViewDataSource {
         
         cell.title.text = title
         let lastPostedByUsername = thread.lastPostedBy?.aozoraUsername ?? ""
-        cell.information.text = "\(thread.replies) comments · \(thread.updatedAt!.timeAgo()) · \(lastPostedByUsername)"
+        cell.information.text = "\(thread.replyCount) comments · \(thread.updatedAt!.timeAgo()) · \(lastPostedByUsername)"
         cell.layoutIfNeeded()
         return cell
     }

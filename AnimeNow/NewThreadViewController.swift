@@ -38,7 +38,7 @@ public class NewThreadViewController: CommentViewController {
             tags = [anime]
         }
         
-        if let thread = editingPost as? Thread {
+        if var thread = editingPost as? Thread {
             textView.text = thread.content
             threadTitle.text = thread.title
             tags = thread.tags
@@ -47,7 +47,7 @@ public class NewThreadViewController: CommentViewController {
                 selectedVideoID = youtubeID
                 videoCountLabel.hidden = false
                 photoCountLabel.hidden = true
-            } else if let imageData = thread.images.last{
+            } else if let imageData = thread.imagesData?.last {
                 selectedImageData = imageData
                 videoCountLabel.hidden = true
                 photoCountLabel.hidden = false
@@ -66,17 +66,18 @@ public class NewThreadViewController: CommentViewController {
         self.sendButton.backgroundColor = UIColor.watching()
         self.sendButton.userInteractionEnabled = false
         
-        let thread = Thread()
+        var thread = Thread()
         thread.edited = false
         thread.title = threadTitle.text!
         thread.content = textView.text
-        thread.replies = 0
+        var postable = thread as Postable
+        postable.replyCount = 0
         thread.tags = tags
         thread.subscribers = [postedBy!]
         thread.lastPostedBy = postedBy
         
         if let selectedImageData = selectedImageData {
-            thread.images = [selectedImageData]
+            thread.imagesData = [selectedImageData]
         }
         
         if let youtubeID = selectedVideoID {
@@ -102,16 +103,16 @@ public class NewThreadViewController: CommentViewController {
         self.sendButton.backgroundColor = UIColor.watching()
         self.sendButton.userInteractionEnabled = false
         
-        if let thread = post as? Thread {
+        if var thread = post as? Thread {
             thread.edited = true
             thread.title = threadTitle.text!
             thread.content = textView.text
             thread.tags = tags
             
             if let selectedImageData = selectedImageData {
-                thread.images = [selectedImageData]
+                thread.imagesData = [selectedImageData]
             } else {
-                thread.images = []
+                thread.imagesData = []
             }
             
             if let youtubeID = selectedVideoID {

@@ -15,6 +15,12 @@ import ANParseKit
 
 public class ProfileViewController: ThreadViewController {
     
+    enum SelectedFeed: Int {
+        case Feed = 0
+        case Popular
+        case Me
+    }
+    
     @IBOutlet weak var settingsButton: UIButton!
     @IBOutlet weak var notificationsButton: UIButton!
     
@@ -54,9 +60,9 @@ public class ProfileViewController: ThreadViewController {
         
         if userProfile == nil && username == nil {
             userProfile = User.currentUser()!
-            segmentedControl.selectedSegmentIndex = 0
+            segmentedControl.selectedSegmentIndex = SelectedFeed.Feed.rawValue
         } else {
-            segmentedControl.selectedSegmentIndex = 1
+            segmentedControl.selectedSegmentIndex = SelectedFeed.Me.rawValue
             tableBottomSpaceConstraint.constant = 0
         }
         
@@ -340,11 +346,17 @@ public class ProfileViewController: ThreadViewController {
         innerQuery.whereKey("replyLevel", equalTo: 0)
         innerQuery.orderByDescending("createdAt")
         
-        if segmentedControl.selectedSegmentIndex == 1 {
-            // 'Me' query
+        let selectedFeed = SelectedFeed(rawValue: segmentedControl.selectedSegmentIndex)!
+        switch selectedFeed {
+        case .Feed:
+            let followingQuery = userProfile!.following().query()
+            followingQuery.orderByDescending("activeStart")
+            followingQuery.limit = 1000
+            innerQuery.whereKey("userTimeline", matchesKey: "objectId", inQuery: followingQuery)
+        case .Popular:
+            break
+        case .Me:
             innerQuery.whereKey("userTimeline", equalTo: userProfile!)
-        } else {
-            innerQuery.whereKey("userTimeline", matchesQuery: userProfile!.following().query())
         }
         
         // 'Feed' query
@@ -378,7 +390,7 @@ public class ProfileViewController: ThreadViewController {
         
         if let parentPost = parentPost {
             // Inserting a new reply in-place
-            var parentPost = parentPost as! Postable
+            var parentPost = parentPost as! Commentable
             parentPost.replies.append(newPost)
             tableView.reloadData()
         } else if parentPost == nil {
