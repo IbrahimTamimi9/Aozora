@@ -24,6 +24,9 @@ public class EditProfileViewController: UIViewController {
     
     @IBOutlet weak var saveBBI: UIBarButtonItem!
     
+    @IBOutlet weak var formWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var scrollViewBottomSpaceConstraint: NSLayoutConstraint!
+    
     weak var delegate: EditProfileViewControllerProtocol?
     var user = User.currentUser()!
     var userProfileManager = UserProfileManager()
@@ -47,9 +50,49 @@ public class EditProfileViewController: UIViewController {
         emailTextField.text = user.email
         user.details.fetchIfNeededInBackgroundWithBlock({ (details, error) -> Void  in
             if let details = details as? UserDetails {
+                self.formWidthConstraint.constant = self.view.bounds.size.width
+                
                 self.aboutTextView.text = details.about
+                self.aboutTextView.sizeToFit()
+                
+                self.view.layoutIfNeeded()
             }
         })
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    // MARK: - NSNotificationCenter
+    
+    func keyboardWillShow(notification: NSNotification) {
+        let userInfo = notification.userInfo! as NSDictionary
+        
+        let endFrameValue = userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue
+        let keyboardEndFrame = view.convertRect(endFrameValue.CGRectValue(), fromView: nil)
+        
+        updateInputForHeight(keyboardEndFrame.size.height)
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        updateInputForHeight(0)
+    }
+    
+    // MARK: - Functions
+    
+    func updateInputForHeight(height: CGFloat) {
+        
+        scrollViewBottomSpaceConstraint.constant = height
+        
+        view.setNeedsUpdateConstraints()
+        
+        UIView.animateWithDuration(0.25, delay: 0.0, options: .CurveEaseOut, animations: {
+            self.view.layoutIfNeeded()
+            }, completion: nil)
     }
     
     // MARK: - IBAction
@@ -103,8 +146,10 @@ extension EditProfileViewController: UserProfileManagerDelegate {
     }
 }
 
-extension EditProfileViewController: ModalTransitionScrollable {
-    public var transitionScrollView: UIScrollView? {
-        return aboutTextView
+extension EditProfileViewController: UITextViewDelegate {
+    public func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        textView.sizeToFit()
+        view.layoutIfNeeded()
+        return true
     }
 }

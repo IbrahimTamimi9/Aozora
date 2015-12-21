@@ -542,7 +542,7 @@ public class ProfileViewController: ThreadViewController {
                 if UIDevice.isPad() {
                     self.presentSmallViewController(editProfileController, sender: sender)
                 } else {
-                    self.animator = self.presentViewControllerModal(editProfileController)
+                    self.presentViewController(editProfileController, animated: true, completion: nil)
                 }
             }))
             
