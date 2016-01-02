@@ -298,17 +298,17 @@ extension ThreadViewController: UITableViewDataSource {
         // Text content
         var textContent = ""
         if let content = post.content {
-            textContent = content+"\n\n"
+            textContent = content
         }
         
         // Setting images and youtube
         if post.hasSpoilers && post.isSpoilerHidden {
-            textContent += "(Show Spoilers)"
+            textContent += "\n\n(Show Spoilers)"
             cell.imageHeightConstraint?.constant = 0
             cell.playButton?.hidden = true
         } else {
             if let spoilerContent = post.spoilerContent {
-                textContent += spoilerContent
+                textContent += "\n\n\(spoilerContent)"
             }
             setImages(post.imagesData, imageView: cell.imageContent, imageHeightConstraint: cell.imageHeightConstraint)
             prepareForVideo(cell.playButton, imageView: cell.imageContent, imageHeightConstraint: cell.imageHeightConstraint, youtubeID: post.youtubeID)
