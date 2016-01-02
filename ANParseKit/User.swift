@@ -126,7 +126,21 @@ public class User: PFUser {
     
     // Muting
     public class func muted(viewController: UIViewController) -> Bool {
-        guard let currentUser = User.currentUser(), let muteDate = currentUser.details.mutedUntil else {
+        
+        
+        guard let currentUser = User.currentUser() else {
+            return false
+        }
+        
+        var mutedUntil: NSDate?
+        
+        do {
+            let details = try currentUser.details.fetchIfNeeded()
+            mutedUntil = details.mutedUntil
+            
+        } catch _ { }
+        
+        guard let muteDate = mutedUntil else {
             return false
         }
         
