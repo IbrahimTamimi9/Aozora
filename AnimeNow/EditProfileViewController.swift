@@ -53,8 +53,6 @@ public class EditProfileViewController: UIViewController {
                 self.formWidthConstraint.constant = self.view.bounds.size.width
                 
                 self.aboutTextView.text = details.about
-                self.aboutTextView.sizeToFit()
-                
                 self.view.layoutIfNeeded()
             }
         })
@@ -148,7 +146,6 @@ extension EditProfileViewController: UserProfileManagerDelegate {
 
 extension EditProfileViewController: UITextViewDelegate {
     public func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
-        textView.sizeToFit()
         view.layoutIfNeeded()
         return true
     }
