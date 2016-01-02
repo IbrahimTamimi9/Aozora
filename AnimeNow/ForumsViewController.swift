@@ -262,6 +262,8 @@ extension ForumsViewController: UITableViewDataSource {
             cell.typeLabel.text = " "
         } else if thread.locked {
             cell.typeLabel.text = " "
+        } else if let _ = thread.youtubeID {
+            cell.typeLabel.text = " "
         } else {
             cell.typeLabel.text = ""
         }
