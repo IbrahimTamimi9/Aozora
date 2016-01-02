@@ -229,6 +229,10 @@ extension EpisodesViewController: EpisodeCellDelegate {
 
 extension EpisodesViewController: DropDownListDelegate {
     func selectedAction(trigger: UIView, action: String, indexPath: NSIndexPath) {
+        if dataSource.isEmpty {
+            return
+        }
+        
         switch indexPath.row {
         case 0:
             // Go to top
@@ -242,7 +246,7 @@ extension EpisodesViewController: DropDownListDelegate {
             // Go to bottom
             self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forRow: dataSource.count - 1, inSection: 0), atScrollPosition: UICollectionViewScrollPosition.Bottom, animated: true)
         default:
-            break;
+            break
         }
     }
     

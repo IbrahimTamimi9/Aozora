@@ -135,7 +135,10 @@ public class CustomThreadViewController: ThreadViewController {
         
         // TODO: Merge this repeated code
         if let startedBy = thread.startedBy {
-            avatar.setImageWithPFFile(startedBy.avatarThumb!)
+            if let avatarThumb = startedBy.avatarThumb {
+                avatar.setImageWithPFFile(avatarThumb)
+            }
+            
             username.text = startedBy.aozoraUsername
             onlineIndicator.hidden = !startedBy.active
             var postedAt = thread.createdAt!.timeAgo()

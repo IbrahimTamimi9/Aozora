@@ -181,7 +181,7 @@ public class ThreadViewController: UIViewController {
             return
         }
         
-        if let post = post as? PFObject {
+        if let post = post as? PFObject where !post.dirty {
             let likedBy = (post as! Commentable).likedBy ?? []
             let currentUser = User.currentUser()!
             if likedBy.contains(currentUser) {

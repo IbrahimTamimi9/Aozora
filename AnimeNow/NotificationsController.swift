@@ -57,6 +57,7 @@ class NotificationsController {
             query.includeKey("thread.tags")
             query.includeKey("thread.anime")
             query.includeKey("thread.episode")
+            query.includeKey("thread.startedBy")
             query.limit = 1
             return query.findObjectsInBackground()
                 .continueWithExecutor(BFExecutor.mainThreadExecutor(), withBlock: { (task: BFTask!) -> AnyObject? in
