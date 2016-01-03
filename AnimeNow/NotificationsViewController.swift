@@ -103,18 +103,21 @@ extension NotificationsViewController: UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("NotificationCell") as! BasicTableCell
         
-
         if notification.lastTriggeredBy.isTheCurrentUser() {
             var selectedUser = notification.lastTriggeredBy
             for user in notification.triggeredBy where !user.isTheCurrentUser() {
                 selectedUser = user
                 break
             }
-            cell.titleimageView.setImageWithPFFile(selectedUser.avatarThumb!)
+            if let avatarThumb = selectedUser.avatarThumb {
+                cell.titleimageView.setImageWithPFFile(avatarThumb)
+            }
+            
         } else {
-            cell.titleimageView.setImageWithPFFile(notification.lastTriggeredBy.avatarThumb!)
+            if let avatarThumb = notification.lastTriggeredBy.avatarThumb {
+                cell.titleimageView.setImageWithPFFile(avatarThumb)
+            }
         }
-        
 
         if notification.owner.isTheCurrentUser() {
             cell.titleLabel.text = notification.messageOwner

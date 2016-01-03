@@ -30,7 +30,7 @@ class SearchViewController: UIViewController {
             collectionView.reloadData()
         }
     }
-    var currentCancellationToken: NSOperation?
+    var currentOperation = NSOperation()
     var initialSearchScope: SearchScope!
     
     func initWithSearchScope(searchScope: SearchScope) {
@@ -76,11 +76,9 @@ class SearchViewController: UIViewController {
         collectionView.reloadItemsAtIndexPaths(indexPaths)
     }
     
-    func fetchAnimeWithQuery(text: String, cancellationToken: NSOperation) {
-    
-        currentCancellationToken = cancellationToken
+    func fetchDataWithQuery(text: String, searchScope: SearchScope) {
         
-        if searchBar.selectedScopeButtonIndex == SearchScope.MyLibrary.rawValue {
+        if searchScope == .MyLibrary {
             
             guard let library = LibraryController.sharedInstance.library else {
                 return
@@ -107,14 +105,8 @@ class SearchViewController: UIViewController {
         
         var query: PFQuery!
         
-        switch searchBar.selectedScopeButtonIndex {
-        case SearchScope.Users.rawValue:
-            query = User.query()!
-            query.limit = 40
-            query.whereKey("aozoraUsername", matchesRegex: text, modifiers: "i")
-            query.orderByAscending("aozoraUsername")
-            
-        case SearchScope.AllAnime.rawValue:
+        switch searchScope {
+        case .AllAnime:
             let query1 = Anime.query()!
             query1.whereKey("title", matchesRegex: text, modifiers: "i")
             
@@ -127,7 +119,13 @@ class SearchViewController: UIViewController {
             
             query = orQuery
             
-        case SearchScope.Forum.rawValue:
+        case .Users:
+            query = User.query()!
+            query.limit = 40
+            query.whereKey("aozoraUsername", matchesRegex: text, modifiers: "i")
+            query.orderByAscending("aozoraUsername")
+            
+        case .Forum:
             query = Thread.query()!
             query.limit = 40
             query.whereKey("title", matchesRegex: text, modifiers: "i")
@@ -139,22 +137,39 @@ class SearchViewController: UIViewController {
             break
         }
         
-        query.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
-            if !cancellationToken.cancelled && result != nil {
-                if let anime = result as? [Anime] {
-                    LibrarySyncController.matchAnimeWithProgress(anime)
-                    self.dataSource = anime
+        currentOperation.cancel()
+        let newOperation = NSOperation()
+        
+        dispatch_after_delay(0.4, queue: dispatch_get_main_queue()) { _ in
             
-                } else if let users = result as? [User] {
-                    self.dataSource = users
-                } else if let threads = result as? [Thread] {
-                    self.dataSource = threads
-                }
+            if newOperation.cancelled == true {
+                return
             }
             
-            self.loadingView.stopAnimating()
-            self.collectionView.animateFadeIn()
-        })
+            query.findObjectsInBackgroundWithBlock({ (result, error) -> Void in
+                print("fetched! \(text)")
+                if result != nil {
+                    if let anime = result as? [Anime] {
+                        LibrarySyncController.matchAnimeWithProgress(anime)
+                        self.dataSource = anime
+                    } else if let users = result as? [User] {
+                        self.dataSource = users
+                    } else if let threads = result as? [Thread] {
+                        self.dataSource = threads
+                    }
+                }
+                
+                self.loadingView.stopAnimating()
+                self.collectionView.animateFadeIn()
+            })
+        }
+        
+        currentOperation = newOperation
+    }
+    
+    func dispatch_after_delay(delay: NSTimeInterval, queue: dispatch_queue_t, block: dispatch_block_t) {
+        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay * Double(NSEC_PER_SEC)))
+        dispatch_after(time, queue, block)
     }
 }
 
@@ -236,23 +251,31 @@ extension SearchViewController: UICollectionViewDelegateFlowLayout {
 extension SearchViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        if let cancelToken = currentCancellationToken {
-            cancelToken.cancel()
-        }
-        
-        fetchAnimeWithQuery(searchBar.text!, cancellationToken: NSOperation())
+        startNewFetch()
         view.endEditing(true)
         searchBar.enableCancelButton()
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchBar.selectedScopeButtonIndex == SearchScope.MyLibrary.rawValue {
-            fetchAnimeWithQuery(searchBar.text!, cancellationToken: NSOperation())
-        }
+        startNewFetch()
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func searchBar(searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        startNewFetch()
+    }
+    
+    func startNewFetch() {
+        
+        guard let query = searchBar.text,
+            let searchScope = SearchScope(rawValue: searchBar.selectedScopeButtonIndex) where query.characters.count > 0 else {
+            return
+        }
+        
+        fetchDataWithQuery(query, searchScope: searchScope)
     }
     
 }
