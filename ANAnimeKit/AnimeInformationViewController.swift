@@ -187,15 +187,19 @@ public class AnimeInformationViewController: AnimeBaseViewController {
             imageString = anime.imageUrl
         }
         
-        let imageURL = NSURL(string: imageString)
+        guard let imageURL = NSURL(string: imageString) else {
+            return
+        }
         presentImageViewController(fanartImageView, imageUrl: imageURL)
     }
     
     @IBAction func showPoster(sender: AnyObject) {
         
         let hdImage = anime.imageUrl.stringByReplacingOccurrencesOfString(".jpg", withString: "l.jpg")
-        let imageURL = NSURL(string: hdImage)
-        presentImageViewController(posterImageView, imageUrl: imageURL!)
+        guard let imageURL = NSURL(string: hdImage) else {
+            return
+        }
+        presentImageViewController(posterImageView, imageUrl: imageURL)
     }
    
     
