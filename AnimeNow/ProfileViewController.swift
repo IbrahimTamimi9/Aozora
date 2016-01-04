@@ -487,8 +487,12 @@ public class ProfileViewController: ThreadViewController {
                 self.animator = self.presentViewControllerModal(navVC)
             }
         }))
+        
+        guard let currentUser = User.currentUser() else {
+            return
+        }
     
-        if User.currentUser()!.isAdmin() && !userProfile!.isAdmin() {
+        if currentUser.isAdmin() && !userProfile!.isAdmin() || currentUser.isTopAdmin() {
         
             guard let userProfile = userProfile else {
                 return

@@ -493,7 +493,7 @@ extension ThreadViewController: UITableViewDelegate {
             return
         }
         
-        let administrating = currentUser.isAdmin() && !postedBy.isAdmin()
+        let administrating = currentUser.isAdmin() && !postedBy.isAdmin() || currentUser.isTopAdmin()
         if let postedBy = post.postedBy where postedBy.isTheCurrentUser() ||
             // Current user is admin and posted by non-admin user
             administrating {

@@ -792,7 +792,6 @@
         <!--Notifications-->
         <scene sceneID="3Ui-F2-DaQ">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="H1g-1S-BKu" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController storyboardIdentifier="NotificationNav" useStoryboardIdentifierAsRestorationIdentifier="YES" id="k9H-KC-pDk" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Notifications" image="icon-reminder" id="1f5-O6-P9A"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
@@ -804,13 +803,13 @@
                         <segue destination="BV2-hV-SI6" kind="relationship" relationship="rootViewController" id="IeQ-y3-eMa"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="H1g-1S-BKu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2136" y="1233.75"/>
+            <point key="canvasLocation" x="811" y="1913"/>
         </scene>
         <!--Notifications-->
         <scene sceneID="CqE-DF-zuE">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="7W9-e8-N0w" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="Notifications" title="Notifications" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BV2-hV-SI6" customClass="NotificationsViewController" customModule="Aozora" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="c7a-ob-NOH"/>
@@ -946,7 +945,7 @@
                                 </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" red="0.97254902124404907" green="0.97254902124404907" blue="0.97254902124404907" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.89411765336990356" green="0.89411765336990356" blue="0.89411765336990356" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="7sw-OS-xHO" firstAttribute="leading" secondItem="dfV-71-Fg0" secondAttribute="leading" id="DA6-kh-4ER"/>
                             <constraint firstItem="7sw-OS-xHO" firstAttribute="top" secondItem="c7a-ob-NOH" secondAttribute="bottom" id="d8O-46-H2H"/>
@@ -974,8 +973,9 @@
                         <outlet property="tableView" destination="7sw-OS-xHO" id="WDP-cr-xyP"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7W9-e8-N0w" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2780.25" y="1233.75"/>
+            <point key="canvasLocation" x="1487" y="1913"/>
         </scene>
     </scenes>
     <resources>

@@ -86,7 +86,11 @@ public class User: PFUser {
     }
     
     public func isAdmin() -> Bool {
-        return badges.contains("Admin")
+        return badges.contains("Admin") || isTopAdmin()
+    }
+    
+    public func isTopAdmin() -> Bool {
+        return badges.contains("Top Admin")
     }
     
     // Don't ever name the function isCurrentUser it will conflict with Parse framework

@@ -147,8 +147,13 @@ public class CustomThreadViewController: ThreadViewController {
             }
             postedDate.text = postedAt
             
-            let administrating = User.currentUser()?.isAdmin() ?? false && !startedBy.isAdmin()
-            moreButton.hidden = startedBy != User.currentUser() ?? false && !administrating
+            guard let currentUser = User.currentUser() else {
+                return
+            }
+            
+            let administrating = currentUser.isAdmin() && !startedBy.isAdmin() || currentUser.isTopAdmin()
+            
+            moreButton.hidden = startedBy != currentUser ?? false && !administrating
         }
         
         setImages(thread.imagesData, imageView: imageContent, imageHeightConstraint: imageHeightConstraint)
@@ -325,7 +330,10 @@ public class CustomThreadViewController: ThreadViewController {
     @IBAction func editThread(sender: AnyObject) {
         if let thread = thread {
             
-            let administrating = User.currentUser()!.isAdmin() && !thread.startedBy!.isAdmin()
+            guard let currentUser = User.currentUser() else {
+                return
+            }
+            let administrating = currentUser.isAdmin() && !thread.startedBy!.isAdmin() || currentUser.isTopAdmin()
             
             let alert: UIAlertController!
             
