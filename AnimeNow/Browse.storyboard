@@ -27,8 +27,8 @@
                         <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="GXC-PI-vMA">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="GXC-PI-vMA">
+                                <rect key="frame" x="0.0" y="-64" width="600" height="600"/>
                                 <color key="backgroundColor" red="0.89411764709999997" green="0.89411764709999997" blue="0.89411764709999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="0.0" id="sow-zA-HFa">
                                     <size key="itemSize" width="340" height="132"/>
@@ -42,14 +42,14 @@
                                     <outlet property="delegate" destination="YRA-9j-0wW" id="NHQ-E2-DbC"/>
                                 </connections>
                             </collectionView>
-                            <view hidden="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hEl-5h-6PJ" userLabel="FilterBar">
-                                <rect key="frame" x="-1" y="40" width="601" height="64"/>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hEl-5h-6PJ" userLabel="FilterBar">
+                                <rect key="frame" x="0.0" y="-24" width="600" height="64"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VFf-lK-T1n">
                                         <rect key="frame" x="0.0" y="24" width="600" height="40"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="FILTER" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i7D-lX-Vhf">
-                                                <rect key="frame" x="8" y="15" width="40.5" height="12.5"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FILTER" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i7D-lX-Vhf">
+                                                <rect key="frame" x="8" y="14" width="40.5" height="12.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="17" id="DAW-En-Qjr"/>
                                                 </constraints>
@@ -62,8 +62,8 @@
                                                     </mask>
                                                 </variation>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="None" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9gm-pf-kWJ">
-                                                <rect key="frame" x="55" y="13" width="32.5" height="16"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="None" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9gm-pf-kWJ">
+                                                <rect key="frame" x="56" y="12" width="32.5" height="16"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                 <color key="textColor" red="0.89411765336990356" green="0.89411765336990356" blue="0.89411765336990356" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -92,7 +92,7 @@
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="GXC-PI-vMA" secondAttribute="trailing" id="Aax-6h-8uo"/>
                             <constraint firstItem="hEl-5h-6PJ" firstAttribute="leading" secondItem="iRo-PT-lV4" secondAttribute="leading" id="HbG-3u-d31"/>
-                            <constraint firstItem="1Rg-vb-Unz" firstAttribute="top" secondItem="GXC-PI-vMA" secondAttribute="bottom" constant="-49" id="SQs-Qa-DbZ"/>
+                            <constraint firstItem="1Rg-vb-Unz" firstAttribute="top" secondItem="GXC-PI-vMA" secondAttribute="bottom" id="SQs-Qa-DbZ"/>
                             <constraint firstItem="GXC-PI-vMA" firstAttribute="leading" secondItem="iRo-PT-lV4" secondAttribute="leading" id="f0q-gh-pme"/>
                             <constraint firstItem="GXC-PI-vMA" firstAttribute="top" secondItem="LH5-rv-kyi" secondAttribute="bottom" constant="-64" id="i8r-5W-Y9E"/>
                             <constraint firstItem="hEl-5h-6PJ" firstAttribute="top" secondItem="LH5-rv-kyi" secondAttribute="bottom" constant="-24" id="jpR-OY-Btd"/>
@@ -136,7 +136,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uHl-y0-C4v" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="938" y="465"/>
+            <point key="canvasLocation" x="938" y="412"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="T68-KA-WLG">
