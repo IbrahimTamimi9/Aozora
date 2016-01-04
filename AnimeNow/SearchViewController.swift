@@ -30,6 +30,8 @@ class SearchViewController: UIViewController {
             collectionView.reloadData()
         }
     }
+    var emptyDataSource: [[AnyObject]] = [[],[],[],[]]
+
     var currentOperation = NSOperation()
     var initialSearchScope: SearchScope!
     
@@ -55,6 +57,8 @@ class SearchViewController: UIViewController {
         searchBar.becomeFirstResponder()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateETACells", name: LibraryUpdatedNotification, object: nil)
+        
+        emptyDataSource[0] = BrowseType.allItems()
     }
 
     override func viewWillDisappear(animated: Bool) {
@@ -140,7 +144,7 @@ class SearchViewController: UIViewController {
         currentOperation.cancel()
         let newOperation = NSOperation()
         
-        dispatch_after_delay(0.4, queue: dispatch_get_main_queue()) { _ in
+        dispatch_after_delay(0.6, queue: dispatch_get_main_queue()) { _ in
             
             if newOperation.cancelled == true {
                 return
@@ -174,13 +178,19 @@ class SearchViewController: UIViewController {
 }
 
 extension SearchViewController: UICollectionViewDataSource {
+    
+    func objectAtIndex(indexPath: NSIndexPath) -> AnyObject {
+        return dataSource.count > 0 ? dataSource[indexPath.row] : emptyDataSource[searchBar.selectedScopeButtonIndex][indexPath.row]
+    }
+    
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dataSource.count
+        return dataSource.count > 0 ? dataSource.count : emptyDataSource[searchBar.selectedScopeButtonIndex].count
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
-        let object = dataSource[indexPath.row]
+        let object = objectAtIndex(indexPath)
+        
         if let anime = object as? Anime {
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier(AnimeCell.id, forIndexPath: indexPath) as! AnimeCell
             cell.configureWithAnime(anime)
@@ -200,6 +210,11 @@ extension SearchViewController: UICollectionViewDataSource {
             cell.titleLabel.text = thread.title
             cell.layoutIfNeeded()
             return cell
+        } else if let string = object as? String {
+            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ThreadCell", forIndexPath: indexPath) as! BasicCollectionCell
+            cell.titleLabel.text = string
+            cell.layoutIfNeeded()
+            return cell
         }
         
         return UICollectionViewCell()
@@ -209,7 +224,8 @@ extension SearchViewController: UICollectionViewDataSource {
 extension SearchViewController: UICollectionViewDelegate {
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
-        let object = dataSource[indexPath.row]
+        let object = objectAtIndex(indexPath)
+        
         if let anime = object as? Anime {
             self.animator = presentAnimeModal(anime)
         } else if let user = object as? User {
@@ -229,6 +245,13 @@ extension SearchViewController: UICollectionViewDelegate {
                 threadController.interstitialPresentationPolicy = .Automatic
             }
             navigationController?.pushViewController(threadController, animated: true)
+        } else if let string = object as? String {
+            guard let browse = UIStoryboard(name: "Browse", bundle: nil).instantiateViewControllerWithIdentifier("Browse") as? BrowseViewController,
+                let browseType = BrowseType(rawValue: string) else {
+                return
+            }
+            browse.currentBrowseType = browseType
+            navigationController?.pushViewController(browse, animated: true)
         }
     }
 }
@@ -236,14 +259,18 @@ extension SearchViewController: UICollectionViewDelegate {
 extension SearchViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        let object = dataSource[indexPath.row]
+        let object = objectAtIndex(indexPath)
+        
         if let _ = object as? Anime {
             return CGSize(width: view.bounds.size.width, height: 132)
         } else if let _ = object as? User {
             return CGSize(width: view.bounds.size.width, height: 44)
         } else if let _ = object as? Thread {
             return CGSize(width: view.bounds.size.width, height: 44)
+        } else if let _ = object as? String {
+            return CGSize(width: view.bounds.size.width, height: 44)
         }
+        
         return CGSizeZero
     }
 }
@@ -266,6 +293,7 @@ extension SearchViewController: UISearchBarDelegate {
     
     func searchBar(searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
         startNewFetch()
+        collectionView.reloadData()
     }
     
     func startNewFetch() {
@@ -277,7 +305,6 @@ extension SearchViewController: UISearchBarDelegate {
         
         fetchDataWithQuery(query, searchScope: searchScope)
     }
-    
 }
 
 extension SearchViewController: UINavigationBarDelegate {

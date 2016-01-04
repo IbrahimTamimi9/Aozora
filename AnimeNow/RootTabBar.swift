@@ -14,14 +14,15 @@ public class RootTabBar: UITabBarController {
     public static let ShowedMyAnimeListLoginDefault = "Defaults.ShowedMyAnimeListLogin"
     
     var selectedDefaultTabOnce = false
+    var chechedForNotificationsOnce = false
     
     override public func viewDidLoad() {
         super.viewDidLoad()
         // Load library
         LibraryController.sharedInstance.fetchAnimeList(false)
-        
         delegate = self
     }
+    
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -44,6 +45,39 @@ public class RootTabBar: UITabBarController {
         }
     }
     
+    public override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        if !chechedForNotificationsOnce {
+            chechedForNotificationsOnce = true
+            checkIfThereAreNotifications()
+        }
+    }
+    
+    func newNotifications(count: Int) {
+        var result: String? = nil
+        if count > 0 {
+            result = "\(count)"
+        }
+        
+        tabBar.items?[3].badgeValue = result
+    }
+    
+    func checkIfThereAreNotifications() {
+        if let navController = viewControllers![3] as? UINavigationController,
+            let notificationVC = navController.viewControllers.first as? NotificationsViewController {
+            notificationVC.fetchNotifications()
+        }
+    }
+}
+
+// MARK: - NotificationsViewControllerDelegate
+extension RootTabBar: NotificationsViewControllerDelegate {
+    func notificationsViewControllerHasUnreadNotifications(count: Int) {
+        newNotifications(count)
+    }
+    func notificationsViewControllerClearedAllNotifications() {
+        newNotifications(0)
+    }
 }
 
 extension RootTabBar: UITabBarControllerDelegate {

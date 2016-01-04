@@ -22,7 +22,6 @@ public class ProfileViewController: ThreadViewController {
     }
     
     @IBOutlet weak var settingsButton: UIButton!
-    @IBOutlet weak var notificationsButton: UIButton!
     
     @IBOutlet weak var userAvatar: UIImageView!
     @IBOutlet weak var usernameLabel: UILabel!
@@ -71,10 +70,6 @@ public class ProfileViewController: ThreadViewController {
         aboutLabel.delegate = self;
         
         fetchPosts()
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "newNotifications", name: "newNotification", object: nil)
-        
-        checkIfThereAreNotifications()
     }
     
     public override func viewWillAppear(animated: Bool) {
@@ -89,16 +84,10 @@ public class ProfileViewController: ThreadViewController {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
-    func newNotifications() {
-        notificationsButton.setTitle("", forState: .Normal)
-    }
-    
-    func noNewNotifications() {
-        notificationsButton.setTitle("", forState: .Normal)
-    }
-    
     func sizeHeaderToFit() {
-        let header = tableView.tableHeaderView!
+        guard let header = tableView.tableHeaderView else {
+            return
+        }
         
         if let userProfile = userProfile where !userProfile.isTheCurrentUser() {
             segmentedControlHeight.constant = 0
@@ -118,28 +107,7 @@ public class ProfileViewController: ThreadViewController {
         tableView.tableHeaderView = header
     }
     
-    func checkIfThereAreNotifications() {
-        // TODO: Fix this mess with notificationsViewController
-        let query = Notification.query()!
-        query.limit = 50
-        query.includeKey("readBy")
-        query.includeKey("triggeredBy")
-        query.whereKey("subscribers", containedIn: [User.currentUser()!])
-        query.orderByDescending("lastUpdatedAt")
-        query.findObjectsInBackgroundWithBlock { (result, error) -> Void in
-            if let result = result as? [Notification] {
-                let unreadNotifications = result.filter { (notification: PFObject) -> Bool in
-                    let notification = notification as! Notification
-                    return !notification.readBy.contains(User.currentUser()!) && (notification.triggeredBy.count > 1 || (notification.triggeredBy.count == 1 && notification.triggeredBy.last != User.currentUser()!))
-                }
-                if unreadNotifications.count == 0 {
-                    self.noNewNotifications()
-                } else {
-                    self.newNotifications()
-                }
-            }
-        }
-    }
+    
     
     // MARK: - Fetching
     
@@ -256,14 +224,12 @@ public class ProfileViewController: ThreadViewController {
         
         if User.currentUserIsGuest() {
             followButton.hidden = true
-            notificationsButton.hidden = true
             settingsButton.hidden = true
         } else if user.isTheCurrentUser() {
             followButton.hidden = true
             settingsTrailingSpaceConstraint.constant = -10
         } else {
             followButton.hidden = false
-            notificationsButton.hidden = true
         }
         
         var hasABadge = false
@@ -580,12 +546,6 @@ public class ProfileViewController: ThreadViewController {
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler:nil))
         self.presentViewController(alert, animated: true, completion: nil)
     }
-    
-    @IBAction func showNotifications(sender: AnyObject) {
-        let notificationsVC = UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("Notifications") as! NotificationsViewController
-        notificationsVC.delegate = self
-        presentSmallViewController(notificationsVC, sender: sender)
-    }
 }
 
 // MARK: - EditProfileViewControllerProtocol
@@ -597,9 +557,4 @@ extension ProfileViewController: EditProfileViewControllerProtocol {
     }
 }
 
-// MARK: - NotificationsViewControllerDelegate
-extension ProfileViewController: NotificationsViewControllerDelegate {
-    func notificationsViewControllerClearedAllNotifications() {
-        noNewNotifications()
-    }
-}
+

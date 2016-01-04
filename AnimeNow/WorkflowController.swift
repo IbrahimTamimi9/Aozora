@@ -17,11 +17,17 @@ class WorkflowController {
         let seasons = UIStoryboard(name: "Season", bundle: nil).instantiateInitialViewController() as! UINavigationController
         let library = UIStoryboard(name: "Library", bundle: nil).instantiateInitialViewController() as! UINavigationController
         let (profile, _) = ANAnimeKit.profileViewController()
+        let notifications = UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("NotificationNav") as! UINavigationController
+        let notificationVC = notifications.viewControllers.first as! NotificationsViewController
+        
+        
         let forum = UIStoryboard(name: "Forums", bundle: nil).instantiateInitialViewController() as! UINavigationController
-        let browse = UIStoryboard(name: "Browse", bundle: nil).instantiateInitialViewController() as! UINavigationController
         
         let tabBarController = RootTabBar()
-        tabBarController.viewControllers = [seasons, library, profile, forum, browse]
+        
+        notificationVC.delegate = tabBarController
+        
+        tabBarController.viewControllers = [seasons, library, profile, notifications, forum]
         
         if animated {
             changeRootViewController(tabBarController, animationDuration: 0.5)

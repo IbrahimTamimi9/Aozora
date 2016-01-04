@@ -11,6 +11,7 @@ import ANCommonKit
 import ANParseKit
 
 protocol NotificationsViewControllerDelegate: class {
+    func notificationsViewControllerHasUnreadNotifications(count: Int)
     func notificationsViewControllerClearedAllNotifications()
 }
 
@@ -25,7 +26,6 @@ class NotificationsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchNotifications()
         title = "Notifications"
         tableView.estimatedRowHeight = 112.0
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -43,18 +43,7 @@ class NotificationsViewController: UIViewController {
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        if isMovingFromParentViewController() {
-            let unreadNotifications = fetchController.dataSource.filter { (notification: PFObject) -> Bool in
-                let notification = notification as! Notification
-                return !notification.readBy.contains(User.currentUser()!)
-            }
-            
-            if unreadNotifications.count == 0 {
-                delegate?.notificationsViewControllerClearedAllNotifications()
-            }
-        } else {
-            tableView.userInteractionEnabled = true
-        }
+        tableView.userInteractionEnabled = true
     }
     
     func fetchNotifications() {
@@ -85,6 +74,26 @@ class NotificationsViewController: UIViewController {
             PFObject.saveAllInBackground(unreadNotifications)
             tableView.reloadData()
         }
+        
+        delegate?.notificationsViewControllerClearedAllNotifications()
+    }
+    
+    func updateUnreadNotifications() {
+        guard let currentUser = User.currentUser() else {
+            return
+        }
+        
+        var unreadNotifications = 0
+        for index in 0..<fetchController.dataCount() {
+            guard let notification = fetchController.objectAtIndex(index) as? Notification else {
+                continue
+            }
+            if !notification.readBy.contains(currentUser) {
+                unreadNotifications += 1
+            }
+        }
+        
+        delegate?.notificationsViewControllerHasUnreadNotifications(unreadNotifications)
     }
     
     @IBAction func dismissViewController(sender: AnyObject) {
@@ -150,7 +159,7 @@ extension NotificationsViewController: UITableViewDelegate {
             tableView.reloadData()
         }
         
-        // Temporal fix to prevent opening the notification twice
+        // Prevents opening the notification twice
         tableView.userInteractionEnabled = false
         NotificationsController
             .handleNotification(notification.objectId!, objectClass: notification.targetClass, objectId: notification.targetID, returnAnimator: true)
@@ -161,6 +170,8 @@ extension NotificationsViewController: UITableViewDelegate {
             }
             return nil
         }
+        
+        updateUnreadNotifications()
     }
 }
 
@@ -179,7 +190,7 @@ extension NotificationsViewController: FetchControllerQueryDelegate {
 
 extension NotificationsViewController: FetchControllerDelegate {
     func didFetchFor(skip skip: Int) {
-        
+        updateUnreadNotifications()
     }
 }
 

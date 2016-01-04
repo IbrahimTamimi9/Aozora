@@ -58,6 +58,7 @@ class BrowseViewController: UIViewController {
     
     @IBOutlet weak var navigationBarTitle: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var navigationBarTitleView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,7 +66,7 @@ class BrowseViewController: UIViewController {
         AnimeCell.registerNibFor(collectionView: collectionView)
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "changeSeasonalChart")
-        navigationController?.navigationBar.addGestureRecognizer(tapGestureRecognizer)
+        navigationBarTitleView.addGestureRecognizer(tapGestureRecognizer)
         
         loadingView = LoaderView(parentView: view)
         
@@ -73,6 +74,8 @@ class BrowseViewController: UIViewController {
         updateLayout(withSize: view.bounds.size)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateETACells", name: LibraryUpdatedNotification, object: nil)
+        
+        navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -168,30 +171,21 @@ class BrowseViewController: UIViewController {
     }
     
     func changeSeasonalChart() {
-        if let bar = navigationController?.navigationBar {         
-            DropDownListViewController.showDropDownListWith(sender: bar, viewController: tabBarController!, delegate: self, dataSource: [BrowseType.allItems()])
+        if let navigationController = navigationController {
+            DropDownListViewController.showDropDownListWith(sender: navigationController.navigationBar, viewController: navigationController, delegate: self, dataSource: [BrowseType.allItems()])
         }
     }
     
     // MARK: - IBActions
     
-    @IBAction func presentSearchPressed(sender: AnyObject) {
-        
-        if let tabBar = tabBarController {
-            let (navigation, controller) = ANAnimeKit.searchViewController()
-            controller.initWithSearchScope(SearchViewController.SearchScope.AllAnime)
-            tabBar.presentViewController(navigation, animated: true, completion: nil)
-        }
-    }
-    
     @IBAction func showFilterPressed(sender: AnyObject) {
         
-        if let tabBar = tabBarController {
+        if let navigationController = navigationController {
             let controller = UIStoryboard(name: "Browse", bundle: nil).instantiateViewControllerWithIdentifier("Filter") as! FilterViewController
             
             controller.delegate = self
             controller.initWith(configuration: currentConfiguration, selectedGenres: selectedGenres)
-            animator = tabBar.presentViewControllerModal(controller)
+            animator = navigationController.presentViewControllerModal(controller)
         }   
     }
 }
