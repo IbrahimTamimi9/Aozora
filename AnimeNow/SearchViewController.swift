@@ -58,7 +58,9 @@ class SearchViewController: UIViewController {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateETACells", name: LibraryUpdatedNotification, object: nil)
         
-        emptyDataSource[0] = BrowseType.allItems()
+        var allBrowseTypes = BrowseType.allItems()
+        allBrowseTypes.append(BrowseType.Filtering.rawValue)
+        emptyDataSource[0] = allBrowseTypes
     }
 
     override func viewWillDisappear(animated: Bool) {

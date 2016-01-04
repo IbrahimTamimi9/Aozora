@@ -20,7 +20,7 @@ enum BrowseType: String {
     case TopSpecials = "Top Specials"
     case JustAdded = "Just Added"
     case MostPopular = "Most Popular"
-    case Filtering = "Filtering"
+    case Filtering = "Advanced Search"
     
     static func allItems() -> [String] {
         return [
@@ -76,6 +76,10 @@ class BrowseViewController: UIViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateETACells", name: LibraryUpdatedNotification, object: nil)
         
         navigationController?.setNavigationBarHidden(false, animated: true)
+        
+        if currentBrowseType == .Filtering {
+            showFilterPressed(self)
+        }
     }
     
     override func viewWillAppear(animated: Bool) {

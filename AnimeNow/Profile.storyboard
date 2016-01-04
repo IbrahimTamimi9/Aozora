@@ -820,9 +820,14 @@
                         <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="61" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="7sw-OS-xHO">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="61" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="7sw-OS-xHO">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
                                 <color key="backgroundColor" red="0.97254902124404907" green="0.97254902124404907" blue="0.97254902124404907" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="800" id="V01-mI-ccP">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="600"/>
+                                    </constraint>
+                                </constraints>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NotificationCell" id="ZWF-3u-dcW" customClass="BasicTableCell" customModule="ANCommonKit">
                                         <rect key="frame" x="0.0" y="22" width="600" height="61"/>
@@ -867,7 +872,7 @@
                                                     </variation>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nvx-LT-0oA" userLabel="Separator">
-                                                    <rect key="frame" x="0.0" y="60" width="600" height="1"/>
+                                                    <rect key="frame" x="8" y="60" width="592" height="1"/>
                                                     <color key="backgroundColor" red="0.89411765340000005" green="0.89411765340000005" blue="0.89411765340000005" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="1" id="kf2-kA-g5k"/>
@@ -902,7 +907,9 @@
                                                 <constraint firstItem="1oo-fD-tr6" firstAttribute="leading" secondItem="JIm-cm-WxV" secondAttribute="leadingMargin" id="d7n-WQ-DJj"/>
                                                 <constraint firstItem="4cQ-wF-sXU" firstAttribute="top" secondItem="7j1-KS-YBT" secondAttribute="bottom" id="ne0-aW-sDM"/>
                                                 <constraint firstItem="1oo-fD-tr6" firstAttribute="top" secondItem="JIm-cm-WxV" secondAttribute="topMargin" id="pRK-5P-6ZI"/>
-                                                <constraint firstItem="nvx-LT-0oA" firstAttribute="leading" secondItem="JIm-cm-WxV" secondAttribute="leading" id="qcD-U0-X4z"/>
+                                                <constraint firstItem="nvx-LT-0oA" firstAttribute="leading" secondItem="JIm-cm-WxV" secondAttribute="leading" constant="8" id="qcD-U0-X4z">
+                                                    <variation key="heightClass=regular-widthClass=regular" constant="8"/>
+                                                </constraint>
                                                 <constraint firstItem="7j1-KS-YBT" firstAttribute="top" secondItem="JIm-cm-WxV" secondAttribute="topMargin" constant="4.5" id="sfi-97-YCR"/>
                                                 <constraint firstAttribute="trailing" secondItem="nvx-LT-0oA" secondAttribute="trailing" id="y8P-Xi-DrA"/>
                                             </constraints>
@@ -923,19 +930,42 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="V01-mI-ccP"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <mask key="constraints">
+                                        <include reference="V01-mI-ccP"/>
+                                    </mask>
+                                </variation>
                                 <connections>
                                     <outlet property="dataSource" destination="BV2-hV-SI6" id="Hgf-JP-MVA"/>
                                     <outlet property="delegate" destination="BV2-hV-SI6" id="nZE-9B-yOl"/>
                                 </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.97254902124404907" green="0.97254902124404907" blue="0.97254902124404907" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="7sw-OS-xHO" firstAttribute="leading" secondItem="dfV-71-Fg0" secondAttribute="leading" id="DA6-kh-4ER"/>
                             <constraint firstItem="7sw-OS-xHO" firstAttribute="top" secondItem="c7a-ob-NOH" secondAttribute="bottom" id="d8O-46-H2H"/>
                             <constraint firstAttribute="trailing" secondItem="7sw-OS-xHO" secondAttribute="trailing" id="eMv-pV-rpI"/>
+                            <constraint firstItem="7sw-OS-xHO" firstAttribute="centerX" secondItem="dfV-71-Fg0" secondAttribute="centerX" id="fMN-2I-0z3"/>
                             <constraint firstItem="Nw9-Jz-uIa" firstAttribute="top" secondItem="7sw-OS-xHO" secondAttribute="bottom" id="lkg-by-AZv"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="fMN-2I-0z3"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=regular">
+                            <mask key="constraints">
+                                <exclude reference="DA6-kh-4ER"/>
+                                <exclude reference="eMv-pV-rpI"/>
+                                <include reference="fMN-2I-0z3"/>
+                            </mask>
+                        </variation>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" title="Notifications" id="03C-Ff-p99"/>
