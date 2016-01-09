@@ -172,6 +172,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             })
         }
         
+        NSNotificationCenter.defaultCenter().postNotificationName("newNotification", object: nil)
         ReminderController.updateScheduledLocalNotifications()
         FBSDKAppEvents.activateApp()
     }

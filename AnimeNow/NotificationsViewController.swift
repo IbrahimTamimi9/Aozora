@@ -191,12 +191,7 @@ extension NotificationsViewController: FetchControllerQueryDelegate {
 extension NotificationsViewController: FetchControllerDelegate {
     func didFetchFor(skip skip: Int) {
         updateUnreadNotifications()
-    }
-}
-
-extension NotificationsViewController: UINavigationBarDelegate {
-    func positionForBar(bar: UIBarPositioning) -> UIBarPosition {
-        return UIBarPosition.TopAttached
+        tableView?.reloadData()
     }
 }
 
