@@ -310,7 +310,8 @@ extension ThreadViewController: UITableViewDataSource {
             if let spoilerContent = post.spoilerContent {
                 textContent += "\n\n\(spoilerContent)"
             }
-            setImages(post.imagesData, imageView: cell.imageContent, imageHeightConstraint: cell.imageHeightConstraint)
+            let calculatedBaseWidth = post.replyLevel == 0 ? baseWidth : baseWidth - 60
+            setImages(post.imagesData, imageView: cell.imageContent, imageHeightConstraint: cell.imageHeightConstraint, baseWidth: calculatedBaseWidth)
             prepareForVideo(cell.playButton, imageView: cell.imageContent, imageHeightConstraint: cell.imageHeightConstraint, youtubeID: post.youtubeID)
         }
         
@@ -383,7 +384,7 @@ extension ThreadViewController: UITableViewDataSource {
         cell.replyButton.setTitle(repliesTitle, forState: .Normal)
     }
     
-    public func setImages(images: [ImageData]?, imageView: UIImageView?, imageHeightConstraint: NSLayoutConstraint?) {
+    public func setImages(images: [ImageData]?, imageView: UIImageView?, imageHeightConstraint: NSLayoutConstraint?, baseWidth: CGFloat) {
         if let image = images?.first {
             imageHeightConstraint?.constant = baseWidth * CGFloat(image.height)/CGFloat(image.width)
             imageView?.setImageFrom(urlString: image.url, animated: false)

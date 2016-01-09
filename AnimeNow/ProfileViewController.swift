@@ -36,9 +36,13 @@ public class ProfileViewController: ThreadViewController {
     @IBOutlet weak var proBadge: UILabel!
     @IBOutlet weak var postsBadge: UILabel!
     @IBOutlet weak var tagBadge: UILabel!
+    
+    @IBOutlet weak var segmentedControlView: UIView!
+    
     @IBOutlet weak var proBottomLayoutConstraint: NSLayoutConstraint!
     @IBOutlet weak var settingsTrailingSpaceConstraint: NSLayoutConstraint!
     @IBOutlet weak var tableBottomSpaceConstraint: NSLayoutConstraint!
+    @IBOutlet weak var segmentedControlTopSpaceConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var segmentedControlHeight: NSLayoutConstraint!
@@ -56,6 +60,8 @@ public class ProfileViewController: ThreadViewController {
     
     override public func viewDidLoad() {
         super.viewDidLoad()
+        
+        segmentedControlView.hidden = true
         
         if userProfile == nil && username == nil {
             userProfile = User.currentUser()!
@@ -255,7 +261,10 @@ public class ProfileViewController: ThreadViewController {
     }
     
     func configureFetchController() {
-        let offset = tableView.contentOffset
+        var offset = tableView.contentOffset
+        if offset.y > 345 {
+           offset.y = 345
+        }
         fetchController.configureWith(self, queryDelegate: self, tableView: self.tableView, limit: self.FetchLimit, datasourceUsesSections: true)
         tableView.setContentOffset(offset, animated: false)
     }
@@ -270,23 +279,23 @@ public class ProfileViewController: ThreadViewController {
     }
     
     @IBAction func followOrUnfollow(sender: AnyObject) {
-        
-            if let thisProfileUser = userProfile,
-                let followingUser = thisProfileUser.followingThisUser,
-                let currentUser = User.currentUser() where !thisProfileUser.isTheCurrentUser() {
-                
-                currentUser.followUser(thisProfileUser, follow: !followingUser)
-                
-                if !followingUser {
-                    // Follow
-                    self.followButton.setTitle("  Following", forState: .Normal)
-                    updateFollowingButtons()
-                } else {
-                    // Unfollow
-                    self.followButton.setTitle("  Follow", forState: .Normal)
-                    updateFollowingButtons()
-                }
+    
+        if let thisProfileUser = userProfile,
+            let followingUser = thisProfileUser.followingThisUser,
+            let currentUser = User.currentUser() where !thisProfileUser.isTheCurrentUser() {
+            
+            currentUser.followUser(thisProfileUser, follow: !followingUser)
+            
+            if !followingUser {
+                // Follow
+                self.followButton.setTitle("  Following", forState: .Normal)
+                updateFollowingButtons()
+            } else {
+                // Unfollow
+                self.followButton.setTitle("  Follow", forState: .Normal)
+                updateFollowingButtons()
             }
+        }
     }
     
     public override func replyToThreadPressed(sender: AnyObject) {
@@ -320,7 +329,7 @@ public class ProfileViewController: ThreadViewController {
             followingQuery.limit = 1000
             innerQuery.whereKey("userTimeline", matchesKey: "objectId", inQuery: followingQuery)
         case .Popular:
-            break
+            innerQuery.whereKeyExists("likedBy")
         case .Me:
             innerQuery.whereKey("userTimeline", equalTo: userProfile!)
         }
@@ -371,6 +380,11 @@ public class ProfileViewController: ThreadViewController {
     
     public override func didFetchFor(skip skip: Int) {
         super.didFetchFor(skip: skip)
+        if segmentedControlView.hidden {
+            segmentedControlView.hidden = false
+            scrollViewDidScroll(tableView)
+            segmentedControlView.animateFadeIn()
+        }
     }
     
     func addMuteUserAction(alert: UIAlertController) {
@@ -549,6 +563,18 @@ public class ProfileViewController: ThreadViewController {
         
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler:nil))
         self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    // MARK: - Overrides
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        
+        let topSpace = tableView.tableHeaderView!.bounds.size.height - 44 - scrollView.contentOffset.y
+        if topSpace < 64 {
+            segmentedControlTopSpaceConstraint.constant = 64
+        } else {
+            segmentedControlTopSpaceConstraint.constant = topSpace
+        }
     }
 }
 

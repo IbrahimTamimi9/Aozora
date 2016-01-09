@@ -156,7 +156,7 @@ public class CustomThreadViewController: ThreadViewController {
             moreButton.hidden = startedBy != currentUser ?? false && !administrating
         }
         
-        setImages(thread.imagesData, imageView: imageContent, imageHeightConstraint: imageHeightConstraint)
+        setImages(thread.imagesData, imageView: imageContent, imageHeightConstraint: imageHeightConstraint, baseWidth: baseWidth)
     }
     
     func sizeHeaderToFit() {
