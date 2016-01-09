@@ -126,7 +126,6 @@ class BrowseViewController: UIViewController {
         currentBrowseType = type
         
         // Update UI
-        collectionView.scrollRectToVisible(CGRect(x: 0, y: 0, width: 1, height: 1), animated: false)
         navigationBarTitle.text! = currentBrowseType.rawValue + " " + FontAwesome.AngleDown.rawValue
         
         // Fetch
@@ -172,6 +171,7 @@ class BrowseViewController: UIViewController {
         }
         
         fetchController.configureWith(self, query: query, collectionView: collectionView)
+        collectionView.reloadData()
     }
     
     func changeSeasonalChart() {
