@@ -107,6 +107,9 @@
 		DA7F45881B8F06C5006F9321 /* UIViewController+Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7C84C81B4379AA0036D119 /* UIViewController+Navigation.swift */; };
 		DA823D8C1B326940005C7AFD /* InAppBrowser.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA823D8A1B326940005C7AFD /* InAppBrowser.storyboard */; };
 		DA823D8D1B326940005C7AFD /* InAppBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA823D8B1B326940005C7AFD /* InAppBrowserViewController.swift */; };
+		DA8495161C42023400EA77B5 /* UserList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8495151C42023400EA77B5 /* UserList.swift */; };
+		DA8495181C42068900EA77B5 /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8495171C42068900EA77B5 /* Review.swift */; };
+		DA84951C1C420CFC00EA77B5 /* Notifications.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA84951A1C420BFE00EA77B5 /* Notifications.storyboard */; };
 		DA897F891B6D1FCC00A9510C /* WriteACommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA897F881B6D1FCC00A9510C /* WriteACommentCell.xib */; };
 		DA897F8B1B6D203D00A9510C /* CommentImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA897F8A1B6D203D00A9510C /* CommentImageCell.xib */; };
 		DA8B6E071B6C4DBF00D240FC /* UIImageView+PFFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8B6E061B6C4DBF00D240FC /* UIImageView+PFFile.swift */; };
@@ -441,6 +444,9 @@
 		DA7F45861B8F069C006F9321 /* UIViewController+Navigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIViewController+Navigation.swift"; path = "../ANAnimeKit/UIViewController+Navigation.swift"; sourceTree = "<group>"; };
 		DA823D8A1B326940005C7AFD /* InAppBrowser.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = InAppBrowser.storyboard; path = ../AnimeNow/InAppBrowser.storyboard; sourceTree = "<group>"; };
 		DA823D8B1B326940005C7AFD /* InAppBrowserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InAppBrowserViewController.swift; path = ../AnimeNow/InAppBrowserViewController.swift; sourceTree = "<group>"; };
+		DA8495151C42023400EA77B5 /* UserList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserList.swift; sourceTree = "<group>"; };
+		DA8495171C42068900EA77B5 /* Review.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
+		DA84951A1C420BFE00EA77B5 /* Notifications.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Notifications.storyboard; sourceTree = "<group>"; };
 		DA897F881B6D1FCC00A9510C /* WriteACommentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WriteACommentCell.xib; path = ../AnimeNow/WriteACommentCell.xib; sourceTree = "<group>"; };
 		DA897F8A1B6D203D00A9510C /* CommentImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CommentImageCell.xib; path = ../AnimeNow/CommentImageCell.xib; sourceTree = "<group>"; };
 		DA897F951B6D461800A9510C /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -718,6 +724,7 @@
 				DA07A3461B4C2B560028B81B /* In-App Purchases */,
 				DAA546DC1BA1A07D003989DE /* Anime */,
 				DAE7A7141B2105C400788614 /* Profile */,
+				DA8495191C420BE800EA77B5 /* Notifications */,
 				DA7F45841B8F05D9006F9321 /* Thread */,
 				DA27D19D1AF1BA9D00CC854E /* Images.xcassets */,
 				DA27D19F1AF1BA9D00CC854E /* LaunchScreen.xib */,
@@ -980,6 +987,16 @@
 			path = ../ANParseKit;
 			sourceTree = "<group>";
 		};
+		DA8495191C420BE800EA77B5 /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				DA84951A1C420BFE00EA77B5 /* Notifications.storyboard */,
+				DAA546D31BA0902E003989DE /* NotificationsController.swift */,
+				DA1340AC1B9E17410073C6EF /* NotificationsViewController.swift */,
+			);
+			name = Notifications;
+			sourceTree = "<group>";
+		};
 		DAA393271B42F1F100A8D5D5 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -1120,6 +1137,8 @@
 				DAD67DFC1B726724000BB325 /* User.swift */,
 				DA03F1591B8B47FA00402AC4 /* ThreadTag.swift */,
 				DA1340AA1B9E11A10073C6EF /* Notification.swift */,
+				DA8495151C42023400EA77B5 /* UserList.swift */,
+				DA8495171C42068900EA77B5 /* Review.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1157,13 +1176,11 @@
 		DAE7A7141B2105C400788614 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				DAA546D31BA0902E003989DE /* NotificationsController.swift */,
 				DAF6189F1B378FF700286517 /* Profile.storyboard */,
 				DA58C2D81B386BB90082B626 /* ProfileViewController.swift */,
 				DA58C2DA1B386BC80082B626 /* UserListViewController.swift */,
 				DA0B26051B75066B00A770AE /* EditProfileViewController.swift */,
 				DA0B260B1B75192400A770AE /* UserProfileManager.swift */,
-				DA1340AC1B9E17410073C6EF /* NotificationsViewController.swift */,
 			);
 			name = Profile;
 			sourceTree = "<group>";
@@ -1540,6 +1557,7 @@
 				DAA546EC1BA1A0FE003989DE /* Thread.storyboard in Resources */,
 				DAC13C191B4228120013D479 /* Aller_BdIt.ttf in Resources */,
 				DA27D19E1AF1BA9D00CC854E /* Images.xcassets in Resources */,
+				DA84951C1C420CFC00EA77B5 /* Notifications.storyboard in Resources */,
 				DAA546EA1BA1A0FB003989DE /* Episodes.storyboard in Resources */,
 				DAC13BEF1B3EEF250013D479 /* AnimeCell.xib in Resources */,
 			);
@@ -1856,6 +1874,7 @@
 				DA6E13131B10F56B00B278B0 /* SeasonalChartService.swift in Sources */,
 				DACCF35D1B110AA2006A13EB /* ANParseKit.swift in Sources */,
 				DA0B261B1B758C3B00A770AE /* String+Validations.swift in Sources */,
+				DA8495161C42023400EA77B5 /* UserList.swift in Sources */,
 				DA7F45881B8F06C5006F9321 /* UIViewController+Navigation.swift in Sources */,
 				DA03F1541B8B188000402AC4 /* NewPostViewController.swift in Sources */,
 				DA6E12E21B10D96F00B278B0 /* XPathQuery.m in Sources */,
@@ -1866,6 +1885,7 @@
 				DA6E12E41B10D96F00B278B0 /* UIViewController+WebScraper.m in Sources */,
 				DA35B99A1B74165000C0AAC7 /* InAppBrowserSelectorViewController.swift in Sources */,
 				DA13806C1B6DBB4C00C53560 /* Post.swift in Sources */,
+				DA8495181C42068900EA77B5 /* Review.swift in Sources */,
 				DAFED2531BA717DE009697E4 /* InAppController.swift in Sources */,
 				DA54E30B1BE9487800FE0AE9 /* PFQuery+Query.swift in Sources */,
 				DA75C89A1BB1A76F00C27A68 /* LibrarySyncController.swift in Sources */,

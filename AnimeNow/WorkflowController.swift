@@ -17,7 +17,7 @@ class WorkflowController {
         let seasons = UIStoryboard(name: "Season", bundle: nil).instantiateInitialViewController() as! UINavigationController
         let library = UIStoryboard(name: "Library", bundle: nil).instantiateInitialViewController() as! UINavigationController
         let (profile, _) = ANAnimeKit.profileViewController()
-        let notifications = UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("NotificationNav") as! UINavigationController
+        let notifications = UIStoryboard(name: "Notifications", bundle: nil).instantiateViewControllerWithIdentifier("NotificationNav") as! UINavigationController
         let notificationVC = notifications.viewControllers.first as! NotificationsViewController
         
         

@@ -15,6 +15,7 @@ public protocol Postable {
     var edited: Bool { get set }
     var hasSpoilers: Bool { get set }
     var content: String? { get set }
+    var postedBy: User? { get set }
     
     var imagesData: [ImageData]? { mutating get set }
     var linkData: LinkData? { mutating get set }
@@ -33,7 +34,6 @@ public protocol Postable {
 public protocol Commentable: Postable {
     
     // Implemented on protocol extension
-    var postedBy: User? { get set }
     
     var spoilerContent: String? { get set }
     var replyLevel: Int { get set }

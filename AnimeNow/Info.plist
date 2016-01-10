@@ -38,7 +38,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>104</string>
+	<string>106</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -123,5 +123,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We need authorization to get your current location</string>
 </dict>
 </plist>

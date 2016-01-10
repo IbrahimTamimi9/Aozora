@@ -129,12 +129,16 @@ public class UserProfileManager: NSObject {
     
     
     public func updateUser(
-    viewController: UIViewController,
-    user: User,
-    email: String? = nil,
-    avatar: UIImage? = nil,
-    banner: UIImage? = nil,
-    about: String? = nil
+        viewController: UIViewController,
+        user: User,
+        email: String? = nil,
+        avatar: UIImage? = nil,
+        banner: UIImage? = nil,
+        about: String? = nil,
+        location: CLLocation?,
+        gender: Gender?,
+        birthday: NSDate?,
+        timezone: String?
     ) -> BFTask {
         
         if let email = email where !email.validEmail(viewController) {
@@ -156,6 +160,22 @@ public class UserProfileManager: NSObject {
         
         if let about = about {
             user.details.about = about
+        }
+        
+        if let location = location {
+            user.details.location = PFGeoPoint(location: location)
+        }
+        
+        if let gender = gender {
+            user.details.gender = gender.rawValue
+        }
+        
+        if let birthday = birthday {
+            user.details.birthday = birthday
+        }
+        
+        if let timezone = timezone {
+            user.details.timezone = timezone
         }
         
         return user.saveInBackground().continueWithExecutor(BFExecutor.mainThreadExecutor(), withBlock: { (task: BFTask!) -> AnyObject! in

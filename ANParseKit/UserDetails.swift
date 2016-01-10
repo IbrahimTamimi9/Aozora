@@ -39,4 +39,9 @@ public class UserDetails: PFObject, PFSubclassing {
     
     @NSManaged public var followingCount: Int
     @NSManaged public var followersCount: Int
+    
+    @NSManaged public var aboutShort: String
+    @NSManaged public var location: PFGeoPoint
+    @NSManaged public var birthday: NSDate
+    @NSManaged public var timezone: String
 }
