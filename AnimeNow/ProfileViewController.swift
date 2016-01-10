@@ -509,7 +509,7 @@ public class ProfileViewController: ThreadViewController {
     @IBAction func showAbout(sender: AnyObject) {
         if let userProfile = self.userProfile {
             let publicList = UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("AboutViewController") as! AboutViewController
-            //publicList.initWithUser(userProfile)
+            publicList.initWithUser(userProfile)
             publicList.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(publicList, animated: true)
         }

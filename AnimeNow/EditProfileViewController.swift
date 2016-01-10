@@ -95,9 +95,18 @@ public class EditProfileViewController: UIViewController {
                 self.aboutTextView.text = details.about
                 self.shortBioTextView.text = details.aboutShort
                 
-                self.location = CLLocation(latitude: details.location.latitude, longitude: details.location.longitude)
-                self.timezoneName = details.timezone
-                self.birthday = details.birthday
+                if let location = details.location {
+                    self.location = CLLocation(latitude: location.latitude, longitude: location.longitude)
+                }
+                
+                if let timezone = details.timezone {
+                    self.timezoneName = timezone
+                }
+                
+                if let birthday = details.birthday {
+                    self.birthday = birthday
+                }
+                
                 self.gender = Gender(rawValue: details.gender) ?? Gender.Select
                 
                 self.view.layoutIfNeeded()

@@ -851,8 +851,8 @@
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 <variation key="default">
                                                     <mask key="constraints">
-                                                        <exclude reference="Ooz-LG-AK6"/>
                                                         <exclude reference="Cpd-Uq-O87"/>
+                                                        <exclude reference="Ooz-LG-AK6"/>
                                                     </mask>
                                                 </variation>
                                                 <connections>
