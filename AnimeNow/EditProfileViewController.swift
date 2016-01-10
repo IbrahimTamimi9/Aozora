@@ -28,6 +28,7 @@ public class EditProfileViewController: UIViewController {
     
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var aboutTextView: UITextView!
+    @IBOutlet weak var shortBioTextView: UITextView!
     
     @IBOutlet weak var saveBBI: UIBarButtonItem!
     
@@ -92,6 +93,7 @@ public class EditProfileViewController: UIViewController {
                 self.formWidthConstraint.constant = self.view.bounds.size.width
                 self.avatarViewWidthConstraint.constant = self.formWidthConstraint.constant / 2 - 8
                 self.aboutTextView.text = details.about
+                self.shortBioTextView.text = details.aboutShort
                 
                 self.location = CLLocation(latitude: details.location.latitude, longitude: details.location.longitude)
                 self.timezoneName = details.timezone
@@ -168,6 +170,7 @@ public class EditProfileViewController: UIViewController {
             email: emailTextField.text,
             avatar: updatedAvatar ? avatarImageView.image : nil,
             banner: updatedBanner ? bannerImageView.image : nil,
+            shortBio: shortBioTextView.text,
             about: aboutTextView.text,
             location: location,
             gender: gender,

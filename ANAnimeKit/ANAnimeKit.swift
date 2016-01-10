@@ -44,7 +44,7 @@ public class ANAnimeKit {
     }
     
     class func searchViewController() -> (UINavigationController, SearchViewController) {
-        let navigation = UIStoryboard(name: "Browse", bundle: nil).instantiateViewControllerWithIdentifier("NavSearch") as! UINavigationController
+        let navigation = UIStoryboard(name: "Search", bundle: nil).instantiateViewControllerWithIdentifier("NavSearch") as! UINavigationController
         navigation.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
         navigation.modalPresentationStyle = .OverCurrentContext
         

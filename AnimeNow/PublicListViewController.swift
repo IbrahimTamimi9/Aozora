@@ -64,10 +64,15 @@ class PublicListViewController: UIViewController {
         
         loadingView = LoaderView(parentView: view)
         
-        title = "\(userProfile.aozoraUsername) Library"
+        title = "Library"
         
         fetchUserLibrary()
         updateLayout(withSize: view.bounds.size)
+        
+        if loadingView.animating == false {
+            loadingView.stopAnimating()
+            collectionView.animateFadeIn()
+        }
     }
     
     deinit {
@@ -75,15 +80,6 @@ class PublicListViewController: UIViewController {
             for anime in typeList {
                 anime.publicProgress = nil
             }
-        }
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        if loadingView.animating == false {
-            loadingView.stopAnimating()
-            collectionView.animateFadeIn()
         }
     }
     

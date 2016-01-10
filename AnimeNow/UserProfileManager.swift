@@ -134,6 +134,7 @@ public class UserProfileManager: NSObject {
         email: String? = nil,
         avatar: UIImage? = nil,
         banner: UIImage? = nil,
+        shortBio: String?,
         about: String? = nil,
         location: CLLocation?,
         gender: Gender?,
@@ -176,6 +177,10 @@ public class UserProfileManager: NSObject {
         
         if let timezone = timezone {
             user.details.timezone = timezone
+        }
+        
+        if let shortBio = shortBio {
+            user.details.aboutShort = shortBio
         }
         
         return user.saveInBackground().continueWithExecutor(BFExecutor.mainThreadExecutor(), withBlock: { (task: BFTask!) -> AnyObject! in

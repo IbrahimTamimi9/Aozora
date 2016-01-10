@@ -144,7 +144,7 @@ public class ProfileViewController: ThreadViewController {
 
             self.userProfile = user
             self.updateViewWithUser(user)
-            self.aboutLabel.setText(user.details.about, afterInheritingLabelAttributesAndConfiguringWithBlock: { (attributedString) -> NSMutableAttributedString! in
+            self.aboutLabel.setText(user.details.aboutShort, afterInheritingLabelAttributesAndConfiguringWithBlock: { (attributedString) -> NSMutableAttributedString! in
                 return attributedString
             })
 
@@ -335,6 +335,10 @@ public class ProfileViewController: ThreadViewController {
             followingQuery.limit = 1000
             innerQuery.whereKey("userTimeline", matchesKey: "objectId", inQuery: followingQuery)
         case .Popular:
+            let followingQuery = userProfile!.following().query()
+            followingQuery.orderByDescending("activeStart")
+            followingQuery.limit = 1000
+            innerQuery.whereKey("userTimeline", doesNotMatchKey: "objectId", inQuery: followingQuery)
             innerQuery.whereKeyExists("likedBy")
         case .Me:
             innerQuery.whereKey("userTimeline", equalTo: userProfile!)
@@ -493,20 +497,29 @@ public class ProfileViewController: ThreadViewController {
         presentSmallViewController(userListController, sender: sender)
     }
     
+    @IBAction func showLibrary(sender: AnyObject) {
+        if let userProfile = self.userProfile {
+            let publicList = UIStoryboard(name: "Library", bundle: nil).instantiateViewControllerWithIdentifier("UserLibrary") as! PublicListViewController
+            publicList.initWithUser(userProfile)
+            publicList.hidesBottomBarWhenPushed = true
+            navigationController?.pushViewController(publicList, animated: true)
+        }
+    }
+    
+    @IBAction func showAbout(sender: AnyObject) {
+        if let userProfile = self.userProfile {
+            let publicList = UIStoryboard(name: "Profile", bundle: nil).instantiateViewControllerWithIdentifier("AboutViewController") as! AboutViewController
+            //publicList.initWithUser(userProfile)
+            publicList.hidesBottomBarWhenPushed = true
+            navigationController?.pushViewController(publicList, animated: true)
+        }
+    }
+    
     @IBAction func showSettings(sender: AnyObject) {
         
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
         alert.popoverPresentationController?.sourceView = sender.superview
         alert.popoverPresentationController?.sourceRect = sender.frame
-        
-        alert.addAction(UIAlertAction(title: "View Library", style: UIAlertActionStyle.Default, handler: { (alertAction: UIAlertAction) -> Void in
-            if let userProfile = self.userProfile {
-                let navVC = UIStoryboard(name: "Library", bundle: nil).instantiateViewControllerWithIdentifier("PublicLibraryNav") as! UINavigationController
-                let publicList = navVC.viewControllers.first as! PublicListViewController
-                publicList.initWithUser(userProfile)
-                self.animator = self.presentViewControllerModal(navVC)
-            }
-        }))
         
         guard let currentUser = User.currentUser() else {
             return

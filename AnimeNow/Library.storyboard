@@ -686,7 +686,7 @@
         <!--Public List View Controller-->
         <scene sceneID="CEY-sJ-SfN">
             <objects>
-                <viewController id="f7V-8F-nqS" customClass="PublicListViewController" customModule="Aozora" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UserLibrary" useStoryboardIdentifierAsRestorationIdentifier="YES" id="f7V-8F-nqS" customClass="PublicListViewController" customModule="Aozora" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="er2-rH-uRi"/>
                         <viewControllerLayoutGuide type="bottom" id="oaN-3O-H7v"/>
@@ -802,12 +802,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="4ut-BY-bTD">
                         <nil key="title"/>
-                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="5r6-lQ-I1v" userLabel="Dismiss">
-                            <connections>
-                                <action selector="dismissViewControllerPressed:" destination="f7V-8F-nqS" id="bMR-eS-pji"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="collectionView" destination="biW-CH-MoU" id="o0G-eD-upv"/>
                         <outlet property="filterBar" destination="30S-tN-V1q" id="ES7-lg-izd"/>
@@ -816,29 +812,10 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z2f-GB-lPa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2103" y="-77"/>
-        </scene>
-        <!--Season-->
-        <scene sceneID="86e-gV-WGr">
-            <objects>
-                <navigationController storyboardIdentifier="PublicLibraryNav" hidesBarsOnSwipe="YES" id="Vot-2a-3Vb" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Season" image="icon-airing" id="I9v-Md-OeS"/>
-                    <nil key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="IlQ-8r-Bwx">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="f7V-8F-nqS" kind="relationship" relationship="rootViewController" id="1rZ-w9-Z5d"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="R9L-MZ-FnZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1411" y="-77"/>
+            <point key="canvasLocation" x="2058" y="-114"/>
         </scene>
     </scenes>
     <resources>
-        <image name="icon-airing" width="26" height="26"/>
         <image name="icon-library-filled" width="25" height="25"/>
         <image name="icon-search" width="22" height="22"/>
         <image name="icon-sort" width="22" height="22"/>
