@@ -90,7 +90,7 @@ public class NewPostViewController: CommentViewController {
     
     public override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
-        if !dataPersisted {
+        if !dataPersisted && editingPost == nil {
             NSUserDefaults.standardUserDefaults().setObject(textView.text, forKey: EditingContentCacheKey)
             NSUserDefaults.standardUserDefaults().synchronize()
         }

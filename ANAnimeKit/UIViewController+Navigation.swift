@@ -31,4 +31,10 @@ extension UIViewController {
         return animator
     }
     
+    func presentSearchViewController(searchScope: SearchScope) {
+        let (navigation, controller) = ANAnimeKit.searchViewController()
+        controller.initWithSearchScope(searchScope)
+        presentViewController(navigation, animated: true, completion: nil)
+    }
+    
 }

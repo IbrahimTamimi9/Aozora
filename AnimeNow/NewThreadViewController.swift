@@ -73,7 +73,7 @@ public class NewThreadViewController: CommentViewController {
     
     public override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
-        if !dataPersisted {
+        if !dataPersisted && editingPost == nil {
             NSUserDefaults.standardUserDefaults().setObject(threadTitle.text, forKey: EditingTitleCacheKey)
             NSUserDefaults.standardUserDefaults().setObject(textView.text, forKey: EditingContentCacheKey)
             NSUserDefaults.standardUserDefaults().synchronize()

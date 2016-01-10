@@ -396,6 +396,25 @@
                                     <outlet property="delegate" destination="M5q-uq-HPK" id="ZxQ-AV-F7D"/>
                                 </connections>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c0T-TP-ObK">
+                                <rect key="frame" x="544" y="497" width="44" height="44"/>
+                                <color key="backgroundColor" red="0.18823529780000001" green="0.19607843459999999" blue="0.23529411850000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="9iJ-BO-HPd"/>
+                                    <constraint firstAttribute="width" constant="44" id="ghb-ZE-UGz"/>
+                                </constraints>
+                                <state key="normal" image="icon-create">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="22"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="replyToThreadPressed:" destination="M5q-uq-HPK" eventType="touchUpInside" id="Kxh-g6-jY6"/>
+                                </connections>
+                            </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zBp-r0-AD0" userLabel="SegmentedControlView">
                                 <rect key="frame" x="0.0" y="337" width="600" height="44"/>
                                 <subviews>
@@ -410,6 +429,11 @@
                                             <segment title="Me"/>
                                         </segments>
                                         <color key="tintColor" red="0.20392157137393951" green="0.59607845544815063" blue="0.85882353782653809" alpha="1" colorSpace="calibratedRGB"/>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="EbO-GG-xXk"/>
+                                            </mask>
+                                        </variation>
                                         <connections>
                                             <action selector="segmentedControlValueChanged:" destination="M5q-uq-HPK" eventType="valueChanged" id="3PQ-Yg-TPL"/>
                                         </connections>
@@ -432,7 +456,10 @@
                         </subviews>
                         <color key="backgroundColor" red="0.89411765336990356" green="0.89411765336990356" blue="0.89411765336990356" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="c0T-TP-ObK" secondAttribute="trailing" constant="12" id="0V7-kU-2Af"/>
                             <constraint firstItem="zBp-r0-AD0" firstAttribute="top" secondItem="wrh-pK-qrQ" secondAttribute="topMargin" constant="337" id="6PD-Mv-cHS"/>
+                            <constraint firstItem="xjQ-kx-jPV" firstAttribute="top" secondItem="c0T-TP-ObK" secondAttribute="bottom" constant="15" id="Jg3-d9-bNs"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="c0T-TP-ObK" secondAttribute="trailing" constant="12" id="ROE-Dk-Ar6"/>
                             <constraint firstItem="xjQ-kx-jPV" firstAttribute="top" secondItem="sY9-wc-JPh" secondAttribute="bottom" constant="-49" id="W8c-aA-Ma7"/>
                             <constraint firstAttribute="trailing" secondItem="zBp-r0-AD0" secondAttribute="trailing" id="YRF-oB-HUr"/>
                             <constraint firstItem="sY9-wc-JPh" firstAttribute="top" secondItem="UR8-Cc-VZl" secondAttribute="bottom" constant="-64" id="c5q-Xd-5Ag"/>
@@ -448,6 +475,7 @@
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="iPm-1s-EnE"/>
+                                <exclude reference="ROE-Dk-Ar6"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=regular">
@@ -465,9 +493,9 @@
                                 <action selector="dismissPressed:" destination="M5q-uq-HPK" id="3tj-Fo-J1J"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="icon-create" id="5c8-zA-vWE" userLabel="Create">
+                        <barButtonItem key="rightBarButtonItem" image="icon-search" id="5c8-zA-vWE" userLabel="Create">
                             <connections>
-                                <action selector="replyToThreadPressed:" destination="M5q-uq-HPK" id="RMY-o1-XFY"/>
+                                <action selector="searchPressed:" destination="M5q-uq-HPK" id="fEz-2D-bod"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -488,6 +516,7 @@
                         <outlet property="settingsButton" destination="qK8-bI-U4V" id="2Td-7e-cr3"/>
                         <outlet property="settingsTrailingSpaceConstraint" destination="E7S-sr-0Fi" id="ovy-WK-t7W"/>
                         <outlet property="tableBottomSpaceConstraint" destination="W8c-aA-Ma7" id="pu0-IY-20R"/>
+                        <outlet property="tableHeaderViewBottomSpaceConstraint" destination="UDj-FY-f5N" id="K3G-7M-qhL"/>
                         <outlet property="tableView" destination="sY9-wc-JPh" id="JcR-C5-OfD"/>
                         <outlet property="tagBadge" destination="MUA-4J-1Hx" id="BxP-Er-d2T"/>
                         <outlet property="userAvatar" destination="9bT-p7-f1f" id="pFe-1U-bQf"/>
@@ -815,7 +844,7 @@
                         <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="61" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="7sw-OS-xHO">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="61" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="7sw-OS-xHO">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
                                 <color key="backgroundColor" red="0.97254902124404907" green="0.97254902124404907" blue="0.97254902124404907" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -963,8 +992,16 @@
                         </variation>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
-                    <navigationItem key="navigationItem" title="Notifications" id="03C-Ff-p99"/>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Notifications" id="03C-Ff-p99">
+                        <barButtonItem key="rightBarButtonItem" image="icon-search" id="Zzk-eX-ScO" userLabel="Create">
+                            <connections>
+                                <action selector="searchPressed:" destination="BV2-hV-SI6" id="ch9-I4-Mx1"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="tableView" destination="7sw-OS-xHO" id="WDP-cr-xyP"/>
                     </connections>
@@ -979,5 +1016,6 @@
         <image name="icon-more-darker" width="25" height="25"/>
         <image name="icon-profile-filled" width="25" height="25"/>
         <image name="icon-reminder" width="25" height="25"/>
+        <image name="icon-search" width="22" height="22"/>
     </resources>
 </document>

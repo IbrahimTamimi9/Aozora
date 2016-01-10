@@ -43,6 +43,7 @@ public class ProfileViewController: ThreadViewController {
     @IBOutlet weak var settingsTrailingSpaceConstraint: NSLayoutConstraint!
     @IBOutlet weak var tableBottomSpaceConstraint: NSLayoutConstraint!
     @IBOutlet weak var segmentedControlTopSpaceConstraint: NSLayoutConstraint!
+    @IBOutlet weak var tableHeaderViewBottomSpaceConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var segmentedControlHeight: NSLayoutConstraint!
@@ -71,6 +72,10 @@ public class ProfileViewController: ThreadViewController {
             tableBottomSpaceConstraint.constant = 0
         }
         
+        if tabBarController == nil {
+            navigationItem.rightBarButtonItem = nil
+        }
+        
         aboutLabel.linkAttributes = [kCTForegroundColorAttributeName: UIColor.peterRiver()]
         aboutLabel.enabledTextCheckingTypes = NSTextCheckingType.Link.rawValue
         aboutLabel.delegate = self;
@@ -96,7 +101,7 @@ public class ProfileViewController: ThreadViewController {
         }
         
         if let userProfile = userProfile where !userProfile.isTheCurrentUser() {
-            segmentedControlHeight.constant = 0
+            tableHeaderViewBottomSpaceConstraint.constant = 8
             segmentedControl.hidden = true
         }
         
@@ -274,10 +279,6 @@ public class ProfileViewController: ThreadViewController {
         configureFetchController()
     }
     
-    @IBAction func showLibrary(sender: AnyObject) {
-        
-    }
-    
     @IBAction func followOrUnfollow(sender: AnyObject) {
     
         if let thisProfileUser = userProfile,
@@ -295,6 +296,12 @@ public class ProfileViewController: ThreadViewController {
                 self.followButton.setTitle("  Follow", forState: .Normal)
                 updateFollowingButtons()
             }
+        }
+    }
+    
+    @IBAction func searchPressed(sender: AnyObject) {
+        if let tabBar = tabBarController {
+            tabBar.presentSearchViewController(.AllAnime)
         }
     }
     
@@ -380,7 +387,7 @@ public class ProfileViewController: ThreadViewController {
     
     public override func didFetchFor(skip skip: Int) {
         super.didFetchFor(skip: skip)
-        if segmentedControlView.hidden {
+        if let userProfile = userProfile where userProfile.isTheCurrentUser() && segmentedControlView.hidden {
             segmentedControlView.hidden = false
             scrollViewDidScroll(tableView)
             segmentedControlView.animateFadeIn()

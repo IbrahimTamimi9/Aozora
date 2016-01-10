@@ -31,7 +31,7 @@ class NotificationsViewController: UIViewController {
         tableView.rowHeight = UITableViewAutomaticDimension
         
         let clearAll = UIBarButtonItem(title: "Read all", style: UIBarButtonItemStyle.Plain, target: self, action: "clearAllPressed:")
-        navigationItem.rightBarButtonItem = clearAll
+        navigationItem.leftBarButtonItem = clearAll
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "fetchNotifications", name: "newNotification", object: nil)
     }
@@ -96,8 +96,11 @@ class NotificationsViewController: UIViewController {
         delegate?.notificationsViewControllerHasUnreadNotifications(unreadNotifications)
     }
     
-    @IBAction func dismissViewController(sender: AnyObject) {
-        dismissViewControllerAnimated(true, completion: nil)
+    
+    @IBAction func searchPressed(sender: AnyObject) {
+        if let tabBar = tabBarController {
+            tabBar.presentSearchViewController(.AllAnime)
+        }
     }
 }
 

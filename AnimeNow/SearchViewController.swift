@@ -11,17 +11,17 @@ import ANParseKit
 import ANCommonKit
 import Bolts
 
+enum SearchScope: Int {
+    case AllAnime = 0
+    case MyLibrary
+    case Users
+    case Forum
+}
+
 class SearchViewController: UIViewController {
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var collectionView: UICollectionView!
-    
-    enum SearchScope: Int {
-        case AllAnime = 0
-        case MyLibrary
-        case Users
-        case Forum
-    }
     
     var loadingView: LoaderView!
     var animator: ZFModalTransitionAnimator!
@@ -53,7 +53,6 @@ class SearchViewController: UIViewController {
         loadingView = LoaderView(parentView: view)
         
         searchBar.placeholder = "Enter your search"
-        searchBar.selectedScopeButtonIndex = initialSearchScope.rawValue
         searchBar.becomeFirstResponder()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateETACells", name: LibraryUpdatedNotification, object: nil)

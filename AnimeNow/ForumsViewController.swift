@@ -234,9 +234,7 @@ class ForumsViewController: UIViewController {
     @IBAction func searchForums(sender: AnyObject) {
         
         if let tabBar = tabBarController {
-            let (navigation, controller) = ANAnimeKit.searchViewController()
-            controller.initWithSearchScope(SearchViewController.SearchScope.Forum)
-            tabBar.presentViewController(navigation, animated: true, completion: nil)
+            tabBar.presentSearchViewController(.Forum)
         }
     }
     
