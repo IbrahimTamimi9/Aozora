@@ -46,6 +46,9 @@
 		DA4595651B83C3500044013E /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC13C291B424DEF0013D479 /* ResetPasswordViewController.swift */; };
 		DA472DFB1BD409EF00E09AB0 /* ShowMoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA472DF91BD409EF00E09AB0 /* ShowMoreCell.swift */; };
 		DA472DFC1BD409EF00E09AB0 /* ShowMoreCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA472DFA1BD409EF00E09AB0 /* ShowMoreCell.xib */; };
+		DA47A8F51C4302C40077772A /* ReviewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA47A8F41C4302C40077772A /* ReviewsViewController.swift */; };
+		DA47A8FC1C432AC50077772A /* NewReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA47A8F61C430C190077772A /* NewReviewViewController.swift */; };
+		DA47A8FD1C432AC50077772A /* RatingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA47A8F81C432AB30077772A /* RatingsViewController.swift */; };
 		DA48EA271B288DED00D8610F /* SeasonalChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA76A1991B2375E1006CB489 /* SeasonalChart.swift */; };
 		DA4AF8BA1B276E060020252E /* ANCommonKit.h in Headers */ = {isa = PBXBuildFile; fileRef = DA4AF8B91B276E060020252E /* ANCommonKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA4AF8C01B276E060020252E /* ANCommonKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA4AF8B51B276E060020252E /* ANCommonKit.framework */; };
@@ -112,7 +115,6 @@
 		DA84951C1C420CFC00EA77B5 /* Notifications.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA84951A1C420BFE00EA77B5 /* Notifications.storyboard */; };
 		DA84951E1C4237B800EA77B5 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA84951D1C4237B800EA77B5 /* AboutViewController.swift */; };
 		DA8495211C4239EF00EA77B5 /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA8495201C4239EE00EA77B5 /* Search.storyboard */; };
-		DA8495231C42D28800EA77B5 /* poster.png in Resources */ = {isa = PBXBuildFile; fileRef = DA8495221C42D28800EA77B5 /* poster.png */; };
 		DA897F891B6D1FCC00A9510C /* WriteACommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA897F881B6D1FCC00A9510C /* WriteACommentCell.xib */; };
 		DA897F8B1B6D203D00A9510C /* CommentImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA897F8A1B6D203D00A9510C /* CommentImageCell.xib */; };
 		DA8B6E071B6C4DBF00D240FC /* UIImageView+PFFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8B6E061B6C4DBF00D240FC /* UIImageView+PFFile.swift */; };
@@ -378,6 +380,9 @@
 		DA4167E81B275F9400847F56 /* ANAnimeKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ANAnimeKit.swift; path = ../ANAnimeKit/ANAnimeKit.swift; sourceTree = "<group>"; };
 		DA472DF91BD409EF00E09AB0 /* ShowMoreCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShowMoreCell.swift; path = ../AnimeNow/ShowMoreCell.swift; sourceTree = "<group>"; };
 		DA472DFA1BD409EF00E09AB0 /* ShowMoreCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ShowMoreCell.xib; path = ../AnimeNow/ShowMoreCell.xib; sourceTree = "<group>"; };
+		DA47A8F41C4302C40077772A /* ReviewsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewsViewController.swift; sourceTree = "<group>"; };
+		DA47A8F61C430C190077772A /* NewReviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewReviewViewController.swift; sourceTree = "<group>"; };
+		DA47A8F81C432AB30077772A /* RatingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingsViewController.swift; sourceTree = "<group>"; };
 		DA4AF8B51B276E060020252E /* ANCommonKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ANCommonKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA4AF8B81B276E060020252E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA4AF8B91B276E060020252E /* ANCommonKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ANCommonKit.h; sourceTree = "<group>"; };
@@ -452,7 +457,6 @@
 		DA84951A1C420BFE00EA77B5 /* Notifications.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Notifications.storyboard; sourceTree = "<group>"; };
 		DA84951D1C4237B800EA77B5 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		DA8495201C4239EE00EA77B5 /* Search.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Search.storyboard; sourceTree = "<group>"; };
-		DA8495221C42D28800EA77B5 /* poster.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = poster.png; sourceTree = "<group>"; };
 		DA897F881B6D1FCC00A9510C /* WriteACommentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WriteACommentCell.xib; path = ../AnimeNow/WriteACommentCell.xib; sourceTree = "<group>"; };
 		DA897F8A1B6D203D00A9510C /* CommentImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CommentImageCell.xib; path = ../AnimeNow/CommentImageCell.xib; sourceTree = "<group>"; };
 		DA897F951B6D461800A9510C /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -813,6 +817,14 @@
 			path = ../ANAnimeKit;
 			sourceTree = "<group>";
 		};
+		DA47A8F31C4302B60077772A /* Reviews */ = {
+			isa = PBXGroup;
+			children = (
+				DA47A8F41C4302C40077772A /* ReviewsViewController.swift */,
+			);
+			name = Reviews;
+			sourceTree = "<group>";
+		};
 		DA4AF8B61B276E060020252E /* ANCommonKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -1035,6 +1047,7 @@
 				DA0B260F1B75666C00A770AE /* Thread */,
 				DA1380641B6DBA7D00C53560 /* Episodes */,
 				DACD6AAA1B62E53900DDA55C /* Rate */,
+				DA47A8F31C4302B60077772A /* Reviews */,
 				DAF6187E1B3785FC00286517 /* Forum */,
 			);
 			name = Anime;
@@ -1170,6 +1183,8 @@
 				DA6755E11B729C2100D6EA32 /* ImagesViewController.swift */,
 				DAE64EEB1B73CCE4005A984A /* ImageViewController.swift */,
 				DA35B9981B74145D00C0AAC7 /* InAppBrowserSelectorViewController.swift */,
+				DA47A8F61C430C190077772A /* NewReviewViewController.swift */,
+				DA47A8F81C432AB30077772A /* RatingsViewController.swift */,
 			);
 			name = Comment;
 			path = ../AnimeNow;
@@ -1193,7 +1208,6 @@
 			children = (
 				DAF6189F1B378FF700286517 /* Profile.storyboard */,
 				DA58C2D81B386BB90082B626 /* ProfileViewController.swift */,
-				DA8495221C42D28800EA77B5 /* poster.png */,
 				DA58C2DA1B386BC80082B626 /* UserListViewController.swift */,
 				DA0B26051B75066B00A770AE /* EditProfileViewController.swift */,
 				DA0B260B1B75192400A770AE /* UserProfileManager.swift */,
@@ -1555,7 +1569,6 @@
 				DAC13C1B1B4228120013D479 /* Aller_Lt.ttf in Resources */,
 				DA07A3481B4C2B730028B81B /* InApp.storyboard in Resources */,
 				DAC077991B68698F0067DA90 /* default-avatar@2x.png in Resources */,
-				DA8495231C42D28800EA77B5 /* poster.png in Resources */,
 				DA58C2E51B39C0080082B626 /* Browse.storyboard in Resources */,
 				DAC13C031B40569F0013D479 /* Settings.storyboard in Resources */,
 				DAC13C1A1B4228120013D479 /* Aller_It.ttf in Resources */,
@@ -1761,6 +1774,7 @@
 				DA4595631B83C3500044013E /* SignInViewController.swift in Sources */,
 				DAA546E11BA1A0C4003989DE /* TitleCell.swift in Sources */,
 				DAA26C8E1BCC92B1001CF62D /* PublicListViewController.swift in Sources */,
+				DA47A8F51C4302C40077772A /* ReviewsViewController.swift in Sources */,
 				DAA546EE1BA1A102003989DE /* AnimeInformationViewController.swift in Sources */,
 				DA52B1831B4838AE001CC1A9 /* CalendarViewController.swift in Sources */,
 				DA27D1991AF1BA9D00CC854E /* ParseWorker.swift in Sources */,
@@ -1874,6 +1888,7 @@
 				DA1340AB1B9E11A10073C6EF /* Notification.swift in Sources */,
 				DA6E12E01B10D96F00B278B0 /* TFHppleElement.m in Sources */,
 				DAF467171B76655700095820 /* PostableProtocol.swift in Sources */,
+				DA47A8FC1C432AC50077772A /* NewReviewViewController.swift in Sources */,
 				DAE43C341B2BC3B700C3092D /* AnimeDetail.swift in Sources */,
 				DA03F1581B8B435400402AC4 /* TagsViewController.swift in Sources */,
 				DACE77C41B29517F00037486 /* AnimeRelation.swift in Sources */,
@@ -1908,6 +1923,7 @@
 				DA8495181C42068900EA77B5 /* Review.swift in Sources */,
 				DAFED2531BA717DE009697E4 /* InAppController.swift in Sources */,
 				DA54E30B1BE9487800FE0AE9 /* PFQuery+Query.swift in Sources */,
+				DA47A8FD1C432AC50077772A /* RatingsViewController.swift in Sources */,
 				DA75C89A1BB1A76F00C27A68 /* LibrarySyncController.swift in Sources */,
 				DA6E13111B10F2E500B278B0 /* ImageScrapper.swift in Sources */,
 				DA03F15C1B8B818E00402AC4 /* TTTAttributedLabel+Tags.swift in Sources */,

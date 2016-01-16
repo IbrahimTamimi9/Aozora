@@ -632,6 +632,7 @@
                         <segue destination="haj-us-SzY" kind="relationship" relationship="viewControllers" id="Aio-am-4Dn"/>
                         <segue destination="6ik-8u-5Gi" kind="relationship" relationship="viewControllers" id="E7C-MV-BX0"/>
                         <segue destination="ysS-TF-YDt" kind="relationship" relationship="viewControllers" id="uEG-ex-3Uf"/>
+                        <segue destination="5qV-u6-4Fd" kind="relationship" relationship="viewControllers" id="cFl-7M-Wun"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="htd-I6-qvE" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1269,10 +1270,78 @@
             </objects>
             <point key="canvasLocation" x="1220" y="1184"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="rqT-8V-uUi">
+            <objects>
+                <navigationController id="5qV-u6-4Fd" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="" image="icon-comments-filled" id="XIJ-Ib-zMu">
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="icon-episode-filled"/>
+                        </userDefinedRuntimeAttributes>
+                    </tabBarItem>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="FoZ-We-jBd">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Qe2-k1-elU" kind="relationship" relationship="rootViewController" id="D4L-eh-bVu"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="If8-br-cI4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="545" y="1886"/>
+        </scene>
+        <!--Reviews-->
+        <scene sceneID="CGP-98-L4l">
+            <objects>
+                <viewController storyboardIdentifier="ReviewsViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Qe2-k1-elU" customClass="ReviewsViewController" customModule="Aozora" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="l4B-wD-9Tu"/>
+                        <viewControllerLayoutGuide type="bottom" id="pxt-DA-tdK"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="9xZ-Iz-LRF">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Xu4-jZ-WEi">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="Qe2-k1-elU" id="WZl-PS-aOA"/>
+                                    <outlet property="delegate" destination="Qe2-k1-elU" id="9kA-Op-bHh"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="bottomMargin" secondItem="Xu4-jZ-WEi" secondAttribute="bottom" id="2gB-XO-yWW"/>
+                            <constraint firstAttribute="topMargin" secondItem="Xu4-jZ-WEi" secondAttribute="top" id="M6m-ha-Ume"/>
+                            <constraint firstAttribute="trailing" secondItem="Xu4-jZ-WEi" secondAttribute="trailing" id="Nnj-Bh-gRt"/>
+                            <constraint firstItem="Xu4-jZ-WEi" firstAttribute="leading" secondItem="9xZ-Iz-LRF" secondAttribute="leading" id="usB-HH-wai"/>
+                        </constraints>
+                    </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Reviews" id="USE-L3-2en">
+                        <barButtonItem key="rightBarButtonItem" image="icon-create" id="szJ-wA-t8J" userLabel="Create">
+                            <connections>
+                                <action selector="createReviewPressed:" destination="Qe2-k1-elU" id="Kfa-ib-TDN"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="Xu4-jZ-WEi" id="9Gj-CC-xcv"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2uO-XV-RSY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1220" y="1886"/>
+        </scene>
     </scenes>
     <resources>
         <image name="icon-check" width="50" height="50"/>
         <image name="icon-close-blue" width="23" height="23"/>
+        <image name="icon-comments-filled" width="25" height="25"/>
+        <image name="icon-create" width="22" height="22"/>
         <image name="icon-details2-filled" width="25" height="25"/>
         <image name="icon-episode-filled" width="25" height="25"/>
         <image name="icon-go-to" width="22" height="22"/>
