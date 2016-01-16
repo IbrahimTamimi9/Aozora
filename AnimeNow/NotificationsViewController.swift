@@ -47,13 +47,17 @@ class NotificationsViewController: UIViewController {
     }
     
     func fetchNotifications() {
+        guard let currentUser = User.currentUser() else {
+            return
+        }
+
         let query = Notification.query()!
         query.includeKey("lastTriggeredBy")
         query.includeKey("triggeredBy")
         query.includeKey("subscribers")
         query.includeKey("owner")
         query.includeKey("readBy")
-        query.whereKey("subscribers", containedIn: [User.currentUser()!])
+        query.whereKey("subscribers", containedIn: [currentUser])
         query.orderByDescending("lastUpdatedAt")
         fetchController.configureWith(self, query: query, queryDelegate:self, tableView: tableView, limit: 50)
     }
